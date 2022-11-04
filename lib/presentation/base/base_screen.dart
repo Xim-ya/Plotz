@@ -32,12 +32,14 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
   Widget _buildScaffold(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: buildAppBar(context),
-      body: buildBody(context),
+      appBar:  buildAppBar(context),
+      body: buildScreen(context),
       backgroundColor: screenBackgroundColor,
       bottomNavigationBar: buildBottomNavigationBar(context),
     );
   }
+
+
 
   @protected
   bool get preventSwipeBack => false;
@@ -49,7 +51,7 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
   Widget? buildBottomNavigationBar(BuildContext context) => null;
 
   @protected
-  Widget buildBody(BuildContext context);
+  Widget buildScreen(BuildContext context);
 
   @protected
   PreferredSizeWidget? buildAppBar(BuildContext context) => null;

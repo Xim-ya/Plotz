@@ -17,7 +17,14 @@ dependencies:
 
   #UI
   cupertino_icons: ^1.0.2
+  fade_scroll_app_bar: ^0.0.7
+  scroll_app_bar: ^2.0.0 # 스크롤 앱 바
   cupertino_will_pop_scope: ^1.2.1 # iOS Android swipe back method 관련
+  flutter_svg: ^1.1.6 # Svg
+  animations: ^2.0.7
+
+
+  #State Controller
   get: ^4.6.5
 
 
@@ -27,8 +34,12 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-
   uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/
+
 
   fonts:
     - family: pretendard_bold

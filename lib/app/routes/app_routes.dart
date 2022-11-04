@@ -2,6 +2,10 @@ abstract class AppRoutes {
   AppRoutes._();
 
 
-  // 탭 스크린
+  // 탭
   static const tabs = 'tabs';
+
+  // 홈
+  static const home = 'home';
+
 }

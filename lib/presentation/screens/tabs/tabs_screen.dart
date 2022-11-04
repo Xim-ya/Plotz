@@ -1,4 +1,5 @@
-import 'package:uppercut_fantube/presentation/screens/tabs/tabs_view_model.dart';
+import 'package:uppercut_fantube/presentation/common/fade_indexed_stack.dart';
+import 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -15,27 +16,31 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
       const _BottomNavigationBar();
 
   @override
-  Widget buildBody(BuildContext context) {
-    return Obx(() => IndexedStack(
-          index: vm.selectedTabIndex.value,
-          children: <Widget>[
-            Container(),
-            Container(
-              child: Center(
-                child: Text('Screen 1', style: TextStyle(
-                  color: Colors.white
-                ),),
+  Widget buildScreen(BuildContext context) {
+    return Obx(
+      () => FadeIndexedStack(
+        index: vm.selectedTabIndex.value,
+        children: <Widget>[
+          HomeScreen(),
+          Container(
+            child: Center(
+              child: Text(
+                'Screen 1',
+                style: TextStyle(color: Colors.white),
               ),
             ),
-            Container(
-              child: Center(
-                child: Text('Screen 2', style: TextStyle(
-                    color: Colors.white
-                ),),
+          ),
+          Container(
+            child: Center(
+              child: Text(
+                'Screen 2',
+                style: TextStyle(color: Colors.white),
               ),
             ),
-          ],
-        ),);
+          ),
+        ],
+      ),
+    );
   }
 }
 

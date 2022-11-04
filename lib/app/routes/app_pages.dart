@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 
@@ -11,8 +12,11 @@ abstract class AppPages {
   AppPages._();
 
   static final routes = [
-    // 탭 스크린
-    GetPage(name: AppRoutes.tabs, page: TabsScreen.new, binding: TabsBinding())
+    // 탭
+    GetPage(name: AppRoutes.tabs, page: TabsScreen.new, binding: TabsBinding()),
+
+    // 홈
+    GetPage(name: AppRoutes.home, page: () => HomeScreen())
   ];
 
 
