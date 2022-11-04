@@ -1,7 +1,4 @@
-import 'package:uppercut_fantube/ui/screens/tabs/tabs_screen.dart';
-import 'package:uppercut_fantube/ui/screens/tabs/tabs_view_model.dart';
-
-import '../../utilities/index.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class PresentationModules {
   PresentationModules._();
