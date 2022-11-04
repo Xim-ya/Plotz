@@ -1,7 +1,7 @@
 import 'package:uppercut_fantube/app/config/theme_config.dart';
 import 'package:uppercut_fantube/app/di/app_binding.dart';
 import 'package:uppercut_fantube/app/routes/app_routes.dart';
-import 'package:uppercut_fantube/ui/screens/tabs/tabs_screen.dart';
+import 'package:uppercut_fantube/presentation/screens/tabs/tabs_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 

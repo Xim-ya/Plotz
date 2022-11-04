@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-import 'package:uppercut_fantube/ui/base/base_view_model.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.04
  * - [GetView]를 상속 받는 Base Screen 모듈

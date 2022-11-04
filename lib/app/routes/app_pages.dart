@@ -1,7 +1,5 @@
-import 'package:get/get.dart';
-import 'package:uppercut_fantube/app/routes/app_routes.dart';
-import 'package:uppercut_fantube/ui/screens/tabs/tabs_binding.dart';
-import 'package:uppercut_fantube/ui/screens/tabs/tabs_screen.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 /** Created By Ximya - 2022.11.04
  *  - [GetPage]기반 라우팅 속성들을 해당 모듈에서 관리.

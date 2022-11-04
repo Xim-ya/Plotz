@@ -1,8 +1,4 @@
-import 'package:uppercut_fantube/app/config/color_config.dart';
-import 'package:uppercut_fantube/ui/base/base_screen.dart';
-import 'package:uppercut_fantube/ui/base/base_view.dart';
-import 'package:uppercut_fantube/ui/screens/tabs/tabs_view_model.dart';
-import 'package:uppercut_fantube/utilities/constants/bottom_navigation_constants.dart';
+import 'package:uppercut_fantube/presentation/screens/tabs/tabs_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {

@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/app/config/color_config.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.04
