@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/presentation/common/fade_indexed_stack.dart';
+import 'package:uppercut_fantube/presentation/common/animated_index_stack.dart';
 import 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -18,7 +18,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
   @override
   Widget buildScreen(BuildContext context) {
     return Obx(
-      () => FadeIndexedStack(
+          () => AnimatedIndexedStack(
         index: vm.selectedTabIndex.value,
         children: <Widget>[
           HomeScreen(),
@@ -50,7 +50,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return Obx(
-      () => BottomNavigationBar(
+          () => BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           for (final tab in BottomNavigationConstants.values)
             BottomNavigationBarItem(
