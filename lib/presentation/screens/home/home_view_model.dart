@@ -1,6 +1,3 @@
-import 'package:flutter/rendering.dart';
-import 'package:uppercut_fantube/app/config/size_config.dart';
-import 'package:uppercut_fantube/utilities/extension/prevent_duplicate_value_inject.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -19,7 +16,7 @@ class HomeViewModel extends BaseViewModel {
 
   /* Intent */
   /// UI Intent Method
-  // AppBar Blur 처리 여부 로직
+  // AppBar Blur효과 avtivate 여부
   void turnOnBlurInAppBar() {
     // Status Bar Height 보다 offest이 작을 땐 Blur 처리 X
     if (scrollOffset <= SizeConfig.to.statusBarHeight) {

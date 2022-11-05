@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentPostItem extends StatelessWidget {

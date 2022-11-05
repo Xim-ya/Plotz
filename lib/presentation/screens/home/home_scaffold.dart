@@ -1,19 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:uppercut_fantube/app/config/app_space_config.dart';
-import 'package:uppercut_fantube/app/config/font_config.dart';
-import 'package:uppercut_fantube/presentation/common/icon_ink_well_button.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScaffold extends StatelessWidget {
-  const HomeScaffold({Key? key, required this.animationAppbar, required this.scrollController, required this.body, required this.appBarHeight, required this.stackedGradientPosterBg, required this.topExposedContentSlider, required this.topTenContentSlider})
+  const HomeScaffold({Key? key, required this.animationAppbar, required this.scrollController, required this.body, required this.appBarHeight, required this.stackedGradientPosterBg, required this.topExposedContentSlider, required this.topTenContentSlider, required this.categoryListWithPostSlider})
       : super(key: key);
 
   final List<Widget> animationAppbar;
   final List<Widget> stackedGradientPosterBg;
   final Widget topExposedContentSlider;
   final List<Widget> topTenContentSlider;
+  final List<Widget> categoryListWithPostSlider;
   final List<Widget> body;
   final ScrollController scrollController;
   final double appBarHeight;
@@ -41,7 +36,9 @@ class HomeScaffold extends StatelessWidget {
                     AppSpace.size72,
                     topExposedContentSlider, // 상단 대표 컨텐츠 슬라이더
                     for (final widget in topTenContentSlider) widget, // Top10 컨텐츠 슬라이더
+                    for (final widget in categoryListWithPostSlider) widget, // 카테고리 컨텐츠 리스트
                     for (final widget in body) widget,
+
                   ],
                 ),
               ],

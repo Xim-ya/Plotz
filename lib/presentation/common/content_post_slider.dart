@@ -1,7 +1,4 @@
-import 'package:uppercut_fantube/app/config/app_space_config.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
-
-
 
 class ContentPostSlider extends StatelessWidget {
   const ContentPostSlider({Key? key, required this.height, required this.itemCount, required this.itemBuilder}) : super(key: key);
