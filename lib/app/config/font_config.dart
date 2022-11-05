@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:uppercut_fantube/app/config/color_config.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 /** Created By Ximya - 2022.11.04
  * TextStyle을 상속 받는 [PretendardTextStyle] 모듈을 기반으로 함.

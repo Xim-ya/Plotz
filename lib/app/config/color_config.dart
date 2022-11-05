@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class AppColor {
   AppColor._();
