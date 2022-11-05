@@ -1,4 +1,5 @@
 import 'package:flutter/rendering.dart';
+import 'package:uppercut_fantube/app/config/size_config.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -9,8 +10,13 @@ class HomeViewModel extends BaseViewModel {
   final RxBool showAppbarBackground = true.obs;
   RxBool showBlurAtAppBar = false.obs;
 
+
+  /// Size
+  final double appBarHeight = SizeConfig.to.statusBarHeight + 56;
+
   ///  Controllers
   late ScrollController scrollController;
+
 
   // Intent
   /// UI Intent Method

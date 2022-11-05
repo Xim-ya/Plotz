@@ -17,11 +17,14 @@ dependencies:
 
   #UI
   cupertino_icons: ^1.0.2
-  fade_scroll_app_bar: ^0.0.7
+  flutter_easyloading: ^3.0.5 # 로딩 UI 처리 관련
   scroll_app_bar: ^2.0.0 # 스크롤 앱 바
   cupertino_will_pop_scope: ^1.2.1 # iOS Android swipe back method 관련
-  flutter_svg: ^1.1.6 # Svg
-  animations: ^2.0.7
+  flutter_svg: ^1.1.6 # Svg 아이콘 처리 관련
+  cached_network_image: ^3.2.2 # 네트워크 이미지 처리 관련
+  carousel_slider: ^4.1.1 # 슬라이더
+
+
 
 
   #State Controller
