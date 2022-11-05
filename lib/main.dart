@@ -1,7 +1,8 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:uppercut_fantube/app/config/size_config.dart';
 import 'package:uppercut_fantube/app/config/theme_config.dart';
 import 'package:uppercut_fantube/app/di/app_binding.dart';
-import 'package:uppercut_fantube/app/routes/app_routes.dart';
-import 'package:uppercut_fantube/presentation/screens/tabs/tabs_screen.dart';
+
 import 'package:uppercut_fantube/utilities/index.dart';
 
 
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeConfig.basicTheme,
       initialBinding: AppBinding(),
       initialRoute: AppRoutes.tabs,
+        builder: (context, child) {
+          SizeConfig.to.init(context); // Size Config 초기화
+          return EasyLoading.init()(context, child);
+        },
       home: const TabsScreen()
     );
   }

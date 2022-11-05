@@ -17,7 +17,18 @@ dependencies:
 
   #UI
   cupertino_icons: ^1.0.2
+  flutter_easyloading: ^3.0.5 # 로딩 UI 처리 관련
+  scroll_app_bar: ^2.0.0 # 스크롤 앱 바
   cupertino_will_pop_scope: ^1.2.1 # iOS Android swipe back method 관련
+  flutter_svg: ^1.1.6 # Svg 아이콘 처리 관련
+  cached_network_image: ^3.2.2 # 네트워크 이미지 처리 관련
+  carousel_slider: ^4.1.1 # 슬라이더
+  shimmer_animation: ^2.1.0+1 # Skeleton 처리 위젯
+
+
+
+
+  #State Controller
   get: ^4.6.5
 
 
@@ -27,8 +38,12 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-
   uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/
+
 
   fonts:
     - family: pretendard_bold
