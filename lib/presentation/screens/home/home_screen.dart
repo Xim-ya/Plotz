@@ -5,6 +5,8 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uppercut_fantube/app/config/app_space_config.dart';
 import 'package:uppercut_fantube/app/config/font_config.dart';
 import 'package:uppercut_fantube/app/config/size_config.dart';
+import 'package:uppercut_fantube/presentation/common/content_post_item.dart';
+import 'package:uppercut_fantube/presentation/common/content_post_slider.dart';
 import 'package:uppercut_fantube/presentation/common/icon_ink_well_button.dart';
 import 'package:uppercut_fantube/presentation/screens/home/home_scaffold.dart';
 import 'package:uppercut_fantube/presentation/screens/home/home_view_model.dart';
@@ -31,67 +33,39 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   List<Widget> _buildBody() => [
         ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 6,
-            separatorBuilder: (__, _) => AppSpace.size16,
-            itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    // 카테고리 제목
-                    child: Text(
-                      '진존잼',
-                      style: AppTextStyle.headline3,
-                      maxLines: 1,
-                      overflow: TextOverflow.fade,
-                    ),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 6,
+          separatorBuilder: (__, _) => AppSpace.size16,
+          itemBuilder: (context, index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  // 카테고리 제목
+                  child: Text(
+                    '진존잼',
+                    style: AppTextStyle.headline3,
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
                   ),
-                  AppSpace.size8,
-                  // 컨텐츠 리스트 슬라이더
-                  SizedBox(
-                    height: 180,
-                    child: ListView.separated(
-                        separatorBuilder: (__, _) => AppSpace.size8,
-                        padding: const EdgeInsets.only(left: 16),
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(6),
-                            child: AspectRatio(
-                              aspectRatio: 1280 / 1920,
-                              child: CachedNetworkImage(
-                                fit: BoxFit.contain,
-                                imageUrl:
-                                    'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                placeholder: (context, url) => Shimmer(
-                                  child: Container(
-                                    color: AppColor.black,
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Center(child: Icon(Icons.error)),
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                ],
-              );
-            }),
+                ),
+                AppSpace.size8,
+                // 컨텐츠 리스트 슬라이더
+                ContentPostSlider(
+                  height: 180,
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    return const ContentPostItem(
+                        imgUrl:
+                            'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg');
+                  },
+                ),
+              ],
+            );
+          },
+        ),
         AppSpace.size72,
       ];
 
@@ -105,43 +79,14 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           ),
         ),
         AppSpace.size6,
-        SizedBox(
+        ContentPostSlider(
           height: 200,
-          child: ListView.separated(
-            padding: const EdgeInsets.only(left: 16),
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: 4,
-            separatorBuilder: (__, _) => AppSpace.size6,
-            itemBuilder: (context, index) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: AspectRatio(
-                  aspectRatio: 1280 / 1920,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.contain,
-                    imageUrl:
-                        'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    placeholder: (context, url) => Shimmer(
-                      child: Container(
-                        color: AppColor.black,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Center(child: Icon(Icons.error)),
-                  ),
-                ),
-              );
-            },
-          ),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return const ContentPostItem(
+                imgUrl:
+                    'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg');
+          },
         ),
       ];
 
