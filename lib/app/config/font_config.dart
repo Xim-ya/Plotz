@@ -114,7 +114,7 @@ class PretendardTextStyle extends TextStyle {
 
   factory PretendardTextStyle.regular({
     required double size,
-    Color color = Colors.white,
+    Color color = AppColor.mixedWhite,
     FontWeight fontWeight = FontWeight.normal,
     double height = 1.0,
     double? letterSpacing,
@@ -124,7 +124,7 @@ class PretendardTextStyle extends TextStyle {
 
   factory PretendardTextStyle.semiBold({
     required double size,
-    Color color = Colors.white,
+    Color color = AppColor.mixedWhite,
     FontWeight fontWeight = FontWeight.normal,
     double height = 1.0,
     double? letterSpacing,
@@ -134,7 +134,7 @@ class PretendardTextStyle extends TextStyle {
 
   factory PretendardTextStyle.medium({
     required double size,
-    Color color = Colors.white,
+    Color color = AppColor.mixedWhite,
     FontWeight fontWeight = FontWeight.normal,
     double height = 1.0,
     double? letterSpacing,
@@ -144,7 +144,7 @@ class PretendardTextStyle extends TextStyle {
 
   factory PretendardTextStyle.bold({
     required double size,
-    Color color = Colors.white,
+    Color color = AppColor.mixedWhite,
     FontWeight fontWeight = FontWeight.normal,
     double height = 1.0,
     double? letterSpacing,
