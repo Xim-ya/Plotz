@@ -23,6 +23,7 @@ dependencies:
   flutter_svg: ^1.1.6 # Svg 아이콘 처리 관련
   cached_network_image: ^3.2.2 # 네트워크 이미지 처리 관련
   carousel_slider: ^4.1.1 # 슬라이더
+  shimmer_animation: ^2.1.0+1 # Skeleton 처리 위젯
 
 
 
