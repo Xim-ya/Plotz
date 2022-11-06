@@ -40,6 +40,12 @@ class HomeViewModel extends BaseViewModel {
   }
 
 
+  /// Routes Method
+  void routeToContentDetail(){
+    Get.toNamed(AppRoutes.contentDetail);
+  }
+
+
 
   @override
   void onInit() {

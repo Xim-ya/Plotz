@@ -3,9 +3,12 @@ abstract class AppRoutes {
 
 
   // 탭
-  static const tabs = 'tabs';
+  // static const tabs = 'tabs';
 
   // 홈
-  static const home = 'home';
+  static const home = '/';
+
+  // 컨텐츠 상세
+  static const contentDetail = '/content_detail';
 
 }

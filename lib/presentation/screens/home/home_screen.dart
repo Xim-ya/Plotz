@@ -101,9 +101,14 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  '올드맨',
-                  style: AppTextStyle.headline2.copyWith(color: Colors.white),
+                GestureDetector(
+                  onTap: (){
+                    vm.routeToContentDetail();
+                  },
+                  child: Text(
+                    '올드맨',
+                    style: AppTextStyle.headline2.copyWith(color: Colors.white),
+                  ),
                 ),
                 AppSpace.size2,
                 Text(
