@@ -10,8 +10,10 @@ class ContentDetailScaffoldController extends BaseViewModel
   late final TabController tabController;
   late final ScrollController scrollController;
 
+
   /* State Variables */
   RxInt selectedTabIndex = 0.obs;
+  late double scrollOffset = 0;
 
   /* 메소드 */
   void onTabClicked(int index) {
@@ -24,5 +26,10 @@ class ContentDetailScaffoldController extends BaseViewModel
 
     tabController = TabController(length: 3, vsync: this);
     scrollController = ScrollController();
+
+    scrollController.addListener(() {
+      scrollOffset = scrollController.offset;
+      print(scrollOffset);
+    });
   }
 }

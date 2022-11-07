@@ -31,6 +31,7 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
 
   Widget _buildScaffold(BuildContext context) {
     return Scaffold(
+      extendBody: extendBodyBehindAppBar,
       resizeToAvoidBottomInset: true,
       appBar:  buildAppBar(context),
       body: buildScreen(context),
@@ -40,6 +41,9 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
   }
 
 
+
+  @protected
+  bool get extendBodyBehindAppBar => false;
 
   @protected
   bool get preventSwipeBack => false;

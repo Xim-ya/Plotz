@@ -50,7 +50,6 @@ class HomeViewModel extends BaseViewModel {
   @override
   void onInit() {
     super.onInit();
-    print("ARANG");
     scrollController = ScrollController();
     scrollController.addListener(() {
       scrollOffset = scrollController.offset;

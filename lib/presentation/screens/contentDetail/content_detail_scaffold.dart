@@ -23,63 +23,93 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
 
   @override
   Widget buildView(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.red,
-      body: CustomScrollView(
-        controller: vm.scrollController,
-        slivers: [
-          // AppBar 영역
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: 56,
-            backgroundColor: Colors.blue,
-            elevation: 0,
-            leading: appBarLeading,
-
-          ),
-          // Header 영역
-          SliverList(
-            delegate: SliverChildListDelegate([header]),
-          ),
-          // 탭바 영역
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: StickyDelegateContainer(
-              minHeight: 44,
-              maxHeight: 1,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                decoration:  BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Colors.yellow),
-                  ),
-                  color: Colors.purple,
-                ),
-                child: TabBar(
-                  labelColor: AppColor.black,
-                  unselectedLabelColor: Colors.brown,
-                  indicatorColor: AppColor.black,
-                  labelStyle: AppTextStyle.title3,
-                  unselectedLabelStyle:
-                  AppTextStyle.body2.copyWith(color: AppColor.mixedWhite),
-                  onTap: vm.onTabClicked,
-                  controller: vm.tabController,
-                  tabs: tabs,
-                ),
+    return Stack(
+      children: [
+        CachedNetworkImage(
+          width: double.infinity,
+          fit: BoxFit.fitWidth,
+          imageUrl:
+              'https://image.tmdb.org/t/p/w1280/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg',
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+        // Graident 레이어
+        Positioned.fill(
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.black, Colors.transparent, AppColor.black],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: <double>[0.0, 0.5, 1.0],
               ),
             ),
           ),
+        ),
+        CustomScrollView(
 
-          // TabBarView 영역
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Obx(
-                    () => tabBarViews[vm.selectedTabIndex.value],
-              )
-            ]),
+          controller: vm.scrollController,
+          slivers: [
+            // AppBar 영역
+            // AppBar 영역
+            SliverAppBar(
+              toolbarHeight:0,
+              pinned: true,
+              backgroundColor: AppColor.black.withOpacity(0.2),
+              elevation: 0,
+
+            ),
+            // Header 영역
+            SliverList(
+              delegate: SliverChildListDelegate([header]),
+            ),
+            // 탭바 영역
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: StickyDelegateContainer(
+                minHeight: 44,
+                maxHeight: 1,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: Color(0xFF1B1C1E)),
+                    ),
+                    color: AppColor.black,
+                  ),
+                  child: TabBar(
+                    labelColor: Colors.white,
+                    unselectedLabelColor: const Color(0xFF505153),
+                    indicatorColor: Colors.white,
+                    labelStyle: AppTextStyle.title3,
+                    unselectedLabelStyle: AppTextStyle.body2,
+                    onTap: vm.onTabClicked,
+                    controller: vm.tabController,
+                    tabs: tabs,
+                  ),
+                ),
+              ),
+            ),
+
+            // TabBarView 영역
+            SliverList(
+              delegate: SliverChildListDelegate([
+                Obx(
+                  () => tabBarViews[vm.selectedTabIndex.value],
+                )
+              ]),
+            ),
+          ],
+        ),
+
+        Positioned(
+          top: 0,
+          child: Container(
+            height: SizeConfig.to.statusBarHeight + 56,
+            width: 100,
+            color: Colors.red,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
