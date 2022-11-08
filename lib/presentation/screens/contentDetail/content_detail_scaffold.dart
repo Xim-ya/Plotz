@@ -13,10 +13,8 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
     required this.tabBarViews,
     required this.tabs,
     required this.header,
-    required this.appBarLeading,
   }) : super(key: key);
 
-  final IconButton appBarLeading;
   final Widget header;
   final List<Tab> tabs;
   final List<Widget> tabBarViews;
@@ -49,17 +47,6 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           controller: vm.scrollController,
           slivers: [
-            // AppBar 영역
-            // AppBar 영역
-            // SliverAppBar(
-            //   toolbarHeight:56,
-            //   pinned: true,
-            //   backgroundColor: Colors.transparent,
-            //   elevation: 0,
-            //
-            //
-            // ),
-            // Header 영역
             SliverList(
               delegate: SliverChildListDelegate([header]),
             ),
@@ -102,17 +89,36 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           ],
         ),
 
+        // 상단 '뒤로가기' 버튼
+        // 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
         Obx(
           () => AnimatedPositioned(
-            top: vm.topPosition.value ? 20 : 200,
-            duration: const Duration(milliseconds: 500),
+            top: vm.showBackBtnOnTop.value ? 0 : -100,
+            left: 12,
+            duration: const Duration(milliseconds: 100),
+            child: IconButton(
+              onPressed: Get.back,
+              icon: const Icon(Icons.arrow_back_ios
+              ,color: Colors.white,),
+            ),
+          ),
+        ),
+
+        // 하단 '뒤로가기' 버튼
+        // 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
+        Obx(
+          () => AnimatedPositioned(
+            bottom:
+                vm.showBackBtnOnTop.value ? -100 : SizeConfig.to.bottomInset,
+            right: 14,
+            duration: const Duration(milliseconds: 160),
             child: FloatingActionButton(
               onPressed: Get.back,
               backgroundColor: AppColor.darkGrey.withOpacity(0.46),
               child: const Icon(Icons.arrow_back),
             ),
           ),
-        )
+        ),
       ],
     );
   }

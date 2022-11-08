@@ -11,6 +11,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   @override
   bool get extendBodyBehindAppBar => false;
 
+  // Sliver레이아웃에서 Tab이 고정되기 위해서 [Sizse.zero]인 Appbar가 필요
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context) {
     return PreferredSize(
@@ -21,23 +22,10 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
     );
   }
 
-  @override
-  FloatingActionButtonLocation? get floatingActionButtonLocation => FloatingActionButtonLocation.startTop;
-
-  // @override
-  // Widget? get buildFloatingActionButton => FloatingActionButton(
-  //       onPressed: Get.back,
-  //       backgroundColor: AppColor.darkGrey.withOpacity(0.46),
-  //       child: const Icon(Icons.arrow_back),
-  //     );
 
   @override
   Widget buildScreen(BuildContext context) {
     return ContentDetailScaffold(
-      appBarLeading: IconButton(
-        icon: Icon(Icons.arrow_back_ios),
-        onPressed: () {},
-      ),
       header: _buildHeader(),
       tabs: _buildTab(),
       tabBarViews: _buildTabBarViews(),
@@ -48,7 +36,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   Widget _buildHeader() => Stack(
         children: <Widget>[
           Container(
-            height: 420,
+            height: 480,
           ),
         ],
       );

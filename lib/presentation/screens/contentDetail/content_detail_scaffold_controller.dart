@@ -10,25 +10,34 @@ class ContentDetailScaffoldController extends BaseViewModel
   late final TabController tabController;
   late final ScrollController scrollController;
 
-
   /* State Variables */
+
+  // 선택된 탭 인덱스
   RxInt selectedTabIndex = 0.obs;
+
+  // Sliver Custom 스크롤 Offset
   late double scrollOffset = 0;
-  RxBool topPosition = false.obs;
+
+  // 상단 '뒤로가기' 버튼 Visibility 여부
+  RxBool showBackBtnOnTop = true.obs;
 
   /* 메소드 */
   void onTabClicked(int index) {
     selectedTabIndex.value = index;
-
   }
 
-  void changeFloatingBtnLocation() {
-    if(scrollController.offset > 220){
-      topPosition(true);
-      print("arang");
+  // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
+  void setBackBtnVisibility() {
+    if (scrollController.offset >= 412 && showBackBtnOnTop.isTrue) {
+      showBackBtnOnTop(false);
+      return;
+    } else if (scrollController.offset >= 482) {
+      return;
+    } else {
+      if (showBackBtnOnTop.isFalse) {
+        showBackBtnOnTop(true);
+      }
     }
-
-
   }
 
   @override
@@ -39,12 +48,10 @@ class ContentDetailScaffoldController extends BaseViewModel
     scrollController = ScrollController();
 
     scrollController.addListener(() {
-
-      changeFloatingBtnLocation();
+      setBackBtnVisibility();
     });
-
-
   }
 
-  static ScrollController get tabScrollController => Get.find<ContentDetailScaffoldController>().scrollController;
+  static ScrollController get tabScrollController =>
+      Get.find<ContentDetailScaffoldController>().scrollController;
 }
