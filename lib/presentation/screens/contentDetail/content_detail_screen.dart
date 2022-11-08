@@ -9,15 +9,27 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   bool get wrapWithSafeArea => false;
 
   @override
-  bool get extendBodyBehindAppBar => true;
+  bool get extendBodyBehindAppBar => false;
+
+  @override
+  PreferredSizeWidget? buildAppBar(BuildContext context) {
+    return PreferredSize(
+      preferredSize: Size.zero,
+      child: AppBar(
+        backgroundColor: Colors.black,
+      ),
+    );
+  }
+
+  @override
+  FloatingActionButtonLocation? get floatingActionButtonLocation => FloatingActionButtonLocation.startTop;
 
   // @override
-  // PreferredSizeWidget? buildAppBar(BuildContext context) {
-  //   return AppBar(
-  //     title: Text('aim'),
-  //     backgroundColor: Colors.transparent,
-  //   );
-  // }
+  // Widget? get buildFloatingActionButton => FloatingActionButton(
+  //       onPressed: Get.back,
+  //       backgroundColor: AppColor.darkGrey.withOpacity(0.46),
+  //       child: const Icon(Icons.arrow_back),
+  //     );
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -34,21 +46,26 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
 
   // 헤더 섹션
   Widget _buildHeader() => Stack(
-          children: <Widget>[
-            Container(height: 420,),
+        children: <Widget>[
+          Container(
+            height: 420,
+          ),
         ],
       );
 
   // 탭뷰
   List<Widget> _buildTabBarViews() => [
         Container(
-          height: 1000,
-          color: AppColor.black,
-          child: ListView.builder(
-            physics:const NeverScrollableScrollPhysics(),
-              itemCount: 100,
-              itemBuilder: (context, index) => Center(child: Text('${index}', style: AppTextStyle.headline2,)))
-        ),
+            height: 1000,
+            color: AppColor.black,
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 100,
+                itemBuilder: (context, index) => Center(
+                        child: Text(
+                      '${index}',
+                      style: AppTextStyle.headline2,
+                    )))),
         Container(
           child: Text('second tab view'),
         ),

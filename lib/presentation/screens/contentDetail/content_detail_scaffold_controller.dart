@@ -14,10 +14,21 @@ class ContentDetailScaffoldController extends BaseViewModel
   /* State Variables */
   RxInt selectedTabIndex = 0.obs;
   late double scrollOffset = 0;
+  RxBool topPosition = false.obs;
 
   /* 메소드 */
   void onTabClicked(int index) {
     selectedTabIndex.value = index;
+
+  }
+
+  void changeFloatingBtnLocation() {
+    if(scrollController.offset > 220){
+      topPosition(true);
+      print("arang");
+    }
+
+
   }
 
   @override
@@ -28,8 +39,12 @@ class ContentDetailScaffoldController extends BaseViewModel
     scrollController = ScrollController();
 
     scrollController.addListener(() {
-      scrollOffset = scrollController.offset;
-      print(scrollOffset);
+
+      changeFloatingBtnLocation();
     });
+
+
   }
+
+  static ScrollController get tabScrollController => Get.find<ContentDetailScaffoldController>().scrollController;
 }

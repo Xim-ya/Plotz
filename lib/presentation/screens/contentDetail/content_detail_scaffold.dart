@@ -46,18 +46,19 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           ),
         ),
         CustomScrollView(
-
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           controller: vm.scrollController,
           slivers: [
             // AppBar 영역
             // AppBar 영역
-            SliverAppBar(
-              toolbarHeight:0,
-              pinned: true,
-              backgroundColor: AppColor.black.withOpacity(0.2),
-              elevation: 0,
-
-            ),
+            // SliverAppBar(
+            //   toolbarHeight:56,
+            //   pinned: true,
+            //   backgroundColor: Colors.transparent,
+            //   elevation: 0,
+            //
+            //
+            // ),
             // Header 영역
             SliverList(
               delegate: SliverChildListDelegate([header]),
@@ -101,14 +102,17 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           ],
         ),
 
-        Positioned(
-          top: 0,
-          child: Container(
-            height: SizeConfig.to.statusBarHeight + 56,
-            width: 100,
-            color: Colors.red,
+        Obx(
+          () => AnimatedPositioned(
+            top: vm.topPosition.value ? 20 : 200,
+            duration: const Duration(milliseconds: 500),
+            child: FloatingActionButton(
+              onPressed: Get.back,
+              backgroundColor: AppColor.darkGrey.withOpacity(0.46),
+              child: const Icon(Icons.arrow_back),
+            ),
           ),
-        ),
+        )
       ],
     );
   }

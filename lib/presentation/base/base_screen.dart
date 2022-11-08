@@ -37,9 +37,17 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
       body: buildScreen(context),
       backgroundColor: screenBackgroundColor,
       bottomNavigationBar: buildBottomNavigationBar(context),
+      floatingActionButtonLocation: floatingActionButtonLocation,
+      floatingActionButton: buildFloatingActionButton,
     );
   }
 
+
+  @protected
+  Widget? get buildFloatingActionButton => null;
+
+  @protected
+  FloatingActionButtonLocation? get floatingActionButtonLocation => null;
 
 
   @protected
