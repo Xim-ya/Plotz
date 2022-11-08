@@ -40,11 +40,16 @@ class HomeViewModel extends BaseViewModel {
   }
 
 
+  /// Routes Method
+  void routeToContentDetail(){
+    Get.toNamed(AppRoutes.contentDetail);
+  }
+
+
 
   @override
   void onInit() {
     super.onInit();
-    print("ARANG");
     scrollController = ScrollController();
     scrollController.addListener(() {
       scrollOffset = scrollController.offset;
