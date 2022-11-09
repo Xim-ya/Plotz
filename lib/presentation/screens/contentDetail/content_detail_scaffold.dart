@@ -22,7 +22,8 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
   @override
   Widget buildView(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
+
         CachedNetworkImage(
           width: double.infinity,
           fit: BoxFit.fitWidth,
@@ -38,10 +39,24 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
                 colors: [Colors.black, Colors.transparent, AppColor.black],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                stops: <double>[0.0, 0.5, 1.0],
+                stops: <double>[0.0, 0.3, 0.8],
               ),
             ),
           ),
+        ),
+        Positioned(
+          top: 188,
+          right: 0,
+          child: Column(
+           children: <Widget>[
+             Column(
+               children: <Text>[
+                 Text('RATE', style: AppTextStyle.extraFont.copyWith(color: Colors.white),),
+                 Text('7.2')
+               ],
+             ),
+           ],
+          )
         ),
         CustomScrollView(
           clipBehavior: Clip.antiAliasWithSaveLayer,

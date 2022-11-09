@@ -10,7 +10,7 @@ class ContentDetailScaffoldController extends BaseViewModel
   late final TabController tabController;
   late final ScrollController scrollController;
 
-  /* State Variables */
+  /*** [State Variables ***/
 
   // 선택된 탭 인덱스
   RxInt selectedTabIndex = 0.obs;
@@ -47,9 +47,7 @@ class ContentDetailScaffoldController extends BaseViewModel
     tabController = TabController(length: 3, vsync: this);
     scrollController = ScrollController();
 
-    scrollController.addListener(() {
-      setBackBtnVisibility();
-    });
+    scrollController.addListener(setBackBtnVisibility);
   }
 
   static ScrollController get tabScrollController =>

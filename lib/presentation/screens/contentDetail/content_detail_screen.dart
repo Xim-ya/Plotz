@@ -33,13 +33,10 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   }
 
   // 헤더 섹션
-  Widget _buildHeader() => Stack(
-        children: <Widget>[
-          Container(
-            height: 480,
-          ),
-        ],
-      );
+  Widget _buildHeader() => SizedBox(
+    height: 480,
+
+  );
 
   // 탭뷰
   List<Widget> _buildTabBarViews() => [

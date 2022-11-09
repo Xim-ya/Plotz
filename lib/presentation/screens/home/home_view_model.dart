@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeViewModel extends BaseViewModel {
   /* Variables */
@@ -38,6 +41,14 @@ class HomeViewModel extends BaseViewModel {
       }
     }
   }
+
+  void launchAnotherApp() async {
+    if (!await launchUrl(Uri.parse("https://www.youtube.com/watch?v=Vt6d12o8ytg"),
+        mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch ';
+    }
+  }
+
 
 
   /// Routes Method

@@ -24,6 +24,7 @@ dependencies:
   cached_network_image: ^3.2.2 # 네트워크 이미지 처리 관련
   carousel_slider: ^4.1.1 # 슬라이더
   shimmer_animation: ^2.1.0+1 # Skeleton 처리 위젯
+  url_launcher: ^6.1.6 #Url 런처
 
 
 
@@ -61,3 +62,7 @@ flutter:
     - family: pretendard_medium
       fonts:
         - asset: fonts/Pretendard-Medium.otf
+
+    - family: staatliches_regular
+      fonts:
+        - asset: fonts/Staatliches-Regular.ttf

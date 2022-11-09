@@ -8,6 +8,12 @@ import 'package:uppercut_fantube/utilities/index.dart';
 * */
 
 abstract class AppTextStyle {
+  static TextStyle extraFont = const TextStyle(
+    fontFamily: 'staatliches_regular',
+    fontSize: 24,
+
+  );
+
   static TextStyle web1 = PretendardTextStyle.bold(
     size: 40,
     height: 52,
@@ -88,6 +94,7 @@ abstract class AppTextStyle {
     height: 18,
   );
 }
+
 
 
 class PretendardTextStyle extends TextStyle {

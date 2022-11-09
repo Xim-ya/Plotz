@@ -24,49 +24,47 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
   List<Widget> _buildCategoryListWithPostSlider() => [
-    ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 6,
-      separatorBuilder: (__, _) => AppSpace.size16,
-      itemBuilder: (context, index) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              // 카테고리 제목
-              child: Text(
-                '진존잼',
-                style: AppTextStyle.headline3,
-                maxLines: 1,
-                overflow: TextOverflow.fade,
-              ),
-            ),
-            AppSpace.size8,
-            // 컨텐츠 리스트 슬라이더
-            ContentPostSlider(
-              height: 180,
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return const ContentPostItem(
-                    imgUrl:
-                    'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg');
-              },
-            ),
-          ],
-        );
-      },
-    ),
-    AppSpace.size72,
-  ];
-
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 6,
+          separatorBuilder: (__, _) => AppSpace.size16,
+          itemBuilder: (context, index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  // 카테고리 제목
+                  child: Text(
+                    '진존잼',
+                    style: AppTextStyle.headline3,
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+                AppSpace.size8,
+                // 컨텐츠 리스트 슬라이더
+                ContentPostSlider(
+                  height: 180,
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    return const ContentPostItem(
+                        imgUrl:
+                            'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg');
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+        AppSpace.size72,
+      ];
 
   // 임시 body
   List<Widget> _buildBody() => [
         AppSpace.size72,
       ];
-
 
   // 상단 'Top10' 포스트 슬라이더
   List<Widget> _buildTopTenContentSlider() => [
@@ -102,7 +100,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
+                    // vm.launchAnotherApp();
                     vm.routeToContentDetail();
                   },
                   child: Text(
@@ -164,7 +163,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             viewportFraction: 0.93,
             aspectRatio: 337 / 276),
       );
-
 
   // 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
