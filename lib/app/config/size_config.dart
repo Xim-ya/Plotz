@@ -11,12 +11,14 @@ class SizeConfig {
 
   late double statusBarHeight; // Safe Area 상단 Inset
   late double bottomInset; // Safe Area 하단 Inset
+  late double screenWidth; // 디바이스 넓이
 
   // 초기화 구문
   void init(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     statusBarHeight = mediaQuery.padding.top;
     bottomInset = mediaQuery.padding.bottom;
+    screenWidth = mediaQuery.size.width;
   }
 
 

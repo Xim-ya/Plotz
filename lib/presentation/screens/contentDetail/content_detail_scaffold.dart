@@ -13,23 +13,30 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
     required this.tabBarViews,
     required this.tabs,
     required this.header,
+    required this.rateAndGenreView,
   }) : super(key: key);
 
   final Widget header;
   final List<Tab> tabs;
   final List<Widget> tabBarViews;
+  final Widget rateAndGenreView;
 
   @override
   Widget buildView(BuildContext context) {
     return Stack(
       children: <Widget>[
-
-        CachedNetworkImage(
-          width: double.infinity,
-          fit: BoxFit.fitWidth,
-          imageUrl:
-              'https://image.tmdb.org/t/p/w1280/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg',
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+        Obx(
+          () => AnimatedPositioned(
+            top: vm.headerBgOffset,
+            duration: const Duration(milliseconds: 40),
+            child: CachedNetworkImage(
+              width: SizeConfig.to.screenWidth,
+              fit: BoxFit.fitWidth,
+              imageUrl:
+                  'https://image.tmdb.org/t/p/w1280/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg',
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
+          ),
         ),
         // Graident 레이어
         Positioned.fill(
@@ -44,20 +51,9 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             ),
           ),
         ),
-        Positioned(
-          top: 188,
-          right: 0,
-          child: Column(
-           children: <Widget>[
-             Column(
-               children: <Text>[
-                 Text('RATE', style: AppTextStyle.extraFont.copyWith(color: Colors.white),),
-                 Text('7.2')
-               ],
-             ),
-           ],
-          )
-        ),
+
+        // Rate & Genre 뷰
+        rateAndGenreView,
         CustomScrollView(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           controller: vm.scrollController,
@@ -113,8 +109,10 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             duration: const Duration(milliseconds: 100),
             child: IconButton(
               onPressed: Get.back,
-              icon: const Icon(Icons.arrow_back_ios
-              ,color: Colors.white,),
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

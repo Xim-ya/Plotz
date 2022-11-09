@@ -10,16 +10,16 @@ class ContentDetailScaffoldController extends BaseViewModel
   late final TabController tabController;
   late final ScrollController scrollController;
 
-  /*** [State Variables ***/
-
+  /*** [State] Variables ***/
   // 선택된 탭 인덱스
   RxInt selectedTabIndex = 0.obs;
 
   // Sliver Custom 스크롤 Offset
-  late double scrollOffset = 0;
+  late Rxn<double> scrollOffset = Rxn();
 
   // 상단 '뒤로가기' 버튼 Visibility 여부
   RxBool showBackBtnOnTop = true.obs;
+
 
   /* 메소드 */
   void onTabClicked(int index) {
@@ -40,6 +40,7 @@ class ContentDetailScaffoldController extends BaseViewModel
     }
   }
 
+
   @override
   void onInit() {
     super.onInit();
@@ -47,9 +48,14 @@ class ContentDetailScaffoldController extends BaseViewModel
     tabController = TabController(length: 3, vsync: this);
     scrollController = ScrollController();
 
-    scrollController.addListener(setBackBtnVisibility);
+    scrollController.addListener(() {
+      setBackBtnVisibility();
+      scrollOffset.value = scrollController.offset;
+    });
   }
 
   static ScrollController get tabScrollController =>
       Get.find<ContentDetailScaffoldController>().scrollController;
+
+  double get headerBgOffset => scrollOffset.value == null ? 0 : -scrollOffset.value! * 0.5;
 }
