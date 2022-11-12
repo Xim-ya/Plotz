@@ -38,7 +38,8 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             ),
           ),
         ),
-        // Graident 레이어
+
+        // Gradient 레이어
         Positioned.fill(
           child: Container(
             decoration: const BoxDecoration(
@@ -53,7 +54,12 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
         ),
 
         // Rate & Genre 뷰
-        rateAndGenreView,
+        Obx(
+          () => AnimatedPositioned(
+              top: 180 - vm.headerBgOffset,
+              right: 16,
+              duration: const Duration(milliseconds: 200), child: rateAndGenreView),
+        ),
         CustomScrollView(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           controller: vm.scrollController,

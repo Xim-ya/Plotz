@@ -1,5 +1,7 @@
-export 'dart:ui';
+import 'dart:ui';
+
 import 'package:uppercut_fantube/utilities/index.dart';
+import '../../common/video_thumbnail_img_with_player_btn.dart';
 import 'home_screen.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -119,39 +121,12 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                 ),
                 AppSpace.size8,
                 // 유튜브 썸네일 이미지
-                Expanded(
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              'https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg',
-                          imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          placeholder: (context, url) => Shimmer(
-                            child: Container(
-                              color: AppColor.black,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
-                      ),
-                      // Play 아이콘
-                      Center(
-                          child: IconInkWellButton(
-                              iconPath: 'assets/icons/play.svg',
-                              iconSize: 54,
-                              onIconTapped: () {}))
-                    ],
-                  ),
+                VideoThumbnailImgWithPlayerBtn(
+                  onPlayerBtnClicked: () {
+                    vm.routeToContentDetail();
+                  },
+                  posterImgUrl:
+                      'https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg',
                 ),
               ],
             ),

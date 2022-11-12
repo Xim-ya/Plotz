@@ -51,11 +51,10 @@ class ContentDetailScaffoldController extends BaseViewModel
     scrollController.addListener(() {
       setBackBtnVisibility();
       scrollOffset.value = scrollController.offset;
+      print(scrollOffset.value);
     });
   }
 
-  static ScrollController get tabScrollController =>
-      Get.find<ContentDetailScaffoldController>().scrollController;
 
   double get headerBgOffset => scrollOffset.value == null ? 0 : -scrollOffset.value! * 0.5;
 }
