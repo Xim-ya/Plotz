@@ -44,14 +44,12 @@ class ContentDetailScaffoldController extends BaseViewModel
   @override
   void onInit() {
     super.onInit();
-
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     scrollController = ScrollController();
 
     scrollController.addListener(() {
       setBackBtnVisibility();
       scrollOffset.value = scrollController.offset;
-      print(scrollOffset.value);
     });
   }
 

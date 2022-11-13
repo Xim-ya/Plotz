@@ -58,7 +58,8 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           () => AnimatedPositioned(
               top: 180 - vm.headerBgOffset,
               right: 16,
-              duration: const Duration(milliseconds: 200), child: rateAndGenreView),
+              duration: const Duration(milliseconds: 200),
+              child: rateAndGenreView),
         ),
         CustomScrollView(
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -99,7 +100,16 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             SliverList(
               delegate: SliverChildListDelegate([
                 Obx(
-                  () => tabBarViews[vm.selectedTabIndex.value],
+                  () => Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    constraints: BoxConstraints(
+                      minHeight: SizeConfig.to.screenHeight -
+                          SizeConfig.to.statusBarHeight -
+                          SizeConfig.to.bottomInset,
+                    ),
+                    color: AppColor.black,
+                    child: tabBarViews[vm.selectedTabIndex.value],
+                  ),
                 )
               ]),
             ),

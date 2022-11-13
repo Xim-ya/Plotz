@@ -1,5 +1,10 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
+/** Created By Ximya - 2022.11.12
+ *  Play 아이콘 버튼 & 컨텐츠 썸네일 버튼을 포함하고 있는 UI 모듈
+ *  Skeleton 로직도 포함.
+ * */
+
 class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
   const VideoThumbnailImgWithPlayerBtn(
       {Key? key,

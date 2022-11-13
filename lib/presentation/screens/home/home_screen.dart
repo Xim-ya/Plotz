@@ -73,9 +73,14 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         AppSpace.size40,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            '어퍼컷 Top10',
-            style: AppTextStyle.headline2,
+          child: GestureDetector(
+            onTap: (){
+              vm.launchAnotherApp();
+            },
+            child: Text(
+              '어퍼컷 Top10',
+              style: AppTextStyle.headline2,
+            ),
           ),
         ),
         AppSpace.size6,

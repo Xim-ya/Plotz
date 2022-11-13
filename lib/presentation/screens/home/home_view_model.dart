@@ -43,7 +43,8 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void launchAnotherApp() async {
-    if (!await launchUrl(Uri.parse("https://www.youtube.com/watch?v=Vt6d12o8ytg"),
+    // https://www.youtube.com/results?search_query=%EC%98%AC%EB%93%9C%EB%A7%A8+%EC%98%81%ED%99%94+%EB%A6%AC%EB%B7%B0
+    if (!await launchUrl(Uri.parse('https://www.youtube.com/watch?v=zhdbtAqne_I&t=1162s'),
         mode: LaunchMode.externalApplication)) {
       throw 'Could not launch ';
     }

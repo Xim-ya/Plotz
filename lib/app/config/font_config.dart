@@ -60,7 +60,7 @@ abstract class AppTextStyle {
   );
 
   static TextStyle title1 =
-  PretendardTextStyle.bold(size: 16, height: 22, letterSpacing: -0.1);
+  PretendardTextStyle.bold(size: 16, height: 22);
 
   static TextStyle body3 = PretendardTextStyle.medium(
     size: 13,

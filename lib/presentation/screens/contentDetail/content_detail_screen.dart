@@ -1,6 +1,7 @@
-import 'package:uppercut_fantube/presentation/common/video_thumbnail_img_with_player_btn.dart';
 import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_scaffold.dart';
 import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_view_model.dart';
+import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tab/content_info_tab_view.dart';
+import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tab/single_episode_content_tab_view.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
@@ -15,7 +16,6 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   // Sliver레이아웃에서 Tab이 고정되기 위해서 [Sizse.zero]인 Appbar가 필요
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context) {
-    print(480 + 42 + SizeConfig.to.statusBarHeight);
     return PreferredSize(
       preferredSize: Size.zero,
       child: AppBar(
@@ -35,50 +35,13 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   }
 
   // 탭뷰
-  List<Widget> _buildTabBarViews() =>
-      [
-        Container(
-            constraints: BoxConstraints(
-              minHeight: SizeConfig.to.screenHeight,
-            ),
-            color: AppColor.black,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: <Widget>[
-                  AppSpace.size20,
-                  // 유튜브 컨텐츠 영상 썸네일
-                  VideoThumbnailImgWithPlayerBtn(
-                      onPlayerBtnClicked: () {},
-                      posterImgUrl:
-                      'https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg'),
-
-                  Text(
-                      '수십 년 전 잠적한 전직 CIA 요원 댄 체이스. 과거의 비밀을 안고 은둔한 채 살아가던 중 결국 정체가 탄로 난다. 하지만 미래를 위해서 더 이상 숨어 살 수 없는 그는 과거의 매듭을 풀고자 하는데.',
-                      style: AppTextStyle.body2,
-
-                  ),
-                ],
-              ),
-            )),
-        Container(
-          color: Colors.red,
-          constraints: BoxConstraints(
-            minHeight: SizeConfig.to.screenHeight,
-          ),
-          child: Text('second tab view'),
-        ),
-        Container(
-          constraints: BoxConstraints(
-            minHeight: 480,
-          ),
-          child: Text('third tab view'),
-        ),
+  List<Widget> _buildTabBarViews() => [
+        const SingleEpisodeContentTabView(),
+        const ContentInfoTabView(),
       ];
 
   // 평점 & 장르 뷰
-  Widget _buildRateAndGenreView() =>
-      Column(
+  Widget _buildRateAndGenreView() => Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Text(
@@ -110,8 +73,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
       );
 
   // 헤더 섹션
-  Widget _buildHeader() =>
-      Container(
+  Widget _buildHeader() => Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         height: 480,
         child: Column(
@@ -168,7 +130,6 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
     return const [
       Tab(text: '컨텐츠', height: 42),
       Tab(text: '정보', height: 42),
-      Tab(text: '관련 콘텐츠', height: 42),
     ];
   }
 }
