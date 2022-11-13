@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.05
  *  - [InkWell] 효과를 적용한 아이콘 버튼

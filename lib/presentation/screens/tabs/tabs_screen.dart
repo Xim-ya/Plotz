@@ -1,5 +1,4 @@
-import 'package:uppercut_fantube/presentation/common/animated_index_stack.dart';
-import 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
+
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {

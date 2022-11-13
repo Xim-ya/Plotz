@@ -1,7 +1,6 @@
 import 'dart:io';
-
 import 'package:uppercut_fantube/utilities/index.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class HomeViewModel extends BaseViewModel {
   /* Variables */

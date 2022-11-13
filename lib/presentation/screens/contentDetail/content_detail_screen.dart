@@ -1,7 +1,3 @@
-import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_scaffold.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_view_model.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tab/content_info_tab_view.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tab/single_episode_content_tab_view.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {

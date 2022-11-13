@@ -1,8 +1,9 @@
-import 'package:uppercut_fantube/presentation/common/round_profile_img.dart';
-import 'package:uppercut_fantube/presentation/common/video_thumbnail_img_with_player_btn.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_view_model.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/section_title.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+
+/** Created By Ximya - 2022.11.13
+ *  '단일 에피소드' 컨텐츠의 경우 에피소드가 존재하는 컨텐츠와 다른 UI가 보여지게 됨.
+ *  단일 에피소드 여부에 따라 탭뷰 영역 자체를 다르게 반환.
+ * */
 
 class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
   const SingleEpisodeContentTabView({Key? key}) : super(key: key);

@@ -1,8 +1,5 @@
 import 'dart:ui';
-
 import 'package:uppercut_fantube/utilities/index.dart';
-import '../../common/video_thumbnail_img_with_player_btn.dart';
-import 'home_screen.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({Key? key}) : super(key: key);

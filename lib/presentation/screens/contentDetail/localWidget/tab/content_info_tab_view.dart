@@ -1,6 +1,8 @@
-import 'package:uppercut_fantube/presentation/common/round_profile_img.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/section_title.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+
+/** Created By Ximya - 2022.11.13
+ *  컨텐츠 상세 스크린 > 정보 탭뷰 위젯
+ * */
 
 class ContentInfoTabView extends StatelessWidget {
   const ContentInfoTabView({Key? key}) : super(key: key);
