@@ -99,7 +99,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
               delegate: SliverChildListDelegate([
                 Obx(
                   () => Container(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 20, bottom: 80),
                     constraints: BoxConstraints(
                       minHeight: SizeConfig.to.screenHeight -
                           SizeConfig.to.statusBarHeight -

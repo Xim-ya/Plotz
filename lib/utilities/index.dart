@@ -16,6 +16,7 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:shimmer_animation/shimmer_animation.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:url_launcher/url_launcher.dart';
+export 'package:json_annotation/json_annotation.dart';
 
 // BaseModule
 export 'package:uppercut_fantube/presentation/base/base_view_model.dart';

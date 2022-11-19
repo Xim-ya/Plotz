@@ -1,8 +1,15 @@
-import 'dart:io';
+import 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
+import 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
-
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class HomeViewModel extends BaseViewModel {
+  /// 임시
+  final ContentDataSource _dataSource;
+
+
+  HomeViewModel(this._dataSource);
+
   /* Variables */
 
   /// State
@@ -42,7 +49,6 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void launchAnotherApp() async {
-    // https://www.youtube.com/results?search_query=%EC%98%AC%EB%93%9C%EB%A7%A8+%EC%98%81%ED%99%94+%EB%A6%AC%EB%B7%B0
     if (!await launchUrl(Uri.parse('https://www.youtube.com/watch?v=zhdbtAqne_I&t=1162s'),
         mode: LaunchMode.externalApplication)) {
       throw 'Could not launch ';
@@ -57,14 +63,33 @@ class HomeViewModel extends BaseViewModel {
   }
 
 
+  /// Youtube Video Comment
+  Future<void> youtubeIntent() async{
+    var yt = YoutubeExplode();
+    var video = await yt.videos.get('N16uIvWozVk');
+
+    var comments = await yt.videos.commentsClient.getComments(video);
+  }
+
+
+  /// Mock Json Data Video
+  Future<void> getJsonMockData() async {
+    final responseResult =  await _dataSource.loadTopExposedContentList();
+    final List<TopExposedContent> mockItemLis = responseResult;
+    print(mockItemLis[2].title);
+  }
 
   @override
   void onInit() {
     super.onInit();
+
     scrollController = ScrollController();
     scrollController.addListener(() {
       scrollOffset = scrollController.offset;
       turnOnBlurInAppBar();
     });
+
+    youtubeIntent();
+    getJsonMockData();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
@@ -46,10 +47,12 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
               color: const Color(0xFFE6E6E6).withOpacity(0.66),
             ),
           ),
-          Text(
-            '7.2',
-            style: AppTextStyle.alert2.copyWith(
-              color: Color(0xFFA8A8A8).withOpacity(0.40),
+          Obx(
+            () => Text(
+              vm.contentMainInfo?.rate.toString() ?? '-',
+              style: AppTextStyle.alert2.copyWith(
+                color: const Color(0xFFA8A8A8).withOpacity(0.40),
+              ),
             ),
           ),
           AppSpace.size4,
@@ -59,12 +62,16 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
               color: const Color(0xFFE6E6E6).withOpacity(0.66),
             ),
           ),
-          Text(
-            '드라마 / 로맨스 / 액션',
-            style: AppTextStyle.alert2.copyWith(
-              color: const Color(0xFFA8A8A8).withOpacity(0.40),
+          Obx(
+            () => Text(
+              Formatter.formatGenreListToSingleStr(
+                      vm.contentMainInfo?.genreList) ??
+                  '-',
+              style: AppTextStyle.alert2.copyWith(
+                color: const Color(0xFFA8A8A8).withOpacity(0.40),
+              ),
             ),
-          ),
+          )
         ],
       );
 
@@ -102,20 +109,65 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
             // 제목 & 날짜
             Row(
               children: <Widget>[
-                Text('올드맨', style: AppTextStyle.headline2),
-                AppSpace.size6,
-                Text(
-                  '2022.10.15',
-                  style: AppTextStyle.alert2,
+                Obx(
+                  () => vm.isContentMainInfoLoading
+                      ? Shimmer(
+                          color: AppColor.lightGrey,
+                          child: const SizedBox(
+                            height: 30,
+                            width: 60,
+                          ),
+                        )
+                      : Text(vm.contentMainInfo!.title,
+                          style: AppTextStyle.headline2),
                 ),
+                AppSpace.size6,
+                Obx(
+                  () => Text(
+                    vm.isContentMainInfoLoading
+                        ? '-'
+                        : Formatter.dateToyyMMdd(
+                            vm.contentMainInfo!.releaseDate),
+                    style: AppTextStyle.alert2,
+                  ),
+                )
               ],
             ),
             AppSpace.size8,
             // 컨텐츠 설명 - (영상 제목)
-            Text(
-              '하필이면 전직 특수 요원을 건드렸는데 개들이 싸움을 더 잘함 | 2022년 신작 중 가장 처절한 싸이 시작됩니다',
-              style: AppTextStyle.headline3.copyWith(color: AppColor.lightGrey),
+            Container(
+              constraints: const BoxConstraints(minHeight: 66),
+              child: Obx(
+                () => vm.isContentMainInfoLoading
+                    ? Column(
+                        children: [
+                          Shimmer(
+                            color: AppColor.lightGrey,
+                            child: const SizedBox(
+                              height: 18,
+                              width: double.infinity,
+                            ),
+                          ),
+                          AppSpace.size6,
+                          Shimmer(
+                            color: AppColor.lightGrey,
+                            child: const SizedBox(
+                              height: 18,
+                              width: double.infinity,
+                            ),
+                          ),
+                        ],
+                      )
+                    /// [ContentEpicType]이 [single] 이라면 헤더에 유튜브 영상 제목을 보여줌
+                    /// 반대의 경우에는 tmdb descriptoin.
+                    : Text(
+                        vm.contentMainInfo!.contentDescription,
+                        style: AppTextStyle.headline3
+                            .copyWith(color: AppColor.lightGrey),
+                      ),
+              ),
             ),
+
             AppSpace.size24,
           ],
         ),
