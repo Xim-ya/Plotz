@@ -30,6 +30,7 @@ export 'package:uppercut_fantube/app/config/app_space_config.dart';
 export 'package:uppercut_fantube/app/config/size_config.dart';
 
 // Data
+export 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
 
 // Domain
 

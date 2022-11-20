@@ -1,32 +1,41 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
-import 'package:uppercut_fantube/domain/model/content/content_main_info.dart';
-import 'package:uppercut_fantube/domain/useCase/load_content_main_info_use_case.dart';
+import 'package:uppercut_fantube/domain/model/content/content_description_info.dart';
+import 'package:uppercut_fantube/domain/repository/content/content_repository.dart';
+import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_main_description_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
+part 'content_detail_view_model.part.dart';
 
 class ContentDetailViewModel extends BaseViewModel {
-  ContentDetailViewModel(this._loadContentMainInfo);
+  ContentDetailViewModel(this._loadContentMainDescription);
 
   /* [Variables] */
+  late int contentId = Get.arguments[0];
 
   /// Data Variables
-  final Rxn<ContentMainInfo> _contentMainInfo = Rxn(); // 헤더 + 컨텐츠탭 데이터
+  /// // 헤더 + 컨텐츠탭 데이터
+  final Rxn<ContentDescriptionInfo> _contentDescriptionInfo = Rxn();
+
+  final Rxn<CommentsList?> _contentCommentList = Rxn();
 
   /* [UseCase] */
-  final LoadContentMainInfoUseCase _loadContentMainInfo;
+  final LoadContentMainDescriptionUseCase _loadContentMainDescription;
 
   /* [Intent ] */
 
+  /// Networking Method
   /// 컨텐츠 상단 핵심 정보
   Future<void> fetchContentMainInfo() async {
-    const tempContentId = 'N16uIvWozVk';
-    final responseResult = await _loadContentMainInfo.call(tempContentId);
-
+    // final responseResult =
+    // await TmdbRepository.to.loadTmdbDetailResponse(passedArgument.contentId);
+    // 임시 파라미터
+    final responseResult =
+        await _loadContentMainDescription.call('tv', passedArgument.contentId);
     responseResult.fold(
       onSuccess: (data) {
-        _contentMainInfo.value = data;
+        _contentDescriptionInfo.value = data;
       },
       onFailure: (e) {
         log(e.toString());
@@ -34,16 +43,44 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
+  // 컨텐츠 댓글 리스트 호출
+  Future<void> fetchContentCommentList() async {
+    final responseResult = await ContentRepository.to
+        .loadContentCommentList(youtubeContentId ?? '');
+    responseResult.fold(onSuccess: (data) {
+      print("AIM COMMENT LIST !!");
+      _contentCommentList.value = data;
+    }, onFailure: (e) {
+      log(e.toString());
+    });
+  }
+
+  /// Routing Method
+  // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
+  Future<void> launchYoutubeApp() async {
+    if (!await launchUrl(
+        Uri.parse('https://www.youtube.com/watch?v=${youtubeContentId ?? ''}'),
+        mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch ';
+    }
+  }
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
 
     fetchContentMainInfo();
+    fetchContentCommentList();
   }
 
-  ContentMainInfo? get contentMainInfo => _contentMainInfo.value;
-  bool get isContentMainInfoLoading => _contentMainInfo.value == null;
-  bool get isSingleEpisodeContent => _contentMainInfo.value?.contentEpicType == ContentEpicType.single;
+  ContentDescriptionInfo? get contentMainInfo => _contentDescriptionInfo.value;
+
+  bool get isContentMainInfoLoading => _contentDescriptionInfo.value == null;
+
+  bool get isSingleEpisodeContent =>
+      _contentDescriptionInfo.value?.contentEpicType ==
+      ContentSeasonType.single;
+
+  ContentDetailParam get passedArgument =>
+      Get.arguments; // 홈 스크린에서 전달 받은 Argument
 }

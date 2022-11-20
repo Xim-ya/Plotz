@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -71,7 +72,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               vm.launchAnotherApp();
             },
             child: Text(
@@ -93,9 +94,12 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       ];
 
   // 맨 상단에 노출되어 있는 컨텐츠 슬라이더 - (컨텐츠 제목, 내용, 유튜브썸네일 이미지로 구성)
-  Widget _buildTopExposedContentSlider() => CarouselSlider.builder(
-        itemCount: 3,
+  Widget _buildTopExposedContentSlider() => Obx(() => CarouselSlider.builder(
+        carouselController: vm.carouselController,
+        itemCount: vm.topExposedContentList?.length ?? 0,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+          final TopExposedContent item = vm.topExposedContentList![itemIndex];
+
           /// Top Content Section
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -109,13 +113,13 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     vm.routeToContentDetail();
                   },
                   child: Text(
-                    '올드맨',
+                    item.title,
                     style: AppTextStyle.headline2.copyWith(color: Colors.white),
                   ),
                 ),
                 AppSpace.size2,
                 Text(
-                  '하필이면 전직 특수 요원을 건드렸는데 개들이 싸움을 더 잘함 | 2022년 신작 중 가장 처절한 액션을 보여드립니다',
+                  '${item.description}\n',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: AppTextStyle.headline3
@@ -127,28 +131,32 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   onPlayerBtnClicked: () {
                     vm.routeToContentDetail();
                   },
-                  posterImgUrl:
-                      'https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg',
+                  posterImgUrl: item.thumbnailImgUrl,
                 ),
               ],
             ),
           );
         },
         options: CarouselOptions(
+            onPageChanged: (index, _) => vm.topExposedContentSliderIndex(index),
             initialPage: 0,
             enableInfiniteScroll: false,
             viewportFraction: 0.93,
             aspectRatio: 337 / 276),
-      );
+      ));
 
   // 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
-        CachedNetworkImage(
-          width: double.infinity,
-          fit: BoxFit.fitWidth,
-          imageUrl:
-              'https://image.tmdb.org/t/p/w1280/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg',
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+        Obx(
+          () => vm.isTopExposedContentListLoaded
+              ? CachedNetworkImage(
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/original${vm.selectedTopExposedContent.posterImgUrl}',
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                )
+              : const SizedBox(),
         ),
         // Graident 레이어
         Positioned.fill(

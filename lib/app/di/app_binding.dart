@@ -8,8 +8,10 @@ import 'package:uppercut_fantube/app/modules/presentation_modules.dart';
 class AppBinding extends Bindings {
   @override
   void dependencies() {
-    PresentationModules.dependencies();
-    DomainModules.dependencies();
     DataModules.getDependencies();
+    DomainModules.dependencies();
+    PresentationModules.dependencies();
+
+
   }
 }

@@ -12,12 +12,14 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
     required this.tabs,
     required this.header,
     required this.rateAndGenreView,
+    required this.headerImgUrl,
   }) : super(key: key);
 
   final Widget header;
   final List<Tab> tabs;
   final List<Widget> tabBarViews;
   final Widget rateAndGenreView;
+  final String headerImgUrl;
 
   @override
   Widget buildView(BuildContext context) {
@@ -31,7 +33,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
               width: SizeConfig.to.screenWidth,
               fit: BoxFit.fitWidth,
               imageUrl:
-                  'https://image.tmdb.org/t/p/w1280/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg',
+                  'https://image.tmdb.org/t/p/w1280/$headerImgUrl',
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),

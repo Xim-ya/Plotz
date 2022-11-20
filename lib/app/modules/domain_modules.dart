@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/domain/repository/content/content_repository.dart';
-import 'package:uppercut_fantube/domain/repository/content/content_repository_impl.dart';
-import 'package:uppercut_fantube/domain/useCase/load_content_main_info_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_content_main_info_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_main_description_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class DomainModules {
@@ -9,6 +9,10 @@ abstract class DomainModules {
   static void dependencies() {
     // 컨텐츠
     Get.lazyPut(() => LoadContentMainInfoUseCase(Get.find()), fenix: true);
-    Get.lazyPut<ContentRepository>(() => ContentRepositoryImpl(), fenix: true);
+    Get.lazyPut(() => LoadTopExposedContentListUseCase(Get.find()),
+        fenix: true);
+
+    // TMDB
+    Get.lazyPut(() => LoadContentMainDescriptionUseCase(Get.find()), fenix: true);
   }
 }

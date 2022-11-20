@@ -25,6 +25,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   Widget buildScreen(BuildContext context) {
     return ContentDetailScaffold(
       header: _buildHeader(),
+      headerImgUrl: vm.passedArgument.posterImgUrl,
       rateAndGenreView: _buildRateAndGenreView(),
       tabs: _buildTab(),
       tabBarViews: _buildTabBarViews(),
@@ -109,18 +110,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
             // 제목 & 날짜
             Row(
               children: <Widget>[
-                Obx(
-                  () => vm.isContentMainInfoLoading
-                      ? Shimmer(
-                          color: AppColor.lightGrey,
-                          child: const SizedBox(
-                            height: 30,
-                            width: 60,
-                          ),
-                        )
-                      : Text(vm.contentMainInfo!.title,
-                          style: AppTextStyle.headline2),
-                ),
+                Text(vm.passedArgument.title, style: AppTextStyle.headline2),
                 AppSpace.size6,
                 Obx(
                   () => Text(
@@ -158,10 +148,13 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
                           ),
                         ],
                       )
+
                     /// [ContentEpicType]이 [single] 이라면 헤더에 유튜브 영상 제목을 보여줌
                     /// 반대의 경우에는 tmdb descriptoin.
                     : Text(
-                        vm.contentMainInfo!.contentDescription,
+                        vm.contentMainInfo!.overView,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.headline3
                             .copyWith(color: AppColor.lightGrey),
                       ),

@@ -20,11 +20,15 @@ class RoundProfileImg extends StatelessWidget {
           borderRadius: BorderRadius.circular(100),
         ),
       ),
-      placeholder: (context, url) => Shimmer(
-        child: Container(
-          color: AppColor.black,
-        ),
-      ),
+      placeholder: (context, url) => const SizedBox(),
+      // placeholder: (context, url) => ClipRRect(
+      //   borderRadius: BorderRadius.circular(100),
+      //   child: Shimmer(
+      //     child: Container(
+      //       color: AppColor.lightGrey,
+      //     ),
+      //   ),
+      // ),
       errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }

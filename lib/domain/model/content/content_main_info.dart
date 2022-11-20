@@ -16,7 +16,7 @@ class ContentMainInfo {
   final List<String> genreList; // 장르 타입 리스트
   final String releaseDate; // 컨텐츠 출시일
   final String contentDescription; // 컨텐츠 설명
-  final ContentEpicType contentEpicType; // 시리즈물 or 단일 컨텐츠
+  final ContentSeasonType contentEpicType; // 시리즈물 or 단일 컨텐츠
 
 
 

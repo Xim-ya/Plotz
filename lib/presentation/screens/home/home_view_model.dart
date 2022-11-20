@@ -1,29 +1,42 @@
+import 'dart:developer';
 import 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
+import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
 import 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
+part 'home_view_model.part.dart';
 
 class HomeViewModel extends BaseViewModel {
   /// 임시
   final ContentDataSource _dataSource;
 
+  HomeViewModel(this._dataSource, this._loadTopExposedContentList);
 
-  HomeViewModel(this._dataSource);
+  /* [Variables] */
 
-  /* Variables */
+  /// Data
+  final Rxn<List<TopExposedContent>> _topExposedContentList = Rxn();
 
   /// State
   late double scrollOffset = 0;
   final RxBool showAppbarBackground = true.obs;
   RxBool showBlurAtAppBar = false.obs;
+  RxInt topExposedContentSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
 
   /// Size
   final double appBarHeight = SizeConfig.to.statusBarHeight + 56;
 
   ///  Controllers
   late ScrollController scrollController;
+  late CarouselController carouselController;
 
-  /* Intent */
+  /* [UseCase] */
+  final LoadTopExposedContentListUseCase _loadTopExposedContentList;
+
+  /* [Intent] */
+
   /// UI Intent Method
   // AppBar Blur효과 avtivate 여부
   void turnOnBlurInAppBar() {
@@ -37,44 +50,61 @@ class HomeViewModel extends BaseViewModel {
        * [showBlurAtAppBar.isTrue] blur값이 true로 선언되어 있다면 값을 변경.
        * */
       if (scrollController.position.userScrollDirection ==
-          ScrollDirection.forward && showBlurAtAppBar.isTrue) {
-          showBlurAtAppBar(false);
+              ScrollDirection.forward &&
+          showBlurAtAppBar.isTrue) {
+        showBlurAtAppBar(false);
         return;
-      } else if  (scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse && showBlurAtAppBar.isFalse){
+      } else if (scrollController.position.userScrollDirection ==
+              ScrollDirection.reverse &&
+          showBlurAtAppBar.isFalse) {
         showBlurAtAppBar(true);
         return;
       }
     }
   }
 
+  // 상단 노출 컨텐츠 리스트 호출
+  Future<void> _fetchTopExposedContentList() async {
+    final responseResult = await _loadTopExposedContentList.call();
+    responseResult.fold(onSuccess: (data) {
+      _topExposedContentList.value = data;
+    }, onFailure: (e) {
+      log(e.toString());
+    });
+  }
+
   void launchAnotherApp() async {
-    if (!await launchUrl(Uri.parse('https://www.youtube.com/watch?v=zhdbtAqne_I&t=1162s'),
+    if (!await launchUrl(
+        Uri.parse('https://www.youtube.com/watch?v=zhdbtAqne_I&t=1162s'),
         mode: LaunchMode.externalApplication)) {
       throw 'Could not launch ';
     }
   }
 
-
-
   /// Routes Method
-  void routeToContentDetail(){
-    Get.toNamed(AppRoutes.contentDetail);
+  void routeToContentDetail() {
+    Get.toNamed(AppRoutes.contentDetail,
+        arguments: ContentDetailParam(
+            contentSeasonType: selectedTopExposedContent.contentSeasonType,
+            contentId: selectedTopExposedContent.contentId,
+            posterImgUrl: selectedTopExposedContent.posterImgUrl,
+            thumbnailUrl: selectedTopExposedContent.thumbnailImgUrl,
+            youtubeId: selectedTopExposedContent.youtubeId,
+            title: selectedTopExposedContent.title,
+            description: selectedTopExposedContent.description));
   }
 
-
   /// Youtube Video Comment
-  Future<void> youtubeIntent() async{
+  Future<void> youtubeIntent() async {
     var yt = YoutubeExplode();
     var video = await yt.videos.get('N16uIvWozVk');
 
     var comments = await yt.videos.commentsClient.getComments(video);
   }
 
-
   /// Mock Json Data Video
   Future<void> getJsonMockData() async {
-    final responseResult =  await _dataSource.loadTopExposedContentList();
+    final responseResult = await _dataSource.loadTopExposedContentList();
     final List<TopExposedContent> mockItemLis = responseResult;
     print(mockItemLis[2].title);
   }
@@ -89,7 +119,31 @@ class HomeViewModel extends BaseViewModel {
       turnOnBlurInAppBar();
     });
 
+    carouselController = CarouselController();
+    _fetchTopExposedContentList();
+
     youtubeIntent();
     getJsonMockData();
   }
+}
+
+/// 상단 노출 컨텐츠 섹션에서 [컨텐츠 상세페이지]로 이동할 때 argument로 넘겨주는 데이터 모델
+class ContentDetailParam {
+  final int contentId;
+  final String youtubeId;
+  final String title;
+  final String description;
+  final String thumbnailUrl;
+  final String posterImgUrl;
+  final ContentSeasonType contentSeasonType;
+
+  ContentDetailParam({
+    required this.contentSeasonType,
+    required this.contentId,
+    required this.title,
+    required this.description,
+    required this.posterImgUrl,
+    required this.thumbnailUrl,
+    required this.youtubeId,
+  });
 }

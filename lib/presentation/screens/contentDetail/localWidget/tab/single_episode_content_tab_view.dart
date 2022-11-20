@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 /** Created By Ximya - 2022.11.13
  *  '단일 에피소드' 컨텐츠의 경우 에피소드가 존재하는 컨텐츠와 다른 UI가 보여지게 됨.
@@ -18,9 +19,10 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
           const SectionTitle(title: '컨텐츠'),
           // 유튜브 컨텐츠 영상 썸네일
           VideoThumbnailImgWithPlayerBtn(
-              onPlayerBtnClicked: () {},
-              posterImgUrl:
-                  'https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg'),
+              onPlayerBtnClicked: () {
+                vm.launchYoutubeApp();
+              },
+              posterImgUrl: vm.contentThumbnailImgUrl ?? ''),
           AppSpace.size4,
           // 좋아요 & 조회수 & 업로드 일자
           SizedBox(
@@ -72,39 +74,93 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
           AppSpace.size40,
           // 댓글 - 유튜브 댓글
           const SectionTitle(title: '댓글'),
-          ListView.separated(
+          Obx(() => ListView.separated(
             separatorBuilder: (__, _) => AppSpace.size12,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 20,
-            itemBuilder: (context, index) => Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const RoundProfileImg(
-                  size: 38,
-                  imgUrl:
+            itemCount: vm.commentList?.length ?? 20,
+            itemBuilder: (context, index) {
+              /// 로딩중일 경우 skeletone 처리
+              if(vm.commentList == null) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                      child: Shimmer(
+                        color: AppColor.lightGrey,
+                        child:  Container(
+                          height: 38,
+                          width: 38,
+                        ),
+                      ),
+                    ),
+
+                    AppSpace.size8,
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Shimmer(
+                            color: AppColor.lightGrey,
+                            child:  Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              height: 20,
+                              width: 60,
+                            ),
+                          ),
+                          AppSpace.size4,
+                          Shimmer(
+                            color: AppColor.lightGrey,
+                            child:  Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              height: 20,
+                              width: SizeConfig.to.screenWidth * 0.6,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                final Comment item = vm.commentList![index];
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const RoundProfileImg(
+                      size: 38,
+                      imgUrl:
                       'https://yt3.ggpht.com/ytc/AMLnZu9mx97jp2uus8qYKYO7gROx18AWIzQprpRdfLIirP19g4qk25l5_ulscs2AWIte2FTnWYE=s48-c-k-c0x00ffffff-no-rj',
-                ),
-                AppSpace.size8,
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '라람',
-                        style: AppTextStyle.body1.copyWith(color: Colors.white),
+                    ),
+                    AppSpace.size8,
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            item.author,
+                            style: AppTextStyle.body1.copyWith(color: Colors.white),
+                          ),
+                          Text(
+                            item.text,
+                            style: AppTextStyle.body1
+                                .copyWith(fontFamily: 'pretendard_regular'),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '상속자들 붐업, 상속자들 붐업 , 상속자들 붐업 상속자들 붐업, 상속자들 붐업 , 상속자들 붐업',
-                        style: AppTextStyle.body1
-                            .copyWith(fontFamily: 'pretendard_regular'),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+                    ),
+                  ],
+                );
+
+              }
+
+            }
+          ),),
         ],
       ),
     );
