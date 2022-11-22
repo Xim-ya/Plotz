@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
@@ -40,30 +41,59 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
                       ),
                     ),
                     AppSpace.size4,
-                    Text(
-                      vm.youtubeVideoContentInfo.value?.viewCount.toString() ??
-                          '-',
-                      style: AppTextStyle.body3,
-                    )
+                    Obx(
+                      () => vm.isYoutubeVideoContentInfoLoaded
+                          ? Text(
+                              Formatter.formatViewAndLikeCount(
+                                  vm.youtubeVideoContentInfo?.likeCount),
+                              style: AppTextStyle.body3,
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: Shimmer(
+                                color: AppColor.lightGrey,
+                                child: const SizedBox(
+                                  height: 16,
+                                  width: 20,
+                                ),
+                              ),
+                            ),
+                    ),
                   ],
                 ),
-                Text(
-                  '조회수 80만회 · 3주전',
-                  style: AppTextStyle.body3,
+                Obx(
+                  () => vm.isYoutubeVideoContentInfoLoaded
+                      ? Text(
+                          '조회수 ${Formatter.formatViewAndLikeCount(
+                            vm.youtubeVideoContentInfo?.viewCount,
+                            isViewCount: true,
+                          )} · ${Formatter.getDateDifferenceFromNow(vm.youtubeVideoContentInfo?.uploadDate)}',
+                          style: AppTextStyle.body3,
+                        )
+                      : Row(
+                          children: <Widget>[
+                            Shimmer(
+                              child:  Container(
+                                color: AppColor.lightGrey.withOpacity(0.1),
+                                height: 16,
+                                width: 70,
+                              ),
+                            ),
+                            AppSpace.size6,
+                            Shimmer(
+                              child:  Container(
+                                color: AppColor.skeletonGrey,
+                                height: 16,
+                                width: 36,
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Opacity(
-              opacity: 0.6,
-              child: Text(
-                '2022.08.11 기준',
-                style: AppTextStyle.body3,
-              ),
-            ),
-          ),
+
           AppSpace.size40,
           const SectionTitle(title: '설명'),
           Text(

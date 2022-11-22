@@ -18,7 +18,7 @@ class ContentDetailViewModel extends BaseViewModel {
   final Rxn<CommentsList?> _contentCommentList = Rxn();
 
   // 유튜브 비디오 컨텐츠 정보
-  final Rxn<YoutubeVideoContentInfo> youtubeVideoContentInfo = Rxn();
+  final Rxn<YoutubeVideoContentInfo> _youtubeVideoContentInfo = Rxn();
 
   /* [UseCase] */
   final LoadContentMainDescriptionUseCase _loadContentMainDescription;
@@ -63,7 +63,7 @@ class ContentDetailViewModel extends BaseViewModel {
         .loadYoutubeVideoContentInfo(youtubeContentId ?? '');
     responseResult.fold(
       onSuccess: (data) {
-        youtubeVideoContentInfo.value = data;
+        _youtubeVideoContentInfo.value = data;
       },
       onFailure: (e) {
         log(e.toString());

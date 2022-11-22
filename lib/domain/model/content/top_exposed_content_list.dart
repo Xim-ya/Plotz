@@ -7,7 +7,7 @@ import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
 class TopExposedContent {
   final int contentId; // TMDB 컨텐츠 id
   final String youtubeId; // 유튜브 비디오 id
-  final String title; // 컨텐츠 제목
+  final String title; // 컨텐츠 제목(이름)
   final String description; // 컨텐츠 설명 or 유튜브 비디오 제목
   final String thumbnailImgUrl; // 유튜브 썸네일 이미지;
   final String posterImgUrl; // 포스터 이미지 (백그라운드에 이미지로 활용)

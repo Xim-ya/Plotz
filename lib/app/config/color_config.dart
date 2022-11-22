@@ -8,4 +8,5 @@ abstract class AppColor {
   static const darkGrey = Color(0xFF212121); // Used in Bottom Navigation
   static const lightGrey = Color(0xFFBBBAC1); // Used in Home Sub title;
   static const mixedWhite = Color(0xFFE6E6E6);
+  static const skeletonGrey = Color(0xFF1F1F20);
 }

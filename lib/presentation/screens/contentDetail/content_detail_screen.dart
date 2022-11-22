@@ -124,11 +124,11 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
               ],
             ),
             AppSpace.size8,
-            // 컨텐츠 설명 - (영상 제목)
+            // 컨텐츠 설명 - (유튜브 영상 제목 or TMDB 컨텐츠 설명)
             Container(
               constraints: const BoxConstraints(minHeight: 66),
               child: Obx(
-                () => vm.isContentMainInfoLoading
+                () => !vm.isHeaderDescriptionLoaded
                     ? Column(
                         children: [
                           Shimmer(
@@ -152,7 +152,9 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
                     /// [ContentEpicType]이 [single] 이라면 헤더에 유튜브 영상 제목을 보여줌
                     /// 반대의 경우에는 tmdb descriptoin.
                     : Text(
-                        vm.contentMainInfo!.overView,
+                        vm.seasonType! == ContentSeasonType.single
+                            ? vm.youtubeVideoContentInfo!.videoTitle
+                            : vm.contentMainInfo!.overView,
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.headline3
