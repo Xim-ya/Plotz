@@ -1,10 +1,5 @@
 import 'dart:developer';
-import 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
-import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
-import 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
-import 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 part 'home_view_model.part.dart';
 
@@ -83,23 +78,32 @@ class HomeViewModel extends BaseViewModel {
 
   /// Routes Method
   void routeToContentDetail() {
-    Get.toNamed(AppRoutes.contentDetail,
-        arguments: ContentDetailParam(
-            contentSeasonType: selectedTopExposedContent.contentSeasonType,
-            contentId: selectedTopExposedContent.contentId,
-            posterImgUrl: selectedTopExposedContent.posterImgUrl,
-            thumbnailUrl: selectedTopExposedContent.thumbnailImgUrl,
-            youtubeId: selectedTopExposedContent.youtubeId,
-            title: selectedTopExposedContent.title,
-            description: selectedTopExposedContent.description));
+    Get.toNamed(
+      AppRoutes.contentDetail,
+      arguments: ContentDetailParam(
+        contentSeasonType: selectedTopExposedContent.contentSeasonType,
+        contentId: selectedTopExposedContent.contentId,
+        posterImgUrl: selectedTopExposedContent.posterImgUrl,
+        thumbnailUrl: selectedTopExposedContent.thumbnailImgUrl,
+        youtubeId: selectedTopExposedContent.youtubeId,
+        title: selectedTopExposedContent.title,
+         description: selectedTopExposedContent.description,
+      ),
+    );
   }
 
   /// Youtube Video Comment
   Future<void> youtubeIntent() async {
     var yt = YoutubeExplode();
-    var video = await yt.videos.get('N16uIvWozVk');
+    var video = await yt.videos.get('EQnYZVKrZOQ');
 
     var comments = await yt.videos.commentsClient.getComments(video);
+
+    print(video.title);
+    print(video.uploadDateRaw);
+    print(video.runtimeType);
+    print(video.duration);
+
   }
 
   /// Mock Json Data Video

@@ -1,8 +1,5 @@
-import 'package:uppercut_fantube/domain/base/base_two_param_use_case.dart';
-import 'package:uppercut_fantube/domain/model/content/content_description_info.dart';
-import 'package:uppercut_fantube/domain/repository/tmdb/tmdb_repository.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_view_model.dart';
-import 'package:uppercut_fantube/utilities/result.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 /** Created By Ximya - 2022-11-20
  *  [ContentDetailViewModel]에서 사용되는 useCase

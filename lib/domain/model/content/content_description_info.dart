@@ -1,5 +1,4 @@
-import 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
-import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.16
  * 컨텐츠 상세페이지에서 사용되는 모델 [헤더 & 컨텐츠 탭]

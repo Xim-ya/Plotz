@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_scaffold_controller.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class PresentationModules {

@@ -1,6 +1,4 @@
-import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_binding.dart';
-import 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_screen.dart';
-import 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
+
 import 'package:uppercut_fantube/utilities/index.dart';
 
 

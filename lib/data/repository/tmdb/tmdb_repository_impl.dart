@@ -1,7 +1,5 @@
-import 'package:uppercut_fantube/data/dataSource/tmdb/tmdb_data_source.dart';
-import 'package:uppercut_fantube/domain/model/content/content_description_info.dart';
-import 'package:uppercut_fantube/domain/repository/tmdb/tmdb_repository.dart';
-import 'package:uppercut_fantube/utilities/result.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 class TmdbRepositoryImpl implements TmdbRepository {
   TmdbRepositoryImpl(this._dataSource);

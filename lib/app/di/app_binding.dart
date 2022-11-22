@@ -1,7 +1,5 @@
-import 'package:get/get.dart';
-import 'package:uppercut_fantube/app/modules/data_modules.dart';
-import 'package:uppercut_fantube/app/modules/domain_modules.dart';
-import 'package:uppercut_fantube/app/modules/presentation_modules.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 
 

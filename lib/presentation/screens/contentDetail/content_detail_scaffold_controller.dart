@@ -1,9 +1,11 @@
+import 'package:uppercut_fantube/utilities/index.dart';
+
 /** Created By Ximya  - 2022.11.07
  * [ContentDetailScaffold]에서 사용되는 UI Interaction들의 로직을 관리하는 Controller
  * [TabController] [ScrollController]을 기반으로 'StickyScrollTabView' 레이아웃을 구성
  * */
 
-import 'package:uppercut_fantube/utilities/index.dart';
+
 
 class ContentDetailScaffoldController extends BaseViewModel
     with GetSingleTickerProviderStateMixin {

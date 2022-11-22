@@ -1,13 +1,6 @@
-import 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
-import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
-import 'package:uppercut_fantube/domain/enum/ott_type_enum.dart';
-import 'package:uppercut_fantube/domain/model/content/content_main_info.dart';
-import 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
-import 'package:uppercut_fantube/domain/model/content/youtube_content.dart';
-import 'package:uppercut_fantube/domain/repository/content/content_repository.dart';
-import 'package:uppercut_fantube/utilities/result.dart';
-import 'package:uppercut_fantube/utilities/youtube_meta_data.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
+
 
 class ContentRepositoryImpl implements ContentRepository {
   ContentRepositoryImpl(this._contentDataSource);
@@ -28,7 +21,7 @@ class ContentRepositoryImpl implements ContentRepository {
     }
   }
 
-  /* 유튜브 컨텐츠 정보 (컨텐츠탭 + 헤더) */
+  /* 컨텐츠 정보 (컨텐츠탭 + 헤더) */
   @override
   Future<Result<ContentMainInfo>> loadContentMainInfo() async {
     try {

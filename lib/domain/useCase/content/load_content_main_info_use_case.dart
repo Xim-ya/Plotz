@@ -1,7 +1,5 @@
-import 'package:uppercut_fantube/domain/base/base_use_case.dart';
-import 'package:uppercut_fantube/domain/model/content/content_main_info.dart';
-import 'package:uppercut_fantube/domain/repository/content/content_repository.dart';
-import 'package:uppercut_fantube/utilities/result.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 /** Created By Ximya - 2022.11.19
  *  - 컨텐츠 상세 페이지[ContentDetailScreen]에서 사용되는 데이터들을 호출하는 [UseCase]

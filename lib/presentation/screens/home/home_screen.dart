@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {

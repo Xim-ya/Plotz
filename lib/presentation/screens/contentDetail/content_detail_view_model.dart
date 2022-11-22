@@ -1,11 +1,5 @@
 import 'dart:developer';
-import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
-import 'package:uppercut_fantube/domain/model/content/content_description_info.dart';
-import 'package:uppercut_fantube/domain/repository/content/content_repository.dart';
-import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_main_description_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-
 part 'content_detail_view_model.part.dart';
 
 class ContentDetailViewModel extends BaseViewModel {
@@ -18,6 +12,7 @@ class ContentDetailViewModel extends BaseViewModel {
   /// // 헤더 + 컨텐츠탭 데이터
   final Rxn<ContentDescriptionInfo> _contentDescriptionInfo = Rxn();
 
+  // 컨텐츨 댓글 리스트
   final Rxn<CommentsList?> _contentCommentList = Rxn();
 
   /* [UseCase] */
@@ -26,7 +21,7 @@ class ContentDetailViewModel extends BaseViewModel {
   /* [Intent ] */
 
   /// Networking Method
-  /// 컨텐츠 상단 핵심 정보
+  // 컨텐츠 상단 핵심 정보
   Future<void> fetchContentMainInfo() async {
     // final responseResult =
     // await TmdbRepository.to.loadTmdbDetailResponse(passedArgument.contentId);
@@ -48,7 +43,6 @@ class ContentDetailViewModel extends BaseViewModel {
     final responseResult = await ContentRepository.to
         .loadContentCommentList(youtubeContentId ?? '');
     responseResult.fold(onSuccess: (data) {
-      print("AIM COMMENT LIST !!");
       _contentCommentList.value = data;
     }, onFailure: (e) {
       log(e.toString());

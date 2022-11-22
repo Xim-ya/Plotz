@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class ContentDataSource {
   Future<List<TopExposedContent>> loadTopExposedContentList();
