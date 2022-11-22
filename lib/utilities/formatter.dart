@@ -12,7 +12,7 @@ class Formatter {
   /// 좋아요 수를 일정 포맷으로 변경
   /// 1000 미만 -> 숫자 ex) 956
   /// 1000 이상 -> 천 단위 ex) 1.4천
-  /// 10000 이상 -> 만 단위 ex) 32만, 이때는 소숫점 없음
+  /// 10000 이상 -> 만 단위 ex) 32만, 이때는 소숫점 없음 && 41000 -> 4.1만
   static String formatLikesCount(int num) {
     final strNum = '$num';
 
@@ -24,18 +24,22 @@ class Formatter {
           .allMatches(subString)
           .map((e) => e.group(0))
           .join('.');
-      return result;
+      return '$result천';
       // 5 ,
     } else if (num >= 10000) {
-      // final int aim = strNum.length == 5 ?  : 4;
-      // final subString = strNum.substring(0, aim);
-      final result = RegExp(r'.{2}')
-          .allMatches(strNum)
-          .map((e) => e.group(0))
-          .join('.');
-      return result + '만';
+      if (strNum.length == 5) {
+        final subString = strNum.substring(0, 2);
+        final result = RegExp(r'.{1}')
+            .allMatches(subString)
+            .map((e) => e.group(0))
+            .join('.');
+        return '$result만';
+      } else {
+        final result = strNum.substring(0, strNum.length - 4);
+        return '$result만';
+      }
     } else {
-      return 'non';
+      return '-';
     }
   }
 }

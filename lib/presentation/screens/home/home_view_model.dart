@@ -98,9 +98,8 @@ class HomeViewModel extends BaseViewModel {
     var yt = YoutubeExplode();
     var video = await yt.videos.get('EQnYZVKrZOQ');
 
-    // var comments = await yt.videos.commentsClient.getComments(video);
-    final test = Formatter.formatLikesCount(120000);
-    print(test);
+
+
 
 
   }
