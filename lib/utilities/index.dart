@@ -40,7 +40,7 @@ export 'package:uppercut_fantube/app/modules/domain_modules.dart';
 export 'package:uppercut_fantube/app/modules/presentation_modules.dart';
 
 // Data
-
+export 'package:uppercut_fantube/data/repository/youtube/youtube_repository.dart';
 export 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
 export 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
 export 'package:uppercut_fantube/data/api/tmdb/tmdb_api.dart';

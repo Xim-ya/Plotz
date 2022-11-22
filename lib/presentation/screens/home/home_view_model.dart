@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:intl/intl.dart';
+import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'home_view_model.part.dart';
@@ -10,7 +12,6 @@ class HomeViewModel extends BaseViewModel {
   HomeViewModel(this._dataSource, this._loadTopExposedContentList);
 
   /* [Variables] */
-
   /// Data
   final Rxn<List<TopExposedContent>> _topExposedContentList = Rxn();
 
@@ -97,12 +98,10 @@ class HomeViewModel extends BaseViewModel {
     var yt = YoutubeExplode();
     var video = await yt.videos.get('EQnYZVKrZOQ');
 
-    var comments = await yt.videos.commentsClient.getComments(video);
+    // var comments = await yt.videos.commentsClient.getComments(video);
+    final test = Formatter.formatLikesCount(120000);
+    print(test);
 
-    print(video.title);
-    print(video.uploadDateRaw);
-    print(video.runtimeType);
-    print(video.duration);
 
   }
 

@@ -7,20 +7,6 @@ class ContentRepositoryImpl implements ContentRepository {
 
   final ContentDataSource _contentDataSource;
 
-  /* 유튜브 컨텐츠 댓글 리스트 호출 */
-  @override
-  Future<Result<CommentsList?>> loadContentCommentList(String videoId) async {
-    try {
-      // 유튜브 댓글
-      final video = await YoutubeMetaData.yt.videos.get(videoId);
-      final commentList =
-          await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
-      return Result.success(commentList);
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
-
   /* 컨텐츠 정보 (컨텐츠탭 + 헤더) */
   @override
   Future<Result<ContentMainInfo>> loadContentMainInfo() async {

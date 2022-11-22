@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+
 part 'content_detail_view_model.part.dart';
 
 class ContentDetailViewModel extends BaseViewModel {
@@ -12,8 +14,11 @@ class ContentDetailViewModel extends BaseViewModel {
   /// // 헤더 + 컨텐츠탭 데이터
   final Rxn<ContentDescriptionInfo> _contentDescriptionInfo = Rxn();
 
-  // 컨텐츨 댓글 리스트
+  // 컨턴츠 댓글 리스트
   final Rxn<CommentsList?> _contentCommentList = Rxn();
+
+  // 유튜브 비디오 컨텐츠 정보
+  final Rxn<YoutubeVideoContentInfo> youtubeVideoContentInfo = Rxn();
 
   /* [UseCase] */
   final LoadContentMainDescriptionUseCase _loadContentMainDescription;
@@ -40,13 +45,30 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 컨텐츠 댓글 리스트 호출
   Future<void> fetchContentCommentList() async {
-    final responseResult = await ContentRepository.to
+    final responseResult = await YoutubeRepository.to
         .loadContentCommentList(youtubeContentId ?? '');
-    responseResult.fold(onSuccess: (data) {
-      _contentCommentList.value = data;
-    }, onFailure: (e) {
-      log(e.toString());
-    });
+    responseResult.fold(
+      onSuccess: (data) {
+        _contentCommentList.value = data;
+      },
+      onFailure: (e) {
+        log(e.toString());
+      },
+    );
+  }
+
+  // 유튜브 비디오 컨텐츠 정보 호출
+  Future<void> fetchYoutubeVideoContentInfo() async {
+    final responseResult = await YoutubeRepository.to
+        .loadYoutubeVideoContentInfo(youtubeContentId ?? '');
+    responseResult.fold(
+      onSuccess: (data) {
+        youtubeVideoContentInfo.value = data;
+      },
+      onFailure: (e) {
+        log(e.toString());
+      },
+    );
   }
 
   /// Routing Method
@@ -64,7 +86,9 @@ class ContentDetailViewModel extends BaseViewModel {
     super.onInit();
 
     fetchContentMainInfo();
+    fetchYoutubeVideoContentInfo();
     fetchContentCommentList();
+
   }
 
   ContentDescriptionInfo? get contentMainInfo => _contentDescriptionInfo.value;

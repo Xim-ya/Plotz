@@ -41,7 +41,8 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
                     ),
                     AppSpace.size4,
                     Text(
-                      '8.8천',
+                      vm.youtubeVideoContentInfo.value?.viewCount.toString() ??
+                          '-',
                       style: AppTextStyle.body3,
                     )
                   ],
