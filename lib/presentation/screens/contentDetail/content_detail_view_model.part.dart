@@ -25,7 +25,7 @@ extension ContentDetailViewModelPart on ContentDetailViewModel {
   }
 
   /** [컨텐츠 탭] **/
-  CommentsList? get commentList => _contentCommentList.value;
+ List<YoutubeContentComment>? get commentList => _contentCommentList.value;
 
   YoutubeVideoContentInfo? get youtubeVideoContentInfo =>
       _youtubeVideoContentInfo.value;

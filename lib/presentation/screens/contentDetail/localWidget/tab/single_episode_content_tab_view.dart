@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -73,7 +74,7 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
                       : Row(
                           children: <Widget>[
                             Shimmer(
-                              child:  Container(
+                              child: Container(
                                 color: AppColor.lightGrey.withOpacity(0.1),
                                 height: 16,
                                 width: 70,
@@ -81,7 +82,7 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
                             ),
                             AppSpace.size6,
                             Shimmer(
-                              child:  Container(
+                              child: Container(
                                 color: AppColor.skeletonGrey,
                                 height: 16,
                                 width: 36,
@@ -158,15 +159,52 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
                     ],
                   );
                 } else {
-                  final Comment item = vm.commentList![index];
+                  final YoutubeContentComment item = vm.commentList![index];
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const RoundProfileImg(
-                        size: 38,
-                        imgUrl:
-                            'https://yt3.ggpht.com/ytc/AMLnZu9mx97jp2uus8qYKYO7gROx18AWIzQprpRdfLIirP19g4qk25l5_ulscs2AWIte2FTnWYE=s48-c-k-c0x00ffffff-no-rj',
+                      Container(
+                        height: 38,
+                        width: 38,
+                        decoration: const BoxDecoration(
+                          color: Colors.grey,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          alignment: Alignment.center,
+                          children: [
+                            Positioned(
+                              bottom: 0,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: SizedBox(
+                                  child: SvgPicture.asset(
+                                    'assets/icons/${item.profileImgPath}.svg',
+                                    height: 33,
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            if (item.isHearted)
+                              Positioned(
+                                top: -2,
+                                right: 0,
+                                child: SvgPicture.asset(
+                                  'assets/icons/heart_ic.svg',
+                                  height: 12,
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
+
+                      // const RoundProfileImg(
+                      //   size: 38,
+                      //   imgUrl:
+                      //       'https://yt3.ggpht.com/ytc/AMLnZu9mx97jp2uus8qYKYO7gROx18AWIzQprpRdfLIirP19g4qk25l5_ulscs2AWIte2FTnWYE=s48-c-k-c0x00ffffff-no-rj',
+                      // ),
                       AppSpace.size8,
                       Flexible(
                         child: Column(

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -15,7 +16,7 @@ class ContentDetailViewModel extends BaseViewModel {
   final Rxn<ContentDescriptionInfo> _contentDescriptionInfo = Rxn();
 
   // 컨턴츠 댓글 리스트
-  final Rxn<CommentsList?> _contentCommentList = Rxn();
+  final Rxn<List<YoutubeContentComment>> _contentCommentList = Rxn();
 
   // 유튜브 비디오 컨텐츠 정보
   final Rxn<YoutubeVideoContentInfo> _youtubeVideoContentInfo = Rxn();

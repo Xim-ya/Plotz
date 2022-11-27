@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -6,7 +7,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 * */
 
 abstract class YoutubeRepository {
-  Future<Result<CommentsList?>> loadContentCommentList(String videoId);
+  Future<Result<List<YoutubeContentComment>>> loadContentCommentList(String videoId);
 
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(String videoId);
 

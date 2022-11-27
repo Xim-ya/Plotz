@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'tmdb_api.g.dart';
@@ -22,6 +23,11 @@ abstract class TmdbApi {
   /*** New One ***/
   @GET('/tv/{tvId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
   Future<TmdbTvDetailResponse> loadTmdbDetailResponse(@Path('tvId') int tvId);
+
+  @GET(
+     '/tv/{tvId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1' )
+  Future<TmdbTveCreditResponse> loadTvCreditInfo(
+    @Path("tvId") int tvId);
 
 
 
