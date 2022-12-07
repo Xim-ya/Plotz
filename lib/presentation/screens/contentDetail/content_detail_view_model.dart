@@ -4,6 +4,7 @@ import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'content_detail_view_model.part.dart';
+part 'partViewModel/content_info_view_model.part.dart';
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(this._loadContentMainDescription);
@@ -12,7 +13,7 @@ class ContentDetailViewModel extends BaseViewModel {
   late int contentId = Get.arguments[0];
 
   /// Data Variables
-  /// // 헤더 + 컨텐츠탭 데이터
+  /// // 헤더 + 컨텐츠탭 정보
   final Rxn<ContentDescriptionInfo> _contentDescriptionInfo = Rxn();
 
   // 컨턴츠 댓글 리스트

@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
+import 'package:uppercut_fantube/presentation/common/conditional_rendering_box.dart';
 import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -94,15 +95,31 @@ class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
               ],
             ),
           ),
+          AppSpace.size40,
+
+          const SectionTitle(title: '설명'),
+          Obx(
+            () => vm.isContentInfoLoaded
+                ? Text(
+                    vm.contentDescriptionInfo!.overView,
+                    style: AppTextStyle.title1
+                        .copyWith(fontFamily: 'pretendard_regular'),
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: 3,
+                    itemBuilder: (__, _) => Shimmer(
+                      child: Container(
+                        height: 18,
+                      ),
+                    ),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        AppSpace.size4,
+                  ),
+          ),
 
           AppSpace.size40,
-          const SectionTitle(title: '설명'),
-          Text(
-            '수십 년 전 잠적한 전직 CIA 요원 댄 체이스. 과거의 비밀을 안고 은둔한 채 살아가던 중 결국 정체가 탄로 난다. 하지만 미래를 위해서 더 이상 숨어 살 수 없는 그는 과거의 매듭을 풀고자 하는데.',
-            style:
-                AppTextStyle.title1.copyWith(fontFamily: 'pretendard_regular'),
-          ),
-          AppSpace.size40,
+
           // 댓글 - 유튜브 댓글
           const SectionTitle(title: '댓글'),
           Obx(
