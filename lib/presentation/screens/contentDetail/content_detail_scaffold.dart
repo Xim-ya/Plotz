@@ -116,7 +116,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           ],
         ),
 
-        // 상단 '뒤로가기' 버튼
+        // 상단 '뒤로가기'   버튼
         // 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
         Obx(
           () => AnimatedPositioned(

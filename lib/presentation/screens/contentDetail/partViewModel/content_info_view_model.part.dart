@@ -9,7 +9,8 @@ part of '../content_detail_view_model.dart';
 extension ContentInfoViewModelPart on ContentDetailViewModel {
 
   // 컨텐츠 데이터
-  ContentDescriptionInfo? get contentDescriptionInfo => _contentDescriptionInfo.value;
+  ContentDescriptionInfo? get contentDescriptionInfo =>  _contentDescriptionInfo.value;
+
 
   // 컨텐츠 데이터 로드 여부
   bool get isContentInfoLoaded => _contentDescriptionInfo.value != null;
