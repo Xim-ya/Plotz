@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
 import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -50,7 +51,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
           ),
           Obx(
             () => Text(
-              vm.contentMainInfo?.rate.toString() ?? '-',
+              vm.rate ?? '-',
               style: AppTextStyle.alert2.copyWith(
                 color: const Color(0xFFA8A8A8).withOpacity(0.40),
               ),
@@ -65,9 +66,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
           ),
           Obx(
             () => Text(
-              Formatter.formatGenreListToSingleStr(
-                      vm.contentMainInfo?.genreList) ??
-                  '-',
+              vm.genre ?? '-',
               style: AppTextStyle.alert2.copyWith(
                 color: const Color(0xFFA8A8A8).withOpacity(0.40),
               ),
@@ -107,17 +106,26 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
               ),
             ),
             AppSpace.size4,
+
             // 제목 & 날짜
             Row(
               children: <Widget>[
-                Text(vm.passedArgument.title, style: AppTextStyle.headline2),
+                Obx(
+                  () => vm.headerTitle.hasData
+                      ? Text(vm.headerTitle!.value,
+                          style: AppTextStyle.headline2)
+                      : Shimmer(
+                          color: AppColor.lightGrey,
+                          child: const SizedBox(
+                            height: 28,
+                            width: 40,
+                          ),
+                        ),
+                ),
                 AppSpace.size6,
                 Obx(
                   () => Text(
-                    vm.isContentMainInfoLoading
-                        ? '-'
-                        : Formatter.dateToyyMMdd(
-                            vm.contentMainInfo!.releaseDate),
+                    vm.releaseDate.hasData ? vm.releaseDate! : '-',
                     style: AppTextStyle.alert2,
                   ),
                 )
@@ -125,43 +133,33 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
             ),
             AppSpace.size8,
             // 컨텐츠 설명 - (유튜브 영상 제목 or TMDB 컨텐츠 설명)
-            Container(
-              constraints: const BoxConstraints(minHeight: 66),
-              child: Obx(
-                () => !vm.isHeaderDescriptionLoaded
-                    ? Column(
-                        children: [
-                          Shimmer(
-                            color: AppColor.lightGrey,
-                            child: const SizedBox(
-                              height: 18,
-                              width: double.infinity,
-                            ),
-                          ),
-                          AppSpace.size6,
-                          Shimmer(
-                            color: AppColor.lightGrey,
-                            child: const SizedBox(
-                              height: 18,
-                              width: double.infinity,
-                            ),
-                          ),
-                        ],
-                      )
-
-                    /// [ContentEpicType]이 [single] 이라면 헤더에 유튜브 영상 제목을 보여줌
-                    /// 반대의 경우에는 tmdb descriptoin.
-                    : Text(
-                        vm.seasonType! == ContentSeasonType.single
-                            ? vm.youtubeVideoContentInfo!.videoTitle
-                            : vm.contentMainInfo!.overView,
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.headline3
-                            .copyWith(color: AppColor.lightGrey),
+            Obx(() => vm.headerContentDesc.hasData
+                ? Text(
+                    vm.headerContentDesc!.value,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.headline3
+                        .copyWith(color: AppColor.lightGrey),
+                  )
+                : Column(
+                    children: [
+                      Shimmer(
+                        color: AppColor.lightGrey,
+                        child: const SizedBox(
+                          height: 18,
+                          width: double.infinity,
+                        ),
                       ),
-              ),
-            ),
+                      AppSpace.size6,
+                      Shimmer(
+                        color: AppColor.lightGrey,
+                        child: const SizedBox(
+                          height: 18,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ],
+                  )),
 
             AppSpace.size24,
           ],

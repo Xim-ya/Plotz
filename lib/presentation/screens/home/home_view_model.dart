@@ -82,7 +82,6 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(
       AppRoutes.contentDetail,
       arguments: ContentDetailParam(
-        contentSeasonType: selectedTopExposedContent.contentSeasonType,
         contentId: selectedTopExposedContent.contentId,
         posterImgUrl: selectedTopExposedContent.posterImgUrl,
         thumbnailUrl: selectedTopExposedContent.thumbnailImgUrl,
@@ -129,23 +128,23 @@ class HomeViewModel extends BaseViewModel {
   }
 }
 
-/// 상단 노출 컨텐츠 섹션에서 [컨텐츠 상세페이지]로 이동할 때 argument로 넘겨주는 데이터 모델
+/// 컨텐츠 리스트 섹션에서 [컨텐츠 상세페이지]로 이동할 때 argument로 넘겨주는 데이터 모델
+/// [TopExposedContentList]의 경우 [title] [description] [thumbnailUrl] 필드를 넘겨줄 수 있지만
+/// 다른 컨텐츠 리스트 섹션에서는 해당 값이 존재하지 않기 때문에 해당 필드는 nullable 처리를 함.
 class ContentDetailParam {
   final int contentId;
   final String youtubeId;
-  final String title;
-  final String description;
-  final String thumbnailUrl;
+  final String? title;
+  final String? description;
+  final String? thumbnailUrl;
   final String posterImgUrl;
-  final ContentSeasonType contentSeasonType;
 
   ContentDetailParam({
-    required this.contentSeasonType,
     required this.contentId,
-    required this.title,
-    required this.description,
+     this.title,
+     this.description,
     required this.posterImgUrl,
-    required this.thumbnailUrl,
+     this.thumbnailUrl,
     required this.youtubeId,
   });
 }

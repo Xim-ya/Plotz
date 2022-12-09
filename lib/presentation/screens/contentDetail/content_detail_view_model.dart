@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
+import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
+import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-part 'content_detail_view_model.part.dart';
-part 'partViewModel/content_info_view_model.part.dart';
+part 'controllerResources/content_detail_view_model.part.dart';
+part 'controllerResources/content_info_view_model.part.dart';
+part 'controllerResources/content_detail_header_view_model.part.dart';
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(this._loadContentMainDescription);
@@ -13,7 +16,7 @@ class ContentDetailViewModel extends BaseViewModel {
   late int contentId = Get.arguments[0];
 
   /// Data Variables
-  /// // 헤더 + 컨텐츠탭 정보
+  /// // 컨텐츠탭 정보
   final Rxn<ContentDescriptionInfo> _contentDescriptionInfo = Rxn();
 
   // 컨턴츠 댓글 리스트
@@ -48,7 +51,7 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠 댓글 리스트 호출
   Future<void> fetchContentCommentList() async {
     final responseResult = await YoutubeRepository.to
-        .loadContentCommentList(youtubeContentId ?? '');
+        .loadContentCommentList(youtubeContentId);
     responseResult.fold(
       onSuccess: (data) {
         _contentCommentList.value = data;
@@ -62,7 +65,7 @@ class ContentDetailViewModel extends BaseViewModel {
   // 유튜브 비디오 컨텐츠 정보 호출
   Future<void> fetchYoutubeVideoContentInfo() async {
     final responseResult = await YoutubeRepository.to
-        .loadYoutubeVideoContentInfo(youtubeContentId ?? '');
+        .loadYoutubeVideoContentInfo(youtubeContentId);
     responseResult.fold(
       onSuccess: (data) {
         _youtubeVideoContentInfo.value = data;
@@ -93,10 +96,13 @@ class ContentDetailViewModel extends BaseViewModel {
 
   }
 
+  /* [Getters] */
   ContentDescriptionInfo? get contentMainInfo => _contentDescriptionInfo.value;
 
-  bool get isContentMainInfoLoading => _contentDescriptionInfo.value == null;
+  // 유튜브 컨텐츠 id => 항상 argument로 전달받음
+  String get youtubeContentId => passedArgument.youtubeId;
 
+  // [ContentSeasonType]의 single 여부
   bool get isSingleEpisodeContent =>
       _contentDescriptionInfo.value?.contentEpicType ==
       ContentSeasonType.single;
