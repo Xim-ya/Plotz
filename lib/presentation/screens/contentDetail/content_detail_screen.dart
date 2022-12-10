@@ -1,26 +1,8 @@
 import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
-import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   const ContentDetailScreen({Key? key}) : super(key: key);
-
-  @override
-  bool get wrapWithSafeArea => false;
-
-  @override
-  bool get extendBodyBehindAppBar => false;
-
-  // Sliver레이아웃에서 Tab이 고정되기 위해서 [Sizse.zero]인 Appbar가 필요
-  @override
-  PreferredSizeWidget? buildAppBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.zero,
-      child: AppBar(
-        backgroundColor: Colors.black,
-      ),
-    );
-  }
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -172,5 +154,23 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
       Tab(text: '컨텐츠', height: 42),
       Tab(text: '정보', height: 42),
     ];
+  }
+
+
+  @override
+  bool get wrapWithSafeArea => false;
+
+  @override
+  bool get extendBodyBehindAppBar => false;
+
+  // Sliver레이아웃에서 Tab이 고정되기 위해서 [Sizse.zero]인 Appbar가 필요
+  @override
+  PreferredSizeWidget? buildAppBar(BuildContext context) {
+    return PreferredSize(
+      preferredSize: Size.zero,
+      child: AppBar(
+        backgroundColor: Colors.black,
+      ),
+    );
   }
 }

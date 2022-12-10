@@ -7,7 +7,8 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResources/content_detail_view_model.part.dart';
 part 'controllerResources/content_info_view_model.part.dart';
-part 'controllerResources/content_detail_header_view_model.part.dart';
+part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
+part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 싱글 컨텐츠 탭뷰 영역
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(this._loadContentMainDescription);

@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.12
@@ -6,38 +7,47 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
-  const VideoThumbnailImgWithPlayerBtn(
-      {Key? key,
-      required this.onPlayerBtnClicked,
-      required this.posterImgUrl,
-      })
-      : super(key: key);
+  const VideoThumbnailImgWithPlayerBtn({
+    Key? key,
+    required this.onPlayerBtnClicked,
+    required this.posterImgUrl,
+  }) : super(key: key);
 
   final VoidCallback onPlayerBtnClicked;
-  final String posterImgUrl;
+  final String? posterImgUrl;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         AspectRatio(
-          aspectRatio: 16/9,
-          child: CachedNetworkImage(
-            imageUrl: posterImgUrl,
-            imageBuilder: (context, imageProvider) => Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth),
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            placeholder: (context, url) => Shimmer(
-              child: Container(
-                color: AppColor.black,
-              ),
-            ),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
+          aspectRatio: 16 / 9,
+          child: posterImgUrl != null
+              ? CachedNetworkImage(
+                  imageUrl: posterImgUrl!,
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.fitWidth),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  placeholder: (context, url) => Shimmer(
+                    child: Container(
+                      color: AppColor.black,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                )
+              : Shimmer(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: AppColor.skeletonGrey,
+                    ),
+                  ),
+                ),
         ),
         Positioned.fill(
           child: Align(
