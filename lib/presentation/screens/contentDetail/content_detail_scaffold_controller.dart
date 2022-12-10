@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya  - 2022.11.07
@@ -25,6 +26,9 @@ class ContentDetailScaffoldController extends BaseViewModel
 
   /* 메소드 */
   void onTabClicked(int index) {
+    if(!ContentDetailViewModel.to.contentCreditList.hasData) {
+      ContentDetailViewModel.to.fetchContentCreditInfo();
+    }
     selectedTabIndex.value = index;
   }
 

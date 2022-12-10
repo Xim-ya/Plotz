@@ -27,7 +27,7 @@ TmdbTvCastInfoResponse _$TmdbTvCastInfoResponseFromJson(
       json['original_name'] as String,
       (json['popularity'] as num).toDouble(),
       json['profile_path'] as String?,
-      json['cast_id'] as int,
+      json['cast_id'] as int?,
       json['character'] as String,
-      json['credit_id'] as String,
+      json['credit_id'] as String?,
     );

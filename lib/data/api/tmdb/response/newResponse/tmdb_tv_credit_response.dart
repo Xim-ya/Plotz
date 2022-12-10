@@ -43,13 +43,13 @@ class TmdbTvCastInfoResponse {
   String? profile_path;
 
   @JsonKey(name: 'cast_id')
-  int cast_id;
+  int? cast_id;
 
   @JsonKey(name: 'character')
   String character;
 
   @JsonKey(name: 'credit_id')
-  String credit_id;
+  String? credit_id;
 
 
   TmdbTvCastInfoResponse(

@@ -1,9 +1,9 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
-
-class ContentDetailBinding extends Bindings{
+class ContentDetailBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ContentDetailViewModel(Get.find()), fenix: true);
+    Get.lazyPut(() => ContentDetailViewModel(Get.find(), Get.find()),
+        fenix: true);
   }
 }

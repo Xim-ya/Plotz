@@ -9,8 +9,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 abstract class TmdbRepository {
   Future<Result<ContentDescriptionInfo>> loadTmdbDetailResponse(int tvId);
 
-  Future<Result<List<TvContentCreditInfo>>> loadTvCreditInfo(int tvId);
-
+  Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId);
 
   static TmdbRepository get to => Get.find();
 }

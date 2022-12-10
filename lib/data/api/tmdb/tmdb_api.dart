@@ -21,13 +21,17 @@ part 'tmdb_api.g.dart';
 abstract class TmdbApi {
   factory TmdbApi(Dio dio, {String baseUrl}) = _TmdbApi;
   /*** New One ***/
+
+  // 'tv' 컨텐츠 상세 정보
   @GET('/tv/{tvId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
   Future<TmdbTvDetailResponse> loadTmdbDetailResponse(@Path('tvId') int tvId);
 
+
+  // 'tv' 컨텐츠 credit 정보
   @GET(
      '/tv/{tvId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1' )
   Future<TmdbTveCreditResponse> loadTvCreditInfo(
-    @Path("tvId") int tvId);
+    @Path('tvId') int tvId);
 
 
 

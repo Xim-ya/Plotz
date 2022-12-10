@@ -1,4 +1,4 @@
-
+import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_credit_info_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class DomainModules {
@@ -11,6 +11,8 @@ abstract class DomainModules {
         fenix: true);
 
     // TMDB
-    Get.lazyPut(() => LoadContentMainDescriptionUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => LoadContentMainDescriptionUseCase(Get.find()),
+        fenix: true);
+    Get.lazyPut(() => LoadContentCreditInfoUseCase(Get.find()), fenix: true);
   }
 }

@@ -19,15 +19,15 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
       : _contentDescriptionInfo.value?.title.obs;
 
   // 컨텐츠 TMDB 평점
-  String? get rate => contentMainInfo?.rate.toString();
+  String? get rate => _contentDescriptionInfo.value?.rate.toString();
 
   // 컨텐츠 장르 리스트
   String? get genre =>
-      Formatter.formatGenreListToSingleStr(contentMainInfo?.genreList);
+      Formatter.formatGenreListToSingleStr(_contentDescriptionInfo.value?.genreList);
 
   // 컨텐츠 개봉일
   String? get releaseDate => _contentDescriptionInfo.value?.releaseDate != null
-      ? Formatter.dateToyyMMdd(contentMainInfo!.releaseDate)
+      ? Formatter.dateToyyMMdd(_contentDescriptionInfo.value!.releaseDate)
       : null;
 
 }

@@ -19,11 +19,13 @@ class TmdbRepositoryImpl implements TmdbRepository {
     }
   }
 
+
+  // TV 드라마 'credit' 정보 호출
   @override
-  Future<Result<List<TvContentCreditInfo>>> loadTvCreditInfo(int tvId) async{
+  Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId) async{
     try {
       final response = await _dataSource.loadTmdbTvCastInfoResponse(tvId);
-      return Result.success(response.cast.map((e) => TvContentCreditInfo.fromResponse(e)).toList());
+      return Result.success(response.cast.map((e) => ContentCreditInfo.fromResponse(e)).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }

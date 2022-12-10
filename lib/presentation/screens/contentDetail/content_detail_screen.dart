@@ -156,7 +156,6 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
     ];
   }
 
-
   @override
   bool get wrapWithSafeArea => false;
 

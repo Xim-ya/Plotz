@@ -3,7 +3,7 @@
  * */
 
 extension TmdbImgPathExtension on String {
-  String returnWithTmdbImgPath(int limitLength) {
+  String get returnWithTmdbImgPath {
     return 'https://image.tmdb.org/t/p/original${this}';
   }
 }
