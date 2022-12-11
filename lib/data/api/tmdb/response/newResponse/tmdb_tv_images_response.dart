@@ -21,9 +21,6 @@ class TmdbTvImagesItemResponse {
   @JsonKey(name: 'height')
   int height;
 
-  @JsonKey(name: 'iso_639_1')
-  String iso_639_1;
-
   @JsonKey(name: 'file_path')
   String file_path;
 
@@ -36,7 +33,7 @@ class TmdbTvImagesItemResponse {
   @JsonKey(name: 'width')
   int width;
 
-  TmdbTvImagesItemResponse(this.aspect_ratio, this.height, this.iso_639_1,
+  TmdbTvImagesItemResponse(this.aspect_ratio, this.height,
       this.file_path, this.vote_average, this.vote_count, this.width);
 
   factory TmdbTvImagesItemResponse.fromJson(Map<String, dynamic> json) =>

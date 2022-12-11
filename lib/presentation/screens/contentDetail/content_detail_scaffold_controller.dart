@@ -6,8 +6,6 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * [TabController] [ScrollController]을 기반으로 'StickyScrollTabView' 레이아웃을 구성
  * */
 
-
-
 class ContentDetailScaffoldController extends BaseViewModel
     with GetSingleTickerProviderStateMixin {
   late final TabController tabController;
@@ -23,11 +21,11 @@ class ContentDetailScaffoldController extends BaseViewModel
   // 상단 '뒤로가기' 버튼 Visibility 여부
   RxBool showBackBtnOnTop = true.obs;
 
-
   /* 메소드 */
   void onTabClicked(int index) {
-    if(!ContentDetailViewModel.to.contentCreditList.hasData) {
+    if (!ContentDetailViewModel.to.contentCreditList.hasData) {
       ContentDetailViewModel.to.fetchContentCreditInfo();
+      ContentDetailViewModel.to.fetchContentImgList();
     }
     selectedTabIndex.value = index;
   }
@@ -46,7 +44,6 @@ class ContentDetailScaffoldController extends BaseViewModel
     }
   }
 
-
   @override
   void onInit() {
     super.onInit();
@@ -59,6 +56,6 @@ class ContentDetailScaffoldController extends BaseViewModel
     });
   }
 
-
-  double get headerBgOffset => scrollOffset.value == null ? 0 : -scrollOffset.value! * 0.5;
+  double get headerBgOffset =>
+      scrollOffset.value == null ? 0 : -scrollOffset.value! * 0.5;
 }

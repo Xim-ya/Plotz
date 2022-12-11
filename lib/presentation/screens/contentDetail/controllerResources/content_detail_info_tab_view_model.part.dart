@@ -6,6 +6,9 @@ part of '../content_detail_view_model.dart';
 
 extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
 
+  // 컨텐츠 이미지 리스트
+  List<String>? get contentImgUrlList => _contentImgUrlList.value;
+
 
   // 총 조회수
   String? get totalViewCount =>  Formatter.formatViewAndLikeCount(

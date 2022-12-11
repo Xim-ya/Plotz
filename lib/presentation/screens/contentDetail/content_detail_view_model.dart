@@ -3,6 +3,7 @@ import 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dar
 import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_credit_info_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_img_list_use_case.dart';
 import 'package:uppercut_fantube/presentation/common/alert_widget.dart';
 import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
 import 'package:uppercut_fantube/utilities/formatter.dart';
@@ -17,7 +18,7 @@ part 'controllerResources/content_detail_single_content_tab_view_model.part.dart
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
 
 class ContentDetailViewModel extends BaseViewModel {
-  ContentDetailViewModel(
+  ContentDetailViewModel(this._loadContentImgList,
       this._loadContentMainDescription, this._loadContentCreditInfo);
 
   /* [Variables] */
@@ -36,13 +37,29 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠 Credit 정보 리스트
   final Rxn<List<ContentCreditInfo>> _contentCreditList = Rxn();
 
+  // 컨텐츠 이미지 리스트
+  final Rxn<List<String>> _contentImgUrlList = Rxn();
+
   /* [UseCase] */
   final LoadContentMainDescriptionUseCase _loadContentMainDescription;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
+  final LoadContentImgListUseCase _loadContentImgList;
 
   /* [Intent ] */
 
   /// Networking Method
+
+  // 컨텐츠 이미지 리스트 호출
+  Future<void> fetchContentImgList() async {
+    final responseRes =
+        await _loadContentImgList.call('tv', passedArgument.contentId);
+    responseRes.fold(onSuccess: (data) {
+      _contentImgUrlList.value = data;
+    }, onFailure: (e) {
+      AlertWidget.toast('컨텐츠 이미지 정보를 불러들이는 데 실패했습니다');
+      log(e.toString());
+    });
+  }
 
   // 컨텐츠 credit 정보 호출
   Future<void> fetchContentCreditInfo() async {

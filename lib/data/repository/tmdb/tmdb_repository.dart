@@ -11,5 +11,7 @@ abstract class TmdbRepository {
 
   Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId);
 
+  Future<Result<List<String>>> loadTvImgUrlList(int tvId);
+
   static TmdbRepository get to => Get.find();
 }

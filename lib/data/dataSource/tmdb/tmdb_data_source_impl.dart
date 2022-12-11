@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
+import 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_images_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TmdbDataSourceImpl with ApiErrorHandlerMixin implements TmdbDataSource {
@@ -11,9 +12,13 @@ class TmdbDataSourceImpl with ApiErrorHandlerMixin implements TmdbDataSource {
   Future<TmdbTvDetailResponse> loadTmdbDetailResponse(int tvId) async =>
       _api.loadTmdbDetailResponse(tvId);
 
-
   // tmdb tv 컨텐츠 크레딧 정보
   @override
   Future<TmdbTveCreditResponse> loadTmdbTvCastInfoResponse(int tvId) async =>
       _api.loadTvCreditInfo(tvId);
+
+  // tmdb tv 이미지 리스트
+  @override
+  Future<TmdbTvImagesResponse> loadTmdbTvIContentImages(int tvId) async =>
+      _api.loadTvImages(tvId);
 }

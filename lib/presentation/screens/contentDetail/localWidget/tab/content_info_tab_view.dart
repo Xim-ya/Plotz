@@ -117,13 +117,15 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
                 children: <Widget>[
                   elseInfoItem(
                       title: '방영상태', content: vm.contentAirStatus ?? '-'),
-                  elseInfoItem(title: '총 좋아요 수', content: vm.totalViewCount ?? '-'),
+                  elseInfoItem(
+                      title: '총 좋아요 수', content: vm.totalViewCount ?? '-'),
                 ],
               ),
               Row(
                 children: <Widget>[
                   elseInfoItem(title: '총 조회수', content: vm.likesCount ?? ''),
-                  elseInfoItem(title: '영상 업로드일', content: vm.youtubeUploadDate ?? ''),
+                  elseInfoItem(
+                      title: '영상 업로드일', content: vm.youtubeUploadDate ?? ''),
                 ],
               ),
             ],
@@ -133,17 +135,17 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
         const SectionTitle(title: '컨텐츠 이미지', setLeftPadding: true),
         SizedBox(
           height: 186,
-          child: ListView.separated(
+          child: Obx(() =>  ListView.separated(
               separatorBuilder: (__, _) => AppSpace.size10,
               padding: const EdgeInsets.only(left: 16),
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: vm.contentImgUrlList?.length ?? 0,
               itemBuilder: (context, index) {
+                final imgItem = vm.contentImgUrlList![index];
                 return CachedNetworkImage(
                   fit: BoxFit.contain,
-                  imageUrl:
-                      'https://image.tmdb.org/t/p/w1280/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg',
+                  imageUrl: imgItem.returnWithTmdbImgPath,
                   height: 100,
                   width: SizeConfig.to.screenWidth - 32,
                   imageBuilder: (context, imageProvider) => Container(
@@ -161,9 +163,9 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
                     ),
                   ),
                   errorWidget: (context, url, error) =>
-                      const Center(child: Icon(Icons.error)),
+                  const Center(child: Icon(Icons.error)),
                 );
-              }),
+              }),)
         )
       ],
     );
@@ -174,9 +176,11 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
     return Expanded(
       child: Row(
         children: <Widget>[
-          Text(title, style: AppTextStyle.body2.copyWith(color: Colors.white),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
+          Text(
+            title,
+            style: AppTextStyle.body2.copyWith(color: Colors.white),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
           Text(
             ' : $content',

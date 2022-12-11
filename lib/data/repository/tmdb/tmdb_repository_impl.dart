@@ -1,7 +1,6 @@
 import 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-
 class TmdbRepositoryImpl implements TmdbRepository {
   TmdbRepositoryImpl(this._dataSource);
 
@@ -19,13 +18,25 @@ class TmdbRepositoryImpl implements TmdbRepository {
     }
   }
 
-
   // TV 드라마 'credit' 정보 호출
   @override
-  Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId) async{
+  Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId) async {
     try {
       final response = await _dataSource.loadTmdbTvCastInfoResponse(tvId);
-      return Result.success(response.cast.map((e) => ContentCreditInfo.fromResponse(e)).toList());
+      return Result.success(
+          response.cast.map((e) => ContentCreditInfo.fromResponse(e)).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  // TV 드라마 image url 리스트 호출
+  @override
+  Future<Result<List<String>>> loadTvImgUrlList(int tvId) async {
+    try {
+      final response = await _dataSource.loadTmdbTvIContentImages(tvId);
+      return Result.success(
+          response.backdrops.map((e) => e.file_path).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }
