@@ -16,6 +16,7 @@ class ContentDescriptionInfo {
   final String releaseDate; // 컨텐츠 출시일
   final String overView; // 컨텐츠 설명
   final ContentSeasonType contentEpicType; // 시리즈물 or 단일 컨텐츠
+  final String airStatus; // 컨텐츠 방영 상태
 
   ContentDescriptionInfo({
     required this.id,
@@ -26,6 +27,7 @@ class ContentDescriptionInfo {
     required this.releaseDate,
     required this.contentEpicType,
     required this.overView,
+    required this.airStatus,
   });
 
   factory ContentDescriptionInfo.fromResponse(TmdbTvDetailResponse response) {
@@ -48,8 +50,27 @@ class ContentDescriptionInfo {
       rate: response.vote_average,
       genreList: formattedGenre,
       releaseDate: response.first_air_date,
-      contentEpicType: ContentSeasonType.fromSeasonCount(response.number_of_seasons),
+      contentEpicType:
+          ContentSeasonType.fromSeasonCount(response.number_of_seasons),
       overView: response.overview,
+      airStatus: _translateTvContentStatus(response.status),
     );
+  }
+}
+
+String _translateTvContentStatus(String status) {
+  switch (status) {
+    case 'Canceled':
+      return '방영 취소';
+    case 'Ended':
+      return '방영 종료';
+    case 'In Production':
+      return '제작 중';
+    case 'Pilot':
+      return '파일럿';
+    case 'Returning Series':
+      return '다음 시즌 방영 예정';
+    default:
+      return '정보 없음';
   }
 }

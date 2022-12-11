@@ -11,7 +11,7 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
   RxString? get headerContentDesc => passedArgument.description.hasData
       ? passedArgument.description!.obs
-      : _contentDescriptionInfo.value?.overView.obs;
+      : _youtubeVideoContentInfo.value?.videoTitle.obs;
 
   // 컨텐츠 제목
   RxString? get headerTitle => passedArgument.title.hasData
@@ -22,12 +22,11 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   String? get rate => _contentDescriptionInfo.value?.rate.toString();
 
   // 컨텐츠 장르 리스트
-  String? get genre =>
-      Formatter.formatGenreListToSingleStr(_contentDescriptionInfo.value?.genreList);
+  String? get genre => Formatter.formatGenreListToSingleStr(
+      _contentDescriptionInfo.value?.genreList);
 
   // 컨텐츠 개봉일
   String? get releaseDate => _contentDescriptionInfo.value?.releaseDate != null
       ? Formatter.dateToyyMMdd(_contentDescriptionInfo.value!.releaseDate)
       : null;
-
 }

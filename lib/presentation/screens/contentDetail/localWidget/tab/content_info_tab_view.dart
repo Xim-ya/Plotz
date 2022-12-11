@@ -17,7 +17,6 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
       children: <Widget>[
         const SectionTitle(title: '출연진', setLeftPadding: true),
         // 출연진 - PageView Slider
-        // 5
         Obx(
           () => CarouselSlider.builder(
             itemCount: vm.contentCreditList.hasData ? vm.sliderCount : 2,
@@ -116,14 +115,15 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  elseInfoItem(title: '방영상태', content: '종영'),
-                  elseInfoItem(title: '총 좋아요 수', content: '1.7천'),
+                  elseInfoItem(
+                      title: '방영상태', content: vm.contentAirStatus ?? '-'),
+                  elseInfoItem(title: '총 좋아요 수', content: vm.totalViewCount ?? '-'),
                 ],
               ),
               Row(
                 children: <Widget>[
-                  elseInfoItem(title: '총 조회수', content: '81만'),
-                  elseInfoItem(title: '영상 업로드일', content: '2022.11.13'),
+                  elseInfoItem(title: '총 조회수', content: vm.likesCount ?? ''),
+                  elseInfoItem(title: '영상 업로드일', content: vm.youtubeUploadDate ?? ''),
                 ],
               ),
             ],
@@ -172,19 +172,19 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
   // 기타정보 > 리스트 아이템
   Expanded elseInfoItem({required String title, required String content}) {
     return Expanded(
-      child: Text.rich(
-        TextSpan(
-          children: <TextSpan>[
-            TextSpan(
-              text: title,
-              style: AppTextStyle.body2.copyWith(color: Colors.white),
-            ),
-            TextSpan(
-              text: ' : $content',
-              style: AppTextStyle.body2,
-            ),
-          ],
-        ),
+      child: Row(
+        children: <Widget>[
+          Text(title, style: AppTextStyle.body2.copyWith(color: Colors.white),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          ),
+          Text(
+            ' : $content',
+            style: AppTextStyle.body2.copyWith(color: Colors.white),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          )
+        ],
       ),
     );
   }

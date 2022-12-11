@@ -18,7 +18,7 @@ class Formatter {
       return '-';
     }
     final strNum = '$num';
-    if (num! <= 1000) {
+    if (num <= 1000) {
       return num.toString();
     } else if (num > 1000 && num < 10000) {
       final subString = strNum.substring(0, 2);

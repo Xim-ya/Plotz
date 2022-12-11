@@ -114,7 +114,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
               ],
             ),
             AppSpace.size8,
-            // 컨텐츠 설명 - (유튜브 영상 제목 or TMDB 컨텐츠 설명)
+            // 컨텐츠 설명 - (유튜브 영상 제목)
             Obx(() => vm.headerContentDesc.hasData
                 ? Text(
                     vm.headerContentDesc!.value,

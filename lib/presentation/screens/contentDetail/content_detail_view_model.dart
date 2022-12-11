@@ -14,7 +14,7 @@ part 'controllerResources/content_info_view_model.part.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
 part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 싱글 컨텐츠 탭뷰 영역
-part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 탭뷰 영역
+part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(
@@ -39,15 +39,6 @@ class ContentDetailViewModel extends BaseViewModel {
   /* [UseCase] */
   final LoadContentMainDescriptionUseCase _loadContentMainDescription;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
-
-  // final Map<int, List<ContentCreditInfo>> aim  = {
-  //   0 : [
-  //     ContentCreditInfo(profilePath: profilePath, name: name, role: role),
-  //     ContentCreditInfo(profilePath: profilePath, name: name, role: role),
-  //     ContentCreditInfo(profilePath: profilePath, name: name, role: role),
-  //   ],
-  //   1: []
-  // };
 
   /* [Intent ] */
 

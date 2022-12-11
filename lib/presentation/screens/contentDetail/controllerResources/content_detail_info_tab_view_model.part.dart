@@ -5,6 +5,17 @@ part of '../content_detail_view_model.dart';
  * */
 
 extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
+
+
+  // 총 조회수
+  String? get totalViewCount =>  Formatter.formatViewAndLikeCount(
+    youtubeVideoContentInfo?.viewCount,
+    isViewCount: false,
+  );
+
+  //방영상태
+  String? get contentAirStatus => _contentDescriptionInfo.value?.airStatus;
+
   // 출연진 정보
   List<ContentCreditInfo>? get contentCreditList => _contentCreditList.value;
 
