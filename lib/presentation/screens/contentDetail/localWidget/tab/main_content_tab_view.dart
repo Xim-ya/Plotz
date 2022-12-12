@@ -1,5 +1,6 @@
 import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
+import 'package:uppercut_fantube/utilities/extensions/tmdb_img_path_extension.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
@@ -7,94 +8,153 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *  단일 에피소드 여부에 따라 탭뷰 영역 자체를 다르게 반환.
  * */
 
-class SingleEpisodeContentTabView extends BaseView<ContentDetailViewModel> {
-  const SingleEpisodeContentTabView({Key? key}) : super(key: key);
+class MainContentTabView extends BaseView<ContentDetailViewModel> {
+  const MainContentTabView({Key? key}) : super(key: key);
 
   @override
   Widget buildView(BuildContext context) =>
       _SingleEpisodeContentTabViewScaffold(
-        youtubeContentSection: buildYoutubeContentSection(),
+        youtubeContentSection: Obx(() => vm.isSeasonEpisodeContent
+            ? buildEpisodeYoutubeContentSection()
+            : buildSingleEpisodeYoutubeContentSection()),
         descriptionSection: buildDescriptionSection(),
         commentSection: buildCommentSection(),
       );
 
-  // 유튜브 컨텐츠 영상 썸네일
-  // 좋아요 & 조회수 & 업로드 일자
-  List<Widget> buildYoutubeContentSection() => [
+  Widget buildEpisodeYoutubeContentSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SectionTitle(title: '시즌 에피소드'),
         Obx(
-          () => VideoThumbnailImgWithPlayerBtn(
-            onPlayerBtnClicked: () {
-              vm.launchYoutubeApp();
-            },
-            posterImgUrl: vm.youtubeImgThumbnailUrl?.value,
-          ),
-        ),
-        AppSpace.size4,
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
+          () => ListView.separated(
+            itemCount: vm.contentEpisodeList?.length ?? 0,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final episodeItem = vm.contentEpisodeList![index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Opacity(
-                    opacity: 1,
-                    child: Icon(
-                      Icons.thumb_up,
-                      color: Colors.white,
-                      size: 22,
-                    ),
+                  Text(
+                    '시즌 ${episodeItem.seasonNumber}',
+                    style: AppTextStyle.body1,
                   ),
-                  AppSpace.size4,
-                  Obx(
-                    () => vm.likesCount.hasData
-                        ? Text(
-                            vm.likesCount!,
-                            style: AppTextStyle.body3,
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.only(left: 2),
-                            child: Shimmer(
-                              color: AppColor.lightGrey,
-                              child: const SizedBox(
-                                height: 16,
-                                width: 20,
-                              ),
-                            ),
-                          ),
+                  AppSpace.size2,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: (SizeConfig.to.screenWidth - 32) * 0.397,
+                        child: VideoThumbnailImgWithPlayerBtn(
+                          aspectRatio: 2 / 3,
+                          onPlayerBtnClicked: () {
+                            vm.launchYoutubeApp(episodeItem.youtubeVideoId);
+                          },
+                          posterImgUrl:
+                              episodeItem.posterUrl.returnWithTmdbImgPath,
+                        ),
+                      ),
+                      AppSpace.size10,
+                      Flexible(
+                        child: Text(
+                          episodeItem.overview,
+                          style: AppTextStyle.alert2,
+                        ),
+                      )
+                    ],
                   ),
                 ],
-              ),
-              Obx(
-                () => vm.viewCount.hasData && vm.youtubeUploadDate.hasData
-                    ? Text(
-                        '조회수 ${vm.viewCount} · ${vm.youtubeUploadDate}',
-                        style: AppTextStyle.body3,
-                      )
-                    : Row(
-                        children: <Widget>[
-                          Shimmer(
-                            child: Container(
-                              color: AppColor.lightGrey.withOpacity(0.1),
-                              height: 16,
-                              width: 70,
-                            ),
-                          ),
-                          AppSpace.size6,
-                          Shimmer(
-                            child: Container(
-                              color: AppColor.skeletonGrey,
-                              height: 16,
-                              width: 36,
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-            ],
+              );
+            },
+            separatorBuilder: (_, __) => AppSpace.size16,
           ),
         ),
-      ];
+      ],
+    );
+  }
+
+  // 유튜브 컨텐츠 영상 썸네일
+  // 좋아요 & 조회수 & 업로드 일자
+  Widget buildSingleEpisodeYoutubeContentSection() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SectionTitle(title: '컨텐츠'),
+          Obx(
+            () => VideoThumbnailImgWithPlayerBtn(
+              onPlayerBtnClicked: () {
+                vm.launchYoutubeApp('');
+              },
+              posterImgUrl: vm.youtubeImgThumbnailUrl?.value,
+            ),
+          ),
+          AppSpace.size4,
+          SizedBox(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    const Opacity(
+                      opacity: 1,
+                      child: Icon(
+                        Icons.thumb_up,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                    AppSpace.size4,
+                    Obx(
+                      () => vm.youtubeVideoContentInfo.hasData
+                          ? Text(
+                              vm.likesCount!,
+                              style: AppTextStyle.body3,
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: Shimmer(
+                                color: AppColor.lightGrey,
+                                child: const SizedBox(
+                                  height: 16,
+                                  width: 20,
+                                ),
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
+                Obx(
+                  () => vm.youtubeVideoContentInfo.hasData
+                      ? Text(
+                          '조회수 ${vm.viewCount} · ${vm.youtubeUploadDate}',
+                          style: AppTextStyle.body3,
+                        )
+                      : Row(
+                          children: <Widget>[
+                            Shimmer(
+                              child: Container(
+                                color: AppColor.lightGrey.withOpacity(0.1),
+                                height: 16,
+                                width: 70,
+                              ),
+                            ),
+                            AppSpace.size6,
+                            Shimmer(
+                              child: Container(
+                                color: AppColor.skeletonGrey,
+                                height: 16,
+                                width: 36,
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
 
   // 컨텐츠 설명(TMDB)
   Widget buildDescriptionSection() => Obx(
@@ -246,7 +306,7 @@ class _SingleEpisodeContentTabViewScaffold extends StatelessWidget {
       required this.commentSection})
       : super(key: key);
 
-  final List<Widget> youtubeContentSection;
+  final Widget youtubeContentSection;
   final Widget descriptionSection;
   final Widget commentSection;
 
@@ -257,8 +317,7 @@ class _SingleEpisodeContentTabViewScaffold extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const SectionTitle(title: '컨텐츠'),
-          for (final widget in youtubeContentSection) widget,
+          youtubeContentSection,
           AppSpace.size40,
           const SectionTitle(title: '설명'),
           descriptionSection,

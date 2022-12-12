@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
 import 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
 import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
@@ -40,6 +41,9 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠 이미지 리스트
   final Rxn<List<String>> _contentImgUrlList = Rxn();
 
+  // 컨텐츠 에피소드 정보 리스트
+  final Rxn<List<ContentEpisodeInfoItem>> _contentEpisodeList = Rxn();
+
   /* [UseCase] */
   final LoadContentMainDescriptionUseCase _loadContentMainDescription;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
@@ -48,6 +52,28 @@ class ContentDetailViewModel extends BaseViewModel {
   /* [Intent ] */
 
   /// Networking Method
+
+  // 컨텐츠 에피소드 정보 호출 (시즌 컨텐츠인 경우에만 호출)
+  Future<void> fetchEpisodeItemList() async {
+    print("발동 ${isSeasonEpisodeContent}");
+    if (isSeasonEpisodeContent) {
+      print("발동1");
+      final responseResult =
+          await ContentRepository.to.loadContentEpisodeItemList();
+      responseResult.fold(
+        onSuccess: (data) {
+          _contentEpisodeList.value = data;
+        },
+        onFailure: (e) {
+          AlertWidget.toast('컨텐츠 시즌 리스트 정보를 불러들이는 데 실패했습니다');
+          log(e.toString());
+        },
+      );
+    } else {
+      print("발동2");
+      return;
+    }
+  }
 
   // 컨텐츠 이미지 리스트 호출
   Future<void> fetchContentImgList() async {
@@ -112,6 +138,7 @@ class ContentDetailViewModel extends BaseViewModel {
     responseResult.fold(
       onSuccess: (data) {
         _youtubeVideoContentInfo.value = data;
+        fetchEpisodeItemList();
       },
       onFailure: (e) {
         log(e.toString());
@@ -121,9 +148,9 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
-  Future<void> launchYoutubeApp() async {
+  Future<void> launchYoutubeApp(String youtubeVideoId) async {
     if (!await launchUrl(
-        Uri.parse('https://www.youtube.com/watch?v=${youtubeContentId ?? ''}'),
+        Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
         mode: LaunchMode.externalApplication)) {
       throw 'Could not launch ';
     }
@@ -145,9 +172,9 @@ class ContentDetailViewModel extends BaseViewModel {
   String get youtubeContentId => passedArgument.youtubeId;
 
   // [ContentSeasonType]의 single 여부
-  bool get isSingleEpisodeContent =>
+  bool get isSeasonEpisodeContent =>
       _contentDescriptionInfo.value?.contentEpicType ==
-      ContentSeasonType.single;
+      ContentSeasonType.series;
 
   // 홈 스크린에서 전달 받은 Argument
   ContentDetailParam get passedArgument => Get.arguments;

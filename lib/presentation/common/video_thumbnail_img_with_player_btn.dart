@@ -7,21 +7,26 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
-  const VideoThumbnailImgWithPlayerBtn({
-    Key? key,
-    required this.onPlayerBtnClicked,
-    required this.posterImgUrl,
-  }) : super(key: key);
+  const VideoThumbnailImgWithPlayerBtn(
+      {Key? key,
+      required this.onPlayerBtnClicked,
+      required this.posterImgUrl,
+      this.showPlayerBtn = true,
+      this.aspectRatio = 16/9
+      })
+      : super(key: key);
 
   final VoidCallback onPlayerBtnClicked;
   final String? posterImgUrl;
+  final bool showPlayerBtn;
+  final double aspectRatio;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         AspectRatio(
-          aspectRatio: 16 / 9,
+          aspectRatio: aspectRatio,
           child: posterImgUrl != null
               ? CachedNetworkImage(
                   imageUrl: posterImgUrl!,
@@ -29,7 +34,7 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.fitWidth),
+                          image: imageProvider, fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
@@ -49,15 +54,16 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
                   ),
                 ),
         ),
-        Positioned.fill(
-          child: Align(
-            child: IconInkWellButton(
-              iconPath: 'assets/icons/play.svg',
-              iconSize: 54,
-              onIconTapped: onPlayerBtnClicked,
+        if (showPlayerBtn == true)
+          Positioned.fill(
+            child: Align(
+              child: IconInkWellButton(
+                iconPath: 'assets/icons/play.svg',
+                iconSize: 54,
+                onIconTapped: onPlayerBtnClicked,
+              ),
             ),
-          ),
-        ),
+          )
       ],
     );
   }

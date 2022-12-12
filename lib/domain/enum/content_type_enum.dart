@@ -15,4 +15,12 @@ enum ContentSeasonType {
       return ContentSeasonType.series;
     }
   }
+
+  static bool isSeriesContent(ContentSeasonType type) {
+    if(type == ContentSeasonType.series) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

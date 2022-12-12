@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -9,6 +10,8 @@ abstract class ContentRepository {
   Future<Result<ContentMainInfo>> loadContentMainInfo();
 
   Future<Result<List<TopExposedContent>>> loadTopExposedContent();
+
+  Future<Result<List<ContentEpisodeInfoItem>>> loadContentEpisodeItemList();
 
 
   static ContentRepository get to => Get.find();

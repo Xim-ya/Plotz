@@ -134,39 +134,40 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
         AppSpace.size40,
         const SectionTitle(title: '컨텐츠 이미지', setLeftPadding: true),
         SizedBox(
-          height: 186,
-          child: Obx(() =>  ListView.separated(
-              separatorBuilder: (__, _) => AppSpace.size10,
-              padding: const EdgeInsets.only(left: 16),
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: vm.contentImgUrlList?.length ?? 0,
-              itemBuilder: (context, index) {
-                final imgItem = vm.contentImgUrlList![index];
-                return CachedNetworkImage(
-                  fit: BoxFit.contain,
-                  imageUrl: imgItem.returnWithTmdbImgPath,
-                  height: 100,
-                  width: SizeConfig.to.screenWidth - 32,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.fitWidth,
+            height: 186,
+            child: Obx(
+              () => ListView.separated(
+                  separatorBuilder: (__, _) => AppSpace.size10,
+                  padding: const EdgeInsets.only(left: 16),
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: vm.contentImgUrlList?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final imgItem = vm.contentImgUrlList![index];
+                    return CachedNetworkImage(
+                      fit: BoxFit.contain,
+                      imageUrl: imgItem.returnWithTmdbImgPath,
+                      height: 100,
+                      width: SizeConfig.to.screenWidth - 32,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  placeholder: (context, url) => Shimmer(
-                    child: Container(
-                      color: AppColor.black,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
-                );
-              }),)
-        )
+                      placeholder: (context, url) => Shimmer(
+                        child: Container(
+                          color: AppColor.black,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Center(child: Icon(Icons.error)),
+                    );
+                  }),
+            ))
       ],
     );
   }
@@ -187,7 +188,7 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
             style: AppTextStyle.body2.copyWith(color: Colors.white),
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-          )
+          ),
         ],
       ),
     );

@@ -1,6 +1,5 @@
+import 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
-
-
 
 class ContentRepositoryImpl implements ContentRepository {
   ContentRepositoryImpl(this._contentDataSource);
@@ -41,6 +40,18 @@ class ContentRepositoryImpl implements ContentRepository {
   Future<Result<List<TopExposedContent>>> loadTopExposedContent() async {
     try {
       final response = await _contentDataSource.loadTopExposedContentList();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  // 컨텐츠 에피소드 아이템 리스트
+  @override
+  Future<Result<List<ContentEpisodeInfoItem>>>
+      loadContentEpisodeItemList() async {
+    try {
+      final response = await _contentDataSource.loadContentEpisodeItemList();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
