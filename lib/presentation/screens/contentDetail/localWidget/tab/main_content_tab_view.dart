@@ -28,44 +28,108 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
         const SectionTitle(title: '시즌 에피소드'),
         Obx(
           () => ListView.separated(
-            itemCount: vm.contentEpisodeList?.length ?? 0,
+            itemCount: vm.contentEpisodeList?.length ?? 2,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              final episodeItem = vm.contentEpisodeList![index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    '시즌 ${episodeItem.seasonNumber}',
-                    style: AppTextStyle.body1,
-                  ),
-                  AppSpace.size2,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        width: (SizeConfig.to.screenWidth - 32) * 0.397,
-                        child: VideoThumbnailImgWithPlayerBtn(
-                          aspectRatio: 2 / 3,
-                          onPlayerBtnClicked: () {
-                            vm.launchYoutubeApp(episodeItem.youtubeVideoId);
-                          },
-                          posterImgUrl:
-                              episodeItem.posterUrl.returnWithTmdbImgPath,
+              if (vm.contentEpisodeList.hasData) {
+                final episodeItem = vm.contentEpisodeList![index];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '시즌 ${episodeItem.seasonNumber}',
+                      style: AppTextStyle.body1,
+                    ),
+                    AppSpace.size2,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: (SizeConfig.to.screenWidth - 32) * 0.397,
+                          child: VideoThumbnailImgWithPlayerBtn(
+                            aspectRatio: 2 / 3,
+                            onPlayerBtnClicked: () {
+                              vm.launchYoutubeApp(episodeItem.youtubeVideoId);
+                            },
+                            posterImgUrl:
+                                episodeItem.posterUrl.returnWithTmdbImgPath,
+                          ),
                         ),
+                        AppSpace.size10,
+                        Flexible(
+                          child: Text(
+                            episodeItem.overview,
+                            style: AppTextStyle.body3,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Shimmer(
+                      child: const SizedBox(
+                        height: 10,
+                        width: 56,
                       ),
-                      AppSpace.size10,
-                      Flexible(
-                        child: Text(
-                          episodeItem.overview,
-                          style: AppTextStyle.alert2,
+                    ),
+                    AppSpace.size2,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: SizedBox(
+                            width: (SizeConfig.to.screenWidth - 32) * 0.397,
+                            child: Shimmer(
+                              child: const AspectRatio(aspectRatio: 2 / 3),
+                            ),
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                ],
-              );
+                        AppSpace.size10,
+                        Column(
+                          children: [
+                            Shimmer(
+                              child: SizedBox(
+                                height: 16,
+                                width: SizeConfig.to.screenWidth -
+                                    ((SizeConfig.to.screenWidth - 32) * 0.397) -
+                                    10 -
+                                    32,
+                              ),
+                            ),
+                            AppSpace.size2,
+                            Shimmer(
+                              child: SizedBox(
+                                height: 16,
+                                width: SizeConfig.to.screenWidth -
+                                    ((SizeConfig.to.screenWidth - 32) * 0.397) -
+                                    10 -
+                                    32,
+                              ),
+                            ),
+                            AppSpace.size2,
+                            Shimmer(
+                              child: SizedBox(
+                                height: 16,
+                                width: SizeConfig.to.screenWidth -
+                                    ((SizeConfig.to.screenWidth - 32) * 0.397) -
+                                    10 -
+                                    32,
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }
             },
             separatorBuilder: (_, __) => AppSpace.size16,
           ),
