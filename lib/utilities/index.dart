@@ -41,9 +41,12 @@ export 'package:uppercut_fantube/app/modules/presentation_modules.dart';
 
 // Data
 export 'package:uppercut_fantube/data/repository/youtube/youtube_repository.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
 export 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
-export 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
-export 'package:uppercut_fantube/data/api/tmdb/tmdb_api.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/tmdb_api.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_images_response.dart';
 export 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
 export 'package:uppercut_fantube/data/dataSource/content/content_data_source_impl.dart';
 export 'package:uppercut_fantube/data/dataSource/tmdb/tmdb_data_source.dart';
@@ -54,6 +57,10 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository.dart';
 export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart';
 
 // Domain
+export 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
+export 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
+export 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
+export 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
 export 'package:uppercut_fantube/domain/useCase/content/load_content_main_info_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_main_description_use_case.dart';
@@ -91,6 +98,7 @@ export 'package:uppercut_fantube/presentation/screens/home/home_scaffold.dart';
 export 'package:uppercut_fantube/presentation/screens/home/home_view_model.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_binding.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_screen.dart';
+export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tab/main_content_tab_view.dart';
 
 
 
@@ -100,6 +108,10 @@ export 'package:uppercut_fantube/utilities/constants/bottom_navigation_constants
 export 'package:uppercut_fantube/utilities/api_error_handler_mixin.dart';
 export 'package:uppercut_fantube/utilities/result.dart';
 export 'package:uppercut_fantube/utilities/youtube_meta_data.dart';
+export 'package:uppercut_fantube/app/config/app_insets.dart';
+export 'package:flutter_styled_toast/flutter_styled_toast.dart';
+export 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
+export 'package:uppercut_fantube/utilities/extensions/tmdb_img_path_extension.dart';
 
 
 

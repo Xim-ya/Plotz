@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:get/get.dart';
-import 'package:uppercut_fantube/app/config/app_insets.dart';
-import 'package:uppercut_fantube/app/config/color_config.dart';
-import 'package:uppercut_fantube/app/config/font_config.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.10
  * toast과

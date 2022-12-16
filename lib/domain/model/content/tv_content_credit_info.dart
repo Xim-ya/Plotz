@@ -1,6 +1,7 @@
-import 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 // Credit 데이터 모델 (출연진 및 제작자)
+
 class ContentCreditInfo {
   final String? profilePath; // 프로필 이미지
   final String name; // 이름
@@ -16,6 +17,8 @@ class ContentCreditInfo {
           role: _departmentTranslateMapping(response.known_for_department));
 }
 
+/// 특정 TMDB API에서 한국어를 지원안하는 경우가 있기 때문에
+/// 따로 매핑 로직을 만듦
 String _departmentTranslateMapping(String departmentOnEng) {
   switch (departmentOnEng) {
     case 'Acting':

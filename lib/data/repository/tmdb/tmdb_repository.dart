@@ -1,5 +1,3 @@
-
-import 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22

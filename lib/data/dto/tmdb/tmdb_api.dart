@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
-import 'package:uppercut_fantube/data/api/tmdb/response/newResponse/tmdb_tv_images_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'tmdb_api.g.dart';

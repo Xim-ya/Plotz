@@ -1,5 +1,3 @@
-import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tab/main_content_tab_view.dart';
-import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {

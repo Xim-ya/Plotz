@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'package:intl/intl.dart';
-import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'home_view_model.part.dart';

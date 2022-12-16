@@ -1,5 +1,3 @@
-
-
 import 'package:uppercut_fantube/utilities/index.dart';
 
 enum BottomNavigationConstants {

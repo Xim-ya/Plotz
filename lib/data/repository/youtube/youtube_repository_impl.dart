@@ -1,5 +1,3 @@
-import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
-import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class YoutubeRepositoryImpl extends YoutubeRepository {
