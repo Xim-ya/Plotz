@@ -1,21 +1,9 @@
 import 'dart:developer';
-import 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
-import 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
-import 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
-import 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
-import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_credit_info_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/tmdb/load_content_img_list_use_case.dart';
-import 'package:uppercut_fantube/presentation/common/alert_widget.dart';
-import 'package:uppercut_fantube/utilities/extensions/check_null_state_extension.dart';
-import 'package:uppercut_fantube/utilities/formatter.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResources/content_detail_view_model.part.dart';
-
-part 'controllerResources/content_info_view_model.part.dart';
-
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
-part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 싱글 컨텐츠 탭뷰 영역
+part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 컨텐츠 탭뷰 영역
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
 
 class ContentDetailViewModel extends BaseViewModel {

@@ -1,14 +1,16 @@
 part of '../content_detail_view_model.dart';
 
 /** Crated By Ximya - 2022.12.10
- *  [ContentSeasonType] 이 [single] 일 때
- *  컨텐츠 탭에 보여지는 컨트롤러 리소스
+ *  컨텐츠 탭뷰에 사용되는 컨트롤러 리소스
  * */
 
 extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
    // 컨텐츠 에피소드 리스트
   List<ContentEpisodeInfoItem>? get contentEpisodeList => _contentEpisodeList.value;
 
+
+  // 컨텐츠 댓글 리스트
+  List<YoutubeContentComment>? get commentList => _contentCommentList.value;
 
 
   /// 유튜브 컨텐츠 썸네일 이미지
@@ -19,17 +21,20 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
 
   // 유튜브 컨텐츠 좋아요 수
   String? get likesCount =>
-      Formatter.formatViewAndLikeCount(youtubeVideoContentInfo?.likeCount);
+      Formatter.formatViewAndLikeCount(_youtubeVideoContentInfo.value?.likeCount);
 
   // 유튜브 컨텐츠 조회수
   String? get viewCount => Formatter.formatViewAndLikeCount(
-        youtubeVideoContentInfo?.viewCount,
+    _youtubeVideoContentInfo.value?.viewCount,
         isViewCount: true,
       );
 
   // 유튜브 컨텐츠 업로드 일자
-  String? get youtubeUploadDate => Formatter.getDateDifferenceFromNow(youtubeVideoContentInfo?.uploadDate);
+  String? get youtubeUploadDate => Formatter.getDateDifferenceFromNow(_youtubeVideoContentInfo.value?.uploadDate);
 
   // 컨텐츠 설명
   String? get contentOverView => _contentDescriptionInfo.value?.overView;
+
+  // 시즌 에피소드 섹션 포스터 이미지 넓이
+  double get seasonEpisodeImgWidth =>  (SizeConfig.to.screenWidth - 32) * 0.397;
 }

@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
@@ -43,7 +44,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          width: (SizeConfig.to.screenWidth - 32) * 0.397,
+                          width: vm.seasonEpisodeImgWidth,
                           child: VideoThumbnailImgWithPlayerBtn(
                             aspectRatio: 2 / 3,
                             onPlayerBtnClicked: () {
@@ -81,7 +82,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(6),
                           child: SizedBox(
-                            width: (SizeConfig.to.screenWidth - 32) * 0.397,
+                            width: vm.seasonEpisodeImgWidth,
                             child: Shimmer(
                               child: const AspectRatio(aspectRatio: 2 / 3),
                             ),
@@ -90,36 +91,23 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                         AppSpace.size10,
                         Column(
                           children: [
-                            Shimmer(
-                              child: SizedBox(
-                                height: 16,
-                                width: SizeConfig.to.screenWidth -
-                                    ((SizeConfig.to.screenWidth - 32) * 0.397) -
-                                    10 -
-                                    32,
-                              ),
+                            SkeletonBox(
+                              height: 16,
+                              width: SizeConfig.to.screenWidth -
+                                  vm.seasonEpisodeImgWidth - 42,
                             ),
                             AppSpace.size2,
-                            Shimmer(
-                              child: SizedBox(
-                                height: 16,
-                                width: SizeConfig.to.screenWidth -
-                                    ((SizeConfig.to.screenWidth - 32) * 0.397) -
-                                    10 -
-                                    32,
-                              ),
+                            SkeletonBox(
+                              height: 16,
+                              width: SizeConfig.to.screenWidth -
+                                  vm.seasonEpisodeImgWidth - 42,
                             ),
                             AppSpace.size2,
-                            Shimmer(
-                              child: SizedBox(
-                                height: 16,
-                                width: SizeConfig.to.screenWidth -
-                                    ((SizeConfig.to.screenWidth - 32) * 0.397) -
-                                    10 -
-                                    32,
-                              ),
+                            SkeletonBox(
+                              height: 16,
+                              width: SizeConfig.to.screenWidth -
+                                  vm.seasonEpisodeImgWidth - 42,
                             ),
-
                           ],
                         ),
                       ],
@@ -167,7 +155,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                     ),
                     AppSpace.size4,
                     Obx(
-                      () => vm.youtubeVideoContentInfo.hasData
+                      () => vm.likesCount.hasData
                           ? Text(
                               vm.likesCount!,
                               style: AppTextStyle.body3,
@@ -186,7 +174,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                   ],
                 ),
                 Obx(
-                  () => vm.youtubeVideoContentInfo.hasData
+                  () => vm.viewCount.hasData && vm.youtubeUploadDate.hasData
                       ? Text(
                           '조회수 ${vm.viewCount} · ${vm.youtubeUploadDate}',
                           style: AppTextStyle.body3,
@@ -247,7 +235,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
           itemCount: vm.commentList?.length ?? 20,
           itemBuilder: (context, index) {
             /// 로딩중일 경우 skeletone 처리
-            if (vm.commentList == null) {
+            if (vm.commentList.hasData) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

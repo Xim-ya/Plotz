@@ -12,7 +12,7 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
 
   // 총 조회수
   String? get totalViewCount =>  Formatter.formatViewAndLikeCount(
-    youtubeVideoContentInfo?.viewCount,
+    _youtubeVideoContentInfo.value?.viewCount,
     isViewCount: false,
   );
 
