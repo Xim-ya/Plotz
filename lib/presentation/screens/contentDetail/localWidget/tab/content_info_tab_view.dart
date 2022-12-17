@@ -41,7 +41,7 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
                       children: <Widget>[
                         RoundProfileImg(
                           size: 62,
-                          imgUrl: creditItem.profilePath?.returnWithTmdbImgPath,
+                          imgUrl: creditItem.profilePath?.prefixTmdbImgPath,
                         ),
                         AppSpace.size14,
                         Column(
@@ -143,7 +143,7 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
                     final imgItem = vm.contentImgUrlList![index];
                     return CachedNetworkImage(
                       fit: BoxFit.contain,
-                      imageUrl: imgItem.returnWithTmdbImgPath,
+                      imageUrl: imgItem.prefixTmdbImgPath,
                       height: 100,
                       width: SizeConfig.to.screenWidth - 32,
                       imageBuilder: (context, imageProvider) => Container(

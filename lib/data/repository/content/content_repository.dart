@@ -8,9 +8,13 @@ import 'package:uppercut_fantube/utilities/index.dart';
 abstract class ContentRepository {
   Future<Result<ContentMainInfo>> loadContentMainInfo();
 
-  Future<Result<List<TopExposedContent>>> loadTopExposedContent();
+  Future<Result<List<PosterExposureContent>>> loadTopExposedContent();
 
   Future<Result<List<ContentEpisodeInfoItem>>> loadContentEpisodeItemList();
+
+  Future<Result<List<PosterExposureContent>>> loadTopTenContentList();
+
+  Future<Result<List<CategoryBaseContentList>>> loadContentListWithCategory();
 
 
   static ContentRepository get to => Get.find();

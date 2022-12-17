@@ -8,13 +8,14 @@ class ContentDataSourceImpl
     implements ContentDataSource {
   // 상단 노출 컨텐츠 리스트
   @override
-  Future<List<TopExposedContent>> loadTopExposedContentList() async {
+  Future<List<PosterExposureContent>> loadTopExposedContentList() async {
     // 임시 Json Mock up Data
+    // top_ten_content_list.json
     var jsonText = await rootBundle
         .loadString('assets/mocks/home_top_section_content_list.json');
     Map<String, dynamic> data = json.decode(jsonText);
     List<dynamic> aim = data['items'];
-    return aim.map((e) => TopExposedContent.fromJson(e)).toList();
+    return aim.map((e) => PosterExposureContent.fromJson(e)).toList();
 
     // final responseValue = ChannelImagesDescriptionsReswponse.fromJson(data);
     // return responseValue;
@@ -29,5 +30,28 @@ class ContentDataSourceImpl
     Map<String, dynamic> data = json.decode(jsonText);
     List<dynamic> aim = data['episode'];
     return aim.map((e) => ContentEpisodeInfoItem.fromJson(e)).toList();
+  }
+
+  // Top10 컨텐츠 리스트 호출
+  @override
+  Future<List<PosterExposureContent>> loadTopTenContentList() async {
+    // 임시 Json Mock up Data
+    // top_ten_content_list.json
+    var jsonText =
+        await rootBundle.loadString('assets/mocks/top_ten_content_list.json');
+    Map<String, dynamic> data = json.decode(jsonText);
+    List<dynamic> aim = data['items'];
+    return aim.map((e) => PosterExposureContent.fromJson(e)).toList();
+  }
+
+  @override
+  Future<List<CategoryBaseContentList>> loadContentWithCategory() async {
+    // 임시 Json Mock up Data
+    // top_ten_content_list.json
+    var jsonText = await rootBundle
+        .loadString('assets/mocks/category_base_content_list.json');
+    Map<String, dynamic> data = json.decode(jsonText);
+    List<dynamic> aim = await data['items'];
+    return aim.map((e) => CategoryBaseContentList.fromJson(e)).toList();
   }
 }

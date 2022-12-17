@@ -5,10 +5,13 @@
 
 enum ContentSeasonType {
   single,
-  series;
+  series,
+  notFound;
 
-
-  factory ContentSeasonType.fromSeasonCount(int seasonNum) {
+  factory ContentSeasonType.fromSeasonCount(int? seasonNum) {
+    if (seasonNum == null) {
+      return ContentSeasonType.notFound;
+    }
     if (seasonNum <= 1) {
       return ContentSeasonType.single;
     } else {
@@ -17,7 +20,7 @@ enum ContentSeasonType {
   }
 
   static bool isSeriesContent(ContentSeasonType type) {
-    if(type == ContentSeasonType.series) {
+    if (type == ContentSeasonType.series) {
       return true;
     } else {
       return false;

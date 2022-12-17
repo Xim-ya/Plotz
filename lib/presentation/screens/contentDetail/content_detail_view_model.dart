@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-part 'controllerResources/content_detail_view_model.part.dart';
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
 part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 컨텐츠 탭뷰 영역
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
@@ -43,9 +42,7 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 컨텐츠 에피소드 정보 호출 (시즌 컨텐츠인 경우에만 호출)
   Future<void> fetchEpisodeItemList() async {
-    print("발동 ${isSeasonEpisodeContent}");
     if (isSeasonEpisodeContent) {
-      print("발동1");
       final responseResult =
           await ContentRepository.to.loadContentEpisodeItemList();
       responseResult.fold(
@@ -58,7 +55,6 @@ class ContentDetailViewModel extends BaseViewModel {
         },
       );
     } else {
-      print("발동2");
       return;
     }
   }
@@ -137,6 +133,7 @@ class ContentDetailViewModel extends BaseViewModel {
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
   Future<void> launchYoutubeApp(String youtubeVideoId) async {
+    log('정상 런치 실패');
     if (!await launchUrl(
         Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
         mode: LaunchMode.externalApplication)) {

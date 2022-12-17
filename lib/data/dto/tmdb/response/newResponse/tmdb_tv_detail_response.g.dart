@@ -23,7 +23,7 @@ TmdbTvDetailResponse _$TmdbTvDetailResponseFromJson(
       json['number_of_seasons'] as int,
       json['original_name'] as String,
       json['overview'] as String,
-      json['poster_path'] as String,
+      json['poster_path'] as String?,
       (json['seasons'] as List<dynamic>)
           .map((e) => SeasonResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -39,7 +39,7 @@ SeasonResponse _$SeasonResponseFromJson(Map<String, dynamic> json) =>
       json['id'] as int,
       json['name'] as String,
       json['overview'] as String,
-      json['poster_path'] as String,
+      json['poster_path'] as String?,
       json['season_number'] as int,
     );
 

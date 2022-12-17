@@ -36,6 +36,10 @@ abstract class TmdbApi {
       '/tv/{tvId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
   Future<TmdbTvImagesResponse> loadTvImages(@Path('tvId') int tvId);
 
+
+
+
+
 // @GET(
 //     '/movie/{movieId}/similar?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
 // Future<TmdbMovieResponse> loadSimilarMovieList(@Path('movieId') int movieId);

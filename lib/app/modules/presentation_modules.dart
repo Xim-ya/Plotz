@@ -10,6 +10,5 @@ abstract class PresentationModules {
 
     // 컨텐츠 상세화면
     Get.lazyPut(() => ContentDetailScaffoldController(), fenix: true);
-
   }
 }

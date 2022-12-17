@@ -7,11 +7,17 @@ class HomeViewModel extends BaseViewModel {
   /// 임시
   final ContentDataSource _dataSource;
 
-  HomeViewModel(this._dataSource, this._loadTopExposedContentList);
+  HomeViewModel(this._dataSource, this._loadTopExposedContentList,);
 
   /* [Variables] */
+
   /// Data
-  final Rxn<List<TopExposedContent>> _topExposedContentList = Rxn();
+  final Rxn<List<PosterExposureContent>> _topExposedContentList =
+      Rxn(); // 상단 노출 컨텐츠
+  final Rxn<List<PosterExposureContent>> topTenContentList =
+      Rxn(); // Top 10 컨텐츠
+  final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
+      Rxn(); // 카테고리 및 카테고리 컨텐츠
 
   /// State
   late double scrollOffset = 0;
@@ -67,6 +73,32 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  // Top10 컨텐츠 리스트 호출
+  Future<void> _fetchTopTenContentList() async {
+    // final responseResult = await _loadTopTenContentListUseCase();
+    final responseResult = await ContentRepository.to.loadTopTenContentList();
+    responseResult.fold(
+      onSuccess: (data) {
+        topTenContentList.value = data;
+      },
+      onFailure: (e) {
+        log(e.toString());
+      },
+    );
+  }
+
+  // 카테고리 & 해당 카테고리 컨텐츠 리스트 호출
+  Future<void> _fetchContentListOfCategory() async {
+    final responseResult =
+        await ContentRepository.to.loadContentListWithCategory();
+    responseResult.fold(onSuccess: (data) {
+      contentListWithCategories.value = data;
+    }, onFailure: (e) {
+      AlertWidget.toast('카테고리 정보를 불러들이는데 실패하였습니다');
+      log(e.toString());
+    });
+  }
+
   void launchAnotherApp() async {
     if (!await launchUrl(
         Uri.parse('https://www.youtube.com/watch?v=zhdbtAqne_I&t=1162s'),
@@ -76,35 +108,20 @@ class HomeViewModel extends BaseViewModel {
   }
 
   /// Routes Method
-  void routeToContentDetail() {
-    Get.toNamed(
-      AppRoutes.contentDetail,
-      arguments: ContentDetailParam(
-        contentId: selectedTopExposedContent.contentId,
-        posterImgUrl: selectedTopExposedContent.posterImgUrl,
-        thumbnailUrl: selectedTopExposedContent.thumbnailImgUrl,
-        youtubeId: selectedTopExposedContent.youtubeId,
-        title: selectedTopExposedContent.title,
-         description: selectedTopExposedContent.description,
-      ),
-    );
+  void routeToContentDetail(ContentDetailParam routingArgument) {
+    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
   /// Youtube Video Comment
   Future<void> youtubeIntent() async {
     var yt = YoutubeExplode();
     var video = await yt.videos.get('EQnYZVKrZOQ');
-
-
-
-
-
   }
 
   /// Mock Json Data Video
   Future<void> getJsonMockData() async {
     final responseResult = await _dataSource.loadTopExposedContentList();
-    final List<TopExposedContent> mockItemLis = responseResult;
+    final List<PosterExposureContent> mockItemLis = responseResult;
     print(mockItemLis[2].title);
   }
 
@@ -119,10 +136,12 @@ class HomeViewModel extends BaseViewModel {
     });
 
     carouselController = CarouselController();
+
+    _fetchTopTenContentList();
     _fetchTopExposedContentList();
+    _fetchContentListOfCategory();
 
     youtubeIntent();
-    getJsonMockData();
   }
 }
 
@@ -139,10 +158,10 @@ class ContentDetailParam {
 
   ContentDetailParam({
     required this.contentId,
-     this.title,
-     this.description,
+    this.title,
+    this.description,
     required this.posterImgUrl,
-     this.thumbnailUrl,
+    this.thumbnailUrl,
     required this.youtubeId,
   });
 }

@@ -11,7 +11,7 @@ class ContentDescriptionInfo {
   final int id;
   final String title; // 컨텐츠 제목
   final double rate; // 평점
-  final String posterImgUrl; // 포스터 이미지 url
+  final String? posterImgUrl; // 포스터 이미지 url
   final List<String> genreList; // 장르 타입 리스트
   final String releaseDate; // 컨텐츠 출시일
   final String overView; // 컨텐츠 설명
@@ -44,7 +44,7 @@ class ContentDescriptionInfo {
     }
 
     return ContentDescriptionInfo(
-      posterImgUrl: response.poster_path,
+      posterImgUrl: response.poster_path ?? response.backdrop_path,
       id: response.id,
       title: response.name,
       rate: response.vote_average,

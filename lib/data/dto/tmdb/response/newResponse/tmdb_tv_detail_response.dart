@@ -41,7 +41,7 @@ class TmdbTvDetailResponse {
   String overview;
 
   @JsonKey(name: 'poster_path')
-  String poster_path;
+  String? poster_path;
 
   @JsonKey(name: 'seasons')
   List<SeasonResponse> seasons;
@@ -96,7 +96,7 @@ class SeasonResponse {
   String overview;
 
   @JsonKey(name: 'poster_path')
-  String poster_path;
+  String? poster_path;
 
   @JsonKey(name: 'season_number')
   int season_number;

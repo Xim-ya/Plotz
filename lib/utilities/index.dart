@@ -42,7 +42,6 @@ export 'package:uppercut_fantube/app/modules/presentation_modules.dart';
 // Data
 export 'package:uppercut_fantube/data/repository/youtube/youtube_repository.dart';
 export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
-export 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
 export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
 export 'package:uppercut_fantube/data/dto/tmdb/tmdb_api.dart';
 export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
@@ -65,10 +64,10 @@ export 'package:uppercut_fantube/domain/useCase/content/load_content_main_info_u
 export 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_main_description_use_case.dart';
 export 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
-export 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
+export 'package:uppercut_fantube/domain/model/content/exposure_content.dart';
 export 'package:uppercut_fantube/domain/model/content/youtube_content.dart';
 export 'package:uppercut_fantube/domain/model/content/content_main_info.dart';
-export 'package:uppercut_fantube/domain/model/content/top_exposed_content_list.dart';
+export 'package:uppercut_fantube/domain/model/content/category_based_content_list.dart';
 export 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
 export 'package:uppercut_fantube/domain/enum/ott_type_enum.dart';
 export 'package:uppercut_fantube/domain/model/content/content_description_info.dart';

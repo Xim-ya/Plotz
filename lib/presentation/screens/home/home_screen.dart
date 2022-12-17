@@ -23,39 +23,53 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
   List<Widget> _buildCategoryListWithPostSlider() => [
-        ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 6,
-          separatorBuilder: (__, _) => AppSpace.size16,
-          itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  // 카테고리 제목
-                  child: Text(
-                    '진존잼',
-                    style: AppTextStyle.headline3,
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
+        Obx(
+          () => ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: vm.contentListWithCategories.value?.length ?? 0,
+            separatorBuilder: (__, _) => AppSpace.size16,
+            itemBuilder: (context, index) {
+              final item = vm.contentListWithCategories.value![index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    // 카테고리 제목
+                    child: Text(
+                      item.category,
+                      style: AppTextStyle.headline3,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                    ),
                   ),
-                ),
-                AppSpace.size8,
-                // 컨텐츠 리스트 슬라이더
-                ContentPostSlider(
-                  height: 180,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return const ContentPostItem(
-                        imgUrl:
-                            'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg');
-                  },
-                ),
-              ],
-            );
-          },
+                  AppSpace.size8,
+                  // 컨텐츠 리스트 슬라이더
+                  ContentPostSlider(
+                    height: 180,
+                    itemCount: item.contents?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final contentItem = item.contents![index];
+                      return GestureDetector(
+                        onTap: () {
+                          final argument = ContentDetailParam(
+                            contentId: contentItem.contentId,
+                            posterImgUrl: contentItem.posterImgUrl,
+                            youtubeId: contentItem.youtubeId,
+                            title: contentItem.title,
+                          );
+                          vm.routeToContentDetail(argument);
+                        },
+                        child: ContentPostItem(
+                            imgUrl: contentItem.posterImgUrl.prefixTmdbImgPath),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
         ),
         AppSpace.size72,
       ];
@@ -81,68 +95,94 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           ),
         ),
         AppSpace.size6,
-        ContentPostSlider(
-          height: 200,
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return const ContentPostItem(
-                imgUrl:
-                    'https://www.themoviedb.org/t/p/w1280/ggFHVNu6YYI5L9pCfOacjizRGt.jpg');
-          },
+        Obx(
+          () => ContentPostSlider(
+            height: 200,
+            itemCount: vm.topTenContentList.value?.length ?? 0,
+            itemBuilder: (context, index) {
+              final item = vm.topTenContentList.value![index];
+              return GestureDetector(
+                onTap: () {
+                  final argument = ContentDetailParam(
+                    contentId: item.contentId,
+                    posterImgUrl: item.posterImgUrl,
+                    youtubeId: item.youtubeId,
+                    title: item.title,
+                  );
+                  vm.routeToContentDetail(argument);
+                },
+                child: ContentPostItem(
+                  imgUrl: vm.topTenContentList.value![index].posterImgUrl
+                      .prefixTmdbImgPath,
+                ),
+              );
+            },
+          ),
         ),
       ];
 
   // 맨 상단에 노출되어 있는 컨텐츠 슬라이더 - (컨텐츠 제목, 내용, 유튜브썸네일 이미지로 구성)
-  Widget _buildTopExposedContentSlider() => Obx(() => CarouselSlider.builder(
-        carouselController: vm.carouselController,
-        itemCount: vm.topExposedContentList?.length ?? 0,
-        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-          final TopExposedContent item = vm.topExposedContentList![itemIndex];
+  // TODO : Skeleton 처리 필요
+  Widget _buildTopExposedContentSlider() => Obx(
+        () => CarouselSlider.builder(
+          carouselController: vm.carouselController,
+          itemCount: vm.topExposedContentList?.length ?? 0,
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) {
+            final PosterExposureContent item =
+                vm.topExposedContentList![itemIndex];
 
-          /// Top Content Section
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    // vm.launchAnotherApp();
-                    vm.routeToContentDetail();
-                  },
-                  child: Text(
-                    item.title,
-                    style: AppTextStyle.headline2.copyWith(color: Colors.white),
+            /// Top Content Section
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text(
+                      item.title ?? '-',
+                      style:
+                          AppTextStyle.headline2.copyWith(color: Colors.white),
+                    ),
                   ),
-                ),
-                AppSpace.size2,
-                Text(
-                  '${item.description}\n',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: AppTextStyle.headline3
-                      .copyWith(color: AppColor.lightGrey),
-                ),
-                AppSpace.size8,
-                // 유튜브 썸네일 이미지
-                VideoThumbnailImgWithPlayerBtn(
-                  onPlayerBtnClicked: () {
-                    vm.routeToContentDetail();
-                  },
-                  posterImgUrl: item.thumbnailImgUrl,
-                ),
-              ],
-            ),
-          );
-        },
-        options: CarouselOptions(
-            onPageChanged: (index, _) => vm.topExposedContentSliderIndex(index),
-            initialPage: 0,
-            enableInfiniteScroll: false,
-            viewportFraction: 0.93,
-            aspectRatio: 337 / 276),
-      ));
+                  AppSpace.size2,
+                  Text(
+                    '${item.description}\n',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: AppTextStyle.headline3
+                        .copyWith(color: AppColor.lightGrey),
+                  ),
+                  AppSpace.size8,
+                  // 유튜브 썸네일 이미지
+                  VideoThumbnailImgWithPlayerBtn(
+                    onPlayerBtnClicked: () {
+                      final argument = ContentDetailParam(
+                        contentId: item.contentId,
+                        posterImgUrl: item.posterImgUrl,
+                        youtubeId: item.youtubeId,
+                        title: item.title,
+                        thumbnailUrl: item.thumbnailImgUrl,
+                        description: item.description,
+                      );
+                      vm.routeToContentDetail(argument);
+                    },
+                    posterImgUrl: item.thumbnailImgUrl,
+                  ),
+                ],
+              ),
+            );
+          },
+          options: CarouselOptions(
+              onPageChanged: (index, _) =>
+                  vm.topExposedContentSliderIndex(index),
+              initialPage: 0,
+              enableInfiniteScroll: false,
+              viewportFraction: 0.93,
+              aspectRatio: 337 / 276),
+        ),
+      );
 
   // 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [

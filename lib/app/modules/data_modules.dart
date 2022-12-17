@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:uppercut_fantube/data/repository/youtube/youtube_repository_impl.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-
 abstract class DataModules {
   DataModules._();
 
@@ -11,7 +10,7 @@ abstract class DataModules {
     Get.lazyPut(() => Dio(), fenix: true);
 
     /* Content */
-    Get.lazyPut<ContentDataSource>(() => ContentDataSourceImpl());
+    Get.lazyPut<ContentDataSource>(() => ContentDataSourceImpl(), fenix: true);
     Get.lazyPut<ContentRepository>(() => ContentRepositoryImpl(Get.find()),
         fenix: true);
 
@@ -22,7 +21,7 @@ abstract class DataModules {
     Get.lazyPut(() => TmdbApi(Get.find()), fenix: true);
     Get.lazyPut<TmdbDataSource>(() => TmdbDataSourceImpl(Get.find()),
         fenix: true);
-    
+
     /* Youtube */
     Get.lazyPut<YoutubeRepository>(() => YoutubeRepositoryImpl(), fenix: true);
   }

@@ -51,7 +51,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                               vm.launchYoutubeApp(episodeItem.youtubeVideoId);
                             },
                             posterImgUrl:
-                                episodeItem.posterUrl.returnWithTmdbImgPath,
+                                episodeItem.posterUrl.prefixTmdbImgPath,
                           ),
                         ),
                         AppSpace.size10,
@@ -94,19 +94,22 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                             SkeletonBox(
                               height: 16,
                               width: SizeConfig.to.screenWidth -
-                                  vm.seasonEpisodeImgWidth - 42,
+                                  vm.seasonEpisodeImgWidth -
+                                  42,
                             ),
                             AppSpace.size2,
                             SkeletonBox(
                               height: 16,
                               width: SizeConfig.to.screenWidth -
-                                  vm.seasonEpisodeImgWidth - 42,
+                                  vm.seasonEpisodeImgWidth -
+                                  42,
                             ),
                             AppSpace.size2,
                             SkeletonBox(
                               height: 16,
                               width: SizeConfig.to.screenWidth -
-                                  vm.seasonEpisodeImgWidth - 42,
+                                  vm.seasonEpisodeImgWidth -
+                                  42,
                             ),
                           ],
                         ),
@@ -132,7 +135,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
           Obx(
             () => VideoThumbnailImgWithPlayerBtn(
               onPlayerBtnClicked: () {
-                vm.launchYoutubeApp('');
+                vm.launchYoutubeApp(vm.youtubeContentId);
               },
               posterImgUrl: vm.youtubeImgThumbnailUrl?.value,
             ),
@@ -236,51 +239,6 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
           itemBuilder: (context, index) {
             /// 로딩중일 경우 skeletone 처리
             if (vm.commentList.hasData) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Shimmer(
-                      color: AppColor.lightGrey,
-                      child: const SizedBox(
-                        height: 38,
-                        width: 38,
-                      ),
-                    ),
-                  ),
-                  AppSpace.size8,
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Shimmer(
-                          color: AppColor.lightGrey,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            height: 20,
-                            width: 60,
-                          ),
-                        ),
-                        AppSpace.size4,
-                        Shimmer(
-                          color: AppColor.lightGrey,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            height: 20,
-                            width: SizeConfig.to.screenWidth * 0.6,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            } else {
               final YoutubeContentComment item = vm.commentList![index];
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -335,6 +293,51 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                           item.text,
                           style: AppTextStyle.body1
                               .copyWith(fontFamily: 'pretendard_regular'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Shimmer(
+                      color: AppColor.lightGrey,
+                      child: const SizedBox(
+                        height: 38,
+                        width: 38,
+                      ),
+                    ),
+                  ),
+                  AppSpace.size8,
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Shimmer(
+                          color: AppColor.lightGrey,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            height: 20,
+                            width: 60,
+                          ),
+                        ),
+                        AppSpace.size4,
+                        Shimmer(
+                          color: AppColor.lightGrey,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            height: 20,
+                            width: SizeConfig.to.screenWidth * 0.6,
+                          ),
                         ),
                       ],
                     ),
