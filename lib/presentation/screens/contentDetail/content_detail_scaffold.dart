@@ -12,14 +12,14 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
     required this.tabs,
     required this.header,
     required this.rateAndGenreView,
-    required this.headerImgUrl,
+    required this.headerBackdropImgUrl,
   }) : super(key: key);
 
   final Widget header;
   final List<Tab> tabs;
   final List<Widget> tabBarViews;
   final Widget rateAndGenreView;
-  final String headerImgUrl;
+  final String headerBackdropImgUrl;
 
   @override
   Widget buildView(BuildContext context) {
@@ -32,8 +32,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             child: CachedNetworkImage(
               width: SizeConfig.to.screenWidth,
               fit: BoxFit.fitWidth,
-              imageUrl:
-                  'https://image.tmdb.org/t/p/w1280/$headerImgUrl',
+              imageUrl: headerBackdropImgUrl.prefixTmdbImgPath,
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),

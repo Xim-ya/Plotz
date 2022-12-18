@@ -114,15 +114,23 @@ class HomeViewModel extends BaseViewModel {
 
   /// Youtube Video Comment
   Future<void> youtubeIntent() async {
-    var yt = YoutubeExplode();
-    var video = await yt.videos.get('EQnYZVKrZOQ');
+    // 유튜브 댓글
+    final video = await YoutubeMetaData.yt.videos.get('9XdAsuXthXA');
+    // final video = await YoutubeMetaData.yt.channels.get(id);
+    // final commentList =
+    //     await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
+    final videoInfo = video.thumbnails.highResUrl;
+
+    // final commentList =
+    // await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
+    
+    
   }
 
   /// Mock Json Data Video
   Future<void> getJsonMockData() async {
     final responseResult = await _dataSource.loadTopExposedContentList();
     final List<PosterExposureContent> mockItemLis = responseResult;
-    print(mockItemLis[2].title);
   }
 
   @override
@@ -150,16 +158,20 @@ class HomeViewModel extends BaseViewModel {
 /// 다른 컨텐츠 리스트 섹션에서는 해당 값이 존재하지 않기 때문에 해당 필드는 nullable 처리를 함.
 class ContentDetailParam {
   final int contentId;
+  final ContentType contentType;
   final String youtubeId;
   final String? title;
   final String? description;
   final String? thumbnailUrl;
   final String posterImgUrl;
+  final String? backdropImgUrl;
 
   ContentDetailParam({
     required this.contentId,
+    required this.contentType,
     this.title,
     this.description,
+    this.backdropImgUrl,
     required this.posterImgUrl,
     this.thumbnailUrl,
     required this.youtubeId,

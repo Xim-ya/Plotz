@@ -55,6 +55,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                         onTap: () {
                           final argument = ContentDetailParam(
                             contentId: contentItem.contentId,
+                            contentType: contentItem.contentType,
                             posterImgUrl: contentItem.posterImgUrl,
                             youtubeId: contentItem.youtubeId,
                             title: contentItem.title,
@@ -105,6 +106,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                 onTap: () {
                   final argument = ContentDetailParam(
                     contentId: item.contentId,
+                    contentType: item.contentType,
                     posterImgUrl: item.posterImgUrl,
                     youtubeId: item.youtubeId,
                     title: item.title,
@@ -157,9 +159,10 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   AppSpace.size8,
                   // 유튜브 썸네일 이미지
                   VideoThumbnailImgWithPlayerBtn(
-                    onPlayerBtnClicked: () {
+                    onPlayerBtnClicked: () {  
                       final argument = ContentDetailParam(
                         contentId: item.contentId,
+                        contentType: item.contentType,
                         posterImgUrl: item.posterImgUrl,
                         youtubeId: item.youtubeId,
                         title: item.title,

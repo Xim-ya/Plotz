@@ -5,16 +5,18 @@ part of '../content_detail_view_model.dart';
  * */
 
 extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
-
   // 컨텐츠 이미지 리스트
   List<String>? get contentImgUrlList => _contentImgUrlList.value;
 
-
   // 총 조회수
-  String? get totalViewCount =>  Formatter.formatViewAndLikeCount(
-    _youtubeVideoContentInfo.value?.viewCount,
-    isViewCount: false,
-  );
+  String? get totalViewCount => Formatter.formatViewAndLikeCount(
+        _youtubeVideoContentInfo.value?.viewCount,
+        isViewCount: false,
+      );
+
+  /// 방영일
+  /// 컨텐츠 타입이 영화일 경우 방영상태 대신 방영일을 보여줌
+  String? get contentReleaseDate => _contentDescriptionInfo.value?.releaseDate;
 
   //방영상태
   String? get contentAirStatus => _contentDescriptionInfo.value?.airStatus;

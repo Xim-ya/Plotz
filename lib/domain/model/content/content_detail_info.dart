@@ -6,31 +6,35 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * TMDB API로부터 데이터를 매핑
  * */
 
-class ContentDescriptionInfo {
+class ContentDetailInfo {
   // 헤더 영역 및 공통 영역
   final int id;
   final String title; // 컨텐츠 제목
   final double rate; // 평점
   final String? posterImgUrl; // 포스터 이미지 url
+  final String? backDropImgUrl; // 컨텐츠 배경 이미지 url
   final List<String> genreList; // 장르 타입 리스트
   final String releaseDate; // 컨텐츠 출시일
   final String overView; // 컨텐츠 설명
-  final ContentSeasonType contentEpicType; // 시리즈물 or 단일 컨텐츠
-  final String airStatus; // 컨텐츠 방영 상태
+  final ContentSeasonType? contentEpicType; // 시리즈물 or 단일 컨텐츠
+  final String? airStatus; // 컨텐츠 방영 상태
 
-  ContentDescriptionInfo({
+  ContentDetailInfo({
     required this.id,
     required this.posterImgUrl,
     required this.title,
     required this.rate,
     required this.genreList,
     required this.releaseDate,
-    required this.contentEpicType,
     required this.overView,
-    required this.airStatus,
+    this.backDropImgUrl,
+    this.contentEpicType,
+    this.airStatus,
   });
 
-  factory ContentDescriptionInfo.fromResponse(TmdbTvDetailResponse response) {
+  // ContentType == movie인 response
+  factory ContentDetailInfo.fromMovieDetailResponse(
+      TmdbMovieDetailResponse response) {
     List<String> formattedGenre = [];
 
     for (var ele in response.genres) {
@@ -43,7 +47,34 @@ class ContentDescriptionInfo {
       }
     }
 
-    return ContentDescriptionInfo(
+    return ContentDetailInfo(
+      posterImgUrl: response.poster_path ?? response.backdrop_path,
+      id: response.id,
+      title: response.title,
+      rate: response.vote_average,
+      genreList: formattedGenre,
+      releaseDate: response.release_date,
+      overView: response.overview,
+      backDropImgUrl: response.backdrop_path,
+    );
+  }
+
+  // ContentType == tv인 response
+  factory ContentDetailInfo.fromTvDetailResponse(
+      TmdbTvDetailResponse response) {
+    List<String> formattedGenre = [];
+
+    for (var ele in response.genres) {
+      // "Action & Adventure" 장르 데이터가 이런 형태도 넘어온다면 Split 함.
+      if (ele.name.contains('&')) {
+        final List<String> splitGenre = ele.name.split('&');
+        formattedGenre.addAll(splitGenre);
+      } else {
+        formattedGenre.add(ele.name);
+      }
+    }
+
+    return ContentDetailInfo(
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       id: response.id,
       title: response.name,
@@ -54,6 +85,7 @@ class ContentDescriptionInfo {
           ContentSeasonType.fromSeasonCount(response.number_of_seasons),
       overView: response.overview,
       airStatus: _translateTvContentStatus(response.status),
+      backDropImgUrl: response.backdrop_path,
     );
   }
 }

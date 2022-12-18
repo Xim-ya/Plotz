@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.19
  *  UI에서 포스터가 노출되는 컨텐츠
@@ -16,15 +16,16 @@ class PosterExposureContent {
   final String? thumbnailImgUrl; // 유튜브 썸네일 이미지;
   final String posterImgUrl; // 포스터 이미지 (백그라운드에 이미지로 활용)
   final ContentSeasonType? contentSeasonType; // 시리즈물 or 단일 컨텐츠
+  final ContentType contentType; // 영화 or 드라마
 
   PosterExposureContent({
     this.contentSeasonType,
     this.description,
     this.thumbnailImgUrl,
     this.title,
+    required this.contentType,
     required this.contentId,
     required this.youtubeId,
-
     required this.posterImgUrl,
   });
 
@@ -38,5 +39,6 @@ class PosterExposureContent {
         youtubeId: json['youtubeId'],
         title: json['title'],
         description: json['description'],
+        contentType: ContentType.fromString(json['type']),
       );
 }

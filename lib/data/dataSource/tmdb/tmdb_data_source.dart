@@ -1,9 +1,15 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class TmdbDataSource {
-  Future<TmdbTvDetailResponse> loadTmdbDetailResponse(int tvId);
+  Future<TmdbTvDetailResponse> loadTmdbTvDetailResponse(int tvId);
 
-  Future<TmdbTveCreditResponse> loadTmdbTvCastInfoResponse(int tvId);
+  Future<TmdbContentCreditResponse> loadTmdbTvCastInfoResponse(int tvId);
 
-  Future<TmdbTvImagesResponse> loadTmdbTvIContentImages(int tvId);
+  Future<TmdbImagesResponse> loadTmdbTvIContentImages(int tvId);
+
+  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailResponse(int movieId);
+
+  Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfoResponse(int movieId);
+
+  Future<TmdbImagesResponse> loadTmdbMovieIContentImages(int movieId);
 }

@@ -1,23 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tmdb_tv_images_response.dart';
+part of 'tmdb_content_image_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TmdbTvImagesResponse _$TmdbTvImagesResponseFromJson(
-        Map<String, dynamic> json) =>
-    TmdbTvImagesResponse(
+TmdbImagesResponse _$TmdbImagesResponseFromJson(Map<String, dynamic> json) =>
+    TmdbImagesResponse(
       (json['backdrops'] as List<dynamic>)
-          .map((e) =>
-              TmdbTvImagesItemResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) => TmdbImageItemResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-TmdbTvImagesItemResponse _$TmdbTvImagesItemResponseFromJson(
+TmdbImageItemResponse _$TmdbImageItemResponseFromJson(
         Map<String, dynamic> json) =>
-    TmdbTvImagesItemResponse(
+    TmdbImageItemResponse(
       (json['aspect_ratio'] as num).toDouble(),
       json['height'] as int,
       json['file_path'] as String,

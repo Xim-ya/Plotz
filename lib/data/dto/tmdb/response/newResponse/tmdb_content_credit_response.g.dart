@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tmdb_tv_credit_response.dart';
+part of 'tmdb_content_credit_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TmdbTveCreditResponse _$TmdbTveCreditResponseFromJson(
+TmdbContentCreditResponse _$TmdbContentCreditResponseFromJson(
         Map<String, dynamic> json) =>
-    TmdbTveCreditResponse(
+    TmdbContentCreditResponse(
       json['id'] as int,
       (json['cast'] as List<dynamic>)
-          .map(
-              (e) => TmdbTvCastInfoResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              TmdbCastInfoItemResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-TmdbTvCastInfoResponse _$TmdbTvCastInfoResponseFromJson(
+TmdbCastInfoItemResponse _$TmdbCastInfoItemResponseFromJson(
         Map<String, dynamic> json) =>
-    TmdbTvCastInfoResponse(
+    TmdbCastInfoItemResponse(
       json['adult'] as bool,
       json['gender'] as int?,
       json['id'] as int,

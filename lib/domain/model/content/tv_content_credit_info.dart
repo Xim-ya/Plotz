@@ -10,7 +10,7 @@ class ContentCreditInfo {
   ContentCreditInfo(
       {required this.profilePath, required this.name, required this.role});
 
-  factory ContentCreditInfo.fromResponse(TmdbTvCastInfoResponse response) =>
+  factory ContentCreditInfo.fromResponse(TmdbCastInfoItemResponse response) =>
       ContentCreditInfo(
           profilePath: response.profile_path,
           name: response.name,

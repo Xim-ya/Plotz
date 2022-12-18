@@ -24,21 +24,33 @@ abstract class TmdbApi {
   // 'tv' 컨텐츠 상세 정보
   @GET(
       '/tv/{tvId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-  Future<TmdbTvDetailResponse> loadTmdbDetailResponse(@Path('tvId') int tvId);
+  Future<TmdbTvDetailResponse> loadTmdbMovieDetailResponse(
+      @Path('tvId') int tvId);
 
   // 'tv' 컨텐츠 credit 정보
   @GET(
       '/tv/{tvId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-  Future<TmdbTveCreditResponse> loadTvCreditInfo(@Path('tvId') int tvId);
+  Future<TmdbContentCreditResponse> loadTvCreditInfo(@Path('tvId') int tvId);
 
-  // 'tv' 이미지 리스트
+  // 'tv' 컨텐츠 이미지 리스트
+  @GET('/tv/{tvId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
+  Future<TmdbImagesResponse> loadTvImages(@Path('tvId') int tvId);
+
+  // 'movie' 컨텐츠 상세 정보
   @GET(
-      '/tv/{tvId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
-  Future<TmdbTvImagesResponse> loadTvImages(@Path('tvId') int tvId);
+      '/movie/{movieId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
+  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailInfoResponse(
+      @Path('movieId') int movieId);
 
+  // 'movie' 컨텐츠 credit 정보
+  @GET(
+      '/movie/{movieId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
+  Future<TmdbContentCreditResponse> loadMovieCreditInfo(
+      @Path('movieId') int movieId);
 
-
-
+  // 'movie' 컨텐츠 이미지 리스트
+  @GET('/movie/{movieId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
+  Future<TmdbImagesResponse> loadMovieImages(@Path('movieId') int movieId);
 
 // @GET(
 //     '/movie/{movieId}/similar?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')

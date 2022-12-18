@@ -112,8 +112,11 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  elseInfoItem(
-                      title: '방영상태', content: vm.contentAirStatus ?? '-'),
+                  if (vm.passedArgument.contentType == ContentType.movie)
+                    elseInfoItem(title: '방영일', content: vm.releaseDate ?? '-')
+                  else
+                    elseInfoItem(
+                        title: '방영상태', content: vm.contentAirStatus ?? '-'),
                   elseInfoItem(
                       title: '총 좋아요 수', content: vm.totalViewCount ?? '-'),
                 ],

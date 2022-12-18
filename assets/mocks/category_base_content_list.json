@@ -6,14 +6,17 @@
         {
           "id": 113988,
           "posterImgUrl": "/f2PVrphK0u81ES256lw3oAZuF3x.jpg",
-          "youtubeId": "OK2zw7dwhng"
+          "youtubeId": "OK2zw7dwhng",
+          "channelId": "@UPKTV",
+          "type" : "tv"
         },
         {
           "id": 1396,
           "posterImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-          "youtubeId": "KfbFaQJK7Sc"
+          "youtubeId": "KfbFaQJK7Sc",
+          "channelId": "@UPKTV",
+          "type" : "tv"
         }
-
       ]
     },
     {
@@ -22,22 +25,23 @@
         {
           "id": 113988,
           "posterImgUrl": "/f2PVrphK0u81ES256lw3oAZuF3x.jpg",
-          "youtubeId": "OK2zw7dwhng"
+          "youtubeId": "OK2zw7dwhng",
+          "channelId": "@UPKTV",
+          "type" : "tv"
         },
         {
           "id": 1396,
           "posterImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-          "youtubeId": "KfbFaQJK7Sc"
+          "youtubeId": "KfbFaQJK7Sc",
+          "channelId": "@UPKTV",
+          "type" : "tv"
         },
         {
           "id": 113988,
           "posterImgUrl": "/f2PVrphK0u81ES256lw3oAZuF3x.jpg",
-          "youtubeId": "OK2zw7dwhng"
-        },
-        {
-          "id": 1396,
-          "posterImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-          "youtubeId": "KfbFaQJK7Sc"
+          "youtubeId": "OK2zw7dwhng",
+          "channelId": "@UPKTV",
+          "type" : "tv"
         }
       ]
     }

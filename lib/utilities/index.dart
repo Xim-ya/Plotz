@@ -7,9 +7,6 @@ export 'package:flutter/material.dart';
 export 'package:flutter/rendering.dart';
 export 'package:flutter_svg/svg.dart';
 
-
-
-
 // External Packages
 export 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
 export 'package:get/get.dart';
@@ -19,8 +16,6 @@ export 'package:carousel_slider/carousel_slider.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:json_annotation/json_annotation.dart';
 export 'package:youtube_explode_dart/youtube_explode_dart.dart';
-
-
 
 // BaseModule
 export 'package:uppercut_fantube/presentation/base/base_view_model.dart';
@@ -41,11 +36,11 @@ export 'package:uppercut_fantube/app/modules/presentation_modules.dart';
 
 // Data
 export 'package:uppercut_fantube/data/repository/youtube/youtube_repository.dart';
-export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_content_credit_response.dart';
 export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
 export 'package:uppercut_fantube/data/dto/tmdb/tmdb_api.dart';
-export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_credit_response.dart';
-export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_images_response.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_movie_detail_response.dart';
+export 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_content_image_response.dart';
 export 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
 export 'package:uppercut_fantube/data/dataSource/content/content_data_source_impl.dart';
 export 'package:uppercut_fantube/data/dataSource/tmdb/tmdb_data_source.dart';
@@ -56,23 +51,23 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository.dart';
 export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart';
 
 // Domain
+export 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
 export 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
 export 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 export 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
 export 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
-export 'package:uppercut_fantube/domain/useCase/content/load_content_main_info_use_case.dart';
+
+// export 'package:uppercut_fantube/domain/useCase/content/load.dart';
 export 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
-export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_main_description_use_case.dart';
+export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_detail_info_use_case.dart';
 export 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
 export 'package:uppercut_fantube/domain/model/content/exposure_content.dart';
 export 'package:uppercut_fantube/domain/model/content/youtube_content.dart';
 export 'package:uppercut_fantube/domain/model/content/content_main_info.dart';
 export 'package:uppercut_fantube/domain/model/content/category_based_content_list.dart';
-export 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
+export 'package:uppercut_fantube/domain/enum/content_season_type_enum.dart';
 export 'package:uppercut_fantube/domain/enum/ott_type_enum.dart';
-export 'package:uppercut_fantube/domain/model/content/content_description_info.dart';
-
-
+export 'package:uppercut_fantube/domain/model/content/content_detail_info.dart';
 
 // Presentation
 export 'package:uppercut_fantube/presentation/common/animated_index_stack.dart';
@@ -101,9 +96,6 @@ export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_credit_info_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_img_list_use_case.dart';
 
-
-
-
 // Utilities
 export 'package:uppercut_fantube/utilities/constants/bottom_navigation_constants.dart';
 export 'package:uppercut_fantube/utilities/api_error_handler_mixin.dart';
@@ -115,11 +107,3 @@ export 'package:uppercut_fantube/utilities/extensions/check_null_state_extension
 export 'package:uppercut_fantube/utilities/extensions/tmdb_img_path_extension.dart';
 export 'package:uppercut_fantube/utilities/formatter.dart';
 export 'package:uppercut_fantube/presentation/common/alert_widget.dart';
-
-
-
-
-
-
-
-

@@ -1,4 +1,3 @@
-
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TmdbRepositoryImpl implements TmdbRepository {
@@ -8,11 +7,10 @@ class TmdbRepositoryImpl implements TmdbRepository {
 
   // TV 드라마 상세 정보 호출 - (컨텐츠 상세 페이지)
   @override
-  Future<Result<ContentDescriptionInfo>> loadTmdbDetailResponse(
-      int tvId) async {
+  Future<Result<ContentDetailInfo>> loadTmdbTvDetailResponse(int tvId) async {
     try {
-      final response = await _dataSource.loadTmdbDetailResponse(tvId);
-      return Result.success(ContentDescriptionInfo.fromResponse(response));
+      final response = await _dataSource.loadTmdbTvDetailResponse(tvId);
+      return Result.success(ContentDetailInfo.fromTvDetailResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -35,6 +33,41 @@ class TmdbRepositoryImpl implements TmdbRepository {
   Future<Result<List<String>>> loadTvImgUrlList(int tvId) async {
     try {
       final response = await _dataSource.loadTmdbTvIContentImages(tvId);
+      return Result.success(
+          response.backdrops.map((e) => e.file_path).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ContentDetailInfo>> loadTmdbMovieDetailInfo(int movieId) async {
+    try {
+      final response = await _dataSource.loadTmdbMovieDetailResponse(movieId);
+      return Result.success(
+          ContentDetailInfo.fromMovieDetailResponse(response));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<ContentCreditInfo>>> loadMovieCreditInfo(
+      int movieId) async {
+    try {
+      final response =
+          await _dataSource.loadTmdbMovieCreditInfoResponse(movieId);
+      return Result.success(
+          response.cast.map((e) => ContentCreditInfo.fromResponse(e)).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<String>>> loadMovieImgUrlList(int movieId) async {
+    try {
+      final response = await _dataSource.loadTmdbMovieIContentImages(movieId);
       return Result.success(
           response.backdrops.map((e) => e.file_path).toList());
     } on Exception catch (e) {

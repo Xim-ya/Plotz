@@ -9,12 +9,9 @@ class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(this._loadContentImgList,
       this._loadContentMainDescription, this._loadContentCreditInfo);
 
-  /* [Variables] */
-  late int contentId = Get.arguments[0];
-
   /// Data Variables
   /// // 컨텐츠탭 정보
-  final Rxn<ContentDescriptionInfo> _contentDescriptionInfo = Rxn();
+  final Rxn<ContentDetailInfo> _contentDescriptionInfo = Rxn();
 
   // 컨턴츠 댓글 리스트
   final Rxn<List<YoutubeContentComment>> _contentCommentList = Rxn();
@@ -32,7 +29,7 @@ class ContentDetailViewModel extends BaseViewModel {
   final Rxn<List<ContentEpisodeInfoItem>> _contentEpisodeList = Rxn();
 
   /* [UseCase] */
-  final LoadContentMainDescriptionUseCase _loadContentMainDescription;
+  final LoadContentDetailInfoUseCase _loadContentMainDescription;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
   final LoadContentImgListUseCase _loadContentImgList;
 
@@ -61,8 +58,8 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 컨텐츠 이미지 리스트 호출
   Future<void> fetchContentImgList() async {
-    final responseRes =
-        await _loadContentImgList.call('tv', passedArgument.contentId);
+    final responseRes = await _loadContentImgList.call(
+        passedArgument.contentType, passedArgument.contentId);
     responseRes.fold(onSuccess: (data) {
       _contentImgUrlList.value = data;
     }, onFailure: (e) {
@@ -73,8 +70,8 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 컨텐츠 credit 정보 호출
   Future<void> fetchContentCreditInfo() async {
-    final responseRes =
-        await _loadContentCreditInfo.call('tv', passedArgument.contentId);
+    final responseRes = await _loadContentCreditInfo.call(
+        passedArgument.contentType, passedArgument.contentId);
 
     responseRes.fold(onSuccess: (data) {
       _contentCreditList.value = data;
@@ -89,11 +86,12 @@ class ContentDetailViewModel extends BaseViewModel {
     // final responseResult =
     // await TmdbRepository.to.loadTmdbDetailResponse(passedArgument.contentId);
     // 임시 파라미터
-    final responseResult =
-        await _loadContentMainDescription.call('tv', passedArgument.contentId);
+    final responseResult = await _loadContentMainDescription.call(
+        passedArgument.contentType, passedArgument.contentId);
     responseResult.fold(
       onSuccess: (data) {
         _contentDescriptionInfo.value = data;
+        print('${_contentDescriptionInfo.value?.backDropImgUrl}');
       },
       onFailure: (e) {
         log(e.toString());

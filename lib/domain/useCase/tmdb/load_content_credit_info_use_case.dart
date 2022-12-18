@@ -8,21 +8,21 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *  [contentType]값('tv' 'movie')에 따라 다른 Api를 호출
  * */
 
-class LoadContentCreditInfoUseCase
-    extends BaseTwoParamUseCase<String, int, Result<List<ContentCreditInfo>>> {
+class LoadContentCreditInfoUseCase extends BaseTwoParamUseCase<ContentType, int,
+    Result<List<ContentCreditInfo>>> {
   LoadContentCreditInfoUseCase(this._repository);
 
   final TmdbRepository _repository;
 
   @override
   Future<Result<List<ContentCreditInfo>>> call(
-      String firstReq, int secondReq) async {
+      ContentType firstReq, int secondReq) async {
     /// firstReq -> [contentType] / secondRequest -> [contentId]
-    if (firstReq == 'tv') {
+    if (firstReq == ContentType.tv) {
       return _repository.loadTvCreditInfo(secondReq);
     } else {
       // 임시
-      return _repository.loadTvCreditInfo(secondReq);
+      return _repository.loadMovieCreditInfo(secondReq);
     }
   }
 }

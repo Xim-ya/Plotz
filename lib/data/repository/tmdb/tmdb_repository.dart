@@ -5,11 +5,17 @@ import 'package:uppercut_fantube/utilities/index.dart';
 * */
 
 abstract class TmdbRepository {
-  Future<Result<ContentDescriptionInfo>> loadTmdbDetailResponse(int tvId);
+  Future<Result<ContentDetailInfo>> loadTmdbTvDetailResponse(int tvId);
 
   Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId);
 
   Future<Result<List<String>>> loadTvImgUrlList(int tvId);
+
+  Future<Result<ContentDetailInfo>> loadTmdbMovieDetailInfo(int movieId);
+
+  Future<Result<List<ContentCreditInfo>>> loadMovieCreditInfo(int movieId);
+
+  Future<Result<List<String>>> loadMovieImgUrlList(int movieId);
 
   static TmdbRepository get to => Get.find();
 }

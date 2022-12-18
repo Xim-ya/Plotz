@@ -7,16 +7,31 @@ class TmdbDataSourceImpl with ApiErrorHandlerMixin implements TmdbDataSource {
 
   // tmdb tv 컨텐츠 상세 정보
   @override
-  Future<TmdbTvDetailResponse> loadTmdbDetailResponse(int tvId) async =>
-      _api.loadTmdbDetailResponse(tvId);
+  Future<TmdbTvDetailResponse> loadTmdbTvDetailResponse(int tvId) async =>
+      _api.loadTmdbMovieDetailResponse(tvId);
 
   // tmdb tv 컨텐츠 크레딧 정보
   @override
-  Future<TmdbTveCreditResponse> loadTmdbTvCastInfoResponse(int tvId) async =>
+  Future<TmdbContentCreditResponse> loadTmdbTvCastInfoResponse(
+          int tvId) async =>
       _api.loadTvCreditInfo(tvId);
 
   // tmdb tv 이미지 리스트
   @override
-  Future<TmdbTvImagesResponse> loadTmdbTvIContentImages(int tvId) async =>
+  Future<TmdbImagesResponse> loadTmdbTvIContentImages(int tvId) async =>
       _api.loadTvImages(tvId);
+
+  @override
+  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailResponse(
+          int movieId) async =>
+      _api.loadTmdbMovieDetailInfoResponse(movieId);
+
+  @override
+  Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfoResponse(
+          int movieId) async =>
+      _api.loadMovieCreditInfo(movieId);
+
+  @override
+  Future<TmdbImagesResponse> loadTmdbMovieIContentImages(int movieId) async =>
+      _api.loadMovieImages(movieId);
 }

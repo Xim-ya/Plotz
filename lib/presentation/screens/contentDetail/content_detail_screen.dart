@@ -7,7 +7,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   Widget buildScreen(BuildContext context) {
     return ContentDetailScaffold(
       header: _buildHeader(),
-      headerImgUrl: vm.passedArgument.posterImgUrl,
+      headerBackdropImgUrl: vm.headerBackdropImg,
       rateAndGenreView: _buildRateAndGenreView(),
       tabs: _buildTab(),
       tabBarViews: _buildTabBarViews(),
@@ -64,30 +64,6 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            // OTT 서비스 인디케이터
-            FittedBox(
-              child: Container(
-                height: 26,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/netflix_logo.png',
-                      width: 18,
-                      height: 18,
-                    ),
-                    AppSpace.size4,
-                    Text('Netflix', style: AppTextStyle.alert1),
-                  ],
-                ),
-              ),
-            ),
-            AppSpace.size4,
-
             // 제목 & 날짜
             Row(
               children: <Widget>[
@@ -127,15 +103,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
                       Shimmer(
                         color: AppColor.lightGrey,
                         child: const SizedBox(
-                          height: 18,
-                          width: double.infinity,
-                        ),
-                      ),
-                      AppSpace.size6,
-                      Shimmer(
-                        color: AppColor.lightGrey,
-                        child: const SizedBox(
-                          height: 18,
+                          height: 22,
                           width: double.infinity,
                         ),
                       ),
