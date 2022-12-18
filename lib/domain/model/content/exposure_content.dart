@@ -17,12 +17,14 @@ class PosterExposureContent {
   final String posterImgUrl; // 포스터 이미지 (백그라운드에 이미지로 활용)
   final ContentSeasonType? contentSeasonType; // 시리즈물 or 단일 컨텐츠
   final ContentType contentType; // 영화 or 드라마
+  final String channelId; // 유튜브 채널 id
 
   PosterExposureContent({
     this.contentSeasonType,
     this.description,
     this.thumbnailImgUrl,
     this.title,
+    required this.channelId,
     required this.contentType,
     required this.contentId,
     required this.youtubeId,
@@ -40,5 +42,6 @@ class PosterExposureContent {
         title: json['title'],
         description: json['description'],
         contentType: ContentType.fromString(json['type']),
+        channelId: json['channelId'],
       );
 }

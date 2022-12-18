@@ -158,6 +158,7 @@ class HomeViewModel extends BaseViewModel {
 /// 다른 컨텐츠 리스트 섹션에서는 해당 값이 존재하지 않기 때문에 해당 필드는 nullable 처리를 함.
 class ContentDetailParam {
   final int contentId;
+  final String channelId;
   final ContentType contentType;
   final String youtubeId;
   final String? title;
@@ -169,11 +170,13 @@ class ContentDetailParam {
   ContentDetailParam({
     required this.contentId,
     required this.contentType,
+    required this.channelId,
+    required this.posterImgUrl,
+    required this.youtubeId,
     this.title,
     this.description,
     this.backdropImgUrl,
-    required this.posterImgUrl,
     this.thumbnailUrl,
-    required this.youtubeId,
+
   });
 }

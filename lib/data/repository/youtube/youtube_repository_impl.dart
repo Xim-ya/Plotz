@@ -1,17 +1,20 @@
+import 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class YoutubeRepositoryImpl extends YoutubeRepository {
   /* 유튜브 컨텐츠 댓글 리스트 호출 */
   @override
-  Future<Result<List<YoutubeContentComment>>> loadContentCommentList(String videoId) async {
+  Future<Result<List<YoutubeContentComment>>> loadContentCommentList(
+      String videoId) async {
     try {
       // 유튜브 댓글
       final video = await YoutubeMetaData.yt.videos.get(videoId);
       // final commentList =
       //     await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
       final commentList =
-      await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
-      final result = commentList!.map(YoutubeContentComment.fromResponse).toList();
+          await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
+      final result =
+          commentList!.map(YoutubeContentComment.fromResponse).toList();
       return Result.success(result);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -25,6 +28,25 @@ class YoutubeRepositoryImpl extends YoutubeRepository {
     try {
       final video = await YoutubeMetaData.yt.videos.get(videoId);
       return Result.success(YoutubeVideoContentInfo.fromResponse(video));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  /* 유튜브 채널 정보 호출 */
+  @override
+  Future<Result<YoutubeChannelInfo>> loadYoutubeChannelInfo(
+      String channelId) async {
+    try {
+      final channelRes = await YoutubeMetaData.yt.channels.get(channelId);
+      final channelDetailRes =
+          await YoutubeMetaData.yt.channels.getAboutPage(channelId);
+      return Result.success(
+        YoutubeChannelInfo.fromResponse(
+          response: channelRes,
+          detailResponse: channelDetailRes,
+        ),
+      );
     } on Exception catch (e) {
       return Result.failure(e);
     }

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
@@ -6,8 +7,11 @@ part 'controllerResources/content_detail_single_content_tab_view_model.part.dart
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
 
 class ContentDetailViewModel extends BaseViewModel {
-  ContentDetailViewModel(this._loadContentImgList,
-      this._loadContentMainDescription, this._loadContentCreditInfo);
+  ContentDetailViewModel(
+    this._loadContentImgList,
+    this._loadContentMainDescription,
+    this._loadContentCreditInfo,
+  );
 
   /// Data Variables
   /// // 컨텐츠탭 정보
@@ -27,6 +31,9 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 컨텐츠 에피소드 정보 리스트
   final Rxn<List<ContentEpisodeInfoItem>> _contentEpisodeList = Rxn();
+
+  // 유튜브 채널
+  final Rxn<YoutubeChannelInfo> _youtubeChannelInfo = Rxn();
 
   /* [UseCase] */
   final LoadContentDetailInfoUseCase _loadContentMainDescription;
@@ -113,6 +120,18 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
+  // 유튜브 채널 정보 호출
+  Future<void> _fetchYoutubeChannelInfo() async {
+    final responseResult = await YoutubeRepository.to
+        .loadYoutubeChannelInfo(passedArgument.channelId);
+    responseResult.fold(onSuccess: (data) {
+      _youtubeChannelInfo.value = data;
+    }, onFailure: (e) {
+      AlertWidget.toast('유튜브 정보를 불러오는데 실패하였습니다');
+      log(e.toString());
+    });
+  }
+
   // 유튜브 비디오 컨텐츠 정보 호출
   Future<void> _fetchYoutubeVideoContentInfo() async {
     final responseResult = await YoutubeRepository.to
@@ -147,6 +166,7 @@ class ContentDetailViewModel extends BaseViewModel {
       _fetchContentMainInfo(),
       _fetchYoutubeVideoContentInfo(),
       _fetchContentCommentList(),
+      _fetchYoutubeChannelInfo(),
     ]);
   }
 

@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -8,6 +9,9 @@ abstract class YoutubeRepository {
   Future<Result<List<YoutubeContentComment>>> loadContentCommentList(String videoId);
 
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(String videoId);
+
+  Future<Result<YoutubeChannelInfo>> loadYoutubeChannelInfo(String channelId);
+
 
   static YoutubeRepository get to => Get.find();
 }

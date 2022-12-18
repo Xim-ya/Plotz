@@ -235,9 +235,8 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
           separatorBuilder: (__, _) => AppSpace.size12,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: vm.commentList?.length ?? 20,
+          itemCount: vm.commentList?.length ?? 10,
           itemBuilder: (context, index) {
-            /// 로딩중일 경우 skeletone 처리
             if (vm.commentList.hasData) {
               final YoutubeContentComment item = vm.commentList![index];
               return Row(
@@ -306,7 +305,6 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Shimmer(
-                      color: AppColor.lightGrey,
                       child: const SizedBox(
                         height: 38,
                         width: 38,
@@ -319,7 +317,6 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Shimmer(
-                          color: AppColor.lightGrey,
                           child: Container(
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
@@ -330,7 +327,6 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                         ),
                         AppSpace.size4,
                         Shimmer(
-                          color: AppColor.lightGrey,
                           child: Container(
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,

@@ -14,6 +14,22 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
         isViewCount: false,
       );
 
+  // 채널 설명
+  String? get channelDescription => _youtubeChannelInfo.value?.description;
+
+  // 채널 구독자 수
+  String? get subscriberCount => Formatter.formatViewAndLikeCount(
+      _youtubeChannelInfo.value?.subscriberCount);
+
+  // 채널 영상 개수
+  String? get totalVideoCount => Formatter.formatViewAndLikeCount(_youtubeChannelInfo.value?.totalViewCount, isViewCount: true);
+
+  // 채널 이미지 url
+  String? get channelImgUrl => _youtubeChannelInfo.value?.channelImgUrl;
+
+  // 채널 명
+  String? get channelName => _youtubeChannelInfo.value?.name;
+
   /// 방영일
   /// 컨텐츠 타입이 영화일 경우 방영상태 대신 방영일을 보여줌
   String? get contentReleaseDate => _contentDescriptionInfo.value?.releaseDate;

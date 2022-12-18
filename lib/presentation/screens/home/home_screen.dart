@@ -59,6 +59,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                             posterImgUrl: contentItem.posterImgUrl,
                             youtubeId: contentItem.youtubeId,
                             title: contentItem.title,
+                            channelId: contentItem.channelId,
                           );
                           vm.routeToContentDetail(argument);
                         },
@@ -110,6 +111,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     posterImgUrl: item.posterImgUrl,
                     youtubeId: item.youtubeId,
                     title: item.title,
+                    channelId: item.channelId,
                   );
                   vm.routeToContentDetail(argument);
                 },
@@ -159,7 +161,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   AppSpace.size8,
                   // 유튜브 썸네일 이미지
                   VideoThumbnailImgWithPlayerBtn(
-                    onPlayerBtnClicked: () {  
+                    onPlayerBtnClicked: () {
                       final argument = ContentDetailParam(
                         contentId: item.contentId,
                         contentType: item.contentType,
@@ -168,6 +170,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                         title: item.title,
                         thumbnailUrl: item.thumbnailImgUrl,
                         description: item.description,
+                        channelId: item.channelId,
                       );
                       vm.routeToContentDetail(argument);
                     },
