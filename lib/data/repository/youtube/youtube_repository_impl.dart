@@ -36,11 +36,11 @@ class YoutubeRepositoryImpl extends YoutubeRepository {
   /* 유튜브 채널 정보 호출 */
   @override
   Future<Result<YoutubeChannelInfo>> loadYoutubeChannelInfo(
-      String channelId) async {
+      String videoId) async {
     try {
-      final channelRes = await YoutubeMetaData.yt.channels.get(channelId);
+      final channelRes = await YoutubeMetaData.yt.channels.getByVideo(videoId);
       final channelDetailRes =
-          await YoutubeMetaData.yt.channels.getAboutPage(channelId);
+          await YoutubeMetaData.yt.channels.getAboutPage(channelRes.id);
       return Result.success(
         YoutubeChannelInfo.fromResponse(
           response: channelRes,

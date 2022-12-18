@@ -194,7 +194,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                             AppSpace.size6,
                             Shimmer(
                               child: Container(
-                                color: AppColor.skeletonGrey,
+                                color: AppColor.strongGrey,
                                 height: 16,
                                 width: 36,
                               ),

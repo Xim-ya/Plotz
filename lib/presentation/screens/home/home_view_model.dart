@@ -7,7 +7,10 @@ class HomeViewModel extends BaseViewModel {
   /// 임시
   final ContentDataSource _dataSource;
 
-  HomeViewModel(this._dataSource, this._loadTopExposedContentList,);
+  HomeViewModel(
+    this._dataSource,
+    this._loadTopExposedContentList,
+  );
 
   /* [Variables] */
 
@@ -61,6 +64,11 @@ class HomeViewModel extends BaseViewModel {
         return;
       }
     }
+  }
+
+  // 검색 스크린으로 이동
+  void routeToSearch() {
+    Get.toNamed(AppRoutes.search);
   }
 
   // 상단 노출 컨텐츠 리스트 호출
@@ -123,8 +131,6 @@ class HomeViewModel extends BaseViewModel {
 
     // final commentList =
     // await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
-    
-    
   }
 
   /// Mock Json Data Video
@@ -147,7 +153,7 @@ class HomeViewModel extends BaseViewModel {
 
     _fetchTopTenContentList();
     _fetchTopExposedContentList();
-    _fetchContentListOfCategory();
+    // _fetchContentListOfCategory();
 
     youtubeIntent();
   }
@@ -158,9 +164,8 @@ class HomeViewModel extends BaseViewModel {
 /// 다른 컨텐츠 리스트 섹션에서는 해당 값이 존재하지 않기 때문에 해당 필드는 nullable 처리를 함.
 class ContentDetailParam {
   final int contentId;
-  final String channelId;
   final ContentType contentType;
-  final String youtubeId;
+  final String videoId;
   final String? title;
   final String? description;
   final String? thumbnailUrl;
@@ -170,13 +175,11 @@ class ContentDetailParam {
   ContentDetailParam({
     required this.contentId,
     required this.contentType,
-    required this.channelId,
     required this.posterImgUrl,
-    required this.youtubeId,
+    required this.videoId,
     this.title,
     this.description,
     this.backdropImgUrl,
     this.thumbnailUrl,
-
   });
 }

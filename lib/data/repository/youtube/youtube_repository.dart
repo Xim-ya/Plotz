@@ -10,7 +10,7 @@ abstract class YoutubeRepository {
 
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(String videoId);
 
-  Future<Result<YoutubeChannelInfo>> loadYoutubeChannelInfo(String channelId);
+  Future<Result<YoutubeChannelInfo>> loadYoutubeChannelInfo(String videoId);
 
 
   static YoutubeRepository get to => Get.find();

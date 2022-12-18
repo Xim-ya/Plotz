@@ -90,25 +90,27 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
             ),
             AppSpace.size8,
             // 컨텐츠 설명 - (유튜브 영상 제목)
-            Obx(() => vm.headerContentDesc.hasData
-                ? Text(
-                    vm.headerContentDesc!.value,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.headline3
-                        .copyWith(color: AppColor.lightGrey),
-                  )
-                : Column(
-                    children: [
-                      Shimmer(
-                        color: AppColor.lightGrey,
-                        child: const SizedBox(
-                          height: 22,
-                          width: double.infinity,
+            Obx(
+              () => vm.headerContentDesc.hasData
+                  ? Text(
+                      vm.headerContentDesc!.value,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.headline3
+                          .copyWith(color: AppColor.lightGrey),
+                    )
+                  : Column(
+                      children: [
+                        Shimmer(
+                          color: AppColor.lightGrey,
+                          child: const SizedBox(
+                            height: 22,
+                            width: double.infinity,
+                          ),
                         ),
-                      ),
-                    ],
-                  )),
+                      ],
+                    ),
+            ),
 
             AppSpace.size24,
           ],

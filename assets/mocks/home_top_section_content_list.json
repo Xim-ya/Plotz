@@ -4,55 +4,50 @@
       "id": 111800,
       "seasonNumber": 1,
       "type": "tv",
-      "youtubeId": "TXMtLF5OANI",
+      "videoId": "TXMtLF5OANI",
       "title": "올드맨",
       "description": "하필이면 전직 특수 요원을 건드렸는데 개들이 싸움을 더 잘함 | 2022년 신작 중 가장 처절한 액션을 보여드립니다",
       "thumbnailImgUrl": "https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg",
-      "posterImgUrl": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg",
-      "channelId": "UCuK80YHBZyyKrr2B1oHrgrw"
+      "posterImgUrl": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg"
     },
     {
       "id": 210577,
       "type": "movie",
-      "youtubeId": "9XdAsuXthXA",
+      "videoId": "9XdAsuXthXA",
       "title": "나를 찾아줘",
       "description": "영화가 끝나고 더 소름돋는 영화",
       "thumbnailImgUrl": "https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg",
-      "posterImgUrl":  "/x9ezMgOtDPqHatHDvxEG0ILb6Ie.jpg",
-      "channelId": "@user-wo5ln9mh6y"
+      "posterImgUrl":  "/x9ezMgOtDPqHatHDvxEG0ILb6Ie.jpg"
     },
     {
       "id": 64464,
       "seasonNumber": 1,
       "type": "tv",
-      "youtubeId": "N16uIvWozVk",
+      "videoId": "N16uIvWozVk",
       "title": "11.22.63",
       "description": "결말에서 당신의 심장을 찢겠습니다 2 | 어퍼컷 리뷰 중 가장 반응이 좋았던 《11.22.63》",
       "thumbnailImgUrl": "https://i.ytimg.com/vi/N16uIvWozVk/maxresdefault.jpg",
-      "posterImgUrl": "/1fH41ccMKvgDTbbcCxWWH6fznah.jpg",
-      "channelId": "@UCuK80YHBZyyKrr2B1oHrgrw"
+      "posterImgUrl": "/1fH41ccMKvgDTbbcCxWWH6fznah.jpg"
     },
     {
       "id": 1396,
       "seasonNumber": 5,
       "type": "tv",
-      "youtubeId": "KfbFaQJK7Sc",
+      "videoId": "KfbFaQJK7Sc",
       "title": "브레이킹 배드",
       "description": "《브레이킹 베드》 | 진짜 존나 재밌음",
       "thumbnailImgUrl": "https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg",
-      "posterImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-      "channelId": "@UCuK80YHBZyyKrr2B1oHrgrw"
+      "posterImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg"
     },
     {
       "id": 111800,
       "seasonNumber": 1,
       "type": "tv",
-      "youtubeId": "TXMtLF5OANI",
+      "videoId": "TXMtLF5OANI",
       "title": "올드맨",
       "description": "수십 년 전 잠적한 전직 CIA 요원 댄 체이스. 과거의 비밀을 안고 은둔한 채 살아가던 중 결국 정체가 탄로 난다. 하지만 미래를 위해서 더 이상 숨어 살 수 없는 그는 과거의 매듭을 풀고자 하는데.",
       "thumbnailImgUrl": "https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg",
-      "posterImgUrl": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg",
-      "channelId": "@UCuK80YHBZyyKrr2B1oHrgrw"
+      "posterImgUrl": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg"
     }
   ]
 }

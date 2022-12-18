@@ -13,9 +13,9 @@ class Formatter {
   /// 1000 미만 -> 숫자 ex) 956
   /// 1000 이상 -> 천 단위 ex) 1.4천
   /// 10000 이상 -> 만 단위 ex) 32만, 이때는 소숫점 없음 && 41000 -> 4.1만
-  static String formatViewAndLikeCount(int? num, {bool? isViewCount}) {
+  static String? formatViewAndLikeCount(int? num, {bool? isViewCount}) {
     if (num == null) {
-      return '-';
+      return null;
     }
     final strNum = '$num';
     if (num <= 1000) {

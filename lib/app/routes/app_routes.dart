@@ -11,4 +11,7 @@ abstract class AppRoutes {
   // 컨텐츠 상세
   static const contentDetail = '/content_detail';
 
+  // 검색
+  static const search = '/search';
+
 }

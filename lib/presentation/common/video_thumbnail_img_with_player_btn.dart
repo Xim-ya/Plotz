@@ -48,7 +48,7 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
-                      color: AppColor.skeletonGrey,
+                      color: AppColor.strongGrey,
                     ),
                   ),
                 ),

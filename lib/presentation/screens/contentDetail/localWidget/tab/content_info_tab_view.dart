@@ -105,71 +105,73 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
 
         // 채널정보
         const SectionTitle(title: '채널', setLeftPadding: true),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: [
-                  // 채널 프로필 이미지
-                  if (vm.channelImgUrl.hasData)
-                    RoundProfileImg(
-                      size: 62,
-                      imgUrl: vm.channelImgUrl,
-                    )
-                  else
-                    const SkeletonBox(
-                      width: 62,
-                      height: 62,
-                      borderRadius: 100,
-                    ),
-                  AppSpace.size10,
-                  // 채널명
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      if (vm.channelName.hasData)
-                        Text(
-                          vm.channelName!,
-                          style: AppTextStyle.headline3,
-                        )
-                      else ...[
-                        const SkeletonBox(
-                          width: 80,
-                          height: 20,
-                        ),
-                        AppSpace.size2,
+        Obx(
+          () => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: [
+                    // 채널 프로필 이미지
+                    if (vm.channelImgUrl.hasData)
+                      RoundProfileImg(
+                        size: 62,
+                        imgUrl: vm.channelImgUrl,
+                      )
+                    else
+                      const SkeletonBox(
+                        width: 62,
+                        height: 62,
+                        borderRadius: 100,
+                      ),
+                    AppSpace.size10,
+                    // 채널명
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        if (vm.channelName.hasData)
+                          Text(
+                            vm.channelName!,
+                            style: AppTextStyle.headline3,
+                          )
+                        else ...[
+                          const SkeletonBox(
+                            width: 80,
+                            height: 20,
+                          ),
+                          AppSpace.size2,
+                        ],
+                        if (vm.subscriberCount.hasData &&
+                            vm.totalVideoCount.hasData)
+                          Text(
+                            '구독자 ${vm.subscriberCount}명 · 총 조회수 ${vm.totalVideoCount}',
+                            style: AppTextStyle.body1
+                                .copyWith(color: AppColor.lightGrey),
+                          )
+                        else
+                          const SkeletonBox(
+                            width: 180,
+                            height: 22,
+                          ),
                       ],
-                      if (vm.subscriberCount.hasData &&
-                          vm.totalVideoCount.hasData)
-                        Text(
-                          '구독자 ${vm.subscriberCount}명 · 총 조회수 ${vm.totalVideoCount}',
-                          style: AppTextStyle.body1
-                              .copyWith(color: AppColor.lightGrey),
-                        )
-                      else
-                        const SkeletonBox(
-                          width: 180,
-                          height: 22,
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-              AppSpace.size8,
-              // 채널 설명
-              if (vm.channelDescription.hasData)
-                Text(
-                  vm.channelDescription!,
-                  style: AppTextStyle.body2,
-                )
-              else
-                const SkeletonBox(
-                  width: double.infinity,
-                  height: 18,
+                    ),
+                  ],
                 ),
-            ],
+                AppSpace.size8,
+                // 채널 설명
+                if (vm.channelDescription.hasData)
+                  Text(
+                    vm.channelDescription!,
+                    style: AppTextStyle.body2,
+                  )
+                else
+                  const SkeletonBox(
+                    width: double.infinity,
+                    height: 18,
+                  ),
+              ],
+            ),
           ),
         ),
 
@@ -206,7 +208,10 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
         ),
         AppSpace.size40,
         const SectionTitle(title: '컨텐츠 이미지', setLeftPadding: true),
-        SizedBox(
+        Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+            ),
             height: 186,
             child: Obx(
               () => ListView.separated(
@@ -214,9 +219,9 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
                   padding: const EdgeInsets.only(left: 16),
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: vm.contentImgUrlList?.length ?? 0,
+                  itemCount: vm.contentImgList?.length ?? 0,
                   itemBuilder: (context, index) {
-                    final imgItem = vm.contentImgUrlList![index];
+                    final imgItem = vm.contentImgList![index];
                     return CachedNetworkImage(
                       fit: BoxFit.contain,
                       imageUrl: imgItem.prefixTmdbImgPath,

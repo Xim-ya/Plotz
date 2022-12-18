@@ -57,9 +57,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                             contentId: contentItem.contentId,
                             contentType: contentItem.contentType,
                             posterImgUrl: contentItem.posterImgUrl,
-                            youtubeId: contentItem.youtubeId,
+                            videoId: contentItem.videoId,
                             title: contentItem.title,
-                            channelId: contentItem.channelId,
                           );
                           vm.routeToContentDetail(argument);
                         },
@@ -109,9 +108,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     contentId: item.contentId,
                     contentType: item.contentType,
                     posterImgUrl: item.posterImgUrl,
-                    youtubeId: item.youtubeId,
+                    videoId: item.videoId,
                     title: item.title,
-                    channelId: item.channelId,
                   );
                   vm.routeToContentDetail(argument);
                 },
@@ -166,11 +164,10 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                         contentId: item.contentId,
                         contentType: item.contentType,
                         posterImgUrl: item.posterImgUrl,
-                        youtubeId: item.youtubeId,
+                        videoId: item.videoId,
                         title: item.title,
                         thumbnailUrl: item.thumbnailImgUrl,
                         description: item.description,
-                        channelId: item.channelId,
                       );
                       vm.routeToContentDetail(argument);
                     },
@@ -252,7 +249,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             IconInkWellButton(
                 iconPath: 'assets/icons/search.svg',
                 iconSize: 40,
-                onIconTapped: () {})
+                onIconTapped: vm.routeToSearch,
+                )
           ],
         ),
       )

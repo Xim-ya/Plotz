@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class PresentationModules {
@@ -10,5 +11,8 @@ abstract class PresentationModules {
 
     // 컨텐츠 상세화면
     Get.lazyPut(() => ContentDetailScaffoldController(), fenix: true);
+
+    // 검색
+    // Get.lazyPut(() => SearchViewModel(), fenix: true);
   }
 }

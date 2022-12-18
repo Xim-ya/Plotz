@@ -27,13 +27,13 @@ class ContentDetailViewModel extends BaseViewModel {
   final Rxn<List<ContentCreditInfo>> _contentCreditList = Rxn();
 
   // 컨텐츠 이미지 리스트
-  final Rxn<List<String>> _contentImgUrlList = Rxn();
+  final Rxn<List<String>> contentImgUrlList = Rxn();
 
   // 컨텐츠 에피소드 정보 리스트
   final Rxn<List<ContentEpisodeInfoItem>> _contentEpisodeList = Rxn();
 
   // 유튜브 채널
-  final Rxn<YoutubeChannelInfo> _youtubeChannelInfo = Rxn();
+  final Rxn<YoutubeChannelInfo> youtubeChannelInfo = Rxn();
 
   /* [UseCase] */
   final LoadContentDetailInfoUseCase _loadContentMainDescription;
@@ -68,7 +68,7 @@ class ContentDetailViewModel extends BaseViewModel {
     final responseRes = await _loadContentImgList.call(
         passedArgument.contentType, passedArgument.contentId);
     responseRes.fold(onSuccess: (data) {
-      _contentImgUrlList.value = data;
+      contentImgUrlList.value = data;
     }, onFailure: (e) {
       AlertWidget.toast('컨텐츠 이미지 정보를 불러들이는 데 실패했습니다');
       log(e.toString());
@@ -121,11 +121,12 @@ class ContentDetailViewModel extends BaseViewModel {
   }
 
   // 유튜브 채널 정보 호출
-  Future<void> _fetchYoutubeChannelInfo() async {
+  Future<void> fetchYoutubeChannelInfo() async {
     final responseResult = await YoutubeRepository.to
-        .loadYoutubeChannelInfo(passedArgument.channelId);
+        .loadYoutubeChannelInfo(passedArgument.videoId);
     responseResult.fold(onSuccess: (data) {
-      _youtubeChannelInfo.value = data;
+      youtubeChannelInfo.value = data;
+      print(data.url);
     }, onFailure: (e) {
       AlertWidget.toast('유튜브 정보를 불러오는데 실패하였습니다');
       log(e.toString());
@@ -166,13 +167,12 @@ class ContentDetailViewModel extends BaseViewModel {
       _fetchContentMainInfo(),
       _fetchYoutubeVideoContentInfo(),
       _fetchContentCommentList(),
-      _fetchYoutubeChannelInfo(),
     ]);
   }
 
   /* [Getters] */
   // 유튜브 컨텐츠 id => 항상 argument로 전달받음
-  String get youtubeContentId => passedArgument.youtubeId;
+  String get youtubeContentId => passedArgument.videoId;
 
   // [ContentSeasonType]의 single 여부
   bool get isSeasonEpisodeContent =>
