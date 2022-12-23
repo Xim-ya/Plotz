@@ -60,60 +60,64 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
               duration: const Duration(milliseconds: 200),
               child: rateAndGenreView),
         ),
-        CustomScrollView(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          controller: vm.scrollController,
-          slivers: [
-            SliverList(
-              delegate: SliverChildListDelegate([header]),
-            ),
-            // 탭바 영역
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: StickyDelegateContainer(
-                minHeight: 44,
-                maxHeight: 1,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Color(0xFF1B1C1E)),
-                    ),
-                    color: AppColor.black,
-                  ),
-                  child: TabBar(
-                    labelColor: Colors.white,
-                    unselectedLabelColor: const Color(0xFF505153),
-                    indicatorColor: Colors.white,
-                    labelStyle: AppTextStyle.title3,
-                    unselectedLabelStyle: AppTextStyle.body2,
-                    onTap: vm.onTabClicked,
-                    controller: vm.tabController,
-                    tabs: tabs,
-                  ),
+        DefaultTabController(
+          length: 2,
+          child: NestedScrollView(
+            controller: vm.scrollController,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    header,
+                  ]),
                 ),
-              ),
-            ),
-
-
-            // TabBarView 영역
-            SliverList(
-              delegate: SliverChildListDelegate([
-                Obx(
-                  () => Container(
-                    padding: const EdgeInsets.only(top: 20, bottom: 80),
-                    constraints: BoxConstraints(
-                      minHeight: SizeConfig.to.screenHeight -
-                          SizeConfig.to.statusBarHeight -
-                          SizeConfig.to.bottomInset,
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: StickyDelegateContainer(
+                    minHeight: 44,
+                    maxHeight: 1,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Color(0xFF1B1C1E)),
+                        ),
+                        color: AppColor.black,
+                      ),
+                      child: TabBar(
+                        labelColor: Colors.white,
+                        unselectedLabelColor: const Color(0xFF505153),
+                        indicatorColor: Colors.white,
+                        labelStyle: AppTextStyle.title3,
+                        unselectedLabelStyle: AppTextStyle.body2,
+                        onTap: vm.onTabClicked,
+                        controller: vm.tabController,
+                        tabs: tabs,
+                      ),
                     ),
-                    color: AppColor.black,
-                    child: tabBarViews[vm.selectedTabIndex.value],
                   ),
                 )
-              ]),
+              ];
+            },
+            body: Container(
+              color: AppColor.black,
+              padding: const EdgeInsets.only(top: 20),
+              child: TabBarView(
+                controller: vm.tabController,
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: tabBarViews[0],
+                  ),
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: tabBarViews[1],
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
 
         // 상단 '뒤로가기'   버튼

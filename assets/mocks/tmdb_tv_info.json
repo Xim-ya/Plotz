@@ -1,124 +1,154 @@
-{
-  "adult": false,
-  "backdrop_path": "/yoFgLaM1GCRMouDwYnGydISgFlB.jpg",
-  "created_by": [
-    {
-      "id": 1215822,
-      "credit_id": "621e8f868c7b0f006df820bb",
-      "name": "Jonathan E. Steinberg",
-      "gender": 2,
-      "profile_path": null
-    },
-    {
-      "id": 1215827,
-      "credit_id": "62620f5ad46537009a1ebf5b",
-      "name": "Robert Levine",
-      "gender": 2,
-      "profile_path": null
-    }
-  ],
-  "episode_run_time": [
-    62
-  ],
-  "first_air_date": "2022-06-16",
-  "genres": [
-    {
-      "id": 10759,
-      "name": "Action & Adventure"
-    },
-    {
-      "id": 18,
-      "name": "드라마"
-    }
-  ],
-  "homepage": "https://www.fxnetworks.com/shows/the-old-man",
-  "id": 111800,
-  "in_production": true,
-  "languages": [
-    "en"
-  ],
-  "last_air_date": "2022-07-21",
-  "last_episode_to_air": {
-    "air_date": "2022-07-21",
-    "episode_number": 7,
-    "id": 3678305,
-    "name": "에피소드 7",
-    "overview": "",
-    "production_code": "",
-    "runtime": 51,
-    "season_number": 1,
-    "show_id": 111800,
-    "still_path": "/2ihYATqLt5I7pgy86pOq5r2iGHp.jpg",
-    "vote_average": 0.0,
-    "vote_count": 0
-  },
-  "name": "올드 맨",
-  "next_episode_to_air": null,
-  "networks": [
-    {
-      "id": 88,
-      "name": "FX",
-      "logo_path": "/aexGjtcs42DgRtZh7zOxayiry4J.png",
-      "origin_country": "US"
-    }
-  ],
-  "number_of_episodes": 7,
-  "number_of_seasons": 1,
-  "origin_country": [
-    "US"
-  ],
-  "original_language": "en",
-  "original_name": "The Old Man",
-  "overview": "수십 년 전 잠적한 전직 CIA 요원 댄 체이스. 과거의 비밀을 안고 은둔한 채 살아가던 중 결국 정체가 탄로 난다. 하지만 미래를 위해서 더 이상 숨어 살 수 없는 그는 과거의 매듭을 풀고자 하는데.",
-  "popularity": 40.797,
-  "poster_path": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg",
-  "production_companies": [
-    {
-      "id": 20815,
-      "logo_path": null,
-      "name": "The Littlefield Company",
-      "origin_country": "US"
-    },
-    {
-      "id": 21659,
-      "logo_path": "/uJhjhEJEPDoCSSOci44tYoe5BjZ.png",
-      "name": "20th Television",
-      "origin_country": "US"
-    },
-    {
-      "id": 73708,
-      "logo_path": null,
-      "name": "Quaker Moving Pictures",
-      "origin_country": "US"
-    }
-  ],
-  "production_countries": [
-    {
-      "iso_3166_1": "US",
-      "name": "United States of America"
-    }
-  ],
-  "seasons": [
-    {
-      "air_date": "2022-06-16",
-      "episode_count": 7,
-      "id": 166270,
-      "name": "시즌 1",
-      "overview": "",
-      "poster_path": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg",
-      "season_number": 1
-    }
-  ],
-  "spoken_languages": [
-    {
-      "english_name": "English",
-      "iso_639_1": "en",
-      "name": "English"
-    }
-  ],
-  "status": "Returning Series",
-  "tagline": "",
-  "type": "Scripted",
-  "vote_average": 7.453,
-  "vote_count": 127
-}
+//import 'package:uppercut_fantube/utilities/index.dart';
+//
+///* 2022.07.14 Created By Ximya
+//* 광고수익금 스크린의 Scaffold
+//* [SliverPersistentHeader]을 이용해 `Tabar`가 고정되는 인터렉션을 고려함.
+//* */
+//
+//class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
+//const ContentDetailScaffold({
+//Key? key,
+//required this.tabBarViews,
+//required this.tabs,
+//required this.header,
+//required this.rateAndGenreView,
+//required this.headerBackdropImgUrl,
+//}) : super(key: key);
+//
+//final Widget header;
+//final List<Tab> tabs;
+//final List<Widget> tabBarViews;
+//final Widget rateAndGenreView;
+//final String headerBackdropImgUrl;
+//
+//@override
+//Widget buildView(BuildContext context) {
+//return Stack(
+//children: <Widget>[
+//Obx(
+//() => AnimatedPositioned(
+//top: vm.headerBgOffset,
+//duration: const Duration(milliseconds: 40),
+//child: CachedNetworkImage(
+//width: SizeConfig.to.screenWidth,
+//fit: BoxFit.fitWidth,
+//imageUrl: headerBackdropImgUrl.prefixTmdbImgPath,
+//errorWidget: (context, url, error) => const Icon(Icons.error),
+//),
+//),
+//),
+//
+//// Gradient 레이어
+//Positioned.fill(
+//child: Container(
+//decoration: const BoxDecoration(
+//gradient: LinearGradient(
+//colors: [Colors.black, Colors.transparent, AppColor.black],
+//begin: Alignment.topCenter,
+//end: Alignment.bottomCenter,
+//stops: <double>[0.0, 0.3, 0.8],
+//),
+//),
+//),
+//),
+//
+//// Rate & Genre 뷰
+//Obx(
+//() => AnimatedPositioned(
+//top: 180 - vm.headerBgOffset,
+//right: 16,
+//duration: const Duration(milliseconds: 200),
+//child: rateAndGenreView),
+//),
+//CustomScrollView(
+//clipBehavior: Clip.antiAliasWithSaveLayer,
+//controller: vm.scrollController,
+//slivers: [
+//SliverList(
+//delegate: SliverChildListDelegate([header]),
+//),
+//// 탭바 영역
+//SliverPersistentHeader(
+//pinned: true,
+//delegate: StickyDelegateContainer(
+//minHeight: 44,
+//maxHeight: 1,
+//child: Container(
+//padding: const EdgeInsets.symmetric(horizontal: 20),
+//decoration: const BoxDecoration(
+//border: Border(
+//bottom: BorderSide(color: Color(0xFF1B1C1E)),
+//),
+//color: AppColor.black,
+//),
+//child: TabBar(
+//labelColor: Colors.white,
+//unselectedLabelColor: const Color(0xFF505153),
+//indicatorColor: Colors.white,
+//labelStyle: AppTextStyle.title3,
+//unselectedLabelStyle: AppTextStyle.body2,
+//onTap: vm.onTabClicked,
+//controller: vm.tabController,
+//tabs: tabs,
+//),
+//),
+//),
+//),
+//
+//
+//// TabBarView 영역
+//SliverList(
+//delegate: SliverChildListDelegate([
+//Obx(
+//() => Container(
+//padding: const EdgeInsets.only(top: 20, bottom: 80),
+//constraints: BoxConstraints(
+//minHeight: SizeConfig.to.screenHeight -
+//SizeConfig.to.statusBarHeight -
+//SizeConfig.to.bottomInset,
+//),
+//color: AppColor.black,
+//child: tabBarViews[vm.selectedTabIndex.value],
+//),
+//)
+//]),
+//),
+//],
+//),
+//
+//// 상단 '뒤로가기'   버튼
+//// 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
+//Obx(
+//() => AnimatedPositioned(
+//top: vm.showBackBtnOnTop.value ? 0 : -100,
+//left: 12,
+//duration: const Duration(milliseconds: 100),
+//child: IconButton(
+//onPressed: Get.back,
+//icon: const Icon(
+//Icons.arrow_back_ios,
+//color: Colors.white,
+//),
+//),
+//),
+//),
+//
+//// 하단 '뒤로가기' 버튼
+//// 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
+//Obx(
+//() => AnimatedPositioned(
+//bottom:
+//vm.showBackBtnOnTop.value ? -100 : SizeConfig.to.bottomInset,
+//right: 14,
+//duration: const Duration(milliseconds: 160),
+//child: FloatingActionButton(
+//onPressed: Get.back,
+//backgroundColor: AppColor.darkGrey.withOpacity(0.46),
+//child: const Icon(Icons.arrow_back),
+//),
+//),
+//),
+//],
+//);
+//}
+//}

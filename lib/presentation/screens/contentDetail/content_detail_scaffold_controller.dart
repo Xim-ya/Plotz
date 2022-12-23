@@ -23,7 +23,12 @@ class ContentDetailScaffoldController extends BaseViewModel
   /* 메소드 */
   // [정보] 탭이 클릭 되었을 때 1회 필요한 api call 실행
   void onTabClicked(int index) {
+    fetchResourcesIfNeeded();
+    selectedTabIndex.value = index;
+  }
 
+  // [정보] 탭이 클릭 되었을 때 1회 필요한 api call 실행
+  void fetchResourcesIfNeeded() {
     if (!ContentDetailViewModel.to.contentCreditList.hasData) {
       ContentDetailViewModel.to.fetchContentCreditInfo();
     }
@@ -35,8 +40,6 @@ class ContentDetailScaffoldController extends BaseViewModel
     if (!ContentDetailViewModel.to.contentImgUrlList.value.hasData) {
       ContentDetailViewModel.to.fetchContentImgList();
     }
-
-    selectedTabIndex.value = index;
   }
 
   // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
@@ -62,6 +65,12 @@ class ContentDetailScaffoldController extends BaseViewModel
     scrollController.addListener(() {
       setBackBtnVisibility();
       scrollOffset.value = scrollController.offset;
+    });
+
+    tabController.addListener(() {
+      if (tabController.index == 1) {
+        fetchResourcesIfNeeded();
+      }
     });
   }
 
