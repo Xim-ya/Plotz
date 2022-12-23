@@ -9,25 +9,25 @@ part of 'tmdb_tv_detail_response.dart';
 TmdbTvDetailResponse _$TmdbTvDetailResponseFromJson(
         Map<String, dynamic> json) =>
     TmdbTvDetailResponse(
-      json['adult'] as bool,
+      json['adult'] as bool?,
       json['backdrop_path'] as String?,
-      (json['genres'] as List<dynamic>)
-          .map((e) => TvGenreResponse.fromJson(e as Map<String, dynamic>))
+      (json['genres'] as List<dynamic>?)
+          ?.map((e) => TvGenreResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['first_air_date'] as String,
-      json['homepage'] as String,
+      json['first_air_date'] as String?,
+      json['homepage'] as String?,
       json['id'] as int,
-      json['in_production'] as bool,
+      json['in_production'] as bool?,
       json['name'] as String,
       json['next_episode_to_air'] as String?,
-      json['number_of_seasons'] as int,
+      json['number_of_seasons'] as int?,
       json['original_name'] as String,
       json['overview'] as String,
       json['poster_path'] as String?,
-      (json['seasons'] as List<dynamic>)
-          .map((e) => SeasonResponse.fromJson(e as Map<String, dynamic>))
+      (json['seasons'] as List<dynamic>?)
+          ?.map((e) => SeasonResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['status'] as String,
+      json['status'] as String?,
       (json['vote_average'] as num).toDouble(),
       json['vote_count'] as int,
     );

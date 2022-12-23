@@ -1,5 +1,5 @@
 import 'package:uppercut_fantube/presentation/screens/search/localWidget/search_scaffold.dart';
-import 'package:uppercut_fantube/presentation/screens/search/localWidget/tabViews/drama_searched_results_tab_view.dart';
+import 'package:uppercut_fantube/presentation/screens/search/localWidget/tabViews/tv_searched_results_tab_view.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -46,7 +46,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
                   TextFormField(
                     keyboardAppearance: Brightness.dark,
                     focusNode: FocusNode(),
-                    onChanged: (String) {},
+                    onChanged: vm.onSearchChanged,
                     controller: vm.textEditingController,
                     cursorColor: AppColor.lightGrey,
                     style: const TextStyle(

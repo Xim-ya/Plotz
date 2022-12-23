@@ -4,26 +4,26 @@ part 'tmdb_tv_detail_response.g.dart';
 
 @JsonSerializable(createToJson: false)
 class TmdbTvDetailResponse {
-  @JsonKey(name:'adult')
-  bool adult;
+  @JsonKey(name: 'adult')
+  bool? adult;
 
-  @JsonKey(name:'backdrop_path')
+  @JsonKey(name: 'backdrop_path')
   String? backdrop_path;
 
-  @JsonKey(name:'genres')
-  List<TvGenreResponse> genres;
+  @JsonKey(name: 'genres')
+  List<TvGenreResponse>? genres;
 
-  @JsonKey(name : 'first_air_date')
-  String first_air_date;
+  @JsonKey(name: 'first_air_date')
+  String? first_air_date;
 
   @JsonKey(name: 'homepage')
-  String homepage;
+  String? homepage;
 
-  @JsonKey(name :'id')
+  @JsonKey(name: 'id')
   int id;
 
-  @JsonKey(name : 'in_production')
-  bool in_production;
+  @JsonKey(name: 'in_production')
+  bool? in_production;
 
   @JsonKey(name: 'name')
   String name;
@@ -32,7 +32,7 @@ class TmdbTvDetailResponse {
   String? next_episode_to_air;
 
   @JsonKey(name: 'number_of_seasons')
-  int number_of_seasons;
+  int? number_of_seasons;
 
   @JsonKey(name: 'original_name')
   String original_name;
@@ -44,12 +44,12 @@ class TmdbTvDetailResponse {
   String? poster_path;
 
   @JsonKey(name: 'seasons')
-  List<SeasonResponse> seasons;
+  List<SeasonResponse>? seasons;
 
   @JsonKey(name: 'status')
-  String status;
+  String? status;
 
-  @JsonKey(name : 'vote_average')
+  @JsonKey(name: 'vote_average')
   double vote_average;
 
   @JsonKey(name: 'vote_count')
@@ -77,6 +77,7 @@ class TmdbTvDetailResponse {
   factory TmdbTvDetailResponse.fromJson(Map<String, dynamic> json) =>
       _$TmdbTvDetailResponseFromJson(json);
 }
+
 // 시즌 - 에피소드
 @JsonSerializable(createToJson: false)
 class SeasonResponse {
@@ -86,10 +87,10 @@ class SeasonResponse {
   @JsonKey(name: 'episode_count')
   int episode_count;
 
-  @JsonKey(name : 'id')
+  @JsonKey(name: 'id')
   int id;
 
-  @JsonKey(name : 'name')
+  @JsonKey(name: 'name')
   String name;
 
   @JsonKey(name: 'overview')
@@ -101,13 +102,12 @@ class SeasonResponse {
   @JsonKey(name: 'season_number')
   int season_number;
 
-  SeasonResponse(this.air_date, this.episode_count, this.id, this.name, this.overview,
-      this.poster_path, this.season_number);
+  SeasonResponse(this.air_date, this.episode_count, this.id, this.name,
+      this.overview, this.poster_path, this.season_number);
 
   factory SeasonResponse.fromJson(Map<String, dynamic> json) =>
       _$SeasonResponseFromJson(json);
 }
-
 
 // TV 장르
 @JsonSerializable(createToJson: false)
@@ -117,7 +117,6 @@ class TvGenreResponse {
 
   @JsonKey(name: 'name')
   String name;
-
 
   TvGenreResponse(this.id, this.name);
 

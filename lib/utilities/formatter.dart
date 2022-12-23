@@ -6,8 +6,9 @@ class Formatter {
       genreList == null ? '-' : genreList.join(' / ');
 
   // Date Format
-  static String dateToyyMMdd(String date) =>
-      DateFormat('yy.MM.dd').format(DateTime.parse(date));
+  static String dateToyyMMdd(String date) {
+    return DateFormat('yy.MM.dd').format(DateTime.parse(date));
+  }
 
   /// 좋아요 수 & 조회수를 유튜브 포맷에 맞게 변경
   /// 1000 미만 -> 숫자 ex) 956

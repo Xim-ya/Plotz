@@ -37,7 +37,7 @@ class SearchScaffold extends BaseView<SearchScaffoldController> {
         ),
         Expanded(
           child: Padding(
-            padding: AppInset.horizontal16 + AppInset.bottom46,
+            padding: AppInset.horizontal16,
             child: TabBarView(
               controller: vm.tabController,
               children: tabViews,

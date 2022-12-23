@@ -22,11 +22,27 @@ class SearchedContent {
       required this.releaseDate});
 
   factory SearchedContent.fromResponse(TmdbTvDetailResponse response) {
+    /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
+    /// 검증 로직이 필요
+    String? verifyReleaseDate() {
+      if (response.first_air_date == null) {
+        print("ARANG ${response.first_air_date}");
+        return null;
+      }
+      if (response.first_air_date!.contains('-')) {
+        return response.first_air_date;
+      } else if (response.first_air_date == 'null') {
+        return response.first_air_date;
+      } else {
+        print("ARANG3 ${response.first_air_date}");
+        return null;
+      }
+    }
+
     return SearchedContent(
-      contentId: response.id,
-      posterImgUrl: response.poster_path ?? response.backdrop_path,
-      title: response.name,
-      releaseDate: response.first_air_date,
-    );
+        contentId: response.id,
+        posterImgUrl: response.poster_path ?? response.backdrop_path,
+        title: response.name,
+        releaseDate: verifyReleaseDate());
   }
 }
