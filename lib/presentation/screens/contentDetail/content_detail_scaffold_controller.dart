@@ -21,9 +21,8 @@ class ContentDetailScaffoldController extends BaseViewModel
   RxBool showBackBtnOnTop = true.obs;
 
   /* 메소드 */
-  // [정보] 탭이 클릭 되었을 때 1회 필요한 api call 실행
+  // 탭 바 버튼이 클릭 되었을 때
   void onTabClicked(int index) {
-    fetchResourcesIfNeeded();
     selectedTabIndex.value = index;
   }
 

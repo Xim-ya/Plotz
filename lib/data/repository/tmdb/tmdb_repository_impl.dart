@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/content/searched_content.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TmdbRepositoryImpl implements TmdbRepository {
@@ -70,6 +71,21 @@ class TmdbRepositoryImpl implements TmdbRepository {
       final response = await _dataSource.loadTmdbMovieIContentImages(movieId);
       return Result.success(
           response.backdrops.map((e) => e.file_path).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+
+  // Tv 컨텐츠  검색 결과 리스트
+  @override
+  Future<Result<List<SearchedContent>>> loadSearchedTvContentList(
+      String query) async {
+    try {
+      final response = await _dataSource.loadSearchedTvContentList(query);
+      return Result.success(
+        response.results.map(SearchedContent.fromResponse).toList(),
+      );
     } on Exception catch (e) {
       return Result.failure(e);
     }

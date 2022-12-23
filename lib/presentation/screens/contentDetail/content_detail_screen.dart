@@ -10,7 +10,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
       headerBackdropImgUrl: vm.headerBackdropImg,
       rateAndGenreView: _buildRateAndGenreView(),
       tabs: _buildTab(),
-      tabBarViews: _buildTabBarViews(),
+      tabViews: _buildTabBarViews(),
     );
   }
 

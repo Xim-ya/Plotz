@@ -8,7 +8,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
   const ContentDetailScaffold({
     Key? key,
-    required this.tabBarViews,
+    required this.tabViews,
     required this.tabs,
     required this.header,
     required this.rateAndGenreView,
@@ -17,7 +17,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
 
   final Widget header;
   final List<Tab> tabs;
-  final List<Widget> tabBarViews;
+  final List<Widget> tabViews;
   final Widget rateAndGenreView;
   final String headerBackdropImgUrl;
 
@@ -108,11 +108,11 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
                 children: [
                   SingleChildScrollView(
                     padding: const EdgeInsets.only(bottom: 80),
-                    child: tabBarViews[0],
+                    child: tabViews[0],
                   ),
                   SingleChildScrollView(
                     padding: const EdgeInsets.only(bottom: 80),
-                    child: tabBarViews[1],
+                    child: tabViews[1],
                   ),
                 ],
               ),

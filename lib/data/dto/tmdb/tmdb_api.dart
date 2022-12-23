@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_content_list_wrapped_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'tmdb_api.g.dart';
@@ -35,6 +36,11 @@ abstract class TmdbApi {
   // 'tv' 컨텐츠 이미지 리스트
   @GET('/tv/{tvId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
   Future<TmdbImagesResponse> loadTvImages(@Path('tvId') int tvId);
+
+  // 'tv' 컨텐츠 검색 결과
+  @GET(
+      '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query={query}')
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(@Path('query') String query);
 
   // 'movie' 컨텐츠 상세 정보
   @GET(

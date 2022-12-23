@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_content_list_wrapped_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TmdbDataSourceImpl with ApiErrorHandlerMixin implements TmdbDataSource {
@@ -34,4 +35,9 @@ class TmdbDataSourceImpl with ApiErrorHandlerMixin implements TmdbDataSource {
   @override
   Future<TmdbImagesResponse> loadTmdbMovieIContentImages(int movieId) async =>
       _api.loadMovieImages(movieId);
+
+  @override
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
+          String query) async =>
+      _api.loadSearchedTvContentList(query);
 }

@@ -98,7 +98,7 @@ class ContentDetailViewModel extends BaseViewModel {
     responseResult.fold(
       onSuccess: (data) {
         _contentDescriptionInfo.value = data;
-        print('${_contentDescriptionInfo.value?.backDropImgUrl}');
+        print('${_contentDescriptionInfo.value?.backDropImgUrl} + !');
       },
       onFailure: (e) {
         log(e.toString());
@@ -126,7 +126,6 @@ class ContentDetailViewModel extends BaseViewModel {
         .loadYoutubeChannelInfo(passedArgument.videoId);
     responseResult.fold(onSuccess: (data) {
       youtubeChannelInfo.value = data;
-      print(data.url);
     }, onFailure: (e) {
       AlertWidget.toast('유튜브 정보를 불러오는데 실패하였습니다');
       log(e.toString());
