@@ -1,10 +1,10 @@
+import 'package:uppercut_fantube/domain/model/content/simple_content_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
   ContentRepositoryImpl(this._contentDataSource);
 
   final ContentDataSource _contentDataSource;
-
 
   // 홈 상단 노출 콘텐츠 리스트 호출
   @override
@@ -45,6 +45,16 @@ class ContentRepositoryImpl implements ContentRepository {
       loadContentListWithCategory() async {
     try {
       final response = await _contentDataSource.loadContentWithCategory();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<SimpleContentInfo>>> loadTotalTvContentList() async {
+    try {
+      final response = await _contentDataSource.loadTotalTvContentList();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

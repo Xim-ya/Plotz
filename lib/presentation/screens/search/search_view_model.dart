@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:uppercut_fantube/domain/model/content/searched_content.dart';
+import 'package:uppercut_fantube/domain/service/content_service.dart';
 import 'package:uppercut_fantube/domain/useCase/tmdb/load_searched_content_result_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -26,7 +27,7 @@ class SearchViewModel extends BaseViewModel {
     textEditingController.text = '';
   }
 
-  // 검색어가 입력창에 입력되었을 때
+  // 검색어가 입력창에 입력되었을 때 (Debounce 설정 0.3초)
   void onSearchChanged(String query) {
     pagingController.refresh();
     if (_debounce?.isActive ?? false) _debounce!.cancel();
@@ -51,6 +52,11 @@ class SearchViewModel extends BaseViewModel {
       onSuccess: (data) {
         // 최대 불러올 수 있는 page 넘버를 2로 설정 (컨텐츠 40개) - TMDB 기준
         // 호출한 데이터가 20개 이하면 더 이상 불러올 수 없다고 판단하고 더 이상 listen 하지 않음
+
+        // 등록된 컨텐츠인지 판별
+        for (var content in data) {
+          content.checkIsContentRegistered();
+        }
 
         final bool noMoreReturn = data.length < 20;
         if (limitPagingByPageLimit || noMoreReturn) {
@@ -95,5 +101,6 @@ class SearchViewModel extends BaseViewModel {
     pagingController.addPageRequestListener((pageKey) {
       loadSearchedContentListByPaging();
     });
+    ContentService.to.fetchTotalListOfTvContent();
   }
 }

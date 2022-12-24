@@ -1,4 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
+import 'package:uppercut_fantube/data/repository/content/content_repository.dart';
+import 'package:uppercut_fantube/domain/model/content/simple_content_info.dart';
+import 'package:uppercut_fantube/domain/service/content_service.dart';
 
 /** Created By Ximya - 2022.12.31
  * [SearchScreen]에서 사용되는
@@ -12,21 +17,37 @@ class SearchedContent {
   final String? posterImgUrl; // 컨텐츠 포스트
   final String? title;
   final String? releaseDate;
-  late bool isRegisteredContent;
-  late String youtubeVideoId;
+  final Rx<ContentRegisteredValue> isRegisteredContent;
+  late String? youtubeVideoId;
 
-  SearchedContent(
-      {required this.contentId,
-      required this.posterImgUrl,
-      required this.title,
-      required this.releaseDate});
+  SearchedContent({
+    required this.contentId,
+    required this.posterImgUrl,
+    required this.title,
+    required this.releaseDate,
+    required this.isRegisteredContent,
+    this.youtubeVideoId,
+  });
+
+  // 등록된 컨텐츠인지 판별.
+  void checkIsContentRegistered() {
+    for (var element in ContentService.to.totalListOfTvContent.value!) {
+      if (element.contentId == contentId) {
+        isRegisteredContent.value = ContentRegisteredValue.registered;
+        youtubeVideoId = element.videoId;
+        break;
+      } else {
+        isRegisteredContent.value = ContentRegisteredValue.unRegistered;
+        break;
+      }
+    }
+  }
 
   factory SearchedContent.fromResponse(TmdbTvDetailResponse response) {
     /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
     /// 검증 로직이 필요
     String? verifyReleaseDate() {
       if (response.first_air_date == null) {
-        print("ARANG ${response.first_air_date}");
         return null;
       }
       if (response.first_air_date!.contains('-')) {
@@ -34,15 +55,36 @@ class SearchedContent {
       } else if (response.first_air_date == 'null') {
         return response.first_air_date;
       } else {
-        print("ARANG3 ${response.first_air_date}");
         return null;
       }
     }
 
+    // bool isRegistered() {
+    //   Future.delayed(const Duration(seconds: 100),(){
+    //
+    //     if([111800,1396].contains(response.id)) {
+    //       print("TURE:");
+    //       return true;
+    //     } else {
+    //       print("FALSE");
+    //       return false;
+    //     }
+    //   });
+    // }
+
     return SearchedContent(
-        contentId: response.id,
-        posterImgUrl: response.poster_path ?? response.backdrop_path,
-        title: response.name,
-        releaseDate: verifyReleaseDate());
+      contentId: response.id,
+      posterImgUrl: response.poster_path ?? response.backdrop_path,
+      title: response.name,
+      releaseDate: verifyReleaseDate(),
+      isRegisteredContent: ContentRegisteredValue.registered.obs,
+    );
   }
+}
+
+// 등록 여부 필드 enum 값
+enum ContentRegisteredValue {
+  isLoading,
+  registered,
+  unRegistered,
 }

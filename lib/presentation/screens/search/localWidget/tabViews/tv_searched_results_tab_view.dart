@@ -1,7 +1,5 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:intl/intl.dart';
 import 'package:uppercut_fantube/domain/model/content/searched_content.dart';
-import 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -15,7 +13,7 @@ class DramaSearchedResultsTabView extends BaseView<SearchViewModel> {
       pagingController: vm.pagingController,
       separatorBuilder: (__, _) => AppSpace.size12,
       builderDelegate: PagedChildBuilderDelegate<SearchedContent>(
-
+          animateTransitions: true,
           /* 검색된 결과가 없을 때 */
           noItemsFoundIndicatorBuilder: (context) => Center(
                 child: Text(
@@ -32,9 +30,70 @@ class DramaSearchedResultsTabView extends BaseView<SearchViewModel> {
               ),
             );
           },
+          /* 검색 결과*/
           itemBuilder: (context, item, index) {
-            if (item.hasData) {
-              return Row(
+            // 컨텐츠 등록 여부에 따른 인디케이터 case별 위젯 (이미지 overlay)
+            Widget caseOverlayIndicatorOnImg() {
+              switch (item.isRegisteredContent.value) {
+                case ContentRegisteredValue.isLoading:
+                  return const SizedBox();
+                case ContentRegisteredValue.registered:
+                  return Positioned.fill(
+                    child: Align(
+                      child: IconInkWellButton(
+                        iconPath: 'assets/icons/play.svg',
+                        iconSize: 40,
+                        onIconTapped: () {},
+                      ),
+                    ),
+                  );
+                case ContentRegisteredValue.unRegistered:
+                  return Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColor.black.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  );
+              }
+            }
+
+            // 컨텐츠 등록 여부 인디케이터 case별 위젯
+            Widget caseIndicatorOnTrailing() {
+              switch (item.isRegisteredContent.value) {
+                case ContentRegisteredValue.isLoading:
+                  return const SizedBox(
+                    height: 12,
+                    width: 12,
+                    child: CircularProgressIndicator(
+                      color: AppColor.darkGrey,
+                      strokeWidth: 2,
+                    ),
+                  );
+                case ContentRegisteredValue.registered:
+                  return const SizedBox();
+                case ContentRegisteredValue.unRegistered:
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SvgPicture.asset('assets/icons/round_exclamation.svg'),
+                      AppSpace.size2,
+                      Text(
+                        '등록되지 않은 컨텐츠 입니다',
+                        style: AppTextStyle.alert2
+                            .copyWith(color: const Color(0xFF303030)),
+                      ),
+                    ],
+                  );
+              }
+            }
+
+            return GestureDetector(
+              onTap: (){
+                print("결과 ${item.youtubeVideoId}-- > id : ${item.contentId}");
+              },
+              child: Row(
                 children: <Widget>[
                   // 컨텐츠 포스터 이미지
                   Stack(
@@ -45,8 +104,7 @@ class DramaSearchedResultsTabView extends BaseView<SearchViewModel> {
                           height: 100,
                           width: 100,
                           child: CachedNetworkImage(
-                            imageUrl:
-                                item.posterImgUrl?.prefixTmdbImgPath ?? '',
+                            imageUrl: item.posterImgUrl?.prefixTmdbImgPath ?? '',
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -68,16 +126,7 @@ class DramaSearchedResultsTabView extends BaseView<SearchViewModel> {
                           ),
                         ),
                       ),
-                      if (true)
-                        Positioned.fill(
-                          child: Align(
-                            child: IconInkWellButton(
-                              iconPath: 'assets/icons/play.svg',
-                              iconSize: 40,
-                              onIconTapped: () {},
-                            ),
-                          ),
-                        ),
+                      Obx(caseOverlayIndicatorOnImg)
                     ],
                   ),
                   AppSpace.size8,
@@ -110,81 +159,15 @@ class DramaSearchedResultsTabView extends BaseView<SearchViewModel> {
                           ),
                         AppSpace.size2,
                         // 등록 여부 Indicator
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SvgPicture.asset(
-                                'assets/icons/round_exclamation.svg'),
-                            AppSpace.size2,
-                            Text(
-                              '등록되지 않은 컨텐츠 입니다',
-                              style: AppTextStyle.alert2
-                                  .copyWith(color: const Color(0xFF303030)),
-                            )
-                          ],
-                        ),
+                        Obx(
+                          caseIndicatorOnTrailing,
+                        )
                       ],
                     ),
                   ),
                 ],
-              );
-            } else {
-              return Row(
-                children: <Widget>[
-                  // 컨텐츠 포스터 이미지
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: const SkeletonBox(
-                      height: 100,
-                      width: 100,
-                    ),
-                  ),
-                  AppSpace.size8,
-                  SizedBox(
-                    height: 100,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        AppSpace.size2,
-                        // 제목
-                        Row(
-                          children: [
-                            Text(
-                              '왕좌의 게임',
-                              style: AppTextStyle.title1,
-                            ),
-                            AppSpace.size2,
-                            // 컨텐츠 등록 여부
-                            SvgPicture.asset('assets/icons/check_box.svg'),
-                          ],
-                        ),
-                        // 개봉 & 첫 방영일
-                        Text(
-                          Formatter.dateToyyMMdd('2022-11-12'),
-                          style: AppTextStyle.body2
-                              .copyWith(color: AppColor.lightGrey),
-                        ),
-                        AppSpace.size2,
-                        // 등록 여부 Indicator
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SvgPicture.asset(
-                                'assets/icons/round_exclamation.svg'),
-                            AppSpace.size2,
-                            Text(
-                              '등록되지 않은 컨텐츠 입니다',
-                              style: AppTextStyle.alert2
-                                  .copyWith(color: const Color(0xFF303030)),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            }
+              ),
+            );
           }),
     );
   }
