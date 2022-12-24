@@ -1,6 +1,3 @@
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:uppercut_fantube/domain/model/content/searched_content.dart';
-import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class MovieSearchedResultsTabView extends BaseScreen<SearchViewModel> {

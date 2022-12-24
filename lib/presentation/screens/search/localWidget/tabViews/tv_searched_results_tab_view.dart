@@ -1,10 +1,7 @@
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:uppercut_fantube/domain/model/content/searched_content.dart';
-import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-class DramaSearchedResultsTabView extends BaseView<SearchViewModel> {
-  const DramaSearchedResultsTabView({Key? key}) : super(key: key);
+class TvSearchedResultsTabView extends BaseView<SearchViewModel> {
+  const TvSearchedResultsTabView({Key? key}) : super(key: key);
 
   @override
   Widget buildView(BuildContext context) {

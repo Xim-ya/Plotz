@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/domain/model/content/searched_content.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TmdbRepositoryImpl implements TmdbRepository {

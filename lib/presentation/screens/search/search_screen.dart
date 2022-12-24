@@ -1,7 +1,4 @@
-import 'package:uppercut_fantube/presentation/screens/search/localWidget/search_scaffold.dart';
-import 'package:uppercut_fantube/presentation/screens/search/localWidget/tabViews/movie_searched_results_tab_view.dart';
-import 'package:uppercut_fantube/presentation/screens/search/localWidget/tabViews/tv_searched_results_tab_view.dart';
-import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
+
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SearchScreen extends BaseScreen<SearchViewModel> {
@@ -19,7 +16,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   }
 
   List<Widget> buildTabView() => [
-        const DramaSearchedResultsTabView(),
+        const TvSearchedResultsTabView(),
         const MovieSearchedResultsTabView(),
       ];
 

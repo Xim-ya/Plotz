@@ -1,11 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:uppercut_fantube/domain/model/content/searched_content.dart';
-import 'package:uppercut_fantube/domain/service/content_service.dart';
-import 'package:uppercut_fantube/domain/useCase/tmdb/load_searched_content_result_use_case.dart';
-import 'package:uppercut_fantube/presentation/screens/search/localWidget/search_scaffold_controller.dart';
-import 'package:uppercut_fantube/utilities/extensions/get_last_character_of_string.extension.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SearchViewModel extends BaseViewModel {

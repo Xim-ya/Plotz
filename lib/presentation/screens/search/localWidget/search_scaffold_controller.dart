@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SearchScaffoldController extends BaseViewModel
@@ -20,20 +19,15 @@ class SearchScaffoldController extends BaseViewModel
     /// 아래 1,2 메소들 실행
     tabController.addListener(
       () {
-        print("TAB CHANGED!! ${tabController.index}");
-        // 1. paiginController 리셋
-        // SearchViewModel.resetPagingValue;
-
-        // 2. 타입별로 Api을 하기 위해 컨텐츠 타입을 변경.
+        // 1. 타입별로 Api을 하기 위해 컨텐츠 타입을 변경.
         if (tabController.index == 0) {
           _selectedTabType = ContentType.tv;
-
         } else {
           _selectedTabType = ContentType.movie;
         }
 
+        // 2. paiginController 리셋
         SearchViewModel.to.refreshPagingController();
-
       },
     );
   }

@@ -1,7 +1,5 @@
-import 'package:get/get.dart';
-import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_movie_detail_response.dart';
-import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
-import 'package:uppercut_fantube/domain/service/content_service.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 /** Created By Ximya - 2022.12.31
  * [SearchScreen]에서 사용되는
