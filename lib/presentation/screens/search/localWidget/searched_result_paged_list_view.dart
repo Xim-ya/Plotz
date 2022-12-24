@@ -1,7 +1,15 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
-class TvSearchedResultsTabView extends BaseView<SearchViewModel> {
-  const TvSearchedResultsTabView({Key? key}) : super(key: key);
+/** Created By Ximya - 2022.12.24 🎅
+ * [SearchScreen] > TabView에서 사용되는
+ *  페이징 리스트 뷰
+ *  인자 전달 받은 [ContentType]에 따라 일부 요소를 분기처리.
+ * */
+
+class SearchedResultPagedListView extends BaseView<SearchViewModel> {
+  const SearchedResultPagedListView({Key? key, required this.contentType}) : super(key: key);
+
+  final ContentType contentType;
 
   @override
   Widget buildView(BuildContext context) {
@@ -40,8 +48,8 @@ class TvSearchedResultsTabView extends BaseView<SearchViewModel> {
         firstPageProgressIndicatorBuilder: (context) {
           return const Center(
               child: CircularProgressIndicator(
-            color: AppColor.darkGrey,
-          ));
+                color: AppColor.darkGrey,
+              ));
         },
         /* 검색 결과*/
         itemBuilder: (context, item, index) {
@@ -158,13 +166,13 @@ class TvSearchedResultsTabView extends BaseView<SearchViewModel> {
                         ),
                       ),
                       AppSpace.size2,
-                      // 개봉 & 첫 방영일
 
+                      // 개봉 & 첫 방영일
                       if (item.releaseDate != null || item.releaseDate != '')
                         Text(
                           item.releaseDate != null
                               ? Formatter.dateToyyMMdd(item.releaseDate!)
-                              : '방영일 확인 불가',
+                              : contentType == ContentType.tv ? '방영일 확인 불가' : '개봉일 확인 불가',
                           style: AppTextStyle.body2
                               .copyWith(color: AppColor.lightGrey),
                         ),

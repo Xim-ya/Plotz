@@ -1,4 +1,3 @@
-
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SearchScreen extends BaseScreen<SearchViewModel> {
@@ -16,8 +15,8 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   }
 
   List<Widget> buildTabView() => [
-        const TvSearchedResultsTabView(),
-        const MovieSearchedResultsTabView(),
+        const SearchedResultPagedListView(contentType: ContentType.tv),
+        const SearchedResultPagedListView(contentType: ContentType.movie),
       ];
 
   List<Tab> buildTabs() => const [
@@ -42,7 +41,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
               child: Stack(
                 children: [
                   TextFormField(
-                    onFieldSubmitted : (value){
+                    onFieldSubmitted: (value) {
                       vm.loadSearchedContentListByPaging();
                     },
                     keyboardAppearance: Brightness.dark,

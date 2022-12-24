@@ -102,9 +102,8 @@ export 'package:uppercut_fantube/presentation/screens/contentDetail/content_deta
 export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tabView/main_content_tab_view.dart';
 export 'package:uppercut_fantube/presentation/screens/search/localWidget/search_scaffold_controller.dart';
 export 'package:uppercut_fantube/presentation/screens/search/localWidget/search_scaffold.dart';
-export 'package:uppercut_fantube/presentation/screens/search/localWidget/tabViews/movie_searched_results_tab_view.dart';
-export 'package:uppercut_fantube/presentation/screens/search/localWidget/tabViews/tv_searched_results_tab_view.dart';
 export 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
+export 'package:uppercut_fantube/presentation/screens/search/localWidget/searched_result_paged_list_view.dart';
 
 
 // Utilities

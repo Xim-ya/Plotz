@@ -13,7 +13,7 @@ class SearchViewModel extends BaseViewModel {
   late final PagingController<int, SearchedContent>
       pagingController; // 'tv' Paging Controller(검색 결과)
 
-  Timer? _debounce;
+  Timer? _debounce; // 검색 api call 시간 딜레이
 
   /* UseCases */
   final LoadSearchedContentResultUseCase _loadSearchedContentResult;
@@ -53,7 +53,7 @@ class SearchViewModel extends BaseViewModel {
 
     // Paging Controller 리셋 --> 검색 api call 실행
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 800), pagingController.refresh);
+    _debounce = Timer(const Duration(milliseconds: 360), pagingController.refresh);
   }
 
   /* Networking Method */
@@ -66,10 +66,10 @@ class SearchViewModel extends BaseViewModel {
       textEditingController.text,
     );
 
+    /// 최대 불러올 수 있는 page 넘버를 2로 설정 (컨텐츠 40개) - TMDB 기준
+    /// 호출한 데이터가 20개 이하면 더 이상 불러올 수 없다고 판단하고 더 이상 listen 하지 않음
     responseResult.fold(
       onSuccess: (data) {
-        // 최대 불러올 수 있는 page 넘버를 2로 설정 (컨텐츠 40개) - TMDB 기준
-        // 호출한 데이터가 20개 이하면 더 이상 불러올 수 없다고 판단하고 더 이상 listen 하지 않음
 
         // 등록된 컨텐츠인지 판별
         for (var content in data) {
@@ -142,7 +142,7 @@ class SearchViewModel extends BaseViewModel {
 }
 
 // 검색어 입력이 불가능한 특수문자
-List<String> invalidCharacter = [
+const List<String> invalidCharacter = [
   '. ',
   '.',
   '-',
