@@ -76,15 +76,28 @@ class TmdbRepositoryImpl implements TmdbRepository {
     }
   }
 
-
-  // Tv 컨텐츠  검색 결과 리스트
+  // 'TV' 컨텐츠 검색 결과 리스트
   @override
   Future<Result<List<SearchedContent>>> loadSearchedTvContentList(
       String query) async {
     try {
       final response = await _dataSource.loadSearchedTvContentList(query);
       return Result.success(
-        response.results.map(SearchedContent.fromResponse).toList(),
+        response.results.map(SearchedContent.fromTvResponse).toList(),
+      );
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  // 'Movie' 컨텐츠 검색 결과 리스트
+  @override
+  Future<Result<List<SearchedContent>>> loadSearchedMovieContentList(
+      String query) async {
+    try {
+      final response = await _dataSource.loadSearchedMovieContentList(query);
+      return Result.success(
+        response.results.map(SearchedContent.fromMovieResponse).toList(),
       );
     } on Exception catch (e) {
       return Result.failure(e);

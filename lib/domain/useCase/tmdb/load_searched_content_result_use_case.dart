@@ -8,7 +8,6 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *  [contentType]값('tv' 'movie')에 따라 다른 Api를 호출
  * */
 
-
 class LoadSearchedContentResultUseCase extends BaseTwoParamUseCase<ContentType,
     String, Result<List<SearchedContent>>> {
   LoadSearchedContentResultUseCase(this._repository);
@@ -19,11 +18,15 @@ class LoadSearchedContentResultUseCase extends BaseTwoParamUseCase<ContentType,
   Future<Result<List<SearchedContent>>> call(
       ContentType firstReq, String secondReq) {
     /// firstReq -> [contentType] / secondRequest -> [Query]
+    ///
+
+    print("SELECT TYPE ${firstReq}");
     if (firstReq == ContentType.tv) {
+      print("QUERY ${secondReq}");
       return _repository.loadSearchedTvContentList(secondReq);
     } else {
-      // 임시
-      return _repository.loadSearchedTvContentList(secondReq);
+      print("MOVIE CALL");
+      return _repository.loadSearchedMovieContentList(secondReq);
     }
   }
 }

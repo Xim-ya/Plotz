@@ -11,10 +11,10 @@ class TmdbMovieDetailResponse {
   String? backdrop_path;
 
   @JsonKey(name: 'genres')
-  List<MovieGenreResponse> genres;
+  List<MovieGenreResponse>? genres;
 
   @JsonKey(name: 'release_date')
-  String release_date;
+  String? release_date;
 
   @JsonKey(name: 'id')
   int id;

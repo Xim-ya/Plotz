@@ -14,7 +14,7 @@ class ContentDetailInfo {
   final String? posterImgUrl; // 포스터 이미지 url
   final String? backDropImgUrl; // 컨텐츠 배경 이미지 url
   final List<String>? genreList; // 장르 타입 리스트
-  final String releaseDate; // 컨텐츠 출시일
+  final String? releaseDate; // 컨텐츠 출시일
   final String overView; // 컨텐츠 설명
   final ContentSeasonType? contentEpicType; // 시리즈물 or 단일 컨텐츠
   final String? airStatus; // 컨텐츠 방영 상태
@@ -37,13 +37,15 @@ class ContentDetailInfo {
       TmdbMovieDetailResponse response) {
     List<String> formattedGenre = [];
 
-    for (var ele in response.genres) {
-      // "Action & Adventure" 장르 데이터가 이런 형태도 넘어온다면 Split 함.
-      if (ele.name.contains('&')) {
-        final List<String> splitGenre = ele.name.split('&');
-        formattedGenre.addAll(splitGenre);
-      } else {
-        formattedGenre.add(ele.name);
+    if (response.genres.hasData) {
+      for (var ele in response.genres!) {
+        // "Action & Adventure" 장르 데이터가 이런 형태도 넘어온다면 Split 함.
+        if (ele.name.contains('&')) {
+          final List<String> splitGenre = ele.name.split('&');
+          formattedGenre.addAll(splitGenre);
+        } else {
+          formattedGenre.add(ele.name);
+        }
       }
     }
 
@@ -64,7 +66,7 @@ class ContentDetailInfo {
       TmdbTvDetailResponse response) {
     List<String> formattedGenre = [];
 
-    if(response.genres.hasData) {
+    if (response.genres.hasData) {
       for (var ele in response.genres!) {
         // "Action & Adventure" 장르 데이터가 이런 형태도 넘어온다면 Split 함.
         if (ele.name.contains('&')) {
@@ -75,7 +77,6 @@ class ContentDetailInfo {
         }
       }
     }
-
 
     return ContentDetailInfo(
       posterImgUrl: response.poster_path ?? response.backdrop_path,

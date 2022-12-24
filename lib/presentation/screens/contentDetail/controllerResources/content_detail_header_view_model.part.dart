@@ -30,6 +30,6 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
 
   // 컨텐츠 개봉일
   String? get releaseDate => _contentDescriptionInfo.value?.releaseDate != null
-      ? Formatter.dateToyyMMdd(_contentDescriptionInfo.value!.releaseDate)
+      ? Formatter.dateToyyMMdd(_contentDescriptionInfo.value!.releaseDate!)
       : null;
 }

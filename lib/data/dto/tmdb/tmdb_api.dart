@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_movie_content_list_wrapped_response.dart';
 import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_content_list_wrapped_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -40,7 +41,8 @@ abstract class TmdbApi {
   // 'tv' 컨텐츠 검색 결과
   @GET(
       '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query={query}')
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(@Path('query') String query);
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
+      @Path('query') String query);
 
   // 'movie' 컨텐츠 상세 정보
   @GET(
@@ -57,6 +59,12 @@ abstract class TmdbApi {
   // 'movie' 컨텐츠 이미지 리스트
   @GET('/movie/{movieId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
   Future<TmdbImagesResponse> loadMovieImages(@Path('movieId') int movieId);
+
+  // 'movie' 컨텐츠 검색 결과
+  @GET(
+      '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query={query}')
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
+      @Path('query') String query);
 
 // @GET(
 //     '/movie/{movieId}/similar?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')

@@ -30,7 +30,6 @@ class SearchScaffold extends BaseView<SearchScaffoldController> {
             indicatorColor: Colors.white,
             labelStyle: AppTextStyle.title3,
             unselectedLabelStyle: AppTextStyle.body2,
-            onTap: (int) {},
             controller: vm.tabController,
             tabs: tabs,
           ),

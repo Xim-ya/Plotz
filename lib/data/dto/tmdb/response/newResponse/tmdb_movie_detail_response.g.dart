@@ -12,10 +12,10 @@ TmdbMovieDetailResponse _$TmdbMovieDetailResponseFromJson(
       (json['vote_average'] as num).toDouble(),
       json['adult'] as bool,
       json['backdrop_path'] as String?,
-      (json['genres'] as List<dynamic>)
-          .map((e) => MovieGenreResponse.fromJson(e as Map<String, dynamic>))
+      (json['genres'] as List<dynamic>?)
+          ?.map((e) => MovieGenreResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['release_date'] as String,
+      json['release_date'] as String?,
       json['id'] as int,
       json['title'] as String,
       json['overview'] as String,

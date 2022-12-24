@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_movie_detail_response.dart';
 import 'package:uppercut_fantube/data/dto/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
-import 'package:uppercut_fantube/data/repository/content/content_repository.dart';
-import 'package:uppercut_fantube/domain/model/content/simple_content_info.dart';
 import 'package:uppercut_fantube/domain/service/content_service.dart';
 
 /** Created By Ximya - 2022.12.31
@@ -31,19 +29,43 @@ class SearchedContent {
 
   // 등록된 컨텐츠인지 판별.
   void checkIsContentRegistered() {
-    for (var element in ContentService.to.totalListOfTvContent.value!) {
+    for (var element in ContentService.to.totalListOfRegisteredTvContent.value!) {
       if (element.contentId == contentId) {
         isRegisteredContent.value = ContentRegisteredValue.registered;
         youtubeVideoId = element.videoId;
         break;
       } else {
         isRegisteredContent.value = ContentRegisteredValue.unRegistered;
-        break;
       }
     }
   }
 
-  factory SearchedContent.fromResponse(TmdbTvDetailResponse response) {
+  factory SearchedContent.fromMovieResponse(TmdbMovieDetailResponse response) {
+    /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
+    /// 검증 로직이 필요
+    String? verifyReleaseDate() {
+      if (response.release_date == null) {
+        return null;
+      }
+      if (response.release_date!.contains('-')) {
+        return response.release_date;
+      } else if (response.release_date == 'null') {
+        return response.release_date;
+      } else {
+        return null;
+      }
+    }
+
+    return SearchedContent(
+      contentId: response.id,
+      posterImgUrl: response.poster_path ?? response.backdrop_path,
+      title: response.title,
+      releaseDate: verifyReleaseDate(),
+      isRegisteredContent: ContentRegisteredValue.registered.obs,
+    );
+  }
+
+  factory SearchedContent.fromTvResponse(TmdbTvDetailResponse response) {
     /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
     /// 검증 로직이 필요
     String? verifyReleaseDate() {
@@ -58,19 +80,6 @@ class SearchedContent {
         return null;
       }
     }
-
-    // bool isRegistered() {
-    //   Future.delayed(const Duration(seconds: 100),(){
-    //
-    //     if([111800,1396].contains(response.id)) {
-    //       print("TURE:");
-    //       return true;
-    //     } else {
-    //       print("FALSE");
-    //       return false;
-    //     }
-    //   });
-    // }
 
     return SearchedContent(
       contentId: response.id,
