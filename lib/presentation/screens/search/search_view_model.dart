@@ -2,6 +2,10 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 
+/// TODO: PAGING 고도화 로직 필요
+/// Tabview를  제스처로 이동할 때 UX가 부자연스러움.
+/// PAGING Controller를 두 개로 분리 필요. (메모리를 너무 많이 사용하는지 사전에 확인 필요)
+
 class SearchViewModel extends BaseViewModel {
   SearchViewModel(this._loadSearchedContentResult);
 
@@ -92,12 +96,17 @@ class SearchViewModel extends BaseViewModel {
     // Paging Controller 리셋 --> 검색 api call 실행
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce =
-        Timer(const Duration(milliseconds: 360), pagingController.refresh);
+        Timer(const Duration(milliseconds: 300), pagingController.refresh);
   }
 
   /* Networking Method */
   // 컨텐츠 리스트 호출 - (pagination logic 적용)
   Future<void> loadSearchedContentListByPaging() async {
+    if (loading.isTrue) {
+      return;
+    }
+    loading(true);
+
     // 입력된 검색어가 없다면 api call을 하지 않음.
 
     final responseResult = await _loadSearchedContentResult(
@@ -131,6 +140,7 @@ class SearchViewModel extends BaseViewModel {
         pagingController.error = err;
       },
     );
+    loading(false);
   }
 
   // [Paging] - 다음 페이지 키. null 일 경우 0을 러틴.

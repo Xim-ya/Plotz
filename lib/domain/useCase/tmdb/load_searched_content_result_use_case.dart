@@ -16,15 +16,10 @@ class LoadSearchedContentResultUseCase extends BaseTwoParamUseCase<ContentType,
   @override
   Future<Result<List<SearchedContent>>> call(
       ContentType firstReq, String secondReq) {
-    /// firstReq -> [contentType] / secondRequest -> [Query]
-    ///
-
-    print("SELECT TYPE ${firstReq}");
+    // firstReq -> [contentType] / secondRequest -> [Query]
     if (firstReq == ContentType.tv) {
-      print("QUERY ${secondReq}");
       return _repository.loadSearchedTvContentList(secondReq);
     } else {
-      print("MOVIE CALL");
       return _repository.loadSearchedMovieContentList(secondReq);
     }
   }
