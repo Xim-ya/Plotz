@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:uppercut_fantube/presentation/common/dialog/app_dialog.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -31,7 +30,6 @@ class SearchViewModel extends BaseViewModel {
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped(
       {required SearchedContent content, required ContentType contentType}) {
-
     print("AIM");
     final registeredValue = content.isRegisteredContent.value;
     // 1. isRegistered 데이터가 로그 안되었다면 toast 메세지를 띄움
@@ -52,12 +50,18 @@ class SearchViewModel extends BaseViewModel {
       );
       return;
     } else {
-      // TODO: 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
-      print("AIM");
-      Get.dialog(AppDialog());
+      // 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
+      Get.dialog(AppDialog.dividedBtn(
+        title: '미등록 컨텐츠\n[${content.title}]',
+        description: '등록되어 있는 컨텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
+        leftBtnContent: '나중에',
+        rightBtnContent: '요청하기',
+        // TODO: 실제 요청 로직 추가 필요
+        onRightBtnClicked: Get.back,
+        onLeftBtnClicked: Get.back,
+      ));
       return;
     }
-
   }
 
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때

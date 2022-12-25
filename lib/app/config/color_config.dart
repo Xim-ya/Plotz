@@ -9,4 +9,5 @@ abstract class AppColor {
   static const lightGrey = Color(0xFFBBBAC1); // Used in Home Sub title;
   static const mixedWhite = Color(0xFFE6E6E6);
   static const strongGrey = Color(0xFF1F1F20);
+  static const yellow = Color(0xFFFFE24B);
 }
