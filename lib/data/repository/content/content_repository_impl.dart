@@ -51,9 +51,19 @@ class ContentRepositoryImpl implements ContentRepository {
   }
 
   @override
-  Future<Result<List<SimpleContentInfo>>> loadTotalTvContentList() async {
+  Future<Result<List<SimpleContentInfo>>> loadAllOfTvContentList() async {
     try {
-      final response = await _contentDataSource.loadTotalTvContentList();
+      final response = await _contentDataSource.loadAllOfTvContentList();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<SimpleContentInfo>>> loadAllOfMovieContentList() async {
+    try {
+      final response = await _contentDataSource.loadAllOfMovieContentList();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

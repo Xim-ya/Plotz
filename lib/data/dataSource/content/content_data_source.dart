@@ -10,5 +10,7 @@ abstract class ContentDataSource {
 
   Future<List<CategoryBaseContentList>> loadContentWithCategory();
 
-  Future<List<SimpleContentInfo>> loadTotalTvContentList();
+  Future<List<SimpleContentInfo>> loadAllOfTvContentList();
+
+  Future<List<SimpleContentInfo>> loadAllOfMovieContentList();
 }

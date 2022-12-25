@@ -15,7 +15,12 @@ abstract class ContentRepository {
 
   Future<Result<List<CategoryBaseContentList>>> loadContentListWithCategory();
 
-  Future<Result<List<SimpleContentInfo>>> loadTotalTvContentList();
+  Future<Result<List<SimpleContentInfo>>> loadAllOfTvContentList();
+
+  Future<Result<List<SimpleContentInfo>>> loadAllOfMovieContentList();
+
+
+
 
   static ContentRepository get to => Get.find();
 }

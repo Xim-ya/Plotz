@@ -5,7 +5,6 @@ class SearchScaffoldController extends BaseViewModel
   late final TabController tabController;
   late final ScrollController scrollController;
 
-
   /* State Variables */
   // 선택된 탭 (컨텐츠 타입)
   ContentType _selectedTabType = ContentType.tv;
@@ -26,6 +25,10 @@ class SearchScaffoldController extends BaseViewModel
           _selectedTabType = ContentType.tv;
         } else {
           _selectedTabType = ContentType.movie;
+          if (ContentService.to.totalListOfRegisteredMovieContent.value ==
+              null) {
+            ContentService.to.fetchAllOfRegisteredMovieContent();
+          }
         }
 
         /// 2. paiginController 리셋

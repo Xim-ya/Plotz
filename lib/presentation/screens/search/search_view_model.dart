@@ -120,7 +120,8 @@ class SearchViewModel extends BaseViewModel {
       onSuccess: (data) {
         // 등록된 컨텐츠인지 판별
         for (var content in data) {
-          content.checkIsContentRegistered();
+          content.checkIsContentRegistered(
+              contentType: SearchScaffoldController.selectedTabType);
         }
 
         final bool noMoreReturn = data.length < 20;
