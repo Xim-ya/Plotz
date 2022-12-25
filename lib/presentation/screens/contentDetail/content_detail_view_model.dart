@@ -41,6 +41,14 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /* [Intent ] */
 
+  /// 이전 페이지로 이동
+  void onRouteBack() {
+    // Get.argument 로딩중이 아니라면 이라면
+    if (loading.isFalse) {
+      Get.back();
+    }
+  }
+
   /// Networking Method
 
   // 컨텐츠 에피소드 정보 호출 (시즌 컨텐츠인 경우에만 호출)
@@ -121,7 +129,7 @@ class ContentDetailViewModel extends BaseViewModel {
   // 유튜브 채널 정보 호출
   Future<void> fetchYoutubeChannelInfo() async {
     final responseResult = await YoutubeRepository.to
-        .loadYoutubeChannelInfo(passedArgument.videoId);
+        .loadYoutubeChannelInfo(passedArgument!.videoId);
     responseResult.fold(onSuccess: (data) {
       youtubeChannelInfo.value = data;
     }, onFailure: (e) {
@@ -156,8 +164,9 @@ class ContentDetailViewModel extends BaseViewModel {
   Future<void> launchYoutubeApp(String youtubeVideoId) async {
     log('정상 런치 실패');
     if (!await launchUrl(
-        Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
-        mode: LaunchMode.externalApplication)) {
+      Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
+      mode: LaunchMode.externalApplication,
+    )) {
       throw 'Could not launch ';
     }
   }
@@ -165,14 +174,13 @@ class ContentDetailViewModel extends BaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
+    loading(true);
 
     await Future.wait([
       _fetchContentMainInfo(),
       _fetchYoutubeVideoContentInfo(),
       _fetchContentCommentList(),
     ]);
-
-    print("SPECIFIED URL ${passedArgument.posterImgUrl}");
   }
 
   /* [Getters] */
@@ -185,7 +193,12 @@ class ContentDetailViewModel extends BaseViewModel {
       ContentSeasonType.series;
 
   // 홈 스크린에서 전달 받은 Argument
-  ContentArgumentFormat get passedArgument => Get.arguments;
+  ContentArgumentFormat get passedArgument {
+    if (Get.arguments != null) {
+      loading(false);
+    }
+    return Get.arguments;
+  }
 
   static ContentDetailViewModel get to => Get.find<ContentDetailViewModel>();
 }

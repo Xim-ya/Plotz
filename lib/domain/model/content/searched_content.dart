@@ -25,7 +25,9 @@ class SearchedContent {
     this.youtubeVideoId,
   });
 
-  // 등록된 컨텐츠인지 판별.
+  /// 등록된 컨텐츠인지 판별하는 메소드.
+  /// 서버에 저장된 '등록된 모든 컨텐츠' 데이터를 기반으로 등록여부를 확인함.
+  /// '서버에 등록된 컨텐츠 리스트' <--(비교)--> '검색된 결과 리스트'
   Future<void> checkIsContentRegistered(
       {required ContentType contentType}) async {
     // 1. 등록된 전체 컨텐츠 리스트 데이터가 호출되어 있지 않다면. 리스트 호출

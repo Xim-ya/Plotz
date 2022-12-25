@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
+
+import 'package:uppercut_fantube/presentation/common/dialog/app_dialog.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /// TODO: PAGING 고도화 로직 필요
@@ -29,6 +31,8 @@ class SearchViewModel extends BaseViewModel {
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped(
       {required SearchedContent content, required ContentType contentType}) {
+
+    print("AIM");
     final registeredValue = content.isRegisteredContent.value;
     // 1. isRegistered 데이터가 로그 안되었다면 toast 메세지를 띄움
     if (registeredValue == ContentRegisteredValue.isLoading) {
@@ -49,8 +53,11 @@ class SearchViewModel extends BaseViewModel {
       return;
     } else {
       // TODO: 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
+      print("AIM");
+      Get.dialog(AppDialog());
       return;
     }
+
   }
 
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때

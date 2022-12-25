@@ -125,12 +125,6 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
     ];
   }
 
-  @override
-  bool get wrapWithSafeArea => false;
-
-  @override
-  bool get extendBodyBehindAppBar => false;
-
   // Sliver레이아웃에서 Tab이 고정되기 위해서 [Sizse.zero]인 Appbar가 필요
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context) {
@@ -141,4 +135,14 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
       ),
     );
   }
+
+  @override
+  bool get wrapWithSafeArea => false;
+
+  @override
+  bool get extendBodyBehindAppBar => false;
+
+  // 데이터가 로딩 중이라면 swipback을 지원하지 않음.
+  @override
+  bool get preventSwipeBack => vm.loading.isTrue ? true : false;
 }

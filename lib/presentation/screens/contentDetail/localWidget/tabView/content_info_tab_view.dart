@@ -68,7 +68,7 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
                             child: Container(
                               height: 62,
                               width: 62,
-                              decoration: BoxDecoration(shape: BoxShape.circle),
+                              decoration: const BoxDecoration(shape: BoxShape.circle),
                             ),
                           ),
                         ),
@@ -78,7 +78,7 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
                           children: [
                             Shimmer(
                               color: AppColor.mixedWhite,
-                              child: Container(
+                              child: const SizedBox(
                                 width: 56,
                                 height: 18,
                               ),

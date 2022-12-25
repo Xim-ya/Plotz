@@ -128,7 +128,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             left: 12,
             duration: const Duration(milliseconds: 100),
             child: IconButton(
-              onPressed: Get.back,
+              onPressed: ContentDetailViewModel.to.onRouteBack,
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
