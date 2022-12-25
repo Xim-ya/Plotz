@@ -5,6 +5,8 @@ class SearchScaffoldController extends BaseViewModel
   late final TabController tabController;
   late final ScrollController scrollController;
 
+
+  /* State Variables */
   // 선택된 탭 (컨텐츠 타입)
   ContentType _selectedTabType = ContentType.tv;
 
@@ -26,8 +28,11 @@ class SearchScaffoldController extends BaseViewModel
           _selectedTabType = ContentType.movie;
         }
 
-        // 2. paiginController 리셋
-        SearchViewModel.to.refreshPagingController();
+        /// 2. paiginController 리셋
+        /// 검색어가 없다면 refresh 하지 않음.
+        if (SearchViewModel.to.textEditingController.text.isNotEmpty) {
+          SearchViewModel.to.refreshPagingController();
+        }
       },
     );
   }

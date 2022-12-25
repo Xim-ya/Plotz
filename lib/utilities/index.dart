@@ -1,5 +1,6 @@
 /* Created By Ximya - 2022.11.04
 *  Single Imports로 패키지 및 소스파일 관리
+*  TODO: 중복된 export 구문 있음. 삭제 필요
 * */
 
 // Flutter Packages
@@ -75,6 +76,8 @@ export 'package:uppercut_fantube/domain/model/content/searched_content.dart';
 export 'package:uppercut_fantube/domain/service/content_service.dart';
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_credit_info_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_img_list_use_case.dart';
+export 'package:uppercut_fantube/domain/model/content/content_argument_format.dart';
+export 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 
 // Presentation
 export 'package:uppercut_fantube/presentation/common/animated_index_stack.dart';

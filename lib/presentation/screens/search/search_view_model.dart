@@ -5,8 +5,9 @@ import 'package:uppercut_fantube/utilities/index.dart';
 class SearchViewModel extends BaseViewModel {
   SearchViewModel(this._loadSearchedContentResult);
 
-  /* Data Variables */
-  // final Rxn<List<SearchedContent>> _tvContentSearchedList = Rxn();
+  /* State Variables */
+  // 검색 앱바 'x' 버튼 노출여부
+  RxBool showRoundCloseBtn = false.obs;
 
   /* Controllers */
   late TextEditingController textEditingController; // 검색 TextField Controller
@@ -19,15 +20,52 @@ class SearchViewModel extends BaseViewModel {
   final LoadSearchedContentResultUseCase _loadSearchedContentResult;
 
   /* Intents */
+
+  /// 검색된 컨텐츠 클릭 되었을 때
+  /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
+  void onSearchedContentTapped(
+      {required SearchedContent content, required ContentType contentType}) {
+    final registeredValue = content.isRegisteredContent.value;
+    // 1. isRegistered 데이터가 로그 안되었다면 toast 메세지를 띄움
+    if (registeredValue == ContentRegisteredValue.isLoading) {
+      AlertWidget.toast('잠시만 기다려주세요. 데이터를 로딩하고 있습니다');
+      return;
+    }
+
+    // 2. 등록된 컨텐츠라면 상세 페이지로 이동
+    if (registeredValue == ContentRegisteredValue.registered) {
+      Get.toNamed(
+        AppRoutes.contentDetail,
+        arguments: ContentArgumentFormat(
+            contentId: content.contentId,
+            contentType: contentType,
+            posterImgUrl: content.posterImgUrl!,
+            videoId: content.youtubeVideoId!),
+      );
+      return;
+    } else {
+      // TODO: 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
+      return;
+    }
+  }
+
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때
   void resetSearchValue() {
     textEditingController.text = '';
+    showRoundCloseBtn(false);
   }
 
   /// 검색어가 입력창에 입력되었을 때 (Debounce 설정 0.3초)
   /// 특정 조건(1,2,3,4,)에서는 검색 메소드를 실행하지 않음.
   /// 위 특정 조건이 아니라면 pagingController를 refresh하여 검색 api call 실행
   void onSearchChanged(String query) {
+    // AppBar 검색창 'x' 버튼 노출 여부
+    if (textEditingController.text.isNotEmpty) {
+      if (showRoundCloseBtn.isFalse) showRoundCloseBtn(true);
+    } else {
+      if (showRoundCloseBtn.isTrue) showRoundCloseBtn(false);
+    }
+
     // 1. 입력된 검색어가 없다면 검색 X
     if (textEditingController.text.isEmpty ||
         textEditingController.text == '') {
@@ -53,7 +91,8 @@ class SearchViewModel extends BaseViewModel {
 
     // Paging Controller 리셋 --> 검색 api call 실행
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 360), pagingController.refresh);
+    _debounce =
+        Timer(const Duration(milliseconds: 360), pagingController.refresh);
   }
 
   /* Networking Method */
@@ -70,7 +109,6 @@ class SearchViewModel extends BaseViewModel {
     /// 호출한 데이터가 20개 이하면 더 이상 불러올 수 없다고 판단하고 더 이상 listen 하지 않음
     responseResult.fold(
       onSuccess: (data) {
-
         // 등록된 컨텐츠인지 판별
         for (var content in data) {
           content.checkIsContentRegistered();

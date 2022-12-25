@@ -7,7 +7,8 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class SearchedResultPagedListView extends BaseView<SearchViewModel> {
-  const SearchedResultPagedListView({Key? key, required this.contentType}) : super(key: key);
+  const SearchedResultPagedListView({Key? key, required this.contentType})
+      : super(key: key);
 
   final ContentType contentType;
 
@@ -48,8 +49,8 @@ class SearchedResultPagedListView extends BaseView<SearchViewModel> {
         firstPageProgressIndicatorBuilder: (context) {
           return const Center(
               child: CircularProgressIndicator(
-                color: AppColor.darkGrey,
-              ));
+            color: AppColor.darkGrey,
+          ));
         },
         /* 검색 결과*/
         itemBuilder: (context, item, index) {
@@ -110,8 +111,15 @@ class SearchedResultPagedListView extends BaseView<SearchViewModel> {
             }
           }
 
-          return GestureDetector(
-            onTap: () {},
+          return InkWell(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              bottomLeft: Radius.circular(12),
+            ),
+            onTap: () {
+              vm.onSearchedContentTapped(
+                  content: item, contentType: contentType);
+            },
             child: Row(
               children: <Widget>[
                 // 컨텐츠 포스터 이미지
@@ -172,7 +180,9 @@ class SearchedResultPagedListView extends BaseView<SearchViewModel> {
                         Text(
                           item.releaseDate != null
                               ? Formatter.dateToyyMMdd(item.releaseDate!)
-                              : contentType == ContentType.tv ? '방영일 확인 불가' : '개봉일 확인 불가',
+                              : contentType == ContentType.tv
+                                  ? '방영일 확인 불가'
+                                  : '개봉일 확인 불가',
                           style: AppTextStyle.body2
                               .copyWith(color: AppColor.lightGrey),
                         ),

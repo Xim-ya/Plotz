@@ -81,29 +81,32 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
                     ),
                   ),
                   // 'X' 버튼
-                  Positioned(
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: vm.resetSearchValue,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        height: 40,
-                        child: Container(
-                          width: 18,
-                          height: 18,
-                          decoration: const BoxDecoration(
-                            color: AppColor.lightGrey,
-                            shape: BoxShape.circle,
+                  Obx(() => vm.showRoundCloseBtn.value
+                      ? Positioned(
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: vm.resetSearchValue,
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              height: 40,
+                              child: Container(
+                                width: 18,
+                                height: 18,
+                                decoration: const BoxDecoration(
+                                  color: AppColor.lightGrey,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.close_rounded,
+                                  size: 12,
+                                  color: AppColor.strongGrey,
+                                ),
+                              ),
+                            ),
                           ),
-                          child: const Icon(
-                            Icons.close_rounded,
-                            size: 12,
-                            color: AppColor.strongGrey,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                        )
+                      : const SizedBox()),
                 ],
               ),
             ),

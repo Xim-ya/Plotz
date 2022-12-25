@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
@@ -98,7 +97,6 @@ class ContentDetailViewModel extends BaseViewModel {
     responseResult.fold(
       onSuccess: (data) {
         _contentDescriptionInfo.value = data;
-        print('${_contentDescriptionInfo.value?.backDropImgUrl} + !');
       },
       onFailure: (e) {
         log(e.toString());
@@ -127,8 +125,14 @@ class ContentDetailViewModel extends BaseViewModel {
     responseResult.fold(onSuccess: (data) {
       youtubeChannelInfo.value = data;
     }, onFailure: (e) {
-      AlertWidget.toast('유튜브 정보를 불러오는데 실패하였습니다');
+      // TODO: Repository 레이어에서 Exception 처리
+      if (e.runtimeType == VideoUnavailableException) {
+        AlertWidget.toast('업로더가 비디오를 삭제했습니다');
+      } else {
+        AlertWidget.toast('유튜브 정보를 불러오는데 실패하였습니다');
+      }
       log(e.toString());
+      log('${e.runtimeType} 타입'); // -> VideoUnavailableException (비디오 유실)
     });
   }
 
@@ -167,6 +171,8 @@ class ContentDetailViewModel extends BaseViewModel {
       _fetchYoutubeVideoContentInfo(),
       _fetchContentCommentList(),
     ]);
+
+    print("SPECIFIED URL ${passedArgument.posterImgUrl}");
   }
 
   /* [Getters] */
@@ -179,7 +185,7 @@ class ContentDetailViewModel extends BaseViewModel {
       ContentSeasonType.series;
 
   // 홈 스크린에서 전달 받은 Argument
-  ContentDetailParam get passedArgument => Get.arguments;
+  ContentArgumentFormat get passedArgument => Get.arguments;
 
   static ContentDetailViewModel get to => Get.find<ContentDetailViewModel>();
 }

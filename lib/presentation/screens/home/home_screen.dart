@@ -53,7 +53,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                       final contentItem = item.contents![index];
                       return GestureDetector(
                         onTap: () {
-                          final argument = ContentDetailParam(
+                          final argument = ContentArgumentFormat(
                             contentId: contentItem.contentId,
                             contentType: contentItem.contentType,
                             posterImgUrl: contentItem.posterImgUrl,
@@ -104,7 +104,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               final item = vm.topTenContentList.value![index];
               return GestureDetector(
                 onTap: () {
-                  final argument = ContentDetailParam(
+                  final argument = ContentArgumentFormat(
                     contentId: item.contentId,
                     contentType: item.contentType,
                     posterImgUrl: item.posterImgUrl,
@@ -160,7 +160,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   // 유튜브 썸네일 이미지
                   VideoThumbnailImgWithPlayerBtn(
                     onPlayerBtnClicked: () {
-                      final argument = ContentDetailParam(
+                      final argument = ContentArgumentFormat(
                         contentId: item.contentId,
                         contentType: item.contentType,
                         posterImgUrl: item.posterImgUrl,
