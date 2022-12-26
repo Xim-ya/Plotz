@@ -14,7 +14,10 @@ class SearchViewModel extends BaseViewModel {
   // 검색 앱바 'x' 버튼 노출여부
   RxBool showRoundCloseBtn = false.obs;
 
+
   /* Controllers */
+
+  late FocusNode focusNode;
   late TextEditingController textEditingController; // 검색 TextField Controller
   late final PagingController<int, SearchedContent>
       pagingController; // 'tv' Paging Controller(검색 결과)
@@ -30,7 +33,9 @@ class SearchViewModel extends BaseViewModel {
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped(
       {required SearchedContent content, required ContentType contentType}) {
-    print("AIM");
+    // 키보드 가리기
+    focusNode.unfocus();
+
     final registeredValue = content.isRegisteredContent.value;
     // 1. isRegistered 데이터가 로그 안되었다면 toast 메세지를 띄움
     if (registeredValue == ContentRegisteredValue.isLoading) {
@@ -190,6 +195,8 @@ class SearchViewModel extends BaseViewModel {
     pagingController.addPageRequestListener((pageKey) {
       loadSearchedContentListByPaging();
     });
+
+    focusNode = FocusNode();
 
     // 등록된 Movie & Tv 컨텐츠 정보 호출
     ContentService.to.fetchAllOfRegisteredTvContent();

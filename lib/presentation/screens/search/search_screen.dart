@@ -45,7 +45,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
                       vm.loadSearchedContentListByPaging();
                     },
                     keyboardAppearance: Brightness.dark,
-                    focusNode: FocusNode(),
+                    focusNode: vm.focusNode,
                     onChanged: vm.onSearchChanged,
                     controller: vm.textEditingController,
                     cursorColor: AppColor.lightGrey,
@@ -56,7 +56,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
                     decoration: InputDecoration(
                       filled: true,
                       contentPadding:
-                          const EdgeInsets.only(left: 38, right: 40),
+                      const EdgeInsets.only(left: 38, right: 40),
                       hintText: '제목을 입력하세요',
                       errorBorder: InputBorder.none,
                       enabledBorder: fixedOutLinedBorder(),
