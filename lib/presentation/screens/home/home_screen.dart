@@ -134,46 +134,57 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             final PosterExposureContent item =
                 vm.topExposedContentList![itemIndex];
 
+            void checkValidation() {
+              print("VALIDATED");
+              vm.resetContentList(item.contentId);
+            }
+
             /// Top Content Section
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  GestureDetector(
-                    child: Text(
-                      item.title ?? '-',
-                      style:
-                          AppTextStyle.headline2.copyWith(color: Colors.white),
+            return GestureDetector(
+              onTap: () {
+                print(vm.topExposedContentList!.length);
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text(
+                        item.title ?? '-',
+                        style: AppTextStyle.headline2
+                            .copyWith(color: Colors.white),
+                      ),
                     ),
-                  ),
-                  AppSpace.size2,
-                  Text(
-                    '${item.description}\n',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: AppTextStyle.headline3
-                        .copyWith(color: AppColor.lightGrey),
-                  ),
-                  AppSpace.size8,
-                  // 유튜브 썸네일 이미지
-                  VideoThumbnailImgWithPlayerBtn(
-                    onPlayerBtnClicked: () {
-                      final argument = ContentArgumentFormat(
-                        contentId: item.contentId,
-                        contentType: item.contentType,
-                        posterImgUrl: item.posterImgUrl,
-                        videoId: item.videoId,
-                        title: item.title,
-                        thumbnailUrl: item.thumbnailImgUrl,
-                        description: item.description,
-                      );
-                      vm.routeToContentDetail(argument);
-                    },
-                    posterImgUrl: item.thumbnailImgUrl,
-                  ),
-                ],
+                    AppSpace.size2,
+                    Text(
+                      '${item.description}\n',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: AppTextStyle.headline3
+                          .copyWith(color: AppColor.lightGrey),
+                    ),
+                    AppSpace.size8,
+                    // 유튜브 썸네일 이미지
+                    VideoThumbnailImgWithPlayerBtn(
+                      checkValidation: checkValidation,
+                      onPlayerBtnClicked: () {
+                        final argument = ContentArgumentFormat(
+                          contentId: item.contentId,
+                          contentType: item.contentType,
+                          posterImgUrl: item.posterImgUrl,
+                          videoId: item.videoId,
+                          title: item.title,
+                          thumbnailUrl: item.thumbnailImgUrl,
+                          description: item.description,
+                        );
+                        vm.routeToContentDetail(argument);
+                      },
+                      posterImgUrl: item.thumbnailImgUrl,
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -241,16 +252,21 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Image.asset(
-              'assets/images/main_logo.png',
-              height: 40,
-              width: 40,
+            GestureDetector(
+              onTap: () {
+                AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
+              },
+              child: Image.asset(
+                'assets/images/main_logo.png',
+                height: 40,
+                width: 40,
+              ),
             ),
             IconInkWellButton(
-                iconPath: 'assets/icons/search.svg',
-                iconSize: 40,
-                onIconTapped: vm.routeToSearch,
-                )
+              iconPath: 'assets/icons/search.svg',
+              iconSize: 40,
+              onIconTapped: vm.routeToSearch,
+            )
           ],
         ),
       )

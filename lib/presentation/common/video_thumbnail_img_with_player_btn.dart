@@ -10,11 +10,13 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
       {Key? key,
       required this.onPlayerBtnClicked,
       required this.posterImgUrl,
+      this.checkValidation,
       this.showPlayerBtn = true,
-      this.aspectRatio = 16/9
-      })
+      this.aspectRatio = 16 / 9,
+      required})
       : super(key: key);
 
+  final void Function()? checkValidation;
   final VoidCallback onPlayerBtnClicked;
   final String? posterImgUrl;
   final bool showPlayerBtn;
@@ -42,7 +44,10 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
                       color: AppColor.black,
                     ),
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  errorWidget: (context, url, error) {
+                    checkValidation!();
+                    return const Icon(Icons.error);
+                  },
                 )
               : Shimmer(
                   child: Container(

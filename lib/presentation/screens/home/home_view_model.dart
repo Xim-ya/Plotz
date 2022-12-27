@@ -40,6 +40,17 @@ class HomeViewModel extends BaseViewModel {
 
   /* [Intent] */
 
+  void resetContentList(int id) {
+    print(_topExposedContentList.value!.length);
+    _topExposedContentList.value!
+        .removeWhere((element) => element.contentId == id);
+    update();
+    carouselController.animateToPage(_topExposedContentList.value!
+        .indexWhere((element) => element.contentId == id));
+    print(_topExposedContentList.value!.length);
+    print(topExposedContentList!.length);
+  }
+
   /// UI Intent Method
   // AppBar Blur효과 avtivate 여부
   void turnOnBlurInAppBar() {
@@ -158,4 +169,3 @@ class HomeViewModel extends BaseViewModel {
     youtubeIntent();
   }
 }
-
