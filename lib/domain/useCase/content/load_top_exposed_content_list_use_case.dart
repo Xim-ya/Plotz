@@ -12,6 +12,8 @@ class LoadTopExposedContentListUseCase
   final ContentRepository _repository;
 
   @override
-  Future<Result<List<PosterExposureContent>>> call() async =>
-      _repository.loadTopExposedContent();
+  Future<Result<List<PosterExposureContent>>> call() async {
+    return _repository.loadTopExposedContent();
+  }
+
 }

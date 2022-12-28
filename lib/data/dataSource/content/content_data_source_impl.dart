@@ -16,7 +16,7 @@ class ContentDataSourceImpl
         .loadString('assets/mocks/home_top_section_content_list.json');
     Map<String, dynamic> data = json.decode(jsonText);
     List<dynamic> aim = data['items'];
-    return aim.map((e) => PosterExposureContent.fromJson(e)).toList();
+    return aim.map((e) => PosterExposureContent.topExposedContent(e)).toList();
 
     // final responseValue = ChannelImagesDescriptionsReswponse.fromJson(data);
     // return responseValue;
@@ -68,11 +68,11 @@ class ContentDataSourceImpl
   }
 
   @override
-  Future<List<SimpleContentInfo>> loadAllOfMovieContentList() async{
+  Future<List<SimpleContentInfo>> loadAllOfMovieContentList() async {
     // 임시 Json Mock up Data
     // top_ten_content_list.json
-    var jsonText =
-        await rootBundle.loadString('assets/mocks/total_movie_content_list.json');
+    var jsonText = await rootBundle
+        .loadString('assets/mocks/total_movie_content_list.json');
     Map<String, dynamic> data = json.decode(jsonText);
     List<dynamic> aim = await data['items'];
     return aim.map((e) => SimpleContentInfo.fromJson(e)).toList();

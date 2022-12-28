@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:http/http.dart' as http;
 
 /** Created By Ximya - 2022.11.19
  *  UI에서 포스터가 노출되는 컨텐츠
@@ -33,7 +34,7 @@ class PosterExposureContent {
       PosterExposureContent(
         posterImgUrl: json['posterImgUrl'],
         contentSeasonType:
-            ContentSeasonType.fromSeasonCount(json['seasonNumber']),
+        ContentSeasonType.fromSeasonCount(json['seasonNumber']),
         thumbnailImgUrl: json['thumbnailImgUrl'],
         contentId: json['id'],
         videoId: json['videoId'],
@@ -41,4 +42,35 @@ class PosterExposureContent {
         description: json['description'],
         contentType: ContentType.fromString(json['type']),
       );
+
+  Future<bool> checkImgValidation(String imgUrl) async {
+    final response = await http.head(
+        Uri.parse(imgUrl));
+
+    if (response.statusCode == 200) {
+      return  true;
+    } else {
+      return false;
+    }
+  }
+
+  factory PosterExposureContent.topExposedContent(Map<String, dynamic> json) async{
+    if(await checkImgValidation())
+
+    print("${json['thumbnailImgUrl']}");
+
+
+
+    return PosterExposureContent(
+      posterImgUrl: json['posterImgUrl'],
+      contentSeasonType:
+      ContentSeasonType.fromSeasonCount(json['seasonNumber']),
+      thumbnailImgUrl: json['thumbnailImgUrl'],
+      contentId: json['id'],
+      videoId: json['videoId'],
+      title: json['title'],
+      description: json['description'],
+      contentType: ContentType.fromString(json['type']),
+    );
+  }
 }

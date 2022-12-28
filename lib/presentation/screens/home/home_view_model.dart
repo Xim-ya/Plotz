@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:http/http.dart' as http;
 
 part 'home_view_model.part.dart';
 
@@ -150,9 +151,22 @@ class HomeViewModel extends BaseViewModel {
     final List<PosterExposureContent> mockItemLis = responseResult;
   }
 
+  Future<void> text() async {
+    final response = await http.head(
+        Uri.parse('https://www.youtube.com/watch?v=N16uIv2134WozVk'));
+
+    if (response.statusCode == 200) {
+      print("SUCCESS");
+    } else {
+      print("FAILED");
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
+
+    text();
 
     scrollController = ScrollController();
     scrollController.addListener(() {
