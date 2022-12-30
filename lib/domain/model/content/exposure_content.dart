@@ -34,7 +34,7 @@ class PosterExposureContent {
       PosterExposureContent(
         posterImgUrl: json['posterImgUrl'],
         contentSeasonType:
-        ContentSeasonType.fromSeasonCount(json['seasonNumber']),
+            ContentSeasonType.fromSeasonCount(json['seasonNumber']),
         thumbnailImgUrl: json['thumbnailImgUrl'],
         contentId: json['id'],
         videoId: json['videoId'],
@@ -43,28 +43,15 @@ class PosterExposureContent {
         contentType: ContentType.fromString(json['type']),
       );
 
-  Future<bool> checkImgValidation(String imgUrl) async {
-    final response = await http.head(
-        Uri.parse(imgUrl));
 
-    if (response.statusCode == 200) {
-      return  true;
-    } else {
-      return false;
-    }
-  }
 
-  factory PosterExposureContent.topExposedContent(Map<String, dynamic> json) async{
-    if(await checkImgValidation())
-
-    print("${json['thumbnailImgUrl']}");
-
+  factory PosterExposureContent.topExposedContent(Map<String, dynamic> json) {
 
 
     return PosterExposureContent(
       posterImgUrl: json['posterImgUrl'],
       contentSeasonType:
-      ContentSeasonType.fromSeasonCount(json['seasonNumber']),
+          ContentSeasonType.fromSeasonCount(json['seasonNumber']),
       thumbnailImgUrl: json['thumbnailImgUrl'],
       contentId: json['id'],
       videoId: json['videoId'],

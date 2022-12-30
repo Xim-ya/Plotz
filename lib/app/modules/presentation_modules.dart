@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
+import 'package:uppercut_fantube/presentation/screens/explore/explore_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class PresentationModules {
@@ -14,5 +14,8 @@ abstract class PresentationModules {
 
     // 검색
     // Get.lazyPut(() => SearchViewModel(), fenix: true);
+
+    // 탐색
+    Get.lazyPut(() => ExploreViewModel(), fenix: true);
   }
 }

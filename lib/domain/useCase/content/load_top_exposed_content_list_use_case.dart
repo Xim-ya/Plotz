@@ -1,6 +1,5 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
-
 /** Created By Ximya - 2022.11.19
  *  홈 스크린 상단 노출 컨텐츠 리스트 호출 UseeCase
  * */
@@ -15,5 +14,4 @@ class LoadTopExposedContentListUseCase
   Future<Result<List<PosterExposureContent>>> call() async {
     return _repository.loadTopExposedContent();
   }
-
 }

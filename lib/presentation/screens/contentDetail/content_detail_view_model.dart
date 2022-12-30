@@ -152,6 +152,7 @@ class ContentDetailViewModel extends BaseViewModel {
       onSuccess: (data) {
         _youtubeVideoContentInfo.value = data;
         fetchEpisodeItemList();
+
       },
       onFailure: (e) {
         log(e.toString());
@@ -181,6 +182,8 @@ class ContentDetailViewModel extends BaseViewModel {
       _fetchYoutubeVideoContentInfo(),
       _fetchContentCommentList(),
     ]);
+
+
   }
 
   /* [Getters] */

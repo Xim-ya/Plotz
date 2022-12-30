@@ -13,7 +13,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       scrollController: vm.scrollController,
       animationAppbar: _buildAnimationAppbar(),
       stackedGradientPosterBg: _buildStackedGradientPosterBg(),
-      topExposedContentSlider: _buildTopExposedContentSlidera(),
+      topExposedContentSlider: _buildTopExposedContentSlider(),
       topTenContentSlider: _buildTopTenContentSlider(),
       categoryListWithPostSlider: _buildCategoryListWithPostSlider(),
       body: _buildBody(),
@@ -123,89 +123,19 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
       ];
 
-  Widget _buildTopExposedContentSlidera() {
-    return Obx(() => Container(
-          height: 300,
-          child: PageView.builder(
-              itemCount: vm.topExposedContentList?.length ?? 0,
-              itemBuilder: (context, index) {
-                final PosterExposureContent item =
-                    vm.topExposedContentList![index];
-
-                void checkValidation() {
-                  print("VALIDATED");
-                  vm.resetContentList(item.contentId);
-                }
-
-                return GestureDetector(
-                  onTap: () {
-                    print(vm.topExposedContentList!.length);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        GestureDetector(
-                          child: Text(
-                            item.title ?? '-',
-                            style: AppTextStyle.headline2
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                        AppSpace.size2,
-                        Text(
-                          '${item.description}\n',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: AppTextStyle.headline3
-                              .copyWith(color: AppColor.lightGrey),
-                        ),
-                        AppSpace.size8,
-                        // 유튜브 썸네일 이미지
-                        VideoThumbnailImgWithPlayerBtn(
-                          checkValidation: checkValidation,
-                          onPlayerBtnClicked: () {
-                            final argument = ContentArgumentFormat(
-                              contentId: item.contentId,
-                              contentType: item.contentType,
-                              posterImgUrl: item.posterImgUrl,
-                              videoId: item.videoId,
-                              title: item.title,
-                              thumbnailUrl: item.thumbnailImgUrl,
-                              description: item.description,
-                            );
-                            vm.routeToContentDetail(argument);
-                          },
-                          posterImgUrl: item.thumbnailImgUrl,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }),
-        ));
-  }
 
   // 맨 상단에 노출되어 있는 컨텐츠 슬라이더 - (컨텐츠 제목, 내용, 유튜브썸네일 이미지로 구성)
   // TODO : Skeleton 처리 필요
-  Widget _buildTopExposedContentSlider() => CarouselSlider.builder(
+  Widget _buildTopExposedContentSlider() => Obx(() => CarouselSlider.builder(
         carouselController: vm.carouselController,
         itemCount: vm.topExposedContentList?.length ?? 0,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
           final PosterExposureContent item =
               vm.topExposedContentList![itemIndex];
-
-          void checkValidation() {
-            print("VALIDATED");
-            vm.resetContentList(item.contentId);
-          }
-
           /// Top Content Section
           return GestureDetector(
             onTap: () {
-              print(vm.topExposedContentList!.length);
+
             },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -231,7 +161,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   AppSpace.size8,
                   // 유튜브 썸네일 이미지
                   VideoThumbnailImgWithPlayerBtn(
-                    checkValidation: checkValidation,
                     onPlayerBtnClicked: () {
                       final argument = ContentArgumentFormat(
                         contentId: item.contentId,
@@ -257,7 +186,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             enableInfiniteScroll: false,
             viewportFraction: 0.93,
             aspectRatio: 337 / 276),
-      );
+      ));
 
   // 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [

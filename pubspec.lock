@@ -726,6 +726,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  swipeable_card_stack:
+    dependency: "direct main"
+    description:
+      name: swipeable_card_stack
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
   synchronized:
     dependency: transitive
     description:
@@ -838,6 +845,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  video_url_validator:
+    dependency: "direct main"
+    description:
+      name: video_url_validator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   watcher:
     dependency: transitive
     description:

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:http/http.dart' as http;
+import 'package:video_url_validator/video_url_validator.dart';
 
 part 'home_view_model.part.dart';
 
@@ -42,14 +43,14 @@ class HomeViewModel extends BaseViewModel {
   /* [Intent] */
 
   void resetContentList(int id) {
-    print(_topExposedContentList.value!.length);
-    _topExposedContentList.value!
-        .removeWhere((element) => element.contentId == id);
-    update();
-    carouselController.animateToPage(_topExposedContentList.value!
-        .indexWhere((element) => element.contentId == id));
-    print(_topExposedContentList.value!.length);
-    print(topExposedContentList!.length);
+    // print(_topExposedContentList.value!.length);
+    // _topExposedContentList.value!
+    //     .removeWhere((element) => element.contentId == id);
+    // update();
+    // carouselController.animateToPage(_topExposedContentList.value!
+    //     .indexWhere((element) => element.contentId == id));
+    // print(_topExposedContentList.value!.length);
+    // print(topExposedContentList!.length);
   }
 
   /// UI Intent Method
@@ -88,6 +89,7 @@ class HomeViewModel extends BaseViewModel {
     final responseResult = await _loadTopExposedContentList.call();
     responseResult.fold(onSuccess: (data) {
       _topExposedContentList.value = data;
+      print(data.length);
     }, onFailure: (e) {
       log(e.toString());
     });
@@ -151,22 +153,62 @@ class HomeViewModel extends BaseViewModel {
     final List<PosterExposureContent> mockItemLis = responseResult;
   }
 
-  Future<void> text() async {
+  Future<void> test() async {
     final response = await http.head(
-        Uri.parse('https://www.youtube.com/watch?v=N16uIv2134WozVk'));
+        Uri.parse('https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg'));
 
     if (response.statusCode == 200) {
-      print("SUCCESS");
+      print("TRUEÎ");
     } else {
       print("FAILED");
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
+  Future<void> aim() async {
+    try {
+      final aim = await YoutubeMetaData.yt.videos.get('N16uIvWozVk');
+      print("just PAssted");
+    } on Exception catch (e) {
+      print("ARANG Exception Activate${e}");
+    }
+  }
 
-    text();
+  Future<bool?> validateResponse() async {
+    const dynamic url = 'https://www.youtube.com/watch?v=N16uIvWozVk';
+    var response =
+        await http.get(url is String ? Uri.parse(url) : url, headers: {});
+
+    // final response = await http
+    //     .head(Uri.parse('https://www.youtube.com/watch?v=N16uIvWozVk'));
+
+    var request = response.request!;
+
+    if (response.statusCode == 200) {
+      print("FINALLY RETURNES TRUE");
+      return true;
+    }
+
+    if (request.url.host.endsWith('.google.com') &&
+        request.url.path.startsWith('/sorry/')) {
+      return false;
+    }
+
+    if (response.statusCode >= 500) {
+      return false;
+    }
+
+    if (response.statusCode == 429) {
+      return false;
+    }
+
+    if (response.statusCode >= 400) {
+      return false;
+    }
+  }
+
+  @override
+  Future<void> onInit() async {
+    super.onInit();
 
     scrollController = ScrollController();
     scrollController.addListener(() {
@@ -181,5 +223,7 @@ class HomeViewModel extends BaseViewModel {
     // _fetchContentListOfCategory();
 
     youtubeIntent();
+
+    // aim();
   }
 }

@@ -45,7 +45,6 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
                     ),
                   ),
                   errorWidget: (context, url, error) {
-                    checkValidation!();
                     return const Icon(Icons.error);
                   },
                 )

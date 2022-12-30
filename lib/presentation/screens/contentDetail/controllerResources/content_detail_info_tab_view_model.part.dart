@@ -18,8 +18,7 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
   String? get channelDescription => youtubeChannelInfo.value?.description;
 
   // 채널 구독자 수
-  String? get subscriberCount => Formatter.formatViewAndLikeCount(
-      youtubeChannelInfo.value?.subscriberCount);
+  int? get subscriberCount => youtubeChannelInfo.value?.subscriberCount;
 
   // 채널 영상 개수
   String? get totalVideoCount =>

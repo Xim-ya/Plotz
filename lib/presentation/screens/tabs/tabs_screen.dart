@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/presentation/screens/explore/explore_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -16,24 +17,15 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
   @override
   Widget buildScreen(BuildContext context) {
     return Obx(
-          () => AnimatedIndexedStack(
+      () => AnimatedIndexedStack(
         index: vm.selectedTabIndex.value,
         children: <Widget>[
-          HomeScreen(),
-          Container(
-            child: Center(
-              child: Text(
-                'Screen 1',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          Container(
-            child: Center(
-              child: Text(
-                'Screen 2',
-                style: TextStyle(color: Colors.white),
-              ),
+          const HomeScreen(),
+          const ExploreScreen(),
+          const Center(
+            child: Text(
+              'Screen 2',
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -48,7 +40,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return Obx(
-          () => BottomNavigationBar(
+      () => BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           for (final tab in BottomNavigationConstants.values)
             BottomNavigationBarItem(
