@@ -49,7 +49,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
             )
         ],
         currentIndex: vm.selectedTabIndex.value,
-        backgroundColor: AppColor.darkGrey,
+        backgroundColor: AppColor.black.withOpacity(0.4),
         selectedItemColor: Colors.white,
         onTap: vm.onBottomNavBarItemTapped,
       ),
