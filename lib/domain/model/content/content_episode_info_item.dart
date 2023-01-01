@@ -8,6 +8,7 @@ class ContentEpisodeInfoItem {
   final int seasonNumber;
   final String youtubeVideoId;
 
+
   ContentEpisodeInfoItem(
       {required this.overview,
       required this.posterUrl,

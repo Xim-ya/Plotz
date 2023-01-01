@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/video/youtube_video_episode.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -30,7 +31,7 @@ class ContentRepositoryImpl implements ContentRepository {
 
   // Top10 컨텐츠 리스트 호출
   @override
-  Future<Result<List<PosterExposureContent>>> loadTopTenContentList() async {
+  Future<Result<List<ContentShell>>> loadTopTenContentList() async {
     try {
       final response = await _contentDataSource.loadTopTenContentList();
       return Result.success(response);
@@ -64,6 +65,28 @@ class ContentRepositoryImpl implements ContentRepository {
   Future<Result<List<SimpleContentInfo>>> loadAllOfMovieContentList() async {
     try {
       final response = await _contentDataSource.loadAllOfMovieContentList();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ContentVideos>> loadDramaContentVideoList(int contentId) async {
+    try {
+      final response =
+          await _contentDataSource.loadDramaContentVideoList(contentId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ContentVideos>> loadMovieContentVideoList(int contentId) async {
+    try {
+      final response =
+          await _contentDataSource.loadMovieContentVideoList(contentId);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

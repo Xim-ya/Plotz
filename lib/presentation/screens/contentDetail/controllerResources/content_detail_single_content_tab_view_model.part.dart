@@ -12,6 +12,9 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
   // 컨텐츠 댓글 리스트
   List<YoutubeContentComment>? get commentList => _contentCommentList.value;
 
+  // 컨텐츠 유튜브 비디오
+  List<YoutubeVideo>? get youtubeVideos => _contentVideos.value?.videos;
+
 
   /// 유튜브 컨텐츠 썸네일 이미지
   /// 이전 화면에서 전달받은 컨텐츠 썸네일 값이 있다면 해당 데이터 사용. 아니라면 networking한 데이터 사용.

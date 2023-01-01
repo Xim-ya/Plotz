@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/content/season_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.16
@@ -18,6 +19,7 @@ class ContentDetailInfo {
   final String overView; // 컨텐츠 설명
   final ContentSeasonType? contentEpicType; // 시리즈물 or 단일 컨텐츠
   final String? airStatus; // 컨텐츠 방영 상태
+  late List<SeasonInfo>? seasonInfoList; // 시즌 정보 리스트
 
   ContentDetailInfo({
     required this.id,
@@ -30,6 +32,7 @@ class ContentDetailInfo {
     this.backDropImgUrl,
     this.contentEpicType,
     this.airStatus,
+    this.seasonInfoList,
   });
 
   // ContentType == movie인 response
@@ -84,12 +87,14 @@ class ContentDetailInfo {
       title: response.name,
       rate: response.vote_average,
       genreList: formattedGenre,
-      releaseDate: response.first_air_date!,
+      releaseDate: response.first_air_date,
       contentEpicType:
           ContentSeasonType.fromSeasonCount(response.number_of_seasons),
       overView: response.overview,
       airStatus: _translateTvContentStatus(response.status!),
       backDropImgUrl: response.backdrop_path,
+      seasonInfoList:
+          response.seasons?.map((e) => SeasonInfo.fromResponse(e)).toList(),
     );
   }
 }

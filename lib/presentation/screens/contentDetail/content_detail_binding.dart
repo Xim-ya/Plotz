@@ -4,7 +4,8 @@ class ContentDetailBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(
-        () => ContentDetailViewModel(Get.find(), Get.find(), Get.find()),
+        () => ContentDetailViewModel(
+            Get.find(), Get.find(), Get.find(), Get.find()),
         fenix: true);
   }
 }

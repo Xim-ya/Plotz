@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/services.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_url_validator/video_url_validator.dart';
@@ -19,8 +21,7 @@ class HomeViewModel extends BaseViewModel {
   /// Data
   final Rxn<List<PosterExposureContent>> _topExposedContentList =
       Rxn(); // 상단 노출 컨텐츠
-  final Rxn<List<PosterExposureContent>> topTenContentList =
-      Rxn(); // Top 10 컨텐츠
+  final Rxn<List<ContentShell>> topTenContentList = Rxn(); // Top 10 컨텐츠
   final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
       Rxn(); // 카테고리 및 카테고리 컨텐츠
 
@@ -206,6 +207,38 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
+  Future<void> jsonCallText() async {
+    // var jsonText = await rootBundle
+    //     .loadString('assets/mocks/movie_content_video_list.json');
+    // Map<String, dynamic> data = json.decode(jsonText);
+    //
+    // List<Map<String, dynamic>> aim =
+    //     List<Map<String, dynamic>>.from(data['items']);
+    //
+    // final arang = aim.firstWhere((element) => element.keys.first == '113988');
+    //
+    // print(arang);
+
+    // final arang = Map.fromEntries(aim.entries)
+    //
+    // print(arang);
+    // Map<String, dynamic> arang = aim[0];
+    // print(arang.keys.single);
+
+    // List<Map<String, dynamic>> map = [];
+    // ...
+    // _map = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+
+    // final arang = aim.map((element) {
+    //   element as Map<String, dynamic>;
+    //   if (element.keys.first == '113988') {
+    //     return element;
+    //   } else {
+    //     return;
+    //   }
+    // });
+  }
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -223,6 +256,7 @@ class HomeViewModel extends BaseViewModel {
     // _fetchContentListOfCategory();
 
     youtubeIntent();
+    jsonCallText();
 
     // aim();
   }

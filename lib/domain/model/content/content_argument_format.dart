@@ -6,7 +6,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 class ContentArgumentFormat {
   final int contentId;
   final ContentType contentType;
-  final String videoId;
+  final String? videoId;
   final String? title;
   final String? description;
   final String? thumbnailUrl;
@@ -17,7 +17,7 @@ class ContentArgumentFormat {
     required this.contentId,
     required this.contentType,
     required this.posterImgUrl,
-    required this.videoId,
+     this.videoId,
     this.title,
     this.description,
     this.backdropImgUrl,

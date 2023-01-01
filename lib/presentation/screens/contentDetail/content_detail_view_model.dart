@@ -7,6 +7,7 @@ part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨�
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(
+    this._loadContentOfVideoList,
     this._loadContentImgList,
     this._loadContentMainDescription,
     this._loadContentCreditInfo,
@@ -34,10 +35,14 @@ class ContentDetailViewModel extends BaseViewModel {
   // 유튜브 채널
   final Rxn<YoutubeChannelInfo> youtubeChannelInfo = Rxn();
 
+  // 컨텐츠 비디오(유튜브)
+  final Rxn<ContentVideos> _contentVideos = Rxn();
+
   /* [UseCase] */
   final LoadContentDetailInfoUseCase _loadContentMainDescription;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
   final LoadContentImgListUseCase _loadContentImgList;
+  final LoadContentOfVideoListUseCase _loadContentOfVideoList;
 
   /* [Intent ] */
 
@@ -51,24 +56,47 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /// Networking Method
 
-  // 컨텐츠 에피소드 정보 호출 (시즌 컨텐츠인 경우에만 호출)
-  Future<void> fetchEpisodeItemList() async {
-    if (isSeasonEpisodeContent) {
-      final responseResult =
-          await ContentRepository.to.loadContentEpisodeItemList();
-      responseResult.fold(
-        onSuccess: (data) {
-          _contentEpisodeList.value = data;
-        },
-        onFailure: (e) {
-          AlertWidget.toast('컨텐츠 시즌 리스트 정보를 불러들이는 데 실패했습니다');
-          log(e.toString());
-        },
-      );
-    } else {
-      return;
-    }
+  // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
+  Future<void> fetchContentOfVideoList() async {
+    final responseRes = await _loadContentOfVideoList.call(
+        passedArgument.contentType, passedArgument.contentId);
+
+    responseRes.fold(onSuccess: (data) {
+      _contentVideos.value = data;
+      for (var e in _contentVideos.value!.videos) {
+        e.updateVideoDetails(); // 비디오 상세 정보 업데이트
+
+        // Tv 컨텐츠 일 경우 시즌 정보 업데이트
+        if (_contentDescriptionInfo.value?.seasonInfoList != null &&
+            passedArgument.contentType == ContentType.tv) {
+          e.mappingTvSeasonInfo(
+              seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!);
+        }
+      } // 유투브 비디오 상세 정보 호출
+    }, onFailure: (e) {
+      AlertWidget.toast('유튜브 비디오 정보를 불러들이는데 실패했어요');
+      log(e.toString());
+    });
   }
+
+  // // 컨텐츠 에피소드 정보 호출 (시즌 컨텐츠인 경우에만 호출)
+  // Future<void> fetchEpisodeItemList() async {
+  //   if (isSeasonEpisodeContent) {
+  //     final responseResult =
+  //         await ContentRepository.to.loadContentEpisodeItemList();
+  //     responseResult.fold(
+  //       onSuccess: (data) {
+  //         _contentEpisodeList.value = data;
+  //       },
+  //       onFailure: (e) {
+  //         AlertWidget.toast('컨텐츠 시즌 리스트 정보를 불러들이는 데 실패했습니다');
+  //         log(e.toString());
+  //       },
+  //     );
+  //   } else {
+  //     return;
+  //   }
+  // }
 
   // 컨텐츠 이미지 리스트 호출
   Future<void> fetchContentImgList() async {
@@ -128,8 +156,8 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 유튜브 채널 정보 호출
   Future<void> fetchYoutubeChannelInfo() async {
-    final responseResult = await YoutubeRepository.to
-        .loadYoutubeChannelInfo(passedArgument!.videoId);
+    final responseResult =
+        await YoutubeRepository.to.loadYoutubeChannelInfo(youtubeContentId);
     responseResult.fold(onSuccess: (data) {
       youtubeChannelInfo.value = data;
     }, onFailure: (e) {
@@ -145,20 +173,19 @@ class ContentDetailViewModel extends BaseViewModel {
   }
 
   // 유튜브 비디오 컨텐츠 정보 호출
-  Future<void> _fetchYoutubeVideoContentInfo() async {
-    final responseResult = await YoutubeRepository.to
-        .loadYoutubeVideoContentInfo(youtubeContentId);
-    responseResult.fold(
-      onSuccess: (data) {
-        _youtubeVideoContentInfo.value = data;
-        fetchEpisodeItemList();
-
-      },
-      onFailure: (e) {
-        log(e.toString());
-      },
-    );
-  }
+  // Future<void> _fetchYoutubeVideoContentInfo() async {
+  //   final responseResult = await YoutubeRepository.to
+  //       .loadYoutubeVideoContentInfo(youtubeContentId);
+  //   responseResult.fold(
+  //     onSuccess: (data) {
+  //       _youtubeVideoContentInfo.value = data;
+  //       // fetchEpisodeItemList();
+  //     },
+  //     onFailure: (e) {
+  //       log(e.toString());
+  //     },
+  //   );
+  // }
 
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
@@ -178,17 +205,22 @@ class ContentDetailViewModel extends BaseViewModel {
     loading(true);
 
     await Future.wait([
-      _fetchContentMainInfo(),
-      _fetchYoutubeVideoContentInfo(),
-      _fetchContentCommentList(),
+      _fetchContentMainInfo().then(
+        (_) => fetchContentOfVideoList().then((_) async {
+          await Future.wait([
+            // _fetchYoutubeVideoContentInfo(),
+            // _fetchContentCommentList(),
+          ]);
+        }),
+      ),
     ]);
-
-
   }
 
   /* [Getters] */
-  // 유튜브 컨텐츠 id => 항상 argument로 전달받음
-  String get youtubeContentId => passedArgument.videoId;
+  // TODO: 이제 항상 전달 받지 않음
+  // 유튜브 컨텐츠 id => 항상 argument로 전달받음1
+  String get youtubeContentId =>
+      passedArgument.videoId ?? _contentVideos.value!.videos[0].videoId;
 
   // [ContentSeasonType]의 single 여부
   bool get isSeasonEpisodeContent =>

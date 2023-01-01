@@ -108,8 +108,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     contentId: item.contentId,
                     contentType: item.contentType,
                     posterImgUrl: item.posterImgUrl,
-                    videoId: item.videoId,
-                    title: item.title,
                   );
                   vm.routeToContentDetail(argument);
                 },
@@ -135,7 +133,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           /// Top Content Section
           return GestureDetector(
             onTap: () {
-
+              print(vm.topExposedContentList!.length);
             },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 4),

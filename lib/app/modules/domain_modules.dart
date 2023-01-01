@@ -1,5 +1,3 @@
-import 'package:uppercut_fantube/domain/service/content_service.dart';
-import 'package:uppercut_fantube/domain/useCase/tmdb/load_searched_content_result_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class DomainModules {
@@ -18,5 +16,8 @@ abstract class DomainModules {
     Get.lazyPut(() => LoadContentImgListUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadSearchedContentResultUseCase(Get.find()),
         fenix: true);
+
+    // Video
+    Get.lazyPut(() => LoadContentOfVideoListUseCase(Get.find()), fenix: true);
   }
 }

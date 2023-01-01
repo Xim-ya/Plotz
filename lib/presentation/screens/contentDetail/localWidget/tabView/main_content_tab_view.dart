@@ -11,7 +11,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget buildView(BuildContext context) =>
-      _SingleEpisodeContentTabViewScaffold(
+      _MainContentTabViewScaffold(
         youtubeContentSection: Obx(() => vm.isSeasonEpisodeContent
             ? buildEpisodeYoutubeContentSection()
             : buildSingleEpisodeYoutubeContentSection()),
@@ -135,7 +135,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
           Obx(
             () => VideoThumbnailImgWithPlayerBtn(
               onPlayerBtnClicked: () {
-                vm.launchYoutubeApp(vm.youtubeContentId);
+                // vm.launchYoutubeApp(vm.youtubeContentId);
               },
               posterImgUrl: vm.youtubeImgThumbnailUrl?.value,
             ),
@@ -346,8 +346,8 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
       );
 }
 
-class _SingleEpisodeContentTabViewScaffold extends StatelessWidget {
-  const _SingleEpisodeContentTabViewScaffold(
+class _MainContentTabViewScaffold extends StatelessWidget {
+  const _MainContentTabViewScaffold(
       {Key? key,
       required this.youtubeContentSection,
       required this.descriptionSection,

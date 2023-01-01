@@ -2,7 +2,6 @@
   "items": [
     {
       "id": 111800,
-      "seasonNumber": 1,
       "type": "tv",
       "videoId": "TXMtLF5OANI",
       "title": "올드맨",
@@ -21,7 +20,6 @@
     },
     {
       "id": 64464,
-      "seasonNumber": 1,
       "type": "tv",
       "videoId": "N16uIvWozVk",
       "title": "11.22.63",
@@ -31,7 +29,6 @@
     },
     {
       "id": 1396,
-      "seasonNumber": 5,
       "type": "tv",
       "videoId": "KfbFaQJK7Sc",
       "title": "브레이킹 배드",

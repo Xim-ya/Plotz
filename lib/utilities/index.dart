@@ -55,6 +55,11 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository.dart';
 export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart';
 
 // Domain
+export 'package:uppercut_fantube/domain/model/video/content_videos.dart';
+export 'package:uppercut_fantube/domain/enum/content_video_format.dart';
+export 'package:uppercut_fantube/domain/useCase/video/load_content_of_video_list_use_case.dart';
+export 'package:uppercut_fantube/domain/model/video/youtube_video_episode.dart';
+export 'package:uppercut_fantube/domain/model/content/content_shell.dart';
 export 'package:uppercut_fantube/domain/model/content/simple_content_info.dart';
 export 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
 export 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.dart';
@@ -107,7 +112,6 @@ export 'package:uppercut_fantube/presentation/screens/search/localWidget/search_
 export 'package:uppercut_fantube/presentation/screens/search/localWidget/search_scaffold.dart';
 export 'package:uppercut_fantube/presentation/screens/search/search_view_model.dart';
 export 'package:uppercut_fantube/presentation/screens/search/localWidget/searched_result_paged_list_view.dart';
-
 
 // Utilities
 export 'package:uppercut_fantube/utilities/extensions/get_last_character_of_string.extension.dart';

@@ -19,10 +19,10 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
     return Obx(
       () => AnimatedIndexedStack(
         index: vm.selectedTabIndex.value,
-        children: <Widget>[
-          const HomeScreen(),
-          const ExploreScreen(),
-          const Center(
+        children: const <Widget>[
+          HomeScreen(),
+          ExploreScreen(),
+          Center(
             child: Text(
               'Screen 2',
               style: TextStyle(color: Colors.white),
@@ -49,7 +49,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
             )
         ],
         currentIndex: vm.selectedTabIndex.value,
-        backgroundColor: AppColor.black.withOpacity(0.4),
+        backgroundColor: AppColor.strongGrey,
         selectedItemColor: Colors.white,
         onTap: vm.onBottomNavBarItemTapped,
       ),

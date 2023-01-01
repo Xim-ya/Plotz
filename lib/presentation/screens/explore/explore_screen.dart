@@ -7,19 +7,16 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   const ExploreScreen({Key? key}) : super(key: key);
 
   @override
-  bool get wrapWithSafeArea => false;
-
-  @override
   Widget buildScreen(BuildContext context) {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
       contentInfoView: buildContentInfoView(),
-      channelInfoView: buildContentInfoView(),
+      channelInfoView: buildChannelInfoView(),
     );
   }
 
+  // 채널 정보
   List<Widget> buildChannelInfoView() => [
-        // 채널 정보
         Obx(
           () => ChannelInfoView(
             channelImgUrl: vm.channelImgUrl,
@@ -30,6 +27,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         AppSpace.size20,
       ];
 
+  // 컨텐츠 정보
   List<Widget> buildContentInfoView() => [
         // 제목 & 개봉년도
         Row(
@@ -61,8 +59,8 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         SizedBox(
           width: SizeConfig.to.screenWidth - 32,
           child: Text(
-            '수십 년 전 잠적한 전직 CIA 요원 댄 체이스. 과거의 비밀을 안고 은둔한 채 살아가던 중 결국 정체가 탄로 난다. 하지만 미래를 위해서 더 이상 숨어 살 수 없는 그는 과거의 매듭을 풀고자 하는데.',
-            maxLines: 3,
+            '결말에서 당신의 심장을 찢겠습니다 2 | 어퍼컷 리뷰 중 가장 반응이 좋았던 《11.22.63》',
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyle.title1,
           ),
@@ -70,9 +68,13 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         AppSpace.size24,
       ];
 
+  // 컨텐츠 (포스터) 이미지
   Widget buildBackdropImg() => CachedNetworkImage(
         imageUrl: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg'.prefixTmdbImgPath,
         height: double.infinity,
         fit: BoxFit.cover,
       );
+
+  @override
+  bool get wrapWithSafeArea => false;
 }
