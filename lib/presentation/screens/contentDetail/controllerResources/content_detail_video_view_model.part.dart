@@ -10,6 +10,8 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
   ContentVideoFormat? get contentVideoFormat =>
       contentVideos.value?.contentVideoFormat;
 
+  /// 비디오 컨텐츠 로드 여부
+  /// 컨텐츠 타입 & 비디오 타입 조건별로 반환하는 값이 다름.
   bool get isVideoContentLoaded {
     if (contentType.isMovie) {
       return contentVideos.value?.isDetailInfoLoaded.value ?? false;
@@ -21,16 +23,6 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
         return contentVideos.value?.isDetailInfoLoaded.value ?? false;
       }
     }
-
-    // if (contentVideos.value.hasData) {
-    //   if (contentVideos.value!.isDetailInfoLoaded.value) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // } else {
-    //   return false;
-    // }
   }
 
   /* [ContentVideoFormat] - single 타입 리소스 (movie, tv)*/
@@ -54,11 +46,8 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
       contentVideos.value?.singleTypeVideo.detailInfo?.uploadDate);
 
   /* [ContentVideoFormat] - multiple 타입 리소스  */
-  List<String>? get multipleVideoThumbnailUrls =>
-      contentVideos.value?.multipleTypeVideos
-          .map((e) => e.detailInfo!.videoThumbnailUrl)
-          .toList();
 
-  List<YoutubeVideo>? get multipleVideoInfo =>
+  // 멀티 비디오 객체
+  List<ContentVideoItem>? get multipleVideoInfo =>
       contentVideos.value?.multipleTypeVideos;
 }

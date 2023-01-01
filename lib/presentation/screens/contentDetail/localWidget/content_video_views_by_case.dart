@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.1.1
@@ -16,8 +15,6 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
   @override
   Widget buildView(BuildContext context) {
     switch (vm.contentVideoFormat) {
-      case null:
-        return _buildSkeletonView();
       case ContentVideoFormat.singleMovie:
         return _buildSingleMovieVideoView();
       case ContentVideoFormat.multipleMovie:
@@ -26,9 +23,12 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
         return _buildSingleTvVideoView();
       case ContentVideoFormat.multipleTv:
         return _buildMultipleTvVideoView();
+      default:
+        return const SizedBox();
     }
   }
 
+  // 싱글 포맷 '영화' 비디오
   Widget _buildSingleMovieVideoView() => Padding(
         padding: AppInset.horizontal16,
         child: Column(
@@ -113,6 +113,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
         ),
       );
 
+  // 멀티플 포맷 '영화' 비디오
   Widget _buildMultipleMoviesVideoView() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -223,90 +224,92 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
         ],
       );
 
-  Widget _buildSingleTvVideoView() =>  Padding(
-    padding: AppInset.horizontal16,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const SectionTitle(title: '컨텐츠'),
-        Obx(
+  // 싱글 포맷 'TV' 비디오
+  Widget _buildSingleTvVideoView() => Padding(
+        padding: AppInset.horizontal16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SectionTitle(title: '컨텐츠'),
+            Obx(
               () => VideoThumbnailImgWithPlayerBtn(
-            onPlayerBtnClicked: () {
-              // vm.launchYoutubeApp(vm.youtubeContentId);
-            },
-            posterImgUrl: vm.singleVideoThumbnailUrl,
-          ),
-        ),
-        AppSpace.size4,
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
+                onPlayerBtnClicked: () {
+                  // vm.launchYoutubeApp(vm.youtubeContentId);
+                },
+                posterImgUrl: vm.singleVideoThumbnailUrl,
+              ),
+            ),
+            AppSpace.size4,
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Opacity(
-                    opacity: 1,
-                    child: Icon(
-                      Icons.thumb_up,
-                      color: Colors.white,
-                      size: 22,
-                    ),
-                  ),
-                  AppSpace.size4,
-                  Obx(
-                        () => vm.singleLikesCount.hasData
-                        ? Text(
-                      vm.singleLikesCount!,
-                      style: AppTextStyle.body3,
-                    )
-                        : Padding(
-                      padding: const EdgeInsets.only(left: 2),
-                      child: Shimmer(
-                        color: AppColor.lightGrey,
-                        child: const SizedBox(
-                          height: 16,
-                          width: 20,
+                  Row(
+                    children: <Widget>[
+                      const Opacity(
+                        opacity: 1,
+                        child: Icon(
+                          Icons.thumb_up,
+                          color: Colors.white,
+                          size: 22,
                         ),
                       ),
-                    ),
+                      AppSpace.size4,
+                      Obx(
+                        () => vm.singleLikesCount.hasData
+                            ? Text(
+                                vm.singleLikesCount!,
+                                style: AppTextStyle.body3,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(left: 2),
+                                child: Shimmer(
+                                  color: AppColor.lightGrey,
+                                  child: const SizedBox(
+                                    height: 16,
+                                    width: 20,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ],
+                  ),
+                  Obx(
+                    () => vm.singleVideoViewCount.hasData &&
+                            vm.singleUploadDate.hasData
+                        ? Text(
+                            '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
+                            style: AppTextStyle.body3,
+                          )
+                        : Row(
+                            children: <Widget>[
+                              Shimmer(
+                                child: Container(
+                                  color: AppColor.lightGrey.withOpacity(0.1),
+                                  height: 16,
+                                  width: 70,
+                                ),
+                              ),
+                              AppSpace.size6,
+                              Shimmer(
+                                child: Container(
+                                  color: AppColor.strongGrey,
+                                  height: 16,
+                                  width: 36,
+                                ),
+                              ),
+                            ],
+                          ),
                   ),
                 ],
               ),
-              Obx(
-                    () => vm.singleVideoViewCount.hasData &&
-                    vm.singleUploadDate.hasData
-                    ? Text(
-                  '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
-                  style: AppTextStyle.body3,
-                )
-                    : Row(
-                  children: <Widget>[
-                    Shimmer(
-                      child: Container(
-                        color: AppColor.lightGrey.withOpacity(0.1),
-                        height: 16,
-                        width: 70,
-                      ),
-                    ),
-                    AppSpace.size6,
-                    Shimmer(
-                      child: Container(
-                        color: AppColor.strongGrey,
-                        height: 16,
-                        width: 36,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
+  // 멀티플 포맷 'TV' 비디오
   Widget _buildMultipleTvVideoView() => Padding(
         padding: AppInset.horizontal16,
         child: Column(
@@ -391,6 +394,4 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           ],
         ),
       );
-
-  Widget _buildSkeletonView() => Container();
 }

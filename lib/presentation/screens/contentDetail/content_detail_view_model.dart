@@ -87,7 +87,7 @@ class ContentDetailViewModel extends BaseViewModel {
       contentVideos.value = data;
 
       fetchAndMappedVideDetailFields().then((value) {
-        contentVideos.value!.updateLoadingState(); // <-- 컨텐츠 로드 완료 필드 값 업데이트
+        contentVideos.value!.updateVideoDetailsLoadingState(); // <-- 컨텐츠 로드 완료 필드 값 업데이트
       });
     }, onFailure: (e) {
       AlertWidget.toast('유튜브 비디오 정보를 불러들이는데 실패했어요');

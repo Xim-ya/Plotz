@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/domain/model/video/youtube_video_episode.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
