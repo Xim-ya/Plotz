@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
 part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 컨텐츠 탭뷰 영역
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
+part 'controllerResources/content_detail_video_view_model.part.dart'; // 컨텐츠 비디오 섹션 뷰
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(
@@ -36,7 +38,7 @@ class ContentDetailViewModel extends BaseViewModel {
   final Rxn<YoutubeChannelInfo> youtubeChannelInfo = Rxn();
 
   // 컨텐츠 비디오(유튜브)
-  final Rxn<ContentVideos> _contentVideos = Rxn();
+  final Rxn<ContentVideos> contentVideos = Rxn();
 
   /* [UseCase] */
   final LoadContentDetailInfoUseCase _loadContentMainDescription;
@@ -56,23 +58,31 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /// Networking Method
 
+  /// 컨텐츠 비디오 상세 정보 호출 & 데이터 매핑 로직
+  Future<void> fetchAndMappedVideDetailFields() async {
+    for (var e in contentVideos.value!.videos) {
+      await e.updateVideoDetails(); // 비디오 상세 정보 업데이트
+
+      // Tv 컨텐츠 일 경우 시즌 정보 업데이트
+      if (_contentDescriptionInfo.value?.seasonInfoList != null &&
+          passedArgument.contentType == ContentType.tv) {
+         unawaited(e.mappingTvSeasonInfo(
+            seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!));
+      }
+    }
+  }
+
   // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
   Future<void> fetchContentOfVideoList() async {
     final responseRes = await _loadContentOfVideoList.call(
         passedArgument.contentType, passedArgument.contentId);
 
     responseRes.fold(onSuccess: (data) {
-      _contentVideos.value = data;
-      for (var e in _contentVideos.value!.videos) {
-        e.updateVideoDetails(); // 비디오 상세 정보 업데이트
+      contentVideos.value = data;
 
-        // Tv 컨텐츠 일 경우 시즌 정보 업데이트
-        if (_contentDescriptionInfo.value?.seasonInfoList != null &&
-            passedArgument.contentType == ContentType.tv) {
-          e.mappingTvSeasonInfo(
-              seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!);
-        }
-      } // 유투브 비디오 상세 정보 호출
+      fetchAndMappedVideDetailFields().then((value) {
+        contentVideos.value!.updateLoadingState(); // <-- 컨텐츠 로드 완료 필드 값 업데이트
+      });
     }, onFailure: (e) {
       AlertWidget.toast('유튜브 비디오 정보를 불러들이는데 실패했어요');
       log(e.toString());
@@ -220,7 +230,10 @@ class ContentDetailViewModel extends BaseViewModel {
   // TODO: 이제 항상 전달 받지 않음
   // 유튜브 컨텐츠 id => 항상 argument로 전달받음1
   String get youtubeContentId =>
-      passedArgument.videoId ?? _contentVideos.value!.videos[0].videoId;
+      passedArgument.videoId ?? contentVideos.value!.videos[0].videoId;
+
+  // 컨텐츠트 타입 (영화 or tv)
+  ContentType get contentType => passedArgument.contentType;
 
   // [ContentSeasonType]의 single 여부
   bool get isSeasonEpisodeContent =>

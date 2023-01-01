@@ -18,6 +18,6 @@ import 'dart:io';
 enum ContentVideoFormat {
   singleMovie,
   multipleMovie,
-  singleDrama,
-  multipleDrama,
+  singleTv,
+  multipleTv,
 }

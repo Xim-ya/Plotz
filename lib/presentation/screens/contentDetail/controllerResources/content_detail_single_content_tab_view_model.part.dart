@@ -13,7 +13,7 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
   List<YoutubeContentComment>? get commentList => _contentCommentList.value;
 
   // 컨텐츠 유튜브 비디오
-  List<YoutubeVideo>? get youtubeVideos => _contentVideos.value?.videos;
+  List<YoutubeVideo>? get youtubeVideos => contentVideos.value?.videos;
 
 
   /// 유튜브 컨텐츠 썸네일 이미지

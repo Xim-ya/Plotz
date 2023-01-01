@@ -16,12 +16,18 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 class YoutubeVideo {
   final int episodeNum; // 시즌, 회차
-  final String videoId;
-  late YoutubeVideoContentInfo? detailInfo;
-  late SeasonInfo? tvSeasonInfo;
+  final String videoId; // 유튜브 비디오 아이디
+  final Rxn<YoutubeVideoContentInfo> _detailInfo = Rxn(); // 유튜브 상세 정보
+  final Rxn<SeasonInfo> _tvSeasonInfo = Rxn(); // Tv 컨텐츠일 경우, 시즌 정보
 
-  YoutubeVideo(
-      {required this.episodeNum, required this.videoId}); // 유튜브 비디오 아이디
+  // Getters
+  YoutubeVideoContentInfo? get detailInfo => _detailInfo.value;
+  SeasonInfo? get tvSeasonInfo => _tvSeasonInfo.value;
+
+  YoutubeVideo({
+    required this.episodeNum,
+    required this.videoId,
+  });
 
   /// 유튜브 비디오 상세 정보를 호출
   /// 호출한 데이터로 lazy [detailInfo] 필드값을 업데이트
@@ -34,7 +40,8 @@ class YoutubeVideo {
     final responseRes =
         await YoutubeRepository.to.loadYoutubeVideoContentInfo(selectedVideoId);
     responseRes.fold(onSuccess: (data) {
-      detailInfo = data;
+      _detailInfo.value = data;
+      print("JUST MODEL UPDATE");
     }, onFailure: (e) {
       AlertWidget.toast('유튜브 영상을 호출하는데 실패했어요');
       log(e.toString());
@@ -46,7 +53,7 @@ class YoutubeVideo {
     for (var ele in seasonInfoList) {
       // 시즌 넘버가 일치한다면 값을 업데이트 함.
       if (ele.seasonNum == episodeNum) {
-        tvSeasonInfo = ele;
+        _tvSeasonInfo.value = ele;
       }
     }
   }

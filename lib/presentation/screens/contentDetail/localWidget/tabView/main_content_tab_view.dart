@@ -1,4 +1,6 @@
 import 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
+import 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/content_video_views_by_case.dart';
+import 'package:uppercut_fantube/utilities/extensions/determine_content_type.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
@@ -10,14 +12,90 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
   const MainContentTabView({Key? key}) : super(key: key);
 
   @override
-  Widget buildView(BuildContext context) =>
-      _MainContentTabViewScaffold(
-        youtubeContentSection: Obx(() => vm.isSeasonEpisodeContent
-            ? buildEpisodeYoutubeContentSection()
-            : buildSingleEpisodeYoutubeContentSection()),
+  Widget buildView(BuildContext context) => _MainContentTabViewScaffold(
+        youtubeContentSection: Obx(
+          () => vm.isVideoContentLoaded
+              ? const ContentVideoViewsByCase()
+              : buildContentVideoSectionSkeleton(),
+        ),
+        // youtubeContentSection: Obx(() => vm.isSeasonEpisodeContent
+        //     ? buildEpisodeYoutubeContentSection()
+        //     : buildSingleEpisodeYoutubeContentSection()),
         descriptionSection: buildDescriptionSection(),
         commentSection: buildCommentSection(),
       );
+
+  /// 컨텐츠 비디오 섹션 Skeleton View
+  /// 컨텐츠 타입에 따라 각각 다른 스켈레톤 뷰를 보여줌ㅇ
+  Widget buildContentVideoSectionSkeleton() {
+    if (vm.contentType.isMovie) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SectionTitle(title: '컨텐츠'),
+          VideoThumbnailImgWithPlayerBtn(
+            onPlayerBtnClicked: () {
+              // vm.launchYoutubeApp(vm.youtubeContentId);
+            },
+            posterImgUrl: null,
+          ),
+          AppSpace.size4,
+          SizedBox(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    const Opacity(
+                      opacity: 1,
+                      child: Icon(
+                        Icons.thumb_up,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                    AppSpace.size4,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2),
+                      child: Shimmer(
+                        color: AppColor.lightGrey,
+                        child: const SizedBox(
+                          height: 16,
+                          width: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Shimmer(
+                      child: Container(
+                        color: AppColor.lightGrey.withOpacity(0.1),
+                        height: 16,
+                        width: 70,
+                      ),
+                    ),
+                    AppSpace.size6,
+                    Shimmer(
+                      child: Container(
+                        color: AppColor.strongGrey,
+                        height: 16,
+                        width: 36,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
+  }
 
   Widget buildEpisodeYoutubeContentSection() {
     return Column(
@@ -360,20 +438,26 @@ class _MainContentTabViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          youtubeContentSection,
-          AppSpace.size40,
-          const SectionTitle(title: '설명'),
-          descriptionSection,
-          AppSpace.size40,
-          const SectionTitle(title: '댓글'),
-          commentSection,
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        youtubeContentSection,
+        AppSpace.size40,
+        const Padding(
+          padding: AppInset.horizontal16,
+          child: SectionTitle(title: '설명'),
+        ),
+        Padding(padding: AppInset.horizontal16, child: descriptionSection),
+        AppSpace.size40,
+        const Padding(
+          padding: AppInset.horizontal16,
+          child: SectionTitle(title: '댓글'),
+        ),
+        Padding(
+          padding: AppInset.horizontal16,
+          child: commentSection,
+        )
+      ],
     );
   }
 }
