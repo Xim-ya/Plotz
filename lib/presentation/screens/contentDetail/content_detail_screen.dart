@@ -17,7 +17,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   // 탭뷰
   List<Widget> _buildTabBarViews() => [
         const MainContentTabView(),
-        const ContentInfoTabView(),
+        const ContentDetailInfoTabView(),
       ];
 
   // 평점 & 장르 뷰

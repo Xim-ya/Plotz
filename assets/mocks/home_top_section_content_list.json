@@ -19,15 +19,6 @@
       "posterImgUrl": "/x9ezMgOtDPqHatHDvxEG0ILb6Ie.jpg"
     },
     {
-      "id": 64464,
-      "type": "tv",
-      "videoId": "N16uIvWozVk",
-      "title": "11.22.63",
-      "description": "결말에서 당신의 심장을 찢겠습니다 2 | 어퍼컷 리뷰 중 가장 반응이 좋았던 《11.22.63》",
-      "thumbnailImgUrl": "https://i.ytimg.com/vi/N16uIvWozVk/maxresdefault.jpg",
-      "posterImgUrl": "/1fH41ccMKvgDTbbcCxWWH6fznah.jpg"
-    },
-    {
       "id": 1396,
       "type": "tv",
       "videoId": "KfbFaQJK7Sc",
@@ -35,6 +26,15 @@
       "description": "《브레이킹 베드》 | 진짜 존나 재밌음",
       "thumbnailImgUrl": "https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg",
       "posterImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg"
+    },
+    {
+      "id": 64464,
+      "type": "tv",
+      "videoId": "N16uIvWozVk",
+      "title": "11.22.63",
+      "description": "결말에서 당신의 심장을 찢겠습니다 2 | 어퍼컷 리뷰 중 가장 반응이 좋았던 《11.22.63》",
+      "thumbnailImgUrl": "https://i.ytimg.com/vi/N16uIvWozVk/maxresdefault.jpg",
+      "posterImgUrl": "/1fH41ccMKvgDTbbcCxWWH6fznah.jpg"
     }
   ]
 }

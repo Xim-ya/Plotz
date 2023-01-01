@@ -27,6 +27,9 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
         vm.contentVideoFormat == ContentVideoFormat.singleTv) {
       return const SingleVideoSkeletonView();
     } else {
+      if (vm.passedArgument.thumbnailUrl.hasData) {
+        return const SingleVideoSkeletonView();
+      }
       return const SizedBox(
         height: 200,
         child: Center(

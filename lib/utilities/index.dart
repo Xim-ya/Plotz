@@ -91,7 +91,7 @@ export 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
 export 'package:uppercut_fantube/presentation/common/sticky_delegate_container.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_scaffold_controller.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_scaffold.dart';
-export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tabView/content_info_tab_view.dart';
+export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/tabView/content_detail_info_tab_view.dart';
 export 'package:uppercut_fantube/presentation/common/video_thumbnail_img_with_player_btn.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_view_model.dart';
 export 'package:uppercut_fantube/presentation/common/round_profile_img.dart';

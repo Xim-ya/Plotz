@@ -6,8 +6,8 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *  컨텐츠 상세 스크린 > 정보 탭뷰 위젯
  * */
 
-class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
-  const ContentInfoTabView({Key? key}) : super(key: key);
+class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
+  const ContentDetailInfoTabView({Key? key}) : super(key: key);
 
   @override
   Widget buildView(BuildContext context) {

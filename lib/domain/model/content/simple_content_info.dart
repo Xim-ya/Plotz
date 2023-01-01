@@ -1,11 +1,14 @@
 class SimpleContentInfo {
   final int contentId;
-  final String videoId;
 
-  SimpleContentInfo({required this.contentId, required this.videoId});
+  SimpleContentInfo({required this.contentId});
 
-  factory SimpleContentInfo.fromJson(Map<String, dynamic> json) {
-    return SimpleContentInfo(
-        contentId: json['contentId'], videoId: json['videoId']);
+  factory SimpleContentInfo.fromJson(int json) {
+    return SimpleContentInfo(contentId: json);
   }
+
+// factory SimpleContentInfo.fromJson(Map<String, dynamic> json) {
+//   return SimpleContentInfo(
+//       contentId: json['contentId'], videoId: json['videoId']);
+// }
 }

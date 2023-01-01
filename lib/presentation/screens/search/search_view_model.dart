@@ -14,7 +14,6 @@ class SearchViewModel extends BaseViewModel {
   // 검색 앱바 'x' 버튼 노출여부
   RxBool showRoundCloseBtn = false.obs;
 
-
   /* Controllers */
 
   late FocusNode focusNode;
@@ -48,10 +47,10 @@ class SearchViewModel extends BaseViewModel {
       Get.toNamed(
         AppRoutes.contentDetail,
         arguments: ContentArgumentFormat(
-            contentId: content.contentId,
-            contentType: contentType,
-            posterImgUrl: content.posterImgUrl!,
-            videoId: content.youtubeVideoId!),
+          contentId: content.contentId,
+          contentType: contentType,
+          posterImgUrl: content.posterImgUrl!,
+        ),
       );
       return;
     } else {

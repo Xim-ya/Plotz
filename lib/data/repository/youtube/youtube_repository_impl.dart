@@ -9,8 +9,6 @@ class YoutubeRepositoryImpl extends YoutubeRepository {
     try {
       // 유튜브 댓글
       final video = await YoutubeMetaData.yt.videos.get(videoId);
-      // final commentList =
-      //     await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
       final commentList =
           await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
       final result =
@@ -21,7 +19,7 @@ class YoutubeRepositoryImpl extends YoutubeRepository {
     }
   }
 
-  /* 유튜브 비디오 컨텐츠 정보 (좋아요 수 / 조회수 / 업로드 일자)*/
+  /* 유튜브 비디오 컨텐츠 정보 (좋아요 수 / 조회수 / 업로드 일자...)*/
   @override
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(
       String videoId) async {

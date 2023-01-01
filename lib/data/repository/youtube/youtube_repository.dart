@@ -8,7 +8,8 @@ import 'package:uppercut_fantube/utilities/index.dart';
 abstract class YoutubeRepository {
   Future<Result<List<YoutubeContentComment>>> loadContentCommentList(String videoId);
 
-  Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(String videoId);
+  Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(
+      String videoId);
 
   Future<Result<YoutubeChannelInfo>> loadYoutubeChannelInfo(String videoId);
 

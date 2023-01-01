@@ -14,16 +14,32 @@ class ContentVideos {
 
   /* Getters */
   ContentVideoItem get singleTypeVideo => videos[0];
+
   List<ContentVideoItem> get multipleTypeVideos => videos;
 
+  // 대표 비디오 url
+  String get mainVideoId => videos[0].videoId;
+
+  // 대표 비디오 타이틀
+  String? get mainVideoTitle => videos[0].detailInfo?.videoTitle;
+
+  // 대표 영상 업로드일
+  String? get mainUploadDate => videos[0].detailInfo?.uploadDate;
+
+  // TODO: 추후 총합으로 수정 필요
+  // 대표 조회 수
+  int? get mainViewCount => videos[0].detailInfo?.likeCount;
+
+  // 대표 좋아요 수
+  int? get mainLikesCount => videos[0].detailInfo?.likeCount;
 
   /* Intents */
-  // 비디오 상세 정보 로딩 state
+  // 비디오 상세 정보 로딩 state 업데이트
   void updateVideoDetailsLoadingState() {
     isDetailInfoLoaded(true);
   }
 
-  // 비디오 시즌 정보 로딩 state
+  // 비디오 시즌 정보 로딩 state 업데이트
   void updateSeasonInfoLoadingState() {
     isSeasonInfoLoaded(true);
   }

@@ -31,6 +31,8 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
       passedArgument.thumbnailUrl ??
       contentVideos.value?.singleTypeVideo.detailInfo?.videoThumbnailUrl;
 
+  String? get singleVideoId => passedArgument.videoId ?? contentVideos.value?.singleTypeVideo.videoId;
+
   // 유튜브 컨텐츠 조회수
   String? get singleVideoViewCount => Formatter.formatViewAndLikeCount(
         contentVideos.value?.singleTypeVideo.detailInfo?.viewCount,

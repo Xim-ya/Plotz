@@ -38,7 +38,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
             Obx(
               () => VideoThumbnailImgWithPlayerBtn(
                 onPlayerBtnClicked: () {
-                  // vm.launchYoutubeApp(vm.youtubeContentId);
+                  vm.launchYoutubeApp(vm.singleVideoId);
                 },
                 posterImgUrl: vm.singleVideoThumbnailUrl,
               ),
@@ -141,7 +141,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                       // 썸네일 이미지
                       VideoThumbnailImgWithPlayerBtn(
                         onPlayerBtnClicked: () {
-                          // vm.launchYoutubeApp(vm.youtubeContentId);
+                          vm.launchYoutubeApp(videoInfoItem.videoId);
                         },
                         posterImgUrl:
                             videoInfoItem.detailInfo?.videoThumbnailUrl ?? '',
@@ -234,7 +234,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
             Obx(
               () => VideoThumbnailImgWithPlayerBtn(
                 onPlayerBtnClicked: () {
-                  // vm.launchYoutubeApp(vm.youtubeContentId);
+                  vm.launchYoutubeApp(vm.singleVideoId);
                 },
                 posterImgUrl: vm.singleVideoThumbnailUrl,
               ),

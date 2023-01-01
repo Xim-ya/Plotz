@@ -44,7 +44,8 @@ class SearchedContent {
         in ContentService.to.returnTotalListBaseOnType(type: contentType)!) {
       if (element.contentId == contentId) {
         isRegisteredContent.value = ContentRegisteredValue.registered;
-        youtubeVideoId = element.videoId;
+        // TODO 필요 없으면 삭제
+        // youtubeVideoId = element.videoId;
         break;
       } else {
         isRegisteredContent.value = ContentRegisteredValue.unRegistered;
