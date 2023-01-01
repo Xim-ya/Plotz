@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:uppercut_fantube/utilities/extensions/determine_content_type.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
@@ -61,14 +62,19 @@ class ContentDetailViewModel extends BaseViewModel {
   /// 컨텐츠 비디오 상세 정보 호출 & 데이터 매핑 로직
   Future<void> fetchAndMappedVideDetailFields() async {
     for (var e in contentVideos.value!.videos) {
-      await e.updateVideoDetails(); // 비디오 상세 정보 업데이트
-
       // Tv 컨텐츠 일 경우 시즌 정보 업데이트
       if (_contentDescriptionInfo.value?.seasonInfoList != null &&
           passedArgument.contentType == ContentType.tv) {
-         unawaited(e.mappingTvSeasonInfo(
-            seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!));
+        await e
+            .mappingTvSeasonInfo(
+                seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!)
+            .then((value) {
+          // 로딩 State 업데이트
+          contentVideos.value!.updateSeasonInfoLoadingState();
+        });
       }
+
+      await e.updateVideoDetails(); // 비디오 상세 정보 업데이트
     }
   }
 

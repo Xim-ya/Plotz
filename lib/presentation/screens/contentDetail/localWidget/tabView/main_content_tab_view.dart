@@ -18,82 +18,90 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
               ? const ContentVideoViewsByCase()
               : buildContentVideoSectionSkeleton(),
         ),
-        // youtubeContentSection: Obx(() => vm.isSeasonEpisodeContent
-        //     ? buildEpisodeYoutubeContentSection()
-        //     : buildSingleEpisodeYoutubeContentSection()),
         descriptionSection: buildDescriptionSection(),
         commentSection: buildCommentSection(),
       );
 
   /// 컨텐츠 비디오 섹션 Skeleton View
-  /// 컨텐츠 타입에 따라 각각 다른 스켈레톤 뷰를 보여줌ㅇ
+  /// 컨텐츠 타입에 따라 각각 다른 스켈레톤 뷰를 보여줌
   Widget buildContentVideoSectionSkeleton() {
-    if (vm.contentType.isMovie) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const SectionTitle(title: '컨텐츠'),
-          VideoThumbnailImgWithPlayerBtn(
-            onPlayerBtnClicked: () {
-              // vm.launchYoutubeApp(vm.youtubeContentId);
-            },
-            posterImgUrl: null,
-          ),
-          AppSpace.size4,
-          SizedBox(
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    const Opacity(
-                      opacity: 1,
-                      child: Icon(
-                        Icons.thumb_up,
-                        color: Colors.white,
-                        size: 22,
-                      ),
-                    ),
-                    AppSpace.size4,
-                    Padding(
-                      padding: const EdgeInsets.only(left: 2),
-                      child: Shimmer(
-                        color: AppColor.lightGrey,
-                        child: const SizedBox(
-                          height: 16,
-                          width: 20,
+    if (vm.contentType.isMovie ||
+        vm.contentVideoFormat == ContentVideoFormat.singleTv) {
+      return Padding(
+        padding: AppInset.horizontal16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SectionTitle(title: '컨텐츠'),
+            VideoThumbnailImgWithPlayerBtn(
+              onPlayerBtnClicked: () {
+                // vm.launchYoutubeApp(vm.youtubeContentId);
+              },
+              posterImgUrl: null,
+            ),
+            AppSpace.size4,
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      const Opacity(
+                        opacity: 1,
+                        child: Icon(
+                          Icons.thumb_up,
+                          color: Colors.white,
+                          size: 22,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Shimmer(
-                      child: Container(
-                        color: AppColor.lightGrey.withOpacity(0.1),
-                        height: 16,
-                        width: 70,
+                      AppSpace.size4,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 2),
+                        child: Shimmer(
+                          color: AppColor.lightGrey,
+                          child: const SizedBox(
+                            height: 16,
+                            width: 20,
+                          ),
+                        ),
                       ),
-                    ),
-                    AppSpace.size6,
-                    Shimmer(
-                      child: Container(
-                        color: AppColor.strongGrey,
-                        height: 16,
-                        width: 36,
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Shimmer(
+                        child: Container(
+                          color: AppColor.lightGrey.withOpacity(0.1),
+                          height: 16,
+                          width: 70,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      AppSpace.size6,
+                      Shimmer(
+                        child: Container(
+                          color: AppColor.strongGrey,
+                          height: 16,
+                          width: 36,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     } else {
-      return Container();
+      return const SizedBox(
+        height: 200,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: AppColor.darkGrey,
+          ),
+        ),
+      );
     }
   }
 

@@ -7,14 +7,14 @@ part of '../content_detail_view_model.dart';
 extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   /* [Getters */
 
-  /// 헤더 영역 이미지
+  /// 헤더 영역 이미지 
   String get headerBackdropImg => passedArgument.posterImgUrl;
 
   /// 컨텐츠 설명 부분 (유튜브 컨텐츠 제목)
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
   RxString? get headerContentDesc => passedArgument.description.hasData
       ? passedArgument.description!.obs
-      : _youtubeVideoContentInfo.value?.videoTitle.obs;
+      : contentVideos.value?.singleTypeVideo.detailInfo?.videoTitle.obs;
 
   // 컨텐츠 제목
   RxString? get headerTitle => passedArgument.title.hasData

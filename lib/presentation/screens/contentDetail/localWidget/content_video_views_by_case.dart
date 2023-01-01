@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.1.1
@@ -222,9 +223,174 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
         ],
       );
 
-  Widget _buildSingleTvVideoView() => Container();
+  Widget _buildSingleTvVideoView() =>  Padding(
+    padding: AppInset.horizontal16,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SectionTitle(title: '컨텐츠'),
+        Obx(
+              () => VideoThumbnailImgWithPlayerBtn(
+            onPlayerBtnClicked: () {
+              // vm.launchYoutubeApp(vm.youtubeContentId);
+            },
+            posterImgUrl: vm.singleVideoThumbnailUrl,
+          ),
+        ),
+        AppSpace.size4,
+        SizedBox(
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  const Opacity(
+                    opacity: 1,
+                    child: Icon(
+                      Icons.thumb_up,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
+                  AppSpace.size4,
+                  Obx(
+                        () => vm.singleLikesCount.hasData
+                        ? Text(
+                      vm.singleLikesCount!,
+                      style: AppTextStyle.body3,
+                    )
+                        : Padding(
+                      padding: const EdgeInsets.only(left: 2),
+                      child: Shimmer(
+                        color: AppColor.lightGrey,
+                        child: const SizedBox(
+                          height: 16,
+                          width: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Obx(
+                    () => vm.singleVideoViewCount.hasData &&
+                    vm.singleUploadDate.hasData
+                    ? Text(
+                  '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
+                  style: AppTextStyle.body3,
+                )
+                    : Row(
+                  children: <Widget>[
+                    Shimmer(
+                      child: Container(
+                        color: AppColor.lightGrey.withOpacity(0.1),
+                        height: 16,
+                        width: 70,
+                      ),
+                    ),
+                    AppSpace.size6,
+                    Shimmer(
+                      child: Container(
+                        color: AppColor.strongGrey,
+                        height: 16,
+                        width: 36,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 
-  Widget _buildMultipleTvVideoView() => Container();
+  Widget _buildMultipleTvVideoView() => Padding(
+        padding: AppInset.horizontal16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SectionTitle(title: '시즌 에피소드'),
+            Obx(
+              () => ListView.separated(
+                itemCount:
+                    vm.contentVideos.value?.multipleTypeVideos.length ?? 3,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final episodeItem =
+                      vm.contentVideos.value!.multipleTypeVideos[index];
+                  return Obx(
+                    () => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '시즌 ${episodeItem.episodeNum}',
+                          style: AppTextStyle.body1,
+                        ),
+                        AppSpace.size2,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              width: vm.seasonEpisodeImgWidth,
+                              child: VideoThumbnailImgWithPlayerBtn(
+                                aspectRatio: 2 / 3,
+                                onPlayerBtnClicked: () {
+                                  vm.launchYoutubeApp(episodeItem.videoId);
+                                },
+                                posterImgUrl: episodeItem.tvSeasonInfo
+                                    ?.posterPathUrl?.prefixTmdbImgPath,
+                              ),
+                            ),
+                            AppSpace.size10,
+                            if (episodeItem.tvSeasonInfo?.description != null)
+                              Flexible(
+                                child: Text(
+                                  episodeItem.tvSeasonInfo?.description ?? '',
+                                  style: AppTextStyle.body3,
+                                ),
+                              ),
+                            // 데이터가 없으면 skeleton을 노출
+                            if (episodeItem.tvSeasonInfo?.description == null)
+                              Column(
+                                children: [
+                                  SkeletonBox(
+                                    height: 16,
+                                    width: SizeConfig.to.screenWidth -
+                                        vm.seasonEpisodeImgWidth -
+                                        42,
+                                  ),
+                                  AppSpace.size2,
+                                  SkeletonBox(
+                                    height: 16,
+                                    width: SizeConfig.to.screenWidth -
+                                        vm.seasonEpisodeImgWidth -
+                                        42,
+                                  ),
+                                  AppSpace.size2,
+                                  SkeletonBox(
+                                    height: 16,
+                                    width: SizeConfig.to.screenWidth -
+                                        vm.seasonEpisodeImgWidth -
+                                        42,
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (_, __) => AppSpace.size16,
+              ),
+            ),
+          ],
+        ),
+      );
 
   Widget _buildSkeletonView() => Container();
 }

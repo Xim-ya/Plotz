@@ -6,6 +6,7 @@ class ContentVideos {
   final List<YoutubeVideo> videos;
   final ContentVideoFormat contentVideoFormat;
   RxBool isDetailInfoLoaded = false.obs;
+  RxBool isSeasonInfoLoaded = false.obs;
 
   // Getters
   YoutubeVideo get singleTypeVideo => videos[0];
@@ -14,6 +15,10 @@ class ContentVideos {
 
   void updateLoadingState() {
     isDetailInfoLoaded(true);
+  }
+
+  void updateSeasonInfoLoadingState() {
+    isSeasonInfoLoaded(true);
   }
 
   ContentVideos({required this.videos, required this.contentVideoFormat});

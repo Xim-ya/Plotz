@@ -11,7 +11,17 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
       contentVideos.value?.contentVideoFormat;
 
   bool get isVideoContentLoaded {
-    return contentVideos.value?.isDetailInfoLoaded.value ?? false;
+    if (contentType.isMovie) {
+      return contentVideos.value?.isDetailInfoLoaded.value ?? false;
+    } else {
+      if (contentVideos.value?.contentVideoFormat ==
+          ContentVideoFormat.multipleTv) {
+        return contentVideos.value?.isSeasonInfoLoaded.value ?? false;
+      } else {
+        return contentVideos.value?.isDetailInfoLoaded.value ?? false;
+      }
+    }
+
     // if (contentVideos.value.hasData) {
     //   if (contentVideos.value!.isDetailInfoLoaded.value) {
     //     return true;
