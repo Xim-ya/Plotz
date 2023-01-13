@@ -9,12 +9,14 @@ part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨�
 part 'controllerResources/content_detail_video_view_model.part.dart'; // 컨텐츠 비디오 섹션 뷰
 
 class ContentDetailViewModel extends BaseViewModel {
-  ContentDetailViewModel(
-    this._loadContentOfVideoList,
-    this._loadContentImgList,
-    this._loadContentMainDescription,
-    this._loadContentCreditInfo,
-  );
+  ContentDetailViewModel(this._loadContentOfVideoList, this._loadContentImgList,
+      this._loadContentMainDescription, this._loadContentCreditInfo,
+      {required argument})
+      : _passedArgument = argument;
+
+
+  // 이전 페이지에서 전달 받는 argument¬
+  final ContentArgumentFormat _passedArgument;
 
   /// Data Variables
   /// // 컨텐츠탭 정보
@@ -153,7 +155,6 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
-
   // // 유튜브 비디오 컨텐츠 정보 호출
   // Future<void> _fetchYoutubeVideoContentInfo() async {
   //   final responseResult = await YoutubeRepository.to
@@ -167,7 +168,6 @@ class ContentDetailViewModel extends BaseViewModel {
   //     },
   //   );
   // }
-
 
   // 유튜브 채널 정보 호출
   Future<void> fetchYoutubeChannelInfo() async {
@@ -190,7 +190,7 @@ class ContentDetailViewModel extends BaseViewModel {
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
   Future<void> launchYoutubeApp(String? youtubeVideoId) async {
-    if(youtubeVideoId == null) {
+    if (youtubeVideoId == null) {
       return AlertWidget.toast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
     }
     log('정상 런치 실패');
@@ -205,7 +205,8 @@ class ContentDetailViewModel extends BaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
-    loading(true);
+
+    // loading(true);
 
     await Future.wait([
       _fetchContentMainInfo().then(
@@ -231,13 +232,8 @@ class ContentDetailViewModel extends BaseViewModel {
       _contentDescriptionInfo.value?.contentEpicType ==
       ContentSeasonType.series;
 
-  // 홈 스크린에서 전달 받은 Argument
-  ContentArgumentFormat get passedArgument {
-    if (Get.arguments != null) {
-      loading(false);
-    }
-    return Get.arguments;
-  }
+  // Argument (이전 스크린에서 전달 받은 인자)
+  ContentArgumentFormat get passedArgument => _passedArgument;
 
   static ContentDetailViewModel get to => Get.find<ContentDetailViewModel>();
 }
