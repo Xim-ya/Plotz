@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
 import 'package:uppercut_fantube/domain/model/content/content_shell.dart';
+import 'package:uppercut_fantube/domain/model/content/explore_content_id_info.dart';
 import 'package:uppercut_fantube/domain/model/content/simple_content_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDataSourceImpl
     with ApiErrorHandlerMixin
     implements ContentDataSource {
-  // 상단 노출 컨텐츠 리스트
+  // 홈 상단 노출 컨텐츠 리스트
   @override
   Future<List<PosterExposureContent>> loadTopExposedContentList() async {
     // 임시 Json Mock up Data
@@ -46,6 +47,7 @@ class ContentDataSourceImpl
     return aim.map((e) => ContentShell.fromJson(e)).toList();
   }
 
+  // 카테고리 컨텐츠 리스트
   @override
   Future<List<CategoryBaseContentList>> loadContentWithCategory() async {
     // 임시 Json Mock up Data
@@ -57,6 +59,7 @@ class ContentDataSourceImpl
     return aim.map((e) => CategoryBaseContentList.fromJson(e)).toList();
   }
 
+  // 모든 드라마 컨텐츠 리스트
   @override
   Future<List<SimpleContentInfo>> loadAllOfTvContentList() async {
     // 임시 Json Mock up Data
@@ -68,6 +71,7 @@ class ContentDataSourceImpl
     return aim.map((e) => SimpleContentInfo.fromJson(e)).toList();
   }
 
+  // 모든 영화 컨텐츠 리스트
   @override
   Future<List<SimpleContentInfo>> loadAllOfMovieContentList() async {
     // 임시 Json Mock up Data
@@ -79,6 +83,7 @@ class ContentDataSourceImpl
     return aim.map((e) => SimpleContentInfo.fromJson(e)).toList();
   }
 
+  // 특정 드라라 컨텐츠 비디오 정보
   @override
   Future<ContentVideos> loadDramaContentVideoList(int contentId) async {
     var jsonText =
@@ -96,6 +101,7 @@ class ContentDataSourceImpl
     return ContentVideos.fromDramaJson(formattedRes);
   }
 
+  // 특정 영화 컨텐츠 비디어 정보 정보
   @override
   Future<ContentVideos> loadMovieContentVideoList(int contentId) async {
     var jsonText = await rootBundle
@@ -113,5 +119,17 @@ class ContentDataSourceImpl
     print(formattedRes);
 
     return ContentVideos.fromMovieJson(formattedRes);
+  }
+
+  // 탐색 컨텐츠 Id (contentId, videoId) 리스트
+  @override
+  Future<List<ExploreContentIdInfo>> loadExploreContentIdInfoList() async {
+    // 임시 Json Mock up Data
+    // top_ten_content_list.json
+    var jsonText = await rootBundle
+        .loadString('assets/mocks/explore_content_Id_list.json');
+    List<Map<String, dynamic>> formatData =
+        List<Map<String, dynamic>>.from(json.decode(jsonText)['items']);
+    return formatData.map((e) => ExploreContentIdInfo.fromJson(e)).toList();
   }
 }

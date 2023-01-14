@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/content/explore_content_id_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class ContentDataSource {
@@ -16,4 +17,6 @@ abstract class ContentDataSource {
   Future<ContentVideos> loadMovieContentVideoList(int contentId);
 
   Future<ContentVideos> loadDramaContentVideoList(int contentId);
+
+  Future<List<ExploreContentIdInfo>> loadExploreContentIdInfoList();
 }

@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/content/explore/explore_content.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -87,6 +88,19 @@ class ContentRepositoryImpl implements ContentRepository {
       final response =
           await _contentDataSource.loadMovieContentVideoList(contentId);
       return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  // 탐색 컨텐츠 기본(contentId, videoId, type) 정보 호출
+  @override
+  Future<Result<List<ExploreContent>>>
+      loadBasicInfoOfExploreContentList() async {
+    try {
+      final response = await _contentDataSource.loadExploreContentIdInfoList();
+      return Result.success(
+          response.map((e) => ExploreContent.fromIdInfoResponse(e)).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }

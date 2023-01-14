@@ -10,17 +10,71 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   Widget buildScreen(BuildContext context) {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
-      contentInfoView: buildContentInfoView(),
-      channelInfoView: buildChannelInfoView(),
+      carouselBuilder: buildCarouselBuilder(),
+    );
+  }
+
+  Widget buildCarouselBuilder() {
+    return Obx(
+      () => CarouselSlider.builder(
+          itemCount: vm.exploreContentList.value?.length ?? 0,
+          options: CarouselOptions(
+            disableCenter: true,
+            height: double.infinity,
+            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+            viewportFraction: 1,
+          ),
+          itemBuilder:
+              (BuildContext context, int parentIndex, int pageViewIndex) {
+            final contentItem = vm.exploreContentList.value![pageViewIndex];
+            return Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: buildBackdropImg(),
+                ),
+                Positioned.fill(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black,
+                          Colors.transparent,
+                          AppColor.black
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: <double>[0.06, 0.3, 0.92],
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  child: Padding(
+                    padding: AppInset.horizontal16,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        ...buildChannelInfoView(contentItem),
+                        ...buildContentInfoView(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
     );
   }
 
   // 채널 정보
-  List<Widget> buildChannelInfoView() => [
+  List<Widget> buildChannelInfoView(ExploreContent item) => [
         Obx(
           () => ChannelInfoView(
             channelImgUrl: vm.channelImgUrl,
-            channelName: vm.channelName,
+            channelName: item.idInfo.videoId,
             subscriberCount: vm.subscriberCount,
           ),
         ),

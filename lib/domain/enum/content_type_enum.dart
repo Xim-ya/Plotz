@@ -10,7 +10,11 @@ enum ContentType {
     switch (originStr) {
       case 'tv':
         return ContentType.tv;
+      case 't':
+        return ContentType.tv;
       case 'movie':
+        return ContentType.movie;
+      case 'm':
         return ContentType.movie;
       default:
         throw Exception('enum not found');

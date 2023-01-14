@@ -19,4 +19,7 @@ abstract class TmdbDataSource {
 
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
       String query);
+
+
+  static TmdbDataSource get to => Get.find();
 }

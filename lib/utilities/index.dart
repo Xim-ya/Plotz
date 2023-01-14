@@ -55,6 +55,7 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository.dart';
 export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart';
 
 // Domain
+export 'package:uppercut_fantube/domain/model/content/explore/explore_content.dart';
 export 'package:uppercut_fantube/domain/model/content/season_info.dart';
 export 'package:uppercut_fantube/domain/model/video/content_videos.dart';
 export 'package:uppercut_fantube/domain/enum/content_video_format.dart';
@@ -77,6 +78,7 @@ export 'package:uppercut_fantube/domain/model/content/content_main_info.dart';
 export 'package:uppercut_fantube/domain/model/content/category_based_content_list.dart';
 export 'package:uppercut_fantube/domain/enum/content_season_type_enum.dart';
 export 'package:uppercut_fantube/domain/enum/ott_type_enum.dart';
+export 'package:uppercut_fantube/domain/model/content/SplittedIdAndType.dart';
 export 'package:uppercut_fantube/domain/model/content/content_detail_info.dart';
 export 'package:uppercut_fantube/domain/model/content/searched_content.dart';
 export 'package:uppercut_fantube/domain/service/content_service.dart';
