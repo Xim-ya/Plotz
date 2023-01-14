@@ -10,30 +10,31 @@ class ExploreContent {
   late final Rxn<ExploreContentYoutubeInfo> youtubeInfo = Rxn(); // 컨텐츠 유튜브 정보
   late final Rxn<ExploreContentDetailInfo> detailInfo =
       Rxn(); // 컨텐츠 상세 정보 (TMDB)
+  final RxBool isUpdated = false.obs; // 유튜브 정보, 상세 정보 업데이트 여부
 
   ExploreContent({required this.idInfo});
 
   /* Intents */
 
   // 유튜브 정보 업데이트
-  Future<void> updateYoutubeChannelInfo(String videoId) async {
-    final channelRes = await YoutubeMetaData.yt.channels.getByVideo(videoId);
-    final videoRes = await YoutubeMetaData.yt.videos.get(videoId);
+  Future<void> updateYoutubeChannelInfo( ) async {
+    final channelRes = await YoutubeMetaData.yt.channels.getByVideo(idInfo.videoId);
+    final videoRes = await YoutubeMetaData.yt.videos.get(idInfo.videoId);
     youtubeInfo.value = ExploreContentYoutubeInfo.fromResponse(
         channelRes: channelRes, videoRes: videoRes);
   }
 
   // 컨텐츠 상세 정보 업데이트 (TMDMB)
-  Future<void> updateContentDetailInfo(int contentId) async {
+  Future<void> updateContentDetailInfo( ) async {
     final ExploreContentDetailInfo responseResult;
 
     if (idInfo.contentType == ContentType.movie) {
       final response =
-          await TmdbDataSource.to.loadTmdbMovieDetailResponse(contentId);
+          await TmdbDataSource.to.loadTmdbMovieDetailResponse(idInfo.contentId);
       responseResult = ExploreContentDetailInfo.fromMovieResponse(response);
     } else {
       final response =
-          await TmdbDataSource.to.loadTmdbTvDetailResponse(contentId);
+          await TmdbDataSource.to.loadTmdbTvDetailResponse(idInfo.contentId);
       responseResult = ExploreContentDetailInfo.fromTvResponse(response);
     }
 

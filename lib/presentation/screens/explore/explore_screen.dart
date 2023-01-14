@@ -19,6 +19,10 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
       () => CarouselSlider.builder(
           itemCount: vm.exploreContentList.value?.length ?? 0,
           options: CarouselOptions(
+            onPageChanged: (index, reason) {
+              vm.swiperIndex(index);
+              vm.scannedAndUpdateContentInfo();
+            },
             disableCenter: true,
             height: double.infinity,
             scrollDirection: Axis.vertical,
@@ -72,10 +76,17 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   // 채널 정보
   List<Widget> buildChannelInfoView(ExploreContent item) => [
         Obx(
-          () => ChannelInfoView(
-            channelImgUrl: vm.channelImgUrl,
-            channelName: item.idInfo.videoId,
-            subscriberCount: vm.subscriberCount,
+          () => GestureDetector(
+            onTap: () {
+              print('${item.youtubeInfo.value?.channelName ?? "제목 없음"}');
+              print('${item.detailInfo.value?.title ?? "제목 없음"}');
+            },
+            child: ChannelInfoView(
+              channelImgUrl: vm.channelImgUrl,
+              channelName:
+                  '${item.idInfo.videoId} ++ ${item.detailInfo.value?.title ?? "null"}',
+              subscriberCount: vm.subscriberCount,
+            ),
           ),
         ),
         AppSpace.size20,
