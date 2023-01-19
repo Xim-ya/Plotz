@@ -27,30 +27,26 @@ class ExploreViewModel extends BaseViewModel {
   }
 
   Future<void> scannedAndUpdateContentInfo() async {
-    // 이미 Scanned & Updated이 완료된 컨텐츠라면(뒤로 이동한 경우)
-    if (swiperIndex.value < maximumIndexOfScanned.value) {
-      print('AIM - 0');
-      return;
-    }
-
-    // 첫 번째
+    // 첫 번째 (첫 번째 호출)
     if (swiperIndex.value == 0) {
-      print('AIM - 1');
-      for (var e in exploreContentList.value!.getRange(0, 2)) {
+      print('첫 번째 호출 ${swiperIndex.value}');
+      maximumIndexOfScanned(2);
+      for (var e in exploreContentList.value!.getRange(0, 3)) {
         if (e.isUpdated.isFalse) {
           await Future.wait([
             e.updateContentDetailInfo(),
             e.updateYoutubeChannelInfo(),
           ]).then((value) {
             e.isUpdated(true);
-            maximumIndexOfScanned(2);
           });
         }
       }
-    } else if (maximumIndexOfScanned.value == swiperIndex.value) {
-      // 미리 호출한 컨텐츠가 없다면
-      if (maximumIndexOfScanned.value+ 2 >= exploreContentList.value!.length) {
-        print('AIM - 2');
+    }
+    // 호출 섹션
+    else if (maximumIndexOfScanned.value - 1 == swiperIndex.value) {
+      if (maximumIndexOfScanned.value + 2 >= exploreContentList.value!.length) {
+        print('마지막 호출 호출 ${swiperIndex.value}');
+        maximumIndexOfScanned(exploreContentList.value!.length);
         for (var e in exploreContentList.value!
             .getRange(swiperIndex.value, exploreContentList.value!.length)) {
           if (e.isUpdated.isFalse) {
@@ -59,31 +55,40 @@ class ExploreViewModel extends BaseViewModel {
               e.updateYoutubeChannelInfo(),
             ]).then((value) {
               e.isUpdated(true);
-              maximumIndexOfScanned(exploreContentList.value!.length);
             });
           }
         }
-      }
-      // 미리 컨텐츠 호출
-      else {
-        print('AIM - 3');
+      } else {
+        /* 0 1 '2' 3 4 '5'  6 */
+        print(
+            '중간 호출 ${swiperIndex.value} swiperIndex ${swiperIndex.value} maximumu${maximumIndexOfScanned}');
+        maximumIndexOfScanned(swiperIndex.value + 4);
+        // 미리 컨텐츠 호출
         for (var e in exploreContentList.value!
-            .getRange(swiperIndex.value + 1, swiperIndex.value + 2)) {
+            .getRange(swiperIndex.value + 2, swiperIndex.value + 4)) {
           if (e.isUpdated.isFalse) {
             await Future.wait([
               e.updateContentDetailInfo(),
               e.updateYoutubeChannelInfo(),
             ]).then((value) {
               e.isUpdated(true);
-              maximumIndexOfScanned(swiperIndex.value + 2);
             });
           }
         }
       }
+    } else {
+      print('호출 안함');
     }
+
+    // 첫번째 호출 - 0
+    // 호출 안함 - 1
+    // 미리 컨텐츠 호출 - 2
+    // 호출 안함 - 3
+    // 호출 안함 - 4
+    // 마지막 호출 - 5
+    // 호출 안함 - 5
+    // 호출 안함 - 6
   }
-
-
 
   String? get headerTitle => '어퍼컷'.obs.value;
 

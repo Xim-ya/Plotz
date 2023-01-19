@@ -17,15 +17,16 @@ class ExploreContent {
   /* Intents */
 
   // 유튜브 정보 업데이트
-  Future<void> updateYoutubeChannelInfo( ) async {
-    final channelRes = await YoutubeMetaData.yt.channels.getByVideo(idInfo.videoId);
+  Future<void> updateYoutubeChannelInfo() async {
+    final channelRes =
+        await YoutubeMetaData.yt.channels.getByVideo(idInfo.videoId);
     final videoRes = await YoutubeMetaData.yt.videos.get(idInfo.videoId);
     youtubeInfo.value = ExploreContentYoutubeInfo.fromResponse(
         channelRes: channelRes, videoRes: videoRes);
   }
 
   // 컨텐츠 상세 정보 업데이트 (TMDMB)
-  Future<void> updateContentDetailInfo( ) async {
+  Future<void> updateContentDetailInfo() async {
     final ExploreContentDetailInfo responseResult;
 
     if (idInfo.contentType == ContentType.movie) {
@@ -37,7 +38,6 @@ class ExploreContent {
           await TmdbDataSource.to.loadTmdbTvDetailResponse(idInfo.contentId);
       responseResult = ExploreContentDetailInfo.fromTvResponse(response);
     }
-
     detailInfo.value = responseResult;
   }
 
