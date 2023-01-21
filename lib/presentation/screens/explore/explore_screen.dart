@@ -11,17 +11,45 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
       carouselBuilder: buildCarouselBuilder(),
+      actionButtons: buildActionButtons(),
+    );
+  }
+
+  Widget buildActionButtons() {
+    return Row(
+      children: [
+        IconInkWellButton(
+          iconPath: 'assets/icons/search.svg',
+          iconSize: 40,
+          onIconTapped: vm.routeToSearch,
+        ),
+        MaterialButton(
+          minWidth: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+          height: 0,
+          padding: const EdgeInsets.all(6),
+          onPressed: vm.reFetchExploreContent,
+          child: const Icon(
+            Icons.refresh,
+            size: 28,
+            color: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 
   Widget buildCarouselBuilder() {
     return Obx(
       () => CarouselSlider.builder(
+          carouselController: vm.swiperController,
           itemCount: vm.exploreContentList.value?.length ?? 0,
           options: CarouselOptions(
             onPageChanged: (index, reason) {
               vm.swiperIndex(index);
-              vm.scannedAndUpdateContentInfo();
+              vm.updateContentListInfo();
             },
             disableCenter: true,
             height: double.infinity,
@@ -32,42 +60,70 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
           itemBuilder:
               (BuildContext context, int parentIndex, int pageViewIndex) {
             final contentItem = vm.exploreContentList.value![pageViewIndex];
-            return Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: buildBackdropImg(),
-                ),
-                Positioned.fill(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.black,
-                          Colors.transparent,
-                          AppColor.black
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: <double>[0.06, 0.3, 0.92],
+            return GestureDetector(
+              onTap: () {
+                if (contentItem.isUpdated.value) {
+                  vm.routeToContentDetail(ContentArgumentFormat(
+                    contentId: contentItem.idInfo.contentId,
+                    videoId: contentItem.idInfo.videoId,
+                    contentType: contentItem.idInfo.contentType,
+                    posterImgUrl: contentItem.detailInfo!.posterImg!,
+                    title: contentItem.youtubeInfo!.videoTitle,
+                  ));
+                }
+              },
+              child: Stack(
+                children: [
+                  Obx(
+                    () => contentItem.detailInfo.hasData
+                        ? CachedNetworkImage(
+                            imageUrl: contentItem
+                                    .detailInfo?.posterImg?.prefixTmdbImgPath ??
+                                '',
+                            height: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.darkGrey,
+                            ),
+                          ),
+                  ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: buildBackdropImg(),
+                  ),
+                  Positioned.fill(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black,
+                            Colors.transparent,
+                            AppColor.black
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: <double>[0.06, 0.3, 0.92],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Padding(
-                    padding: AppInset.horizontal16,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ...buildChannelInfoView(contentItem),
-                        ...buildContentInfoView(),
-                      ],
+                  Positioned(
+                    bottom: 0,
+                    child: Padding(
+                      padding: AppInset.horizontal16,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          ...buildContentInfoView(contentItem),
+                          ...buildChannelInfoView(contentItem),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           }),
     );
@@ -77,15 +133,11 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   List<Widget> buildChannelInfoView(ExploreContent item) => [
         Obx(
           () => GestureDetector(
-            onTap: () {
-              print('${item.youtubeInfo.value?.channelName ?? "제목 없음"}');
-              print('${item.detailInfo.value?.title ?? "제목 없음"}');
-            },
+            onTap: () {},
             child: ChannelInfoView(
-              channelImgUrl: vm.channelImgUrl,
-              channelName:
-                  '${item.idInfo.videoId} ++ ${item.detailInfo.value?.title ?? "null"}',
-              subscriberCount: vm.subscriberCount,
+              channelImgUrl: item.youtubeInfo?.channelImgUrl,
+              channelName: item.youtubeInfo?.channelName,
+              subscriberCount: item.youtubeInfo?.subscribers,
             ),
           ),
         ),
@@ -93,13 +145,13 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
       ];
 
   // 컨텐츠 정보
-  List<Widget> buildContentInfoView() => [
+  List<Widget> buildContentInfoView(ExploreContent item) => [
         // 제목 & 개봉년도
         Row(
           children: <Widget>[
             Obx(
-              () => vm.headerTitle.hasData
-                  ? Text(vm.headerTitle!, style: AppTextStyle.headline2)
+              () => item.detailInfo.hasData
+                  ? Text(item.detailInfo!.title, style: AppTextStyle.headline2)
                   : Shimmer(
                       color: AppColor.lightGrey,
                       child: const SizedBox(
@@ -111,8 +163,8 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
             AppSpace.size6,
             Obx(
               () => Text(
-                vm.releaseDate.hasData
-                    ? Formatter.dateToyyMMdd(vm.releaseDate!)
+                item.detailInfo?.releaseDate.hasData ?? false
+                    ? Formatter.dateToyyMMdd(item.detailInfo!.releaseDate!)
                     : '-',
                 style: AppTextStyle.alert2,
               ),
@@ -121,24 +173,28 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         ),
         AppSpace.size6,
         // 컨텐츠 설명
-        SizedBox(
-          width: SizeConfig.to.screenWidth - 32,
-          child: Text(
-            '결말에서 당신의 심장을 찢겠습니다 2 | 어퍼컷 리뷰 중 가장 반응이 좋았던 《11.22.63》',
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyle.title1,
-          ),
+        Obx(
+          () => item.youtubeInfo.hasData
+              ? SizedBox(
+                  width: SizeConfig.to.screenWidth - 32,
+                  child: Text(
+                    item.youtubeInfo!.videoTitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.title1,
+                  ),
+                )
+              : SkeletonBox(
+                  height: 22,
+                  width: SizeConfig.to.screenWidth - 32,
+                  borderRadius: 2,
+                ),
         ),
         AppSpace.size24,
       ];
 
   // 컨텐츠 (포스터) 이미지
-  Widget buildBackdropImg() => CachedNetworkImage(
-        imageUrl: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg'.prefixTmdbImgPath,
-        height: double.infinity,
-        fit: BoxFit.cover,
-      );
+  Widget buildBackdropImg() => Container();
 
   @override
   bool get wrapWithSafeArea => false;

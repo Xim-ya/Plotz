@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/domain/useCase/content/explore/load_explore_content_by_slider_index_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class DomainModules {
@@ -10,6 +11,7 @@ abstract class DomainModules {
     Get.lazyPut(() => LoadTopExposedContentListUseCase(Get.find()),
         fenix: true);
     Get.lazyPut(() => ContentService(), fenix: true);
+    Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
 
     // TMDB
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);

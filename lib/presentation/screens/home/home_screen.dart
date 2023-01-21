@@ -121,7 +121,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
       ];
 
-
   // 맨 상단에 노출되어 있는 컨텐츠 슬라이더 - (컨텐츠 제목, 내용, 유튜브썸네일 이미지로 구성)
   // TODO : Skeleton 처리 필요
   Widget _buildTopExposedContentSlider() => Obx(() => CarouselSlider.builder(
@@ -130,6 +129,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
           final PosterExposureContent item =
               vm.topExposedContentList![itemIndex];
+
           /// Top Content Section
           return GestureDetector(
             onTap: () {
@@ -193,8 +193,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               ? CachedNetworkImage(
                   width: double.infinity,
                   fit: BoxFit.fitWidth,
-                  imageUrl:
-                      'https://image.tmdb.org/t/p/original${vm.selectedTopExposedContent.posterImgUrl}',
+                  imageUrl: vm
+                      .selectedTopExposedContent.posterImgUrl.prefixTmdbImgPath,
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               : const SizedBox(),
