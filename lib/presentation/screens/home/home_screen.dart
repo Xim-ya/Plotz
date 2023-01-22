@@ -167,7 +167,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                         videoId: item.videoId,
                         title: item.title,
                         thumbnailUrl: item.thumbnailImgUrl,
-                        description: item.description,
+                        videoTitle: item.description,
                       );
                       vm.routeToContentDetail(argument);
                     },

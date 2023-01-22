@@ -1,5 +1,6 @@
 import 'package:uppercut_fantube/domain/useCase/content/explore/load_explore_content_by_slider_index_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class DomainModules {
@@ -24,5 +25,8 @@ abstract class DomainModules {
 
     // Video
     Get.lazyPut(() => LoadContentOfVideoListUseCase(Get.find()), fenix: true);
+
+    // Explore
+    Get.lazyPut(() => TestUseCase(), fenix: true);
   }
 }

@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/domain/useCase/content/explore/load_explore_content_by_slider_index_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ExploreViewModel extends BaseViewModel {
@@ -10,10 +10,11 @@ class ExploreViewModel extends BaseViewModel {
   /* Controllers */
   late final CarouselController swiperController;
 
-  ExploreViewModel(this._partialLoadContentUseCase);
+  ExploreViewModel(this._partialLoadContentUseCase, this._testUseCase);
 
   /* UseCases */
-  PartialLoadContentUseCase _partialLoadContentUseCase;
+  final PartialLoadContentUseCase _partialLoadContentUseCase;
+  final TestUseCase _testUseCase;
 
   /* Intents */
   // 탐색 컨텐츠 리스트 호출
@@ -25,19 +26,19 @@ class ExploreViewModel extends BaseViewModel {
   // 탐색 컨텐츠 리스트 재호출
   Future<void> reFetchExploreContent() async {
     // 슬라이더 State 및 데이터 초기화
-    _partialLoadContentUseCase.cancelFuture();
-    _partialLoadContentUseCase.maxScannedIndex.value = 0;
+    _partialLoadContentUseCase.isCanceled(true);
+    _partialLoadContentUseCase.maxScannedIndex(0);
     exploreContentList.value = null;
     swiperIndex(0);
     await swiperController.animateToPage(0);
 
     // 탐색 컨텐츠 재호출
-    print("aim");
     final responseResult = await _partialLoadContentUseCase.loadContentIdList();
     exploreContentList.value = responseResult;
     exploreContentList.value?.shuffle();
 
     // 컨텐츠 리스트 내부 필드값 업데이트
+    await _partialLoadContentUseCase.changeCanceledState();
     await _partialLoadContentUseCase.updateExploreContentFields(0);
   }
 
@@ -56,6 +57,16 @@ class ExploreViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
+  // swiper가 이동했을 때 관련 동작
+  void onSwiperChanged(int index) {
+    swiperIndex(index);
+    updateContentListInfo();
+    // if (index + 1 == exploreContentList.value?.length) {
+    //   AlertWidget.toast('새로운 컨텐츠를 불러옵니다');
+    //   reFetchExploreContent();
+    // }
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -65,5 +76,6 @@ class ExploreViewModel extends BaseViewModel {
     _fetchExploreContent().then((value) {
       updateContentListInfo();
     });
+    _testUseCase.testLoop();
   }
 }

@@ -29,7 +29,7 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
 
   // 컨텐츠 설명
   String? get contentOverView =>
-      passedArgument.description ?? _contentDescriptionInfo.value?.overView;
+      passedArgument.videoTitle ?? _contentDescriptionInfo.value?.overView;
 
   // 시즌 에피소드 섹션 포스터 이미지 넓이
   double get seasonEpisodeImgWidth => (SizeConfig.to.screenWidth - 32) * 0.397;

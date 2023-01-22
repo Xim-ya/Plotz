@@ -8,9 +8,9 @@ class ContentArgumentFormat {
   final ContentType contentType;
   final String? videoId;
   final String? title;
-  final String? description;
+  final String? videoTitle;
   final String? thumbnailUrl;
-  final String posterImgUrl;
+  final String? posterImgUrl;
   final String? backdropImgUrl;
 
   ContentArgumentFormat({
@@ -19,7 +19,7 @@ class ContentArgumentFormat {
     required this.posterImgUrl,
      this.videoId,
     this.title,
-    this.description,
+    this.videoTitle,
     this.backdropImgUrl,
     this.thumbnailUrl,
   });

@@ -47,9 +47,8 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
           carouselController: vm.swiperController,
           itemCount: vm.exploreContentList.value?.length ?? 0,
           options: CarouselOptions(
-            onPageChanged: (index, reason) {
-              vm.swiperIndex(index);
-              vm.updateContentListInfo();
+            onPageChanged: (index, _) {
+              vm.onSwiperChanged(index);
             },
             disableCenter: true,
             height: double.infinity,
@@ -62,15 +61,14 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
             final contentItem = vm.exploreContentList.value![pageViewIndex];
             return GestureDetector(
               onTap: () {
-                if (contentItem.isUpdated.value) {
                   vm.routeToContentDetail(ContentArgumentFormat(
                     contentId: contentItem.idInfo.contentId,
                     videoId: contentItem.idInfo.videoId,
                     contentType: contentItem.idInfo.contentType,
-                    posterImgUrl: contentItem.detailInfo!.posterImg!,
-                    title: contentItem.youtubeInfo!.videoTitle,
+                    posterImgUrl: contentItem.detailInfo?.posterImg,
+                    title: contentItem.detailInfo?.title,
                   ));
-                }
+
               },
               child: Stack(
                 children: [

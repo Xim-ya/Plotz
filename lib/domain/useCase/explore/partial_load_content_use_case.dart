@@ -20,6 +20,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *
  *
  *  TODO: Exception 처리 로직 필요 + Isolate 로직 추가
+ *  TODO: for loop Excution 로직 고도화 필요
  * */
 
 class PartialLoadContentUseCase {
@@ -27,15 +28,17 @@ class PartialLoadContentUseCase {
 
   final ContentRepository _repository;
 
+  RxInt tesInt = 0.obs;
   RxInt maxScannedIndex = 0.obs; // 최대 스캔된 인덱스
   RxList<ExploreContent> exploreContentList =
       <ExploreContent>[].obs; // 탐색 컨텐츠 리스트
   RxBool isCanceled = false.obs;
 
-  // // keep a reference to CancelableOperation
-  CancelableOperation? _myCancelableFuture;
-
   /* Intents */
+
+  Future<void> changeCanceledState() async {
+    isCanceled(false);
+  }
 
   /// 리스트 부분 업데이트 로직
   Future<void> updateExploreContentFields(int swiperIndex) async {
@@ -67,57 +70,32 @@ class PartialLoadContentUseCase {
 
   // 컨텐츠 [idInfo] 데이터 리스트 호출
   Future<List<ExploreContent>> loadContentIdList() async {
-    isCanceled.value = false;
     final response = await _repository.loadBasicInfoOfExploreContentList();
     final result = response.getOrThrow();
     exploreContentList.value = result;
     return result;
   }
 
-  Future<void> cancelableMethod(ExploreContent e) async {
-    _myCancelableFuture = CancelableOperation.fromFuture(
-      cancelableUpdateMethod(e),
-      onCancel: () => 'Future has been canceld',
-    );
-  }
-
-  void cancelFuture() async {
-    final result = await _myCancelableFuture!.cancel();
-
-    print('Async 메소드 취소됨 ${result}');
-    isCanceled(true);
-  }
-
-  Future<void> cancelableUpdateMethod(ExploreContent e) async {
-    if (e.isUpdated.isFalse) {
-      await Future.wait([
-        e.updateContentDetailInfo(), // 컨텐츠 상세 정보 업데이트
-        e.updateYoutubeChannelInfo(), // 유뷰트 상세 정보 업데이트
-      ]).then((value) {
-        print("${isCanceled.value} AXAS");
-        e.isUpdated(true); // 객체 업데이트 상태변경
-      });
-    }
-  }
-
   /// 특정 범위의 리스트의 필드 값 업데이트
   Future<void> loopAndUpdateListOfRange(
       int firstRangIndex, int lastRangeIndex) async {
-    for (var e in exploreContentList.getRange(firstRangIndex, lastRangeIndex)) {
-      if (isCanceled.isTrue) {
-        print("BREAKS");
-        break ;
+    try {
+      for (var e
+          in exploreContentList.getRange(firstRangIndex, lastRangeIndex)) {
+        if (isCanceled.isTrue) throw 'For loop Excuted ${tesInt.value} ${e.idInfo.contentId}';
+        if (e.isUpdated.isFalse) {
+          tesInt.value = tesInt.value + 1;
+          print(tesInt.value);
+          await Future.wait([
+            e.updateContentDetailInfo(), // 컨텐츠 상세 정보 업데이트
+            e.updateYoutubeChannelInfo(), // 유뷰트 상세 정보 업데이트
+          ]).then((value) {
+            e.isUpdated(true); // 객체 업데이트 상태변경
+          });
+        }
       }
-      await cancelableMethod(e);
-      // if (e.isUpdated.isFalse) {
-      //   await Future.wait([
-      //     e.updateContentDetailInfo(), // 컨텐츠 상세 정보 업데이트
-      //     e.updateYoutubeChannelInfo(), // 유뷰트 상세 정보 업데이트
-      //   ]).then((value) {
-      //     print("AXAS");
-      //     e.isUpdated(true); // 객체 업데이트 상태변경
-      //   });
-      // }
+    } catch (e) {
+      print('${e}');
     }
   }
 }

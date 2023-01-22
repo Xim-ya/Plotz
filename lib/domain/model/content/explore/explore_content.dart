@@ -13,9 +13,9 @@ class ExploreContent {
       Rxn(); // 컨텐츠 상세 정보 (TMDB)
   final RxBool isUpdated = false.obs; // 유튜브 정보, 상세 정보 업데이트 여부
 
-   ExploreContentYoutubeInfo? get youtubeInfo => _youtubeInfo.value;
-  ExploreContentDetailInfo? get detailInfo => _detailInfo.value;
+  ExploreContentYoutubeInfo? get youtubeInfo => _youtubeInfo.value;
 
+  ExploreContentDetailInfo? get detailInfo => _detailInfo.value;
 
   /* Intents */
   // 유튜브 정보 업데이트
@@ -48,7 +48,3 @@ class ExploreContent {
     return ExploreContent(idInfo: response);
   }
 }
-
-
-
-
