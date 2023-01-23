@@ -69,7 +69,7 @@ class SearchedResultPagedListView extends BaseView<SearchViewModel> {
                     child: Align(
                       child: IconInkWellButton(
                         iconPath: 'assets/icons/play.svg',
-                        iconSize: 40,
+                        size: 40,
                         onIconTapped: () {},
                       ),
                     ),

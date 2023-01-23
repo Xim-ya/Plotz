@@ -21,18 +21,9 @@ class RoundProfileImg extends StatelessWidget {
                   color: Colors.red,
                   image:
                       DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                  // borderRadius: BorderRadius.circular(100),
                 ),
               ),
               placeholder: (context, url) => const SizedBox(),
-              // placeholder: (context, url) => ClipRRect(
-              //   borderRadius: BorderRadius.circular(100),
-              //   child: Shimmer(
-              //     child: Container(
-              //       color: AppColor.lightGrey,
-              //     ),
-              //   ),
-              // ),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             )
           : Image.asset(

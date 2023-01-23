@@ -18,24 +18,15 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   Widget buildActionButtons() {
     return Row(
       children: [
-        IconInkWellButton(
+        IconInkWellButton.assetIcon(
           iconPath: 'assets/icons/search.svg',
-          iconSize: 40,
+          size: 40,
           onIconTapped: vm.routeToSearch,
         ),
-        MaterialButton(
-          minWidth: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
-          ),
-          height: 0,
-          padding: const EdgeInsets.all(6),
-          onPressed: vm.reFetchExploreContent,
-          child: const Icon(
-            Icons.refresh,
-            size: 28,
-            color: Colors.white,
-          ),
+        IconInkWellButton.packageIcon(
+          icon: Icons.refresh,
+          size: 28,
+          onIconTapped: vm.reFetchExploreContent,
         ),
       ],
     );

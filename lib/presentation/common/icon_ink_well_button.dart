@@ -8,11 +8,40 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class IconInkWellButton extends StatelessWidget {
-  const IconInkWellButton({super.key, required this.iconPath, required this.iconSize, required this.onIconTapped});
+  const IconInkWellButton(
+      {super.key,
+      this.icon,
+      this.iconPath,
+      this.color = Colors.white,
+      required this.size,
+      required this.onIconTapped});
 
-  final String iconPath;
-  final double iconSize;
+  final String? iconPath;
+  final IconData? icon;
+  final double size;
+  final Color? color;
   final VoidCallback onIconTapped;
+
+  // Assets Icon 포맷
+  factory IconInkWellButton.assetIcon(
+          {required String iconPath,
+          required double size,
+          required VoidCallback onIconTapped}) =>
+      IconInkWellButton(
+          iconPath: iconPath, size: size, onIconTapped: onIconTapped);
+
+  // Flutter Package Icon 포맷
+  factory IconInkWellButton.packageIcon(
+          {Color? color = Colors.white,
+          required IconData icon,
+          required double size,
+          required VoidCallback onIconTapped}) =>
+      IconInkWellButton(
+        icon: icon,
+        size: size,
+        onIconTapped: onIconTapped,
+        color: color,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +53,20 @@ class IconInkWellButton extends StatelessWidget {
       height: 0,
       padding: EdgeInsets.zero,
       onPressed: onIconTapped,
-      child: SvgPicture.asset(
-       iconPath,
-        height: iconSize,
-        width: iconSize,
-      ),
+      child: iconPath.hasData
+          ? SvgPicture.asset(
+              iconPath!,
+              height: size,
+              width: size,
+            )
+          : Padding(
+              padding: EdgeInsets.all(6),
+              child: Icon(
+                icon,
+                size: size,
+                color: color,
+              ),
+            ),
     );
   }
-
 }

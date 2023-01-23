@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/presentation/screens/explore/explore_screen.dart';
+import 'package:uppercut_fantube/presentation/screens/my/my_page_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -22,12 +23,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
         children: const <Widget>[
           HomeScreen(),
           ExploreScreen(),
-          Center(
-            child: Text(
-              'Screen 2',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+          MyPageScreen(),
         ],
       ),
     );

@@ -13,21 +13,21 @@ class SearchViewModel extends BaseViewModel {
   /* State Variables */
   // 검색 앱바 'x' 버튼 노출여부
   RxBool showRoundCloseBtn = false.obs;
+  Timer? _debounce; // 검색 api call 시간 딜레이
+
 
   /* Controllers */
-
   late FocusNode focusNode;
   late TextEditingController textEditingController; // 검색 TextField Controller
   late final PagingController<int, SearchedContent>
       pagingController; // 'tv' Paging Controller(검색 결과)
 
-  Timer? _debounce; // 검색 api call 시간 딜레이
 
   /* UseCases */
   final LoadSearchedContentResultUseCase _loadSearchedContentResult;
 
-  /* Intents */
 
+  /* Intents */
   /// 검색된 컨텐츠 클릭 되었을 때
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped(
@@ -193,6 +193,7 @@ class SearchViewModel extends BaseViewModel {
     textEditingController = TextEditingController();
     pagingController.addPageRequestListener((pageKey) {
       loadSearchedContentListByPaging();
+      // print("ACTIVATED");
     });
 
     focusNode = FocusNode();

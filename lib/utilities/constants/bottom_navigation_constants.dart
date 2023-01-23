@@ -2,16 +2,16 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 enum BottomNavigationConstants {
   home(
-    label: 'Home',
+    label: '홈',
     icon: Icon(Icons.home),
   ),
   business(
-    label: 'Business',
-    icon: Icon(Icons.business),
+    label: '탐색',
+    icon: Icon(Icons.video_collection),
   ),
   school(
-    label: 'School',
-    icon: Icon(Icons.school),
+    label: '마에페이지',
+    icon: Icon(Icons.person),
   );
 
   final String label;

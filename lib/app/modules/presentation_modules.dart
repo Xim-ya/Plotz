@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/presentation/screens/explore/explore_view_model.dart';
+import 'package:uppercut_fantube/presentation/screens/my/my_page_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class PresentationModules {
@@ -17,5 +18,8 @@ abstract class PresentationModules {
 
     // 탐색
     Get.lazyPut(() => ExploreViewModel(Get.find(), Get.find()), fenix: true);
+
+    // 마에페이지
+    Get.lazyPut(() => MyPageViewModel());
   }
 }

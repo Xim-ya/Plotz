@@ -62,7 +62,7 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
             child: Align(
               child: IconInkWellButton(
                 iconPath: 'assets/icons/play.svg',
-                iconSize: 54,
+                size: 54,
                 onIconTapped: onPlayerBtnClicked,
               ),
             ),

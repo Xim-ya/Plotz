@@ -252,7 +252,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             ),
             IconInkWellButton(
               iconPath: 'assets/icons/search.svg',
-              iconSize: 40,
+              size: 40,
               onIconTapped: vm.routeToSearch,
             )
           ],
