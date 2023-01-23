@@ -103,6 +103,7 @@ class HomeViewModel extends BaseViewModel {
     responseResult.fold(
       onSuccess: (data) {
         topTenContentList.value = data;
+        print(data[1].posterImgUrl);
       },
       onFailure: (e) {
         log(e.toString());

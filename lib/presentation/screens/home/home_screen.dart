@@ -63,7 +63,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                           vm.routeToContentDetail(argument);
                         },
                         child: ContentPostItem(
-                            imgUrl: contentItem.posterImgUrl.prefixTmdbImgPath),
+                            imgUrl: contentItem.posterImgUrl),
                       );
                     },
                   ),
@@ -250,7 +250,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                 width: 40,
               ),
             ),
-            IconInkWellButton(
+            IconInkWellButton.assetIcon(
               iconPath: 'assets/icons/search.svg',
               size: 40,
               onIconTapped: vm.routeToSearch,
