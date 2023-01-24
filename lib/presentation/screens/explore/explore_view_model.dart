@@ -72,10 +72,10 @@ class ExploreViewModel extends BaseViewModel {
     super.onInit();
 
     swiperController = CarouselController();
-
-    _fetchExploreContent().then((value) {
-      updateContentListInfo();
-    });
+    //
+    // _fetchExploreContent().then((value) {
+    //   updateContentListInfo();
+    // });
     _testUseCase.testLoop();
   }
 }
