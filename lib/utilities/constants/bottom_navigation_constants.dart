@@ -9,6 +9,10 @@ enum BottomNavigationConstants {
     label: '탐색',
     icon: Icon(Icons.video_collection),
   ),
+  quration(
+    label: '큐레이션',
+    icon: Icon(Icons.video_call),
+  ),
   school(
     label: '마에페이지',
     icon: Icon(Icons.person),

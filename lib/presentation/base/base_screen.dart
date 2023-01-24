@@ -33,7 +33,7 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
     return Scaffold(
       extendBody: extendBodyBehindAppBar,
       resizeToAvoidBottomInset: true,
-      appBar:  buildAppBar(context),
+      appBar: buildAppBar(context),
       body: buildScreen(context),
       backgroundColor: screenBackgroundColor,
       bottomNavigationBar: buildBottomNavigationBar(context),
@@ -42,13 +42,11 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
     );
   }
 
-
   @protected
   Widget? get buildFloatingActionButton => null;
 
   @protected
   FloatingActionButtonLocation? get floatingActionButtonLocation => null;
-
 
   @protected
   bool get extendBodyBehindAppBar => false;

@@ -1,5 +1,6 @@
 import 'package:uppercut_fantube/presentation/screens/explore/explore_screen.dart';
 import 'package:uppercut_fantube/presentation/screens/my/my_page_screen.dart';
+import 'package:uppercut_fantube/presentation/screens/quration/quration_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -23,6 +24,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
         children: const <Widget>[
           HomeScreen(),
           ExploreScreen(),
+          QurationScreen(),
           MyPageScreen(),
         ],
       ),
@@ -36,18 +38,23 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return Obx(
-      () => BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          for (final tab in BottomNavigationConstants.values)
-            BottomNavigationBarItem(
-              icon: tab.icon,
-              label: tab.label,
-            )
-        ],
-        currentIndex: vm.selectedTabIndex.value,
-        backgroundColor: AppColor.strongGrey,
-        selectedItemColor: Colors.white,
-        onTap: vm.onBottomNavBarItemTapped,
+      () => Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: AppColor.strongGrey, // Bg 컬러
+        ),
+        child: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            for (final tab in BottomNavigationConstants.values)
+              BottomNavigationBarItem(
+                icon: tab.icon,
+                label: tab.label,
+              )
+          ],
+          currentIndex: vm.selectedTabIndex.value,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.white,
+          onTap: vm.onBottomNavBarItemTapped,
+        ),
       ),
     );
   }
