@@ -9,7 +9,8 @@ class SearchBar extends StatelessWidget {
       required this.onFieldSubmitted,
       required this.resetSearchValue,
       required this.showRoundCloseBtn,
-      this.width = double.infinity})
+      this.width = double.infinity,
+      this.hintText = '제목을 입력하세요'})
       : super(key: key);
 
   final FocusNode focusNode;
@@ -19,6 +20,7 @@ class SearchBar extends StatelessWidget {
   final VoidCallback resetSearchValue;
   final RxBool showRoundCloseBtn;
   final double width;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +43,17 @@ class SearchBar extends StatelessWidget {
             decoration: InputDecoration(
               filled: true,
               contentPadding: const EdgeInsets.only(left: 38, right: 40),
-              hintText: '제목을 입력하세요',
+              hintText: hintText,
               errorBorder: InputBorder.none,
               enabledBorder: _fixedOutLinedBorder(),
               disabledBorder: _fixedOutLinedBorder(),
               focusedBorder: _fixedOutLinedBorder(),
               fillColor: AppColor.strongGrey,
               hintStyle: TextStyle(
-                  fontSize: 16,
-                  color: AppColor.lightGrey.withOpacity(0.4),
-                  fontFamily: 'pretendard_regular'),
+                fontSize: 16,
+                color: AppColor.lightGrey.withOpacity(0.4),
+                fontFamily: 'pretendard_regular',
+              ),
             ),
           ),
           // 검색창 prefix 검색 아이콘

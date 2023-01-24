@@ -91,6 +91,7 @@ export 'package:uppercut_fantube/domain/model/content/content_argument_format.da
 export 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 
 // Presentation
+export 'package:uppercut_fantube/presentation/common/textField/search_bard.dart';
 export 'package:uppercut_fantube/presentation/common/animated_index_stack.dart';
 export 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
 export 'package:uppercut_fantube/presentation/common/sticky_delegate_container.dart';

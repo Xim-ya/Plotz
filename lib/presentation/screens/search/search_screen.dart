@@ -1,4 +1,5 @@
-import 'package:uppercut_fantube/presentation/common/searchBar/search_bard.dart';
+import 'package:uppercut_fantube/presentation/common/listView/paging_result_list_view.dart';
+import 'package:uppercut_fantube/presentation/screens/search/localWidget/searched_list_item.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SearchScreen extends BaseScreen<SearchViewModel> {
@@ -16,8 +17,38 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   }
 
   List<Widget> buildTabView() => [
-        const SearchedResultPagedListView(contentType: ContentType.tv),
-        const SearchedResultPagedListView(contentType: ContentType.movie),
+        PagingResultListView(
+          focusNode: vm.focusNode,
+          pagingController: vm.pagingController,
+          firstPageErrorText: '드라마 제목을 입력해주세요',
+          itemBuilder: (BuildContext context, dynamic item, int index) {
+            final searchedItem = item as SearchedContent;
+            return SearchedListItem(
+              contentType: ContentType.tv,
+              item: searchedItem,
+              onItemClicked: () {
+                vm.onSearchedContentTapped(
+                    content: searchedItem, contentType: ContentType.tv);
+              },
+            );
+          },
+        ),
+        PagingResultListView(
+          focusNode: vm.focusNode,
+          pagingController: vm.pagingController,
+          firstPageErrorText: '영화 제목을 입력해주세요',
+          itemBuilder: (BuildContext context, dynamic item, int index) {
+            final searchedItem = item as SearchedContent;
+            return SearchedListItem(
+              contentType: ContentType.movie,
+              item: searchedItem,
+              onItemClicked: () {
+                vm.onSearchedContentTapped(
+                    content: searchedItem, contentType: ContentType.movie);
+              },
+            );
+          },
+        ),
       ];
 
   List<Tab> buildTabs() => const [
