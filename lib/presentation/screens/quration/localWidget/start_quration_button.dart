@@ -4,13 +4,21 @@ import 'package:uppercut_fantube/utilities/extensions/random_list_item_extension
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'dart:math' as math;
 
+/** Created By Ximya - 022.01.24
+ *  다각형(polygon) 형태로 구성되어 있는 버튼 UI
+ *  다각형 UI는 Painter로 그려짐.
+ *
+ *  각 [ContentType]에 따라
+ *  랜덤으로 컨텐츠 이미지가 보여짐.
+ * */
+
 class StartQurationButton extends StatelessWidget {
   const StartQurationButton(
       {Key? key, required this.contentType, required this.onBtnTapped})
       : super(key: key);
 
   final ContentType contentType;
-  final VoidCallback? onBtnTapped;
+  final VoidCallback onBtnTapped;
 
   String randomImgGenerator() {
     final List<String> imgPathList =
@@ -21,62 +29,92 @@ class StartQurationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    randomImgGenerator();
     return Expanded(
       child: Transform(
         alignment: Alignment.center,
         transform: Matrix4.rotationY(contentType.isTv ? 0 : math.pi),
-        child: GestureDetector(
-          onTap: onBtnTapped,
-          child: AspectRatio(
-            aspectRatio: 163 / 148,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                shadows: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    spreadRadius: 0,
-                    blurRadius: 4,
-                    offset: const Offset(0, 4), // changes position of shadow
+        child: Stack(
+          children: <Widget>[
+            // Shadow Box
+            Positioned.fill(
+              child: Container(
+                height: 74,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(100),
+                    topRight: Radius.circular(100),
+                    bottomRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
                   ),
-                ],
-                image: DecorationImage(
-                  image: AssetImage('assets/images/${randomImgGenerator()}'),
-                  fit: BoxFit.cover,
-                ),
-                shape: const PolygonBorder(
-                  polygon: polygonOffset,
-                  radius: 24,
-                  borderAlign: BorderAlign.outside,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 4,
+                      offset: const Offset(0, 4), // changes position of shadow
+                    ),
+                  ],
                 ),
               ),
-              child: Container(
-                padding: AppInset.left10 + AppInset.bottom6,
-                alignment: Alignment.bottomLeft,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.transparent,
-                      Colors.transparent,
-                      AppColor.black
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: <double>[0.0, 0.68, 1.0],
-                  ),
-                ),
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.rotationY(contentType.isTv ? 0 : math.pi),
-                  child: Text(
-                    contentType.isTv ? '드라마' : '영화',
-                    style: AppTextStyle.headline3
-                        .copyWith(color: AppColor.lightGrey),
+            ),
+            // 다각형 이미지 버튼
+            GestureDetector(
+              onTap: onBtnTapped,
+              child: AspectRatio(
+                aspectRatio: 163 / 148,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      // shadows: [
+                      //   BoxShadow(
+                      //     color: Colors.white.withOpacity(0.25),
+                      //     spreadRadius: 0,
+                      //     blurRadius: 4,
+                      //     offset: const Offset(0, 4), // changes position of shadow
+                      //   ),
+                      // ],
+                      image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/${randomImgGenerator()}'),
+                        fit: BoxFit.cover,
+                      ),
+                      shape: const PolygonBorder(
+                        polygon: polygonOffset,
+                        radius: 24,
+                        borderAlign: BorderAlign.outside,
+                      ),
+                    ),
+                    child: Container(
+                      padding: AppInset.left10 + AppInset.bottom6,
+                      alignment: Alignment.bottomLeft,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.black,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: <double>[0.0, 0.4, 1.0],
+                        ),
+                      ),
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform:
+                            Matrix4.rotationY(contentType.isTv ? 0 : math.pi),
+                        child: Text(
+                          contentType.isTv ? '드라마' : '영화',
+                          style: AppTextStyle.headline3
+                              .copyWith(color: AppColor.lightGrey),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

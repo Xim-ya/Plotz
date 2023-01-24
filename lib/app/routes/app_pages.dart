@@ -1,3 +1,5 @@
+import 'package:uppercut_fantube/presentation/screens/quration/register/register_binding.dart';
+import 'package:uppercut_fantube/presentation/screens/quration/register/register_screen.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_binding.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -24,14 +26,23 @@ abstract class AppPages {
 
     // 컨텐츠 상세
     GetPage(
-        name: AppRoutes.contentDetail,
-        page: () => ContentDetailScreen(),
-        binding: ContentDetailBinding()),
+      name: AppRoutes.contentDetail,
+      page: () => ContentDetailScreen(),
+      binding: ContentDetailBinding(),
+    ),
 
     // 검색
     GetPage(
-        name: AppRoutes.search,
-        page: () => SearchScreen(),
-        binding: SearchBinding())
+      name: AppRoutes.search,
+      page: () => SearchScreen(),
+      binding: SearchBinding(),
+    ),
+
+    // 등록
+    GetPage(
+      name: AppRoutes.register,
+      page: () => RegisterScreen(),
+      binding: RegisterBinding(),
+    )
   ];
 }

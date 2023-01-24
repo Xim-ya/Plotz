@@ -14,4 +14,7 @@ abstract class AppRoutes {
   // 검색
   static const search = '/search';
 
+  // 등록
+  static const register = '/register';
+
 }

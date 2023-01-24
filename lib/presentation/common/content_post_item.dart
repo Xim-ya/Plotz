@@ -14,7 +14,7 @@ class ContentPostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
+    return   ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
       child: AspectRatio(
         aspectRatio: ratio!,
@@ -35,7 +35,7 @@ class ContentPostItem extends StatelessWidget {
             ),
           ),
           errorWidget: (context, url, error) =>
-              const Center(child: Icon(Icons.error)),
+          const Center(child: Icon(Icons.error)),
         ),
       ),
     );

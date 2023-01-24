@@ -11,8 +11,7 @@ class SearchViewModel extends BaseViewModel {
   SearchViewModel(this._loadSearchedContentResult);
 
   /* State Variables */
-  // 검색 앱바 'x' 버튼 노출여부
-  RxBool showRoundCloseBtn = false.obs;
+  RxBool showRoundCloseBtn = false.obs; // 검색 앱바 'x' 버튼 노출여부
   Timer? _debounce; // 검색 api call 시간 딜레이
 
 
