@@ -27,7 +27,7 @@ dependencies:
   url_launcher: ^6.1.6 #Url 런처
   flutter_styled_toast: ^2.1.3 # 토스트
   infinite_scroll_pagination: ^3.2.0 #Pagination
-  swipeable_card_stack: ^0.0.5
+  polygon: ^0.1.0 # 다각형
 
 
   #State Controller

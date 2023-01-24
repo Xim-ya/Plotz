@@ -21,6 +21,7 @@ abstract class AppSpace {
   static const size28 = SizedBox(width: 28, height: 28);
   static const size30 = SizedBox(width: 30, height: 30);
   static const size32 = SizedBox(width: 32, height: 32);
+  static const size34 = SizedBox(width: 34, height: 34);
   static const size36 = SizedBox(width: 36, height: 36);
   static const size39 = SizedBox(width: 39, height: 39);
   static const size40 = SizedBox(width: 40, height: 40);
