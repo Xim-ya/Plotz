@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 
+
 class PagingHandlerUseCase {
   PagingHandlerUseCase(this._repository);
 
@@ -60,7 +61,7 @@ class PagingHandlerUseCase {
 
   /// 검색된 컨텐츠 리스트 호출
   /// paging 로직 적용
-  Future<void> loadSearchedContentList(ContentType contentType) async {
+  Future<void> loadSearchedContentList(ContentType contentType, {required bool checkContentRegistration}) async {
     Result<List<SearchedContent>> responseResult;
 
     if(contentType.isTv) {
@@ -72,10 +73,13 @@ class PagingHandlerUseCase {
     responseResult.fold(
       onSuccess: (data) {
         // 등록된 컨텐츠인지 판별
-        for (var content in data) {
-          content.checkIsContentRegistered(
-              contentType: SearchScaffoldController.selectedTabType);
+        if(checkContentRegistration) {
+          for (var content in data) {
+            content.checkIsContentRegistered(
+                contentType: contentType);
+          }
         }
+
         final bool noMoreReturn = data.length < 20;
         if (limitPagingByPageLimit || noMoreReturn) {
           log('[PAGING] LAST LOAD');
@@ -95,4 +99,3 @@ class PagingHandlerUseCase {
     );
   }
 }
-

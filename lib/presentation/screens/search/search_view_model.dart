@@ -74,7 +74,19 @@ class SearchViewModel extends BaseViewModel {
 
 
   // 검색어가 입력되었을 때
-  void onSearchChanged(String query) {
+  void onSearchChanged(String searchedKeyword) {
+
+    // 'x' 버튼 노출 여부 로직
+    if(searchedKeyword.isNotEmpty && showRoundCloseBtn.isFalse) {
+      showRoundCloseBtn(true);
+    }
+
+    if(searchedKeyword.isEmpty && showRoundCloseBtn.isTrue) {
+      showRoundCloseBtn(false);
+    }
+
+
+
     if (_pagingHandler.isPagingAllowed) {
       // Paging Controller 리셋 --> 검색 api call 실행
       if (_debounce?.isActive ?? false) _debounce!.cancel();
@@ -90,7 +102,7 @@ class SearchViewModel extends BaseViewModel {
       return;
     }
     loading(true);
-    await _pagingHandler.loadSearchedContentList(SearchScaffoldController.selectedTabType);
+    await _pagingHandler.loadSearchedContentList(SearchScaffoldController.selectedTabType, checkContentRegistration: true);
     loading(false);
   }
 
@@ -105,9 +117,9 @@ class SearchViewModel extends BaseViewModel {
   @override
   void onInit() {
     super.onInit();
+
     pagingController.addPageRequestListener((pageKey) {
       loadSearchedContentListByPaging();
-      // print("ACTIVATED");
     });
 
     focusNode = FocusNode();

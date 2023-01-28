@@ -7,7 +7,7 @@ class QurationViewModel extends BaseViewModel {
   /* Intent */
 
   // 컨텐츠 등록 스크린으로 이동
-  void routeToRegister() {
-    Get.toNamed(AppRoutes.register);
+  void routeToRegister({required ContentType contentType}) {
+    Get.toNamed(AppRoutes.register, arguments: contentType);
   }
 }

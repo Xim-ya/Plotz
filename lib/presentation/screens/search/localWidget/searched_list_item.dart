@@ -137,7 +137,7 @@ class SearchedListItem extends StatelessWidget {
                   Text(
                     item.releaseDate != null
                         ? Formatter.dateToyyMMdd(item.releaseDate!)
-                        : contentType == ContentType.tv
+                        : contentType.isTv
                             ? '방영일 확인 불가'
                             : '개봉일 확인 불가',
                     style:

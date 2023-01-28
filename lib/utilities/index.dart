@@ -55,7 +55,7 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository.dart';
 export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart';
 
 // Domain
-export 'package:uppercut_fantube/domain/useCase/content/explore/load_explore_content_by_slider_index_use_case.dart';
+export 'package:uppercut_fantube/domain/useCase/explore/load_explore_content_by_slider_index_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/content/paging_handler_use_case.dart';
 export 'package:uppercut_fantube/domain/model/content/explore/explore_content_detail_info.dart';
@@ -74,7 +74,6 @@ export 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.da
 export 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 export 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
 export 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
-export 'package:uppercut_fantube/domain/useCase/tmdb/load_searched_content_result_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_detail_info_use_case.dart';
 export 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';

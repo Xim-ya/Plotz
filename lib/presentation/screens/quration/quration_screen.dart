@@ -28,12 +28,16 @@ class QurationScreen extends BaseScreen<QurationViewModel> {
               children: [
                 StartQurationButton(
                   contentType: ContentType.tv,
-                  onBtnTapped: vm.routeToRegister,
+                  onBtnTapped: (){
+                    vm.routeToRegister(contentType: ContentType.tv);
+                  },
                 ),
                 AppSpace.size16,
                 StartQurationButton(
                   contentType: ContentType.movie,
-                  onBtnTapped: vm.routeToRegister,
+                  onBtnTapped: (){
+                    vm.routeToRegister(contentType: ContentType.movie);
+                  },
                 ),
               ],
             ),

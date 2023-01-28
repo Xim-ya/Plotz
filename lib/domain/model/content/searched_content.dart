@@ -8,7 +8,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * 핵심 정보를 load하고 이후에 받아올 수 있도록 함.
  * */
 
-class SearchedContent {
+class SearchedContent{
   final int contentId;
   final String? posterImgUrl; // 컨텐츠 포스트
   final String? title;

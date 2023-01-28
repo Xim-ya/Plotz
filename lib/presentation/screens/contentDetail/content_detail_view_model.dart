@@ -15,7 +15,7 @@ class ContentDetailViewModel extends BaseViewModel {
       : _passedArgument = argument;
 
 
-  // 이전 페이지에서 전달 받는 argument¬
+  // 이전 페이지에서 전달 받는 argument
   final ContentArgumentFormat _passedArgument;
 
   /// Data Variables

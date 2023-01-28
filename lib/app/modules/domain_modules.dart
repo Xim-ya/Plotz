@@ -6,7 +6,6 @@ abstract class DomainModules {
 
   static void dependencies() {
     // 컨텐츠
-    // Get.lazyPut(() => LoadContentMainInfoUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadTopExposedContentListUseCase(Get.find()),
         fenix: true);
     Get.lazyPut(() => ContentService(), fenix: true);
@@ -18,8 +17,6 @@ abstract class DomainModules {
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadContentCreditInfoUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadContentImgListUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => LoadSearchedContentResultUseCase(Get.find()),
-        fenix: true);
     Get.lazyPut(() => LoadExploreContentBySlierIndexUseCase(Get.find()),
         fenix: true);
 
@@ -28,5 +25,7 @@ abstract class DomainModules {
 
     // Explore
     Get.lazyPut(() => TestUseCase(), fenix: true);
+
+
   }
 }

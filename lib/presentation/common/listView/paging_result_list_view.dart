@@ -15,7 +15,9 @@ class PagingResultListView extends StatelessWidget {
       required this.pagingController,
       required this.itemBuilder,
       required this.firstPageErrorText,
-      this.noItemsFoundText = '검색된 결과가 없습니다'})
+      this.noItemsFoundText = '검색된 결과가 없습니다',
+      this.padding = const EdgeInsets.only(top: 24, bottom: 46),
+      })
       : super(key: key);
 
   final FocusNode focusNode;
@@ -23,6 +25,7 @@ class PagingResultListView extends StatelessWidget {
   final ItemWidgetBuilder<SearchedContent> itemBuilder;
   final String firstPageErrorText;
   final String? noItemsFoundText;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class PagingResultListView extends StatelessWidget {
         focusNode.unfocus();
       },
       child: PagedListView.separated(
-        padding: AppInset.top20 + AppInset.bottom46,
+        padding: padding,
         pagingController: pagingController,
         separatorBuilder: (__, _) => AppSpace.size12,
         builderDelegate: PagedChildBuilderDelegate<SearchedContent>(
