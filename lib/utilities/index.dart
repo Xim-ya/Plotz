@@ -55,6 +55,9 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository.dart';
 export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart';
 
 // Domain
+export 'package:uppercut_fantube/domain/useCase/content/explore/load_explore_content_by_slider_index_use_case.dart';
+export 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
+export 'package:uppercut_fantube/domain/useCase/content/paging_handler_use_case.dart';
 export 'package:uppercut_fantube/domain/model/content/explore/explore_content_detail_info.dart';
 export 'package:uppercut_fantube/domain/model/content/explore/explore_content_youtube_info.dart';
 export 'package:uppercut_fantube/domain/model/content/explore_content_id_info.dart';
@@ -91,7 +94,8 @@ export 'package:uppercut_fantube/domain/model/content/content_argument_format.da
 export 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 
 // Presentation
-export 'package:uppercut_fantube/presentation/common/textField/search_bard.dart';
+export 'package:uppercut_fantube/presentation/common/dialog/app_dialog.dart';
+export 'package:uppercut_fantube/presentation/common/textField/search_bar.dart';
 export 'package:uppercut_fantube/presentation/common/animated_index_stack.dart';
 export 'package:uppercut_fantube/presentation/screens/home/home_screen.dart';
 export 'package:uppercut_fantube/presentation/common/sticky_delegate_container.dart';
@@ -124,6 +128,8 @@ export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/
 export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/single_video_skeleton_view.dart';
 
 // Utilities
+export 'package:uppercut_fantube/utilities/constants/invalid_search_character.dart';
+export 'package:uppercut_fantube/utilities/extensions/determine_content_type.dart';
 export 'package:uppercut_fantube/utilities/extensions/get_last_character_of_string.extension.dart';
 export 'package:uppercut_fantube/utilities/constants/bottom_navigation_constants.dart';
 export 'package:uppercut_fantube/utilities/api_error_handler_mixin.dart';

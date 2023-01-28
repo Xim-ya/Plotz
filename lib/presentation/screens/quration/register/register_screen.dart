@@ -12,7 +12,7 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
   Widget buildScreen(BuildContext context) {
     return Container(
       child: PageView(
-        controller: vm.pageController,
+        controller: vm.pageViewController,
         children: <Widget>[
           const FindContentView(),
           Container(

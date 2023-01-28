@@ -13,10 +13,14 @@ class LoadSearchedContentResultUseCase extends BaseTwoParamUseCase<ContentType,
 
   final TmdbRepository _repository;
 
+
+
   @override
   Future<Result<List<SearchedContent>>> call(
       ContentType firstReq, String secondReq) {
     // firstReq -> [contentType] / secondRequest -> [Query]
+
+
     if (firstReq == ContentType.tv) {
       return _repository.loadSearchedTvContentList(secondReq);
     } else {

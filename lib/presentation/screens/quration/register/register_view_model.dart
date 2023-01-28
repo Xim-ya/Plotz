@@ -6,7 +6,8 @@ class RegisterViewModel extends BaseViewModel {
   RxBool showRoundCloseBtn = false.obs; // 검색 컨테이너 'x' 버튼 노출여부
 
   /* Controllers */
-  late PageController pageController;
+  late PageController pageViewController;
+  late PagingController<int, SearchedContent> pagingController;
   late FocusNode focusNode;
   late TextEditingController textEditingController;
 
@@ -23,7 +24,9 @@ class RegisterViewModel extends BaseViewModel {
   void onInit() {
     super.onInit();
 
-    pageController = PageController();
+    pageViewController = PageController();
+    pagingController = pagingController = PagingController(
+        firstPageKey: 1, invisibleItemsThreshold: 1);
     focusNode = FocusNode();
     textEditingController = TextEditingController();
   }
