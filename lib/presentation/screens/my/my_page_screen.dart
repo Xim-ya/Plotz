@@ -63,7 +63,6 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             },
           ),
           AppSpace.size48,
-
           // 큐레이션
           Padding(
             padding: AppInset.left16,

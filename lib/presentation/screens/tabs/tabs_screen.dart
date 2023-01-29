@@ -12,6 +12,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
   @override
   bool get wrapWithSafeArea => false;
 
+
   @override
   Widget? buildBottomNavigationBar(BuildContext context) =>
       const _BottomNavigationBar();

@@ -9,16 +9,16 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class PagingResultListView extends StatelessWidget {
-  const PagingResultListView(
-      {Key? key,
-      required this.focusNode,
-      required this.pagingController,
-      required this.itemBuilder,
-      required this.firstPageErrorText,
-      this.noItemsFoundText = '검색된 결과가 없습니다',
-      this.padding = const EdgeInsets.only(top: 24, bottom: 46),
-      })
-      : super(key: key);
+  const PagingResultListView({
+    Key? key,
+    required this.focusNode,
+    required this.pagingController,
+    required this.itemBuilder,
+    required this.firstPageErrorText,
+    this.physics,
+    this.noItemsFoundText = '검색된 결과가 없습니다',
+    this.padding = const EdgeInsets.only(top: 24, bottom: 46),
+  }) : super(key: key);
 
   final FocusNode focusNode;
   final PagingController pagingController;
@@ -26,6 +26,7 @@ class PagingResultListView extends StatelessWidget {
   final String firstPageErrorText;
   final String? noItemsFoundText;
   final EdgeInsets? padding;
+  final ScrollPhysics? physics;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class PagingResultListView extends StatelessWidget {
         focusNode.unfocus();
       },
       child: PagedListView.separated(
+        physics: physics,
         padding: padding,
         pagingController: pagingController,
         separatorBuilder: (__, _) => AppSpace.size12,

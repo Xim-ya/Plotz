@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:uppercut_fantube/utilities/index.dart';
 
+part 'controllerResource/find_content_view_model.part.dart'; // 컨텐츠 검색
+
 class RegisterViewModel extends BaseViewModel {
   RegisterViewModel(this._pagingHandler, {required contentType})
       : selectedContentType = contentType;
@@ -18,14 +20,18 @@ class RegisterViewModel extends BaseViewModel {
   // 검색 api call 시간 딜레이
   Timer? _debounce;
 
+  // 선택된 컨텐츠의 id
+  RxInt selectedContentId = 0.obs;
+
+  // 하단 고정 버튼 활성화 여부
+  RxBool get showBtnFloatingBtn => (selectedContentId.value != 0).obs;
+
+
   /* Controllers */
   late PageController pageViewController;
-
   late FocusNode focusNode;
-
   TextEditingController get textEditingController =>
       _pagingHandler.textEditingController;
-
   PagingController<int, SearchedContent> get pagingController =>
       _pagingHandler.pagingController;
 
@@ -47,18 +53,17 @@ class RegisterViewModel extends BaseViewModel {
 
   // 검색어가 입력되었을 때
   void onSearchChanged(String searchedKeyword) {
-
     // 'x' 버튼 노출 여부 로직
     if(searchedKeyword.isNotEmpty && showRoundCloseBtn.isFalse) {
       showRoundCloseBtn(true);
     }
-
     if(searchedKeyword.isEmpty && showRoundCloseBtn.isTrue) {
       showRoundCloseBtn(false);
     }
 
+
     if (_pagingHandler.isPagingAllowed) {
-      // Paging Controller 리셋 --> 검색 api call 실행
+      // Debounce delay 설정
       if (_debounce?.isActive ?? false) _debounce!.cancel();
       _debounce =
           Timer(const Duration(milliseconds: 300), pagingController.refresh);

@@ -75,20 +75,16 @@ class SearchViewModel extends BaseViewModel {
 
   // 검색어가 입력되었을 때
   void onSearchChanged(String searchedKeyword) {
-
     // 'x' 버튼 노출 여부 로직
     if(searchedKeyword.isNotEmpty && showRoundCloseBtn.isFalse) {
       showRoundCloseBtn(true);
     }
-
     if(searchedKeyword.isEmpty && showRoundCloseBtn.isTrue) {
       showRoundCloseBtn(false);
     }
 
-
-
     if (_pagingHandler.isPagingAllowed) {
-      // Paging Controller 리셋 --> 검색 api call 실행
+      // Debounce delay 설정
       if (_debounce?.isActive ?? false) _debounce!.cancel();
       _debounce =
           Timer(const Duration(milliseconds: 300), pagingController.refresh);

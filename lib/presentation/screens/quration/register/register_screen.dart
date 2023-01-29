@@ -11,25 +11,25 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
   @override
   Widget buildScreen(BuildContext context) {
     return Container(
-      child: PageView(
-        controller: vm.pageViewController,
-        children: <Widget>[
-          const FindContentView(),
-          Container(
-            child: Text(
-              '2',
-              style: AppTextStyle.web1,
+        color: AppColor.black,
+        child: PageView(
+          controller: vm.pageViewController,
+          children: <Widget>[
+            const FindContentView(),
+            Container(
+              child: Text(
+                '2',
+                style: AppTextStyle.web1,
+              ),
             ),
-          ),
-          Container(
-            child: Text(
-              '3',
-              style: AppTextStyle.web1,
-            ),
-          )
-        ],
-      ),
-    );
+            Container(
+              child: Text(
+                '3',
+                style: AppTextStyle.web1,
+              ),
+            )
+          ],
+        ));
   }
 
   // 앱바
@@ -53,14 +53,15 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
             ),
             // 진행 단계 Indicator
             ToggleButtons(
-                constraints: BoxConstraints.loose(Size.infinite),
-                renderBorder: false,
-                isSelected: vm.selectedSteps,
-                children: [
-                  _circleBtnIndicator('1', vm.selectedSteps[0]),
-                  _circleBtnIndicator('2', vm.selectedSteps[1]),
-                  _circleBtnIndicator('3', vm.selectedSteps[2]),
-                ])
+              constraints: BoxConstraints.loose(Size.infinite),
+              renderBorder: false,
+              isSelected: vm.selectedSteps,
+              children: [
+                _circleBtnIndicator('1', vm.selectedSteps[0]),
+                _circleBtnIndicator('2', vm.selectedSteps[1]),
+                _circleBtnIndicator('3', vm.selectedSteps[2]),
+              ],
+            )
           ],
         ),
       ),
