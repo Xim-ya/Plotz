@@ -49,6 +49,7 @@ dependencies:
   intl: ^0.17.0 # DATE
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

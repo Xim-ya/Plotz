@@ -4,7 +4,6 @@ abstract class BaseViewModel extends GetxController {
   final loading = false.obs;
 
   void routeBack() {
-    print("ARang");
     Get.back();
   }
 }

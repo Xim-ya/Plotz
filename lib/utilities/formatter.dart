@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Formatter {
@@ -9,7 +10,6 @@ class Formatter {
   static String dateToyyMMdd(String date) {
     return DateFormat('yy.MM.dd').format(DateTime.parse(date));
   }
-
 
   /// 좋아요 수 & 조회수를 유튜브 포맷에 맞게 변경
   /// 1000 미만 -> 숫자 ex) 956
@@ -68,5 +68,13 @@ class Formatter {
     } else {
       return '${diffSeconds ~/ 31536000}년 전';
     }
+  }
+
+  // 유튜브 비디오 링크에서 비디오 id 추출
+  static String? getVideoIdFromYoutubeUrl(String url) {
+    return RegExp(
+      r'.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*',
+      caseSensitive: false,
+    ).firstMatch(url)?.group(1);
   }
 }

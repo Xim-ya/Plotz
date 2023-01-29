@@ -27,7 +27,9 @@ abstract class AppInset {
   static const bottom36 = EdgeInsets.only(bottom: 36);
   static const bottom46 = EdgeInsets.only(bottom: 46);
   static const bottom64 = EdgeInsets.only(bottom: 64);
+  static const bottom84 = EdgeInsets.only(bottom: 84);
   static const bottom104 = EdgeInsets.only(bottom: 104);
+  static const left4 = EdgeInsets.only(left: 8);
   static const left8 = EdgeInsets.only(left: 8);
   static const left10 = EdgeInsets.only(left: 10);
   static const left16 = EdgeInsets.only(left: 16);

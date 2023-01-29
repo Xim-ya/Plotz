@@ -1,4 +1,5 @@
-import 'package:uppercut_fantube/presentation/screens/quration/register/pageView/find_content_view.dart';
+import 'package:uppercut_fantube/presentation/screens/quration/register/pageView/register_video_link_page_view.dart';
+import 'package:uppercut_fantube/presentation/screens/quration/register/pageView/search_content_page_view.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -6,22 +7,15 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  bool get wrapWithSafeArea => false;
-
-  @override
   Widget buildScreen(BuildContext context) {
     return Container(
         color: AppColor.black,
         child: PageView(
+          // physics: NeverScrollableScrollPhysics(),
           controller: vm.pageViewController,
           children: <Widget>[
-            const FindContentView(),
-            Container(
-              child: Text(
-                '2',
-                style: AppTextStyle.web1,
-              ),
-            ),
+            const SearchContentPageView(),
+            const RegisterVideoLinkPageView(),
             Container(
               child: Text(
                 '3',
@@ -45,7 +39,7 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
-              onTap: vm.routeBack,
+              onTap: vm.onBackBtnTapped,
               child: const Icon(
                 Icons.arrow_back_ios,
                 color: AppColor.mixedWhite,
@@ -86,4 +80,12 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
       ),
     );
   }
+
+  @override
+  bool get wrapWithSafeArea => false;
+
+  @override
+  bool get resizeToAvoidBottomInset => false;
+
+
 }

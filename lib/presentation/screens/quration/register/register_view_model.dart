@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-part 'controllerResource/find_content_view_model.part.dart'; // 컨텐츠 검색
+part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
+part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 링크 등록
 
 class RegisterViewModel extends BaseViewModel {
   RegisterViewModel(this._pagingHandler, {required contentType})
@@ -23,59 +26,109 @@ class RegisterViewModel extends BaseViewModel {
   // 선택된 컨텐츠의 id
   RxInt selectedContentId = 0.obs;
 
-  // 하단 고정 버튼 활성화 여부
-  RxBool get showBtnFloatingBtn => (selectedContentId.value != 0).obs;
+  // 현재 pageView Index
+  int get currentPageViewIndex => pageViewController.page?.toInt() ?? 0;
 
+  // 입력된 비디오 링크 유효 여부
+  Rx<ValidationState> isEnteredVideoUrlValid = ValidationState.initState.obs;
+
+  // 검색어
+  String get searchedKeyword  => textEditingController.text;
 
   /* Controllers */
   late PageController pageViewController;
   late FocusNode focusNode;
+
   TextEditingController get textEditingController =>
       _pagingHandler.textEditingController;
+
   PagingController<int, SearchedContent> get pagingController =>
       _pagingHandler.pagingController;
 
   /* UseCases */
   final PagingHandlerUseCase _pagingHandler;
 
-  /* Intent */
-  // 컨텐츠 리스트 호출 - (pagination logic 적용)
-  Future<void> loadSearchedContentListByPaging() async {
-    if (loading.isTrue) {
-      return;
+  /* Intents */
+
+  /// 하단 고정 버튼이 클릭 시
+  /// pageView 현재 인덱스에 따라 동작을 다르게 함.
+  void onFloatingStepBtnTapped() {
+    switch (currentPageViewIndex) {
+      case 0:
+        pageViewController.animateToPage(
+          1,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+        textEditingController.text = '';
+        selectedContentId(0);
+        show1StepFloatingBtn(false);
+        pagingController.refresh();
+        break;
+      case 1:
+        pageViewController.animateToPage(
+          2,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+        textEditingController.text = '';
+        show2StepFloatingBtn(false);
+        break;
     }
-    loading(true);
-    await _pagingHandler.loadSearchedContentList(selectedContentType,
-        checkContentRegistration: true);
-    loading(false);
   }
 
+  // 뒤로가기 버튼 클릭 시
+  void onBackBtnTapped() {
+    textEditingController.text = ''; // 검색어 초기화
+    focusNode.unfocus(); // 키보드 가리기
 
-  // 검색어가 입력되었을 때
-  void onSearchChanged(String searchedKeyword) {
-    // 'x' 버튼 노출 여부 로직
-    if(searchedKeyword.isNotEmpty && showRoundCloseBtn.isFalse) {
+    switch (currentPageViewIndex) {
+      case 0:
+        Get.back();
+        break;
+      case 1:
+        isEnteredVideoUrlValid(ValidationState.initState);
+        pageViewController.animateToPage(
+          0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+        break;
+      case 2:
+        pageViewController.animateToPage(
+          1,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+        break;
+    }
+  }
+
+  //  검색 바 'x' 버튼 노출 여부 로직
+  void toggleSearchBarClosedBtn() {
+    if (searchedKeyword.isNotEmpty && showRoundCloseBtn.isFalse) {
       showRoundCloseBtn(true);
     }
-    if(searchedKeyword.isEmpty && showRoundCloseBtn.isTrue) {
+    if (searchedKeyword.isEmpty && showRoundCloseBtn.isTrue) {
       showRoundCloseBtn(false);
     }
-
-
-    if (_pagingHandler.isPagingAllowed) {
-      // Debounce delay 설정
-      if (_debounce?.isActive ?? false) _debounce!.cancel();
-      _debounce =
-          Timer(const Duration(milliseconds: 300), pagingController.refresh);
-    }
   }
-
 
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때
   void resetSearchValue() {
     textEditingController.text = '';
     showRoundCloseBtn(false);
+
+    switch (currentPageViewIndex) {
+      case 0:
+        selectedContentId(0);
+        break;
+      case 1:
+        isEnteredVideoUrlValid(ValidationState.initState);
+        break;
+    }
   }
+
 
   @override
   void onInit() {

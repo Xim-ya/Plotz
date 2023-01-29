@@ -5,8 +5,8 @@ import 'package:uppercut_fantube/presentation/screens/quration/register/localWid
 import 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-class FindContentView extends BaseView<RegisterViewModel> {
-  const FindContentView({Key? key}) : super(key: key);
+class SearchContentPageView extends BaseView<RegisterViewModel> {
+  const SearchContentPageView({Key? key}) : super(key: key);
 
   @override
   Widget buildView(BuildContext context) {
@@ -22,7 +22,7 @@ class FindContentView extends BaseView<RegisterViewModel> {
   Widget _buildHeader() => Padding(
         padding: AppInset.top10 + AppInset.bottom16,
         child: Text(
-          '영화\n제목을 검색해주세요',
+          '${vm.selectedContentType.asText}\n제목을 검색해주세요',
           style: AppTextStyle.headline1,
         ),
       );
@@ -42,7 +42,7 @@ class FindContentView extends BaseView<RegisterViewModel> {
   // 검색 결과 리스트
   Widget _buildSearchedListView() => PagingResultListView(
         physics: const NeverScrollableScrollPhysics(),
-        padding: AppInset.top4 + AppInset.bottom46,
+        padding: AppInset.top4 + AppInset.bottom104,
         focusNode: vm.focusNode,
         pagingController: vm.pagingController,
         firstPageErrorText: '영화 제목을 입력해주세요',
@@ -66,10 +66,10 @@ class FindContentView extends BaseView<RegisterViewModel> {
   // 하단 고정 버튼
   Widget _buildBottomFixedStepBtn() => Obx(
         () => AnimatedOpacity(
-          opacity: vm.showBtnFloatingBtn.value ? 1 : 0,
+          opacity: vm.show1StepFloatingBtn.value ? 1 : 0,
           duration: const Duration(milliseconds: 500),
           child: Visibility(
-            visible: vm.showBtnFloatingBtn.value ? true : false,
+            visible: vm.show1StepFloatingBtn.value ? true : false,
             child: Stack(
               children: [
                 Positioned(
@@ -81,8 +81,13 @@ class FindContentView extends BaseView<RegisterViewModel> {
                   ),
                 ),
                 Container(
-                    padding: AppInset.bottom32,
-                    child: LinearBgBottomFloatingBtn(text: '다음', onTap: () {})),
+                  padding: EdgeInsets.only(
+                      bottom: SizeConfig.to.responsiveBottomInset),
+                  child: LinearBgBottomFloatingBtn(
+                    text: '다음',
+                    onTap: vm.onFloatingStepBtnTapped,
+                  ),
+                ),
               ],
             ),
           ),

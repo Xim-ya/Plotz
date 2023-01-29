@@ -31,12 +31,11 @@ class LinearBgBottomFloatingBtn extends StatelessWidget {
           color: AppColor.strongGrey,
           width: SizeConfig.to.screenWidth - 32,
           height: 56,
-          margin:
-          EdgeInsets.only(bottom: SizeConfig.to.responsiveBottomInset),
+
           child: MaterialButton(
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             key: key,
-            onPressed: () {},
+            onPressed: onTap,
             child: Text(
               '다음',
               textAlign: TextAlign.center,

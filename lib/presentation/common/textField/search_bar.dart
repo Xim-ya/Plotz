@@ -1,17 +1,18 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar(
-      {Key? key,
-      required this.focusNode,
-      required this.textEditingController,
-      required this.onChanged,
-      required this.onFieldSubmitted,
-      required this.resetSearchValue,
-      required this.showRoundCloseBtn,
-      this.width = double.infinity,
-      this.hintText = '제목을 입력하세요'})
-      : super(key: key);
+  const SearchBar({
+    Key? key,
+    required this.focusNode,
+    required this.textEditingController,
+    required this.onChanged,
+    required this.onFieldSubmitted,
+    required this.resetSearchValue,
+    required this.showRoundCloseBtn,
+    this.showPrefixIcon = true,
+    this.width = double.infinity,
+    this.hintText = '제목을 입력하세요',
+  }) : super(key: key);
 
   final FocusNode focusNode;
   final TextEditingController textEditingController;
@@ -21,6 +22,7 @@ class SearchBar extends StatelessWidget {
   final RxBool showRoundCloseBtn;
   final double width;
   final String? hintText;
+  final bool? showPrefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,8 @@ class SearchBar extends StatelessWidget {
                 fontFamily: 'pretendard_regular'),
             decoration: InputDecoration(
               filled: true,
-              contentPadding: const EdgeInsets.only(left: 38, right: 40),
+              contentPadding:
+                  EdgeInsets.only(left: showPrefixIcon! ? 38 : 14, right: 40),
               hintText: hintText,
               errorBorder: InputBorder.none,
               enabledBorder: _fixedOutLinedBorder(),
@@ -56,17 +59,20 @@ class SearchBar extends StatelessWidget {
               ),
             ),
           ),
+
           // 검색창 prefix 검색 아이콘
-          Positioned(
-            child: Container(
-              alignment: Alignment.center,
-              width: 40,
-              child: const Icon(
-                Icons.search_rounded,
-                color: AppColor.lightGrey,
+          if (showPrefixIcon!)
+            Positioned(
+              child: Container(
+                alignment: Alignment.center,
+                width: 40,
+                child: const Icon(
+                  Icons.search_rounded,
+                  color: AppColor.lightGrey,
+                ),
               ),
             ),
-          ),
+
           // 'X' 버튼
           Obx(() => showRoundCloseBtn.value
               ? Positioned(

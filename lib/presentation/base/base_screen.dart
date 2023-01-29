@@ -32,7 +32,7 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
   Widget _buildScaffold(BuildContext context) {
     return Scaffold(
       extendBody: extendBodyBehindAppBar,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       appBar: buildAppBar(context),
       body: buildScreen(context),
       backgroundColor: screenBackgroundColor,
@@ -41,6 +41,9 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
       floatingActionButton: buildFloatingActionButton,
     );
   }
+
+  @protected
+  bool get resizeToAvoidBottomInset => true;
 
   @protected
   Widget? get buildFloatingActionButton => null;
@@ -68,6 +71,12 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
 
   @protected
   bool get wrapWithSafeArea => true;
+
+  @protected
+  bool get setBottomSafeArea => true;
+
+  @protected
+  bool get setTopSafeArea => true;
 
   @mustCallSuper
   void initViewModel() {

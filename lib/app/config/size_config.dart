@@ -23,7 +23,7 @@ class SizeConfig {
     screenWidth = mediaQuery.size.width;
     screenHeight = mediaQuery.size.height;
     responsiveBottomInset =
-        mediaQuery.padding.bottom == 0 ? 16 : 0;
+        mediaQuery.padding.bottom == 0 ? 16 : mediaQuery.padding.bottom;
   }
 
   static final SizeConfig to = SizeConfig._();
