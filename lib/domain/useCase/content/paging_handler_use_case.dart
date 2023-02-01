@@ -11,6 +11,7 @@ class PagingHandlerUseCase {
       PagingController(firstPageKey: 1, invisibleItemsThreshold: 1);
   RxBool showRoundCloseBtn = false.obs;
   String get searchedKeyword => textEditingController.value.text;
+  final focusNode = FocusNode();
 
 
   // 검색 결과 paging(request)동작 시행 여부를 판별하는 메소드

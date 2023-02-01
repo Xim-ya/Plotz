@@ -124,8 +124,8 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
           () => GestureDetector(
             onTap: () {},
             child: ChannelInfoView(
-              channelImgUrl: item.youtubeInfo?.channelImgUrl,
-              channelName: item.youtubeInfo?.channelName,
+              imgUrl: item.youtubeInfo?.channelImgUrl,
+              name: item.youtubeInfo?.channelName,
               subscriberCount: item.youtubeInfo?.subscribers,
             ),
           ),

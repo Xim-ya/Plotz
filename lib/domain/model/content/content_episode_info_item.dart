@@ -8,7 +8,6 @@ class ContentEpisodeInfoItem {
   final int seasonNumber;
   final String youtubeVideoId;
 
-
   ContentEpisodeInfoItem(
       {required this.overview,
       required this.posterUrl,
@@ -17,9 +16,10 @@ class ContentEpisodeInfoItem {
 
   factory ContentEpisodeInfoItem.fromJson(Map<String, dynamic> json) {
     return ContentEpisodeInfoItem(
-        overview: json['overview'],
-        posterUrl: json['posterImgUrl'],
-        seasonNumber: json['seasonNumber'],
-        youtubeVideoId: json['youtubeVideoId']);
+      overview: json['overview'],
+      posterUrl: json['posterImgUrl'],
+      seasonNumber: json['seasonNumber'],
+      youtubeVideoId: json['youtubeVideoId'],
+    );
   }
 }

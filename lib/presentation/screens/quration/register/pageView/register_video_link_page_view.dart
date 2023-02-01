@@ -2,7 +2,6 @@ import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/presentation/common/button/linear_background_bottom_floating_btn.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/register_video_link_page_view_scaffold.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/url_validation_indicator.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
@@ -11,7 +10,7 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return RegisterVideoLinkPageViewScaffold(
-        onBackgroundLayerTapped: vm.focusNode.unfocus,
+        onBackgroundLayerTapped: vm.videoFormFocusNode.unfocus,
         leadingTitle: _buildLeadingTitle(),
         searchBar: _buildSearchBar(),
         pasteIntroductionView: _buildPateIntroductinoView(),

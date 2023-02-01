@@ -4,23 +4,31 @@ import 'package:flutter/services.dart';
 import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
+/** Created By Ximya - 2023.02.01
+ *  입력된 유튜브 링크의 입력 및 유효성 검사 로직의 기능을 수행하는 UseCase
+ *  [RegisterScreen] > [RegisterVideoLinkPageView] 에서 사용됨
+ * */
+
 class ValidateVideoUrlUseCase {
   final FocusNode focusNode = FocusNode();
   final TextEditingController textEditingController = TextEditingController();
   final Rx<ValidationState> videoUrlValidState = ValidationState.initState.obs;
+  String? selectedChannelId;
+  String? selectedVideoId;
   Timer? _debounce;
 
   String get searchedKeyword => textEditingController.value.text;
 
   ValidationState get isVideoValid => videoUrlValidState.value;
-
   RxBool showRoundCloseBtn = false.obs;
 
   // 비디오 url 유효성 검사
   Future<void> checkVideoIdValidation(String? videoId) async {
     try {
-      await YoutubeMetaData.yt.videos.get(videoId);
+      final response = await YoutubeMetaData.yt.videos.get(videoId);
       videoUrlValidState(ValidationState.valid);
+      selectedChannelId = response.channelId.value;
+      selectedVideoId = videoId;
     } catch (e) {
       videoUrlValidState(ValidationState.invalid);
     }
@@ -34,6 +42,7 @@ class ValidateVideoUrlUseCase {
     ClipboardData? pasteUrl = await Clipboard.getData('text/plain');
 
     if (pasteUrl?.text == null) {
+      unawaited(AlertWidget.toast('복사된 링크가 없습니다'));
       if (searchedKeyword != '') {
         videoUrlValidState(ValidationState.invalid);
         showRoundCloseBtn(true);
@@ -79,4 +88,15 @@ class ValidateVideoUrlUseCase {
     showRoundCloseBtn(false);
     videoUrlValidState.value = ValidationState.initState;
   }
+}
+
+class _YoutubeVideoInfo {
+  final String videoId;
+  final String channelName;
+  final String channelImg;
+
+  _YoutubeVideoInfo(
+      {required this.videoId,
+      required this.channelName,
+      required this.channelImg});
 }

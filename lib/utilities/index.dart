@@ -93,6 +93,9 @@ export 'package:uppercut_fantube/domain/model/content/content_argument_format.da
 export 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 
 // Presentation
+export 'package:uppercut_fantube/presentation/screens/quration/register/pageView/register_video_link_page_view.dart';
+export 'package:uppercut_fantube/presentation/screens/quration/register/pageView/search_content_page_view.dart';
+export 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
 export 'package:uppercut_fantube/presentation/common/dialog/app_dialog.dart';
 export 'package:uppercut_fantube/presentation/common/textField/search_bar.dart';
 export 'package:uppercut_fantube/presentation/common/animated_index_stack.dart';

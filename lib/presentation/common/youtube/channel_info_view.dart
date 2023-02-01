@@ -8,17 +8,21 @@ import 'package:uppercut_fantube/utilities/index.dart';
 * */
 
 class ChannelInfoView extends StatelessWidget {
-  const ChannelInfoView(
-      {Key? key,
-      this.imgSize = 48,
-      required this.channelImgUrl,
-      required this.channelName,
-      required this.subscriberCount})
-      : super(key: key);
+  const ChannelInfoView({
+    Key? key,
+    this.imgSize = 48,
+    this.nameFontSize,
+    this.subscriberFontSize,
+    this.subscriberCount,
+    required this.imgUrl,
+    required this.name,
+  }) : super(key: key);
 
-  final String? channelImgUrl;
-  final String? channelName;
+  final String? imgUrl;
+  final String? name;
   final int? subscriberCount;
+  final double? nameFontSize;
+  final double? subscriberFontSize;
   final double imgSize;
 
   @override
@@ -26,10 +30,10 @@ class ChannelInfoView extends StatelessWidget {
     return Row(
       children: [
         // 채널 프로필 이미지
-        if (channelImgUrl.hasData)
+        if (imgUrl.hasData)
           RoundProfileImg(
             size: imgSize,
-            imgUrl: channelImgUrl,
+            imgUrl: imgUrl,
           )
         else
           SkeletonBox(
@@ -42,10 +46,10 @@ class ChannelInfoView extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if (channelName.hasData)
+            if (name.hasData)
               Text(
-                channelName!,
-                style: AppTextStyle.headline3,
+                name!,
+                style: AppTextStyle.headline3.copyWith(fontSize: nameFontSize),
               )
             else ...[
               const SkeletonBox(
@@ -57,7 +61,10 @@ class ChannelInfoView extends StatelessWidget {
             if (subscriberCount.hasData)
               Text(
                 '구독자 ${Formatter.formatViewAndLikeCount(subscriberCount)}명',
-                style: AppTextStyle.body1.copyWith(color: AppColor.lightGrey),
+                style: AppTextStyle.body1.copyWith(
+                  color: AppColor.lightGrey,
+                  fontSize: subscriberFontSize,
+                ),
               )
             else
               const SkeletonBox(

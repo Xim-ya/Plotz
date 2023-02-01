@@ -1,6 +1,4 @@
-import 'package:uppercut_fantube/presentation/screens/quration/register/pageView/register_video_link_page_view.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/pageView/search_content_page_view.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
+import 'package:uppercut_fantube/presentation/screens/quration/register/pageView/confirm_quration_page_view.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class RegisterScreen extends BaseScreen<RegisterViewModel> {
@@ -9,21 +7,17 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
   @override
   Widget buildScreen(BuildContext context) {
     return Container(
-        color: AppColor.black,
-        child: PageView(
-          // physics: NeverScrollableScrollPhysics(),
-          controller: vm.pageViewController,
-          children: <Widget>[
-            const SearchContentPageView(),
-            const RegisterVideoLinkPageView(),
-            Container(
-              child: Text(
-                '3',
-                style: AppTextStyle.web1,
-              ),
-            )
-          ],
-        ));
+      color: AppColor.black,
+      child: PageView(
+        // physics: NeverScrollableScrollPhysics(),
+        controller: vm.pageViewController,
+        children: <Widget>[
+          const SearchContentPageView(),
+          const RegisterVideoLinkPageView(),
+          const ConfirmQurationScreen(),
+        ],
+      ),
+    );
   }
 
   // 앱바
@@ -86,6 +80,4 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
 
   @override
   bool get resizeToAvoidBottomInset => false;
-
-
 }

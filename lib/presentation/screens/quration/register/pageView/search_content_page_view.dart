@@ -2,7 +2,6 @@ import 'package:uppercut_fantube/presentation/common/button/linear_background_bo
 import 'package:uppercut_fantube/presentation/common/listView/paging_result_list_view.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/search_content_page_view_scaffold.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/searched_content_item_btn.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SearchContentPageView extends BaseView<RegisterViewModel> {
@@ -29,7 +28,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
 
   // 검색창
   Widget _buildSearchBar() => SearchBar(
-        focusNode: vm.focusNode,
+        focusNode: vm.contentFormFocusNode,
         textEditingController: vm.textEditingController,
         onChanged: vm.onSearchChanged,
         onFieldSubmitted: (_) {
@@ -43,7 +42,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
   Widget _buildSearchedListView() => PagingResultListView(
         physics: const NeverScrollableScrollPhysics(),
         padding: AppInset.top4 + AppInset.bottom104,
-        focusNode: vm.focusNode,
+        focusNode: vm.contentFormFocusNode,
         pagingController: vm.pagingController,
         firstPageErrorText: '영화 제목을 입력해주세요',
         itemBuilder: (BuildContext context, dynamic item, int index) {
@@ -51,7 +50,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
           return Obx(
             () => SearchedContentItemBtn(
               onBtnTap: () {
-                vm.onSearchedContentTapped(item.contentId);
+                vm.onSearchedContentTapped(item);
               },
               title: searchedItem.title,
               posterImgUrl: searchedItem.posterImgUrl,

@@ -115,8 +115,8 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
               children: <Widget>[
                 ChannelInfoView(
                   imgSize: 62,
-                  channelImgUrl: vm.channelImgUrl,
-                  channelName: vm.channelName,
+                  imgUrl: vm.channelImgUrl,
+                  name: vm.channelName,
                   subscriberCount: vm.subscriberCount,
                 ),
                 AppSpace.size8,

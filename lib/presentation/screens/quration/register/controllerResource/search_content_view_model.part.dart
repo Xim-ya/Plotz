@@ -4,13 +4,8 @@ extension FindContentViewModel on RegisterViewModel {
   /* Intent */
   // 컨텐츠 리스트 호출 - (pagination logic 적용)
   Future<void> loadSearchedContentListByPaging() async {
-    if (loading.isTrue) {
-      return;
-    }
-    loading(true);
     await _pagingHandler.loadSearchedContentList(selectedContentType,
         checkContentRegistration: true);
-    loading(false);
   }
 
   //  검색 바 'x' 버튼 노출 여부 로직
@@ -38,8 +33,17 @@ extension FindContentViewModel on RegisterViewModel {
   }
 
   // 검색된 컨텐츠 선택 되었을 때
-  void onSearchedContentTapped(int contentId) {
-    selectedContentId.value = contentId;
+  void onSearchedContentTapped(SearchedContent content) {
+    selectedContentId.value = content.contentId;
+    qurationContent = Content(
+      id: content.contentId,
+      type: selectedContentType,
+      detail: ContentDetail(
+        title: content.title,
+        posterImgUrl: content.posterImgUrl,
+        releaseDate: content.releaseDate,
+      ),
+    );
   }
 
   void onCloseBtnTapped() {
@@ -48,6 +52,13 @@ extension FindContentViewModel on RegisterViewModel {
 
   RxBool get showCloseBtn1 => _pagingHandler.showRoundCloseBtn;
 
-  // 하단 고정 버튼 활성화 여부
   RxBool get show1StepFloatingBtn => (selectedContentId.value != 0).obs;
+
+  TextEditingController get textEditingController =>
+      _pagingHandler.textEditingController;
+
+  PagingController<int, SearchedContent> get pagingController =>
+      _pagingHandler.pagingController;
+
+  FocusNode get contentFormFocusNode => _pagingHandler.focusNode;
 }

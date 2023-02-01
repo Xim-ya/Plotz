@@ -65,14 +65,6 @@ class StartQurationButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
-                      // shadows: [
-                      //   BoxShadow(
-                      //     color: Colors.white.withOpacity(0.25),
-                      //     spreadRadius: 0,
-                      //     blurRadius: 4,
-                      //     offset: const Offset(0, 4), // changes position of shadow
-                      //   ),
-                      // ],
                       image: DecorationImage(
                         image:
                             AssetImage('assets/images/${randomImgGenerator()}'),
