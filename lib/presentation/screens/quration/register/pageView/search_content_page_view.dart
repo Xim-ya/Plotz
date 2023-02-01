@@ -30,12 +30,12 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
   Widget _buildSearchBar() => SearchBar(
         focusNode: vm.contentFormFocusNode,
         textEditingController: vm.textEditingController,
-        onChanged: vm.onSearchChanged,
+        onChanged: vm.onSearchTermEntered,
         onFieldSubmitted: (_) {
           vm.loadSearchedContentListByPaging();
         },
         resetSearchValue: vm.onCloseBtnTapped,
-        showRoundCloseBtn: vm.showCloseBtn1,
+        showRoundCloseBtn: vm.showContentSbCloseBtn,
       );
 
   // 검색 결과 리스트
@@ -56,7 +56,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
               posterImgUrl: searchedItem.posterImgUrl,
               releaseDate: searchedItem.releaseDate,
               contentType: vm.selectedContentType,
-              isSelected: vm.selectedContentId.value == item.contentId,
+              isSelected: vm.selectedContent?.id == item.contentId,
             ),
           );
         },
@@ -65,10 +65,10 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
   // 하단 고정 버튼
   Widget _buildBottomFixedStepBtn() => Obx(
         () => AnimatedOpacity(
-          opacity: vm.show1StepFloatingBtn.value ? 1 : 0,
+          opacity: vm.isContentSelected.value ? 1 : 0,
           duration: const Duration(milliseconds: 500),
           child: Visibility(
-            visible: vm.show1StepFloatingBtn.value ? true : false,
+            visible: vm.isContentSelected.value ? true : false,
             child: Stack(
               children: [
                 Positioned(

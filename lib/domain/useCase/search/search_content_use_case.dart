@@ -1,23 +1,21 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-
-class PagingHandlerUseCase {
-  PagingHandlerUseCase(this._repository);
+class SearchContentUseCase  {
+  SearchContentUseCase(this._repository);
 
   final TmdbRepository _repository;
   final TextEditingController textEditingController = TextEditingController();
   final PagingController<int, SearchedContent> pagingController =
       PagingController(firstPageKey: 1, invisibleItemsThreshold: 1);
   RxBool showRoundCloseBtn = false.obs;
+
   String get searchedKeyword => textEditingController.value.text;
   final focusNode = FocusNode();
-
 
   // 검색 결과 paging(request)동작 시행 여부를 판별하는 메소드
   /// 특정 조건(1,2,3,4)에서는 'false' 값을 리턴하여 paging발동을 막음
   bool get isPagingAllowed {
-
     // 1. 입력된 검색어가 없다면 검색 X
     if (searchedKeyword.isEmpty || searchedKeyword == '') {
       return false;
@@ -34,7 +32,8 @@ class PagingHandlerUseCase {
     }
 
     // 4. IOS space (공백) 연타시 '.'이 입력되는 현상이 있따면 검색 X
-    if (searchedKeyword.getLastCharacter == '' && searchedKeyword.contains(' ')) {
+    if (searchedKeyword.getLastCharacter == '' &&
+        searchedKeyword.contains(' ')) {
       return false;
     }
 
@@ -61,22 +60,24 @@ class PagingHandlerUseCase {
 
   /// 검색된 컨텐츠 리스트 호출
   /// paging 로직 적용
-  Future<void> loadSearchedContentList(ContentType contentType, {required bool checkContentRegistration}) async {
+  Future<void> loadSearchedContentList(ContentType contentType,
+      {required bool checkContentRegistration}) async {
     Result<List<SearchedContent>> responseResult;
 
-    if(contentType.isTv) {
-      responseResult = await _repository.loadSearchedTvContentList(searchedKeyword);
+    if (contentType.isTv) {
+      responseResult =
+          await _repository.loadSearchedTvContentList(searchedKeyword);
     } else {
-      responseResult = await _repository.loadSearchedMovieContentList(searchedKeyword);
+      responseResult =
+          await _repository.loadSearchedMovieContentList(searchedKeyword);
     }
 
     responseResult.fold(
       onSuccess: (data) {
         // 등록된 컨텐츠인지 판별
-        if(checkContentRegistration) {
+        if (checkContentRegistration) {
           for (var content in data) {
-            content.checkIsContentRegistered(
-                contentType: contentType);
+            content.checkIsContentRegistered(contentType: contentType);
           }
         }
 
@@ -104,6 +105,4 @@ class PagingHandlerUseCase {
     textEditingController.text = '';
     showRoundCloseBtn(false);
   }
-
-
 }

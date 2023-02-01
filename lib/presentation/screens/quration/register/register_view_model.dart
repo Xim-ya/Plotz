@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/domain/model/content/content.dart';
 import 'package:uppercut_fantube/domain/useCase/content/register/validate_video_url_input_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
+
+
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
@@ -10,7 +13,7 @@ part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 �
 part 'controllerResource/confirm_quration_view_model.part.dart'; // 등록 컨텐츠 확인
 
 class RegisterViewModel extends BaseViewModel {
-  RegisterViewModel(this._pagingHandler, this.validateVideoUrlUseCase,
+  RegisterViewModel(this._searchUseCase, this.validateVideoUrlUseCase,
       {required contentType})
       : selectedContentType = contentType;
 
@@ -21,17 +24,10 @@ class RegisterViewModel extends BaseViewModel {
   // 등록 컨텐츠 진행 단계
   final RxList<bool> selectedSteps = <bool>[true, false, false].obs;
 
-  // 검색 api call 시간 딜레이
-  Timer? _debounce;
-
-  // 선택된 컨텐츠의 id
-  RxInt selectedContentId = 0.obs;
 
   // 현재 pageView Index
   int get currentPageViewIndex => pageViewController.page?.toInt() ?? 0;
 
-  // 검색어
-  String get searchedKeyword => textEditingController.text;
 
   // 등록 진행중 컨텐츠 데이터
   Content? qurationContent;
@@ -40,7 +36,8 @@ class RegisterViewModel extends BaseViewModel {
   late PageController pageViewController;
 
   /* UseCases */
-  final PagingHandlerUseCase _pagingHandler;
+  final SearchPagedContentUseCase _searchUseCase;
+  // final SearchContentUseCase _pagingHandler;
   final ValidateVideoUrlUseCase validateVideoUrlUseCase;
 
   /* Intents */

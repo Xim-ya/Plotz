@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:uppercut_fantube/domain/useCase/search/search_paging_content_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /// TODO: PAGING 고도화 로직 필요
@@ -25,7 +26,7 @@ class SearchViewModel extends BaseViewModel {
 
 
   /* UseCases */
-  final PagingHandlerUseCase _pagingHandler;
+  final SearchPagingContentUseCase _pagingHandler;
 
   /* Intents */
   /// 검색된 컨텐츠 클릭 되었을 때
