@@ -13,6 +13,16 @@ extension FindContentViewModel on RegisterViewModel {
     loading(false);
   }
 
+  //  검색 바 'x' 버튼 노출 여부 로직
+  void toggleSearchBarClosedBtn() {
+    if (searchedKeyword.isNotEmpty &&
+        _pagingHandler.showRoundCloseBtn.isFalse) {
+      _pagingHandler.showRoundCloseBtn(true);
+    }
+    if (searchedKeyword.isEmpty && _pagingHandler.showRoundCloseBtn.isTrue) {
+      _pagingHandler.showRoundCloseBtn(false);
+    }
+  }
 
   // 검색어가 입력되었을 때
   void onSearchChanged(String searchedKeyword) {
@@ -31,6 +41,12 @@ extension FindContentViewModel on RegisterViewModel {
   void onSearchedContentTapped(int contentId) {
     selectedContentId.value = contentId;
   }
+
+  void onCloseBtnTapped() {
+    _pagingHandler.onCloseBtnTapped();
+  }
+
+  RxBool get showCloseBtn1 => _pagingHandler.showRoundCloseBtn;
 
   // 하단 고정 버튼 활성화 여부
   RxBool get show1StepFloatingBtn => (selectedContentId.value != 0).obs;

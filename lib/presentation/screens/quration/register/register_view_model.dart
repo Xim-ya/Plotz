@@ -1,13 +1,14 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
+import 'package:uppercut_fantube/domain/useCase/content/register/validate_video_url_input_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
 part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 링크 등록
 
 class RegisterViewModel extends BaseViewModel {
-  RegisterViewModel(this._pagingHandler, {required contentType})
+  RegisterViewModel(this._pagingHandler, this.validateVideoUrlUseCase,
+      {required contentType})
       : selectedContentType = contentType;
 
   /* Variables */
@@ -16,9 +17,6 @@ class RegisterViewModel extends BaseViewModel {
 
   // 등록 컨텐츠 진행 단계
   final RxList<bool> selectedSteps = <bool>[true, false, false].obs;
-
-  // 검색 컨테이너 'x' 버튼 노출여부
-  RxBool showRoundCloseBtn = false.obs;
 
   // 검색 api call 시간 딜레이
   Timer? _debounce;
@@ -29,11 +27,10 @@ class RegisterViewModel extends BaseViewModel {
   // 현재 pageView Index
   int get currentPageViewIndex => pageViewController.page?.toInt() ?? 0;
 
-  // 입력된 비디오 링크 유효 여부
-  Rx<ValidationState> isEnteredVideoUrlValid = ValidationState.initState.obs;
+
 
   // 검색어
-  String get searchedKeyword  => textEditingController.text;
+  String get searchedKeyword => textEditingController.text;
 
   /* Controllers */
   late PageController pageViewController;
@@ -47,6 +44,7 @@ class RegisterViewModel extends BaseViewModel {
 
   /* UseCases */
   final PagingHandlerUseCase _pagingHandler;
+  final ValidateVideoUrlUseCase validateVideoUrlUseCase;
 
   /* Intents */
 
@@ -71,8 +69,9 @@ class RegisterViewModel extends BaseViewModel {
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
         );
+        // isEnteredVideoUrlValid(ValidationState.initState);
         textEditingController.text = '';
-        show2StepFloatingBtn(false);
+        // show2StepFloatingBtn(false);
         break;
     }
   }
@@ -87,7 +86,6 @@ class RegisterViewModel extends BaseViewModel {
         Get.back();
         break;
       case 1:
-        isEnteredVideoUrlValid(ValidationState.initState);
         pageViewController.animateToPage(
           0,
           duration: const Duration(milliseconds: 300),
@@ -104,30 +102,6 @@ class RegisterViewModel extends BaseViewModel {
     }
   }
 
-  //  검색 바 'x' 버튼 노출 여부 로직
-  void toggleSearchBarClosedBtn() {
-    if (searchedKeyword.isNotEmpty && showRoundCloseBtn.isFalse) {
-      showRoundCloseBtn(true);
-    }
-    if (searchedKeyword.isEmpty && showRoundCloseBtn.isTrue) {
-      showRoundCloseBtn(false);
-    }
-  }
-
-  // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때
-  void resetSearchValue() {
-    textEditingController.text = '';
-    showRoundCloseBtn(false);
-
-    switch (currentPageViewIndex) {
-      case 0:
-        selectedContentId(0);
-        break;
-      case 1:
-        isEnteredVideoUrlValid(ValidationState.initState);
-        break;
-    }
-  }
 
 
   @override

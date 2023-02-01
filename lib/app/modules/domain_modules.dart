@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/useCase/content/register/validate_video_url_input_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -10,8 +11,6 @@ abstract class DomainModules {
         fenix: true);
     Get.lazyPut(() => ContentService(), fenix: true);
     Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => PagingHandlerUseCase(Get.find()), fenix: true);
-
 
     // TMDB
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);
@@ -26,6 +25,8 @@ abstract class DomainModules {
     // Explore
     Get.lazyPut(() => TestUseCase(), fenix: true);
 
-
+    // Register
+    Get.lazyPut(() => PagingHandlerUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => ValidateVideoUrlUseCase(), fenix: true);
   }
 }

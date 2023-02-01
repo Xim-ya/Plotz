@@ -8,6 +8,7 @@ class RegisterBinding extends Bindings {
       () => RegisterViewModel(
         contentType: Get.arguments,
         Get.find(),
+        Get.find(),
       ),
     );
   }

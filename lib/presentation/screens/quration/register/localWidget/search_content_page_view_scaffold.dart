@@ -1,7 +1,7 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
-class FindContentViewScaffold extends StatelessWidget {
-  const FindContentViewScaffold(
+class SearchContentPageViewScaffold extends StatelessWidget {
+  const SearchContentPageViewScaffold(
       {Key? key,
       required this.header,
       required this.searchBar,

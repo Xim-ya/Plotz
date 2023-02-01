@@ -9,8 +9,7 @@ class PagingHandlerUseCase {
   final TextEditingController textEditingController = TextEditingController();
   final PagingController<int, SearchedContent> pagingController =
       PagingController(firstPageKey: 1, invisibleItemsThreshold: 1);
-
-
+  RxBool showRoundCloseBtn = false.obs;
   String get searchedKeyword => textEditingController.value.text;
 
 
@@ -98,4 +97,12 @@ class PagingHandlerUseCase {
       },
     );
   }
+
+  // 검색창 'x' 버튼이 클릭 되었을 때
+  void onCloseBtnTapped() {
+    textEditingController.text = '';
+    showRoundCloseBtn(false);
+  }
+
+
 }

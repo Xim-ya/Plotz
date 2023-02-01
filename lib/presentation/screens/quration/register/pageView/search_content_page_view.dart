@@ -1,6 +1,6 @@
 import 'package:uppercut_fantube/presentation/common/button/linear_background_bottom_floating_btn.dart';
 import 'package:uppercut_fantube/presentation/common/listView/paging_result_list_view.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/find_content_view_scaffold.dart';
+import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/search_content_page_view_scaffold.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/searched_content_item_btn.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -10,7 +10,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
 
   @override
   Widget buildView(BuildContext context) {
-    return FindContentViewScaffold(
+    return SearchContentPageViewScaffold(
       header: _buildHeader(),
       searchBar: _buildSearchBar(),
       searchedListView: _buildSearchedListView(),
@@ -35,8 +35,8 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
         onFieldSubmitted: (_) {
           vm.loadSearchedContentListByPaging();
         },
-        resetSearchValue: vm.resetSearchValue,
-        showRoundCloseBtn: vm.showRoundCloseBtn,
+        resetSearchValue: vm.onCloseBtnTapped,
+        showRoundCloseBtn: vm.showCloseBtn1,
       );
 
   // 검색 결과 리스트
