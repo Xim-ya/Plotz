@@ -107,10 +107,12 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
                 controller: vm.tabController,
                 children: [
                   SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
                     padding: const EdgeInsets.only(bottom: 80),
                     child: tabViews[0],
                   ),
                   SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
                     padding: const EdgeInsets.only(bottom: 80),
                     child: tabViews[1],
                   ),

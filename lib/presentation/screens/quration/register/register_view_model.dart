@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/domain/model/content/content.dart';
 import 'package:uppercut_fantube/domain/useCase/content/register/validate_video_url_input_use_case.dart';
@@ -18,7 +19,7 @@ class RegisterViewModel extends BaseViewModel {
   final ContentType selectedContentType;
 
   // 등록 컨텐츠 진행 단계
-  final RxList<bool> selectedSteps = <bool>[false, false, false].obs;
+  final RxList<bool> selectedSteps = <bool>[true, false, false].obs;
 
   // 검색 api call 시간 딜레이
   Timer? _debounce;
@@ -44,17 +45,28 @@ class RegisterViewModel extends BaseViewModel {
 
   /* Intents */
 
+  // PageIndicator 토글 로직
+  void togglePageIndicatorIndex(int pageIndex) {
+    for (int i = 0; i < selectedSteps.length; i++) {
+      if (i == pageIndex) {
+        selectedSteps[i] = true;
+      } else {
+        selectedSteps[i] = false;
+      }
+    }
+  }
+
   /// 하단 고정 버튼이 클릭 시
   /// pageView 현재 인덱스에 따라 동작을 다르게 함.
   Future<void> onFloatingStepBtnTapped() async {
     switch (currentPageViewIndex) {
       case 0:
-        // 페이지 이동
         await pageViewController.animateToPage(
           1,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
         );
+        togglePageIndicatorIndex(1);
         break;
       case 1:
         await setVideoInfo();
@@ -63,7 +75,11 @@ class RegisterViewModel extends BaseViewModel {
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
         );
+        togglePageIndicatorIndex(2);
         break;
+      case 2:
+        Get.back();
+        log('컨텐츠 등록 완료 : ${qurationContent!.detail!.title}');
     }
   }
 
@@ -75,6 +91,7 @@ class RegisterViewModel extends BaseViewModel {
         break;
       case 1:
         contentFormFocusNode.unfocus();
+        togglePageIndicatorIndex(0);
         pageViewController.animateToPage(
           0,
           duration: const Duration(milliseconds: 300),
@@ -83,6 +100,7 @@ class RegisterViewModel extends BaseViewModel {
         break;
       case 2:
         videoFormFocusNode.unfocus();
+        togglePageIndicatorIndex(1);
         pageViewController.animateToPage(
           1,
           duration: const Duration(milliseconds: 300),

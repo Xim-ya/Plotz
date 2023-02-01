@@ -40,16 +40,18 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
               ),
             ),
             // 진행 단계 Indicator
-            ToggleButtons(
-              constraints: BoxConstraints.loose(Size.infinite),
-              renderBorder: false,
-              isSelected: vm.selectedSteps,
-              children: [
-                _circleBtnIndicator('1', vm.selectedSteps[0]),
-                _circleBtnIndicator('2', vm.selectedSteps[1]),
-                _circleBtnIndicator('3', vm.selectedSteps[2]),
-              ],
-            )
+            Obx(
+              () => ToggleButtons(
+                constraints: BoxConstraints.loose(Size.infinite),
+                renderBorder: false,
+                isSelected: vm.selectedSteps,
+                children: [
+                  _circleBtnIndicator('1', vm.selectedSteps[0]),
+                  _circleBtnIndicator('2', vm.selectedSteps[1]),
+                  _circleBtnIndicator('3', vm.selectedSteps[2]),
+                ],
+              ),
+            ),
           ],
         ),
       ),
