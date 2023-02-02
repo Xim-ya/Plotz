@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/domain/useCase/content/register/validate_video_url_input_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/video/validate_video_url_input_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_impl.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';

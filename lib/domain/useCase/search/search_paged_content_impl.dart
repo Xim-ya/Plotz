@@ -1,22 +1,18 @@
-import 'dart:async';
 import 'dart:developer';
+import 'package:uppercut_fantube/domain/mixin/search_handler_mixin.dart';
 import 'package:uppercut_fantube/domain/model/content/content.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-class SearchPagedContentImpl extends SearchPagedContentUseCase {
+class SearchPagedContentImpl
+    with SearchHandlerMixin
+    implements SearchPagedContentUseCase {
   SearchPagedContentImpl(this._repository);
 
   final TmdbRepository _repository;
-  final TextEditingController _textEditingController = TextEditingController();
   final PagingController<int, SearchedContent> _pagingController =
       PagingController(firstPageKey: 1, invisibleItemsThreshold: 1);
   final Rxn<Content> _selectedContent = Rxn();
-  final RxBool _showRoundCloseBtn = false.obs;
-  final FocusNode _focusNode = FocusNode();
-
-  @override
-  TextEditingController get textEditingController => _textEditingController;
 
   @override
   PagingController<int, SearchedContent> get pagingController =>
@@ -25,37 +21,29 @@ class SearchPagedContentImpl extends SearchPagedContentUseCase {
   @override
   Content? get selectedContent => _selectedContent.value;
 
-  @override
-  RxBool get showRoundCloseBtn => _showRoundCloseBtn;
-
-  @override
-  FocusNode get focusNode => _focusNode;
-
-  @override
-  String get searchedKeyword => _textEditingController.value.text;
   Timer? _debounce;
 
   // 검색 결과 paging(request)동작 시행 여부를 판별하는 메소드
   /// 특정 조건(1,2,3,4)에서는 'false' 값을 리턴하여 paging발동을 막음
   bool get isPagingAllowed {
     // 1. 입력된 검색어가 없다면 검색 X
-    if (searchedKeyword.isEmpty || searchedKeyword == '') {
+    if (term.isEmpty || term == '') {
       return false;
     }
 
     // 2. 검색어 마지막 글자가 ' ' (공백)이라면 검색 X
-    if (searchedKeyword.isNotEmpty && searchedKeyword.getLastCharacter == ' ') {
+    if (term.isNotEmpty && term.getLastCharacter == ' ') {
       return false;
     }
 
     // 3. 검색어에 검색 불가능한 특수문자가 포함되어 있다면 검색 X
-    if (invalidSearchCharacter.contains(searchedKeyword)) {
+    if (invalidSearchCharacter.contains(term)) {
       return false;
     }
 
     // 4. IOS space (공백) 연타시 '.'이 입력되는 현상이 있따면 검색 X
-    if (searchedKeyword.getLastCharacter == '' &&
-        searchedKeyword.contains(' ')) {
+    if (term.getLastCharacter == '' &&
+        term.contains(' ')) {
       return false;
     }
 
@@ -80,10 +68,11 @@ class SearchPagedContentImpl extends SearchPagedContentUseCase {
     }
   }
 
+
+
   // 검색어가 입력되었을 때
   @override
   Future<void> onSearchTermEntered() async {
-    toggleCloseBtn();
     if (isPagingAllowed) {
       // Debounce delay 설정
       if (_debounce?.isActive ?? false) _debounce!.cancel();
@@ -108,17 +97,7 @@ class SearchPagedContentImpl extends SearchPagedContentUseCase {
     );
   }
 
-  // 검색창 'x' 버튼 토글 로직
-  void toggleCloseBtn() {
-    final String term = _textEditingController.text;
-    if (showRoundCloseBtn.isFalse && term.isNotEmpty) {
-      showRoundCloseBtn(true);
-    }
 
-    if (showRoundCloseBtn.isTrue && term.isEmpty) {
-      showRoundCloseBtn(false);
-    }
-  }
 
   /// 검색된 컨텐츠 리스트 호출
   /// paging 로직 적용
@@ -129,10 +108,10 @@ class SearchPagedContentImpl extends SearchPagedContentUseCase {
 
     if (contentType.isTv) {
       responseResult =
-          await _repository.loadSearchedTvContentList(searchedKeyword);
+          await _repository.loadSearchedTvContentList(term);
     } else {
       responseResult =
-          await _repository.loadSearchedMovieContentList(searchedKeyword);
+          await _repository.loadSearchedMovieContentList(term);
     }
 
     responseResult.fold(
@@ -163,10 +142,14 @@ class SearchPagedContentImpl extends SearchPagedContentUseCase {
     );
   }
 
-  // 검색창 'x' 버튼이 클릭 되었을 때
-  @override
-  void onCloseBtnTapped() {
-    _textEditingController.text = '';
-    _showRoundCloseBtn(false);
-  }
+
+
+
+
+// // 검색창 'x' 버튼이 클릭 되었을 때
+// @override
+// void onCloseBtnTapped() {
+//   textFormEditingController.text = '';
+//   showRoundCloseButton(false);
+// }
 }

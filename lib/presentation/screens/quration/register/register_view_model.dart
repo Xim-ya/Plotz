@@ -1,12 +1,9 @@
-import 'dart:async';
 import 'dart:developer';
-import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/domain/model/content/content.dart';
-import 'package:uppercut_fantube/domain/useCase/content/register/validate_video_url_input_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/video/validate_video_url_input_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
-
-
 import 'package:uppercut_fantube/utilities/index.dart';
+
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
 part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 링크 등록
@@ -37,11 +34,9 @@ class RegisterViewModel extends BaseViewModel {
 
   /* UseCases */
   final SearchPagedContentUseCase _searchUseCase;
-  // final SearchContentUseCase _pagingHandler;
   final ValidateVideoUrlUseCase validateVideoUrlUseCase;
 
   /* Intents */
-
   // PageIndicator 토글 로직
   void togglePageIndicatorIndex(int pageIndex) {
     for (int i = 0; i < selectedSteps.length; i++) {
@@ -81,6 +76,7 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   // 뒤로가기 버튼 클릭 시
+  /// pageView 현재 인덱스에 따라 동작을 다르게 함.
   void onBackBtnTapped() {
     switch (currentPageViewIndex) {
       case 0:
@@ -116,5 +112,6 @@ class RegisterViewModel extends BaseViewModel {
     });
 
     pageViewController = PageController();
+    
   }
 }

@@ -10,11 +10,12 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return RegisterVideoLinkPageViewScaffold(
-        onBackgroundLayerTapped: vm.videoFormFocusNode.unfocus,
-        leadingTitle: _buildLeadingTitle(),
-        searchBar: _buildSearchBar(),
-        pasteIntroductionView: _buildPateIntroductinoView(),
-        bottomFixedStepBtn: _buildBottomFixedStepBtn());
+      onBackgroundLayerTapped: vm.videoFormFocusNode.unfocus,
+      leadingTitle: _buildLeadingTitle(),
+      searchBar: _buildSearchBar(),
+      pasteIntroductionView: _buildPateIntroductinoView(),
+      bottomFixedStepBtn: _buildBottomFixedStepBtn(),
+    );
   }
 
   // 리딩 문구

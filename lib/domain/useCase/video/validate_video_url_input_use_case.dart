@@ -1,7 +1,3 @@
-import 'dart:async';
-
-import 'package:flutter/services.dart';
-import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.01
@@ -88,15 +84,4 @@ class ValidateVideoUrlUseCase {
     showRoundCloseBtn(false);
     videoUrlValidState.value = ValidationState.initState;
   }
-}
-
-class _YoutubeVideoInfo {
-  final String videoId;
-  final String channelName;
-  final String channelImg;
-
-  _YoutubeVideoInfo(
-      {required this.videoId,
-      required this.channelName,
-      required this.channelImg});
 }
