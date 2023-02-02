@@ -57,7 +57,6 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart'
 // Domain
 export 'package:uppercut_fantube/domain/useCase/explore/load_explore_content_by_slider_index_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
-export 'package:uppercut_fantube/domain/useCase/search/search_content_use_case.dart';
 export 'package:uppercut_fantube/domain/model/content/explore/explore_content_detail_info.dart';
 export 'package:uppercut_fantube/domain/model/content/explore/explore_content_youtube_info.dart';
 export 'package:uppercut_fantube/domain/model/content/explore_content_id_info.dart';

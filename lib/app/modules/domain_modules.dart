@@ -2,7 +2,6 @@ import 'package:uppercut_fantube/domain/useCase/content/register/validate_video_
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_impl.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/search/search_paging_content_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class DomainModules {
@@ -29,11 +28,9 @@ abstract class DomainModules {
     Get.lazyPut(() => TestUseCase(), fenix: true);
 
     // Register
-    Get.lazyPut(() => SearchContentUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => SearchPagingContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => ValidateVideoUrlUseCase(), fenix: true);
 
-    // Test
+    // Search
     Get.lazyPut<SearchPagedContentUseCase>(() => SearchPagedContentImpl(Get.find()),
         fenix: true);
   }

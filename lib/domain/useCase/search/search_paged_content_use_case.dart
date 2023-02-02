@@ -8,6 +8,8 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *     반환 받는 페이징 데이터는 [SearchedContent] 타입으로 전제로 함
  *  2) 검색 Api 호출
  *  3) 검색바 'x' 닫기 버튼 로직
+ *  4) 가상 키보드 인터렉션로직 (focusNode)
+ *  5) 검색된 컨텐츠 선택 토글 로직
  * */
 
 abstract class SearchPagedContentUseCase {

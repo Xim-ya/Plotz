@@ -70,7 +70,9 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
             SearchBar(
               focusNode: vm.focusNode,
               textEditingController: vm.textEditingController,
-              onChanged: vm.onSearchChanged,
+              onChanged: (_) {
+                vm.onSearchChanged();
+              },
               onFieldSubmitted: (value) {
                 vm.loadSearchedContentListByPaging();
               },

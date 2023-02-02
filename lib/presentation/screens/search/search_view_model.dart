@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:uppercut_fantube/domain/useCase/search/search_paging_content_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /// TODO: PAGING 고도화 로직 필요
@@ -9,24 +9,10 @@ import 'package:uppercut_fantube/utilities/index.dart';
 class SearchViewModel extends BaseViewModel {
   SearchViewModel(this._pagingHandler);
 
-  /* Variables */
-  RxBool showRoundCloseBtn = false.obs; // 검색 앱바 'x' 버튼 노출여부
-  Timer? _debounce; // 검색 api call 시간 딜레이
-
-  /* Getters */
-  TextEditingController get textEditingController =>
-      _pagingHandler.textEditingController;
-  PagingController<int, SearchedContent> get pagingController =>
-      _pagingHandler.pagingController;
-  String get searchedKeyword => _pagingHandler.searchedKeyword;
-
-
-  /* Controllers */
-  late FocusNode focusNode;
-
-
   /* UseCases */
-  final SearchPagingContentUseCase _pagingHandler;
+  // final SearchPagingContentUseCase _pagingHandler;
+  final SearchPagedContentUseCase _pagingHandler;
+
 
   /* Intents */
   /// 검색된 컨텐츠 클릭 되었을 때
@@ -73,43 +59,23 @@ class SearchViewModel extends BaseViewModel {
     showRoundCloseBtn(false);
   }
 
-
   // 검색어가 입력되었을 때
-  void onSearchChanged(String searchedKeyword) {
-    // 'x' 버튼 노출 여부 로직
-    if(searchedKeyword.isNotEmpty && showRoundCloseBtn.isFalse) {
-      showRoundCloseBtn(true);
-    }
-    if(searchedKeyword.isEmpty && showRoundCloseBtn.isTrue) {
-      showRoundCloseBtn(false);
-    }
-
-    if (_pagingHandler.isPagingAllowed) {
-      // Debounce delay 설정
-      if (_debounce?.isActive ?? false) _debounce!.cancel();
-      _debounce =
-          Timer(const Duration(milliseconds: 300), pagingController.refresh);
-    }
+  void onSearchChanged() {
+    _pagingHandler.onSearchTermEntered();
   }
-
 
   // 컨텐츠 리스트 호출 - (pagination logic 적용)
   Future<void> loadSearchedContentListByPaging() async {
-    if (loading.isTrue) {
-      return;
-    }
-    loading(true);
-    await _pagingHandler.loadSearchedContentList(SearchScaffoldController.selectedTabType, checkContentRegistration: true);
-    loading(false);
+    await _pagingHandler.loadSearchedContentList(
+      selectedContentType,
+      checkContentRegistration: true,
+    );
   }
-
 
   // Paging Controller 리셋
   void refreshPagingController() {
     pagingController.refresh();
   }
-
-
 
   @override
   void onInit() {
@@ -119,14 +85,25 @@ class SearchViewModel extends BaseViewModel {
       loadSearchedContentListByPaging();
     });
 
-    focusNode = FocusNode();
-
     // 등록된 Movie & Tv 컨텐츠 정보 호출
     ContentService.to.fetchAllOfRegisteredTvContent();
   }
 
   /* Getters */
-  // Paging Controller 리셋, 탭이 onChanged 되었을 때 발동.
   static SearchViewModel get to => Get.find();
-}
 
+  TextEditingController get textEditingController =>
+      _pagingHandler.textEditingController;
+
+  PagingController<int, SearchedContent> get pagingController =>
+      _pagingHandler.pagingController;
+
+  String get searchedKeyword => _pagingHandler.searchedKeyword;
+
+  FocusNode get focusNode => _pagingHandler.focusNode;
+
+  ContentType get selectedContentType =>
+      SearchScaffoldController.selectedTabType;
+
+  RxBool get showRoundCloseBtn => _pagingHandler.showRoundCloseBtn;
+}
