@@ -25,7 +25,6 @@ class SearchPagedContentImpl
   @override
   bool get isPagingAllowed => getPagingAvailableState(term);
 
-  /* Intents */
   // 검색어가 입력되었을 때
   @override
   Future<void> onSearchTermEntered() async {

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:uppercut_fantube/domain/model/content/content.dart';
 import 'package:uppercut_fantube/domain/useCase/video/validate_video_url_input_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
+import 'package:uppercut_fantube/main.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 
@@ -17,6 +18,8 @@ class RegisterViewModel extends BaseViewModel {
   /* Variables */
   // 선택된 컨텐츠 타입
   final ContentType selectedContentType;
+
+
 
   // 등록 컨텐츠 진행 단계
   final RxList<bool> selectedSteps = <bool>[true, false, false].obs;
@@ -112,6 +115,6 @@ class RegisterViewModel extends BaseViewModel {
     });
 
     pageViewController = PageController();
-    
+
   }
 }

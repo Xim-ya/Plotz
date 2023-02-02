@@ -98,7 +98,7 @@ class SearchViewModel extends BaseViewModel {
   PagingController<int, SearchedContent> get pagingController =>
       _pagingHandler.pagingController;
 
-  String get searchedKeyword => _pagingHandler.term;
+  String get searchedKeyword => _pagingHandler.searchedKeyword;
 
   FocusNode get focusNode => _pagingHandler.focusNode;
 

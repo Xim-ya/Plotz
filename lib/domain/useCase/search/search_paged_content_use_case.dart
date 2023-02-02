@@ -1,5 +1,4 @@
 import 'package:uppercut_fantube/domain/model/content/content.dart';
-
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.01
@@ -14,14 +13,18 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 
-
-abstract class SearchPagedContentUseCase   {
+abstract class SearchPagedContentUseCase {
   TextEditingController get textEditingController;
+
   PagingController<int, SearchedContent> get pagingController;
+
   Content? get selectedContent;
+
   RxBool get showRoundCloseBtn;
+
   FocusNode get focusNode;
-  String get term;
+
+  String get searchedKeyword;
 
   Future<void> loadSearchedContentList(ContentType contentType,
       {required bool checkContentRegistration});
@@ -31,7 +34,5 @@ abstract class SearchPagedContentUseCase   {
   void onSearchedContentTapped(
       {required SearchedContent content, required ContentType contentType});
 
-  @override
   void onCloseBtnTapped();
-
 }
