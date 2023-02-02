@@ -57,6 +57,11 @@ export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository.dart';
 export 'package:uppercut_fantube/data/repository/tmdb/tmdb_repository_impl.dart';
 
 // Domain
+export 'package:uppercut_fantube/domain/useCase/search/search_validate_url_use_case.dart';
+export 'package:uppercut_fantube/domain/mixin/paging_handler_mixin.dart';
+export 'package:uppercut_fantube/domain/mixin/search_handler_mixin.dart';
+export 'package:uppercut_fantube/domain/model/content/content.dart';
+export 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
 export 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 export 'package:uppercut_fantube/domain/useCase/explore/load_explore_content_by_slider_index_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';

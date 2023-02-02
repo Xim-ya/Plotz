@@ -15,18 +15,4 @@ extension RegisterVideoLinkViewModel on RegisterViewModel {
   ValidationState get videoUrlValidState =>
       validateVideoUrlUseCase.isVideoValid;
 
-  // 비디오 정보 등록
-  Future<void> setVideoInfo() async {
-    final videoId = validateVideoUrlUseCase.selectedVideoId;
-    final channelId = validateVideoUrlUseCase.selectedChannelId;
-    final response = await YoutubeMetaData.yt.channels.get(channelId);
-
-    qurationContent?.videoId = videoId;
-
-    qurationContent?.youtubeVideo = YoutubeVideo(
-      channelName: response.title,
-      channelImg: response.logoUrl,
-      subscriberCount: response.subscribersCount,
-    );
-  }
 }

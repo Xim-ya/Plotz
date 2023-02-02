@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /// TODO: PAGING 고도화 로직 필요
@@ -36,7 +34,7 @@ class SearchViewModel extends BaseViewModel {
         arguments: ContentArgumentFormat(
           contentId: content.contentId,
           contentType: contentType,
-          posterImgUrl: content.posterImgUrl!,
+          posterImgUrl: content.posterImgUrl,
         ),
       );
     } else {

@@ -33,24 +33,28 @@ class ConfirmQurationScreen extends BaseView<RegisterViewModel> {
                   child: Stack(
                     children: <Widget>[
                       // 컨텐츠 포스터 이미지
-                      LinearLayeredPosterImg(
-                        borderRadius: 12,
-                        aspectRatio: 273 / 412,
-                        imgUrl: vm.posterImgUrl,
-                        linearColor: Colors.black,
-                        linearStep: const [0.0, 0.36, 1.0],
+                      Obx(
+                        () => LinearLayeredPosterImg(
+                          borderRadius: 12,
+                          aspectRatio: 273 / 412,
+                          imgUrl: vm.posterImgUrl,
+                          linearColor: Colors.black,
+                          linearStep: const [0.0, 0.36, 1.0],
+                        ),
                       ),
 
                       // 채널 정보
-                      Positioned(
-                        left: 12,
-                        bottom: 14,
-                        child: ChannelInfoView(
-                          imgSize: 40,
-                          imgUrl: vm.channelImgUrl,
-                          name: vm.channelName,
-                          nameFontSize: 16,
-                          subscriberCount: vm.subscriberCount,
+                      Obx(
+                        () => Positioned(
+                          left: 12,
+                          bottom: 14,
+                          child: ChannelInfoView(
+                            imgSize: 40,
+                            imgUrl: vm.channelImgUrl,
+                            name: vm.channelName,
+                            nameFontSize: 16,
+                            subscriberCount: vm.subscriberCount,
+                          ),
                         ),
                       ),
                     ],
@@ -63,17 +67,23 @@ class ConfirmQurationScreen extends BaseView<RegisterViewModel> {
                   width: double.infinity,
                   child: Column(
                     children: <Widget>[
-                      Text(
-                        vm.contentTitle ?? '',
-                        style: AppTextStyle.title1,
-                        textAlign: TextAlign.center,
+                      Obx(
+                        () => Text(
+                          vm.contentTitle ?? '',
+                          style: AppTextStyle.title1,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       AppSpace.size2,
-                      Text(
-                        Formatter.dateToyyyyMMdd(vm.releaseDate ?? ''),
-                        style: AppTextStyle.body2
-                            .copyWith(color: AppColor.lightGrey),
-                      ),
+                      Obx(() {
+                        if (vm.releaseDate.hasData) {
+                          return Text(Formatter.dateToyyyyMMdd(vm.releaseDate!),
+                              style: AppTextStyle.body2
+                                  .copyWith(color: AppColor.lightGrey));
+                        } else {
+                          return const SizedBox();
+                        }
+                      }),
                     ],
                   ),
                 ),

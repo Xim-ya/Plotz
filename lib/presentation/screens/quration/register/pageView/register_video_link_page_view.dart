@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
 import 'package:uppercut_fantube/presentation/common/button/linear_background_bottom_floating_btn.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/register_video_link_page_view_scaffold.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/url_validation_indicator.dart';
@@ -45,8 +44,8 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
                   focusNode: vm.videoFormFocusNode,
                   showPrefixIcon: false,
                   textEditingController: vm.videoFormController,
-                  onChanged: (input) {
-                    vm.validateVideoUrlUseCase.onVideoUrlFieldChanged(input);
+                  onChanged: (_) {
+                    vm.validateVideoUrlUseCase.onSearchTermEntered();
                   },
                   onFieldSubmitted: (_) {},
                   resetSearchValue: vm.validateVideoUrlUseCase.onCloseBtnTapped,

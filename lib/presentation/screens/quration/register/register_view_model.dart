@@ -1,8 +1,5 @@
+import 'dart:async';
 import 'dart:developer';
-import 'package:uppercut_fantube/domain/model/content/content.dart';
-import 'package:uppercut_fantube/domain/useCase/video/validate_video_url_input_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
-import 'package:uppercut_fantube/main.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 
@@ -20,7 +17,6 @@ class RegisterViewModel extends BaseViewModel {
   final ContentType selectedContentType;
 
 
-
   // 등록 컨텐츠 진행 단계
   final RxList<bool> selectedSteps = <bool>[true, false, false].obs;
 
@@ -30,14 +26,14 @@ class RegisterViewModel extends BaseViewModel {
 
 
   // 등록 진행중 컨텐츠 데이터
-  Content? qurationContent;
+  Rxn<Content> qurationContent = Rxn();
 
   /* Controllers */
   late PageController pageViewController;
 
   /* UseCases */
   final SearchPagedContentUseCase _searchUseCase;
-  final ValidateVideoUrlUseCase validateVideoUrlUseCase;
+  final SearchValidateUrlUseCase validateVideoUrlUseCase;
 
   /* Intents */
   // PageIndicator 토글 로직
@@ -64,17 +60,16 @@ class RegisterViewModel extends BaseViewModel {
         togglePageIndicatorIndex(1);
         break;
       case 1:
-        await setVideoInfo();
-        await pageViewController.animateToPage(
+         unawaited(setContentInfo());
+         unawaited(pageViewController.animateToPage(
           2,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
-        );
+        ));
         togglePageIndicatorIndex(2);
         break;
       case 2:
         Get.back();
-        log('컨텐츠 등록 완료 : ${qurationContent!.detail!.title}');
     }
   }
 
@@ -105,6 +100,31 @@ class RegisterViewModel extends BaseViewModel {
         break;
     }
   }
+
+
+  // 입력된 컨텐츠 정보 저장
+  Future<void> setContentInfo() async {
+    final videoId = validateVideoUrlUseCase.selectedVideoId;
+    final channelId = validateVideoUrlUseCase.selectedChannelId;
+    final response = await YoutubeMetaData.yt.channels.get(channelId);
+
+    qurationContent.value = Content(
+      id: selectedContentDetail!.id,
+      type: selectedContentDetail?.type,
+      videoId: videoId,
+      youtubeVideo: YoutubeVideo(
+        channelName: response.title,
+        channelImg: response.logoUrl,
+        subscriberCount: response.subscribersCount,
+      ),
+      detail: ContentDetail(
+        title: selectedContentDetail?.detail?.title,
+        posterImgUrl: selectedContentDetail?.detail?.posterImgUrl,
+        releaseDate: selectedContentDetail?.detail?.releaseDate,
+      ),
+    );
+  }
+
 
   @override
   void onInit() {

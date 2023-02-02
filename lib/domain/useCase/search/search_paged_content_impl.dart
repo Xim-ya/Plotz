@@ -1,8 +1,5 @@
-import 'package:uppercut_fantube/domain/mixin/paging_handler_mixin.dart';
-import 'package:uppercut_fantube/domain/mixin/search_handler_mixin.dart';
-import 'package:uppercut_fantube/domain/model/content/content.dart';
-import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+
 
 class SearchPagedContentImpl
     with SearchHandlerMixin, PagingHandlerMixin

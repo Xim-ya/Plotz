@@ -56,7 +56,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
               posterImgUrl: searchedItem.posterImgUrl,
               releaseDate: searchedItem.releaseDate,
               contentType: vm.selectedContentType,
-              isSelected: vm.selectedContent?.id == item.contentId,
+              isSelected: vm.selectedContentDetail?.id == item.contentId,
             ),
           );
         },

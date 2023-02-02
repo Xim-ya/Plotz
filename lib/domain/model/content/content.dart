@@ -8,7 +8,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class Content {
-  final int id;
+  late final int id;
   late String? videoId;
   late ContentType? type;
   late ContentDetail? detail;

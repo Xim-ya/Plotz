@@ -19,9 +19,11 @@ extension FindContentViewModel on RegisterViewModel {
         content: content, contentType: selectedContentType);
   }
 
+  // 검색 바 'X' 버튼이 클릭 되었을 때
   void onCloseBtnTapped() {
     _searchUseCase.onCloseBtnTapped();
   }
+
 
   RxBool get showContentSbCloseBtn => _searchUseCase.showRoundCloseBtn;
   RxBool get isContentSelected => (_searchUseCase.selectedContent.hasData).obs;
@@ -30,5 +32,5 @@ extension FindContentViewModel on RegisterViewModel {
   PagingController<int, SearchedContent> get pagingController =>
       _searchUseCase.pagingController;
   FocusNode get contentFormFocusNode => _searchUseCase.focusNode;
-  Content? get selectedContent => _searchUseCase.selectedContent;
+  Content? get selectedContentDetail => _searchUseCase.selectedContent;
 }

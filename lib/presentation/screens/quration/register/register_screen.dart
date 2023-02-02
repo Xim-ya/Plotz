@@ -9,7 +9,7 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
     return Container(
       color: AppColor.black,
       child: PageView(
-        // physics: NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         controller: vm.pageViewController,
         children: <Widget>[
           const SearchContentPageView(),

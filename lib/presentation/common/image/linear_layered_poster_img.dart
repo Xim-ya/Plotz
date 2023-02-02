@@ -29,7 +29,7 @@ class LinearLayeredPosterImg extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             CachedNetworkImage(
-              imageUrl: imgUrl!.prefixTmdbImgPath,
+              imageUrl: imgUrl?.prefixTmdbImgPath ?? '',
               imageBuilder: (context, imageProvider) => Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -39,7 +39,7 @@ class LinearLayeredPosterImg extends StatelessWidget {
                 ),
               ),
               placeholder: (context, url) => const SizedBox(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) => Center(child: const Icon(Icons.error)),
             ),
 
             // Linear Over Layer

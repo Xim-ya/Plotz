@@ -1,9 +1,19 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 
+/** Created By Ximya - 202.02.02
+ *  검색 페이징 담고 있는 mixin 모듈
+ *  해당 모듈은 아래의 기능과 리소스를 가지고 있음
+ *  1) PagingController 리소스 [pagingController]
+ *  2) Paging Api Call 로직 [loadSearchedContentList]
+ *  3) Paging 실행 관련 유효성 검사 로직 [getPagingAvailableState]
+ * */
+
 mixin PagingHandlerMixin {
   final PagingController<int, SearchedContent> pagingController =
       PagingController(firstPageKey: 1, invisibleItemsThreshold: 1);
+
+  /// mixin 되는 클래스로 전달 받는 변수
   String get searchedKeyword;
   TmdbRepository get repository;
   bool get isPagingAllowed;
