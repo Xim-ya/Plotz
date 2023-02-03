@@ -11,14 +11,6 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(
-            child: TextButton(
-              onPressed: () {
-                AlertWidget.animatedToast('이렇게 토스트가 나옵니다');
-              },
-              child: const Text('테스트'),
-            ),
-          ),
 
           // 설정 버튼
           Padding(

@@ -4,14 +4,12 @@ class SearchValidateUrlImpl
     with SearchHandlerMixin
     implements SearchValidateUrlUseCase {
 
-
   @override
   final Rx<ValidationState> videoUrlValidState = ValidationState.initState.obs;
   @override
   String? selectedChannelId;
   @override
   String? selectedVideoId;
-
   Timer? _debounce;
 
   @override
@@ -20,8 +18,6 @@ class SearchValidateUrlImpl
   @override
   ValidationState get isVideoValid => videoUrlValidState.value;
 
-  @override
-  RxBool showRoundCloseBtn = false.obs;
 
   // 비디오 url 유효성 검사
   Future<void> checkVideoIdValidation(String? videoId) async {

@@ -23,10 +23,13 @@ class QurationScreen extends BaseScreen<QurationViewModel> {
             ),
             AppSpace.size22,
 
+
+
             // 큐레이션 컨텐츠 등록 버튼 (드라마, 영화)
             Row(
               children: [
                 StartQurationButton(
+                  imgPath: vm.randomContentImg.tvImgPath,
                   contentType: ContentType.tv,
                   onBtnTapped: () {
                     vm.routeToRegister(contentType: ContentType.tv);
@@ -34,6 +37,7 @@ class QurationScreen extends BaseScreen<QurationViewModel> {
                 ),
                 AppSpace.size16,
                 StartQurationButton(
+                  imgPath: vm.randomContentImg.movieImgPath,
                   contentType: ContentType.movie,
                   onBtnTapped: () {
                     vm.routeToRegister(contentType: ContentType.movie);

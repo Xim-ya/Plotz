@@ -14,18 +14,14 @@ import 'dart:math' as math;
 
 class StartQurationButton extends StatelessWidget {
   const StartQurationButton(
-      {Key? key, required this.contentType, required this.onBtnTapped})
+      {Key? key, required this.contentType, required this.onBtnTapped, required this.imgPath})
       : super(key: key);
 
   final ContentType contentType;
   final VoidCallback onBtnTapped;
+  final String imgPath;
 
-  String randomImgGenerator() {
-    final List<String> imgPathList =
-        contentType.isTv ? tvImgPathList : movieImgPathList;
-    String randomImgPath = imgPathList.randomItem();
-    return randomImgPath;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +63,7 @@ class StartQurationButton extends StatelessWidget {
                     decoration: ShapeDecoration(
                       image: DecorationImage(
                         image:
-                            AssetImage('assets/images/${randomImgGenerator()}'),
+                            AssetImage('assets/images/$imgPath'),
                         fit: BoxFit.cover,
                       ),
                       shape: const PolygonBorder(
