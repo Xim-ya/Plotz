@@ -44,7 +44,7 @@ class SearchValidateUrlImpl
     ClipboardData? pasteUrl = await Clipboard.getData('text/plain');
 
     if (pasteUrl?.text == null) {
-      unawaited(AlertWidget.toast('복사된 링크가 없습니다'));
+      unawaited(AlertWidget.newToast('복사된 링크가 없습니다'));
       if (searchedKeyword != '') {
         videoUrlValidState(ValidationState.invalid);
         showRoundCloseBtn(true);

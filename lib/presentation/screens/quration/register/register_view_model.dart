@@ -1,7 +1,4 @@
-import 'dart:async';
-import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
-
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
 part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 링크 등록
@@ -16,14 +13,11 @@ class RegisterViewModel extends BaseViewModel {
   // 선택된 컨텐츠 타입
   final ContentType selectedContentType;
 
-
   // 등록 컨텐츠 진행 단계
   final RxList<bool> selectedSteps = <bool>[true, false, false].obs;
 
-
   // 현재 pageView Index
   int get currentPageViewIndex => pageViewController.page?.toInt() ?? 0;
-
 
   // 등록 진행중 컨텐츠 데이터
   Rxn<Content> qurationContent = Rxn();
@@ -47,6 +41,12 @@ class RegisterViewModel extends BaseViewModel {
     }
   }
 
+  // 등록 진행 컨텐츠 데이터 업데이트
+  Future<void> submitContent() async {
+    AlertWidget.animatedToast('등록 절차를 거친 뒤 컨텐츠가 등록됩니다',
+        isUsedOnTabScreen: true);
+  }
+
   /// 하단 고정 버튼이 클릭 시
   /// pageView 현재 인덱스에 따라 동작을 다르게 함.
   Future<void> onFloatingStepBtnTapped() async {
@@ -60,8 +60,8 @@ class RegisterViewModel extends BaseViewModel {
         togglePageIndicatorIndex(1);
         break;
       case 1:
-         unawaited(setContentInfo());
-         unawaited(pageViewController.animateToPage(
+        unawaited(setContentInfo());
+        unawaited(pageViewController.animateToPage(
           2,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
@@ -70,6 +70,7 @@ class RegisterViewModel extends BaseViewModel {
         break;
       case 2:
         Get.back();
+        submitContent();
     }
   }
 
@@ -101,7 +102,6 @@ class RegisterViewModel extends BaseViewModel {
     }
   }
 
-
   // 입력된 컨텐츠 정보 저장
   Future<void> setContentInfo() async {
     final videoId = validateVideoUrlUseCase.selectedVideoId;
@@ -125,7 +125,6 @@ class RegisterViewModel extends BaseViewModel {
     );
   }
 
-
   @override
   void onInit() {
     super.onInit();
@@ -135,6 +134,5 @@ class RegisterViewModel extends BaseViewModel {
     });
 
     pageViewController = PageController();
-
   }
 }

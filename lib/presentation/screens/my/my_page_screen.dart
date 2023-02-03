@@ -11,6 +11,15 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Center(
+            child: TextButton(
+              onPressed: () {
+                AlertWidget.animatedToast('이렇게 토스트가 나옵니다');
+              },
+              child: const Text('테스트'),
+            ),
+          ),
+
           // 설정 버튼
           Padding(
             padding: AppInset.right8,
@@ -69,7 +78,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             child: Text(
               '큐레이션 내역',
               style:
-              AppTextStyle.alert1.copyWith(color: const Color(0xFF868585)),
+                  AppTextStyle.alert1.copyWith(color: const Color(0xFF868585)),
             ),
           ),
           AppSpace.size2,
