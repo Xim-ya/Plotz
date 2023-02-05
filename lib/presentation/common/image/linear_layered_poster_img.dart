@@ -39,13 +39,14 @@ class LinearLayeredPosterImg extends StatelessWidget {
                 ),
               ),
               placeholder: (context, url) => const SizedBox(),
-              errorWidget: (context, url, error) => Center(child: const Icon(Icons.error)),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
             ),
 
             // Linear Over Layer
             Container(
               alignment: Alignment.bottomCenter,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Colors.transparent,

@@ -14,7 +14,7 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
         children: <Widget>[
           const SearchContentPageView(),
           const RegisterVideoLinkPageView(),
-          const ConfirmQurationScreen(),
+          const ConfirmQurationPageView(),
         ],
       ),
     );

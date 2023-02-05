@@ -11,7 +11,6 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-
           // 설정 버튼
           Padding(
             padding: AppInset.right8,
@@ -44,17 +43,54 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               ],
             ),
           ),
-          AppSpace.size24,
+          AppSpace.size34,
+
+          // 큐레이션
+          Padding(
+            padding: AppInset.left16,
+            child: Text(
+              '큐레이션 내역',
+              style: AppTextStyle.headline2,
+            ),
+          ),
+          AppSpace.size14,
+          Container(
+            margin: AppInset.horizontal16,
+            height: 80,
+            decoration: BoxDecoration(
+                color: AppColor.strongGrey,
+                borderRadius: BorderRadius.circular(6)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                _qurationProgressRowItem(title: '진행중', count: 4),
+                Container(
+                  height: 24,
+                  width: 1,
+                  color: AppColor.lightGrey,
+                ),
+                _qurationProgressRowItem(title: '등록 완료', count: 7),
+                Container(
+                  height: 24,
+                  width: 1,
+                  color: AppColor.lightGrey,
+                ),
+                _qurationProgressRowItem(title: '보류', count: 0),
+              ],
+            ),
+          ),
+
+          AppSpace.size64,
+
           // 시청 기록
           Padding(
             padding: AppInset.left16,
             child: Text(
-              '시청 기록',
-              style:
-                  AppTextStyle.alert1.copyWith(color: const Color(0xFF868585)),
+            '시청 기록',
+              style: AppTextStyle.headline2,
             ),
           ),
-          AppSpace.size8,
+          AppSpace.size14,
           ContentPostSlider(
             height: 168,
             itemCount: 12,
@@ -64,37 +100,29 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             },
           ),
           AppSpace.size48,
-          // 큐레이션
-          Padding(
-            padding: AppInset.left16,
-            child: Text(
-              '큐레이션 내역',
-              style:
-                  AppTextStyle.alert1.copyWith(color: const Color(0xFF868585)),
-            ),
-          ),
-          AppSpace.size2,
-          Padding(
-            padding: AppInset.left8,
-            child:
-                ToggleButtons(isSelected: vm.qurateOptionSelections, children: [
-              qurationOptionBtn('진행중'),
-              qurationOptionBtn('등록완료'),
-              qurationOptionBtn('보류'),
-            ]),
-          )
         ],
       ),
     );
   }
 
-  Widget qurationOptionBtn(String content) {
-    return Container(
-      child: TextButton(
-        onPressed: () {},
-        child: Text(
-          content,
-          style: AppTextStyle.headline3.copyWith(color: AppColor.mixedWhite),
+  Widget _qurationProgressRowItem({required String title, required int count}) {
+    return InkWell(
+      onTap: (){
+        print("aim");
+      },
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '$count',
+              style: AppTextStyle.headline3,
+            ),
+            Text(
+              title,
+              style: AppTextStyle.body2,
+            ),
+          ],
         ),
       ),
     );

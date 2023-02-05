@@ -14,6 +14,7 @@ class ChannelInfoView extends StatelessWidget {
     this.nameFontSize,
     this.subscriberFontSize,
     this.subscriberCount,
+    this.nameTextWidth,
     required this.imgUrl,
     required this.name,
   }) : super(key: key);
@@ -24,6 +25,7 @@ class ChannelInfoView extends StatelessWidget {
   final double? nameFontSize;
   final double? subscriberFontSize;
   final double imgSize;
+  final double? nameTextWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +49,15 @@ class ChannelInfoView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             if (name.hasData)
-              Text(
-                name!,
-                style: AppTextStyle.headline3.copyWith(fontSize: nameFontSize),
+              SizedBox(
+                width: nameTextWidth,
+                child: Text(
+                  name!,
+                  style:
+                      AppTextStyle.headline3.copyWith(fontSize: nameFontSize),
+                  maxLines: 1,
+                  overflow: TextOverflow.clip,
+                ),
               )
             else ...[
               const SkeletonBox(

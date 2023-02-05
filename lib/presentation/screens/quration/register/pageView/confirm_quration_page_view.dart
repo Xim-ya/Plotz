@@ -3,8 +3,8 @@ import 'package:uppercut_fantube/presentation/common/image/linear_layered_poster
 import 'package:uppercut_fantube/presentation/common/youtube/channel_info_view.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-class ConfirmQurationScreen extends BaseView<RegisterViewModel> {
-  const ConfirmQurationScreen({Key? key}) : super(key: key);
+class ConfirmQurationPageView extends BaseView<RegisterViewModel> {
+  const ConfirmQurationPageView({Key? key}) : super(key: key);
 
   @override
   Widget buildView(BuildContext context) {
@@ -49,6 +49,7 @@ class ConfirmQurationScreen extends BaseView<RegisterViewModel> {
                           left: 12,
                           bottom: 14,
                           child: ChannelInfoView(
+                            nameTextWidth: SizeConfig.to.screenWidth - 32 - 12 - 40 - 10,
                             imgSize: 40,
                             imgUrl: vm.channelImgUrl,
                             name: vm.channelName,

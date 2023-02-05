@@ -1,5 +1,6 @@
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:polygon/polygon.dart';
+import 'package:uppercut_fantube/presentation/common/image/linear_layered_poster_img.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/localWidget/start_quration_button.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/quration_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -22,9 +23,6 @@ class QurationScreen extends BaseScreen<QurationViewModel> {
               style: AppTextStyle.headline1,
             ),
             AppSpace.size22,
-
-
-
             // 큐레이션 컨텐츠 등록 버튼 (드라마, 영화)
             Row(
               children: [
@@ -65,16 +63,46 @@ class QurationScreen extends BaseScreen<QurationViewModel> {
                 crossAxisSpacing: 8,
                 repeatPattern: QuiltedGridRepeatPattern.inverted,
                 pattern: [
-                  QuiltedGridTile(9, 7),
-                  QuiltedGridTile(8, 7),
+                  const QuiltedGridTile(9, 7),
+                  const QuiltedGridTile(8, 7),
                 ],
               ),
               itemBuilder: (BuildContext context, int index) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: const ContentPostItem(
-                    imgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg',
-                  ),
+                return Stack(
+                  children: <Widget>[
+                    // 컨텐츠 포스터 이미지
+                    Positioned.fill(
+                      child: LinearLayeredPosterImg(
+                          linearColor: Colors.black.withOpacity(0.8),
+                          linearStep: const [0.1, 0.2, 1],
+                          imgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg'),
+                    ),
+
+                    // 컨텐츠 요청 유저 정보
+                    Positioned(
+                      left: 10,
+                      bottom: 10,
+                      child: Row(
+                        children: <Widget>[
+                          // 프로필 이미지
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  'https://memez861.cdn-nhncommerce.com/data/category/scm_342.jpg',
+                              height: 36,
+                            ),
+                          ),
+
+                          // 프로필 이미지
+                          Text(
+                            '${'심야'}님',
+                            style: AppTextStyle.title3,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
