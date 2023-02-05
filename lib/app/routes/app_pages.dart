@@ -1,5 +1,7 @@
 import 'package:uppercut_fantube/presentation/screens/quration/register/register_binding.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/register_screen.dart';
+import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_binding.dart';
+import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_screen.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_binding.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -43,6 +45,13 @@ abstract class AppPages {
       name: AppRoutes.register,
       page: () => RegisterScreen(),
       binding: RegisterBinding(),
-    )
+    ),
+
+    // 큐레이션 내력
+    GetPage(
+      name: AppRoutes.qurationHistory,
+      page: () => QurationHistoryScreen(),
+      binding: QurationHistoryBinding(),
+    ),
   ];
 }

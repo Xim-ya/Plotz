@@ -1,6 +1,7 @@
 import 'package:uppercut_fantube/presentation/screens/explore/explore_view_model.dart';
 import 'package:uppercut_fantube/presentation/screens/my/my_page_view_model.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/quration_view_model.dart';
+import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class PresentationModules {
@@ -25,5 +26,8 @@ abstract class PresentationModules {
 
     // 마에페이지
     Get.lazyPut(() => MyPageViewModel());
+
+    // 큐레이션 내역
+    Get.lazyPut(() => QurationHistoryViewModel(), fenix: true);
   }
 }

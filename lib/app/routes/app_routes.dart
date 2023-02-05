@@ -17,4 +17,7 @@ abstract class AppRoutes {
   // 등록
   static const register = '/register';
 
+  // 큐레이션 내역
+  static const qurationHistory = '/qurationHistory';
+
 }

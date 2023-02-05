@@ -5,7 +5,7 @@ class LinearLayeredPosterImg extends StatelessWidget {
       {Key? key,
       required this.imgUrl,
       this.aspectRatio = 2 / 3,
-      this.borderRadius = 0,
+      this.borderRadius = 12,
       this.linearColor = AppColor.black,
       this.linearStep = const [0.1, 0.5, 1.0],
       this.linearBeginPosition = Alignment.topCenter,
@@ -23,7 +23,7 @@ class LinearLayeredPosterImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(borderRadius!),
       child: AspectRatio(
         aspectRatio: aspectRatio!,
         child: Stack(

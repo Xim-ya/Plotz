@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/presentation/screens/my/localWidget/leading_icon_title.dart';
 import 'package:uppercut_fantube/presentation/screens/my/my_page_view_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'dart:math' as math;
 
 class MyPageScreen extends BaseScreen<MyPageViewModel> {
   const MyPageScreen({Key? key}) : super(key: key);
@@ -47,36 +47,56 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
 
           // 큐레이션
           Padding(
-            padding: AppInset.left16,
-            child: Text(
-              '큐레이션 내역',
-              style: AppTextStyle.headline2,
+            padding: AppInset.horizontal16,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: vm.routeToQurationHistory,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '큐레이션 내역',
+                    style: AppTextStyle.headline2,
+                  ),
+                  Transform.rotate(
+                    angle: 180 * math.pi / 180,
+                    child: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: AppColor.mixedWhite,
+                      size: 18,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           AppSpace.size14,
-          Container(
-            margin: AppInset.horizontal16,
-            height: 80,
-            decoration: BoxDecoration(
-                color: AppColor.strongGrey,
-                borderRadius: BorderRadius.circular(6)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _qurationProgressRowItem(title: '진행중', count: 4),
-                Container(
-                  height: 24,
-                  width: 1,
-                  color: AppColor.lightGrey,
-                ),
-                _qurationProgressRowItem(title: '등록 완료', count: 7),
-                Container(
-                  height: 24,
-                  width: 1,
-                  color: AppColor.lightGrey,
-                ),
-                _qurationProgressRowItem(title: '보류', count: 0),
-              ],
+          GestureDetector(
+            onTap: vm.routeToQurationHistory,
+            child: Container(
+              margin: AppInset.horizontal16,
+              height: 80,
+              decoration: BoxDecoration(
+                  color: AppColor.strongGrey,
+                  borderRadius: BorderRadius.circular(6)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _qurationProgressRowItem(title: '진행중', count: 4),
+                  Container(
+                    height: 24,
+                    width: 1,
+                    color: AppColor.lightGrey,
+                  ),
+                  _qurationProgressRowItem(title: '등록 완료', count: 7),
+                  Container(
+                    height: 24,
+                    width: 1,
+                    color: AppColor.lightGrey,
+                  ),
+                  _qurationProgressRowItem(title: '보류', count: 0),
+                ],
+              ),
             ),
           ),
 
@@ -86,7 +106,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           Padding(
             padding: AppInset.left16,
             child: Text(
-            '시청 기록',
+              '시청 기록',
               style: AppTextStyle.headline2,
             ),
           ),
@@ -106,25 +126,18 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
   }
 
   Widget _qurationProgressRowItem({required String title, required int count}) {
-    return InkWell(
-      onTap: (){
-        print("aim");
-      },
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '$count',
-              style: AppTextStyle.headline3,
-            ),
-            Text(
-              title,
-              style: AppTextStyle.body2,
-            ),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '$count',
+          style: AppTextStyle.headline3,
         ),
-      ),
+        Text(
+          title,
+          style: AppTextStyle.body2,
+        ),
+      ],
     );
   }
 }
