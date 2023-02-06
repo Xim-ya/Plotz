@@ -12,6 +12,7 @@ class StickyDelegateContainer extends SliverPersistentHeaderDelegate {
     required this.maxHeight,
     required this.child,
   });
+
   final double minHeight;
   final double maxHeight;
   final Widget child;

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1061021294637",
+    "project_id": "soonsak-15350",
+    "storage_bucket": "soonsak-15350.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061021294637:android:3ba1e53928812837d418a4",
+        "android_client_info": {
+          "package_name": "com.example.uppercut_fantube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061021294637-stslo2r5eskrfgdfu42i9f2vo0958fqq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8uLI0nazM-2o9y1-mvSmi9vXrNEPl2Fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061021294637-stslo2r5eskrfgdfu42i9f2vo0958fqq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
