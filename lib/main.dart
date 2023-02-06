@@ -16,16 +16,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Uppercut FanTube',
-        theme: ThemeConfig.basicTheme,
-        getPages: AppPages.routes,
-        initialBinding: AppBinding(),
-        initialRoute: AppRoutes.home,
-        builder: (context, child) {
-          SizeConfig.to.init(context); // Size Config 초기화
-          return EasyLoading.init()(context, child);
-        },
-        home: const TabsScreen());
+      debugShowCheckedModeBanner: false,
+      title: 'Uppercut FanTube',
+      theme: ThemeConfig.basicTheme,
+      getPages: AppPages.routes,
+      initialBinding: AppBinding(),
+      initialRoute: AppRoutes.login,
+      builder: (context, child) {
+        SizeConfig.to.init(context); // Size Config 초기화
+        return EasyLoading.init()(context, child);
+      },
+    );
   }
 }

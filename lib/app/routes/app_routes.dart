@@ -1,9 +1,11 @@
 abstract class AppRoutes {
   AppRoutes._();
 
+  // 로그인
+  static const login = '/login';
 
   // 탭
-  // static const tabs = 'tabs';
+  static const tabs = '/tabs';
 
   // 홈
   static const home = '/';

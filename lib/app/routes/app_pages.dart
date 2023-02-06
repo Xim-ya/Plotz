@@ -1,3 +1,5 @@
+import 'package:uppercut_fantube/presentation/screens/login/login_binding.dart';
+import 'package:uppercut_fantube/presentation/screens/login/login_screen.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/register_binding.dart';
 import 'package:uppercut_fantube/presentation/screens/quration/register/register_screen.dart';
 import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_binding.dart';
@@ -16,8 +18,14 @@ abstract class AppPages {
   AppPages._();
 
   static final routes = [
+    // 로그인
+    GetPage(
+        name: AppRoutes.login,
+        page: () => LoginScreen(),
+        binding: LoginBinding()),
+
     // 탭
-    // GetPage(name: AppRoutes.tabs, page: TabsScreen.new, binding: TabsBinding()),
+    GetPage(name: AppRoutes.tabs, page: TabsScreen.new, binding: TabsBinding()),
 
     // 홈
     GetPage(
@@ -25,6 +33,7 @@ abstract class AppPages {
       page: () => HomeScreen(),
       binding: TabsBinding(),
     ),
+
 
     // 컨텐츠 상세
     GetPage(
