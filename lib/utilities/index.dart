@@ -100,6 +100,7 @@ export 'package:uppercut_fantube/domain/model/content/content_argument_format.da
 export 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
 
 // Presentation
+export 'package:uppercut_fantube/presentation/screens/qurationHistory/localWidget/contents_grid_view.dart';
 export 'package:uppercut_fantube/presentation/screens/quration/register/pageView/register_video_link_page_view.dart';
 export 'package:uppercut_fantube/presentation/screens/quration/register/pageView/search_content_page_view.dart';
 export 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
@@ -135,6 +136,11 @@ export 'package:uppercut_fantube/presentation/screens/search/localWidget/searche
 export 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/content_video_views_by_case.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/localWidget/single_video_skeleton_view.dart';
+export 'package:uppercut_fantube/presentation/screens/qurationHistory/localWidget/quration_history_scaffold.dart';
+export 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_view_model.dart';
+export 'package:uppercut_fantube/presentation/screens/qurationHistory/tabview/completed_contents_tab_view.dart';
+export 'package:uppercut_fantube/presentation/screens/qurationHistory/tabview/in_progress_contents_tab_view.dart';
+export 'package:uppercut_fantube/presentation/screens/qurationHistory/tabview/pending_contents_tab_view.dart';
 
 // Utilities
 export 'package:uppercut_fantube/utilities/constants/invalid_search_character.dart';
