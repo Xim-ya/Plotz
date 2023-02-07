@@ -22,11 +22,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Uppercut FanTube',
+      title: 'Soon Sak',
       theme: ThemeConfig.basicTheme,
       getPages: AppPages.routes,
       initialBinding: AppBinding(),
-      initialRoute: AppRoutes.tabs,
+      initialRoute: AppRoutes.login,
       builder: (context, child) {
         SizeConfig.to.init(context); // Size Config 초기화
         return EasyLoading.init()(context, child);

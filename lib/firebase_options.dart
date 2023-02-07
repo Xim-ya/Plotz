@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB_KolUuNZziRow5pjFHgD2RX5miTjcUmY',
-    appId: '1:1061021294637:web:e788020552d163ead418a4',
-    messagingSenderId: '1061021294637',
-    projectId: 'soonsak-15350',
-    authDomain: 'soonsak-15350.firebaseapp.com',
-    storageBucket: 'soonsak-15350.appspot.com',
-    measurementId: 'G-6XXEB74JML',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD8uLI0nazM-2o9y1-mvSmi9vXrNEPl2Fo',
     appId: '1:1061021294637:android:3ba1e53928812837d418a4',
@@ -70,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1061021294637',
     projectId: 'soonsak-15350',
     storageBucket: 'soonsak-15350.appspot.com',
+    androidClientId: '1061021294637-fadcb107161nikk5grp53ee09pobtej0.apps.googleusercontent.com',
     iosClientId: '1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl.apps.googleusercontent.com',
     iosBundleId: 'com.example.uppercutFantube',
   );

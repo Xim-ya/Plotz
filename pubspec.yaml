@@ -44,11 +44,17 @@ dependencies:
 
   #Firebase
   firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+
+
+  #Auth
+  google_sign_in: ^5.4.4
 
 
   #Utils
   either_dart: ^0.3.0
   intl: ^0.17.0 # DATE
+
 
 
 

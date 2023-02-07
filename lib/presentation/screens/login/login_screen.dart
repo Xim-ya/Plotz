@@ -9,7 +9,6 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
   @override
   bool get wrapWithSafeArea => false;
 
-
   @override
   Widget buildScreen(BuildContext context) {
     return Stack(
@@ -66,7 +65,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               children: [
                 SnsLoginButton(
                   sns: Sns.google,
-                  onBtnTapped: () {},
+                  onBtnTapped: vm.signInWithGoogle,
                 ),
                 AppSpace.size20,
                 SnsLoginButton(

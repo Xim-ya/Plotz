@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "1061021294637-stslo2r5eskrfgdfu42i9f2vo0958fqq.apps.googleusercontent.com",
+          "client_id": "1061021294637-fadcb107161nikk5grp53ee09pobtej0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uppercut_fantube",
+            "certificate_hash": "28ab0e8618a6cdf6bb761fc3af5f77a6deb3d011"
+          }
+        },
+        {
+          "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1061021294637-stslo2r5eskrfgdfu42i9f2vo0958fqq.apps.googleusercontent.com",
+              "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uppercutFantube"
+              }
             }
           ]
         }
