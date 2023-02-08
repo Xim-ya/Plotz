@@ -1,4 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source.dart';
+import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source_impl.dart';
+import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
+import 'package:uppercut_fantube/data/repository/auth/auth_repository_impl.dart';
 import 'package:uppercut_fantube/data/repository/youtube/youtube_repository_impl.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -6,6 +10,11 @@ abstract class DataModules {
   DataModules._();
 
   static void getDependencies() {
+    /* Auth */
+    Get.lazyPut<AuthDataSource>(() => AuthDataSourceImpl(), fenix: true);
+    Get.lazyPut<AuthRepository>(() => AuthRepositoryImpl(Get.find()),
+        fenix: true);
+
     /* Dio */
     Get.lazyPut(() => Dio(), fenix: true);
 

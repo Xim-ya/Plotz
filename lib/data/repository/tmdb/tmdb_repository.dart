@@ -5,7 +5,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 *  [TMDB API] API 데이터를 호출을 관리하는 Repository
 * */
 
-abstract class TmdbRepository extends Repository {
+abstract class TmdbRepository {
   Future<Result<ContentDetailInfo>> loadTmdbTvDetailResponse(int tvId);
 
   Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId);

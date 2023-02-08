@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/main.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -6,7 +5,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 *  [Content] 관련 데이터 호출을 담당하는 레이어.
 * */
 
-abstract class ContentRepository extends Repository {
+abstract class ContentRepository   {
   Future<Result<List<PosterExposureContent>>> loadTopExposedContent();
 
   Future<Result<List<ContentEpisodeInfoItem>>> loadContentEpisodeItemList();

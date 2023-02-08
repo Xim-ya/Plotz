@@ -6,13 +6,13 @@ import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-class Repository {}
-
 void main() async{
   runApp(const MyApp());
+  print('=====run App');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  print('=====run Ap2');
 }
 
 class MyApp extends StatelessWidget {

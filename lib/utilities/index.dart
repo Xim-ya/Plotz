@@ -20,6 +20,8 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:json_annotation/json_annotation.dart';
 export 'package:youtube_explode_dart/youtube_explode_dart.dart';
 export 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+export 'package:firebase_auth/firebase_auth.dart';
+
 
 // BaseModule
 export 'package:uppercut_fantube/presentation/base/base_view_model.dart';
@@ -147,7 +149,7 @@ export 'package:uppercut_fantube/utilities/constants/invalid_search_character.da
 export 'package:uppercut_fantube/utilities/extensions/determine_content_type.dart';
 export 'package:uppercut_fantube/utilities/extensions/get_last_character_of_string.extension.dart';
 export 'package:uppercut_fantube/utilities/constants/bottom_navigation_constants.dart';
-export 'package:uppercut_fantube/utilities/api_error_handler_mixin.dart';
+export 'package:uppercut_fantube/data/mixin/api_error_handler_mixin.dart';
 export 'package:uppercut_fantube/utilities/result.dart';
 export 'package:uppercut_fantube/utilities/youtube_meta_data.dart';
 export 'package:uppercut_fantube/app/config/app_insets.dart';

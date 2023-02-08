@@ -65,12 +65,16 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               children: [
                 SnsLoginButton(
                   sns: Sns.google,
-                  onBtnTapped: vm.signInWithGoogle,
+                  onBtnTapped:(){
+                    vm.googleSignIn();
+                  },
                 ),
                 AppSpace.size20,
                 SnsLoginButton(
                   sns: Sns.apple,
-                  onBtnTapped: () {},
+                  onBtnTapped: () {
+                    vm.checkUserState();
+                  },
                 ),
               ],
             ),
