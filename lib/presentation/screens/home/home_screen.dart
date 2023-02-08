@@ -62,8 +62,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                           );
                           vm.routeToContentDetail(argument);
                         },
-                        child: ContentPostItem(
-                            imgUrl: contentItem.posterImgUrl),
+                        child:
+                            ContentPostItem(imgUrl: contentItem.posterImgUrl),
                       );
                     },
                   ),
@@ -127,8 +127,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         carouselController: vm.carouselController,
         itemCount: vm.topExposedContentList?.length ?? 0,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-          final PosterExposureContent item =
-              vm.topExposedContentList![itemIndex];
+          final BannerContent item = vm.topExposedContentList![itemIndex];
 
           /// Top Content Section
           return GestureDetector(
@@ -161,17 +160,15 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   VideoThumbnailImgWithPlayerBtn(
                     onPlayerBtnClicked: () {
                       final argument = ContentArgumentFormat(
-                        contentId: item.contentId,
-                        contentType: item.contentType,
-                        posterImgUrl: item.posterImgUrl,
+                        contentId: item.id,
+                        contentType: item.type,
+                        posterImgUrl: item.backdropImgUrl,
+                        thumbnailUrl: item.imgUrl,
                         videoId: item.videoId,
-                        title: item.title,
-                        thumbnailUrl: item.thumbnailImgUrl,
-                        videoTitle: item.description,
                       );
                       vm.routeToContentDetail(argument);
                     },
-                    posterImgUrl: item.thumbnailImgUrl,
+                    posterImgUrl: item.imgUrl,
                   ),
                 ],
               ),
@@ -193,8 +190,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               ? CachedNetworkImage(
                   width: double.infinity,
                   fit: BoxFit.fitWidth,
-                  imageUrl: vm
-                      .selectedTopExposedContent.posterImgUrl.prefixTmdbImgPath,
+                  imageUrl: vm.selectedTopExposedContent.backdropImgUrl
+                      .prefixTmdbImgPath,
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               : const SizedBox(),

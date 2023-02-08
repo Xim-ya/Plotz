@@ -7,12 +7,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async{
-  runApp(const MyApp());
-  print('=====run App');
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print('=====run Ap2');
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeConfig.basicTheme,
       getPages: AppPages.routes,
       initialBinding: AppBinding(),
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.splash,
       builder: (context, child) {
         SizeConfig.to.init(context); // Size Config 초기화
         return EasyLoading.init()(context, child);

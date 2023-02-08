@@ -5,13 +5,13 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class LoadTopExposedContentListUseCase
-    extends BaseNoParamUseCase<Result<List<PosterExposureContent>>> {
+    extends BaseNoParamUseCase<Result<List<BannerContent>>> {
   LoadTopExposedContentListUseCase(this._repository);
 
   final ContentRepository _repository;
 
   @override
-  Future<Result<List<PosterExposureContent>>> call() async {
+  Future<Result<List<BannerContent>>> call() async {
     return _repository.loadTopExposedContent();
   }
 }

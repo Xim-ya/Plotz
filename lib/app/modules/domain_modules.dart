@@ -1,4 +1,6 @@
 import 'package:uppercut_fantube/domain/service/user_service.dart';
+import 'package:uppercut_fantube/domain/useCase/auth/social_sign_in_handler_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_impl.dart';
 import 'package:uppercut_fantube/domain/useCase/search/validate_video_url_use_case_impl.dart';
@@ -8,6 +10,10 @@ abstract class DomainModules {
   DomainModules._();
 
   static void dependencies() {
+    // 인증
+    Get.lazyPut(() => SocialSignOutHandlerUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => SocialSignInHandlerUseCase(Get.find()), fenix: true);
+
     // 컨텐츠
     Get.lazyPut(() => LoadTopExposedContentListUseCase(Get.find()),
         fenix: true);
@@ -37,6 +43,6 @@ abstract class DomainModules {
         () => SearchPagedContentImpl(Get.find()),
         fenix: true);
 
-    Get.lazyPut(() => UserService(), fenix: true);
+    Get.lazyPut(() => UserService(Get.find()), fenix: true);
   }
 }

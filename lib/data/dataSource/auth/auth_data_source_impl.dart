@@ -7,19 +7,27 @@ class AuthDataSourceImpl implements AuthDataSource {
   // AuthDataSourceImpl(this._auth);
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignInOutHandler = GoogleSignIn();
 
   @override
   bool isUserSignedIn() {
     if (_auth.currentUser == null) {
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   }
 
   @override
   Future<GoogleSignInAccount?> triggerGoogleSignIn() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser =
+        await _googleSignInOutHandler.signIn();
     return googleUser;
+  }
+
+  @override
+  Future<void> triggerGoogleSignOut() async {
+    await _auth.signOut();
+    await _googleSignInOutHandler.signOut();
   }
 }

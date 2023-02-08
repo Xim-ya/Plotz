@@ -1,6 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source.dart';
 import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
+import 'package:uppercut_fantube/domain/exception/auth_exception.dart';
 import 'package:uppercut_fantube/domain/model/auth/user_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -13,6 +14,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Result<bool> isUserSignedIn() {
     try {
       final response = _dataSource.isUserSignedIn();
+
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -29,7 +31,7 @@ class AuthRepositoryImpl implements AuthRepository {
           await response?.authentication;
 
       if (response == null || googleAuth == null) {
-        return Result.failure(Exception(''));
+        return Result.failure(AuthException.stopGoogleSignInProcess());
       }
 
       return Result.success(
@@ -38,6 +40,16 @@ class AuthRepositoryImpl implements AuthRepository {
           authentication: googleAuth,
         ),
       );
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> googleSignOut() async {
+    try {
+      final response = await _dataSource.triggerGoogleSignOut();
+      return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
     }

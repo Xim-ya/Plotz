@@ -35,13 +35,11 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SectionTitle(title: '컨텐츠'),
-            Obx(
-              () => VideoThumbnailImgWithPlayerBtn(
-                onPlayerBtnClicked: () {
-                  vm.launchYoutubeApp(vm.singleVideoId);
-                },
-                posterImgUrl: vm.singleVideoThumbnailUrl,
-              ),
+            VideoThumbnailImgWithPlayerBtn(
+              onPlayerBtnClicked: () {
+                vm.launchYoutubeApp(vm.singleVideoId);
+              },
+              posterImgUrl: vm.singleVideoThumbnailUrl,
             ),
             AppSpace.size4,
             SizedBox(

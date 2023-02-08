@@ -6,6 +6,8 @@ import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_h
 import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_screen.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_binding.dart';
 import 'package:uppercut_fantube/presentation/screens/search/search_screen.dart';
+import 'package:uppercut_fantube/presentation/screens/splash/splash_binding.dart';
+import 'package:uppercut_fantube/presentation/screens/splash/splash_screen.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.04
@@ -18,6 +20,12 @@ abstract class AppPages {
   AppPages._();
 
   static final routes = [
+    // 스플래쉬
+    GetPage(
+        name: AppRoutes.splash,
+        page: () => SplashScreen(),
+        binding: SplashBinding()),
+
     // 로그인
     GetPage(
         name: AppRoutes.login,

@@ -1,6 +1,9 @@
 abstract class AppRoutes {
   AppRoutes._();
 
+  // 스플래시
+  static const splash = '/';
+
   // 로그인
   static const login = '/login';
 
@@ -8,7 +11,7 @@ abstract class AppRoutes {
   static const tabs = '/tabs';
 
   // 홈
-  static const home = '/';
+  static const home = '/home';
 
   // 컨텐츠 상세
   static const contentDetail = '/content_detail';

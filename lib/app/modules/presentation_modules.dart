@@ -22,10 +22,10 @@ abstract class PresentationModules {
     Get.lazyPut(() => ExploreViewModel(Get.find(), Get.find()), fenix: true);
 
     // 큐레이션
-    Get.lazyPut(() => QurationViewModel());
+    Get.lazyPut(() => QurationViewModel(), fenix: true);
 
     // 마에페이지
-    Get.lazyPut(() => MyPageViewModel());
+    Get.lazyPut(() => MyPageViewModel(Get.find()), fenix: true);
 
     // 큐레이션 내역
     Get.lazyPut(() => QurationHistoryViewModel(), fenix: true);

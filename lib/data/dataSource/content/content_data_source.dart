@@ -1,7 +1,8 @@
+import 'package:uppercut_fantube/domain/model/content/banner_content.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class ContentDataSource {
-  Future<List<PosterExposureContent>> loadTopExposedContentList();
+  Future<List<BannerContent>> loadBannerContentList();
 
   Future<List<ContentEpisodeInfoItem>> loadContentEpisodeItemList();
 

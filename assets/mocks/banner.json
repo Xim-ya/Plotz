@@ -1,31 +1,28 @@
 {
   "items": [
     {
-      "id": 111800,
-      "type": "tv",
+      "id": "t-111800",
       "videoId": "TXMtLF5OANI",
       "title": "올드맨",
       "description": "하필이면 전직 특수 요원을 건드렸는데 개들이 싸움을 더 잘함 | 2022년 신작 중 가장 처절한 액션을 보여드립니다",
-      "thumbnailImgUrl": "https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg",
-      "posterImgUrl": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg"
+      "imgUrl": "https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg",
+      "backdropImgUrl": "/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg"
     },
     {
-      "id": 210577,
-      "type": "movie",
+      "id": "m-210577",
       "videoId": "9XdAsuXthXA",
       "title": "나를 찾아줘",
       "description": "영화가 끝나고 더 소름돋는 영화",
-      "thumbnailImgUrl": "https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg",
-      "posterImgUrl": "/x9ezMgOtDPqHatHDvxEG0ILb6Ie.jpg"
+      "imgUrl": "https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg",
+      "backdropImgUrl": "/x9ezMgOtDPqHatHDvxEG0ILb6Ie.jpg"
     },
     {
-      "id": 1396,
-      "type": "tv",
+      "id": "t-1396",
       "videoId": "KfbFaQJK7Sc",
       "title": "브레이킹 배드",
       "description": "《브레이킹 베드》 | 진짜 존나 재밌음",
-      "thumbnailImgUrl": "https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg",
-      "posterImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg"
+      "imgUrl": "https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg",
+      "backdropImgUrl": "/ggFHVNu6YYI5L9pCfOacjizRGt.jpg"
     }
   ]
 }

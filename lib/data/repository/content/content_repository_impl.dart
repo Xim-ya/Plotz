@@ -8,9 +8,9 @@ class ContentRepositoryImpl implements ContentRepository {
 
   // 홈 상단 노출 콘텐츠 리스트 호출
   @override
-  Future<Result<List<PosterExposureContent>>> loadTopExposedContent() async {
+  Future<Result<List<BannerContent>>> loadTopExposedContent() async {
     try {
-      final response = await _contentDataSource.loadTopExposedContentList();
+      final response = await _contentDataSource.loadBannerContentList();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

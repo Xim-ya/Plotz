@@ -19,7 +19,7 @@ class HomeViewModel extends BaseViewModel {
   /* [Variables] */
 
   /// Data
-  final Rxn<List<PosterExposureContent>> _topExposedContentList =
+  final Rxn<List<BannerContent>> _topExposedContentList =
       Rxn(); // 상단 노출 컨텐츠
   final Rxn<List<ContentShell>> topTenContentList = Rxn(); // Top 10 컨텐츠
   final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
@@ -151,8 +151,8 @@ class HomeViewModel extends BaseViewModel {
 
   /// Mock Json Data Video
   Future<void> getJsonMockData() async {
-    final responseResult = await _dataSource.loadTopExposedContentList();
-    final List<PosterExposureContent> mockItemLis = responseResult;
+    final responseResult = await _dataSource.loadBannerContentList();
+    final List<BannerContent> mockItemLis = responseResult;
   }
 
   Future<void> test() async {

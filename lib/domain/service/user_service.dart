@@ -1,36 +1,34 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
 
 class UserService extends GetxService {
+  UserService(this._authRepository);
+
+  final AuthRepository _authRepository;
+
   late final bool isUserSignIn;
 
-  bool checkUserSignInState()  {
-    if (FirebaseAuth.instance.currentUser == null) {
-      return false;
-    } else {
-      return true;
-    }
+  void checkUserSignInState() {
+    final response = _authRepository.isUserSignedIn();
+    response.fold(
+      onSuccess: (data) {
+        isUserSignIn = data;
+      },
+      onFailure: (e) {
+        log(e.toString());
+      },
+    );
   }
-
-  // 유저의 로그인 여부를 확인
-  // Future<void> checkUserSignInState() async {
-  //   FirebaseAuth.instance.authStateChanges().listen(
-  //     (event) {
-  //       if (event == null) {
-  //         isUserSignIn = false;
-  //         print("FALSE");
-  //       } else {
-  //         isUserSignIn = true;
-  //         print("TRUE");
-  //       }
-  //     },
-  //   );
-  // }
 
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
 
-    print("arang");
+    checkUserSignInState();
   }
+
+  static UserService get to => Get.find();
 }

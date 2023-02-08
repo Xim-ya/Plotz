@@ -7,4 +7,7 @@ abstract class AuthDataSource {
 
   // 구글 로그인
   Future<GoogleSignInAccount?> triggerGoogleSignIn();
+
+  // 구글 로그아웃
+  Future<void> triggerGoogleSignOut();
 }

@@ -1,9 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
-import 'package:uppercut_fantube/domain/model/content/content_shell.dart';
-import 'package:uppercut_fantube/domain/model/content/explore_content_id_info.dart';
-import 'package:uppercut_fantube/domain/model/content/simple_content_info.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDataSourceImpl
@@ -11,14 +6,14 @@ class ContentDataSourceImpl
     implements ContentDataSource {
   // 홈 상단 노출 컨텐츠 리스트
   @override
-  Future<List<PosterExposureContent>> loadTopExposedContentList() async {
+  Future<List<BannerContent>> loadBannerContentList() async {
     // 임시 Json Mock up Data
     // top_ten_content_list.json
     var jsonText = await rootBundle
-        .loadString('assets/mocks/home_top_section_content_list.json');
+        .loadString('assets/mocks/banner.json');
     Map<String, dynamic> data = json.decode(jsonText);
     List<dynamic> aim = data['items'];
-    return aim.map((e) => PosterExposureContent.topExposedContent(e)).toList();
+    return aim.map((e) => BannerContent.fromJson(e)).toList();
 
     // final responseValue = ChannelImagesDescriptionsReswponse.fromJson(data);
     // return responseValue;
