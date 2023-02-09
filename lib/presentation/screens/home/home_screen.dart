@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
+import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -256,14 +257,15 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             GestureDetector(
               onTap: () {
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
-                vm.testResponseResult();
+                LocalStorageService.to.deleteData(fieldName: 'test');
+                // vm.testResponseResult();
               },
-              child: const SizedBox(),
-              // Image.asset(
-              //   'assets/images/main_logo.png',
-              //   height: 40,
-              //   width: 40,
-              // ),
+              child:
+              Image.asset(
+                'assets/images/main_logo.png',
+                height: 40,
+                width: 40,
+              ),
             ),
             IconInkWellButton.assetIcon(
               iconPath: 'assets/icons/search.svg',

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/services.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -85,6 +87,32 @@ class HomeViewModel extends BaseViewModel {
         return;
       }
     }
+  }
+
+  Future<void> testSaveData() async {
+    // File path to a file in the current directory
+    String dbPath = 'sample.db';
+    DatabaseFactory dbFactory = databaseFactoryIo;
+
+    // We use the database factory to open the database
+    Database db = await dbFactory.openDatabase(dbPath);
+
+  }
+
+  Future<void> testReadData() async {
+    // File path to a file in the current directory
+    String dbPath = 'sample.db';
+    DatabaseFactory dbFactory = databaseFactoryIo;
+
+    // We use the database factory to open the database
+    Database db = await dbFactory.openDatabase(dbPath);
+
+    // Sotre 선언
+    var store = StoreRef.main();
+
+    var sampleData = await store.record('sampleTitle').get(db);
+
+    print(sampleData);
   }
 
   // 검색 스크린으로 이동

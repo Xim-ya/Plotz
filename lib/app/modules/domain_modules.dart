@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/domain/service/user_service.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_in_handler_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
@@ -10,6 +11,9 @@ abstract class DomainModules {
   DomainModules._();
 
   static void dependencies() {
+    // 로컬 스토리지
+    Get.put(LocalStorageService());
+
     // 인증
     Get.lazyPut(() => SocialSignOutHandlerUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => SocialSignInHandlerUseCase(Get.find()), fenix: true);

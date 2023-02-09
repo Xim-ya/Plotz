@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/data/dto/staticContent/response/content_key_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class StaticContentDataSourceImpl extends StaticContentDataSource {
@@ -35,7 +36,23 @@ class StaticContentDataSourceImpl extends StaticContentDataSource {
   }
 
   @override
-  Future<TopTenContentResponse> loadTopTenContents() {
+  Future<TopTenContentResponse> loadTopTenContents() async {
+    return TopTenContentResponse(key: '2022-02-09-EFG', items: [
+      TopTenContentItemResponse(
+          id: 'm-210577', posterImgUrl: '/epEVLlIRErigv6YFkS6YQNFtCtj.jpg'),
+      TopTenContentItemResponse(
+          id: 'm-4965', posterImgUrl: '/9tG96b62438mIXi12dhBbIOBgiY.jpg'),
+      TopTenContentItemResponse(
+          id: 't-113988', posterImgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg'),
+      TopTenContentItemResponse(
+          id: 't-1396', posterImgUrl: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg'),
+    ]);
+
     return loadResponseOrThrow(() => _api.loadTopTenContent());
+  }
+
+  @override
+  Future<ContentKeyResponse> loadStaticContentKeys() {
+    return loadResponseOrThrow(() => _api.loadStaticContentKeys());
   }
 }
