@@ -1,4 +1,6 @@
 import 'dart:ui';
+
+import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -123,78 +125,92 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   // 맨 상단에 노출되어 있는 컨텐츠 슬라이더 - (컨텐츠 제목, 내용, 유튜브썸네일 이미지로 구성)
   // TODO : Skeleton 처리 필요
-  Widget _buildTopExposedContentSlider() => Obx(() => CarouselSlider.builder(
-        carouselController: vm.carouselController,
-        itemCount: vm.topExposedContentList?.length ?? 0,
-        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-          final BannerContent item = vm.topExposedContentList![itemIndex];
-
-          /// Top Content Section
-          return GestureDetector(
-            onTap: () {
-              print(vm.topExposedContentList!.length);
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  GestureDetector(
-                    child: Text(
-                      item.title ?? '-',
-                      style:
-                          AppTextStyle.headline2.copyWith(color: Colors.white),
-                    ),
-                  ),
-                  AppSpace.size2,
-                  Text(
-                    '${item.description}\n',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: AppTextStyle.headline3
-                        .copyWith(color: AppColor.lightGrey),
-                  ),
-                  AppSpace.size8,
-                  // 유튜브 썸네일 이미지
-                  VideoThumbnailImgWithPlayerBtn(
-                    onPlayerBtnClicked: () {
-                      final argument = ContentArgumentFormat(
-                        contentId: item.id,
-                        contentType: item.type,
-                        posterImgUrl: item.backdropImgUrl,
-                        thumbnailUrl: item.imgUrl,
-                        videoId: item.videoId,
-                      );
-                      vm.routeToContentDetail(argument);
-                    },
-                    posterImgUrl: item.imgUrl,
-                  ),
-                ],
-              ),
+  Widget _buildTopExposedContentSlider() => GetBuilder<HomeViewModel>(
+        init: vm,
+        builder: (_) {
+          return CarouselSlider.builder(
+            carouselController: vm.carouselController,
+            itemCount: vm.topExposedContentList?.length ?? 0,
+            options: CarouselOptions(
+              onPageChanged: (index, _) {
+                vm.onBannerSliderSwiped(index);
+              },
+              initialPage: 0,
+              enableInfiniteScroll: false,
+              viewportFraction: 0.93,
+              aspectRatio: 337 / 276,
             ),
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) {
+              final BannerItem item = vm.topExposedContentList![itemIndex];
+
+              /// Top Content Section
+              return GestureDetector(
+                onTap: () {
+                  print(vm.topExposedContentList!.length);
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      GestureDetector(
+                        child: Text(
+                          item.title ?? '-',
+                          style: AppTextStyle.headline2
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
+                      AppSpace.size2,
+                      Text(
+                        '${item.description}\n',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: AppTextStyle.headline3
+                            .copyWith(color: AppColor.lightGrey),
+                      ),
+                      AppSpace.size8,
+                      // 유튜브 썸네일 이미지
+                      VideoThumbnailImgWithPlayerBtn(
+                        onPlayerBtnClicked: () {
+                          final argument = ContentArgumentFormat(
+                            contentId: item.id,
+                            contentType: item.type,
+                            posterImgUrl: item.backdropImgUrl,
+                            thumbnailUrl: item.imgUrl,
+                            videoId: item.videoId,
+                          );
+                          vm.routeToContentDetail(argument);
+                        },
+                        posterImgUrl: item.imgUrl,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
         },
-        options: CarouselOptions(
-            onPageChanged: (index, _) => vm.topExposedContentSliderIndex(index),
-            initialPage: 0,
-            enableInfiniteScroll: false,
-            viewportFraction: 0.93,
-            aspectRatio: 337 / 276),
-      ));
+      );
 
   // 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
-        Obx(
-          () => vm.isTopExposedContentListLoaded
-              ? CachedNetworkImage(
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                  imageUrl: vm.selectedTopExposedContent.backdropImgUrl
-                      .prefixTmdbImgPath,
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                )
-              : const SizedBox(),
+        GetBuilder<HomeViewModel>(
+          init: vm,
+          builder: (_) {
+            if (vm.isTopExposedContentListLoaded) {
+              return CachedNetworkImage(
+                width: double.infinity,
+                fit: BoxFit.fitWidth,
+                imageUrl: vm
+                    .selectedTopExposedContent.backdropImgUrl.prefixTmdbImgPath,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
         ),
         // Graident 레이어
         Positioned.fill(
@@ -240,6 +256,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             GestureDetector(
               onTap: () {
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
+                vm.testResponseResult();
               },
               child: Image.asset(
                 'assets/images/main_logo.png',

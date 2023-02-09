@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -6,7 +7,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 * */
 
 abstract class ContentRepository   {
-  Future<Result<List<BannerContent>>> loadTopExposedContent();
+  Future<Result<List<BannerItem>>> loadTopExposedContent();
 
   Future<Result<List<ContentEpisodeInfoItem>>> loadContentEpisodeItemList();
 

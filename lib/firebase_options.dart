@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:1061021294637:android:3ba1e53928812837d418a4',
     messagingSenderId: '1061021294637',
     projectId: 'soonsak-15350',
+    databaseURL: 'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'soonsak-15350.appspot.com',
   );
 
@@ -62,6 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:1061021294637:ios:e087ac5654812d2cd418a4',
     messagingSenderId: '1061021294637',
     projectId: 'soonsak-15350',
+    databaseURL: 'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'soonsak-15350.appspot.com',
     androidClientId: '1061021294637-fadcb107161nikk5grp53ee09pobtej0.apps.googleusercontent.com',
     iosClientId: '1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl.apps.googleusercontent.com',

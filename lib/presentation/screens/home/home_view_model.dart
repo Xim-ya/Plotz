@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/services.dart';
+import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_url_validator/video_url_validator.dart';
@@ -19,8 +20,9 @@ class HomeViewModel extends BaseViewModel {
   /* [Variables] */
 
   /// Data
-  final Rxn<List<BannerContent>> _topExposedContentList =
-      Rxn(); // 상단 노출 컨텐츠
+  final BannerModel _bannerContent = BannerModel();
+
+  // final Rxn<List<BannerItem>> _topExposedContentList = Rxn(); // 상단 노출 컨텐츠
   final Rxn<List<ContentShell>> topTenContentList = Rxn(); // Top 10 컨텐츠
   final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
       Rxn(); // 카테고리 및 카테고리 컨텐츠
@@ -29,7 +31,7 @@ class HomeViewModel extends BaseViewModel {
   late double scrollOffset = 0;
   final RxBool showAppbarBackground = true.obs;
   RxBool showBlurAtAppBar = false.obs;
-  RxInt topExposedContentSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
+  int topExposedContentSliderIndex = 0; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
 
   /// Size
   final double appBarHeight = SizeConfig.to.statusBarHeight + 56;
@@ -42,6 +44,11 @@ class HomeViewModel extends BaseViewModel {
   final LoadTopExposedContentListUseCase _loadTopExposedContentList;
 
   /* [Intent] */
+
+  void onBannerSliderSwiped(int index) {
+    topExposedContentSliderIndex = index;
+    update();
+  }
 
   void resetContentList(int id) {
     // print(_topExposedContentList.value!.length);
@@ -89,7 +96,7 @@ class HomeViewModel extends BaseViewModel {
   Future<void> _fetchTopExposedContentList() async {
     final responseResult = await _loadTopExposedContentList.call();
     responseResult.fold(onSuccess: (data) {
-      _topExposedContentList.value = data;
+      // _topExposedContentList.value = data;
       print(data.length);
     }, onFailure: (e) {
       log(e.toString());
@@ -151,19 +158,19 @@ class HomeViewModel extends BaseViewModel {
 
   /// Mock Json Data Video
   Future<void> getJsonMockData() async {
-    final responseResult = await _dataSource.loadBannerContentList();
-    final List<BannerContent> mockItemLis = responseResult;
-  }
-
-  Future<void> test() async {
-    final response = await http.head(
-        Uri.parse('https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg'));
-
-    if (response.statusCode == 200) {
-      print("TRUEÎ");
-    } else {
-      print("FAILED");
-    }
+    //   final responseResult = await _dataSource.loadBannerContentList();
+    //   final List<BannerContent> mockItemLis = responseResult;
+    // }
+    //
+    // Future<void> test() async {
+    //   final response = await http.head(
+    //       Uri.parse('https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg'));
+    //
+    //   if (response.statusCode == 200) {
+    //     print("TRUEÎ");
+    //   } else {
+    //     print("FAILED");
+    //   }
   }
 
   Future<void> aim() async {
@@ -208,36 +215,8 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> jsonCallText() async {
-    // var jsonText = await rootBundle
-    //     .loadString('assets/mocks/movie_content_video_list.json');
-    // Map<String, dynamic> data = json.decode(jsonText);
-    //
-    // List<Map<String, dynamic>> aim =
-    //     List<Map<String, dynamic>>.from(data['items']);
-    //
-    // final arang = aim.firstWhere((element) => element.keys.first == '113988');
-    //
-    // print(arang);
-
-    // final arang = Map.fromEntries(aim.entries)
-    //
-    // print(arang);
-    // Map<String, dynamic> arang = aim[0];
-    // print(arang.keys.single);
-
-    // List<Map<String, dynamic>> map = [];
-    // ...
-    // _map = List<Map<String, dynamic>>.from(jsonDecode(response.body));
-
-    // final arang = aim.map((element) {
-    //   element as Map<String, dynamic>;
-    //   if (element.keys.first == '113988') {
-    //     return element;
-    //   } else {
-    //     return;
-    //   }
-    // });
+  Future<void> testResponseResult() async {
+    print(_bannerContent.id);
   }
 
   @override
@@ -252,12 +231,13 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
+    await _bannerContent.fetchBannerContentList().then((_) => update());
+
     _fetchTopTenContentList();
     _fetchTopExposedContentList();
     // _fetchContentListOfCategory();
 
     youtubeIntent();
-    jsonCallText();
 
     // aim();
   }

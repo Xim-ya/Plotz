@@ -1,4 +1,5 @@
 
+import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -8,7 +9,7 @@ class ContentRepositoryImpl implements ContentRepository {
 
   // 홈 상단 노출 콘텐츠 리스트 호출
   @override
-  Future<Result<List<BannerContent>>> loadTopExposedContent() async {
+  Future<Result<List<BannerItem>>> loadTopExposedContent() async {
     try {
       final response = await _contentDataSource.loadBannerContentList();
       return Result.success(response);

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDataSourceImpl
@@ -6,14 +8,31 @@ class ContentDataSourceImpl
     implements ContentDataSource {
   // 홈 상단 노출 컨텐츠 리스트
   @override
-  Future<List<BannerContent>> loadBannerContentList() async {
+  Future<List<BannerItem>> loadBannerContentList() async {
+    final url = Uri.parse(
+        'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app/banner.json');
+
+
+    try {
+      final response = await http.get(url);
+      var pdfText= await json.decode(response.body);
+      print("=========== 테스트 \n ${pdfText}");
+
+      } catch (e) {
+      print('코드 오류');
+      print(e);
+    }
+
+
+
+
     // 임시 Json Mock up Data
     // top_ten_content_list.json
-    var jsonText = await rootBundle
-        .loadString('assets/mocks/banner.json');
+    var jsonText = await rootBundle.loadString('assets/mocks/banner.json');
     Map<String, dynamic> data = json.decode(jsonText);
     List<dynamic> aim = data['items'];
-    return aim.map((e) => BannerContent.fromJson(e)).toList();
+
+    return aim.map((e) => BannerItem.fromJson(e)).toList();
 
     // final responseValue = ChannelImagesDescriptionsReswponse.fromJson(data);
     // return responseValue;

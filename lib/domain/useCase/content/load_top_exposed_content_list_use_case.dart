@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.19
@@ -5,13 +6,13 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class LoadTopExposedContentListUseCase
-    extends BaseNoParamUseCase<Result<List<BannerContent>>> {
+    extends BaseNoParamUseCase<Result<List<BannerItem>>> {
   LoadTopExposedContentListUseCase(this._repository);
 
   final ContentRepository _repository;
 
   @override
-  Future<Result<List<BannerContent>>> call() async {
+  Future<Result<List<BannerItem>>> call() async {
     return _repository.loadTopExposedContent();
   }
 }
