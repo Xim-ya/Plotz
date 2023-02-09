@@ -8,14 +8,14 @@ class HomeScaffold extends StatelessWidget {
       required this.body,
       required this.appBarHeight,
       required this.stackedGradientPosterBg,
-      required this.topExposedContentSlider,
+      required this.topBannerSlider,
       required this.topTenContentSlider,
       required this.categoryListWithPostSlider})
       : super(key: key);
 
   final List<Widget> animationAppbar;
   final List<Widget> stackedGradientPosterBg;
-  final Widget topExposedContentSlider;
+  final Widget topBannerSlider;
   final List<Widget> topTenContentSlider;
   final List<Widget> categoryListWithPostSlider;
   final List<Widget> body;
@@ -43,7 +43,7 @@ class HomeScaffold extends StatelessWidget {
                   children: [
                     SizedBox(height: appBarHeight), // 커스텀 앱바와 간격을 맞추기 위한 위젯
                     AppSpace.size72,
-                    topExposedContentSlider, // 상단 대표 컨텐츠 슬라이더
+                    topBannerSlider, // 상단 대표 컨텐츠 슬라이더
                     ...topTenContentSlider, // Top10 컨텐츠 슬라이더
                     ...categoryListWithPostSlider, // 카테고리 컨텐츠 리스트
                     ...body

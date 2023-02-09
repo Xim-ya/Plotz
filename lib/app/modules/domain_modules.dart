@@ -15,8 +15,6 @@ abstract class DomainModules {
     Get.lazyPut(() => SocialSignInHandlerUseCase(Get.find()), fenix: true);
 
     // 컨텐츠
-    Get.lazyPut(() => LoadTopExposedContentListUseCase(Get.find()),
-        fenix: true);
     Get.lazyPut(() => ContentService(), fenix: true);
     Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
 

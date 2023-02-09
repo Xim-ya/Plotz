@@ -84,9 +84,7 @@ export 'package:uppercut_fantube/domain/model/youtube/youtube_content_comment.da
 export 'package:uppercut_fantube/domain/model/youtube/youtube_video_content_info.dart';
 export 'package:uppercut_fantube/domain/model/content/tv_content_credit_info.dart';
 export 'package:uppercut_fantube/domain/model/content/content_episode_info_item.dart';
-export 'package:uppercut_fantube/domain/useCase/content/load_top_exposed_content_list_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/tmdb/load_content_detail_info_use_case.dart';
-export 'package:uppercut_fantube/data/dataSource/content/content_data_source.dart';
 export 'package:uppercut_fantube/domain/model/content/exposure_content.dart';
 export 'package:uppercut_fantube/domain/model/content/youtube_content.dart';
 export 'package:uppercut_fantube/domain/model/content/content_main_info.dart';

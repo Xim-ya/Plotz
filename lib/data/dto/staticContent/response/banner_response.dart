@@ -37,11 +37,16 @@ class BannerItemResponse {
   @JsonKey(name: 'backdropImgUrl')
   String backdropImgUrl;
 
-  BannerItemResponse(this.id, this.videoId, this.title, this.description,
-      this.imgUrl, this.backdropImgUrl);
+  BannerItemResponse(
+      {required this.id,
+        required this.videoId,
+        required this.title,
+        required this.description,
+        required this.imgUrl,
+        required this.backdropImgUrl});
 
   factory BannerItemResponse.fromJson(Map<String, dynamic> json) =>
-      _$BannerContentResponseFromJson(json);
+      _$BannerItemResponseFromJson(json);
 
 
 }

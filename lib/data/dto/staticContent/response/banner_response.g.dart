@@ -14,13 +14,12 @@ BannerResponse _$BannerResponseFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-BannerItemResponse _$BannerContentResponseFromJson(
-        Map<String, dynamic> json) =>
+BannerItemResponse _$BannerItemResponseFromJson(Map<String, dynamic> json) =>
     BannerItemResponse(
-      json['id'] as String,
-      json['videoId'] as String,
-      json['title'] as String,
-      json['description'] as String,
-      json['imgUrl'] as String,
-      json['backdropImgUrl'] as String,
+      id: json['id'] as String,
+      videoId: json['videoId'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      imgUrl: json['imgUrl'] as String,
+      backdropImgUrl: json['backdropImgUrl'] as String,
     );

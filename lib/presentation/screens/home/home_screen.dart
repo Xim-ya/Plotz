@@ -1,6 +1,5 @@
 import 'dart:ui';
-
-import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
+import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -15,7 +14,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       scrollController: vm.scrollController,
       animationAppbar: _buildAnimationAppbar(),
       stackedGradientPosterBg: _buildStackedGradientPosterBg(),
-      topExposedContentSlider: _buildTopExposedContentSlider(),
+      topBannerSlider: _buildTopBannerSlider(),
       topTenContentSlider: _buildTopTenContentSlider(),
       categoryListWithPostSlider: _buildCategoryListWithPostSlider(),
       body: _buildBody(),
@@ -92,18 +91,19 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               vm.launchAnotherApp();
             },
             child: Text(
-              '어퍼컷 Top10',
+              '순삭 Top10',
               style: AppTextStyle.headline2,
             ),
           ),
         ),
         AppSpace.size6,
-        Obx(
-          () => ContentPostSlider(
+        GetBuilder<HomeViewModel>(
+          init: vm,
+          builder: (_) => ContentPostSlider(
             height: 200,
-            itemCount: vm.topTenContentList.value?.length ?? 0,
+            itemCount: vm.topTenContents.contentList?.length ?? 0,
             itemBuilder: (context, index) {
-              final item = vm.topTenContentList.value![index];
+              final item = vm.topTenContents.contentList![index];
               return GestureDetector(
                 onTap: () {
                   final argument = ContentArgumentFormat(
@@ -114,18 +114,18 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   vm.routeToContentDetail(argument);
                 },
                 child: ContentPostItem(
-                  imgUrl: vm.topTenContentList.value![index].posterImgUrl
+                  imgUrl: vm.topTenContents.contentList![index].posterImgUrl
                       .prefixTmdbImgPath,
                 ),
               );
             },
           ),
-        ),
+        )
       ];
 
   // 맨 상단에 노출되어 있는 컨텐츠 슬라이더 - (컨텐츠 제목, 내용, 유튜브썸네일 이미지로 구성)
   // TODO : Skeleton 처리 필요
-  Widget _buildTopExposedContentSlider() => GetBuilder<HomeViewModel>(
+  Widget _buildTopBannerSlider() => GetBuilder<HomeViewModel>(
         init: vm,
         builder: (_) {
           return CarouselSlider.builder(
@@ -258,11 +258,12 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
                 vm.testResponseResult();
               },
-              child: Image.asset(
-                'assets/images/main_logo.png',
-                height: 40,
-                width: 40,
-              ),
+              child: const SizedBox(),
+              // Image.asset(
+              //   'assets/images/main_logo.png',
+              //   height: 40,
+              //   width: 40,
+              // ),
             ),
             IconInkWellButton.assetIcon(
               iconPath: 'assets/icons/search.svg',

@@ -11,4 +11,5 @@ extension HomeViewModelPart on HomeViewModel {
   BannerItem get selectedTopExposedContent =>
       _bannerContent.contentList![topExposedContentSliderIndex];
 
+  TopTenContentsModel get topTenContents => _topTenContents;
 }

@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/services.dart';
-import 'package:uppercut_fantube/domain/model/staticContent/banner.dart';
+import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
+import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_url_validator/video_url_validator.dart';
@@ -14,16 +15,16 @@ class HomeViewModel extends BaseViewModel {
 
   HomeViewModel(
     this._dataSource,
-    this._loadTopExposedContentList,
   );
 
   /* [Variables] */
 
   /// Data
   final BannerModel _bannerContent = BannerModel();
+  final TopTenContentsModel _topTenContents = TopTenContentsModel();
 
   // final Rxn<List<BannerItem>> _topExposedContentList = Rxn(); // 상단 노출 컨텐츠
-  final Rxn<List<ContentShell>> topTenContentList = Rxn(); // Top 10 컨텐츠
+  // final Rxn<List<ContentPosterShell>> topTenContentList = Rxn(); // Top 10 컨텐츠
   final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
       Rxn(); // 카테고리 및 카테고리 컨텐츠
 
@@ -41,7 +42,6 @@ class HomeViewModel extends BaseViewModel {
   late CarouselController carouselController;
 
   /* [UseCase] */
-  final LoadTopExposedContentListUseCase _loadTopExposedContentList;
 
   /* [Intent] */
 
@@ -90,32 +90,6 @@ class HomeViewModel extends BaseViewModel {
   // 검색 스크린으로 이동
   void routeToSearch() {
     Get.toNamed(AppRoutes.search);
-  }
-
-  // 상단 노출 컨텐츠 리스트 호출
-  Future<void> _fetchTopExposedContentList() async {
-    final responseResult = await _loadTopExposedContentList.call();
-    responseResult.fold(onSuccess: (data) {
-      // _topExposedContentList.value = data;
-      print(data.length);
-    }, onFailure: (e) {
-      log(e.toString());
-    });
-  }
-
-  // Top10 컨텐츠 리스트 호출
-  Future<void> _fetchTopTenContentList() async {
-    // final responseResult = await _loadTopTenContentListUseCase();
-    final responseResult = await ContentRepository.to.loadTopTenContentList();
-    responseResult.fold(
-      onSuccess: (data) {
-        topTenContentList.value = data;
-        print(data[1].posterImgUrl);
-      },
-      onFailure: (e) {
-        log(e.toString());
-      },
-    );
   }
 
   // 카테고리 & 해당 카테고리 컨텐츠 리스트 호출
@@ -232,9 +206,8 @@ class HomeViewModel extends BaseViewModel {
     carouselController = CarouselController();
 
     await _bannerContent.fetchBannerContentList().then((_) => update());
+    await _topTenContents.fetchData().then((_) => update());
 
-    _fetchTopTenContentList();
-    _fetchTopExposedContentList();
     // _fetchContentListOfCategory();
 
     youtubeIntent();

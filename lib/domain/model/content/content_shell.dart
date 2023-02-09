@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/data/dto/staticContent/response/top_ten_content_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.31
@@ -10,21 +11,32 @@ import 'package:uppercut_fantube/utilities/index.dart';
     }
  * */
 
-class ContentShell {
+class ContentPosterShell {
   final int contentId;
-  final String posterImgUrl;
   final ContentType contentType;
+  final String posterImgUrl;
 
-  ContentShell(
-      {required this.contentId,
-      required this.posterImgUrl,
-      required this.contentType});
+  ContentPosterShell({
+    required this.contentId,
+    required this.contentType,
+    required this.posterImgUrl,
+  }); 
 
-  factory ContentShell.fromJson(Map<String, dynamic> json) {
-    return ContentShell(
+  factory ContentPosterShell.fromResponse(TopTenContentItemResponse response) =>
+      ContentPosterShell(
+        contentId: SplittedIdAndType.fromOriginId(response.id).id,
+        contentType: SplittedIdAndType.fromOriginId(response.id).type,
+        posterImgUrl: response.posterImgUrl,
+      );
+
+  // Form Mock Json Data Response
+  factory ContentPosterShell.fromJson(Map<String, dynamic> json) {
+    return ContentPosterShell(
       contentId: json['id'],
       posterImgUrl: json['posterImgUrl'],
-      contentType: ContentType.fromString(json['type']),
+      contentType: ContentType.fromString(
+        json['type'],
+      ),
     );
   }
 }
