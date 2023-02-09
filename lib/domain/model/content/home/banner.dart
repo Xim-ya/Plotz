@@ -1,23 +1,21 @@
-import 'package:uppercut_fantube/data/dto/staticContent/response/banner_response.dart';
-import 'package:uppercut_fantube/data/repository/staticContent/static_content_repository.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
-class BannerModel {
-  String? id;
+class BannerModel extends BaseSingleDataModel {
+  BannerModel({this.key, this.contentList});
+
+  String? key;
   List<BannerItem>? contentList;
 
+  @override
   bool get isLoaded => contentList.hasData;
 
-  BannerModel({this.id, this.contentList});
-
-
-
   // 데이터 호출
-  Future<void> fetchBannerContentList() async {
+  @override
+  Future<void> fetchData() async {
     final response = await StaticContentRepository.to.loadBannerContentList();
     response.fold(
         onSuccess: (data) {
-          id = data.id;
+          key = data.key;
           contentList = data.contentList;
         },
         onFailure: (e) {});
@@ -25,7 +23,7 @@ class BannerModel {
 
   factory BannerModel.fromResponse(BannerResponse response) {
     return BannerModel(
-        id: response.id,
+        key: response.key,
         contentList: response.items.map(BannerItem.fromResponse).toList());
   }
 }

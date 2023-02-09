@@ -190,7 +190,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> testResponseResult() async {
-    print(_bannerContent.id);
+    print(_bannerContent.key);
   }
 
   @override
@@ -205,7 +205,7 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
-    await _bannerContent.fetchBannerContentList().then((_) => update());
+    await _bannerContent.fetchData().then((_) => update());
     await _topTenContents.fetchData().then((_) => update());
 
     // _fetchContentListOfCategory();

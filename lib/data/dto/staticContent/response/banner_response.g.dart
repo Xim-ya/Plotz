@@ -8,7 +8,7 @@ part of 'banner_response.dart';
 
 BannerResponse _$BannerResponseFromJson(Map<String, dynamic> json) =>
     BannerResponse(
-      json['id'] as String,
+      json['key'] as String,
       (json['items'] as List<dynamic>)
           .map((e) => BannerItemResponse.fromJson(e as Map<String, dynamic>))
           .toList(),

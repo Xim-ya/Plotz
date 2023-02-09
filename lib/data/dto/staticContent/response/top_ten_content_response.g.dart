@@ -9,7 +9,7 @@ part of 'top_ten_content_response.dart';
 TopTenContentResponse _$TopTenContentResponseFromJson(
         Map<String, dynamic> json) =>
     TopTenContentResponse(
-      id: json['id'] as String,
+      key: json['key'] as String,
       items: (json['items'] as List<dynamic>)
           .map((e) =>
               TopTenContentItemResponse.fromJson(e as Map<String, dynamic>))

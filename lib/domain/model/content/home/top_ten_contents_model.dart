@@ -1,22 +1,18 @@
 import 'dart:developer';
-
-import 'package:uppercut_fantube/data/dto/staticContent/response/top_ten_content_response.dart';
-import 'package:uppercut_fantube/data/repository/staticContent/static_content_repository.dart';
-import 'package:uppercut_fantube/domain/base/base_single_data_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class TopTenContentsModel extends BaseSingleDataModel {
-  late String? id;
+  late String? key;
   late List<ContentPosterShell>? contentList;
 
-  TopTenContentsModel({this.id, this.contentList});
+  TopTenContentsModel({this.key, this.contentList});
 
   @override
   Future<void> fetchData() async {
     final response = await StaticContentRepository.to.loadTopTenContent();
     response.fold(
       onSuccess: (data) {
-        id = data.id;
+        key = data.key;
         contentList = data.contentList;
       },
       onFailure: (e) {
@@ -31,7 +27,7 @@ class TopTenContentsModel extends BaseSingleDataModel {
 
   factory TopTenContentsModel.fromResponse(TopTenContentResponse response) =>
       TopTenContentsModel(
-        id: response.id,
+        key: response.key,
         contentList:
             response.items.map(ContentPosterShell.fromResponse).toList(),
       );

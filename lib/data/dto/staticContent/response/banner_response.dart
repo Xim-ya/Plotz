@@ -1,16 +1,18 @@
-import 'package:json_annotation/json_annotation.dart';
+
+
+import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'banner_response.g.dart';
 
 @JsonSerializable(createToJson : false)
 class BannerResponse {
-  @JsonKey(name: 'id')
-  String id;
+  @JsonKey(name: 'key')
+  String key;
 
   @JsonKey(name: 'items')
   List<BannerItemResponse> items;
 
-  BannerResponse(this.id, this.items);
+  BannerResponse(this.key, this.items);
 
   factory BannerResponse.fromJson(Map<String, dynamic> json) =>
       _$BannerResponseFromJson(json);

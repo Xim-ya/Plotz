@@ -1,7 +1,4 @@
-import 'package:uppercut_fantube/data/dataSource/staticContent/static_content_data_source.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/response/banner_response.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/response/top_ten_content_response.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/static_content_api.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 class StaticContentDataSourceImpl extends StaticContentDataSource {
   StaticContentDataSourceImpl(this._api);
@@ -24,12 +21,13 @@ class StaticContentDataSourceImpl extends StaticContentDataSource {
             imgUrl: 'https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg',
             backdropImgUrl: '/euYz4adiSHH0GE3YnTeh3uLfBvL.jpg'),
         BannerItemResponse(
-            id: 't-1396',
-            videoId: 'KfbFaQJK7Sc',
-            title: '브레이킹 배드',
-            description: '《브레이킹 베드》 | 진짜 존나 재밌음',
-            imgUrl: 'https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg',
-            backdropImgUrl: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg')
+          id: 't-1396',
+          videoId: 'KfbFaQJK7Sc',
+          title: '브레이킹 배드',
+          description: '《브레이킹 베드》 | 진짜 존나 재밌음',
+          imgUrl: 'https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg',
+          backdropImgUrl: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
+        )
       ],
     );
 

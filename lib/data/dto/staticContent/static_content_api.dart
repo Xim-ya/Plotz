@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/response/banner_response.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/response/top_ten_content_response.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 part 'static_content_api.g.dart';
 

@@ -1,6 +1,5 @@
-import 'package:uppercut_fantube/data/dto/staticContent/response/banner_response.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/response/top_ten_content_response.dart';
-import 'package:uppercut_fantube/data/mixin/fire_store_error_handler_mixin.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
+
 
 abstract class StaticContentDataSource with FireStoreErrorHandlerMixin {
 
