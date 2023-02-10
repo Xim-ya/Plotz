@@ -32,11 +32,9 @@ class ContentPosterShell {
   // Form Mock Json Data Response
   factory ContentPosterShell.fromJson(Map<String, dynamic> json) {
     return ContentPosterShell(
-      contentId: json['id'],
+      contentId:  SplittedIdAndType.fromOriginId(json['id']).id,
       posterImgUrl: json['posterImgUrl'],
-      contentType: ContentType.fromString(
-        json['type'],
-      ),
-    );
+      contentType: SplittedIdAndType.fromOriginId(json['id']).type,
+      );
   }
 }

@@ -1,15 +1,10 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/services.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
-import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
-import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
-import 'package:uppercut_fantube/domain/useCase/content/load_banner_content_use_caes.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:http/http.dart' as http;
-import 'package:video_url_validator/video_url_validator.dart';
 
 part 'home_view_model.part.dart';
 
@@ -18,6 +13,7 @@ class HomeViewModel extends BaseViewModel {
   final ContentDataSource _dataSource;
 
   HomeViewModel(
+    this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
     this._dataSource,
   );
@@ -26,7 +22,7 @@ class HomeViewModel extends BaseViewModel {
 
   /// Data
   final Rxn<BannerModel> _bannerContent = Rxn();
-  final TopTenContentsModel _topTenContents = TopTenContentsModel();
+  final Rxn<TopTenContentsModel> _topTenContents = Rxn();
 
   // final Rxn<List<BannerItem>> _topExposedContentList = Rxn(); // 상단 노출 컨텐츠
   // final Rxn<List<ContentPosterShell>> topTenContentList = Rxn(); // Top 10 컨텐츠
@@ -47,7 +43,8 @@ class HomeViewModel extends BaseViewModel {
   late CarouselController carouselController;
 
   /* [UseCase] */
-  final LoadBannerContentUseCase _loadBannerContentUseCase;
+  final LoadCachedBannerContentUseCase _loadBannerContentUseCase;
+  final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
 
   /* [Intent] */
 
@@ -224,14 +221,23 @@ class HomeViewModel extends BaseViewModel {
     // print(_bannerContent.key);
   }
 
-  Future<void> loadBannerContents() async {
+  Future<void> _fetchTopTenContents() async {
+    final response = await _loadCachedTopTenContentsUseCase.call();
+    response.fold(onSuccess: (data) {
+      _topTenContents.value = data;
+      update();
+    }, onFailure: (e) {
+      log('HomeViewModel > $e');
+    });
+  }
+
+  Future<void> _fetchBannerContents() async {
     final response = await _loadBannerContentUseCase.call();
     response.fold(onSuccess: (data) {
       _bannerContent.value = data;
-      print('====== 최종 성공 $data');
       update();
     }, onFailure: (e) {
-      print('======= 최종 실패');
+      log('HomeViewModel > $e');
     });
   }
 
@@ -247,10 +253,8 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
-    LocalStorageService.to.readData(fieldName: 'banner');
-    await loadBannerContents();
-    // await _bannerContent.fetchData().then((_) => update());
-    await _topTenContents.fetchData().then((_) => update());
+    await _fetchBannerContents();
+    await _fetchTopTenContents();
 
     // _fetchContentListOfCategory();
 

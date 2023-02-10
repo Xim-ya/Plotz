@@ -11,8 +11,6 @@ export 'dart:async';
 export 'package:flutter/services.dart';
 
 
-
-
 // External Packages
 export 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
 export 'package:get/get.dart';
@@ -24,7 +22,6 @@ export 'package:json_annotation/json_annotation.dart';
 export 'package:youtube_explode_dart/youtube_explode_dart.dart';
 export 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 export 'package:firebase_auth/firebase_auth.dart';
-
 
 
 // BaseModule
@@ -68,6 +65,9 @@ export 'package:uppercut_fantube/data/dto/staticContent/response/top_ten_content
 export 'package:uppercut_fantube/data/mixin/fire_store_error_handler_mixin.dart';
 
 // Domain
+export 'package:uppercut_fantube/domain/model/content/home/banner_model.dart';
+export 'package:uppercut_fantube/domain/service/local_storage_service.dart';
+export 'package:uppercut_fantube/domain/useCase/content/load_cached_banner_content_use_case.dart';
 export 'package:uppercut_fantube/domain/useCase/search/search_validate_url_use_case.dart';
 export 'package:uppercut_fantube/domain/mixin/paging_handler_mixin.dart';
 export 'package:uppercut_fantube/domain/mixin/search_handler_mixin.dart';

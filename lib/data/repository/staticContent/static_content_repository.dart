@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
 import 'package:uppercut_fantube/domain/model/content/home/static_content_keys.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';

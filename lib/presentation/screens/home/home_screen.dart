@@ -1,6 +1,4 @@
 import 'dart:ui';
-import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
-import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -102,9 +100,9 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           init: vm,
           builder: (_) => ContentPostSlider(
             height: 200,
-            itemCount: vm.topTenContents.contentList?.length ?? 0,
+            itemCount: vm.topTenContents?.contentList?.length ?? 0,
             itemBuilder: (context, index) {
-              final item = vm.topTenContents.contentList![index];
+              final item = vm.topTenContents!.contentList![index];
               return GestureDetector(
                 onTap: () {
                   final argument = ContentArgumentFormat(
@@ -115,7 +113,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   vm.routeToContentDetail(argument);
                 },
                 child: ContentPostItem(
-                  imgUrl: vm.topTenContents.contentList![index].posterImgUrl
+                  imgUrl: vm.topTenContents!.contentList![index].posterImgUrl
                       .prefixTmdbImgPath,
                 ),
               );
@@ -257,7 +255,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             GestureDetector(
               onTap: () {
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
-                LocalStorageService.to.deleteData(fieldName: 'banner');
+                LocalStorageService.to.deleteData(fieldName: 'topTen');
                 // vm.loadBannerContents();
                 // vm.testResponseResult();
               },

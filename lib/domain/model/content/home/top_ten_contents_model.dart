@@ -25,10 +25,20 @@ class TopTenContentsModel extends BaseSingleDataModel {
   @override
   bool get isLoaded => contentList.hasData;
 
+  // From Response
   factory TopTenContentsModel.fromResponse(TopTenContentResponse response) =>
       TopTenContentsModel(
         key: response.key,
         contentList:
             response.items.map(ContentPosterShell.fromResponse).toList(),
       );
+
+  // From Json
+  factory TopTenContentsModel.fromJson(Map<String, dynamic> json) {
+    List<dynamic> jsonItemList = json['items'];
+    return TopTenContentsModel(
+        key: json['key'],
+        contentList:
+            jsonItemList.map((e) => ContentPosterShell.fromJson(e)).toList());
+  }
 }

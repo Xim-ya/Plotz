@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
-import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.09
@@ -23,8 +21,8 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *
  * */
 
-class LoadBannerContentUseCase extends BaseNoParamUseCase<Result<BannerModel>> {
-  LoadBannerContentUseCase(this._repository);
+class LoadCachedBannerContentUseCase extends BaseNoParamUseCase<Result<BannerModel>> {
+  LoadCachedBannerContentUseCase(this._repository);
 
   final StaticContentRepository _repository;
 
@@ -36,7 +34,6 @@ class LoadBannerContentUseCase extends BaseNoParamUseCase<Result<BannerModel>> {
 
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
-      print('===== BP 1');
       // 2-a).Static content keysData 호출
       final String? keyResponse = await fetchContentKey();
 
@@ -47,7 +44,6 @@ class LoadBannerContentUseCase extends BaseNoParamUseCase<Result<BannerModel>> {
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
             jsonText: localData.toString(), givenKey: keyResponse!)) {
-          print('===== BP 3');
           final data = jsonDecode(localData.toString());
           final result = BannerModel.fromJson(data);
           return Result.success(result);
@@ -55,18 +51,15 @@ class LoadBannerContentUseCase extends BaseNoParamUseCase<Result<BannerModel>> {
         // 조건 : 최신 업데이트 키가 아니라면
         // 실행 : 2-c) api 호출
         else {
-          print('===== BP 4');
           return fetchBannerModel();
         }
       }
       // 조건 : 키 값이 정상적으로 불러오지 못했다면
       // 실행 : 2-c) api 호출
       else {
-        print('===== BP 5');
         return fetchBannerModel();
       }
     } else {
-      print('===== BP 2');
       // 조건 : local data가 존재하지 않는다면
       // 실행 :  api 호출
       return fetchBannerModel();

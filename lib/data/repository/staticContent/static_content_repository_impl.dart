@@ -1,9 +1,6 @@
-import 'package:uppercut_fantube/data/dataSource/staticContent/static_content_data_source.dart';
-import 'package:uppercut_fantube/data/repository/staticContent/static_content_repository.dart';
-import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
 import 'package:uppercut_fantube/domain/model/content/home/static_content_keys.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
-import 'package:uppercut_fantube/utilities/result.dart';
+import 'package:uppercut_fantube/utilities/index.dart';
 
 class StaticContentRepositoryImpl extends StaticContentRepository {
   StaticContentRepositoryImpl(this._dataSource);

@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 abstract class ContentDataSource {
