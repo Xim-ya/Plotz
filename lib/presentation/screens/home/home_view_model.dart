@@ -21,9 +21,6 @@ class HomeViewModel extends BaseViewModel {
   /// Data
   final Rxn<BannerModel> _bannerContent = Rxn();
   final Rxn<TopTenContentsModel> _topTenContents = Rxn();
-
-  // final Rxn<List<BannerItem>> _topExposedContentList = Rxn(); // 상단 노출 컨텐츠
-  // final Rxn<List<ContentPosterShell>> topTenContentList = Rxn(); // Top 10 컨텐츠
   final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
       Rxn(); // 카테고리 및 카테고리 컨텐츠
 
