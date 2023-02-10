@@ -8,35 +8,37 @@ class ContentPostItem extends StatelessWidget {
       this.ratio = 1280 / 1920})
       : super(key: key);
 
-  final String imgUrl;
+  final String? imgUrl;
   final double borderRadius;
   final double? ratio;
 
   @override
   Widget build(BuildContext context) {
-    return   ClipRRect(
+    return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
       child: AspectRatio(
         aspectRatio: ratio!,
-        child: CachedNetworkImage(
-          fit: BoxFit.contain,
-          imageUrl: imgUrl.prefixTmdbImgPath,
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          placeholder: (context, url) => Shimmer(
-            child: Container(
-              color: AppColor.black,
-            ),
-          ),
-          errorWidget: (context, url, error) =>
-          const Center(child: Icon(Icons.error)),
-        ),
+        child: imgUrl.hasData
+            ? CachedNetworkImage(
+                fit: BoxFit.contain,
+                imageUrl: imgUrl!.prefixTmdbImgPath,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => Shimmer(
+                  child: Container(
+                    color: AppColor.black,
+                  ),
+                ),
+                errorWidget: (context, url, error) =>
+                    const Center(child: Icon(Icons.error)),
+              )
+            : const SkeletonBox(),
       ),
     );
   }

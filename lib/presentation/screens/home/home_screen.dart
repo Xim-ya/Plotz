@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:uppercut_fantube/presentation/screens/home/localWidget/banner_item.dart';
+import 'package:uppercut_fantube/presentation/screens/home/localWidget/banner_skeleton_item.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -85,14 +87,9 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         AppSpace.size40,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: GestureDetector(
-            onTap: () {
-              vm.launchAnotherApp();
-            },
-            child: Text(
-              '순삭 Top10',
-              style: AppTextStyle.headline2,
-            ),
+          child: Text(
+            '순삭 Top10',
+            style: AppTextStyle.headline2,
           ),
         ),
         AppSpace.size6,
@@ -100,94 +97,69 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           init: vm,
           builder: (_) => ContentPostSlider(
             height: 200,
-            itemCount: vm.topTenContents?.contentList?.length ?? 0,
+            itemCount: vm.topTenContents?.contentList?.length ?? 5,
             itemBuilder: (context, index) {
-              final item = vm.topTenContents!.contentList![index];
-              return GestureDetector(
-                onTap: () {
-                  final argument = ContentArgumentFormat(
-                    contentId: item.contentId,
-                    contentType: item.contentType,
-                    posterImgUrl: item.posterImgUrl,
-                  );
-                  vm.routeToContentDetail(argument);
-                },
-                child: ContentPostItem(
-                  imgUrl: vm.topTenContents!.contentList![index].posterImgUrl
-                      .prefixTmdbImgPath,
-                ),
-              );
+              if (vm.isTopTenContentsLoaded) {
+                final item = vm.topTenContents!.contentList![index];
+                return GestureDetector(
+                  onTap: () {
+                    final argument = ContentArgumentFormat(
+                      contentId: item.contentId,
+                      contentType: item.contentType,
+                      posterImgUrl: item.posterImgUrl,
+                    );
+                    vm.routeToContentDetail(argument);
+                  },
+                  child: ContentPostItem(
+                    imgUrl: vm.topTenContents!.contentList![index].posterImgUrl
+                        .prefixTmdbImgPath,
+                  ),
+                );
+              } else {
+                return const ContentPostItem(imgUrl: null);
+              }
             },
           ),
         )
       ];
 
-  // 맨 상단에 노출되어 있는 컨텐츠 슬라이더 - (컨텐츠 제목, 내용, 유튜브썸네일 이미지로 구성)
-  // TODO : Skeleton 처리 필요
+  // 상단 배너 슬라이더
   Widget _buildTopBannerSlider() => GetBuilder<HomeViewModel>(
         init: vm,
         builder: (_) {
           return CarouselSlider.builder(
             carouselController: vm.carouselController,
-            itemCount: vm.topExposedContentList?.length ?? 0,
+            itemCount: vm.bannerContentList?.length ?? 2,
             options: CarouselOptions(
+              autoPlay: true,
               onPageChanged: (index, _) {
                 vm.onBannerSliderSwiped(index);
               },
-              initialPage: 0,
-              enableInfiniteScroll: false,
               viewportFraction: 0.93,
               aspectRatio: 337 / 276,
             ),
             itemBuilder:
                 (BuildContext context, int itemIndex, int pageViewIndex) {
-              final BannerItem item = vm.topExposedContentList![itemIndex];
-
-              /// Top Content Section
-              return GestureDetector(
-                onTap: () {
-                  print(vm.topExposedContentList!.length);
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      GestureDetector(
-                        child: Text(
-                          item.title ?? '-',
-                          style: AppTextStyle.headline2
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                      AppSpace.size2,
-                      Text(
-                        '${item.description}\n',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: AppTextStyle.headline3
-                            .copyWith(color: AppColor.lightGrey),
-                      ),
-                      AppSpace.size8,
-                      // 유튜브 썸네일 이미지
-                      VideoThumbnailImgWithPlayerBtn(
-                        onPlayerBtnClicked: () {
-                          final argument = ContentArgumentFormat(
-                            contentId: item.id,
-                            contentType: item.type,
-                            posterImgUrl: item.backdropImgUrl,
-                            thumbnailUrl: item.imgUrl,
-                            videoId: item.videoId,
-                          );
-                          vm.routeToContentDetail(argument);
-                        },
-                        posterImgUrl: item.imgUrl,
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              if (vm.isBannerContentsLoaded) {
+                final BannerItem item = vm.bannerContentList![itemIndex];
+                return BannerItemView(
+                  title: item.title,
+                  description: item.description,
+                  imgUrl: item.imgUrl,
+                  onItemTapped: () {
+                    final argument = ContentArgumentFormat(
+                      contentId: item.id,
+                      contentType: item.type,
+                      posterImgUrl: item.backdropImgUrl,
+                      thumbnailUrl: item.imgUrl,
+                      videoId: item.videoId,
+                    );
+                    vm.routeToContentDetail(argument);
+                  },
+                );
+              } else {
+                return const BannerSkeletonItem();
+              }
             },
           );
         },
@@ -198,12 +170,12 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         GetBuilder<HomeViewModel>(
           init: vm,
           builder: (_) {
-            if (vm.isTopExposedContentListLoaded) {
+            if (vm.isBannerContentsLoaded) {
               return CachedNetworkImage(
                 width: double.infinity,
                 fit: BoxFit.fitWidth,
-                imageUrl: vm
-                    .selectedTopExposedContent.backdropImgUrl.prefixTmdbImgPath,
+                imageUrl: vm.selectedTopExposedContent!.backdropImgUrl
+                    .prefixTmdbImgPath,
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               );
             } else {

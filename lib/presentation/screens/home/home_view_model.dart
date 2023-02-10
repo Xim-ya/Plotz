@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'package:sembast/sembast.dart';
-import 'package:sembast/sembast_io.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -53,6 +51,11 @@ class HomeViewModel extends BaseViewModel {
     update();
   }
 
+  // 컨텐츠 상세 화면으로 이동
+  void routeToContentDetail(ContentArgumentFormat routingArgument) {
+    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
+  }
+
   void resetContentList(int id) {
     // print(_topExposedContentList.value!.length);
     // _topExposedContentList.value!
@@ -90,30 +93,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> testSaveData() async {
-    // File path to a file in the current directory
-    String dbPath = 'sample.db';
-    DatabaseFactory dbFactory = databaseFactoryIo;
 
-    // We use the database factory to open the database
-    Database db = await dbFactory.openDatabase(dbPath);
-  }
-
-  Future<void> testReadData() async {
-    // File path to a file in the current directory
-    String dbPath = 'sample.db';
-    DatabaseFactory dbFactory = databaseFactoryIo;
-
-    // We use the database factory to open the database
-    Database db = await dbFactory.openDatabase(dbPath);
-
-    // Sotre 선언
-    var store = StoreRef.main();
-
-    var sampleData = await store.record('sampleTitle').get(db);
-
-    print(sampleData);
-  }
 
   // 검색 스크린으로 이동
   void routeToSearch() {
@@ -140,10 +120,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  /// Routes Method
-  void routeToContentDetail(ContentArgumentFormat routingArgument) {
-    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
-  }
+
 
   /// Youtube Video Comment
   Future<void> youtubeIntent() async {

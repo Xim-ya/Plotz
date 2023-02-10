@@ -134,7 +134,7 @@ export 'package:uppercut_fantube/presentation/screens/tabs/tabs_screen.dart';
 export 'package:uppercut_fantube/presentation/common/content_post_item.dart';
 export 'package:uppercut_fantube/presentation/common/content_post_slider.dart';
 export 'package:uppercut_fantube/presentation/common/icon_ink_well_button.dart';
-export 'package:uppercut_fantube/presentation/screens/home/home_scaffold.dart';
+export 'package:uppercut_fantube/presentation/screens/home/localWidget/home_scaffold.dart';
 export 'package:uppercut_fantube/presentation/screens/home/home_view_model.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_binding.dart';
 export 'package:uppercut_fantube/presentation/screens/contentDetail/content_detail_screen.dart';

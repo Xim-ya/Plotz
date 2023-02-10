@@ -26,36 +26,39 @@ class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AspectRatio(
-          aspectRatio: aspectRatio,
-          child: posterImgUrl != null
-              ? CachedNetworkImage(
-                  imageUrl: posterImgUrl!,
-                  imageBuilder: (context, imageProvider) => Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(6),
+        GestureDetector(
+          onTap: onPlayerBtnClicked,
+          child: AspectRatio(
+            aspectRatio: aspectRatio,
+            child: posterImgUrl != null
+                ? CachedNetworkImage(
+                    imageUrl: posterImgUrl!,
+                    imageBuilder: (context, imageProvider) => Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
                     ),
-                  ),
-                  placeholder: (context, url) => Shimmer(
+                    placeholder: (context, url) => Shimmer(
+                      child: Container(
+                        color: AppColor.black,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) {
+                      return const Icon(Icons.error);
+                    },
+                  )
+                : Shimmer(
                     child: Container(
-                      color: AppColor.black,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: AppColor.strongGrey,
+                      ),
                     ),
                   ),
-                  errorWidget: (context, url, error) {
-                    return const Icon(Icons.error);
-                  },
-                )
-              : Shimmer(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: AppColor.strongGrey,
-                    ),
-                  ),
-                ),
+          ),
         ),
         if (showPlayerBtn == true)
           Positioned.fill(

@@ -6,10 +6,11 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 class SkeletonBox extends StatelessWidget {
   const SkeletonBox(
-      {Key? key, this.borderRadius, this.height, this.width, this.color})
+      {Key? key, this.margin, this.borderRadius, this.height, this.width, this.color})
       : super(key: key);
 
   final double? borderRadius;
+  final EdgeInsets? margin;
   final double? height;
   final double? width;
   final Color? color;
