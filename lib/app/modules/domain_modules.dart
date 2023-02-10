@@ -2,6 +2,7 @@ import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/domain/service/user_service.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_in_handler_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_banner_content_use_caes.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_impl.dart';
 import 'package:uppercut_fantube/domain/useCase/search/validate_video_url_use_case_impl.dart';
@@ -21,6 +22,7 @@ abstract class DomainModules {
     // 컨텐츠
     Get.lazyPut(() => ContentService(), fenix: true);
     Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => LoadBannerContentUseCase(Get.find()), fenix: true);
 
     // TMDB
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);

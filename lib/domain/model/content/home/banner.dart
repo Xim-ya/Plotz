@@ -26,6 +26,14 @@ class BannerModel extends BaseSingleDataModel {
         key: response.key,
         contentList: response.items.map(BannerItem.fromResponse).toList());
   }
+
+  factory BannerModel.fromJson(Map<String, dynamic> json) {
+    List<dynamic> jsonItemList = json['items'];
+
+    return BannerModel(
+        key: json['key'],
+        contentList: jsonItemList.map((e) => BannerItem.fromJson(e)).toList());
+  }
 }
 
 class BannerItem {

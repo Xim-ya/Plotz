@@ -1,14 +1,28 @@
+import 'dart:convert';
 import 'package:uppercut_fantube/data/dto/staticContent/response/content_key_response.dart';
+import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:http/http.dart' as http;
 
 class StaticContentDataSourceImpl extends StaticContentDataSource {
   StaticContentDataSourceImpl(this._api);
 
   final StaticContentApi _api;
 
-  // TODO:  여기서 호출할지 말지를 정해야힘 Local Sotrage 로직 기반
+  final String baseUrl =
+      'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app';
+
   @override
   Future<BannerResponse> loadBannerContents() async {
+    final response = await http.get(Uri.parse('$baseUrl/banner.json'));
+    final jsonText = response.body;
+
+    // LocalStorage에 받아온 response의 boy(jsonText) 저장
+    await LocalStorageService.to.saveData(fieldName: 'banner', data: jsonText);
+    final data = jsonDecode(jsonText);
+
+    return BannerResponse.fromJson(data);
+
     // TODO: 임시 Mock Data
     return BannerResponse(
       '2022-11',

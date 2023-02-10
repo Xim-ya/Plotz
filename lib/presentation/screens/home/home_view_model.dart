@@ -5,6 +5,8 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:uppercut_fantube/domain/model/content/home/banner.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
+import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_banner_content_use_caes.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_url_validator/video_url_validator.dart';
@@ -16,13 +18,14 @@ class HomeViewModel extends BaseViewModel {
   final ContentDataSource _dataSource;
 
   HomeViewModel(
+    this._loadBannerContentUseCase,
     this._dataSource,
   );
 
   /* [Variables] */
 
   /// Data
-  final BannerModel _bannerContent = BannerModel();
+  final Rxn<BannerModel> _bannerContent = Rxn();
   final TopTenContentsModel _topTenContents = TopTenContentsModel();
 
   // final Rxn<List<BannerItem>> _topExposedContentList = Rxn(); // 상단 노출 컨텐츠
@@ -44,6 +47,7 @@ class HomeViewModel extends BaseViewModel {
   late CarouselController carouselController;
 
   /* [UseCase] */
+  final LoadBannerContentUseCase _loadBannerContentUseCase;
 
   /* [Intent] */
 
@@ -96,7 +100,6 @@ class HomeViewModel extends BaseViewModel {
 
     // We use the database factory to open the database
     Database db = await dbFactory.openDatabase(dbPath);
-
   }
 
   Future<void> testReadData() async {
@@ -218,7 +221,18 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> testResponseResult() async {
-    print(_bannerContent.key);
+    // print(_bannerContent.key);
+  }
+
+  Future<void> loadBannerContents() async {
+    final response = await _loadBannerContentUseCase.call();
+    response.fold(onSuccess: (data) {
+      _bannerContent.value = data;
+      print('====== 최종 성공 $data');
+      update();
+    }, onFailure: (e) {
+      print('======= 최종 실패');
+    });
   }
 
   @override
@@ -233,13 +247,16 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
-    await _bannerContent.fetchData().then((_) => update());
+    LocalStorageService.to.readData(fieldName: 'banner');
+    await loadBannerContents();
+    // await _bannerContent.fetchData().then((_) => update());
     await _topTenContents.fetchData().then((_) => update());
 
     // _fetchContentListOfCategory();
 
     youtubeIntent();
 
+    // loadBannerContents();
     // aim();
   }
 }

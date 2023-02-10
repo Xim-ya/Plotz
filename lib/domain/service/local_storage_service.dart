@@ -14,8 +14,9 @@ import 'package:uppercut_fantube/utilities/index.dart';
 *  해당 서비스 모듈은 LocalStorage 관련
 *  읽기, 쓰기, 삭제 로직을 담당
 *
-*  현재 앱에서 사용하고 있는 LocalStorage의 db명 및 필드 값은 아래와 같은
+*  현재 앱에서 사용하고 있는 LocalStorage의 db명 및 필드 값은 아래와 같음
 *
+*  version 1
 *  - db: content.db
 *    1) field : banner <-- 홈 스크린 배너 데이터
 *    2) field : topTen <-- 홈 스크린 TopTen 컨텐츠 리스트 데이터
@@ -25,7 +26,6 @@ import 'package:uppercut_fantube/utilities/index.dart';
 class LocalStorageService extends GetxService {
   late Directory dir;
   late StoreRef store;
-  late Database db;
   late String dbPath;
 
   // 로컬 스토리지 초기화 작업
@@ -34,11 +34,30 @@ class LocalStorageService extends GetxService {
     dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true);
     dbPath = join('${dir.path}/storeData', 'content.db');
-    db = await databaseFactoryIo.openDatabase(dbPath);
   }
 
-  Future<void> saveData({required String fieldName,  required String data}) async {
+  // 로컬 스토리지 데이터 존재 유무
+  Future<bool> isLocalDataExist({required String fieldName}) async {
     try {
+      var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
+      var data = await store.record(fieldName).get(db);
+      log('====== 로컬 데이터 읽기 성공 / RESULT : $data');
+      if (data.hasData) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log('====== 로컬 데이터 읽기 실패 / $e');
+      return false;
+    }
+  }
+
+  // 데이터 저장
+  Future<void> saveData(
+      {required String fieldName, required String data}) async {
+    try {
+      var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).put(db, data);
       log('====== 로컬 데이터 저장 성공');
     } catch (e) {
@@ -46,29 +65,46 @@ class LocalStorageService extends GetxService {
     }
   }
 
+  // 데이터 읽기
   Future<void> readData({required String fieldName}) async {
     try {
-      var sampleData = await store.record(fieldName).get(db);
-      log('====== 로컬 데이터 읽기 성공 / RESULT : $sampleData');
+      var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
+      var data = await store.record(fieldName).get(db);
+      log('====== 로컬 데이터 읽기 성공 / RESULT : $data');
     } catch (e) {
       log('====== 로컬 데이터 읽기 실패 / $e');
     }
   }
 
+  // 데이터 조회
+  Future<Object?> getData({required String fieldName}) async {
+    try {
+      var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
+      var data = await store.record(fieldName).get(db);
+      log('====== 로컬 데이터 읽기 성공 / RESULT : $data');
+      return data;
+    } catch (e) {
+      log('====== 로컬 데이터 읽기 실패 / $e');
+      return null;
+    }
+  }
+
+  // 데이터 삭제
   Future<void> deleteData({required String fieldName}) async {
     try {
+      var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).delete(db);
-      log('로컬 데이터 삭제 성공');
+      log('====== 로컬 데이터 삭제 성공');
     } catch (e) {
-      log('로컬 데이터 삭제 실패 : $e');
+      log('====== 로컬 데이터 삭제 실패 : $e');
     }
   }
 
   static LocalStorageService get to => Get.find();
 
   @override
-  void onInit() {
-    super.onInit();
-    _initStorage();
+  Future<void> onReady() async {
+    super.onReady();
+    await _initStorage();
   }
 }
