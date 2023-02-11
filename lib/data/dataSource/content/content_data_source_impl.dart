@@ -16,17 +16,6 @@ class ContentDataSourceImpl
     return aim.map((e) => ContentEpisodeInfoItem.fromJson(e)).toList();
   }
 
-  // Top10 컨텐츠 리스트 호출
-  @override
-  Future<List<ContentPosterShell>> loadTopTenContentList() async {
-    // 임시 Json Mock up Data
-    // top_ten_content_list.json
-    var jsonText =
-        await rootBundle.loadString('assets/mocks/top_ten_content_list.json');
-    Map<String, dynamic> data = json.decode(jsonText);
-    List<dynamic> aim = data['items'];
-    return aim.map((e) => ContentPosterShell.fromJson(e)).toList();
-  }
 
   // 카테고리 컨텐츠 리스트
   @override

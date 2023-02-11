@@ -8,7 +8,7 @@ class CategoryContentSectionView extends StatelessWidget {
       required this.onContentTapped})
       : super(key: key);
 
-  final CategoryContentModel contentSectionData;
+  final CategoryContentSection contentSectionData;
   final Function(int) onContentTapped;
 
   @override

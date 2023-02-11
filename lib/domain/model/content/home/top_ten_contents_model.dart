@@ -32,13 +32,4 @@ class TopTenContentsModel extends BaseSingleDataModel {
         contentList:
             response.items.map(ContentPosterShell.fromResponse).toList(),
       );
-
-  // From Json
-  factory TopTenContentsModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> jsonItemList = json['items'];
-    return TopTenContentsModel(
-        key: json['key'],
-        contentList:
-            jsonItemList.map((e) => ContentPosterShell.fromJson(e)).toList());
-  }
 }

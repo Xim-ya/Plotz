@@ -3,8 +3,6 @@ import 'package:uppercut_fantube/utilities/index.dart';
 abstract class ContentDataSource {
   Future<List<ContentEpisodeInfoItem>> loadContentEpisodeItemList();
 
-  Future<List<ContentPosterShell>> loadTopTenContentList();
-
   Future<List<CategoryBaseContentList>> loadContentWithCategory();
 
   Future<List<SimpleContentInfo>> loadAllOfTvContentList();

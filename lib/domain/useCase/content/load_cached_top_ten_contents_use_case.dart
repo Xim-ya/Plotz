@@ -47,8 +47,9 @@ class LoadCachedTopTenContentsUseCase
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
             jsonText: localData.toString(), givenKey: keyResponse!)) {
-          final data = jsonDecode(localData.toString());
-          final result = TopTenContentsModel.fromJson(data);
+          final json = jsonDecode(localData.toString());
+          final response = TopTenContentResponse.fromJson(json);
+          final result = TopTenContentsModel.fromResponse(response);
           return Result.success(result);
         }
         // 조건 : 최신 업데이트 키가 아니라면

@@ -9,7 +9,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 /* Created By Ximya - 2022.02.09
 *  값이 일정 기간동안 고정되어 있는 데이터의 API Call을 최소화 하기 위해
-*  Local Stroage에 일부 데이터를 저장하고 받아오는 로직을 택함.
+*  Local Storage에 일부 데이터를 저장하고 받아오는 로직을 택함.
 *
 *  해당 서비스 모듈은 LocalStorage 관련
 *  읽기, 쓰기, 삭제 로직을 담당
@@ -20,6 +20,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 *  - db: content.db
 *    1) field : banner <-- 홈 스크린 배너 데이터
 *    2) field : topTen <-- 홈 스크린 TopTen 컨텐츠 리스트 데이터
+*    3) field : categoryCollection <-- 홈 스크린 카테고리 컨텐츠 데이터
 *
 * */
 

@@ -29,12 +29,12 @@ class ContentPosterShell {
         posterImgUrl: response.posterImgUrl,
       );
 
-  // Form Mock Json Data Response
-  factory ContentPosterShell.fromJson(Map<String, dynamic> json) {
-    return ContentPosterShell(
-      contentId:  SplittedIdAndType.fromOriginId(json['id']).id,
-      posterImgUrl: json['posterImgUrl'],
-      contentType: SplittedIdAndType.fromOriginId(json['id']).type,
-      );
-  }
+  // // Form Mock Json Data Response
+  // factory ContentPosterShell.fromJson(Map<String, dynamic> json) {
+  //   return ContentPosterShell(
+  //     contentId:  SplittedIdAndType.fromOriginId(json['id']).id,
+  //     posterImgUrl: json['posterImgUrl'],
+  //     contentType: SplittedIdAndType.fromOriginId(json['id']).type,
+  //     );
+  // }
 }

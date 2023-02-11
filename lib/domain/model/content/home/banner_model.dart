@@ -6,24 +6,11 @@ class BannerModel  {
   String key;
   List<BannerItem> contentList;
 
-
-
-
   // From Response
   factory BannerModel.fromResponse(BannerResponse response) {
     return BannerModel(
         key: response.key,
         contentList: response.items.map(BannerItem.fromResponse).toList());
-  }
-
-
-  // From Json
-  factory BannerModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> jsonItemList = json['items'];
-
-    return BannerModel(
-        key: json['key'],
-        contentList: jsonItemList.map((e) => BannerItem.fromJson(e)).toList());
   }
 }
 
@@ -55,18 +42,6 @@ class BannerItem {
         imgUrl: response.imgUrl,
         backdropImgUrl: response.backdropImgUrl,
       );
-
-  // Mock Json 데이터 (임시)
-  factory BannerItem.fromJson(Map<String, dynamic> json) {
-    return BannerItem(
-        id: SplittedIdAndType.fromOriginId(json['id']).id,
-        videoId: json['videoId'],
-        type: SplittedIdAndType.fromOriginId(json['id']).type,
-        title: json['title'],
-        description: json['description'],
-        imgUrl: json['imgUrl'],
-        backdropImgUrl: json['backdropImgUrl']);
-  }
 }
 
 

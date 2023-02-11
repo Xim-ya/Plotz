@@ -21,7 +21,8 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *
  * */
 
-class LoadCachedBannerContentUseCase extends BaseNoParamUseCase<Result<BannerModel>> {
+class LoadCachedBannerContentUseCase
+    extends BaseNoParamUseCase<Result<BannerModel>> {
   LoadCachedBannerContentUseCase(this._repository);
 
   final StaticContentRepository _repository;
@@ -44,8 +45,9 @@ class LoadCachedBannerContentUseCase extends BaseNoParamUseCase<Result<BannerMod
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
             jsonText: localData.toString(), givenKey: keyResponse!)) {
-          final data = jsonDecode(localData.toString());
-          final result = BannerModel.fromJson(data);
+          final json = jsonDecode(localData.toString());
+          final response = BannerResponse.fromJson(json);
+          final result = BannerModel.fromResponse(response);
           return Result.success(result);
         }
         // 조건 : 최신 업데이트 키가 아니라면

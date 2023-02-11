@@ -19,16 +19,7 @@ class ContentRepositoryImpl implements ContentRepository {
     }
   }
 
-  // Top10 컨텐츠 리스트 호출
-  @override
-  Future<Result<List<ContentPosterShell>>> loadTopTenContentList() async {
-    try {
-      final response = await _contentDataSource.loadTopTenContentList();
-      return Result.success(response);
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
+
 
   @override
   Future<Result<List<CategoryBaseContentList>>>

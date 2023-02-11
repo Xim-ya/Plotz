@@ -2,31 +2,32 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 class CategoryContentCollection {
   final String key;
-  final List<CategoryContentModel> items;
-
-
+  final List<CategoryContentSection> items;
 
   CategoryContentCollection({required this.key, required this.items});
 
+  // Response
   factory CategoryContentCollection.fromResponse(
     CategoryContentCollectionResponse response,
   ) =>
       CategoryContentCollection(
-          key: response.key,
-          items:
-              response.items.map(CategoryContentModel.fromResponse).toList());
+        key: response.key,
+        items: response.items.map(CategoryContentSection.fromResponse).toList(),
+      );
+
+
 }
 
-class CategoryContentModel {
+class CategoryContentSection {
   final String title;
   final List<CategoryContentItem> contents;
 
-  CategoryContentModel({required this.title, required this.contents});
+  CategoryContentSection({required this.title, required this.contents});
 
-  factory CategoryContentModel.fromResponse(
+  factory CategoryContentSection.fromResponse(
     CategoryContentsResponse response,
   ) =>
-      CategoryContentModel(
+      CategoryContentSection(
         title: response.title,
         contents:
             response.contents.map(CategoryContentItem.fromResponse).toList(),
