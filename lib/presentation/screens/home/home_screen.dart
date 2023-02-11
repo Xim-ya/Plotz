@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:uppercut_fantube/presentation/screens/home/localWidget/banner_item.dart';
 import 'package:uppercut_fantube/presentation/screens/home/localWidget/banner_skeleton_item.dart';
+import 'package:uppercut_fantube/presentation/screens/home/localWidget/category_content_section_skeleton_view.dart';
+import 'package:uppercut_fantube/presentation/screens/home/localWidget/category_content_section_view.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -17,58 +19,37 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       stackedGradientPosterBg: _buildStackedGradientPosterBg(),
       topBannerSlider: _buildTopBannerSlider(),
       topTenContentSlider: _buildTopTenContentSlider(),
-      categoryListWithPostSlider: _buildCategoryListWithPostSlider(),
+      categoryContentCollectionList: _buildCategoryContentCollectionList(),
       body: _buildBody(),
       appBarHeight: vm.appBarHeight,
     );
   }
 
   /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
-  List<Widget> _buildCategoryListWithPostSlider() => [
+  List<Widget> _buildCategoryContentCollectionList() => [
         Obx(
           () => ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: vm.categoryContentCollection?.items.length ?? 0,
+            itemCount: vm.categoryContentCollection?.items.length ?? 4,
             separatorBuilder: (__, _) => AppSpace.size16,
             itemBuilder: (context, index) {
-              final item = vm.categoryContentCollection!.items[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    // 카테고리 제목
-                    child: Text(
-                      item.title,
-                      style: AppTextStyle.headline3,
-                      maxLines: 1,
-                      overflow: TextOverflow.fade,
-                    ),
-                  ),
-                  AppSpace.size8,
-                  // 컨텐츠 리스트 슬라이더
-                  ContentPostSlider(
-                    height: 180,
-                    itemCount: item.contents.length ?? 0,
-                    itemBuilder: (context, index) {
-                      final contentItem = item.contents![index];
-                      return GestureDetector(
-                        onTap: () {
-                          final argument = ContentArgumentFormat(
-                            contentId: contentItem.id,
-                            contentType: contentItem.contentType,
-                            posterImgUrl: contentItem.posterImgUrl,
-                          );
-                          vm.routeToContentDetail(argument);
-                        },
-                        child:
-                            ContentPostItem(imgUrl: contentItem.posterImgUrl),
-                      );
-                    },
-                  ),
-                ],
-              );
+              if (vm.categoryContentCollection.hasData) {
+                final item = vm.categoryContentCollection!.items[index];
+                return CategoryContentSectionView(
+                  contentSectionData: item,
+                  onContentTapped: (nestedIndex) {
+                    final argument = ContentArgumentFormat(
+                      contentId: item.contents[nestedIndex].id,
+                      contentType: item.contents[nestedIndex].contentType,
+                      posterImgUrl: item.contents[nestedIndex].posterImgUrl,
+                    );
+                    vm.routeToContentDetail(argument);
+                  },
+                );
+              } else {
+                return const CategoryContentSectionSkeletonView();
+              }
             },
           ),
         ),

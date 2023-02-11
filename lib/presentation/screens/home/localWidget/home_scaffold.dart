@@ -1,23 +1,23 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class HomeScaffold extends StatelessWidget {
-  const HomeScaffold(
-      {Key? key,
-      required this.animationAppbar,
-      required this.scrollController,
-      required this.body,
-      required this.appBarHeight,
-      required this.stackedGradientPosterBg,
-      required this.topBannerSlider,
-      required this.topTenContentSlider,
-      required this.categoryListWithPostSlider})
-      : super(key: key);
+  const HomeScaffold({
+    Key? key,
+    required this.animationAppbar,
+    required this.scrollController,
+    required this.body,
+    required this.appBarHeight,
+    required this.stackedGradientPosterBg,
+    required this.topBannerSlider,
+    required this.topTenContentSlider,
+    required this.categoryContentCollectionList,
+  }) : super(key: key);
 
   final List<Widget> animationAppbar;
   final List<Widget> stackedGradientPosterBg;
   final Widget topBannerSlider;
   final List<Widget> topTenContentSlider;
-  final List<Widget> categoryListWithPostSlider;
+  final List<Widget> categoryContentCollectionList;
   final List<Widget> body;
   final ScrollController scrollController;
   final double appBarHeight;
@@ -45,7 +45,7 @@ class HomeScaffold extends StatelessWidget {
                     AppSpace.size72,
                     topBannerSlider, // 상단 대표 컨텐츠 슬라이더
                     ...topTenContentSlider, // Top10 컨텐츠 슬라이더
-                    ...categoryListWithPostSlider, // 카테고리 컨텐츠 리스트
+                    ...categoryContentCollectionList, // 카테고리 컨텐츠 리스트
                     ...body
                   ],
                 ),
