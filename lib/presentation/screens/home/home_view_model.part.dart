@@ -22,4 +22,10 @@ extension HomeViewModelPart on HomeViewModel {
 
   // Top10 컨텐츠
   TopTenContentsModel? get topTenContents => _topTenContents.value;
+
+
+  // 카테고리 컨텐츠 collection
+  CategoryContentCollection? get categoryContentCollection => _categoryContentCollection.value;
+
+
 }

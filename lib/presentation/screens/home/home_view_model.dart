@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:uppercut_fantube/domain/model/content/home/category_content_collection_model.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -21,8 +22,9 @@ class HomeViewModel extends BaseViewModel {
   /// Data
   final Rxn<BannerModel> _bannerContent = Rxn();
   final Rxn<TopTenContentsModel> _topTenContents = Rxn();
-  final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
-      Rxn(); // 카테고리 및 카테고리 컨텐츠
+  final Rxn<CategoryContentCollection> _categoryContentCollection = Rxn();
+  // final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
+  //     Rxn(); // 카테고리 및 카테고리 컨텐츠
 
   /// State
   late double scrollOffset = 0;
@@ -42,7 +44,6 @@ class HomeViewModel extends BaseViewModel {
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
 
   /* [Intent] */
-
   void onBannerSliderSwiped(int index) {
     topExposedContentSliderIndex = index;
     update();
@@ -53,15 +54,18 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
-  void resetContentList(int id) {
-    // print(_topExposedContentList.value!.length);
-    // _topExposedContentList.value!
-    //     .removeWhere((element) => element.contentId == id);
-    // update();
-    // carouselController.animateToPage(_topExposedContentList.value!
-    //     .indexWhere((element) => element.contentId == id));
-    // print(_topExposedContentList.value!.length);
-    // print(topExposedContentList!.length);
+  // 카테고리 컨텐츠 collection 정보 호출
+  Future<void> _fetchCategoryContentCollection() async {
+    final response =
+        await StaticContentRepository.to.loadCategoryContentCollection();
+    response.fold(
+      onSuccess: (data) {
+        _categoryContentCollection.value = data;
+      },
+      onFailure: (e) {
+        log('HomeViewModel > $e');
+      },
+    );
   }
 
   /// UI Intent Method
@@ -90,8 +94,6 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-
-
   // 검색 스크린으로 이동
   void routeToSearch() {
     Get.toNamed(AppRoutes.search);
@@ -102,7 +104,7 @@ class HomeViewModel extends BaseViewModel {
     final responseResult =
         await ContentRepository.to.loadContentListWithCategory();
     responseResult.fold(onSuccess: (data) {
-      contentListWithCategories.value = data;
+      // contentListWithCategories.value = data;
     }, onFailure: (e) {
       AlertWidget.toast('카테고리 정보를 불러들이는데 실패하였습니다');
       log(e.toString());
@@ -116,8 +118,6 @@ class HomeViewModel extends BaseViewModel {
       throw 'Could not launch ';
     }
   }
-
-
 
   /// Youtube Video Comment
   Future<void> youtubeIntent() async {
@@ -229,6 +229,7 @@ class HomeViewModel extends BaseViewModel {
 
     await _fetchBannerContents();
     await _fetchTopTenContents();
+    await _fetchCategoryContentCollection();
 
     // _fetchContentListOfCategory();
 

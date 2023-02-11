@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 class StaticContentDataSourceImpl extends StaticContentDataSource {
   StaticContentDataSourceImpl(this._api);
+
   final StaticContentApi _api;
 
   final String baseUrl =
@@ -37,5 +38,15 @@ class StaticContentDataSourceImpl extends StaticContentDataSource {
   @override
   Future<ContentKeyResponse> loadStaticContentKeys() {
     return loadResponseOrThrow(() => _api.loadStaticContentKeys());
+  }
+
+  @override
+  Future<CategoryContentCollectionResponse>
+      loadCategoryContentCollection() async {
+    final response = await http.get(Uri.parse('$baseUrl/categoryContent.json'));
+    final jsonText = response.body;
+    final data = jsonDecode(jsonText);
+
+    return CategoryContentCollectionResponse.fromJson(data);
   }
 }

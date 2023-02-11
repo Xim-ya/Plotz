@@ -43,6 +43,7 @@ export 'package:uppercut_fantube/app/modules/domain_modules.dart';
 export 'package:uppercut_fantube/app/modules/presentation_modules.dart';
 
 // Data
+export 'package:uppercut_fantube/data/dto/staticContent/response/category_content_collection_response.dart';
 export 'package:uppercut_fantube/data/dataSource/staticContent/static_content_data_source.dart';
 export 'package:uppercut_fantube/data/dto/staticContent/static_content_api.dart';
 export 'package:uppercut_fantube/data/repository/youtube/youtube_repository.dart';

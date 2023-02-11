@@ -1,3 +1,4 @@
+
 import 'package:uppercut_fantube/data/dto/staticContent/response/content_key_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
@@ -11,5 +12,9 @@ abstract class StaticContentDataSource with FireStoreErrorHandlerMixin {
 
   // 고정 컨텐츠 key 값 호출
   Future<ContentKeyResponse> loadStaticContentKeys();
+
+
+  // 카테고리 컨텐츠 모음 정보 호출
+  Future<CategoryContentCollectionResponse> loadCategoryContentCollection();
 
 }

@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/content/home/category_content_collection_model.dart';
 import 'package:uppercut_fantube/domain/model/content/home/static_content_keys.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -32,6 +33,17 @@ class StaticContentRepositoryImpl extends StaticContentRepository {
     try {
       final response = await _dataSource.loadStaticContentKeys();
       return Result.success(StaticContentKeys.fromResponse(response));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<CategoryContentCollection>>
+      loadCategoryContentCollection() async {
+    try {
+      final response = await _dataSource.loadCategoryContentCollection();
+      return Result.success(CategoryContentCollection.fromResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }

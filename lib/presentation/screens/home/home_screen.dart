@@ -29,10 +29,10 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           () => ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: vm.contentListWithCategories.value?.length ?? 0,
+            itemCount: vm.categoryContentCollection?.items.length ?? 0,
             separatorBuilder: (__, _) => AppSpace.size16,
             itemBuilder: (context, index) {
-              final item = vm.contentListWithCategories.value![index];
+              final item = vm.categoryContentCollection!.items[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -40,7 +40,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     // 카테고리 제목
                     child: Text(
-                      item.category,
+                      item.title,
                       style: AppTextStyle.headline3,
                       maxLines: 1,
                       overflow: TextOverflow.fade,
@@ -50,17 +50,15 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   // 컨텐츠 리스트 슬라이더
                   ContentPostSlider(
                     height: 180,
-                    itemCount: item.contents?.length ?? 0,
+                    itemCount: item.contents.length ?? 0,
                     itemBuilder: (context, index) {
                       final contentItem = item.contents![index];
                       return GestureDetector(
                         onTap: () {
                           final argument = ContentArgumentFormat(
-                            contentId: contentItem.contentId,
+                            contentId: contentItem.id,
                             contentType: contentItem.contentType,
                             posterImgUrl: contentItem.posterImgUrl,
-                            videoId: contentItem.videoId,
-                            title: contentItem.title,
                           );
                           vm.routeToContentDetail(argument);
                         },
