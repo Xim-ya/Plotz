@@ -91,7 +91,8 @@ class _StaticContentApi implements StaticContentApi {
   }
 
   @override
-  Future<CategoryContentCollectionResponse> loadCategoryContentCollection() async {
+  Future<CategoryContentCollectionResponse>
+      loadCategoryContentCollection() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

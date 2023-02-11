@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:uppercut_fantube/domain/model/content/home/category_content_collection_model.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,7 @@ class HomeViewModel extends BaseViewModel {
   final ContentDataSource _dataSource;
 
   HomeViewModel(
+    this._loadCachedCategoryContentCollectionUseCase,
     this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
     this._dataSource,
@@ -23,6 +25,7 @@ class HomeViewModel extends BaseViewModel {
   final Rxn<BannerModel> _bannerContent = Rxn();
   final Rxn<TopTenContentsModel> _topTenContents = Rxn();
   final Rxn<CategoryContentCollection> _categoryContentCollection = Rxn();
+
   // final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
   //     Rxn(); // 카테고리 및 카테고리 컨텐츠
 
@@ -42,6 +45,8 @@ class HomeViewModel extends BaseViewModel {
   /* [UseCase] */
   final LoadCachedBannerContentUseCase _loadBannerContentUseCase;
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
+  final LoadCachedCategoryContentCollectionUseCase
+      _loadCachedCategoryContentCollectionUseCase;
 
   /* [Intent] */
   void onBannerSliderSwiped(int index) {
@@ -56,8 +61,7 @@ class HomeViewModel extends BaseViewModel {
 
   // 카테고리 컨텐츠 collection 정보 호출
   Future<void> _fetchCategoryContentCollection() async {
-    final response =
-        await StaticContentRepository.to.loadCategoryContentCollection();
+    final response = await _loadCachedCategoryContentCollectionUseCase.call();
     response.fold(
       onSuccess: (data) {
         _categoryContentCollection.value = data;

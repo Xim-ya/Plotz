@@ -45,6 +45,10 @@ class StaticContentDataSourceImpl extends StaticContentDataSource {
       loadCategoryContentCollection() async {
     final response = await http.get(Uri.parse('$baseUrl/categoryContent.json'));
     final jsonText = response.body;
+
+    // LocalStorage에 받아온 response의 boy(jsonText) 저장
+    await LocalStorageService.to
+        .saveData(fieldName: 'categoryCollection', data: jsonText);
     final data = jsonDecode(jsonText);
 
     return CategoryContentCollectionResponse.fromJson(data);

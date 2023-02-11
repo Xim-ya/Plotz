@@ -2,6 +2,7 @@ import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/domain/service/user_service.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_in_handler_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
+import 'package:uppercut_fantube/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_impl.dart';
@@ -24,6 +25,8 @@ abstract class DomainModules {
     Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedBannerContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedTopTenContentsUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => LoadCachedCategoryContentCollectionUseCase(Get.find()),
+        fenix: true);
 
     // TMDB
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);
