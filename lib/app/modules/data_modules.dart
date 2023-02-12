@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source.dart';
 import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source_impl.dart';
-import 'package:uppercut_fantube/data/dataSource/staticContent/static_content_data_source.dart';
 import 'package:uppercut_fantube/data/dataSource/staticContent/static_content_data_source_impl.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/static_content_api.dart';
+import 'package:uppercut_fantube/data/dto/content/content_api.dart';
+import 'package:uppercut_fantube/data/dto/content/content_api_impl.dart';
+import 'package:uppercut_fantube/data/firebase/app_fire_store.dart';
 import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
 import 'package:uppercut_fantube/data/repository/auth/auth_repository_impl.dart';
-import 'package:uppercut_fantube/data/repository/staticContent/static_content_repository.dart';
 import 'package:uppercut_fantube/data/repository/staticContent/static_content_repository_impl.dart';
 import 'package:uppercut_fantube/data/repository/youtube/youtube_repository_impl.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -32,8 +32,14 @@ abstract class DataModules {
     /* Dio */
     Get.lazyPut(() => Dio(), fenix: true);
 
+    // Get.put<Dio>(AppDio.getInstance(), permanent: true);
+    /* FireStore */
+    Get.lazyPut(() => AppFireStore(), fenix: true);
+
     /* Content */
-    Get.lazyPut<ContentDataSource>(() => ContentDataSourceImpl(), fenix: true);
+    Get.lazyPut<ContentApi>(() => ContentApiImpl(), fenix: true);
+    Get.lazyPut<ContentDataSource>(() => ContentDataSourceImpl(Get.find()),
+        fenix: true);
     Get.lazyPut<ContentRepository>(() => ContentRepositoryImpl(Get.find()),
         fenix: true);
 

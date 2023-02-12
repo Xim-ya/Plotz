@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:uppercut_fantube/data/repository/content/content_repository.dart';
 import 'package:uppercut_fantube/domain/enum/content_type_enum.dart';
+import 'package:uppercut_fantube/domain/model/content/content_id_model.dart';
 import 'package:uppercut_fantube/domain/model/content/simple_content_info.dart';
 import 'package:uppercut_fantube/utilities/extensions/determine_content_type.dart';
 
@@ -11,11 +12,17 @@ import 'package:uppercut_fantube/utilities/extensions/determine_content_type.dar
  * */
 
 class ContentService extends GetxService {
+
   // 등록된 전체 tv 컨텐츠 리스트
   final Rxn<List<SimpleContentInfo>> totalListOfRegisteredTvContent = Rxn();
 
   // 등록된 전체 movie 컨텐츠 리스트
   final Rxn<List<SimpleContentInfo>> totalListOfRegisteredMovieContent = Rxn();
+
+  final ContentIdInfoModel _contentIdInfo = ContentIdInfoModel();
+
+  ContentIdInfoModel get contentIdInfo => _contentIdInfo;
+
 
   /* Intent */
   // 인자로 전달 받은 타입에 따라 등록된 전체 컨텐츠 리스트를 반환
@@ -52,6 +59,12 @@ class ContentService extends GetxService {
         log('[ContentService] - 전체 MOVIE 컨텐츠 리스트 호출 실패');
       },
     );
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    _contentIdInfo.fetchContentIdList();
   }
 
   static ContentService get to => Get.find();

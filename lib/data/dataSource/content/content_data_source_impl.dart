@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'package:uppercut_fantube/data/dto/content/content_api.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDataSourceImpl
     with ApiErrorHandlerMixin
     implements ContentDataSource {
+  ContentDataSourceImpl(this._api);
+
+  final ContentApi _api;
 
   // 컨텐츠 에피소드 리스트 정보
   @override
@@ -15,7 +19,6 @@ class ContentDataSourceImpl
     List<dynamic> aim = data['episode'];
     return aim.map((e) => ContentEpisodeInfoItem.fromJson(e)).toList();
   }
-
 
   // 카테고리 컨텐츠 리스트
   @override
@@ -101,5 +104,10 @@ class ContentDataSourceImpl
     List<Map<String, dynamic>> formatData =
         List<Map<String, dynamic>>.from(json.decode(jsonText)['items']);
     return formatData.map((e) => ExploreContentIdInfo.fromJson(e)).toList();
+  }
+
+  @override
+  Future<List<String>> loadTotalContentIdList() {
+    return loadResponseOrThrow(() => _api.loadTotalContentIdList());
   }
 }

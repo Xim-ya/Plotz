@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/domain/model/content/content_id_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -5,7 +6,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 *  [Content] 관련 데이터 호출을 담당하는 레이어.
 * */
 
-abstract class ContentRepository   {
+abstract class ContentRepository {
   Future<Result<List<ContentEpisodeInfoItem>>> loadContentEpisodeItemList();
 
   Future<Result<List<CategoryBaseContentList>>> loadContentListWithCategory();
@@ -19,6 +20,9 @@ abstract class ContentRepository   {
   Future<Result<ContentVideos>> loadMovieContentVideoList(int contentId);
 
   Future<Result<List<ExploreContent>>> loadBasicInfoOfExploreContentList();
+
+  // 모든 컨텐츠 id 정보 리스트 호출
+  Future<Result<List<ContentIdInfoItem>>> loadContentIdInfoList();
 
   static ContentRepository get to => Get.find();
 }

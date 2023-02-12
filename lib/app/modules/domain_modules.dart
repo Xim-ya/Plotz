@@ -21,7 +21,6 @@ abstract class DomainModules {
     Get.lazyPut(() => SocialSignInHandlerUseCase(Get.find()), fenix: true);
 
     // 컨텐츠
-    Get.lazyPut(() => ContentService(), fenix: true);
     Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedBannerContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedTopTenContentsUseCase(Get.find()), fenix: true);
@@ -51,6 +50,9 @@ abstract class DomainModules {
         () => SearchPagedContentImpl(Get.find()),
         fenix: true);
 
+
+    // Service
     Get.lazyPut(() => UserService(Get.find()), fenix: true);
+    Get.put(ContentService());
   }
 }

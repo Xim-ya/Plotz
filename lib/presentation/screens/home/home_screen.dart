@@ -206,9 +206,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             GestureDetector(
               onTap: () {
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
-                LocalStorageService.to.deleteData(fieldName: 'topTen');
-                // vm.loadBannerContents();
-                // vm.testResponseResult();
+                // LocalStorageService.to.deleteData(fieldName: 'topTen');
+                print(ContentService.to.contentIdInfo.movieContentIdList);
               },
               child: Image.asset(
                 'assets/images/main_logo.png',
