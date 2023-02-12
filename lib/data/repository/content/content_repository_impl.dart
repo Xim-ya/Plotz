@@ -1,4 +1,5 @@
 import 'package:uppercut_fantube/domain/model/content/content_id_model.dart';
+import 'package:uppercut_fantube/domain/model/content/explore/explore_content_model.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -90,6 +91,18 @@ class ContentRepositoryImpl implements ContentRepository {
       final response = await _contentDataSource.loadTotalContentIdList();
       return Result.success(
           response.map((e) => ContentIdInfoItem.fromOriginId(e)).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ExploreContentModel>> loadContainingIdsContents(
+      List<String> ids) async {
+    try {
+      final response = await _contentDataSource.loadContainingIdsContents(ids);
+      final result = ExploreContentModel.fromResponse(response);
+      return Result.success(result);
     } on Exception catch (e) {
       return Result.failure(e);
     }

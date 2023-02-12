@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:uppercut_fantube/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -10,10 +13,12 @@ class ExploreViewModel extends BaseViewModel {
   /* Controllers */
   late final CarouselController swiperController;
 
-  ExploreViewModel(this._partialLoadContentUseCase, this._testUseCase);
+  ExploreViewModel(this._partialLoadContentUseCase, this._testUseCase,
+      this._exploreContentsUseCase);
 
   /* UseCases */
   final PartialLoadContentUseCase _partialLoadContentUseCase;
+  final LoadRandomPagedExploreContentsUseCase _exploreContentsUseCase;
   final TestUseCase _testUseCase;
 
   /* Intents */
@@ -67,11 +72,21 @@ class ExploreViewModel extends BaseViewModel {
     // }
   }
 
+  Future<void> loadRandomExploreContents() async {
+    final response = await _exploreContentsUseCase.call();
+    response.fold(onSuccess: (data) {
+      print(data.contents.length);
+    }, onFailure: (e) {
+      log('ExploreViewModel : $e');
+    });
+  }
+
   @override
   void onInit() {
     super.onInit();
 
     swiperController = CarouselController();
+    loadRandomExploreContents();
     //
     // _fetchExploreContent().then((value) {
     //   updateContentListInfo();

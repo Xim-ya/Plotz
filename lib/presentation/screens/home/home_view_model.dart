@@ -223,26 +223,26 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> firebaseStoreTest() async {
-    final docRef = FirebaseFirestore.instance.collection('content');
-    // 'Future<QuerySnapshot<Map<String, dynamic>>>'
-    final QuerySnapshot<Map<String, dynamic>> snapshot = await docRef.get();
-    final docsData = snapshot.docs;
-
-    final aim = docRef.orderBy('randomValue', descending: true).limit(10).get();
-
-    final randomValue = math.Random().nextInt(300);
-
-    print("AIM");
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('content')
-        .where('randomId', whereIn: [139, 150, 25])
-        .limit(10)
-        .get();
-
-    // List<DocumentSnapshot> randomDocuments =
-    //     await getRandomDocuments('content', 10);
-
-    print('====== AIM DATA  ${querySnapshot.docs.length}');
+    // final docRef = FirebaseFirestore.instance.collection('content');
+    // // 'Future<QuerySnapshot<Map<String, dynamic>>>'
+    // final QuerySnapshot<Map<String, dynamic>> snapshot = await docRef.get();
+    // final docsData = snapshot.docs;
+    //
+    // final aim = docRef.orderBy('randomValue', descending: true).limit(10).get();
+    //
+    // final randomValue = math.Random().nextInt(300);
+    //
+    // print("AIM");
+    // QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    //     .collection('content')
+    //     .where('randomId', whereIn: [139, 150, 25])
+    //     .limit(10)
+    //     .get();
+    //
+    // // List<DocumentSnapshot> randomDocuments =
+    // //     await getRandomDocuments('content', 10);
+    //
+    // print('====== AIM DATA  ${querySnapshot.docs.length}');
   }
 
   @override
