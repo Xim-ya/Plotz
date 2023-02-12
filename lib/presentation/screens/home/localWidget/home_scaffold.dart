@@ -43,9 +43,9 @@ class HomeScaffold extends StatelessWidget {
                   children: [
                     SizedBox(height: appBarHeight), // 커스텀 앱바와 간격을 맞추기 위한 위젯
                     AppSpace.size72,
-                    ...categoryContentCollectionList, // 카테고리 컨텐츠 리스트
                     topBannerSlider, // 상단 대표 컨텐츠 슬라이더
                     ...topTenContentSlider, // Top10 컨텐츠 슬라이더
+                    ...categoryContentCollectionList, // 카테고리 컨텐츠 리스트
                     ...body
                   ],
                 ),

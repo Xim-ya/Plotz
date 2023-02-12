@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:uppercut_fantube/domain/model/content/home/category_content_collection_model.dart';
 import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
+import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 
 part 'home_view_model.part.dart';
@@ -219,6 +222,29 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  Future<void> firebaseStoreTest() async {
+    final docRef = FirebaseFirestore.instance.collection('content');
+    // 'Future<QuerySnapshot<Map<String, dynamic>>>'
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await docRef.get();
+    final docsData = snapshot.docs;
+
+    final aim = docRef.orderBy('randomValue', descending: true).limit(10).get();
+
+    final randomValue = math.Random().nextInt(300);
+
+    print("AIM");
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('content')
+        .where('randomId', whereIn: [139, 150, 25])
+        .limit(10)
+        .get();
+
+    // List<DocumentSnapshot> randomDocuments =
+    //     await getRandomDocuments('content', 10);
+
+    print('====== AIM DATA  ${querySnapshot.docs.length}');
+  }
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -228,6 +254,7 @@ class HomeViewModel extends BaseViewModel {
       scrollOffset = scrollController.offset;
       turnOnBlurInAppBar();
     });
+    firebaseStoreTest();
 
     carouselController = CarouselController();
 

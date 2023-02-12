@@ -22,9 +22,12 @@ abstract class DataModules {
 
     /* Static Content */
     Get.lazyPut(() => StaticContentApi(Get.find()), fenix: true);
-    Get.lazyPut<StaticContentDataSource>(() =>  StaticContentDataSourceImpl(Get.find()));
-    Get.lazyPut<StaticContentRepository>(() => StaticContentRepositoryImpl(Get.find()));
-
+    Get.lazyPut<StaticContentDataSource>(
+        () => StaticContentDataSourceImpl(Get.find()),
+        fenix: true);
+    Get.lazyPut<StaticContentRepository>(
+        () => StaticContentRepositoryImpl(Get.find()),
+        fenix: true);
 
     /* Dio */
     Get.lazyPut(() => Dio(), fenix: true);
