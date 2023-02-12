@@ -20,8 +20,10 @@ mixin FirestoreHelper {
   // 주어진 id List에 해당하는 Document 데이터를 불러오는 메소도
   Future<List<DocumentSnapshot>> getContainingDocs(
       {required String collectionName, required List<String> ids}) async {
-    QuerySnapshot snapshot =
-        await _db.collection(collectionName).where('id', whereIn: ids).get();
+    QuerySnapshot snapshot = await _db
+        .collection(collectionName)
+        .where('id', whereIn: ids)
+        .get();
     return snapshot.docs;
   }
 

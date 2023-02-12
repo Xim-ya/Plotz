@@ -1,13 +1,14 @@
 import 'dart:developer';
 
+import 'package:uppercut_fantube/domain/model/content/explore/explore_content_model.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/explore/partial_load_content_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ExploreViewModel extends BaseViewModel {
   /* Variables */
-  final Rxn<List<ExploreContent>> exploreContentList = Rxn();
+  // final Rxn<List<ExploreContent>> exploreContentList = Rxn();
+  final Rxn<ExploreContentModel> _exploreContentModel = Rxn();
   final RxInt swiperIndex = 0.obs;
 
   /* Controllers */
@@ -25,7 +26,7 @@ class ExploreViewModel extends BaseViewModel {
   // 탐색 컨텐츠 리스트 호출
   Future<void> _fetchExploreContent() async {
     final responseResult = await _partialLoadContentUseCase.loadContentIdList();
-    exploreContentList.value = responseResult;
+    // exploreContentList.value = responseResult;
   }
 
   // 탐색 컨텐츠 리스트 재호출
@@ -33,14 +34,14 @@ class ExploreViewModel extends BaseViewModel {
     // 슬라이더 State 및 데이터 초기화
     _partialLoadContentUseCase.isCanceled(true);
     _partialLoadContentUseCase.maxScannedIndex(0);
-    exploreContentList.value = null;
+    // exploreContentList.value = null;
     swiperIndex(0);
     await swiperController.animateToPage(0);
 
     // 탐색 컨텐츠 재호출
     final responseResult = await _partialLoadContentUseCase.loadContentIdList();
-    exploreContentList.value = responseResult;
-    exploreContentList.value?.shuffle();
+    // exploreContentList.value = responseResult;
+    // exploreContentList.value?.shuffle();
 
     // 컨텐츠 리스트 내부 필드값 업데이트
     await _partialLoadContentUseCase.changeCanceledState();
@@ -75,11 +76,16 @@ class ExploreViewModel extends BaseViewModel {
   Future<void> loadRandomExploreContents() async {
     final response = await _exploreContentsUseCase.call();
     response.fold(onSuccess: (data) {
-      print(data.contents.length);
+      _exploreContentModel.value = data;
+      data.updateYoutubeChannelInfo();
     }, onFailure: (e) {
       log('ExploreViewModel : $e');
     });
   }
+
+  ExploreContentModel? get exploreContentModel => _exploreContentModel.value;
+  bool get isContentLoaded => _exploreContentModel.value.hasData;
+  List<ExploreContentItem>? get exploreContents => _exploreContentModel.value?.contents;
 
   @override
   void onInit() {

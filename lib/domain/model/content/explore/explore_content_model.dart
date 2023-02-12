@@ -7,10 +7,15 @@ class ExploreContentModel {
   ExploreContentModel({required this.contents});
 
   factory ExploreContentModel.fromResponse(
-          List<BasicContentInfoResponse> response) =>
-      ExploreContentModel(
-          contents:
-              response.map((e) => ExploreContentItem.fromResponse(e)).toList());
+      List<BasicContentInfoResponse> response) {
+    final List<BasicContentInfoResponse> shuffledList = response;
+    shuffledList.shuffle();
+
+    return ExploreContentModel(
+      contents:
+          shuffledList.map((e) => ExploreContentItem.fromResponse(e)).toList(),
+    );
+  }
 
   /* Intents */
   // 유튜브 정보 업데이트
@@ -33,6 +38,7 @@ class ExploreContentItem {
   final String videoId;
   final String title;
   final String releaseDate;
+  final String posterImgUrl;
   late final Rxn<ExploreContentYoutubeInfo> youtubeInfo = Rxn(); // 컨텐츠 유튜브 정보
 
   ExploreContentItem(
@@ -40,6 +46,7 @@ class ExploreContentItem {
       required this.type,
       required this.videoId,
       required this.title,
+      required this.posterImgUrl,
       required this.releaseDate});
 
   factory ExploreContentItem.fromResponse(BasicContentInfoResponse response) =>
@@ -49,5 +56,6 @@ class ExploreContentItem {
         videoId: response.videoId,
         title: response.title,
         releaseDate: response.releaseDate,
+        posterImgUrl: response.posterImgUrl,
       );
 }
