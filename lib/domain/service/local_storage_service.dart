@@ -103,9 +103,10 @@ class LocalStorageService extends GetxService {
 
   static LocalStorageService get to => Get.find();
 
+
   @override
-  Future<void> onReady() async {
-    super.onReady();
+  Future<void> onInit() async{
+    super.onInit();
     await _initStorage();
   }
 }

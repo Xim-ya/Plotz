@@ -3,7 +3,8 @@ import 'dart:developer';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentIdInfoModel {
-  late final List<ContentIdInfoItem> totalIdInfoList;
+  ContentIdInfoModel(this.totalIdInfoList);
+  final List<ContentIdInfoItem> totalIdInfoList;
 
   // 전체 원형(db) 아이디 리스트
   List<String> get originIdList =>
@@ -20,18 +21,6 @@ class ContentIdInfoModel {
   List<int> get tvContentIdList =>
       totalIdInfoList.where((e) => e.type.isTv).map((e) => e.id).toList();
 
-  // 컨텐츠 아이디 정보 리스트 호출
-  Future<void> fetchContentIdList() async {
-    final response = await ContentRepository.to.loadContentIdInfoList();
-    response.fold(
-      onSuccess: (data) {
-        totalIdInfoList = data;
-      },
-      onFailure: (e) {
-        log('ContentIdInfoModel : $e');
-      },
-    );
-  }
 }
 
 class ContentIdInfoItem {

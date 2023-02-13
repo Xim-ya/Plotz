@@ -3,11 +3,23 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 class AppBinding extends Bindings {
   @override
-  void dependencies() {
+  Future<void> dependencies() async{
+
+    // 로컬 스토리지
+    // await _preloadDependencies();
+
+
 
 
     DataModules.getDependencies();
     DomainModules.dependencies();
     PresentationModules.dependencies();
+  }
+
+
+
+  Future<void> _preloadDependencies() async{
+    // Get.put(LocalStorageService());
+    // Get.put(ContentService());
   }
 }

@@ -1,4 +1,3 @@
-import 'package:uppercut_fantube/domain/service/local_storage_service.dart';
 import 'package:uppercut_fantube/domain/service/user_service.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_in_handler_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
@@ -13,9 +12,15 @@ import 'package:uppercut_fantube/utilities/index.dart';
 abstract class DomainModules {
   DomainModules._();
 
-  static void dependencies() {
-    // 로컬 스토리지
+  // Service
+  static Future<void> _preLoadDependencies() async{
+    Get.put(ContentService(Get.find()));
     Get.put(LocalStorageService());
+  }
+
+  static void dependencies() {
+    _preLoadDependencies();
+
 
     // 인증
     Get.lazyPut(() => SocialSignOutHandlerUseCase(Get.find()), fenix: true);
@@ -40,7 +45,8 @@ abstract class DomainModules {
 
     // Explore
     Get.lazyPut(() => TestUseCase(), fenix: true);
-    Get.lazyPut(() => LoadRandomPagedExploreContentsUseCase(Get.find()),
+    Get.lazyPut(
+        () => LoadRandomPagedExploreContentsUseCase(Get.find(), Get.find()),
         fenix: true);
 
     // Register
@@ -52,9 +58,7 @@ abstract class DomainModules {
     Get.lazyPut<SearchPagedContentUseCase>(
         () => SearchPagedContentImpl(Get.find()),
         fenix: true);
-
-    // Service
-    Get.lazyPut(() => UserService(Get.find()), fenix: true);
-    Get.put(ContentService());
   }
+
+
 }

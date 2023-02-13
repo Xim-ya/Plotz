@@ -77,6 +77,7 @@ class ExploreViewModel extends BaseViewModel {
     final response = await _exploreContentsUseCase.call();
     response.fold(onSuccess: (data) {
       _exploreContentModel.value = data;
+      update();
       data.updateYoutubeChannelInfo();
     }, onFailure: (e) {
       log('ExploreViewModel : $e');
@@ -88,15 +89,11 @@ class ExploreViewModel extends BaseViewModel {
   List<ExploreContentItem>? get exploreContents => _exploreContentModel.value?.contents;
 
   @override
-  void onInit() {
+  Future<void> onInit() async{
     super.onInit();
 
     swiperController = CarouselController();
-    loadRandomExploreContents();
-    //
-    // _fetchExploreContent().then((value) {
-    //   updateContentListInfo();
-    // });
-    _testUseCase.testLoop();
+    await loadRandomExploreContents();
+
   }
 }

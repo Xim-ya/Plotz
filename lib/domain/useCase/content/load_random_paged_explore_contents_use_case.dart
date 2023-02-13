@@ -13,14 +13,17 @@ import 'package:uppercut_fantube/utilities/index.dart';
 
 class LoadRandomPagedExploreContentsUseCase
     extends BaseNoParamUseCase<Result<ExploreContentModel>> {
-  LoadRandomPagedExploreContentsUseCase(this._repository);
+  LoadRandomPagedExploreContentsUseCase(this._repository, this._service);
 
   final ContentRepository _repository;
+  final ContentService _service;
 
   @override
   Future<Result<ExploreContentModel>> call() async {
+    
     // 전체 컨텐츠 아이디 리스트 호출
-    final List<String> idList = ContentService.to.contentIdInfo.originIdList;
+    await _service.prepare();
+    final List<String> idList = _service.contentIdInfo!.originIdList;
 
     // 무작위로 10개의 id 리스트 추출
     final List<String> randomIdList = randomIds(idList);

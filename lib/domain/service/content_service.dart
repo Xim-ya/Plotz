@@ -12,6 +12,7 @@ import 'package:uppercut_fantube/utilities/extensions/determine_content_type.dar
  * */
 
 class ContentService extends GetxService {
+  ContentService(this._contentRepository);
 
   // 등록된 전체 tv 컨텐츠 리스트
   final Rxn<List<SimpleContentInfo>> totalListOfRegisteredTvContent = Rxn();
@@ -19,10 +20,11 @@ class ContentService extends GetxService {
   // 등록된 전체 movie 컨텐츠 리스트
   final Rxn<List<SimpleContentInfo>> totalListOfRegisteredMovieContent = Rxn();
 
-  final ContentIdInfoModel _contentIdInfo = ContentIdInfoModel();
+  final Rxn<ContentIdInfoModel> _contentIdInfo = Rxn();
 
-  ContentIdInfoModel get contentIdInfo => _contentIdInfo;
+  ContentIdInfoModel? get contentIdInfo => _contentIdInfo.value;
 
+  final ContentRepository _contentRepository;
 
   /* Intent */
   // 인자로 전달 받은 타입에 따라 등록된 전체 컨텐츠 리스트를 반환
@@ -37,7 +39,7 @@ class ContentService extends GetxService {
 
   // 등록된 'TV' 컨텐츠 리스트 호출
   Future<void> fetchAllOfRegisteredTvContent() async {
-    final responseResult = await ContentRepository.to.loadAllOfTvContentList();
+    final responseResult = await _contentRepository.loadAllOfTvContentList();
     responseResult.fold(
       onSuccess: (data) {
         totalListOfRegisteredTvContent.value = data;
@@ -61,10 +63,21 @@ class ContentService extends GetxService {
     );
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    _contentIdInfo.fetchContentIdList();
+  Future<void> fetchTotalInfoList() async {
+    final response = await _contentRepository.loadContentIdInfoList();
+    response.fold(
+      onSuccess: (data) {
+        _contentIdInfo.value = ContentIdInfoModel(data);
+      },
+      onFailure: (e) {
+        log('ContentService : $e');
+      },
+    );
+  }
+
+
+  Future<void> prepare() async {
+    await fetchTotalInfoList();
   }
 
   static ContentService get to => Get.find();
