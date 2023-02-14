@@ -7,8 +7,9 @@ import 'package:uppercut_fantube/utilities/index.dart';
  *  아래 기능을 단계별로 실행함.
  *
  *  1. 전체 컨텐츠 Id 리스트 호출
- *  2. 호출한 컨텐츠 Id List에서 무작위로 10개의 id 추출
- *  3. 추출한 10개의 아이디에 해당하는 컨텐츠 데이터 호출
+ *  2. 호출한 컨텐츠 Id List에서 무작위로 20개의 id 추출
+ *  3. 추출한 20개의 아이디에 해당하는 컨텐츠 데이터 호출
+ *
  * */
 
 class LoadRandomPagedExploreContentsUseCase

@@ -1,7 +1,7 @@
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class SeasonInfo {
-  final String airDate; // 방영일
+  final String? airDate; // 방영일
   final int seasonNum; // 시즌
   final String name; // 시즌 이름
   final String description; // 설명(overView)

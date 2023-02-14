@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:uppercut_fantube/data/dto/content/content_api.dart';
 import 'package:uppercut_fantube/data/dto/content/response/basic_content_info_response.dart';
+import 'package:uppercut_fantube/data/dto/content/response/video_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 class ContentDataSourceImpl
@@ -114,7 +115,12 @@ class ContentDataSourceImpl
 
   @override
   Future<List<BasicContentInfoResponse>> loadContainingIdsContents(
-  List<String> ids) {
+      List<String> ids) {
     return loadResponseOrThrow(() => _api.loadContainingIdsContents(ids));
+  }
+
+  @override
+  Future<List<VideoResponse>> loadVideoInfo(String id) {
+    return loadResponseOrThrow(() => _api.loadVideoInfo(id));
   }
 }

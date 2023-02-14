@@ -1,3 +1,4 @@
+import 'package:uppercut_fantube/data/dto/content/response/video_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2023.01.01
@@ -63,4 +64,28 @@ class ContentVideos {
             ? ContentVideoFormat.multipleMovie
             : ContentVideoFormat.singleMovie);
   }
+
+  factory ContentVideos.fromResponse(List<VideoResponse> response,
+      {required String id}) {
+    final ContentType type = SplittedIdAndType.fromOriginId(id).type;
+
+    ContentVideoFormat getFormatType() {
+      if (type.isMovie) {
+        return response.length > 1
+            ? ContentVideoFormat.multipleMovie
+            : ContentVideoFormat.singleMovie;
+      } else {
+        return response.length > 1
+            ? ContentVideoFormat.multipleTv
+            : ContentVideoFormat.singleTv;
+      }
+    }
+
+    return ContentVideos(
+        videos: response.map((e) => ContentVideoItem.fromResponse(e)).toList(),
+        contentVideoFormat: getFormatType());
+  }
+
+
+
 }

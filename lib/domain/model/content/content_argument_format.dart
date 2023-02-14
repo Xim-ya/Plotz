@@ -4,6 +4,7 @@ import 'package:uppercut_fantube/utilities/index.dart';
 /// [TopExposedContentList]의 경우 [title] [description] [thumbnailUrl] 필드를 넘겨줄 수 있지만
 /// 다른 컨텐츠 리스트 섹션에서는 해당 값이 존재하지 않기 때문에 해당 필드는 nullable 처리를 함.
 class ContentArgumentFormat {
+  final String originId;
   final int contentId;
   final ContentType contentType;
   final String? videoId;
@@ -14,6 +15,7 @@ class ContentArgumentFormat {
   final String? backdropImgUrl;
 
   ContentArgumentFormat({
+    required this.originId,
     required this.contentId,
     required this.contentType,
     required this.posterImgUrl,

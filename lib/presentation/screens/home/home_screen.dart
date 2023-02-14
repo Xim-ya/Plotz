@@ -43,6 +43,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                       contentId: item.contents[nestedIndex].id,
                       contentType: item.contents[nestedIndex].contentType,
                       posterImgUrl: item.contents[nestedIndex].posterImgUrl,
+                      originId: item.contents[nestedIndex].originId,
                     );
                     vm.routeToContentDetail(argument);
                   },
@@ -86,6 +87,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                       contentId: item.contentId,
                       contentType: item.contentType,
                       posterImgUrl: item.posterImgUrl,
+                      originId: item.originId,
                     );
                     vm.routeToContentDetail(argument);
                   },
@@ -132,6 +134,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                       posterImgUrl: item.backdropImgUrl,
                       thumbnailUrl: item.imgUrl,
                       videoId: item.videoId,
+                      originId: item.originId,
                     );
                     vm.routeToContentDetail(argument);
                   },

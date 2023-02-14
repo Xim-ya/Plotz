@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:uppercut_fantube/data/dto/content/response/video_response.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.31
@@ -57,6 +58,14 @@ class ContentVideoItem {
   }
 
   factory ContentVideoItem.fromJson(Map<String, dynamic> json) {
-    return ContentVideoItem(episodeNum: json['order'], videoId: json['videoId']);
+    return ContentVideoItem(
+        episodeNum: json['order'], videoId: json['videoId']);
+  }
+
+  factory ContentVideoItem.fromResponse(VideoResponse response) {
+    return ContentVideoItem(
+      episodeNum: response.order,
+      videoId: response.videoId,
+    );
   }
 }

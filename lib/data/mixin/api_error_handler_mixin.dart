@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-
 mixin ApiErrorHandlerMixin {
   Future<T> loadResponseOrThrow<T>(Future<T> Function() actionApi) async {
     try {

@@ -84,18 +84,20 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
   Future<void> fetchContentOfVideoList() async {
     final responseRes = await _loadContentOfVideoList.call(
-        passedArgument.contentType, passedArgument.contentId);
+        passedArgument.contentType, passedArgument.originId);
 
     responseRes.fold(onSuccess: (data) {
       contentVideos.value = data;
+      print("데이터 결과 ${data.videos[0].videoId}");
 
       fetchAndMappedVideDetailFields().then((value) {
         contentVideos.value!
             .updateVideoDetailsLoadingState(); // <-- 컨텐츠 로드 완료 필드 값 업데이트
       });
     }, onFailure: (e) {
+      print("데이터 호출 실패");
       AlertWidget.toast('유튜브 비디오 정보를 불러들이는데 실패했어요');
-      log(e.toString());
+      log('ContentDetailViewModel ${e.toString()}');
     });
   }
 

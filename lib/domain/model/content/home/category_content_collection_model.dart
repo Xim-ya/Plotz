@@ -36,17 +36,20 @@ class CategoryContentSection {
 
 class CategoryContentItem {
   final int id;
+  final String originId;
   final ContentType contentType;
   final String posterImgUrl;
 
   CategoryContentItem(
       {required this.id,
+        required this.originId,
       required this.contentType,
       required this.posterImgUrl});
 
   factory CategoryContentItem.fromResponse(
           CategoryContentItemResponse response) =>
       CategoryContentItem(
+        originId: response.id,
         id: SplittedIdAndType.fromOriginId(response.id).id,
         contentType: SplittedIdAndType.fromOriginId(response.id).type,
         posterImgUrl: response.posterImgUrl,

@@ -29,7 +29,7 @@ class TmdbTvDetailResponse {
   String name;
 
   @JsonKey(name: 'next_episode_to_air')
-  String? next_episode_to_air;
+  NextEpisodeInfoResponse? next_episode_to_air;
 
   @JsonKey(name: 'number_of_seasons')
   int? number_of_seasons;
@@ -82,7 +82,7 @@ class TmdbTvDetailResponse {
 @JsonSerializable(createToJson: false)
 class SeasonResponse {
   @JsonKey(name: 'air_date')
-  String air_date;
+  String? air_date;
 
   @JsonKey(name: 'episode_count')
   int episode_count;
@@ -107,6 +107,38 @@ class SeasonResponse {
 
   factory SeasonResponse.fromJson(Map<String, dynamic> json) =>
       _$SeasonResponseFromJson(json);
+}
+
+// 다음 시즌 정보
+@JsonSerializable(createToJson: false)
+class NextEpisodeInfoResponse {
+  @JsonKey(name: 'air_date')
+  String? air_date;
+
+  @JsonKey(name: 'episode_count')
+  int? episode_count;
+
+  @JsonKey(name: 'id')
+  int id;
+
+  @JsonKey(name: 'name')
+  String name;
+
+  @JsonKey(name: 'overview')
+  String overview;
+
+  @JsonKey(name: 'production_code')
+  String production_code;
+
+  @JsonKey(name: 'season_number')
+  int season_number;
+
+
+  NextEpisodeInfoResponse(this.air_date, this.episode_count, this.id, this.name,
+      this.overview, this.production_code, this.season_number);
+
+  factory NextEpisodeInfoResponse.fromJson(Map<String, dynamic> json) =>
+      _$NextEpisodeInfoResponseFromJson(json);
 }
 
 // TV 장르

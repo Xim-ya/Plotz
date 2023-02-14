@@ -46,6 +46,7 @@ class ExploreContentModel {
 }
 
 class ExploreContentItem {
+  final String originId;
   final int id;
   final ContentType type;
   final String videoId;
@@ -55,7 +56,9 @@ class ExploreContentItem {
   late final Rxn<ExploreContentYoutubeInfo> youtubeInfo = Rxn(); // 컨텐츠 유튜브 정보
 
   ExploreContentItem(
-      {required this.id,
+      {
+        required this.originId,
+        required this.id,
       required this.type,
       required this.videoId,
       required this.title,
@@ -64,6 +67,7 @@ class ExploreContentItem {
 
   factory ExploreContentItem.fromResponse(BasicContentInfoResponse response) =>
       ExploreContentItem(
+        originId: response.id,
         id: SplittedIdAndType.fromOriginId(response.id).id,
         type: SplittedIdAndType.fromOriginId(response.id).type,
         videoId: response.videoId,

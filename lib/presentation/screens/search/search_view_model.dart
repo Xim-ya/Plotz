@@ -11,8 +11,8 @@ class SearchViewModel extends BaseViewModel {
   // final SearchPagingContentUseCase _pagingHandler;
   final SearchPagedContentUseCase _pagingHandler;
 
-
   /* Intents */
+
   /// 검색된 컨텐츠 클릭 되었을 때
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped(
@@ -35,6 +35,8 @@ class SearchViewModel extends BaseViewModel {
           contentId: content.contentId,
           contentType: contentType,
           posterImgUrl: content.posterImgUrl,
+          // TODO: origin id 매핑 로직 필요
+          originId: '',
         ),
       );
     } else {

@@ -61,22 +61,23 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
                       contentType: contentItem.type,
                       posterImgUrl: contentItem.posterImgUrl,
                       title: contentItem.title,
+                      originId: contentItem.originId,
                     ));
                   },
                   child: Stack(
                     children: [
-                      vm.isContentLoaded
-                          ? CachedNetworkImage(
-                              imageUrl:
-                                  contentItem.posterImgUrl.prefixTmdbImgPath,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
-                            )
-                          : const Center(
-                              child: CircularProgressIndicator(
-                                color: AppColor.darkGrey,
-                              ),
-                            ),
+                      if (vm.isContentLoaded)
+                        CachedNetworkImage(
+                          imageUrl: contentItem.posterImgUrl.prefixTmdbImgPath,
+                          height: double.infinity,
+                          fit: BoxFit.cover,
+                        )
+                      else
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColor.darkGrey,
+                          ),
+                        ),
                       Align(
                         alignment: Alignment.topCenter,
                         child: buildBackdropImg(),

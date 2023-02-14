@@ -12,11 +12,13 @@ import 'package:uppercut_fantube/utilities/index.dart';
  * */
 
 class ContentPosterShell {
+  final String originId;
   final int contentId;
   final ContentType contentType;
   final String posterImgUrl;
 
   ContentPosterShell({
+    required this.originId,
     required this.contentId,
     required this.contentType,
     required this.posterImgUrl,
@@ -24,6 +26,7 @@ class ContentPosterShell {
 
   factory ContentPosterShell.fromResponse(TopTenContentItemResponse response) =>
       ContentPosterShell(
+        originId: response.id,
         contentId: SplittedIdAndType.fromOriginId(response.id).id,
         contentType: SplittedIdAndType.fromOriginId(response.id).type,
         posterImgUrl: response.posterImgUrl,

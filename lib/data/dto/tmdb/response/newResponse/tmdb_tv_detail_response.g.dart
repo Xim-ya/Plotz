@@ -19,7 +19,10 @@ TmdbTvDetailResponse _$TmdbTvDetailResponseFromJson(
       json['id'] as int,
       json['in_production'] as bool?,
       json['name'] as String,
-      json['next_episode_to_air'] as String?,
+      json['next_episode_to_air'] == null
+          ? null
+          : NextEpisodeInfoResponse.fromJson(
+              json['next_episode_to_air'] as Map<String, dynamic>),
       json['number_of_seasons'] as int?,
       json['original_name'] as String,
       json['overview'] as String,
@@ -34,12 +37,24 @@ TmdbTvDetailResponse _$TmdbTvDetailResponseFromJson(
 
 SeasonResponse _$SeasonResponseFromJson(Map<String, dynamic> json) =>
     SeasonResponse(
-      json['air_date'] as String,
+      json['air_date'] as String?,
       json['episode_count'] as int,
       json['id'] as int,
       json['name'] as String,
       json['overview'] as String,
       json['poster_path'] as String?,
+      json['season_number'] as int,
+    );
+
+NextEpisodeInfoResponse _$NextEpisodeInfoResponseFromJson(
+        Map<String, dynamic> json) =>
+    NextEpisodeInfoResponse(
+      json['air_date'] as String?,
+      json['episode_count'] as int?,
+      json['id'] as int,
+      json['name'] as String,
+      json['overview'] as String,
+      json['production_code'] as String,
       json['season_number'] as int,
     );
 

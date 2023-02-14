@@ -10,7 +10,7 @@ class ContentRepositoryImpl implements ContentRepository {
   // 컨텐츠 에피소드 아이템 리스트 호출
   @override
   Future<Result<List<ContentEpisodeInfoItem>>>
-      loadContentEpisodeItemList() async {
+  loadContentEpisodeItemList() async {
     try {
       final response = await _contentDataSource.loadContentEpisodeItemList();
       return Result.success(response);
@@ -21,7 +21,7 @@ class ContentRepositoryImpl implements ContentRepository {
 
   @override
   Future<Result<List<CategoryBaseContentList>>>
-      loadContentListWithCategory() async {
+  loadContentListWithCategory() async {
     try {
       final response = await _contentDataSource.loadContentWithCategory();
       return Result.success(response);
@@ -54,7 +54,7 @@ class ContentRepositoryImpl implements ContentRepository {
   Future<Result<ContentVideos>> loadDramaContentVideoList(int contentId) async {
     try {
       final response =
-          await _contentDataSource.loadDramaContentVideoList(contentId);
+      await _contentDataSource.loadDramaContentVideoList(contentId);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -65,7 +65,7 @@ class ContentRepositoryImpl implements ContentRepository {
   Future<Result<ContentVideos>> loadMovieContentVideoList(int contentId) async {
     try {
       final response =
-          await _contentDataSource.loadMovieContentVideoList(contentId);
+      await _contentDataSource.loadMovieContentVideoList(contentId);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -75,7 +75,7 @@ class ContentRepositoryImpl implements ContentRepository {
   // 탐색 컨텐츠 기본(contentId, videoId, type) 정보 호출
   @override
   Future<Result<List<ExploreContent>>>
-      loadBasicInfoOfExploreContentList() async {
+  loadBasicInfoOfExploreContentList() async {
     try {
       final response = await _contentDataSource.loadExploreContentIdInfoList();
       return Result.success(
@@ -102,6 +102,18 @@ class ContentRepositoryImpl implements ContentRepository {
     try {
       final response = await _contentDataSource.loadContainingIdsContents(ids);
       final result = ExploreContentModel.fromResponse(response);
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ContentVideos>> loadContentVideoInfo(String id) async {
+    try {
+      final response =
+      await _contentDataSource.loadVideoInfo(id);
+      final result = ContentVideos.fromResponse(response, id: id);
       return Result.success(result);
     } on Exception catch (e) {
       return Result.failure(e);

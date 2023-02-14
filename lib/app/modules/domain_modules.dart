@@ -1,10 +1,8 @@
-import 'package:uppercut_fantube/domain/service/user_service.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_in_handler_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/explore/test_use_case.dart';
 import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_impl.dart';
 import 'package:uppercut_fantube/domain/useCase/search/validate_video_url_use_case_impl.dart';
 import 'package:uppercut_fantube/utilities/index.dart';
@@ -44,7 +42,6 @@ abstract class DomainModules {
     Get.lazyPut(() => LoadContentOfVideoListUseCase(Get.find()), fenix: true);
 
     // Explore
-    Get.lazyPut(() => TestUseCase(), fenix: true);
     Get.lazyPut(
         () => LoadRandomPagedExploreContentsUseCase(Get.find(), Get.find()),
         fenix: true);

@@ -15,6 +15,7 @@ class BannerModel  {
 }
 
 class BannerItem {
+  final String originId;
   final int id;
   final String videoId;
   final ContentType type;
@@ -24,6 +25,7 @@ class BannerItem {
   final String backdropImgUrl;
 
   BannerItem({
+    required this.originId,
     required this.id,
     required this.videoId,
     required this.type,
@@ -34,6 +36,7 @@ class BannerItem {
   });
 
   factory BannerItem.fromResponse(BannerItemResponse response) => BannerItem(
+    originId: response.id,
         id: SplittedIdAndType.fromOriginId(response.id).id,
         videoId: response.videoId,
         type: SplittedIdAndType.fromOriginId(response.id).type,

@@ -23,7 +23,6 @@ mixin FirestoreHelper {
   /// 전달 받은 [ids] 10개 단위로 나누어 호출
   Future<List<DocumentSnapshot>> getContainingDocs(
       {required String collectionName, required List<String> ids}) async {
-
     List<DocumentSnapshot> results = [];
 
     List<List<String>> idChunks = [];
@@ -43,6 +42,17 @@ mixin FirestoreHelper {
 
     return results;
   }
+
+  /// subCollection의 document 데이터를 불러오는 메소드
+  Future<QueryDocumentSnapshot> getFirstSubCollectionDoc(String collectionName,
+      {required String docId, required String subCollectionName}) async {
+    QuerySnapshot snapshot = await _db
+        .collection(collectionName)
+        .doc(docId)
+        .collection(subCollectionName)
+        .limit(1)
+        .get();
+
+    return snapshot.docs.first;
+  }
 }
-
-
