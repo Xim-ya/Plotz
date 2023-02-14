@@ -17,25 +17,32 @@ mixin FirestoreHelper {
     return documentIds;
   }
 
-  // 주어진 id List에 해당하는 Document 데이터를 불러오는 메소도
+  /// 주어진 id List에 해당하는 Document 데이터를 불러오는 메소도
+  /// FireStore where In 인덱싱 쿼리 메소드는
+  /// 10개의 제한이 있기 때문에
+  /// 전달 받은 [ids] 10개 단위로 나누어 호출
   Future<List<DocumentSnapshot>> getContainingDocs(
       {required String collectionName, required List<String> ids}) async {
-    QuerySnapshot snapshot = await _db
-        .collection(collectionName)
-        .where('id', whereIn: ids)
-        .get();
-    return snapshot.docs;
-  }
 
-  // 특정 Array에서 10개의 무작위 데이터를 불러오는 메소드
-  Future<List<String>> getRandomArrayElements() async {
-    final List<String> documentIds =
-        await getDocumentIdsFromCollection('contents');
-    final random = Random();
-    final result = <String>[];
-    for (int i = 0; i < 10; i++) {
-      result.add(documentIds[random.nextInt(documentIds.length)]);
+    List<DocumentSnapshot> results = [];
+
+    List<List<String>> idChunks = [];
+    for (int i = 0; i < ids.length; i += 10) {
+      int end = i + 10;
+      if (end > ids.length) end = ids.length;
+      idChunks.add(ids.sublist(i, end));
     }
-    return result;
+
+    for (List<String> idChunk in idChunks) {
+      QuerySnapshot snapshot = await _db
+          .collection(collectionName)
+          .where('id', whereIn: idChunk)
+          .get();
+      results.addAll(snapshot.docs);
+    }
+
+    return results;
   }
 }
+
+

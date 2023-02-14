@@ -10,6 +10,7 @@ class ExploreViewModel extends BaseViewModel {
   // final Rxn<List<ExploreContent>> exploreContentList = Rxn();
   final Rxn<ExploreContentModel> _exploreContentModel = Rxn();
   final RxInt swiperIndex = 0.obs;
+  final RxBool loopIsOnProgress = false.obs;
 
   /* Controllers */
   late final CarouselController swiperController;
@@ -23,30 +24,8 @@ class ExploreViewModel extends BaseViewModel {
   final TestUseCase _testUseCase;
 
   /* Intents */
-  // 탐색 컨텐츠 리스트 호출
-  Future<void> _fetchExploreContent() async {
-    final responseResult = await _partialLoadContentUseCase.loadContentIdList();
-    // exploreContentList.value = responseResult;
-  }
-
   // 탐색 컨텐츠 리스트 재호출
-  Future<void> reFetchExploreContent() async {
-    // 슬라이더 State 및 데이터 초기화
-    _partialLoadContentUseCase.isCanceled(true);
-    _partialLoadContentUseCase.maxScannedIndex(0);
-    // exploreContentList.value = null;
-    swiperIndex(0);
-    await swiperController.animateToPage(0);
-
-    // 탐색 컨텐츠 재호출
-    final responseResult = await _partialLoadContentUseCase.loadContentIdList();
-    // exploreContentList.value = responseResult;
-    // exploreContentList.value?.shuffle();
-
-    // 컨텐츠 리스트 내부 필드값 업데이트
-    await _partialLoadContentUseCase.changeCanceledState();
-    await _partialLoadContentUseCase.updateExploreContentFields(0);
-  }
+  Future<void> reFetchExploreContent() async {}
 
   // 컨텐츠 리스트 내부 필드값 업데이트
   void updateContentListInfo() {
@@ -65,35 +44,49 @@ class ExploreViewModel extends BaseViewModel {
 
   // swiper가 이동했을 때 관련 동작
   void onSwiperChanged(int index) {
-    swiperIndex(index);
-    updateContentListInfo();
-    // if (index + 1 == exploreContentList.value?.length) {
-    //   AlertWidget.toast('새로운 컨텐츠를 불러옵니다');
-    //   reFetchExploreContent();
+    // if (index == 6 && _exploreContentsUseCase.pagedAllowed == true) {
+    //   loadMoreContents();
     // }
+  }
+
+  void test() {
+    print('${exploreContentModel?.contents.length}');
+  }
+
+  Future<void> loadMoreContents() async {
+    final response = await _exploreContentsUseCase.pagedCall();
+    await response.fold(onSuccess: (data) async{
+      _exploreContentModel.value!.contents.addAll(data.contents);
+      update();
+      await data.updateYoutubeChannelInfo();
+    }, onFailure: (e) {
+      log('ExploreViewModel : $e');
+    });
   }
 
   Future<void> loadRandomExploreContents() async {
     final response = await _exploreContentsUseCase.call();
-    response.fold(onSuccess: (data) {
+     response.fold(onSuccess: (data) {
       _exploreContentModel.value = data;
       update();
-      data.updateYoutubeChannelInfo();
+        data.updateYoutubeChannelInfo();
     }, onFailure: (e) {
       log('ExploreViewModel : $e');
     });
   }
 
   ExploreContentModel? get exploreContentModel => _exploreContentModel.value;
+
   bool get isContentLoaded => _exploreContentModel.value.hasData;
-  List<ExploreContentItem>? get exploreContents => _exploreContentModel.value?.contents;
+
+  List<ExploreContentItem>? get exploreContents =>
+      _exploreContentModel.value?.contents;
 
   @override
-  Future<void> onInit() async{
+  Future<void> onInit() async {
     super.onInit();
 
     swiperController = CarouselController();
     await loadRandomExploreContents();
-
   }
 }

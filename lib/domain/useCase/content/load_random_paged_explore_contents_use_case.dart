@@ -18,36 +18,71 @@ class LoadRandomPagedExploreContentsUseCase
   final ContentRepository _repository;
   final ContentService _service;
 
+  bool pagedAllowed = true;
+  final List<String> prevIds = [];
+
+  Future<Result<ExploreContentModel>> pagedCall() async {
+    //  무작위로 10개 id 추출 (이전 호출한 id 리스트를 제외)
+    final List<String> randomIdList = getRandomIdsExceptPrevIds(
+        prevIds: prevIds, ids: _service.contentIdInfo!.originIdList);
+
+    pagedAllowed = false;
+    return _repository.loadContainingIdsContents(randomIdList);
+  }
+
   @override
   Future<Result<ExploreContentModel>> call() async {
-    
     // 전체 컨텐츠 아이디 리스트 호출
     await _service.prepare();
     final List<String> idList = _service.contentIdInfo!.originIdList;
 
-    // 무작위로 10개의 id 리스트 추출
-    final List<String> randomIdList = randomIds(idList);
+    // 무작위로 20개의 id 리스트 추출
+    final List<String> randomIdList = getRandomIds(idList, 20);
+    prevIds.addAll(randomIdList);
 
     // 추출한 10개의 아이디에 해당하는 컨텐츠 데이터 호출
     return _repository.loadContainingIdsContents(randomIdList);
   }
 
-  // 무작위로 10개의 id 추출
-  List<String> randomIds(List<String> ids) {
-    final idList = ids;
-    if (ids.length <= 10) {
-      idList.shuffle();
-      return idList;
-    }
-
-    Random random = Random();
+  /// 무작위로 20개 id 추출 (이전 호출한 id 리스트를 제외)
+  /// 이전 호출한 ids 리스트 제외한 ids의 길이가 20 이하라면
+  /// 남은 id 리스트 모두 호출
+  List<String> getRandomIdsExceptPrevIds(
+      {required List<String> prevIds, required List<String> ids}) {
+    final filteredIds = ids.toSet().difference(prevIds.toSet()).toList();
+    final random = Random();
     List<String> result = [];
 
-    for (int i = 0; i < 10; i++) {
-      int index = random.nextInt(ids.length);
-      result.add(ids[index]);
+
+    if (filteredIds.length <= 20) {
+      for (int i = 0; i < filteredIds.length; i++) {
+        int index = random.nextInt(filteredIds.length);
+        result.add(filteredIds[index]);
+      }
+      return result;
+    } else {
+      for (int i = 0; i < 10; i++) {
+        int index = random.nextInt(filteredIds.length);
+        result.add(filteredIds[index]);
+      }
+      return result;
+    }
+  }
+
+
+  // 무작위로 id 리스트 추출
+  List<String> getRandomIds(List<String> someArray, int count) {
+    var arrayCopy = List<String>.from(someArray);
+    count = min(count, arrayCopy.length);
+    var selectedElements = <String>[];
+
+    var random = Random();
+    for (var i = 0; i < count; i++) {
+      var randomIndex = random.nextInt(arrayCopy.length);
+      selectedElements.add(arrayCopy[randomIndex]);
+      arrayCopy.removeAt(randomIndex);
     }
 
-    return result;
+    return selectedElements;
   }
 }

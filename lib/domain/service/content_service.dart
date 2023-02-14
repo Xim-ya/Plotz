@@ -20,9 +20,9 @@ class ContentService extends GetxService {
   // 등록된 전체 movie 컨텐츠 리스트
   final Rxn<List<SimpleContentInfo>> totalListOfRegisteredMovieContent = Rxn();
 
-  final Rxn<ContentIdInfoModel> _contentIdInfo = Rxn();
+  late final ContentIdInfoModel _contentIdInfo;
 
-  ContentIdInfoModel? get contentIdInfo => _contentIdInfo.value;
+  ContentIdInfoModel? get contentIdInfo => _contentIdInfo;
 
   final ContentRepository _contentRepository;
 
@@ -67,7 +67,7 @@ class ContentService extends GetxService {
     final response = await _contentRepository.loadContentIdInfoList();
     response.fold(
       onSuccess: (data) {
-        _contentIdInfo.value = ContentIdInfoModel(data);
+        _contentIdInfo = ContentIdInfoModel(data);
       },
       onFailure: (e) {
         log('ContentService : $e');

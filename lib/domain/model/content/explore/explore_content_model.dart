@@ -30,6 +30,19 @@ class ExploreContentModel {
       );
     }
   }
+
+  Future<void> updateYoutubeChannelInfo2() async {
+    for (var e in contents) {
+      YoutubeExplode();
+      final channelRes =
+      await YoutubeMetaData.yt.channels.getByVideo(e.videoId);
+      final videoRes = await YoutubeMetaData.yt.videos.get(e.videoId);
+      e.youtubeInfo.value = ExploreContentYoutubeInfo.fromResponse(
+        channelRes: channelRes,
+        videoRes: videoRes,
+      );
+    }
+  }
 }
 
 class ExploreContentItem {

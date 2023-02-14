@@ -27,7 +27,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         IconInkWellButton.packageIcon(
           icon: Icons.refresh,
           size: 28,
-          onIconTapped: vm.reFetchExploreContent,
+          onIconTapped: vm.test,
         ),
       ],
     );
