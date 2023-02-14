@@ -1,6 +1,6 @@
 
-import 'package:uppercut_fantube/domain/enum/validation_state_enum.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/enum/validation_state_enum.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class UrlValidationIndicator extends StatelessWidget {
   const UrlValidationIndicator({Key? key, required this.validationState})

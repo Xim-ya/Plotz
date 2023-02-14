@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:uppercut_fantube/domain/service/user_service.dart';
-import 'package:uppercut_fantube/presentation/screens/splash/splash_view_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/service/user_service.dart';
+import 'package:soon_sak/presentation/screens/splash/splash_view_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class SplashBinding extends Bindings {
   @override

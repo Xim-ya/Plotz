@@ -1,7 +1,7 @@
-import 'package:uppercut_fantube/presentation/screens/explore/explore_view_model.dart';
-import 'package:uppercut_fantube/presentation/screens/my/my_page_view_model.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/quration_view_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/screens/explore/explore_view_model.dart';
+import 'package:soon_sak/presentation/screens/my/my_page_view_model.dart';
+import 'package:soon_sak/presentation/screens/quration/quration_view_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 abstract class PresentationModules {
   PresentationModules._();

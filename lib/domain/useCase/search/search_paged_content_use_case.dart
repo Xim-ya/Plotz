@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.01
  *  검색 기능과 페이징 기능이 적용되어 있는 UseCase

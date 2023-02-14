@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
-import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source.dart';
-import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source_impl.dart';
-import 'package:uppercut_fantube/data/dataSource/staticContent/static_content_data_source_impl.dart';
-import 'package:uppercut_fantube/data/dto/content/content_api.dart';
-import 'package:uppercut_fantube/data/dto/content/content_api_impl.dart';
-import 'package:uppercut_fantube/data/firebase/app_fire_store.dart';
-import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
-import 'package:uppercut_fantube/data/repository/auth/auth_repository_impl.dart';
-import 'package:uppercut_fantube/data/repository/staticContent/static_content_repository_impl.dart';
-import 'package:uppercut_fantube/data/repository/youtube/youtube_repository_impl.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
+import 'package:soon_sak/data/dataSource/auth/auth_data_source_impl.dart';
+import 'package:soon_sak/data/dataSource/staticContent/static_content_data_source_impl.dart';
+import 'package:soon_sak/data/dto/content/content_api.dart';
+import 'package:soon_sak/data/dto/content/content_api_impl.dart';
+import 'package:soon_sak/data/firebase/app_fire_store.dart';
+import 'package:soon_sak/data/repository/auth/auth_repository.dart';
+import 'package:soon_sak/data/repository/auth/auth_repository_impl.dart';
+import 'package:soon_sak/data/repository/staticContent/static_content_repository_impl.dart';
+import 'package:soon_sak/data/repository/youtube/youtube_repository_impl.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 abstract class DataModules {
   DataModules._();

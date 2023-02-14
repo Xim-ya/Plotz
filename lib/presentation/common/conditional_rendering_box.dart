@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.17
  *  조건부 렌더링이 필요한 widget이 있을 때 사용하는 모듈

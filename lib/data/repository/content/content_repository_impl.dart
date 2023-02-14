@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/domain/model/content/content_id_model.dart';
-import 'package:uppercut_fantube/domain/model/content/explore/explore_content_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/model/content/content_id_model.dart';
+import 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
   ContentRepositoryImpl(this._contentDataSource);

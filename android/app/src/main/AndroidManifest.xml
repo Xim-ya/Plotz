@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.uppercut_fantube">
+    package="com.soon_sak">
    <application
-        android:label="uppercut_fantube"
+        android:label="soon_sak"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

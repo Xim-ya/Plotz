@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/domain/service/user_service.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/service/user_service.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class AppBinding extends Bindings {
   @override

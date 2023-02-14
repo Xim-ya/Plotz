@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:uppercut_fantube/utilities/extensions/determine_content_type.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
 part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 컨텐츠 탭뷰 영역

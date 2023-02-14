@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/presentation/common/listView/paging_result_list_view.dart';
-import 'package:uppercut_fantube/presentation/screens/search/localWidget/searched_list_item.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/common/listView/paging_result_list_view.dart';
+import 'package:soon_sak/presentation/screens/search/localWidget/searched_list_item.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class SearchScreen extends BaseScreen<SearchViewModel> {
   const SearchScreen({Key? key}) : super(key: key);

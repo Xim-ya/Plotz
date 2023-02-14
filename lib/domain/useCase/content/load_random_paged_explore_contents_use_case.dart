@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:uppercut_fantube/domain/model/content/explore/explore_content_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.12
  *  랜덤하게 10개의 탐색 컨텐츠 리스트를 불러오는 메소드

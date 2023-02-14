@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.09
  *  홈 스크린 상단에 위치한 배너 컨텐츠 정보를 불러오는 메소드

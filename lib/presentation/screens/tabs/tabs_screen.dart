@@ -1,7 +1,7 @@
-import 'package:uppercut_fantube/presentation/screens/explore/explore_screen.dart';
-import 'package:uppercut_fantube/presentation/screens/my/my_page_screen.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/quration_screen.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/screens/explore/explore_screen.dart';
+import 'package:soon_sak/presentation/screens/my/my_page_screen.dart';
+import 'package:soon_sak/presentation/screens/quration/quration_screen.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
   const TabsScreen({Key? key}) : super(key: key);

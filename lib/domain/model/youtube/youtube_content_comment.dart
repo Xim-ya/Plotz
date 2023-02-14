@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.23
  *  [YoutubeExplore]로부터 데이터를 매핑

@@ -3,7 +3,7 @@ import 'dart:isolate';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:uppercut_fantube/firebase_options.dart';
+import 'package:soon_sak/firebase_options.dart';
 
 mixin FirestoreIsolateMixin {
   // Firestore 인스턴스 생성

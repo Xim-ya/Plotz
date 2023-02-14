@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source.dart';
-import 'package:uppercut_fantube/data/mixin/fire_store_error_handler_mixin.dart';
+import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
+import 'package:soon_sak/data/mixin/fire_store_error_handler_mixin.dart';
 
 class AuthDataSourceImpl implements AuthDataSource {
   // AuthDataSourceImpl(this._auth);

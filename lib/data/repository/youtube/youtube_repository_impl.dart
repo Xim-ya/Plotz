@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/domain/model/youtube/youtube_channel_info.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/model/youtube/youtube_channel_info.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class YoutubeRepositoryImpl extends YoutubeRepository {
   /* 유튜브 컨텐츠 댓글 리스트 호출 */

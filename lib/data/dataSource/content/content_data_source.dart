@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/data/dto/content/response/basic_content_info_response.dart';
-import 'package:uppercut_fantube/data/dto/content/response/video_response.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/dto/content/response/basic_content_info_response.dart';
+import 'package:soon_sak/data/dto/content/response/video_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 abstract class ContentDataSource {
   Future<List<ContentEpisodeInfoItem>> loadContentEpisodeItemList();

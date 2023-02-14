@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022-11-20
  *  [ContentDetailViewModel]에서 사용되는 useCase

@@ -1,7 +1,7 @@
 import 'dart:developer';
-import 'package:uppercut_fantube/domain/enum/sns_type_enum.dart';
-import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/enum/sns_type_enum.dart';
+import 'package:soon_sak/domain/useCase/auth/social_sign_out_handler_use_case.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class MyPageViewModel extends BaseViewModel {
   MyPageViewModel(this._signOutHandlerUseCase);

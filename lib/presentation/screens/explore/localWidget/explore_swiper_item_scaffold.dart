@@ -1,5 +1,5 @@
 // 스와이퍼 아이템 Scaffold
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ExploreSwiperItemScaffold extends StatelessWidget {
   const ExploreSwiperItemScaffold({

@@ -1,8 +1,8 @@
-import 'package:uppercut_fantube/domain/model/content/explore/explore_content_model.dart';
-import 'package:uppercut_fantube/presentation/common/youtube/channel_info_view.dart';
-import 'package:uppercut_fantube/presentation/screens/explore/explore_view_model.dart';
-import 'package:uppercut_fantube/presentation/screens/explore/localWidget/explore_swiper_item_scaffold.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
+import 'package:soon_sak/presentation/common/youtube/channel_info_view.dart';
+import 'package:soon_sak/presentation/screens/explore/explore_view_model.dart';
+import 'package:soon_sak/presentation/screens/explore/localWidget/explore_swiper_item_scaffold.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ExploreScreen extends BaseScreen<ExploreViewModel> {
   const ExploreScreen({Key? key}) : super(key: key);

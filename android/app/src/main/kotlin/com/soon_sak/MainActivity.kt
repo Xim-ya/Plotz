@@ -1,4 +1,4 @@
-package com.example.uppercut_fantube
+package com.soon_sak
 
 import io.flutter.embedding.android.FlutterActivity
 

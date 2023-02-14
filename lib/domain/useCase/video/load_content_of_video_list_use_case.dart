@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.12.31
  *  컨텐츠의 유튜브 비도오 정보 리스트를 호출하는 useCase

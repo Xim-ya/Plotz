@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class LeadingIconTitle extends StatelessWidget {
   const LeadingIconTitle({Key? key, required this.title, required this.icon})

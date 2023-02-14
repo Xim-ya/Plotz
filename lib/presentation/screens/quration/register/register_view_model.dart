@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
 part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 링크 등록

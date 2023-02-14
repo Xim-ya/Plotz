@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/main.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/main.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
 *  [TMDB API] API 데이터를 호출을 관리하는 Repository

@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
-import 'package:uppercut_fantube/domain/enum/sns_type_enum.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/repository/auth/auth_repository.dart';
+import 'package:soon_sak/domain/enum/sns_type_enum.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class SocialSignOutHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
   SocialSignOutHandlerUseCase(this._authRepository);

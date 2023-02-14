@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class BannerModel  {
   BannerModel({required this.key, required this.contentList});
@@ -52,7 +52,7 @@ class BannerItem {
 
 /// TODO : 임시저장
 
-// import 'package:uppercut_fantube/utilities/index.dart';
+// import 'package:soon_sak/utilities/index.dart';
 //
 // class BannerModel extends BaseSingleDataModel {
 //   BannerModel({this.key, this.contentList});

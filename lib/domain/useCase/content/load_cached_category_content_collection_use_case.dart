@@ -1,7 +1,7 @@
-import 'package:uppercut_fantube/domain/model/content/home/category_content_collection_model.dart';
+import 'package:soon_sak/domain/model/content/home/category_content_collection_model.dart';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.11
  *  홈 스크린 상단에 위치한 카테고리 섹션 정보를 불러오는 메소드

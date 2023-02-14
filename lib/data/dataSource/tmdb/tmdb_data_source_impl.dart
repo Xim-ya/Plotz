@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class TmdbDataSourceImpl with ApiErrorHandlerMixin implements TmdbDataSource {
   TmdbDataSourceImpl(this._api);

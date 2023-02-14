@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.12
  *  Play 아이콘 버튼 & 컨텐츠 썸네일 버튼을 포함하고 있는 UI 모듈

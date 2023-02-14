@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.01
  *  입력된 유튜브 링크의 입력 및 유효성 검사 로직의 기능을 수행하는 UseCase

@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class CompletedContentsTabView extends StatelessWidget {
   const CompletedContentsTabView({Key? key}) : super(key: key);

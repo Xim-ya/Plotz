@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/domain/enum/sns_type_enum.dart';
-import 'package:uppercut_fantube/presentation/screens/my/my_page_view_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/enum/sns_type_enum.dart';
+import 'package:soon_sak/presentation/screens/my/my_page_view_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 import 'dart:math' as math;
 
 class MyPageScreen extends BaseScreen<MyPageViewModel> {

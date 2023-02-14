@@ -1,14 +1,14 @@
-import 'package:uppercut_fantube/presentation/screens/login/login_binding.dart';
-import 'package:uppercut_fantube/presentation/screens/login/login_screen.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/register_binding.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/register_screen.dart';
-import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_binding.dart';
-import 'package:uppercut_fantube/presentation/screens/qurationHistory/quration_history_screen.dart';
-import 'package:uppercut_fantube/presentation/screens/search/search_binding.dart';
-import 'package:uppercut_fantube/presentation/screens/search/search_screen.dart';
-import 'package:uppercut_fantube/presentation/screens/splash/splash_binding.dart';
-import 'package:uppercut_fantube/presentation/screens/splash/splash_screen.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/screens/login/login_binding.dart';
+import 'package:soon_sak/presentation/screens/login/login_screen.dart';
+import 'package:soon_sak/presentation/screens/quration/register/register_binding.dart';
+import 'package:soon_sak/presentation/screens/quration/register/register_screen.dart';
+import 'package:soon_sak/presentation/screens/qurationHistory/quration_history_binding.dart';
+import 'package:soon_sak/presentation/screens/qurationHistory/quration_history_screen.dart';
+import 'package:soon_sak/presentation/screens/search/search_binding.dart';
+import 'package:soon_sak/presentation/screens/search/search_screen.dart';
+import 'package:soon_sak/presentation/screens/splash/splash_binding.dart';
+import 'package:soon_sak/presentation/screens/splash/splash_screen.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.04
  *  - [GetPage]기반 라우팅 속성들을 해당 모듈에서 관리.

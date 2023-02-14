@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/data/dto/staticContent/response/top_ten_content_response.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/dto/staticContent/response/top_ten_content_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.31
  *  컨텐츠 간략 정보를 담고 있는 데이터 모델

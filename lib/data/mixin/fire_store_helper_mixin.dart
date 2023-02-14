@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uppercut_fantube/data/firebase/app_fire_store.dart';
+import 'package:soon_sak/data/firebase/app_fire_store.dart';
 
 mixin FirestoreHelper {
   final _db = AppFireStore.getInstance;

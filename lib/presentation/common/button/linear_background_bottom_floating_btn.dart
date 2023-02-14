@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class LinearBgBottomFloatingBtn extends StatelessWidget {
   const LinearBgBottomFloatingBtn({Key? key, required this.text, required this.onTap}) : super(key: key);

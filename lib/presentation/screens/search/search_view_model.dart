@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /// TODO: PAGING 고도화 로직 필요
 /// Tabview를  제스처로 이동할 때 UX가 부자연스러움.

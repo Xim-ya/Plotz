@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/data/dto/staticContent/response/content_key_response.dart';
+import 'package:soon_sak/data/dto/staticContent/response/content_key_response.dart';
 
 class StaticContentKeys {
   final String bannerKey;

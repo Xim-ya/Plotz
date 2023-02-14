@@ -1,8 +1,8 @@
-import 'package:uppercut_fantube/presentation/common/button/linear_background_bottom_floating_btn.dart';
-import 'package:uppercut_fantube/presentation/common/listView/paging_result_list_view.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/search_content_page_view_scaffold.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/searched_content_item_btn.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/common/button/linear_background_bottom_floating_btn.dart';
+import 'package:soon_sak/presentation/common/listView/paging_result_list_view.dart';
+import 'package:soon_sak/presentation/screens/quration/register/localWidget/search_content_page_view_scaffold.dart';
+import 'package:soon_sak/presentation/screens/quration/register/localWidget/searched_content_item_btn.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class SearchContentPageView extends BaseView<RegisterViewModel> {
   const SearchContentPageView({Key? key}) : super(key: key);

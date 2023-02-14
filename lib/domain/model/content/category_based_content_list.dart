@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/domain/model/content/exposure_content.dart';
+import 'package:soon_sak/domain/model/content/exposure_content.dart';
 
 class CategoryBaseContentList {
   final String category; // 카테고리

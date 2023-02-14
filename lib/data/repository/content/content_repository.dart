@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/domain/model/content/content_id_model.dart';
-import 'package:uppercut_fantube/domain/model/content/explore/explore_content_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/model/content/content_id_model.dart';
+import 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
 *  'Firebase Store' 로부터 데이터를 받음

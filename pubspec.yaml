@@ -1,4 +1,4 @@
-name: uppercut_fantube
+name: soon_sak
 description: A new Flutter project.
 
 
@@ -61,8 +61,8 @@ dependencies:
   #Utils
   either_dart: ^0.3.0
   intl: ^0.17.0 # DATE
-
-
+  change_app_package_name: ^1.1.0
+  rename: ^2.1.1
 
 
 dev_dependencies:

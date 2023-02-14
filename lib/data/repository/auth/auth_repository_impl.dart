@@ -1,9 +1,9 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:uppercut_fantube/data/dataSource/auth/auth_data_source.dart';
-import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
-import 'package:uppercut_fantube/domain/exception/auth_exception.dart';
-import 'package:uppercut_fantube/domain/model/auth/user_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
+import 'package:soon_sak/data/repository/auth/auth_repository.dart';
+import 'package:soon_sak/domain/exception/auth_exception.dart';
+import 'package:soon_sak/domain/model/auth/user_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._dataSource);

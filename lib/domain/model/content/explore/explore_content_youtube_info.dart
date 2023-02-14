@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ExploreContentYoutubeInfo {
   final String videoTitle; // 유튜브 비디오 제목

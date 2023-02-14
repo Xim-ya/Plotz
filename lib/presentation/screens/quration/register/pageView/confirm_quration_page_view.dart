@@ -1,7 +1,7 @@
-import 'package:uppercut_fantube/presentation/common/button/linear_background_bottom_floating_btn.dart';
-import 'package:uppercut_fantube/presentation/common/image/linear_layered_poster_img.dart';
-import 'package:uppercut_fantube/presentation/common/youtube/channel_info_view.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/common/button/linear_background_bottom_floating_btn.dart';
+import 'package:soon_sak/presentation/common/image/linear_layered_poster_img.dart';
+import 'package:soon_sak/presentation/common/youtube/channel_info_view.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ConfirmQurationPageView extends BaseView<RegisterViewModel> {
   const ConfirmQurationPageView({Key? key}) : super(key: key);

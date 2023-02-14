@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ExploreContentDetailInfo {
   final String? posterImg; // 포스터 이미지

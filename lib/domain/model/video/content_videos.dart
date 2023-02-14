@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/data/dto/content/response/video_response.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/dto/content/response/video_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.01.01
  * [ContentDetailScreen]에서 사용되는 비디오 객체 정보를 담고 있는 모델

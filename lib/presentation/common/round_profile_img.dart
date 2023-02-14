@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class RoundProfileImg extends StatelessWidget {
   const RoundProfileImg({Key? key, required this.size, required this.imgUrl})

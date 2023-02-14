@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /* 2022.07.14 Created By Ximya
 * 광고수익금 스크린의 Scaffold

@@ -1,9 +1,9 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:uppercut_fantube/app/config/theme_config.dart';
-import 'package:uppercut_fantube/app/di/app_binding.dart';
-import 'package:uppercut_fantube/app/routes/app_pages.dart';
-import 'package:uppercut_fantube/data/firebase/app_fire_store.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/app/config/theme_config.dart';
+import 'package:soon_sak/app/di/app_binding.dart';
+import 'package:soon_sak/app/routes/app_pages.dart';
+import 'package:soon_sak/data/firebase/app_fire_store.dart';
+import 'package:soon_sak/utilities/index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -13,7 +13,6 @@ void main() async{
     name: 'soonsak-15350',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print("arang 456");
   runApp(const MyApp());
 }
 

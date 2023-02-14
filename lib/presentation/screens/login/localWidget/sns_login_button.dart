@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/domain/enum/sns_type_enum.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/enum/sns_type_enum.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class SnsLoginButton extends StatelessWidget {
   const SnsLoginButton({Key? key, required this.sns, required this.onBtnTapped})

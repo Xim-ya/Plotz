@@ -1,11 +1,11 @@
-import 'package:uppercut_fantube/domain/useCase/auth/social_sign_in_handler_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/auth/social_sign_out_handler_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/search/search_paged_content_impl.dart';
-import 'package:uppercut_fantube/domain/useCase/search/validate_video_url_use_case_impl.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/useCase/auth/social_sign_in_handler_use_case.dart';
+import 'package:soon_sak/domain/useCase/auth/social_sign_out_handler_use_case.dart';
+import 'package:soon_sak/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
+import 'package:soon_sak/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
+import 'package:soon_sak/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
+import 'package:soon_sak/domain/useCase/search/search_paged_content_impl.dart';
+import 'package:soon_sak/domain/useCase/search/validate_video_url_use_case_impl.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 abstract class DomainModules {
   DomainModules._();

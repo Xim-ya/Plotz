@@ -1,7 +1,7 @@
-import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
+import 'package:soon_sak/domain/model/content/home/top_ten_contents_model.dart';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.09
  *  홈 스크린 위치한 TopTen10 컨텐츠 정보를 불러오는 메소드

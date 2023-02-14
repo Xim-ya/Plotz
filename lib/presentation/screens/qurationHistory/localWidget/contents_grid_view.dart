@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ContentsGridView extends StatelessWidget {
   const ContentsGridView({Key? key}) : super(key: key);

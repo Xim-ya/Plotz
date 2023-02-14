@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya  - 2022.11.07
  * [ContentDetailScaffold]에서 사용되는 UI Interaction들의 로직을 관리하는 Controller

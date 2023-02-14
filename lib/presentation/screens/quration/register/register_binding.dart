@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/presentation/screens/quration/register/register_view_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/screens/quration/register/register_view_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class RegisterBinding extends Bindings {
   @override

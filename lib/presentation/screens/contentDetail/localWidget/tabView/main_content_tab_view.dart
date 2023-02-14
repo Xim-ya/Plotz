@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/utilities/extensions/determine_content_type.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
  *  '단일 에피소드' 컨텐츠의 경우 에피소드가 존재하는 컨텐츠와 다른 UI가 보여지게 됨.

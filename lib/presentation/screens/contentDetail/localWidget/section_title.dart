@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({Key? key, required this.title, this.setLeftPadding = false})

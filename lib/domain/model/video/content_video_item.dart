@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:uppercut_fantube/data/dto/content/response/video_response.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/dto/content/response/video_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.31
  *  컨텐츠 회차와 유튜브 영상 id 값을 담고 있는 데이터 모델

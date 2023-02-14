@@ -1,7 +1,7 @@
-import 'package:uppercut_fantube/data/repository/auth/auth_repository.dart';
-import 'package:uppercut_fantube/domain/enum/sns_type_enum.dart';
-import 'package:uppercut_fantube/domain/model/auth/user_model.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/repository/auth/auth_repository.dart';
+import 'package:soon_sak/domain/enum/sns_type_enum.dart';
+import 'package:soon_sak/domain/model/auth/user_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class SocialSignInHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
   SocialSignInHandlerUseCase(this._authRepository);

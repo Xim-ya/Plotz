@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class BannerItemView extends StatelessWidget {
   const BannerItemView({Key? key, required this.title, required this.description, required this.onItemTapped, required this.imgUrl}) : super(key: key);

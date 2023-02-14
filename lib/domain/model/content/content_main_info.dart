@@ -1,4 +1,4 @@
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.16
  * 컨텐츠 상세페이지에서 사용되는 모델 [헤더 & 컨텐츠 탭]

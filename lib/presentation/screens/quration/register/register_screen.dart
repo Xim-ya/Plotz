@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/presentation/screens/quration/register/pageView/confirm_quration_page_view.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/screens/quration/register/pageView/confirm_quration_page_view.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class RegisterScreen extends BaseScreen<RegisterViewModel> {
   const RegisterScreen({Key? key}) : super(key: key);

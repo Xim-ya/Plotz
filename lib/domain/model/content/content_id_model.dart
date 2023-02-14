@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class ContentIdInfoModel {
   ContentIdInfoModel(this.totalIdInfoList);

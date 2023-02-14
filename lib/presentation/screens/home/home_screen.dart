@@ -1,9 +1,9 @@
 import 'dart:ui';
-import 'package:uppercut_fantube/presentation/screens/home/localWidget/banner_item.dart';
-import 'package:uppercut_fantube/presentation/screens/home/localWidget/banner_skeleton_item.dart';
-import 'package:uppercut_fantube/presentation/screens/home/localWidget/category_content_section_skeleton_view.dart';
-import 'package:uppercut_fantube/presentation/screens/home/localWidget/category_content_section_view.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/screens/home/localWidget/banner_item.dart';
+import 'package:soon_sak/presentation/screens/home/localWidget/banner_skeleton_item.dart';
+import 'package:soon_sak/presentation/screens/home/localWidget/category_content_section_skeleton_view.dart';
+import 'package:soon_sak/presentation/screens/home/localWidget/category_content_section_view.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({Key? key}) : super(key: key);

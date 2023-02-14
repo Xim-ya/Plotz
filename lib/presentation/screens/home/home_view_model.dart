@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:uppercut_fantube/domain/model/content/home/category_content_collection_model.dart';
-import 'package:uppercut_fantube/domain/model/content/home/top_ten_contents_model.dart';
-import 'package:uppercut_fantube/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
-import 'package:uppercut_fantube/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/domain/model/content/home/category_content_collection_model.dart';
+import 'package:soon_sak/domain/model/content/home/top_ten_contents_model.dart';
+import 'package:soon_sak/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
+import 'package:soon_sak/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
+import 'package:soon_sak/utilities/index.dart';
 import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 

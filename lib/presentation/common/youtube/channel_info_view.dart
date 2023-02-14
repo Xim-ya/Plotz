@@ -1,5 +1,5 @@
-import 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.12.30
 *  채널 프로필 이미지 & 채널명 & 구독자 수

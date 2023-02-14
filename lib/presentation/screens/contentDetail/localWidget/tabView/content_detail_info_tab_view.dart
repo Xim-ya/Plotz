@@ -1,6 +1,6 @@
-import 'package:uppercut_fantube/presentation/common/skeleton_box.dart';
-import 'package:uppercut_fantube/presentation/common/youtube/channel_info_view.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
+import 'package:soon_sak/presentation/common/youtube/channel_info_view.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
  *  컨텐츠 상세 스크린 > 정보 탭뷰 위젯

@@ -1,7 +1,7 @@
-import 'package:uppercut_fantube/presentation/common/button/linear_background_bottom_floating_btn.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/register_video_link_page_view_scaffold.dart';
-import 'package:uppercut_fantube/presentation/screens/quration/register/localWidget/url_validation_indicator.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/presentation/common/button/linear_background_bottom_floating_btn.dart';
+import 'package:soon_sak/presentation/screens/quration/register/localWidget/register_video_link_page_view_scaffold.dart';
+import 'package:soon_sak/presentation/screens/quration/register/localWidget/url_validation_indicator.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
   const RegisterVideoLinkPageView({Key? key}) : super(key: key);

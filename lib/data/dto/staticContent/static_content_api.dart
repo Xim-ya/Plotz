@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/response/category_content_collection_response.dart';
-import 'package:uppercut_fantube/data/dto/staticContent/response/content_key_response.dart';
-import 'package:uppercut_fantube/utilities/index.dart';
+import 'package:soon_sak/data/dto/staticContent/response/category_content_collection_response.dart';
+import 'package:soon_sak/data/dto/staticContent/response/content_key_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 part 'static_content_api.g.dart';
 
