@@ -14,8 +14,8 @@ class ExploreViewModel extends BaseViewModel {
   /* Controllers */
   late final CarouselController swiperController;
 
-  ExploreViewModel(this._partialLoadContentUseCase,
-      this._exploreContentsUseCase);
+  ExploreViewModel(
+      this._partialLoadContentUseCase, this._exploreContentsUseCase);
 
   /* UseCases */
   final PartialLoadContentUseCase _partialLoadContentUseCase;
@@ -53,21 +53,24 @@ class ExploreViewModel extends BaseViewModel {
 
   Future<void> loadMoreContents() async {
     final response = await _exploreContentsUseCase.pagedCall();
-    await response.fold(onSuccess: (data) async{
-      _exploreContentModel.value!.contents.addAll(data.contents);
-      update();
-      await data.updateYoutubeChannelInfo();
-    }, onFailure: (e) {
-      log('ExploreViewModel : $e');
-    });
+    await response.fold(
+      onSuccess: (data) async {
+        _exploreContentModel.value!.contents.addAll(data.contents);
+        update();
+        await data.updateYoutubeChannelInfo();
+      },
+      onFailure: (e) {
+        log('ExploreViewModel : $e');
+      },
+    );
   }
 
   Future<void> loadRandomExploreContents() async {
     final response = await _exploreContentsUseCase.call();
-     response.fold(onSuccess: (data) {
+    response.fold(onSuccess: (data) {
       _exploreContentModel.value = data;
       update();
-        data.updateYoutubeChannelInfo();
+      data.updateYoutubeChannelInfo();
     }, onFailure: (e) {
       log('ExploreViewModel : $e');
     });
@@ -85,6 +88,6 @@ class ExploreViewModel extends BaseViewModel {
     super.onInit();
 
     swiperController = CarouselController();
-    await loadRandomExploreContents();
+    // await loadRandomExploreContents();
   }
 }

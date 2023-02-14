@@ -49,6 +49,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061021294637:android:c89bd4094ac7a778d418a4",
+        "android_client_info": {
+          "package_name": "com.soon_sak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8uLI0nazM-2o9y1-mvSmi9vXrNEPl2Fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uppercutFantube"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
