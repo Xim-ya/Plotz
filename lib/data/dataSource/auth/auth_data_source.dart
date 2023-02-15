@@ -1,5 +1,6 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:soon_sak/domain/model/auth/user_model.dart';
 
 
 abstract class AuthDataSource {
@@ -12,6 +13,8 @@ abstract class AuthDataSource {
   // 애플 로그인 트기거
   Future<AuthorizationCredentialAppleID> triggerAppleSignIn();
 
+  // 유저 정보 등록(저장)
+  Future<void> saveUserInfo(UserModel userInfo);
 
   // 유저의 계정 등록 여부
   Future<bool> isUserAlreadyRegistered(String userId);

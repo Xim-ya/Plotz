@@ -1,19 +1,23 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:soon_sak/domain/enum/sns_type_enum.dart';
 
 class UserModel {
   final String? displayName;
+  final String? nickName;
   final String? email;
-  final String? id;
+  late String id;
   final String? photoUrl;
   final UserToken? token;
+  final Sns provider;
 
   UserModel({
-    required this.displayName,
-    required this.email,
-    required this.id,
-    required this.photoUrl,
+    required this.provider,
+    this.displayName,
+    this.email,
+    this.photoUrl,
     this.token,
+    this.nickName,
   });
 
   // 구글 로그인 시
@@ -23,7 +27,7 @@ class UserModel {
     return UserModel(
       displayName: account.displayName,
       email: account.email,
-      id: account.id,
+      provider: Sns.google,
       photoUrl: account.photoUrl,
       token: UserToken(
           idToken: authentication.idToken,
@@ -35,14 +39,25 @@ class UserModel {
   factory UserModel.fromAppleSignInRes(
           {required AuthorizationCredentialAppleID response}) =>
       UserModel(
-        displayName: '${response.familyName} ${response.givenName}',
+        displayName: '${response.familyName}${response.givenName}',
         email: response.email,
-        id: response.identityToken,
+        provider: Sns.apple,
         token: UserToken(
             idToken: response.identityToken,
             accessToken: response.authorizationCode),
-        photoUrl: null,
       );
+
+  // Instance -> Map (FireStore 저장 용도)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': displayName,
+      'provider': provider.originString.toString(), // toString으로 포맷을 한번더 해줘야함
+      'nickName': nickName,
+      'photoUrl': photoUrl,
+      'email': email,
+    };
+  }
 }
 
 class UserToken {

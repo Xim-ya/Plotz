@@ -5,6 +5,7 @@ import 'package:sign_in_with_apple_platform_interface/authorization_credential.d
 import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
 import 'package:soon_sak/data/mixin/fire_store_error_handler_mixin.dart';
 import 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
+import 'package:soon_sak/domain/model/auth/user_model.dart';
 
 class AuthDataSourceImpl with FirestoreHelper implements AuthDataSource {
   // AuthDataSourceImpl(this._auth);
@@ -52,5 +53,12 @@ class AuthDataSourceImpl with FirestoreHelper implements AuthDataSource {
     } else {
       return false;
     }
+  }
+
+  @override
+  Future<void> saveUserInfo(
+    UserModel userInfo,
+  ) async {
+    return storeDocument('user', docId: userInfo.id, data: userInfo.toMap());
   }
 }

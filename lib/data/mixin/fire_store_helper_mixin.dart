@@ -63,4 +63,12 @@ mixin FirestoreHelper {
 
     return snapshot.docs.first;
   }
+
+
+  // document에 데이터를 저장하는 메소드
+  Future<void> storeDocument(String collectionName,
+      {required String docId, required Map<String, dynamic> data}) {
+    final docRef = _db.collection(collectionName).doc(docId);
+    return docRef.set(data);
+  }
 }

@@ -32,3 +32,4 @@ class UserService extends GetxService {
 
   static UserService get to => Get.find();
 }
+

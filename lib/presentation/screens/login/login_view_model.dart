@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:soon_sak/domain/enum/sns_type_enum.dart';
-import 'package:soon_sak/domain/useCase/auth/social_sign_in_handler_use_case.dart';
-import 'package:soon_sak/domain/useCase/auth/social_sign_out_handler_use_case.dart';
+import 'package:soon_sak/domain/useCase/auth/sign_in_and_up_handler_use_case.dart';
+import 'package:soon_sak/domain/useCase/auth/sign_out_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class LoginViewModel extends BaseViewModel {
@@ -9,16 +9,17 @@ class LoginViewModel extends BaseViewModel {
 
   bool isUserSignIn = false;
 
-  final SocialSignOutHandlerUseCase _signOutHandlerUseCase;
-  final SocialSignInHandlerUseCase _signInHandlerUseCase;
+  final SignOutUseCase _signOutHandlerUseCase;
+  final SignInAndUpHandlerUseCase _signInHandlerUseCase;
 
   Future<void> checkUserState() async {}
 
-  Future<void> socialSignIn(Sns social) async {
+
+  // 로그인 & 회원가입
+  Future<void> signInAndUp(Sns social) async {
     final result = await _signInHandlerUseCase.call(social);
     result.fold(
       onSuccess: (data) {
-        print('애플 로그인 성공?');
         Get.offAllNamed(AppRoutes.tabs);
       },
       onFailure: (e) {

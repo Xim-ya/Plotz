@@ -1,5 +1,5 @@
-import 'package:soon_sak/domain/useCase/auth/social_sign_in_handler_use_case.dart';
-import 'package:soon_sak/domain/useCase/auth/social_sign_out_handler_use_case.dart';
+import 'package:soon_sak/domain/useCase/auth/sign_in_and_up_handler_use_case.dart';
+import 'package:soon_sak/domain/useCase/auth/sign_out_use_case.dart';
 import 'package:soon_sak/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
 import 'package:soon_sak/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
 import 'package:soon_sak/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
@@ -21,8 +21,8 @@ abstract class DomainModules {
 
 
     // 인증
-    Get.lazyPut(() => SocialSignOutHandlerUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => SocialSignInHandlerUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => SignOutUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => SignInAndUpHandlerUseCase(Get.find()), fenix: true);
 
     // 컨텐츠
     Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);

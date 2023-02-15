@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'package:soon_sak/domain/enum/sns_type_enum.dart';
-import 'package:soon_sak/domain/useCase/auth/social_sign_out_handler_use_case.dart';
+import 'package:soon_sak/domain/useCase/auth/sign_out_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class MyPageViewModel extends BaseViewModel {
   MyPageViewModel(this._signOutHandlerUseCase);
 
-  final SocialSignOutHandlerUseCase _signOutHandlerUseCase;
+  final SignOutUseCase _signOutHandlerUseCase;
 
   /* Intents */
   // 큐레이팅 내역 스크린으로 라우팅

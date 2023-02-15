@@ -2,8 +2,8 @@ import 'package:soon_sak/data/repository/auth/auth_repository.dart';
 import 'package:soon_sak/domain/enum/sns_type_enum.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SocialSignOutHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
-  SocialSignOutHandlerUseCase(this._authRepository);
+class SignOutUseCase extends BaseUseCase<Sns, Result<void>> {
+  SignOutUseCase(this._authRepository);
 
   final AuthRepository _authRepository;
 

@@ -81,4 +81,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<void>> saveUserInfo(UserModel userInfo) async {
+    try {
+      final response = await _dataSource.saveUserInfo(userInfo);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

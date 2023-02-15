@@ -5,8 +5,21 @@ import 'package:soon_sak/domain/enum/sns_type_enum.dart';
 import 'package:soon_sak/domain/model/auth/user_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SocialSignInHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
-  SocialSignInHandlerUseCase(this._authRepository);
+/** Created By Ximya - 2022.02.15
+ *  로그인과 회원가입을 진행하는 UseCase
+ *  Google SignIn & Apple SignIn 으로 구성
+ *  데이터 레이로부터 유저의 정보를 받아오고, 해당 UseCase 에서 Firebase Auth에 등록하는 구조
+ *
+ *  아래와 같은 기능을 포함하고 있음
+ *
+ *  1. 유저 데이터 호출 (google, apple)
+ *  2. Firebase Auth 등록
+ *  3. 기존에 등록된 유저인지 아닌지 확인
+ *  4. 신규유저라면 서버의 유저 정보 저장
+ * */
+
+class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
+  SignInAndUpHandlerUseCase(this._authRepository);
 
   final AuthRepository _authRepository;
 
@@ -16,8 +29,9 @@ class SocialSignInHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
       case Sns.google:
         final response = await _authRepository.getGoogleUserInfo();
         return response.fold(
-          onSuccess: (data) {
-            signWithCredential(data, snsType: Sns.google);
+          onSuccess: (data) async {
+            await signWithCredential(data, snsType: Sns.google);
+            await signUp(data);
             return Result.success(null);
           },
           onFailure: Result.failure,
@@ -28,6 +42,7 @@ class SocialSignInHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
         return response.fold(
           onSuccess: (data) async {
             await signWithCredential(data, snsType: Sns.apple);
+            await signUp(data);
             return Result.success(null);
           },
           onFailure: Result.failure,
@@ -35,6 +50,25 @@ class SocialSignInHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
     }
   }
 
+  /// 회원가입
+  /// Firesotre에 유저 데이터 자장
+  Future<void> signUp(UserModel userInfo) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    final response = await _authRepository.isUserAlreadyRegistered(user!.uid);
+    response.fold(
+      onSuccess: (isRegisteredUser) {
+        // 이전에 등록에 유저가 아니라면 -> 서버에 유저 데이터 저장
+        if (!isRegisteredUser) {
+          userInfo.id = user.uid; // uid 필드값 업데이트
+          _authRepository.saveUserInfo(userInfo);
+          return;
+        }
+      },
+      onFailure: (e) {
+        log('SocialSignInHandlerUseCase $e');
+      },
+    );
+  }
 
   // Firebase Auth 등록
   Future<void> signWithCredential(UserModel user,
