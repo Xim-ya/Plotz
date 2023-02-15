@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/content/home/category_content_collection_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CategoryContentSectionView extends StatelessWidget {

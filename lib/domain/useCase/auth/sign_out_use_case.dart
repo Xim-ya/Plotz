@@ -1,5 +1,3 @@
-import 'package:soon_sak/data/repository/auth/auth_repository.dart';
-import 'package:soon_sak/domain/enum/sns_type_enum.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SignOutUseCase extends BaseUseCase<Sns, Result<void>> {

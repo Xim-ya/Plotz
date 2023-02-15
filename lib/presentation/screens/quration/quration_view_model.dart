@@ -1,5 +1,3 @@
-import 'package:soon_sak/presentation/screens/quration/localWidget/start_quration_button.dart';
-import 'package:soon_sak/utilities/extensions/random_list_item_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class QurationViewModel extends BaseViewModel {

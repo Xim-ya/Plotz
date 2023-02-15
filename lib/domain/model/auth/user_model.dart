@@ -1,6 +1,5 @@
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:soon_sak/domain/enum/sns_type_enum.dart';
+
+import 'package:soon_sak/utilities/index.dart';
 
 class UserModel {
   final String? displayName;

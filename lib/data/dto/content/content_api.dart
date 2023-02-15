@@ -1,5 +1,4 @@
-import 'package:soon_sak/data/dto/content/response/basic_content_info_response.dart';
-import 'package:soon_sak/data/dto/content/response/video_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 abstract class ContentApi {
 

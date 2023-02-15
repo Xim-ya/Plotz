@@ -1,4 +1,3 @@
-import 'package:soon_sak/main.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22

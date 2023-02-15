@@ -3,6 +3,10 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:soon_sak/data/firebase/app_fire_store.dart';
 
+/** Created By Ximya - 2023.02.15
+ *  FireStore 관련 네트워킹 메소드 기능을 관리하는 mixin 모듈
+ * */
+
 mixin FirestoreHelper {
   final _db = AppFireStore.getInstance;
 

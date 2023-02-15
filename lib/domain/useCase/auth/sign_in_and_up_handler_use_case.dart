@@ -1,8 +1,4 @@
 import 'dart:developer';
-
-import 'package:soon_sak/data/repository/auth/auth_repository.dart';
-import 'package:soon_sak/domain/enum/sns_type_enum.dart';
-import 'package:soon_sak/domain/model/auth/user_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.15

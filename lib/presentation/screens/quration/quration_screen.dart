@@ -1,8 +1,3 @@
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:polygon/polygon.dart';
-import 'package:soon_sak/presentation/common/image/linear_layered_poster_img.dart';
-import 'package:soon_sak/presentation/screens/quration/localWidget/start_quration_button.dart';
-import 'package:soon_sak/presentation/screens/quration/quration_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class QurationScreen extends BaseScreen<QurationViewModel> {

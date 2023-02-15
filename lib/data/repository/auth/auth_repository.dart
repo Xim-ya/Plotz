@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/auth/user_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class AuthRepository {

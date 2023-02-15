@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'package:soon_sak/domain/enum/sns_type_enum.dart';
-import 'package:soon_sak/domain/useCase/auth/sign_out_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class MyPageViewModel extends BaseViewModel {

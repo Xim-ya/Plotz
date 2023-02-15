@@ -1,7 +1,5 @@
-import 'package:soon_sak/data/dto/content/content_api.dart';
-import 'package:soon_sak/data/dto/content/response/basic_content_info_response.dart';
-import 'package:soon_sak/data/dto/content/response/video_response.dart';
-import 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
+import 'package:soon_sak/utilities/index.dart';
+
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override

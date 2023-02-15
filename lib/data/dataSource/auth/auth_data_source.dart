@@ -1,6 +1,4 @@
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:soon_sak/domain/model/auth/user_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 
 abstract class AuthDataSource {

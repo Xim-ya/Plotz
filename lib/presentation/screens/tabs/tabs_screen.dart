@@ -1,6 +1,3 @@
-import 'package:soon_sak/presentation/screens/explore/explore_screen.dart';
-import 'package:soon_sak/presentation/screens/my/my_page_screen.dart';
-import 'package:soon_sak/presentation/screens/quration/quration_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {

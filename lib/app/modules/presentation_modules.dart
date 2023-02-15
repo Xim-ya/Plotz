@@ -1,6 +1,3 @@
-import 'package:soon_sak/presentation/screens/explore/explore_view_model.dart';
-import 'package:soon_sak/presentation/screens/my/my_page_view_model.dart';
-import 'package:soon_sak/presentation/screens/quration/quration_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class PresentationModules {
@@ -15,9 +12,6 @@ abstract class PresentationModules {
 
     // 컨텐츠 상세화면
     Get.lazyPut(() => ContentDetailScaffoldController(), fenix: true);
-
-    // 검색
-    // Get.lazyPut(() => SearchViewModel(), fenix: true);
 
     // 탐색
     Get.lazyPut(() => ExploreViewModel(Get.find(), Get.find()), fenix: true);

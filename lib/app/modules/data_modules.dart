@@ -1,14 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
-import 'package:soon_sak/data/dataSource/auth/auth_data_source_impl.dart';
-import 'package:soon_sak/data/dataSource/staticContent/static_content_data_source_impl.dart';
-import 'package:soon_sak/data/dto/content/content_api.dart';
-import 'package:soon_sak/data/dto/content/content_api_impl.dart';
-import 'package:soon_sak/data/firebase/app_fire_store.dart';
-import 'package:soon_sak/data/repository/auth/auth_repository.dart';
-import 'package:soon_sak/data/repository/auth/auth_repository_impl.dart';
-import 'package:soon_sak/data/repository/staticContent/static_content_repository_impl.dart';
-import 'package:soon_sak/data/repository/youtube/youtube_repository_impl.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class DataModules {
@@ -32,7 +22,7 @@ abstract class DataModules {
     /* Dio */
     Get.lazyPut(() => Dio(), fenix: true);
 
-    // Get.put<Dio>(AppDio.getInstance(), permanent: true);
+
     /* FireStore */
     Get.lazyPut(() => AppFireStore(), fenix: true);
 

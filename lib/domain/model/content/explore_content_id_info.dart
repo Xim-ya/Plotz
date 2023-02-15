@@ -1,4 +1,3 @@
-
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreContentIdInfo {

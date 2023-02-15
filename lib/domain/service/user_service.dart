@@ -1,8 +1,6 @@
 import 'dart:developer';
+import 'package:soon_sak/utilities/index.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
-import 'package:soon_sak/data/repository/auth/auth_repository.dart';
 
 class UserService extends GetxService {
   UserService(this._authRepository);

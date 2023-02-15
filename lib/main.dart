@@ -1,11 +1,6 @@
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:soon_sak/app/config/theme_config.dart';
-import 'package:soon_sak/app/di/app_binding.dart';
-import 'package:soon_sak/app/routes/app_pages.dart';
-import 'package:soon_sak/data/firebase/app_fire_store.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

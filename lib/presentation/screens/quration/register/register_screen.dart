@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/screens/quration/register/pageView/confirm_quration_page_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class RegisterScreen extends BaseScreen<RegisterViewModel> {
@@ -9,12 +8,12 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
     return Container(
       color: AppColor.black,
       child: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: vm.pageViewController,
-        children: <Widget>[
-          const SearchContentPageView(),
-          const RegisterVideoLinkPageView(),
-          const ConfirmQurationPageView(),
+        children: const <Widget>[
+          SearchContentPageView(),
+          RegisterVideoLinkPageView(),
+          ConfirmQurationPageView(),
         ],
       ),
     );

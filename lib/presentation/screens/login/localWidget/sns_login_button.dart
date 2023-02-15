@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/enum/sns_type_enum.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SnsLoginButton extends StatelessWidget {

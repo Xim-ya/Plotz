@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.12

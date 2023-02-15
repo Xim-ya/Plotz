@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentIdInfoModel {

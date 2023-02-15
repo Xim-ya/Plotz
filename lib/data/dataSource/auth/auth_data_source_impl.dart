@@ -1,11 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:sign_in_with_apple_platform_interface/authorization_credential.dart';
-import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
-import 'package:soon_sak/data/mixin/fire_store_error_handler_mixin.dart';
-import 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
-import 'package:soon_sak/domain/model/auth/user_model.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class AuthDataSourceImpl with FirestoreHelper implements AuthDataSource {
   // AuthDataSourceImpl(this._auth);

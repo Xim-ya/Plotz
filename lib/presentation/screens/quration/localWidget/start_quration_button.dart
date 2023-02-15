@@ -1,6 +1,3 @@
-import 'package:polygon/polygon.dart';
-import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
-import 'package:soon_sak/utilities/extensions/random_list_item_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:math' as math;
 

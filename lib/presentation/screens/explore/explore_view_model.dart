@@ -1,7 +1,4 @@
 import 'dart:developer';
-
-import 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
-import 'package:soon_sak/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreViewModel extends BaseViewModel {

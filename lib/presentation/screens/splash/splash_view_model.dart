@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/service/user_service.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SplashViewModel extends BaseViewModel {

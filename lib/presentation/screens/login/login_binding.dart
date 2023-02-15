@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
-import 'package:soon_sak/presentation/screens/login/login_view_model.dart';
+import 'package:soon_sak/utilities/index.dart';
+
 
 class LoginBinding extends Bindings {
   @override

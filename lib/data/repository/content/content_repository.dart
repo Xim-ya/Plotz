@@ -1,5 +1,3 @@
-import 'package:soon_sak/domain/model/content/content_id_model.dart';
-import 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22

@@ -1,10 +1,5 @@
 import 'dart:developer';
-import 'package:get/get.dart';
-import 'package:soon_sak/data/repository/content/content_repository.dart';
-import 'package:soon_sak/domain/enum/content_type_enum.dart';
-import 'package:soon_sak/domain/model/content/content_id_model.dart';
-import 'package:soon_sak/domain/model/content/simple_content_info.dart';
-import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.24
  *  ContentService 모듈에서는 전역으로 사용되는
