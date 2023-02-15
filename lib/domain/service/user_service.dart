@@ -18,7 +18,7 @@ class UserService extends GetxService {
         isUserSignIn = data;
       },
       onFailure: (e) {
-        log(e.toString());
+        log('UserService $e');
       },
     );
   }

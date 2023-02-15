@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:soon_sak/data/repository/auth/auth_repository.dart';
 import 'package:soon_sak/domain/enum/sns_type_enum.dart';
 import 'package:soon_sak/domain/model/auth/user_model.dart';
@@ -13,25 +15,44 @@ class SocialSignInHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
     switch (request) {
       case Sns.google:
         final response = await _authRepository.getGoogleUserInfo();
-        response.fold(
+        return response.fold(
           onSuccess: (data) {
-            signWithCredential(data);
+            signWithCredential(data, snsType: Sns.google);
+            return Result.success(null);
           },
-          onFailure: (e) {},
+          onFailure: Result.failure,
         );
-        return response;
+
       case Sns.apple:
-        return Result.failure(Exception());
+        final response = await _authRepository.getAppleUserInfo();
+        return response.fold(
+          onSuccess: (data) async {
+            await signWithCredential(data, snsType: Sns.apple);
+            return Result.success(null);
+          },
+          onFailure: Result.failure,
+        );
     }
   }
 
-  // Firebase Auth 등록
-  void signWithCredential(UserModel user) {
-    final credential = GoogleAuthProvider.credential(
-      accessToken: user.token?.accessToken,
-      idToken: user.token?.idToken,
-    );
 
-    FirebaseAuth.instance.signInWithCredential(credential);
+  // Firebase Auth 등록
+  Future<void> signWithCredential(UserModel user,
+      {required Sns snsType}) async {
+    late final OAuthCredential credential;
+
+    if (snsType == Sns.google) {
+      credential = GoogleAuthProvider.credential(
+        accessToken: user.token?.accessToken,
+        idToken: user.token?.idToken,
+      );
+    } else {
+      credential = OAuthProvider('apple.com').credential(
+        idToken: user.token?.idToken,
+        accessToken: user.token?.accessToken,
+      );
+    }
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

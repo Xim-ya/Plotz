@@ -54,4 +54,31 @@ class AuthRepositoryImpl implements AuthRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<UserModel>> getAppleUserInfo() async {
+    try {
+      final response = await _dataSource.triggerAppleSignIn();
+
+      if (response.identityToken == null) {
+        return Result.failure(AuthException.stopAppleSignInProgress());
+      }
+
+      return Result.success(
+        UserModel.fromAppleSignInRes(response: response),
+      );
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<bool>> isUserAlreadyRegistered(String userId) async {
+    try {
+      final response = await _dataSource.isUserAlreadyRegistered(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

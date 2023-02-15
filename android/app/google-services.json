@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1061021294637:android:3ba1e53928812837d418a4",
+        "mobilesdk_app_id": "1:1061021294637:android:c89bd4094ac7a778d418a4",
         "android_client_info": {
-          "package_name": "com.example.uppercut_fantube"
+          "package_name": "com.soon_sak"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1061021294637-fadcb107161nikk5grp53ee09pobtej0.apps.googleusercontent.com",
+          "client_id": "1061021294637-7illq6jigflrj08cbkbi8jmjep8l9eel.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.uppercut_fantube",
+            "package_name": "com.soon_sak",
             "certificate_hash": "28ab0e8618a6cdf6bb761fc3af5f77a6deb3d011"
           }
         },
@@ -40,46 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl.apps.googleusercontent.com",
+              "client_id": "1061021294637-63pis3kq3rn2dc86g7rh0t6s35bsjjor.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.uppercutFantube"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1061021294637:android:c89bd4094ac7a778d418a4",
-        "android_client_info": {
-          "package_name": "com.soon_sak"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD8uLI0nazM-2o9y1-mvSmi9vXrNEPl2Fo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.uppercutFantube"
+                "bundle_id": "com.example.soonSak"
               }
             }
           ]

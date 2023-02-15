@@ -73,7 +73,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 SnsLoginButton(
                   sns: Sns.apple,
                   onBtnTapped: () {
-                    vm.checkUserState();
+                    vm.socialSignIn(Sns.apple);
                   },
                 ),
               ],

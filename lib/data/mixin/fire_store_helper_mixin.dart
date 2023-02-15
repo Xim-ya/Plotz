@@ -6,6 +6,14 @@ import 'package:soon_sak/data/firebase/app_fire_store.dart';
 mixin FirestoreHelper {
   final _db = AppFireStore.getInstance;
 
+  // 특정 id의 document 데이터를 불러오는 메소드
+  Future<DocumentSnapshot> getDocsFromId(String collectionName,
+      {required String docId}) async {
+    final ref = _db.collection(collectionName).doc(docId);
+    final doc = await ref.get();
+    return doc;
+  }
+
   // Collection에서 속한 Document ID List를 불러오는 메소드
   Future<List<String>> getDocumentIdsFromCollection(
       String collectionName) async {

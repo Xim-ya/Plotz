@@ -48,13 +48,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyB_KolUuNZziRow5pjFHgD2RX5miTjcUmY',
-    appId: '1:1061021294637:web:e788020552d163ead418a4',
+    appId: '1:1061021294637:web:4e2e366eabbede58d418a4',
     messagingSenderId: '1061021294637',
     projectId: 'soonsak-15350',
     authDomain: 'soonsak-15350.firebaseapp.com',
     databaseURL: 'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'soonsak-15350.appspot.com',
-    measurementId: 'G-6XXEB74JML',
+    measurementId: 'G-W154CJ1TY9',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -68,13 +68,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBKuFSxnz3HVm8EJpsKx55_3QWqZXKg7H0',
-    appId: '1:1061021294637:ios:1964e6a0f82560b2d418a4',
+    appId: '1:1061021294637:ios:68b27f3b476537fed418a4',
     messagingSenderId: '1061021294637',
     projectId: 'soonsak-15350',
     databaseURL: 'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'soonsak-15350.appspot.com',
-    androidClientId: '1061021294637-fadcb107161nikk5grp53ee09pobtej0.apps.googleusercontent.com',
-    iosClientId: '1061021294637-63pis3kq3rn2dc86g7rh0t6s35bsjjor.apps.googleusercontent.com',
-    iosBundleId: 'com.example.soonSak',
+    androidClientId: '1061021294637-7illq6jigflrj08cbkbi8jmjep8l9eel.apps.googleusercontent.com',
+    iosClientId: '1061021294637-i1qloceu0r1lrfo3ic22ps83pqg5ta6v.apps.googleusercontent.com',
+    iosBundleId: 'com.soonSak',
   );
 }

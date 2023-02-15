@@ -18,6 +18,7 @@ class LoginViewModel extends BaseViewModel {
     final result = await _signInHandlerUseCase.call(social);
     result.fold(
       onSuccess: (data) {
+        print('애플 로그인 성공?');
         Get.offAllNamed(AppRoutes.tabs);
       },
       onFailure: (e) {
