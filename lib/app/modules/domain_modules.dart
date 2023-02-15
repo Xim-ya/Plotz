@@ -2,9 +2,9 @@ import 'package:soon_sak/utilities/index.dart';
 
 abstract class DomainModules {
   DomainModules._();
-  
+
   // 우선적으로 inject 되어야하는 모듈
-  static Future<void> _preLoadDependencies() async{
+  static Future<void> _preLoadDependencies() async {
     // Service
     Get.put(ContentService(Get.find()));
     Get.put(LocalStorageService());
@@ -13,10 +13,10 @@ abstract class DomainModules {
   static void dependencies() {
     _preLoadDependencies();
 
-
     // 인증
     Get.lazyPut(() => SignOutUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => SignInAndUpHandlerUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => SignInAndUpHandlerUseCase(Get.find(), Get.find()),
+        fenix: true);
 
     // 컨텐츠
     Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
@@ -49,6 +49,4 @@ abstract class DomainModules {
         () => SearchPagedContentImpl(Get.find()),
         fenix: true);
   }
-
-
 }

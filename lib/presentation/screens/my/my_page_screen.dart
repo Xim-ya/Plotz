@@ -37,7 +37,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                 ),
                 AppSpace.size10,
                 Text(
-                  '심야님',
+                  '${vm.displayName ?? '-'}님',
                   style:
                       AppTextStyle.title1.copyWith(color: AppColor.mixedWhite),
                 ),

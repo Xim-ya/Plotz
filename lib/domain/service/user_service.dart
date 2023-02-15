@@ -1,13 +1,25 @@
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
-
 class UserService extends GetxService {
   UserService(this._authRepository);
 
   final AuthRepository _authRepository;
 
-  late final bool isUserSignIn;
+  late final bool isUserSignIn; // 유저 로그인 여부
+  UserModel? userInfo; // 유저 정보
+
+  Future<void> getUserInfo() async {
+    final response = await _authRepository.loadUserInfo();
+    response.fold(
+      onSuccess: (data) {
+        userInfo = data;
+      },
+      onFailure: (e) {
+        log('UserService : $e');
+      },
+    );
+  }
 
   void checkUserSignInState() {
     final response = _authRepository.isUserSignedIn();
@@ -16,7 +28,7 @@ class UserService extends GetxService {
         isUserSignIn = data;
       },
       onFailure: (e) {
-        log('UserService $e');
+        log('UserService : $e');
       },
     );
   }
@@ -24,10 +36,9 @@ class UserService extends GetxService {
   @override
   void onInit() {
     super.onInit();
-
+    getUserInfo();
     checkUserSignInState();
   }
 
   static UserService get to => Get.find();
 }
-

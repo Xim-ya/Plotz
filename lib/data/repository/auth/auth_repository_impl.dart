@@ -86,4 +86,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<UserModel>> loadUserInfo() async {
+    try {
+      final response = await _dataSource.loadUserInfo();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

@@ -14,6 +14,9 @@ abstract class AuthDataSource {
   // 유저 정보 등록(저장)
   Future<void> saveUserInfo(UserModel userInfo);
 
+  // 유저 정보 호출
+  Future<UserModel> loadUserInfo();
+
   // 유저의 계정 등록 여부
   Future<bool> isUserAlreadyRegistered(String userId);
 

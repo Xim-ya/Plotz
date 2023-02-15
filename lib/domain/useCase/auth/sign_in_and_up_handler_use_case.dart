@@ -15,9 +15,10 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
-  SignInAndUpHandlerUseCase(this._authRepository);
+  SignInAndUpHandlerUseCase(this._authRepository, this._userService);
 
   final AuthRepository _authRepository;
+  final UserService _userService;
 
   @override
   Future<Result<void>> call(Sns request) async {
@@ -51,12 +52,13 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
   Future<void> signUp(UserModel userInfo) async {
     User? user = FirebaseAuth.instance.currentUser;
     final response = await _authRepository.isUserAlreadyRegistered(user!.uid);
-    response.fold(
-      onSuccess: (isRegisteredUser) {
-        // 이전에 등록에 유저가 아니라면 -> 서버에 유저 데이터 저장
+    await response.fold(
+      onSuccess: (isRegisteredUser) async {
+        // 조건 : 이전에 등록에 유저가 아니라면
         if (!isRegisteredUser) {
           userInfo.id = user.uid; // uid 필드값 업데이트
-          _authRepository.saveUserInfo(userInfo);
+          await _authRepository.saveUserInfo(userInfo); // 서버에 유저 정보 저장
+          await _userService.getUserInfo(); // service 레이어 유저 정보 업데이트
           return;
         }
       },

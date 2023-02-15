@@ -5,5 +5,4 @@ class TabsBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => TabsViewModel(), fenix: true);
   }
-
 }

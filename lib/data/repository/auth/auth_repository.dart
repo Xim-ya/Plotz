@@ -7,6 +7,9 @@ abstract class AuthRepository {
   // 유저의 계정 등록 여부
   Future<Result<bool>> isUserAlreadyRegistered(String userId);
 
+  // 유저 정보 호출
+  Future<Result<UserModel>> loadUserInfo();
+
   // 구글 로그인 (유저 정보 호출)
   Future<Result<UserModel>> getGoogleUserInfo();
 

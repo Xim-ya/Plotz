@@ -1,8 +1,7 @@
-
 import 'package:soon_sak/utilities/index.dart';
 
 class UserModel {
-  final String? displayName;
+  final String? name;
   final String? nickName;
   final String? email;
   late String id;
@@ -12,19 +11,30 @@ class UserModel {
 
   UserModel({
     required this.provider,
-    this.displayName,
+    this.name,
     this.email,
     this.photoUrl,
     this.token,
     this.nickName,
   });
 
+  // FirebaseStore
+  factory UserModel.fromDocumentRes(DocumentSnapshot doc) => UserModel(
+        name: doc.get('name'),
+        email: doc.get('email'),
+        photoUrl: doc.get('photoUrl'),
+        nickName: doc.get('nickName'),
+        provider: Sns.fromOriginString(
+          doc.get('provider'),
+        ),
+      );
+
   // 구글 로그인 시
   factory UserModel.fromGoogleSignInRes(
       {required GoogleSignInAccount account,
       required GoogleSignInAuthentication authentication}) {
     return UserModel(
-      displayName: account.displayName,
+      name: account.displayName,
       email: account.email,
       provider: Sns.google,
       photoUrl: account.photoUrl,
@@ -38,7 +48,7 @@ class UserModel {
   factory UserModel.fromAppleSignInRes(
           {required AuthorizationCredentialAppleID response}) =>
       UserModel(
-        displayName: '${response.familyName}${response.givenName}',
+        name: '${response.familyName}${response.givenName}',
         email: response.email,
         provider: Sns.apple,
         token: UserToken(
@@ -50,7 +60,7 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name': displayName,
+      'name': name,
       'provider': provider.originString.toString(), // toString으로 포맷을 한번더 해줘야함
       'nickName': nickName,
       'photoUrl': photoUrl,

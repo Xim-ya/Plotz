@@ -26,4 +26,15 @@ enum Sns {
       required this.textColor,
       required this.bgColor,
       required this.originString});
+
+  factory Sns.fromOriginString(String originId) {
+    switch (originId) {
+      case 'apple':
+        return Sns.apple;
+      case 'google':
+        return Sns.google;
+      default:
+        throw Exception('Sns Enum : enum not found');
+    }
+  }
 }
