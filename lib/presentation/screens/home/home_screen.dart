@@ -206,6 +206,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               onTap: () {
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
                 // LocalStorageService.to.deleteData(fieldName: 'topTen');
+                vm.firebaseStoreTest();
               },
               child: Image.asset(
                 'assets/images/main_logo.png',

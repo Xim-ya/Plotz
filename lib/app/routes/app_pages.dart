@@ -56,9 +56,9 @@ abstract class AppPages {
 
     // 큐레이션 내력
     GetPage(
-      name: AppRoutes.qurationHistory,
-      page: () => QurationHistoryScreen(),
-      binding: QurationHistoryBinding(),
+      name: AppRoutes.curationHistory,
+      page: () => CurationHistoryScreen(),
+      binding: CurationHistoryBinding(),
     ),
   ];
 }

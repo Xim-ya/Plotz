@@ -23,6 +23,6 @@ abstract class AppRoutes {
   static const register = '/register';
 
   // 큐레이션 내역
-  static const qurationHistory = '/qurationHistory';
+  static const curationHistory = '/curationHistory';
 
 }

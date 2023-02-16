@@ -2,7 +2,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
 part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 링크 등록
-part 'controllerResource/confirm_quration_view_model.part.dart'; // 등록 컨텐츠 확인
+part 'controllerResource/confirm_curation_view_model.part.dart'; // 등록 컨텐츠 확인
 
 class RegisterViewModel extends BaseViewModel {
   RegisterViewModel(this._searchUseCase, this.validateVideoUrlUseCase,
@@ -20,7 +20,7 @@ class RegisterViewModel extends BaseViewModel {
   int get currentPageViewIndex => pageViewController.page?.toInt() ?? 0;
 
   // 등록 진행중 컨텐츠 데이터
-  Rxn<Content> qurationContent = Rxn();
+  Rxn<Content> curationContent = Rxn();
 
   /* Controllers */
   late PageController pageViewController;
@@ -108,7 +108,7 @@ class RegisterViewModel extends BaseViewModel {
     final channelId = validateVideoUrlUseCase.selectedChannelId;
     final response = await YoutubeMetaData.yt.channels.get(channelId);
 
-    qurationContent.value = Content(
+    curationContent.value = Content(
       id: selectedContentDetail!.id,
       type: selectedContentDetail?.type,
       videoId: videoId,

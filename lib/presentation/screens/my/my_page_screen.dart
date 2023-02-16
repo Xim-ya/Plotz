@@ -51,7 +51,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             padding: AppInset.horizontal16,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: vm.routeToQurationHistory,
+              onTap: vm.routeToCurationHistory,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -73,7 +73,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           ),
           AppSpace.size14,
           GestureDetector(
-            onTap: vm.routeToQurationHistory,
+            onTap: vm.routeToCurationHistory,
             child: Container(
               margin: AppInset.horizontal16,
               height: 80,
@@ -83,19 +83,19 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  _qurationProgressRowItem(title: '진행중', count: 4),
+                  _curationProgressRowItem(title: '진행중', count: 4),
                   Container(
                     height: 24,
                     width: 1,
                     color: AppColor.lightGrey,
                   ),
-                  _qurationProgressRowItem(title: '등록 완료', count: 7),
+                  _curationProgressRowItem(title: '등록 완료', count: 7),
                   Container(
                     height: 24,
                     width: 1,
                     color: AppColor.lightGrey,
                   ),
-                  _qurationProgressRowItem(title: '보류', count: 0),
+                  _curationProgressRowItem(title: '보류', count: 0),
                 ],
               ),
             ),
@@ -126,7 +126,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
     );
   }
 
-  Widget _qurationProgressRowItem({required String title, required int count}) {
+  Widget _curationProgressRowItem({required String title, required int count}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

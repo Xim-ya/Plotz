@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class ConfirmQurationPageView extends BaseView<RegisterViewModel> {
-  const ConfirmQurationPageView({Key? key}) : super(key: key);
+class ConfirmCurationPageView extends BaseView<RegisterViewModel> {
+  const ConfirmCurationPageView({Key? key}) : super(key: key);
 
   @override
   Widget buildView(BuildContext context) {

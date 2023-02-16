@@ -55,7 +55,7 @@ mixin FirestoreHelper {
     return results;
   }
 
-  /// subCollection의 document 데이터를 불러오는 메소드
+  /// subCollection의 단일 document 데이터를 불러오는 메소드
   Future<QueryDocumentSnapshot> getFirstSubCollectionDoc(String collectionName,
       {required String docId, required String subCollectionName}) async {
     QuerySnapshot snapshot = await _db
@@ -68,6 +68,17 @@ mixin FirestoreHelper {
     return snapshot.docs.first;
   }
 
+  /// subCollection document 데이터 리스트를 불러오는 메소드
+  Future<List<DocumentSnapshot>> getSubCollectionDocs(String collectionName,
+      {required String docId, required String subCollectionName}) async {
+    QuerySnapshot snapshot = await _db
+        .collection(collectionName)
+        .doc(docId)
+        .collection(subCollectionName)
+        .get();
+
+    return snapshot.docs;
+  }
 
   // document에 데이터를 저장하는 메소드
   Future<void> storeDocument(String collectionName,

@@ -1,6 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class QurationHistoryViewModel extends BaseViewModel with GetSingleTickerProviderStateMixin {
+class CurationHistoryViewModel extends BaseViewModel with GetSingleTickerProviderStateMixin {
 
   late final TabController tabController;
 

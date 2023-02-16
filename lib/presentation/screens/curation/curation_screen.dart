@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class QurationScreen extends BaseScreen<QurationViewModel> {
-  const QurationScreen({Key? key}) : super(key: key);
+class CurationScreen extends BaseScreen<CurationViewModel> {
+  const CurationScreen({Key? key}) : super(key: key);
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -21,7 +21,7 @@ class QurationScreen extends BaseScreen<QurationViewModel> {
             // 큐레이션 컨텐츠 등록 버튼 (드라마, 영화)
             Row(
               children: [
-                StartQurationButton(
+                StartCurationButton(
                   imgPath: vm.randomContentImg.tvImgPath,
                   contentType: ContentType.tv,
                   onBtnTapped: () {
@@ -29,7 +29,7 @@ class QurationScreen extends BaseScreen<QurationViewModel> {
                   },
                 ),
                 AppSpace.size16,
-                StartQurationButton(
+                StartCurationButton(
                   imgPath: vm.randomContentImg.movieImgPath,
                   contentType: ContentType.movie,
                   onBtnTapped: () {

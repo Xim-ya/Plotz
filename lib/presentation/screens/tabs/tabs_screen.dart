@@ -1,3 +1,4 @@
+
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -22,7 +23,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
         children: const <Widget>[
           HomeScreen(),
           ExploreScreen(),
-          QurationScreen(),
+          CurationScreen(),
           MyPageScreen(),
         ],
       ),

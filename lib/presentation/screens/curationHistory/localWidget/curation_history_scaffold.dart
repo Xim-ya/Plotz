@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class QurationHistoryScaffold extends StatelessWidget {
-  const QurationHistoryScaffold(
+class CurationHistoryScaffold extends StatelessWidget {
+  const CurationHistoryScaffold(
       {Key? key,
       required this.tabController,
       required this.tabs,

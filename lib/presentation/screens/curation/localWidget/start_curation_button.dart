@@ -9,8 +9,8 @@ import 'dart:math' as math;
  *  랜덤으로 컨텐츠 이미지가 보여짐.
  * */
 
-class StartQurationButton extends StatelessWidget {
-  const StartQurationButton(
+class StartCurationButton extends StatelessWidget {
+  const StartCurationButton(
       {Key? key, required this.contentType, required this.onBtnTapped, required this.imgPath})
       : super(key: key);
 

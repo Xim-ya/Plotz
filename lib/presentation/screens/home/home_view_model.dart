@@ -1,9 +1,10 @@
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:http/http.dart' as http;
+
 part 'home_view_model.part.dart';
 
-class HomeViewModel extends BaseViewModel {
+class HomeViewModel extends BaseViewModel with FirestoreHelper {
   /// 임시
   final ContentDataSource _dataSource;
 
@@ -132,7 +133,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   /// Mock Json Data Video
-  Future<void> getJsonMockData() async {
+  Future<void> firestoreTest() async {
     //   final responseResult = await _dataSource.loadBannerContentList();
     //   final List<BannerContent> mockItemLis = responseResult;
     // }
@@ -206,35 +207,35 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> _fetchBannerContents() async {
     final response = await _loadBannerContentUseCase.call();
-    response.fold(onSuccess: (data) {
-      _bannerContent.value = data;
-      update();
-    }, onFailure: (e) {
-      log('HomeViewModel > $e');
-    });
+    response.fold(
+      onSuccess: (data) {
+        _bannerContent.value = data;
+        update();
+      },
+      onFailure: (e) {
+        log('HomeViewModel > $e');
+      },
+    );
+  }
+
+  Future<void> document() async {
+    final documentReference = await getFirstSubCollectionDoc('user',
+        docId: 'zyN1qU1gAkSdtpFCuDGS0GBTO9m2', subCollectionName: 'curation');
+    DocumentReference<Map<String, dynamic>> ref = documentReference.get('temp');
+    final data = await ref.get();
+    print('파이버에스 테스트 결과 ${data.get('title')}');
   }
 
   Future<void> firebaseStoreTest() async {
-    // final docRef = FirebaseFirestore.instance.collection('content');
-    // // 'Future<QuerySnapshot<Map<String, dynamic>>>'
-    // final QuerySnapshot<Map<String, dynamic>> snapshot = await docRef.get();
-    // final docsData = snapshot.docs;
-    //
-    // final aim = docRef.orderBy('randomValue', descending: true).limit(10).get();
-    //
-    // final randomValue = math.Random().nextInt(300);
-    //
-    // print("AIM");
-    // QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-    //     .collection('content')
-    //     .where('randomId', whereIn: [139, 150, 25])
-    //     .limit(10)
-    //     .get();
-    //
-    // // List<DocumentSnapshot> randomDocuments =
-    // //     await getRandomDocuments('content', 10);
-    //
-    // print('====== AIM DATA  ${querySnapshot.docs.length}');
+    final documentSnapshots = await getSubCollectionDocs('user',
+        docId: 'zyN1qU1gAkSdtpFCuDGS0GBTO9m2', subCollectionName: 'curation');
+
+    DocumentReference<Map<String, dynamic>> ref =
+        documentSnapshots[1].get('temp');
+
+    final data = await ref.get();
+
+    print(data.get('title'));
   }
 
   @override
@@ -257,6 +258,7 @@ class HomeViewModel extends BaseViewModel {
     // _fetchContentListOfCategory();
 
     youtubeIntent();
+    firebaseStoreTest();
 
     // loadBannerContents();
     // aim();

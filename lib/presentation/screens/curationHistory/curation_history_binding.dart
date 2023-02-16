@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class QurationHistoryBinding extends Bindings {
+class CurationHistoryBinding extends Bindings {
   @override
   void dependencies() { }
 }

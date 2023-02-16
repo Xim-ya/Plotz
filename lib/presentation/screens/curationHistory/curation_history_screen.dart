@@ -1,14 +1,14 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class QurationHistoryScreen extends BaseScreen<QurationHistoryViewModel> {
-  const QurationHistoryScreen({super.key});
+class CurationHistoryScreen extends BaseScreen<CurationHistoryViewModel> {
+  const CurationHistoryScreen({super.key});
 
   @override
   bool get wrapWithSafeArea => false;
 
   @override
   Widget buildScreen(BuildContext context) {
-    return QurationHistoryScaffold(
+    return CurationHistoryScaffold(
       tabController: vm.tabController,
       tabs: _buildTabs(),
       tabViews: _buildTabViews(),

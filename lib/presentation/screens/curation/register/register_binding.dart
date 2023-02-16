@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/screens/quration/register/register_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class RegisterBinding extends Bindings {

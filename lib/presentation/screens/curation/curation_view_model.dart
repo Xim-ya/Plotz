@@ -1,6 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class QurationViewModel extends BaseViewModel {
+class CurationViewModel extends BaseViewModel {
   /* Variables */
   late final RandomImg randomContentImg;
 

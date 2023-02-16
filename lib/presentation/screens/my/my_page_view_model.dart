@@ -17,8 +17,8 @@ class MyPageViewModel extends BaseViewModel {
 
   /* Intents */
   // 큐레이팅 내역 스크린으로 라우팅
-  void routeToQurationHistory() {
-    Get.toNamed(AppRoutes.qurationHistory);
+  void routeToCurationHistory() {
+    Get.toNamed(AppRoutes.curationHistory);
   }
 
   // 로그아웃
