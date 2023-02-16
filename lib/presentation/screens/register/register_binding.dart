@@ -8,6 +8,7 @@ class RegisterBinding extends Bindings {
         contentType: Get.arguments,
         Get.find(),
         Get.find(),
+        Get.find(),
       ),
     );
   }

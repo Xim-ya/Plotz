@@ -150,6 +150,7 @@ export 'package:soon_sak/domain/model/content/content_argument_format.dart';
 export 'package:soon_sak/domain/model/youtube/youtube_channel_info.dart';
 export 'package:soon_sak/domain/base/base_single_data_model.dart';
 export 'package:soon_sak/domain/service/user_service.dart';
+export 'package:soon_sak/domain/model/content/register/content_request.dart';
 
 // Presentation
 export 'package:soon_sak/presentation/screens/curation/curation_view_model.dart';

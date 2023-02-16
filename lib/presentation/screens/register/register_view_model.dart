@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
@@ -6,6 +9,7 @@ part 'controllerResource/confirm_curation_view_model.part.dart'; // 등록 컨�
 
 class RegisterViewModel extends BaseViewModel {
   RegisterViewModel(this._searchUseCase, this.validateVideoUrlUseCase,
+      this._requestContentRegistrationUseCase,
       {required contentType})
       : selectedContentType = contentType;
 
@@ -28,6 +32,7 @@ class RegisterViewModel extends BaseViewModel {
   /* UseCases */
   final SearchPagedContentUseCase _searchUseCase;
   final SearchValidateUrlUseCase validateVideoUrlUseCase;
+  final RequestContentRegistrationUseCase _requestContentRegistrationUseCase;
 
   /* Intents */
   // PageIndicator 토글 로직
@@ -39,12 +44,6 @@ class RegisterViewModel extends BaseViewModel {
         selectedSteps[i] = false;
       }
     }
-  }
-
-  // 등록 진행 컨텐츠 데이터 업데이트
-  Future<void> submitContent() async {
-    AlertWidget.animatedToast('등록 절차를 거친 뒤 컨텐츠가 등록됩니다',
-        isUsedOnTabScreen: true);
   }
 
   /// 하단 고정 버튼이 클릭 시
@@ -61,16 +60,17 @@ class RegisterViewModel extends BaseViewModel {
         break;
       case 1:
         unawaited(setContentInfo());
-        unawaited(pageViewController.animateToPage(
-          2,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeIn,
-        ));
+        unawaited(
+          pageViewController.animateToPage(
+            2,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeIn,
+          ),
+        );
         togglePageIndicatorIndex(2);
         break;
       case 2:
-        Get.back();
-        submitContent();
+        unawaited(requestRegistration());
     }
   }
 
@@ -122,6 +122,25 @@ class RegisterViewModel extends BaseViewModel {
         posterImgUrl: selectedContentDetail?.detail?.posterImgUrl,
         releaseDate: selectedContentDetail?.detail?.releaseDate,
       ),
+    );
+  }
+
+  Future<void> requestRegistration() async {
+    final requestData = ContentRequest.fromContentModelWithUserId(
+        content: curationContent.value!, userId: UserService.to.userInfo!.id!);
+    final response = await _requestContentRegistrationUseCase.call(requestData);
+    response.fold(
+      onSuccess: (data) {
+        log('컨텐츠 등록 성공');
+        Get.back();
+        AlertWidget.animatedToast(
+          '등록 절차를 거친 뒤 컨텐츠가 등록됩니다',
+          isUsedOnTabScreen: true,
+        );
+      },
+      onFailure: (e) {
+        log('RegisterViewModel : $e');
+      },
     );
   }
 

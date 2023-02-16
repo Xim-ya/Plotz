@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class Formatter {
   // ['드라마' , '액션' , '멜로'] --> '드라마 / 액션 / 멜로'
@@ -80,5 +81,10 @@ class Formatter {
       r'.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*',
       caseSensitive: false,
     ).firstMatch(url)?.group(1);
+  }
+
+  // 컨텐츠 type & id  -> origin id
+  static String getOriginIdByTypeAndId({required ContentType type, required int id}) {
+    return '${type.getTypeCharacter}-$id';
   }
 }

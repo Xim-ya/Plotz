@@ -122,8 +122,6 @@ class ContentDataSourceImpl
   }
 
   @override
-  Future<void> requestContentRegistration(Content content) {
-    // TODO: implement requestContentRegistration
-    throw UnimplementedError();
-  }
+  Future<void> requestContentRegistration(ContentRequest requestData) =>
+      loadResponseOrThrow(() => _api.requestContentRegistration(requestData));
 }

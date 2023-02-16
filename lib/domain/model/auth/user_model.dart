@@ -4,13 +4,14 @@ class UserModel {
   final String? name;
   final String? nickName;
   final String? email;
-  late String id;
+  late String? id;
   final String? photoUrl;
   final UserToken? token;
   final Sns provider;
 
   UserModel({
     required this.provider,
+    this.id,
     this.name,
     this.email,
     this.photoUrl,
@@ -21,6 +22,7 @@ class UserModel {
   // FirebaseStore
   factory UserModel.fromDocumentRes(DocumentSnapshot doc) => UserModel(
         name: doc.get('name'),
+        id: doc.get('id'),
         email: doc.get('email'),
         photoUrl: doc.get('photoUrl'),
         nickName: doc.get('nickName'),

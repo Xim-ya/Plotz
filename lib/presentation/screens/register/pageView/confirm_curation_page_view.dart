@@ -105,8 +105,8 @@ class ConfirmCurationPageView extends BaseView<RegisterViewModel> {
                 padding: EdgeInsets.only(
                     bottom: SizeConfig.to.responsiveBottomInset),
                 child: LinearBgBottomFloatingBtn(
-                  text: '다음',
-                  onTap: vm.onFloatingStepBtnTapped,
+                  text: '등록',
+                  onTap: vm.requestRegistration,
                 ),
               ),
             ],

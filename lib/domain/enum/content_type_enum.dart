@@ -23,6 +23,15 @@ enum ContentType {
     }
   }
 
+  String get getTypeCharacter {
+    if(this == ContentType.tv) {
+      return 't';
+    } else {
+      return 'm';
+    }
+
+  }
+
   String get asText {
     return isTv ? '드라마' : '영화';
   }

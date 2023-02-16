@@ -27,8 +27,11 @@ abstract class ContentRepository {
   Future<Result<ExploreContentModel>> loadContainingIdsContents(
       List<String> ids);
 
-
   // 컨텐츠 비디어 정보 호출
   Future<Result<ContentVideos>> loadContentVideoInfo(String id);
+
+  // 컨텐츠 등록 요청
+  Future<Result<void>> requestContentRegistration(ContentRequest requestData);
+
   static ContentRepository get to => Get.find();
 }

@@ -14,6 +14,7 @@ class UserService extends GetxService {
     response.fold(
       onSuccess: (data) {
         userInfo = data;
+        // userInfo = FirebaseAuth.instance.currentUser.uid;
       },
       onFailure: (e) {
         log('UserService : $e');

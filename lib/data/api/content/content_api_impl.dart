@@ -1,6 +1,5 @@
 import 'package:soon_sak/utilities/index.dart';
 
-
 class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override
   Future<List<String>> loadTotalContentIdList() async {
@@ -30,5 +29,20 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     final listRes = documentSnapshots.get('items') as List<dynamic>;
 
     return listRes.map((e) => VideoResponse.fromJson(e)).toList();
+  }
+
+  @override
+  Future<void> requestContentRegistration(ContentRequest requestData) {
+    final Map<String, dynamic> data = {
+      'id': db.collection('users').doc(requestData.originId),
+      'requestDate': FieldValue.serverTimestamp(),
+      'title': requestData.title,
+      'posterImgUrl': requestData.posterImgUrl,
+      'curator': requestData.curatorId,
+      'status': requestData.status,
+      'videoID': requestData.videoId,
+    };
+
+    return storeDocument('curation', docId: null, data: data);
   }
 }

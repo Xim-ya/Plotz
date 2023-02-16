@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class DomainModules {
@@ -23,6 +24,8 @@ abstract class DomainModules {
     Get.lazyPut(() => LoadCachedBannerContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedTopTenContentsUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedCategoryContentCollectionUseCase(Get.find()),
+        fenix: true);
+    Get.lazyPut(() => RequestContentRegistrationUseCase(Get.find()),
         fenix: true);
 
     // TMDB
