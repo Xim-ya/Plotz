@@ -1,8 +1,7 @@
-
-
 import 'package:soon_sak/utilities/index.dart';
 
-abstract class AuthDataSource {
+
+abstract class AuthApi {
   // 유저 로그인 여부 확인
   Future<bool> isUserSignedIn();
 

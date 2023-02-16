@@ -2,7 +2,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 abstract class AuthRepository {
   // 유저 로그인 여부
-  Result<bool> isUserSignedIn();
+  Future<Result<bool>> isUserSignedIn();
 
   // 유저의 계정 등록 여부
   Future<Result<bool>> isUserAlreadyRegistered(String userId);

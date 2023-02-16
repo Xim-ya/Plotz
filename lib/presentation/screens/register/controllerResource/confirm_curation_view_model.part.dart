@@ -1,7 +1,6 @@
 part of '../register_view_model.dart';
 
 
-
 extension ConfirmCurationViewModel on RegisterViewModel {
   String? get posterImgUrl => curationContent.value?.detail?.posterImgUrl;
 

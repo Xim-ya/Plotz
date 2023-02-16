@@ -1,4 +1,4 @@
-import 'package:soon_sak/data/dto/staticContent/response/content_key_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class StaticContentKeys {
   final String bannerKey;

@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
+import 'package:soon_sak/data/dataSource/auth/auth_data_source_impl.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class DataModules {
@@ -6,7 +8,9 @@ abstract class DataModules {
 
   static void getDependencies() {
     /* Auth */
-    Get.lazyPut<AuthDataSource>(() => AuthDataSourceImpl(), fenix: true);
+    Get.lazyPut<AuthApi>(() => AuthApiImpl(), fenix: true);
+    Get.lazyPut<AuthDataSource>(() => AuthDataSourceImpl(Get.find()),
+        fenix: true);
     Get.lazyPut<AuthRepository>(() => AuthRepositoryImpl(Get.find()),
         fenix: true);
 
@@ -21,7 +25,6 @@ abstract class DataModules {
 
     /* Dio */
     Get.lazyPut(() => Dio(), fenix: true);
-
 
     /* FireStore */
     Get.lazyPut(() => AppFireStore(), fenix: true);

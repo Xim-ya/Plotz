@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentDataSourceImpl
-    with ApiErrorHandlerMixin
+    with ApiErrorHandlerMixin, FirestoreHelper
     implements ContentDataSource {
   ContentDataSourceImpl(this._api);
 
@@ -119,5 +119,11 @@ class ContentDataSourceImpl
   @override
   Future<List<VideoResponse>> loadVideoInfo(String id) {
     return loadResponseOrThrow(() => _api.loadVideoInfo(id));
+  }
+
+  @override
+  Future<void> requestContentRegistration(Content content) {
+    // TODO: implement requestContentRegistration
+    throw UnimplementedError();
   }
 }

@@ -21,8 +21,8 @@ class UserService extends GetxService {
     );
   }
 
-  void checkUserSignInState() {
-    final response = _authRepository.isUserSignedIn();
+  Future<void> checkUserSignInState() async{
+    final response = await _authRepository.isUserSignedIn();
     response.fold(
       onSuccess: (data) {
         isUserSignIn = data;

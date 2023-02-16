@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -6,9 +7,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource _dataSource;
 
   @override
-  Result<bool> isUserSignedIn() {
+  Future<Result<bool>> isUserSignedIn() async{
     try {
-      final response = _dataSource.isUserSignedIn();
+      final response = await _dataSource.isUserSignedIn();
 
       return Result.success(response);
     } on Exception catch (e) {

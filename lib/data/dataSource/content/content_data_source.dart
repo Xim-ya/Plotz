@@ -25,4 +25,7 @@ abstract class ContentDataSource {
 
   // 컨텐츠 비디오 정보 호출
   Future<List<VideoResponse>> loadVideoInfo(String id);
+
+  // 컨텐츠 등록 요청
+  Future<void> requestContentRegistration(Content content);
 }

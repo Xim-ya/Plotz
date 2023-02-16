@@ -11,7 +11,6 @@ export 'dart:async';
 
 export 'package:flutter/services.dart';
 
-
 // External Packages
 
 export 'package:firebase_core/firebase_core.dart';
@@ -32,8 +31,6 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:polygon/polygon.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-
-
 // BaseModule
 export 'package:soon_sak/presentation/base/base_view_model.dart';
 export 'package:soon_sak/domain/base/base_use_case.dart';
@@ -44,8 +41,8 @@ export 'package:soon_sak/domain/base/base_two_param_use_case.dart';
 export 'package:soon_sak/app/config/theme_config.dart';
 export 'package:soon_sak/app/di/app_binding.dart';
 export 'package:soon_sak/app/routes/app_pages.dart';
-export 'package:soon_sak/data/dto/tmdb/response/newResponse/tmdb_movie_content_list_wrapped_response.dart';
-export 'package:soon_sak/data/dto/tmdb/response/newResponse/tmdb_tv_content_list_wrapped_response.dart';
+export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_movie_content_list_wrapped_response.dart';
+export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_content_list_wrapped_response.dart';
 export 'package:soon_sak/app/config/font_config.dart';
 export 'package:soon_sak/app/config/color_config.dart';
 export 'package:soon_sak/app/routes/app_routes.dart';
@@ -57,28 +54,28 @@ export 'package:soon_sak/app/modules/presentation_modules.dart';
 
 // Data
 export 'package:soon_sak/domain/exception/auth_exception.dart';
-export 'package:soon_sak/data/dto/content/response/basic_content_info_response.dart';
-export 'package:soon_sak/data/dto/content/response/video_response.dart';
-export 'package:soon_sak/data/dto/staticContent/response/content_key_response.dart';
+export 'package:soon_sak/data/api/content/response/basic_content_info_response.dart';
+export 'package:soon_sak/data/api/content/response/video_response.dart';
+export 'package:soon_sak/data/api/staticContent/response/content_key_response.dart';
 export 'package:soon_sak/data/repository/youtube/youtube_repository_impl.dart';
-export 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
-export 'package:soon_sak/data/dataSource/auth/auth_data_source_impl.dart';
+export 'package:soon_sak/data/api/auth/auth_api.dart';
+export 'package:soon_sak/data/api/auth/auth_api_impl.dart';
 export 'package:soon_sak/data/dataSource/staticContent/static_content_data_source_impl.dart';
-export 'package:soon_sak/data/dto/content/content_api.dart';
-export 'package:soon_sak/data/dto/content/content_api_impl.dart';
+export 'package:soon_sak/data/api/content/content_api.dart';
+export 'package:soon_sak/data/api/content/content_api_impl.dart';
 export 'package:soon_sak/data/firebase/app_fire_store.dart';
 export 'package:soon_sak/data/repository/auth/auth_repository.dart';
 export 'package:soon_sak/data/repository/auth/auth_repository_impl.dart';
 export 'package:soon_sak/data/repository/staticContent/static_content_repository_impl.dart';
-export 'package:soon_sak/data/dto/staticContent/response/category_content_collection_response.dart';
+export 'package:soon_sak/data/api/staticContent/response/category_content_collection_response.dart';
 export 'package:soon_sak/data/dataSource/staticContent/static_content_data_source.dart';
-export 'package:soon_sak/data/dto/staticContent/static_content_api.dart';
+export 'package:soon_sak/data/api/staticContent/static_content_api.dart';
 export 'package:soon_sak/data/repository/youtube/youtube_repository.dart';
-export 'package:soon_sak/data/dto/tmdb/response/newResponse/tmdb_content_credit_response.dart';
-export 'package:soon_sak/data/dto/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
-export 'package:soon_sak/data/dto/tmdb/tmdb_api.dart';
-export 'package:soon_sak/data/dto/tmdb/response/newResponse/tmdb_movie_detail_response.dart';
-export 'package:soon_sak/data/dto/tmdb/response/newResponse/tmdb_content_image_response.dart';
+export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_content_credit_response.dart';
+export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
+export 'package:soon_sak/data/api/tmdb/tmdb_api.dart';
+export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_movie_detail_response.dart';
+export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_content_image_response.dart';
 export 'package:soon_sak/data/dataSource/content/content_data_source.dart';
 export 'package:soon_sak/data/dataSource/content/content_data_source_impl.dart';
 export 'package:soon_sak/data/dataSource/tmdb/tmdb_data_source.dart';
@@ -87,9 +84,10 @@ export 'package:soon_sak/data/repository/content/content_repository.dart';
 export 'package:soon_sak/data/repository/content/content_repository_impl.dart';
 export 'package:soon_sak/data/repository/tmdb/tmdb_repository.dart';
 export 'package:soon_sak/data/repository/tmdb/tmdb_repository_impl.dart';
-export 'package:soon_sak/data/dto/staticContent/response/banner_response.dart';
+export 'package:soon_sak/data/api/staticContent/response/banner_response.dart';
+
 export 'package:soon_sak/data/repository/staticContent/static_content_repository.dart';
-export 'package:soon_sak/data/dto/staticContent/response/top_ten_content_response.dart';
+export 'package:soon_sak/data/api/staticContent/response/top_ten_content_response.dart';
 export 'package:soon_sak/data/mixin/fire_store_error_handler_mixin.dart';
 export 'package:soon_sak/domain/useCase/auth/sign_in_and_up_handler_use_case.dart';
 export 'package:soon_sak/domain/useCase/auth/sign_out_use_case.dart';
@@ -156,16 +154,16 @@ export 'package:soon_sak/domain/service/user_service.dart';
 // Presentation
 export 'package:soon_sak/presentation/screens/curation/curation_view_model.dart';
 export 'package:soon_sak/presentation/screens/curation/curation_screen.dart';
-export 'package:soon_sak/presentation/screens/curation/register/register_view_model.dart';
+export 'package:soon_sak/presentation/screens/register/register_view_model.dart';
 export 'package:soon_sak/presentation/screens/explore/explore_screen.dart';
 export 'package:soon_sak/presentation/screens/my/my_page_screen.dart';
 export 'package:soon_sak/presentation/screens/curation/localWidget/start_curation_button.dart';
-export 'package:soon_sak/presentation/screens/curation/register/pageView/confirm_curation_page_view.dart';
+export 'package:soon_sak/presentation/screens/register/pageView/confirm_curation_page_view.dart';
 export 'package:soon_sak/presentation/common/listView/paging_result_list_view.dart';
-export 'package:soon_sak/presentation/screens/curation/register/localWidget/search_content_page_view_scaffold.dart';
-export 'package:soon_sak/presentation/screens/curation/register/localWidget/searched_content_item_btn.dart';
-export 'package:soon_sak/presentation/screens/curation/register/localWidget/register_video_link_page_view_scaffold.dart';
-export 'package:soon_sak/presentation/screens/curation/register/localWidget/url_validation_indicator.dart';
+export 'package:soon_sak/presentation/screens/register/localWidget/search_content_page_view_scaffold.dart';
+export 'package:soon_sak/presentation/screens/register/localWidget/searched_content_item_btn.dart';
+export 'package:soon_sak/presentation/screens/register/localWidget/register_video_link_page_view_scaffold.dart';
+export 'package:soon_sak/presentation/screens/register/localWidget/url_validation_indicator.dart';
 export 'package:soon_sak/presentation/common/button/linear_background_bottom_floating_btn.dart';
 export 'package:soon_sak/presentation/common/image/linear_layered_poster_img.dart';
 export 'package:soon_sak/presentation/screens/login/localWidget/sns_login_button.dart';
@@ -177,8 +175,8 @@ export 'package:soon_sak/presentation/screens/home/localWidget/category_content_
 export 'package:soon_sak/presentation/screens/explore/localWidget/explore_swiper_item_scaffold.dart';
 export 'package:soon_sak/presentation/common/youtube/channel_info_view.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/localWidget/contents_grid_view.dart';
-export 'package:soon_sak/presentation/screens/curation/register/pageView/register_video_link_page_view.dart';
-export 'package:soon_sak/presentation/screens/curation/register/pageView/search_content_page_view.dart';
+export 'package:soon_sak/presentation/screens/register/pageView/register_video_link_page_view.dart';
+export 'package:soon_sak/presentation/screens/register/pageView/search_content_page_view.dart';
 export 'package:soon_sak/presentation/common/dialog/app_dialog.dart';
 export 'package:soon_sak/presentation/common/textField/search_bar.dart';
 export 'package:soon_sak/presentation/common/animated_index_stack.dart';
@@ -219,8 +217,8 @@ export 'package:soon_sak/presentation/screens/explore/explore_view_model.dart';
 export 'package:soon_sak/presentation/screens/my/my_page_view_model.dart';
 export 'package:soon_sak/presentation/screens/login/login_binding.dart';
 export 'package:soon_sak/presentation/screens/login/login_screen.dart';
-export 'package:soon_sak/presentation/screens/curation/register/register_binding.dart';
-export 'package:soon_sak/presentation/screens/curation/register/register_screen.dart';
+export 'package:soon_sak/presentation/screens/register/register_binding.dart';
+export 'package:soon_sak/presentation/screens/register/register_screen.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/curation_history_binding.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/curation_history_screen.dart';
 export 'package:soon_sak/presentation/screens/search/search_binding.dart';

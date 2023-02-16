@@ -258,7 +258,7 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
     // _fetchContentListOfCategory();
 
     youtubeIntent();
-    firebaseStoreTest();
+    // firebaseStoreTest();
 
     // loadBannerContents();
     // aim();

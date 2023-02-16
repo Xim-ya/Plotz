@@ -72,7 +72,6 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
                           linearStep: const [0.1, 0.2, 1],
                           imgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg'),
                     ),
-
                     // 컨텐츠 요청 유저 정보
                     Positioned(
                       left: 10,
