@@ -30,4 +30,19 @@ class ContentRequest {
         status: 'inProgress',
         videoId: content.videoId!,
       );
+
+  // requset 포맷으로 변경
+  Map<String, dynamic> toMap({required DocumentReference curatorRef}) {
+    final data = {
+      'id' : originId,
+      'requestDate': FieldValue.serverTimestamp(),
+      'title': title,
+      'posterImgUrl': posterImgUrl,
+      'curator': curatorRef, // 레퍼런스 타입
+      'status': status,
+      'videoId': videoId,
+    };
+
+    return data;
+  }
 }

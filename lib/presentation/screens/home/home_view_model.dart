@@ -247,7 +247,7 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
       scrollOffset = scrollController.offset;
       turnOnBlurInAppBar();
     });
-    firebaseStoreTest();
+
 
     carouselController = CarouselController();
 

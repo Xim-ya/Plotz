@@ -10,7 +10,6 @@ import 'package:soon_sak/data/firebase/app_fire_store.dart';
 mixin FirestoreHelper {
   final _db = AppFireStore.getInstance;
 
-
   // 특정 id의 document 데이터를 불러오는 메소드
   Future<DocumentSnapshot> getDocFromId(String collectionName,
       {required String docId}) async {
@@ -81,14 +80,51 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
-  // document에 데이터를 저장하는 메소드
+  /// document를 생성하고 데이터를 저장하는 메소드
+  //  생성한 document의 id값을 리턴함
   Future<void> storeDocument(String collectionName,
       {required String? docId, required Map<String, dynamic> data}) {
     final docRef = _db.collection(collectionName).doc(docId);
     return docRef.set(data);
   }
 
+  /// document를 생성하고 데이터를 저장하는 메소드
+  //  생성한 document의 id값을 리턴함
+  Future<String> storeDocumentAndReturnId(String collectionName,
+      {required String? docId, required Map<String, dynamic> data}) async {
+    final docRef = _db.collection(collectionName).doc(docId);
+    await docRef.set(data);
+    return docRef.id;
+  }
 
-  FirebaseFirestore get  db  => _db;
+  // 특정 subCollection의 dcoument 생성하고 데이터를 저장 하는 메소드
+  Future<void> storeDocumentOnSubCollection(
+    String collectionName, {
+    required String subCollectionName,
+    required String docId,
+    required String subCollectionDocId,
+    required Map<String, dynamic> data,
+  }) async {
+    final docRef = _db
+        .collection(collectionName)
+        .doc(docId)
+        .collection(subCollectionName)
+        .doc(subCollectionDocId);
 
+    return docRef.set(data);
+  }
+
+  // 특정 field 값을 가지고 있는 document 리스트를 불러오는 메소드
+  Future<List<DocumentSnapshot>> getDocsWithContainingField(
+      String collectionName,
+      {required String fieldName,
+      required String neededFieldName}) async {
+    final snapshot = await _db
+        .collection(collectionName)
+        .where(fieldName, isEqualTo: neededFieldName)
+        .get();
+    return snapshot.docs;
+  }
+
+  FirebaseFirestore get db => _db;
 }

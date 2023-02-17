@@ -122,6 +122,18 @@ class ContentDataSourceImpl
   }
 
   @override
-  Future<void> requestContentRegistration(ContentRequest requestData) =>
+  Future<String> requestContentRegistration(ContentRequest requestData) =>
       loadResponseOrThrow(() => _api.requestContentRegistration(requestData));
+
+  @override
+  Future<void> addUserQurationInfo(
+          {required String qurationDocId, required String userId}) =>
+      loadResponseOrThrow(
+        () => _api.addUserQurationInfo(
+            qurationDocId: qurationDocId, userId: userId),
+      );
+
+  @override
+  Future<List<InProgressCurationItemResponse>> loadInProgressQurationList() =>
+      loadResponseOrThrow(() => _api.loadInProgressQurationList());
 }

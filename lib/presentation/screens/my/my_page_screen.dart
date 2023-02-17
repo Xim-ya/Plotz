@@ -36,11 +36,14 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                   imgUrl: null,
                 ),
                 AppSpace.size10,
-                Text(
-                  '${vm.displayName ?? '-'}님',
-                  style:
-                      AppTextStyle.title1.copyWith(color: AppColor.mixedWhite),
-                ),
+                GetBuilder<MyPageViewModel>(
+                  init: vm,
+                  builder: (context) => Text(
+                    '${vm.displayName ?? '-'}님',
+                    style: AppTextStyle.title1
+                        .copyWith(color: AppColor.mixedWhite),
+                  ),
+                )
               ],
             ),
           ),

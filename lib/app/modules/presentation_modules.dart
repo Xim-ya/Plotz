@@ -17,7 +17,7 @@ abstract class PresentationModules {
     Get.lazyPut(() => ExploreViewModel(Get.find(), Get.find()), fenix: true);
 
     // 큐레이션
-    Get.lazyPut(() => CurationViewModel(), fenix: true);
+    Get.lazyPut(() => CurationViewModel(Get.find()), fenix: true);
 
     // 마에페이지
     Get.lazyPut(() => MyPageViewModel(Get.find()), fenix: true);

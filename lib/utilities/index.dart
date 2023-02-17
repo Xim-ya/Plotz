@@ -53,6 +53,7 @@ export 'package:soon_sak/app/modules/domain_modules.dart';
 export 'package:soon_sak/app/modules/presentation_modules.dart';
 
 // Data
+export 'package:soon_sak/data/api/content/response/in_progress_curation_item_response.dart';
 export 'package:soon_sak/domain/exception/auth_exception.dart';
 export 'package:soon_sak/data/api/content/response/basic_content_info_response.dart';
 export 'package:soon_sak/data/api/content/response/video_response.dart';

@@ -1,3 +1,5 @@
+import 'package:soon_sak/domain/exception/content/content_exception.dart';
+import 'package:soon_sak/domain/model/content/curation/in_progress_quration.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -118,12 +120,36 @@ class ContentRepositoryImpl implements ContentRepository {
   }
 
   @override
-  Future<Result<void>> requestContentRegistration(
+  Future<Result<String>> requestContentRegistration(
       ContentRequest requestData) async {
     try {
       final response =
           await _contentDataSource.requestContentRegistration(requestData);
       return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(ContentException.qurationRequestFailed());
+    }
+  }
+
+  @override
+  Future<Result<void>> addUserQurationInfo(
+      {required String qurationDocId, required String userId}) async {
+    try {
+      final response = _contentDataSource.addUserQurationInfo(
+          qurationDocId: qurationDocId, userId: userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(ContentException.updateUserQurationInfoFailed());
+    }
+  }
+
+  @override
+  Future<Result<List<InProgressQurationItem>>>
+      loadInProgressQurationList() async {
+    try {
+      final response = await _contentDataSource.loadInProgressQurationList();
+      return Result.success(
+          response.map(InProgressQurationItem.fromResponse).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }

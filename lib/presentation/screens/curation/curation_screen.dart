@@ -13,9 +13,14 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
           children: <Widget>[
             AppSpace.size34,
             // 리딩 문구
-            Text(
-              '재미있는\n리뷰 컨텐츠를 등록해주세요!',
-              style: AppTextStyle.headline1,
+            GestureDetector(
+              onTap: () {
+                vm.fetchInProgressQurationList();
+              },
+              child: Text(
+                '재미있는\n리뷰 컨텐츠를 등록해주세요!',
+                style: AppTextStyle.headline1,
+              ),
             ),
             AppSpace.size22,
             // 큐레이션 컨텐츠 등록 버튼 (드라마, 영화)
@@ -48,58 +53,61 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
               ),
             ),
             AppSpace.size10,
-            GridView.builder(
-              shrinkWrap: true,
-              itemCount: 19,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverQuiltedGridDelegate(
-                crossAxisCount: 14,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                repeatPattern: QuiltedGridRepeatPattern.inverted,
-                pattern: [
-                  const QuiltedGridTile(9, 7),
-                  const QuiltedGridTile(8, 7),
-                ],
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return Stack(
-                  children: <Widget>[
-                    // 컨텐츠 포스터 이미지
-                    Positioned.fill(
-                      child: LinearLayeredPosterImg(
-                          linearColor: Colors.black.withOpacity(0.8),
-                          linearStep: const [0.1, 0.2, 1],
-                          imgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg'),
-                    ),
-                    // 컨텐츠 요청 유저 정보
-                    Positioned(
-                      left: 10,
-                      bottom: 10,
-                      child: Row(
-                        children: <Widget>[
-                          // 프로필 이미지
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  'https://memez861.cdn-nhncommerce.com/data/category/scm_342.jpg',
-                              height: 36,
-                            ),
-                          ),
-
-                          // 프로필 이미지
-                          Text(
-                            '${'심야'}님',
-                            style: AppTextStyle.title3,
-                          )
-                        ],
-                      ),
-                    ),
+            GetBuilder<CurationViewModel>(
+              init: vm,
+              builder: (_) => GridView.builder(
+                shrinkWrap: true,
+                itemCount: vm.inProgressCurations.length,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverQuiltedGridDelegate(
+                  crossAxisCount: 14,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  repeatPattern: QuiltedGridRepeatPattern.inverted,
+                  pattern: [
+                    const QuiltedGridTile(9, 7),
+                    const QuiltedGridTile(8, 7),
                   ],
-                );
-              },
-            ),
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  final curationItem = vm.inProgressCurations[index];
+                  return Stack(
+                    children: <Widget>[
+                      // 컨텐츠 포스터 이미지
+                      Positioned.fill(
+                        child: LinearLayeredPosterImg(
+                            linearColor: Colors.black.withOpacity(0.8),
+                            linearStep: const [0.1, 0.2, 1],
+                            imgUrl: curationItem.posterImgUrl),
+                      ),
+                      // 컨텐츠 요청 유저 정보
+                      Positioned(
+                        left: 10,
+                        bottom: 10,
+                        child: Row(
+                          children: <Widget>[
+                            // 프로필 이미지
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    'https://memez861.cdn-nhncommerce.com/data/category/scm_342.jpg',
+                                height: 36,
+                              ),
+                            ),
+                            // 프로필 이미지
+                            Text(
+                              '${curationItem.curatorName}님',
+                              style: AppTextStyle.title3,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

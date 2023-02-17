@@ -13,6 +13,7 @@ class MyPageViewModel extends BaseViewModel {
   Future<void> getUserInfo() async {
     await UserService.to.getUserInfo(); // fetch 메소드 실행
     userInfo = UserService.to.userInfo;
+    update();
   }
 
   /* Intents */
