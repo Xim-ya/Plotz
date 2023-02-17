@@ -34,10 +34,6 @@ abstract class ContentRepository {
   // 컨텐츠 등록 요청
   Future<Result<String>> requestContentRegistration(ContentRequest requestData);
 
-  // 유저 큐레이션 정보 추가
-  Future<Result<void>> addUserQurationInfo(
-      {required String qurationDocId, required String userId});
-
   // 진행중인 큐레이션 리스트 호출
   Future<Result<List<InProgressQurationItem>>> loadInProgressQurationList();
 

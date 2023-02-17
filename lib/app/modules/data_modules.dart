@@ -1,6 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:soon_sak/data/api/user/user_api.dart';
+import 'package:soon_sak/data/api/user/user_api_impl.dart';
 import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
 import 'package:soon_sak/data/dataSource/auth/auth_data_source_impl.dart';
+import 'package:soon_sak/data/dataSource/user/user_data_source.dart';
+import 'package:soon_sak/data/dataSource/user/user_data_source_impl.dart';
+import 'package:soon_sak/data/repository/user/user_repository.dart';
+import 'package:soon_sak/data/repository/user/user_repository_impl.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class DataModules {
@@ -12,6 +18,13 @@ abstract class DataModules {
     Get.lazyPut<AuthDataSource>(() => AuthDataSourceImpl(Get.find()),
         fenix: true);
     Get.lazyPut<AuthRepository>(() => AuthRepositoryImpl(Get.find()),
+        fenix: true);
+
+    /* User */
+    Get.lazyPut<UserApi>(() => UserApiImpl(), fenix: true);
+    Get.lazyPut<UserDataSource>(() => UserDataSourceImpl(Get.find()),
+        fenix: true);
+    Get.lazyPut<UserRepository>(() => UserRepositoryImpl(Get.find()),
         fenix: true);
 
     /* Static Content */

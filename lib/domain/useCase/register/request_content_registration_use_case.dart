@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:soon_sak/data/repository/user/user_repository.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.16
@@ -7,16 +8,17 @@ import 'package:soon_sak/utilities/index.dart';
 
 class RequestContentRegistrationUseCase
     extends BaseUseCase<ContentRequest, Result<void>> {
-  RequestContentRegistrationUseCase(this._repository);
+  RequestContentRegistrationUseCase(this._contentRepository, this._userRepository);
 
-  final ContentRepository _repository;
+  final ContentRepository _contentRepository;
+  final UserRepository _userRepository;
 
   @override
   Future<Result<void>> call(ContentRequest request) async {
-    final response = await _repository.requestContentRegistration(request);
+    final response = await _contentRepository.requestContentRegistration(request);
     return response.fold(
       onSuccess: (data) async {
-        final response = await _repository.addUserQurationInfo(
+        final response = await _userRepository.addUserQurationInfo(
           qurationDocId: data,
           userId: UserService.to.userInfo!.id!,
         );

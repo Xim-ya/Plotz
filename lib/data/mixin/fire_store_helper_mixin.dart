@@ -81,11 +81,54 @@ mixin FirestoreHelper {
   }
 
   /// document를 생성하고 데이터를 저장하는 메소드
-  //  생성한 document의 id값을 리턴함
   Future<void> storeDocument(String collectionName,
       {required String? docId, required Map<String, dynamic> data}) {
     final docRef = _db.collection(collectionName).doc(docId);
     return docRef.set(data);
+  }
+
+  /// 특정 컬렉션의 document와 여러 subCollection document를
+  /// 생성 및 저장하는 메소드
+  /// subCollection의 경우
+  /// 해당 subCollection이 기존에 존재 했을 경우 특정 필드 값을 increase하고
+  /// 반대의 경우 기존 초기값(data)를 추가함
+  Future<void> storeAndUpdateDocumentAndSubCollection(
+    String collectionName, {
+    required String docId,
+    required Map<String, dynamic> data,
+    required String firstSubCollectionName,
+    required Map<String, dynamic> firstSubCollectionData,
+    required String secondSubCollectionName,
+    required Map<String, dynamic> secondSubCollectionData,
+    required String secondSubCollectionFieldName,
+    required String firstSubCollectionDocId,
+  }) async {
+    // document 생성 및 저장
+    final docRef = _db.collection(collectionName).doc(docId);
+
+    // Subcollection & subDocument 생성 및 저장
+    // 1. Main Document
+    final subCollectionRef =
+        docRef.collection(firstSubCollectionName).doc(firstSubCollectionDocId);
+    await subCollectionRef.set(firstSubCollectionData);
+
+    // 2. Sub Document
+    final CollectionReference secondSubCollectionRef =
+        docRef.collection(secondSubCollectionName);
+    final subCollectionDoc = await secondSubCollectionRef.limit(1).get();
+
+    // subCollection이 기존에도 생성되어 있다면 특정 필드값 increase
+    if (subCollectionDoc.docs.isNotEmpty) {
+      print('// subCollection이 기존에도 생성되어 있다면 특정 필드값 increase');
+      await secondSubCollectionRef
+          .doc(subCollectionDoc.docs.single.id)
+          .update({secondSubCollectionFieldName: FieldValue.increment(1)});
+    } else {
+      // 반대의 경우 subCollection을 생성하고 데이터를 추가 함.
+
+      await secondSubCollectionRef.add(secondSubCollectionData);
+    }
+    return;
   }
 
   /// document를 생성하고 데이터를 저장하는 메소드

@@ -55,11 +55,13 @@ class CurationViewModel extends BaseViewModel {
   void onInit() {
     super.onInit();
 
-    fetchInProgressQurationList();
+    // TODO : 임시 주석
+    // fetchInProgressQurationList();
 
     randomContentImg = RandomImg(
-        tvImgPath: tvImgPathList.randomItem(),
-        movieImgPath: movieImgPathList.randomItem());
+      tvImgPath: tvImgPathList.randomItem(),
+      movieImgPath: movieImgPathList.randomItem(),
+    );
   }
 }
 

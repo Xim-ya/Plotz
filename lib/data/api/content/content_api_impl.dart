@@ -39,21 +39,6 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     return storeDocumentAndReturnId('curation', docId: null, data: data);
   }
 
-  @override
-  Future<void> addUserQurationInfo(
-      {required String qurationDocId, required String userId}) async {
-    final Map<String, dynamic> data = {
-      'data': db.collection('curation').doc(qurationDocId)
-    };
-
-    return storeDocumentOnSubCollection(
-      'user',
-      subCollectionName: 'curationList',
-      docId: userId,
-      subCollectionDocId: qurationDocId,
-      data: data,
-    );
-  }
 
   @override
   Future<List<InProgressCurationItemResponse>>
