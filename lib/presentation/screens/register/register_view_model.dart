@@ -9,9 +9,12 @@ part 'controllerResource/confirm_curation_view_model.part.dart'; // 등록 컨�
 
 class RegisterViewModel extends BaseViewModel {
   RegisterViewModel(this._searchUseCase, this.validateVideoUrlUseCase,
-      this._requestContentRegistrationUseCase,
+      this._requestContentRegistrationUseCase, this._curationViewModel,
       {required contentType})
       : selectedContentType = contentType;
+
+  /* ViewModel */
+  final CurationViewModel _curationViewModel;
 
   /* Variables */
   // 선택된 컨텐츠 타입
@@ -137,6 +140,7 @@ class RegisterViewModel extends BaseViewModel {
           '등록 절차를 거친 뒤 컨텐츠가 등록됩니다',
           isUsedOnTabScreen: true,
         );
+        _curationViewModel.fetchInProgressQurationList();
       },
       onFailure: (e) {
         log('RegisterViewModel : $e');

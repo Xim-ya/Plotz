@@ -8,17 +8,22 @@ class CurationViewModel extends BaseViewModel {
   /* Variables */
   late final RandomImg randomContentImg;
   late final List<InProgressQurationItem> inProgressCurations = [];
+  bool isInProgressCurationEmpty = false;
 
   /* Domain Modules */
   final ContentRepository _contentRepository;
 
-  /* Intent */
   // 진행중인 큐레이션 리스트 호출
   Future<void> fetchInProgressQurationList() async {
     final response = await _contentRepository.loadInProgressQurationList();
     response.fold(
       onSuccess: (data) {
-        inProgressCurations.addAll(data);
+        if (data.isEmpty) {
+          isInProgressCurationEmpty = true;
+        } else {
+          inProgressCurations.clear();
+          inProgressCurations.addAll(data);
+        }
         update();
       },
       onFailure: (e) {
@@ -37,6 +42,13 @@ class CurationViewModel extends BaseViewModel {
         contentType.isTv ? tvImgPathList : movieImgPathList;
     String randomImgPath = imgPathList.randomItem();
     return randomImgPath;
+  }
+
+  /* Getters */
+  int get curationListLength {
+    return inProgressCurations.isNotEmpty
+        ? inProgressCurations.length
+        : 4; // 4 == 스켈레톤 뷰 개수
   }
 
   @override

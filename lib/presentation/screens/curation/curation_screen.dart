@@ -1,3 +1,5 @@
+import 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_skeleton_view.dart';
+import 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CurationScreen extends BaseScreen<CurationViewModel> {
@@ -15,7 +17,11 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
             // 리딩 문구
             GestureDetector(
               onTap: () {
-                vm.fetchInProgressQurationList();
+                print(SizeConfig.to.screenHeight -
+                    279 -
+                    SizeConfig.to.statusBarHeight -
+                    SizeConfig.to.bottomInset -
+                    56);
               },
               child: Text(
                 '재미있는\n리뷰 컨텐츠를 등록해주세요!',
@@ -54,60 +60,45 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
             ),
             AppSpace.size10,
             GetBuilder<CurationViewModel>(
-              init: vm,
-              builder: (_) => GridView.builder(
-                shrinkWrap: true,
-                itemCount: vm.inProgressCurations.length,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverQuiltedGridDelegate(
-                  crossAxisCount: 14,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  repeatPattern: QuiltedGridRepeatPattern.inverted,
-                  pattern: [
-                    const QuiltedGridTile(9, 7),
-                    const QuiltedGridTile(8, 7),
-                  ],
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  final curationItem = vm.inProgressCurations[index];
-                  return Stack(
-                    children: <Widget>[
-                      // 컨텐츠 포스터 이미지
-                      Positioned.fill(
-                        child: LinearLayeredPosterImg(
-                            linearColor: Colors.black.withOpacity(0.8),
-                            linearStep: const [0.1, 0.2, 1],
-                            imgUrl: curationItem.posterImgUrl),
-                      ),
-                      // 컨텐츠 요청 유저 정보
-                      Positioned(
-                        left: 10,
-                        bottom: 10,
-                        child: Row(
-                          children: <Widget>[
-                            // 프로필 이미지
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    'https://memez861.cdn-nhncommerce.com/data/category/scm_342.jpg',
-                                height: 36,
-                              ),
-                            ),
-                            // 프로필 이미지
-                            Text(
-                              '${curationItem.curatorName}님',
-                              style: AppTextStyle.title3,
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
+              builder: (_) {
+                if (vm.isInProgressCurationEmpty) {
+                  return Text(
+                    '현재 진행중인 큐레이션이 없어요',
+                    style:
+                        AppTextStyle.body1.copyWith(color: AppColor.lightGrey),
                   );
-                },
-              ),
-            )
+                } else {
+                  return GridView.builder(
+                    padding: AppInset.bottom46,
+                    shrinkWrap: true,
+                    itemCount: vm.curationListLength,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverQuiltedGridDelegate(
+                      crossAxisCount: 14,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      repeatPattern: QuiltedGridRepeatPattern.inverted,
+                      pattern: [
+                        const QuiltedGridTile(9, 7),
+                        const QuiltedGridTile(8, 7),
+                      ],
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (vm.inProgressCurations.isNotEmpty) {
+                        final item = vm.inProgressCurations[index];
+                        return CurationGridItemView(
+                          posterImgUrl: item.posterImgUrl,
+                          curatorProfileImgUrl: item.curatorProfileImgUrl,
+                          curatorName: item.curatorName,
+                        );
+                      } else {
+                        return const CurationGridItemSkeletonView();
+                      }
+                    },
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

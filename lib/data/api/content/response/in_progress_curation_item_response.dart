@@ -20,11 +20,11 @@ class InProgressCurationItemResponse {
     required this.videoId,
   });
 
-  factory InProgressCurationItemResponse.fromDocument(
-      DocumentSnapshot snapshot, String curatorName) {
+  factory InProgressCurationItemResponse.fromDocument(DocumentSnapshot snapshot,
+      {required String curatorName, required String curatorImg}) {
     return InProgressCurationItemResponse(
       curatorDisplayName: curatorName,
-      curatorProfileImgUrl: curatorName,
+      curatorProfileImgUrl: curatorImg,
       posterImgUrl: snapshot.get('posterImgUrl'),
       requestDate:
           DateFormat('yyyy-MM-dd').format(snapshot.get('requestDate').toDate()),
