@@ -5,8 +5,12 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 enum ContentType {
-  tv,
-  movie;
+  tv('드라마'),
+  movie('영화');
+
+  const ContentType(this.name);
+
+  final String name;
 
   factory ContentType.fromString(String originStr) {
     switch (originStr) {
@@ -24,16 +28,14 @@ enum ContentType {
   }
 
   String get getTypeCharacter {
-    if(this == ContentType.tv) {
+    if (this == ContentType.tv) {
       return 't';
     } else {
       return 'm';
     }
-
   }
 
   String get asText {
     return isTv ? '드라마' : '영화';
   }
 }
-

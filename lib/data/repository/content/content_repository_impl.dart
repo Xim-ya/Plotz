@@ -1,5 +1,4 @@
 import 'package:soon_sak/domain/exception/content/content_exception.dart';
-import 'package:soon_sak/domain/model/content/curation/in_progress_quration.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -132,12 +131,12 @@ class ContentRepositoryImpl implements ContentRepository {
   }
 
   @override
-  Future<Result<List<InProgressQurationItem>>>
+  Future<Result<List<CurationContent>>>
       loadInProgressQurationList() async {
     try {
       final response = await _contentDataSource.loadInProgressQurationList();
       return Result.success(
-          response.map(InProgressQurationItem.fromResponse).toList());
+          response.map(CurationContent.fromResponse).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }

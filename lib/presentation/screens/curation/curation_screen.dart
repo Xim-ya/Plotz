@@ -15,18 +15,9 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
           children: <Widget>[
             AppSpace.size34,
             // 리딩 문구
-            GestureDetector(
-              onTap: () {
-                print(SizeConfig.to.screenHeight -
-                    279 -
-                    SizeConfig.to.statusBarHeight -
-                    SizeConfig.to.bottomInset -
-                    56);
-              },
-              child: Text(
-                '재미있는\n리뷰 컨텐츠를 등록해주세요!',
-                style: AppTextStyle.headline1,
-              ),
+            Text(
+              '재미있는\n리뷰 컨텐츠를 등록해주세요!',
+              style: AppTextStyle.headline1,
             ),
             AppSpace.size22,
             // 큐레이션 컨텐츠 등록 버튼 (드라마, 영화)
@@ -88,8 +79,8 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
                         final item = vm.inProgressCurations[index];
                         return CurationGridItemView(
                           posterImgUrl: item.posterImgUrl,
-                          curatorProfileImgUrl: item.curatorProfileImgUrl,
-                          curatorName: item.curatorName,
+                          curatorProfileImgUrl: item.curatorProfileImgUrl!,
+                          curatorName: item.curatorName!,
                         );
                       } else {
                         return const CurationGridItemSkeletonView();

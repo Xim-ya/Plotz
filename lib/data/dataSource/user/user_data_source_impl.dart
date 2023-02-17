@@ -23,4 +23,10 @@ class UserDataSourceImpl
   @override
   Future<UserCurationSummaryResponse> loadUserCurationSummary(String userId) =>
       loadResponseOrThrow(() => _api.loadUserCurationSummary(userId));
+
+  @override
+  Future<List<CurationContentResponse>> loadUserCurationContentList(
+      String userId) async {
+    return loadResponseOrThrow(() => _api.loadUserCurationContentList(userId));
+  }
 }

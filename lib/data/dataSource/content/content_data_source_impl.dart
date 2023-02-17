@@ -127,6 +127,6 @@ class ContentDataSourceImpl
 
 
   @override
-  Future<List<InProgressCurationItemResponse>> loadInProgressQurationList() =>
+  Future<List<CurationContentResponse>> loadInProgressQurationList() =>
       loadResponseOrThrow(() => _api.loadInProgressQurationList());
 }

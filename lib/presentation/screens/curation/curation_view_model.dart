@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:soon_sak/domain/model/content/curation/in_progress_quration.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CurationViewModel extends BaseViewModel {
@@ -7,7 +6,7 @@ class CurationViewModel extends BaseViewModel {
 
   /* Variables */
   late final RandomImg randomContentImg;
-  late final List<InProgressQurationItem> inProgressCurations = [];
+  late final List<CurationContent> inProgressCurations = [];
   bool isInProgressCurationEmpty = false;
 
   /* Domain Modules */
@@ -21,6 +20,9 @@ class CurationViewModel extends BaseViewModel {
         if (data.isEmpty) {
           isInProgressCurationEmpty = true;
         } else {
+          if(isInProgressCurationEmpty == true) {
+            isInProgressCurationEmpty = false;
+          }
           inProgressCurations.clear();
           inProgressCurations.addAll(data);
         }
@@ -55,8 +57,8 @@ class CurationViewModel extends BaseViewModel {
   void onInit() {
     super.onInit();
 
-    // TODO : 임시 주석
-    // fetchInProgressQurationList();
+
+    fetchInProgressQurationList();
 
     randomContentImg = RandomImg(
       tvImgPath: tvImgPathList.randomItem(),

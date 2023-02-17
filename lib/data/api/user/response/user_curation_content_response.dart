@@ -1,36 +1,34 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:soon_sak/utilities/index.dart';
 
-class InProgressCurationItemResponse {
-  final String curatorDisplayName;
-  final String curatorProfileImgUrl;
+class UserCurationContentResponse {
   final String requestDate;
   final String status;
   final String title;
   final String posterImgUrl;
   final String videoId;
+  final String id;
 
-  InProgressCurationItemResponse({
-    required this.curatorDisplayName,
-    required this.curatorProfileImgUrl,
+  UserCurationContentResponse({
     required this.requestDate,
     required this.status,
     required this.title,
     required this.posterImgUrl,
+    required this.id,
     required this.videoId,
   });
 
-  factory InProgressCurationItemResponse.fromDocument(DocumentSnapshot snapshot,
+  factory UserCurationContentResponse.fromDocument(DocumentSnapshot snapshot,
       {required String curatorName, required String curatorImg}) {
-    return InProgressCurationItemResponse(
-      curatorDisplayName: curatorName,
-      curatorProfileImgUrl: curatorImg,
+    return UserCurationContentResponse(
       posterImgUrl: snapshot.get('posterImgUrl'),
       requestDate:
-          DateFormat('yyyy-MM-dd').format(snapshot.get('requestDate').toDate()),
+      DateFormat('yyyy-MM-dd').format(snapshot.get('requestDate').toDate()),
       status: snapshot.get('status'),
       title: snapshot.get('title'),
+      id: snapshot.get('id'),
       videoId: snapshot.get('videoId'),
     );
   }
+
 }

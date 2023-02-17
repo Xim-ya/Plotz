@@ -29,7 +29,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           // 프로필
           GestureDetector(
             onTap: () {
-              vm.fetchUserCurationHistory();
+              vm.fetchUserCurationSummary();
             },
             child: Padding(
               padding: AppInset.horizontal16,

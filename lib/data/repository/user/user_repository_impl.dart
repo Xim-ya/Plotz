@@ -22,10 +22,23 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<UserCurationSummary>> loadUserCurationSummary(String userId) async {
+  Future<Result<UserCurationSummary>> loadUserCurationSummary(
+      String userId) async {
     try {
       final response = await _dataSource.loadUserCurationSummary(userId);
       return Result.success(UserCurationSummary.fromResponse(response));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<CurationContent>>> loadUserCurationContentList(
+      String userId) async {
+    try {
+      final response = await _dataSource.loadUserCurationContentList(userId);
+      return Result.success(
+          response.map(CurationContent.fromResponse).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }

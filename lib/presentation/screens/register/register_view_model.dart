@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
@@ -8,13 +9,18 @@ part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 �
 part 'controllerResource/confirm_curation_view_model.part.dart'; // 등록 컨텐츠 확인
 
 class RegisterViewModel extends BaseViewModel {
-  RegisterViewModel(this._searchUseCase, this.validateVideoUrlUseCase,
-      this._requestContentRegistrationUseCase, this._curationViewModel,
+  RegisterViewModel(
+      this._searchUseCase,
+      this.validateVideoUrlUseCase,
+      this._requestContentRegistrationUseCase,
+      this._curationViewModel,
+      this._myPageViewModel,
       {required contentType})
       : selectedContentType = contentType;
 
   /* ViewModel */
   final CurationViewModel _curationViewModel;
+  final MyPageViewModel _myPageViewModel;
 
   /* Variables */
   // 선택된 컨텐츠 타입
@@ -132,15 +138,20 @@ class RegisterViewModel extends BaseViewModel {
     final requestData = ContentRequest.fromContentModelWithUserId(
         content: curationContent.value!, userId: UserService.to.userInfo!.id!);
     final response = await _requestContentRegistrationUseCase.call(requestData);
-    response.fold(
-      onSuccess: (data) {
+    await response.fold(
+      onSuccess: (data) async {
         log('컨텐츠 등록 성공');
         Get.back();
-        AlertWidget.animatedToast(
+        unawaited(AlertWidget.animatedToast(
           '등록 절차를 거친 뒤 컨텐츠가 등록됩니다',
           isUsedOnTabScreen: true,
-        );
-        _curationViewModel.fetchInProgressQurationList();
+        ));
+
+        /// 다른 화면 데이터 갱신
+        /// 1. 큐레이션 스크린 (진행 중 큐레이션 내역)
+        /// 2. 마이페이지 스크린 (큐레이션 내역)
+        await _curationViewModel.fetchInProgressQurationList();
+        await _myPageViewModel.fetchUserCurationSummary();
       },
       onFailure: (e) {
         log('RegisterViewModel : $e');

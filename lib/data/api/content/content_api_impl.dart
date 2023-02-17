@@ -41,7 +41,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
 
 
   @override
-  Future<List<InProgressCurationItemResponse>>
+  Future<List<CurationContentResponse>>
       loadInProgressQurationList() async {
     final docs = await getDocsWithContainingField('curation',
         fieldName: 'status', neededFieldName: 'inProgress');
@@ -54,7 +54,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       final curatorDoc = await curatorRef.get();
       final curatorName = await curatorDoc.get('name');
       final curatorImg = await curatorDoc.get('photoUrl');
-      return InProgressCurationItemResponse.fromDocument(e, curatorName: curatorName, curatorImg: curatorImg);
+      return CurationContentResponse.fromDocument(e, curatorName: curatorName, curatorImg: curatorImg);
     }).toList();
 
     return Future.wait(resultList);

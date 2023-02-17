@@ -53,7 +53,7 @@ export 'package:soon_sak/app/modules/domain_modules.dart';
 export 'package:soon_sak/app/modules/presentation_modules.dart';
 
 // Data
-export 'package:soon_sak/data/api/content/response/in_progress_curation_item_response.dart';
+export 'package:soon_sak/data/api/content/response/curation_content_response.dart';
 export 'package:soon_sak/domain/exception/auth_exception.dart';
 export 'package:soon_sak/data/api/content/response/basic_content_info_response.dart';
 export 'package:soon_sak/data/api/content/response/video_response.dart';
@@ -151,6 +151,7 @@ export 'package:soon_sak/domain/model/content/content_argument_format.dart';
 export 'package:soon_sak/domain/model/youtube/youtube_channel_info.dart';
 export 'package:soon_sak/domain/base/base_single_data_model.dart';
 export 'package:soon_sak/domain/service/user_service.dart';
+export 'package:soon_sak/domain/model/content/curation/curation_content.dart';
 export 'package:soon_sak/domain/model/content/register/content_request.dart';
 
 // Presentation

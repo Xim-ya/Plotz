@@ -45,7 +45,7 @@ class MyPageViewModel extends BaseViewModel {
   }
 
   // 유저 큐레이션 내역 요약 정보 호출
-  Future<void> fetchUserCurationHistory() async {
+  Future<void> fetchUserCurationSummary() async {
     final userId = UserService.to.userInfo!.id!;
     final response = await _userRepository.loadUserCurationSummary(userId);
     response.fold(
@@ -63,6 +63,6 @@ class MyPageViewModel extends BaseViewModel {
   Future<void> onInit() async {
     super.onInit();
     await getUserInfo();
-    await fetchUserCurationHistory();
+    await fetchUserCurationSummary();
   }
 }

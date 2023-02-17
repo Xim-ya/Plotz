@@ -1,6 +1,6 @@
 import 'package:soon_sak/data/api/user/user_api.dart';
-import 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
 import 'package:soon_sak/domain/exception/user/response/user_curation_summary_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class UserApiImpl with FirestoreHelper implements UserApi {
   @override
@@ -31,12 +31,41 @@ class UserApiImpl with FirestoreHelper implements UserApi {
   @override
   Future<UserCurationSummaryResponse> loadUserCurationSummary(
       String userId) async {
-    final doc = await getSingleSubCollectionDoc(
+    final snapshot = await getSingleSubCollectionDoc(
       'user',
       docId: userId,
       subCollectionName: 'curationSummary',
     );
 
-    return UserCurationSummaryResponse.fromDoc(doc.docs.single);
+    final doc = snapshot.docs;
+
+    if (doc.isNotEmpty) {
+      return UserCurationSummaryResponse.fromDoc(doc.single);
+    } else {
+      /// curation 내역이 없으면 초기값 전달
+      return UserCurationSummaryResponse(
+        completedCount: 0,
+        inProgressCount: 0,
+        onHoldCount: 0,
+      );
+    }
+  }
+
+  @override
+  Future<List<CurationContentResponse>> loadUserCurationContentList(
+      String userId) async {
+    final docsRef = await getSubCollectionDocs(
+      'user',
+      docId: userId,
+      subCollectionName: 'curationList',
+    );
+
+    final resultList = docsRef.map((e) async {
+      final DocumentReference<Map<String, dynamic>> ref = e.get('data');
+      final doc = await ref.get();
+      return CurationContentResponse.fromUserResponseDoc(doc);
+    }).toList();
+
+    return Future.wait(resultList);
   }
 }

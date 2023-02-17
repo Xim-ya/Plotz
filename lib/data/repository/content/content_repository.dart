@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/content/curation/in_progress_quration.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -35,7 +34,7 @@ abstract class ContentRepository {
   Future<Result<String>> requestContentRegistration(ContentRequest requestData);
 
   // 진행중인 큐레이션 리스트 호출
-  Future<Result<List<InProgressQurationItem>>> loadInProgressQurationList();
+  Future<Result<List<CurationContent>>> loadInProgressQurationList();
 
   static ContentRepository get to => Get.find();
 }

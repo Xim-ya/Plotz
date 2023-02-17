@@ -8,7 +8,7 @@ class CurationGridItemView extends StatelessWidget {
       required this.curatorName})
       : super(key: key);
 
-  final String posterImgUrl;
+  final String? posterImgUrl;
   final String curatorProfileImgUrl;
   final String curatorName;
 
