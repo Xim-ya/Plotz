@@ -1,13 +1,21 @@
 import 'dart:developer';
+import 'package:soon_sak/data/repository/user/user_repository.dart';
+import 'package:soon_sak/domain/model/content/myPage/user_curation_summary.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class MyPageViewModel extends BaseViewModel {
-  MyPageViewModel(this._signOutHandlerUseCase);
+  MyPageViewModel(this._signOutHandlerUseCase, this._userRepository);
+
+  /* Variables */
+  UserCurationSummary? curationSummary;
 
   final SignOutUseCase _signOutHandlerUseCase;
   UserModel? userInfo;
 
   String? get displayName => userInfo?.nickName ?? userInfo?.name;
+
+  /* Data Modules */
+  final UserRepository _userRepository;
 
   // 유저 정보 호출
   Future<void> getUserInfo() async {
@@ -36,9 +44,25 @@ class MyPageViewModel extends BaseViewModel {
     );
   }
 
+  // 유저 큐레이션 내역 요약 정보 호출
+  Future<void> fetchUserCurationHistory() async {
+    final userId = UserService.to.userInfo!.id!;
+    final response = await _userRepository.loadUserCurationSummary(userId);
+    response.fold(
+      onSuccess: (data) {
+        curationSummary = data;
+        update();
+      },
+      onFailure: (e) {
+        log('MyPageViewModel $e');
+      },
+    );
+  }
+
   @override
   Future<void> onInit() async {
     super.onInit();
     await getUserInfo();
+    await fetchUserCurationHistory();
   }
 }

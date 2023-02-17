@@ -27,24 +27,29 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           AppSpace.size16,
 
           // 프로필
-          Padding(
-            padding: AppInset.horizontal16,
-            child: Row(
-              children: <Widget>[
-                const RoundProfileImg(
-                  size: 58,
-                  imgUrl: null,
-                ),
-                AppSpace.size10,
-                GetBuilder<MyPageViewModel>(
-                  init: vm,
-                  builder: (context) => Text(
-                    '${vm.displayName ?? '-'}님',
-                    style: AppTextStyle.title1
-                        .copyWith(color: AppColor.mixedWhite),
+          GestureDetector(
+            onTap: () {
+              vm.fetchUserCurationHistory();
+            },
+            child: Padding(
+              padding: AppInset.horizontal16,
+              child: Row(
+                children: <Widget>[
+                  const RoundProfileImg(
+                    size: 58,
+                    imgUrl: null,
                   ),
-                )
-              ],
+                  AppSpace.size10,
+                  GetBuilder<MyPageViewModel>(
+                    init: vm,
+                    builder: (context) => Text(
+                      '${vm.displayName ?? '-'}님',
+                      style: AppTextStyle.title1
+                          .copyWith(color: AppColor.mixedWhite),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           AppSpace.size34,
@@ -78,30 +83,41 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           GestureDetector(
             onTap: vm.routeToCurationHistory,
             child: Container(
-              margin: AppInset.horizontal16,
-              height: 80,
-              decoration: BoxDecoration(
+                margin: AppInset.horizontal16,
+                height: 80,
+                decoration: BoxDecoration(
                   color: AppColor.strongGrey,
-                  borderRadius: BorderRadius.circular(6)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  _curationProgressRowItem(title: '진행중', count: 4),
-                  Container(
-                    height: 24,
-                    width: 1,
-                    color: AppColor.lightGrey,
-                  ),
-                  _curationProgressRowItem(title: '등록 완료', count: 7),
-                  Container(
-                    height: 24,
-                    width: 1,
-                    color: AppColor.lightGrey,
-                  ),
-                  _curationProgressRowItem(title: '보류', count: 0),
-                ],
-              ),
-            ),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: GetBuilder<MyPageViewModel>(
+                  init: vm,
+                  builder: (_) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        _curationProgressRowItem(
+                            title: '진행중',
+                            count: vm.curationSummary?.inProgressCount ?? 0),
+                        Container(
+                          height: 24,
+                          width: 1,
+                          color: AppColor.lightGrey,
+                        ),
+                        _curationProgressRowItem(
+                            title: '등록 완료',
+                            count: vm.curationSummary?.completedCount ?? 0),
+                        Container(
+                          height: 24,
+                          width: 1,
+                          color: AppColor.lightGrey,
+                        ),
+                        _curationProgressRowItem(
+                            title: '보류',
+                            count: vm.curationSummary?.onHoldCount ?? 0),
+                      ],
+                    );
+                  },
+                )),
           ),
 
           AppSpace.size64,

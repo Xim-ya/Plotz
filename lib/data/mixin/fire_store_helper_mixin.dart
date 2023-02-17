@@ -80,6 +80,18 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
+  /// subCollection의 단일 document 데이터를 불러오는 메소드
+  Future<QuerySnapshot> getSingleSubCollectionDoc(String collectionName,
+      {required String docId, required String subCollectionName}) async {
+    QuerySnapshot snapshot = await _db
+        .collection(collectionName)
+        .doc(docId)
+        .collection(subCollectionName)
+        .limit(1)
+        .get();
+    return snapshot;
+  }
+
   /// document를 생성하고 데이터를 저장하는 메소드
   Future<void> storeDocument(String collectionName,
       {required String? docId, required Map<String, dynamic> data}) {
