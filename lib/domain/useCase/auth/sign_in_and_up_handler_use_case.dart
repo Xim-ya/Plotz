@@ -1,9 +1,10 @@
 import 'dart:developer';
+import 'package:soon_sak/utilities/constants/basic_profile_img_list_constants.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.15
  *  로그인과 회원가입을 진행하는 UseCase
- *  Google SignIn & Apple SignIn 으로 구성
+ *  Google SignIn & AppnIn 으로 구성
  *  데이터 레이로부터 유저의 정보를 받아오고, 해당 UseCase 에서 Firebase Auth에 등록하는 구조
  *
  *  아래와 같은 기능을 포함하고 있음
@@ -57,6 +58,8 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
         // 조건 : 이전에 등록에 유저가 아니라면
         if (!isRegisteredUser) {
           userInfo.id = user.uid; // uid 필드값 업데이트
+          userInfo.photoUrl ??= basicProfileImgList
+              .randomItem(); // 프로필 이미지가 없을 경우 랜덤 기본 프로필 이미지로 필드 값 업데이트
           await _authRepository.saveUserInfo(userInfo); // 서버에 유저 정보 저장
           await _userService.getUserInfo(); // service 레이어 유저 정보 업데이트
           return;

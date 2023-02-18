@@ -5,7 +5,7 @@ class UserModel {
   final String? nickName;
   final String? email;
   late String? id;
-  final String? photoUrl;
+  late String? photoUrl;
   final UserToken? token;
   final Sns provider;
 

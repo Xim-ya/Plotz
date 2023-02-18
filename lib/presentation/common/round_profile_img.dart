@@ -18,7 +18,7 @@ class RoundProfileImg extends StatelessWidget {
               imageUrl: imgUrl!,
               imageBuilder: (context, imageProvider) => Container(
                 decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: Colors.grey,
                   image:
                       DecorationImage(image: imageProvider, fit: BoxFit.cover),
                 ),

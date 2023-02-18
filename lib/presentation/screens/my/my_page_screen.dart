@@ -35,9 +35,12 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               padding: AppInset.horizontal16,
               child: Row(
                 children: <Widget>[
-                  const RoundProfileImg(
-                    size: 58,
-                    imgUrl: null,
+                  GetBuilder<MyPageViewModel>(
+                    init: vm,
+                    builder: (_) => RoundProfileImg(
+                      size: 58,
+                      imgUrl: vm.userInfo?.photoUrl ?? '',
+                    ),
                   ),
                   AppSpace.size10,
                   GetBuilder<MyPageViewModel>(
