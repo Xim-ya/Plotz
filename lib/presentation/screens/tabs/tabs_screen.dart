@@ -20,7 +20,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
     return Obx(
       () => AnimatedIndexedStack(
         index: vm.selectedTabIndex.value,
-        children: const <Widget>[
+        children:  <Widget>[
           HomeScreen(),
           ExploreScreen(),
           CurationScreen(),

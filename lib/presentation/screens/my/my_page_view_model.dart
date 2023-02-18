@@ -64,5 +64,6 @@ class MyPageViewModel extends BaseViewModel {
     super.onInit();
     await getUserInfo();
     await fetchUserCurationSummary();
+
   }
 }

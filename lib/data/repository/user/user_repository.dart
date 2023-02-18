@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/content/myPage/user_curation_summary.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserRepository {

@@ -1,4 +1,4 @@
-import 'package:soon_sak/domain/exception/user/response/user_curation_summary_response.dart';
+import 'package:soon_sak/data/api/user/response/user_curation_summary_response.dart';
 
 class UserCurationSummary {
   final int completedCount;

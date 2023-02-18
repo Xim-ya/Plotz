@@ -1,5 +1,3 @@
-import 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_skeleton_view.dart';
-import 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CurationScreen extends BaseScreen<CurationViewModel> {

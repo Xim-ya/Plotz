@@ -1,5 +1,4 @@
-import 'package:soon_sak/data/api/content/response/curation_content_response.dart';
-import 'package:soon_sak/domain/exception/user/response/user_curation_summary_response.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserApi {
   // 유저 큐레이션 정보 추가
@@ -7,9 +6,10 @@ abstract class UserApi {
       {required String qurationDocId, required String userId});
 
   // 유저 큐레이션 요약 정보 호출
-  Future<UserCurationSummaryResponse> loadUserCurationSummary(final String userId);
-
+  Future<UserCurationSummaryResponse> loadUserCurationSummary(
+      final String userId);
 
   // 유저의 큐레이션 리스트 호출
-  Future<List<CurationContentResponse>> loadUserCurationContentList(String userId);
+  Future<List<CurationContentResponse>> loadUserCurationContentList(
+      String userId);
 }

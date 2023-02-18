@@ -1,3 +1,5 @@
+
+
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:math' as math;
 
@@ -36,21 +38,19 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               child: Row(
                 children: <Widget>[
                   GetBuilder<MyPageViewModel>(
-                    init: vm,
                     builder: (_) => RoundProfileImg(
                       size: 58,
                       imgUrl: vm.userInfo?.photoUrl ?? '',
                     ),
                   ),
                   AppSpace.size10,
-                  GetBuilder<MyPageViewModel>(
-                    init: vm,
-                    builder: (context) => Text(
+                  StateBox<MyPageViewModel>(
+                    child: Text(
                       '${vm.displayName ?? '-'}님',
                       style: AppTextStyle.title1
                           .copyWith(color: AppColor.mixedWhite),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
