@@ -1,5 +1,3 @@
-
-
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:math' as math;
 
@@ -37,8 +35,8 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               padding: AppInset.horizontal16,
               child: Row(
                 children: <Widget>[
-                  GetBuilder<MyPageViewModel>(
-                    builder: (_) => RoundProfileImg(
+                  StateBox<MyPageViewModel>(
+                    child: RoundProfileImg(
                       size: 58,
                       imgUrl: vm.userInfo?.photoUrl ?? '',
                     ),
@@ -92,34 +90,31 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                   color: AppColor.strongGrey,
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: GetBuilder<MyPageViewModel>(
-                  init: vm,
-                  builder: (_) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        _curationProgressRowItem(
-                            title: '진행중',
-                            count: vm.curationSummary?.inProgressCount ?? 0),
-                        Container(
-                          height: 24,
-                          width: 1,
-                          color: AppColor.lightGrey,
-                        ),
-                        _curationProgressRowItem(
-                            title: '등록 완료',
-                            count: vm.curationSummary?.completedCount ?? 0),
-                        Container(
-                          height: 24,
-                          width: 1,
-                          color: AppColor.lightGrey,
-                        ),
-                        _curationProgressRowItem(
-                            title: '보류',
-                            count: vm.curationSummary?.onHoldCount ?? 0),
-                      ],
-                    );
-                  },
+                child: StateBox<MyPageViewModel>(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      _curationProgressRowItem(
+                          title: '진행중',
+                          count: vm.curationSummary?.inProgressCount ?? 0),
+                      Container(
+                        height: 24,
+                        width: 1,
+                        color: AppColor.lightGrey,
+                      ),
+                      _curationProgressRowItem(
+                          title: '등록 완료',
+                          count: vm.curationSummary?.completedCount ?? 0),
+                      Container(
+                        height: 24,
+                        width: 1,
+                        color: AppColor.lightGrey,
+                      ),
+                      _curationProgressRowItem(
+                          title: '보류',
+                          count: vm.curationSummary?.onHoldCount ?? 0),
+                    ],
+                  ),
                 )),
           ),
 
