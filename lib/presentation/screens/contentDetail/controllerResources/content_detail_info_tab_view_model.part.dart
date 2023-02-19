@@ -14,7 +14,7 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
         isViewCount: false,
       );
 
-  // 좋아요 수
+  // 좋아요 수  
   String? get likesCount =>
       Formatter.formatViewAndLikeCount(contentVideos.value?.mainLikesCount);
 
@@ -46,6 +46,9 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
 
   // 출연진 정보 개수
   int? get creditCount => _contentCreditList.value?.length;
+
+  // 큐레이터 정보
+  UserModel? get curator => _curator.value;
 
   // 출연진 섹션 > [CarouselSlider] 개수
   int? get sliderCount {

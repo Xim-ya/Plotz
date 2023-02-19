@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserModel {
@@ -7,10 +8,10 @@ class UserModel {
   late String? id;
   late String? photoUrl;
   final UserToken? token;
-  final Sns provider;
+  final Sns? provider;
 
   UserModel({
-    required this.provider,
+    this.provider,
     this.id,
     this.name,
     this.email,
@@ -58,12 +59,19 @@ class UserModel {
             accessToken: response.authorizationCode),
       );
 
+  // 큐레이터 Response
+  factory UserModel.fromCurationRes(UserResponse response) => UserModel(
+        id: response.id,
+        photoUrl: response.photoUrl,
+        name: response.name,
+      );
+
   // Instance -> Map (FireStore 저장 용도)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
-      'provider': provider.originString.toString(), // toString으로 포맷을 한번더 해줘야함
+      'provider': provider!.originString.toString(), // toString으로 포맷을 한번더 해줘야함
       'nickName': nickName,
       'photoUrl': photoUrl,
       'email': email,

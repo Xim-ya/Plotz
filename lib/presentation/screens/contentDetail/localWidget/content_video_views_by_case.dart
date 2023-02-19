@@ -58,52 +58,50 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         ),
                       ),
                       AppSpace.size4,
-                      Obx(
-                        () => vm.singleLikesCount.hasData
-                            ? Text(
-                                vm.singleLikesCount!,
-                                style: AppTextStyle.body3,
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(left: 2),
-                                child: Shimmer(
-                                  color: AppColor.lightGrey,
-                                  child: const SizedBox(
-                                    height: 16,
-                                    width: 20,
-                                  ),
-                                ),
-                              ),
-                      ),
+                      if (vm.singleLikesCount.hasData)
+                        Text(
+                          vm.singleLikesCount!,
+                          style: AppTextStyle.body3,
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2),
+                          child: Shimmer(
+                            color: AppColor.lightGrey,
+                            child: const SizedBox(
+                              height: 16,
+                              width: 20,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
-                  Obx(
-                    () => vm.singleVideoViewCount.hasData &&
-                            vm.singleUploadDate.hasData
-                        ? Text(
-                            '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
-                            style: AppTextStyle.body3,
-                          )
-                        : Row(
-                            children: <Widget>[
-                              Shimmer(
-                                child: Container(
-                                  color: AppColor.lightGrey.withOpacity(0.1),
-                                  height: 16,
-                                  width: 70,
-                                ),
-                              ),
-                              AppSpace.size6,
-                              Shimmer(
-                                child: Container(
-                                  color: AppColor.strongGrey,
-                                  height: 16,
-                                  width: 36,
-                                ),
-                              ),
-                            ],
+                  if (vm.singleVideoViewCount.hasData &&
+                      vm.singleUploadDate.hasData)
+                    Text(
+                      '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
+                      style: AppTextStyle.body3,
+                    )
+                  else
+                    Row(
+                      children: <Widget>[
+                        Shimmer(
+                          child: Container(
+                            color: AppColor.lightGrey.withOpacity(0.1),
+                            height: 16,
+                            width: 70,
                           ),
-                  ),
+                        ),
+                        AppSpace.size6,
+                        Shimmer(
+                          child: Container(
+                            color: AppColor.strongGrey,
+                            height: 16,
+                            width: 36,
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -119,105 +117,99 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
             padding: AppInset.horizontal16,
             child: SectionTitle(title: '컨텐츠'),
           ),
-          Obx(
-            () => CarouselSlider.builder(
-              itemCount:
-                  vm.isVideoContentLoaded ? vm.multipleVideoInfo!.length : 0,
-              options: CarouselOptions(
-                aspectRatio: 16 / 9.6,
-                enableInfiniteScroll: false,
-                viewportFraction: 0.93,
-              ),
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) {
-                final videoInfoItem = vm.multipleVideoInfo![itemIndex];
-                return SizedBox(
-                  width: SizeConfig.to.screenWidth - 32,
-                  // margin: AppInset.right8,
-                  child: Column(
-                    children: <Widget>[
-                      // 썸네일 이미지
-                      VideoThumbnailImgWithPlayerBtn(
-                        onPlayerBtnClicked: () {
-                          vm.launchYoutubeApp(videoInfoItem.videoId);
-                        },
-                        posterImgUrl:
-                            videoInfoItem.detailInfo?.videoThumbnailUrl ?? '',
-                      ),
-                      AppSpace.size4,
-                      Container(
-                        padding: AppInset.horizontal8,
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                const Opacity(
-                                  opacity: 1,
-                                  child: Icon(
-                                    Icons.thumb_up,
-                                    color: Colors.white,
-                                    size: 22,
+          CarouselSlider.builder(
+            itemCount:
+                vm.isVideoContentLoaded ? vm.multipleVideoInfo!.length : 0,
+            options: CarouselOptions(
+              aspectRatio: 16 / 9.6,
+              enableInfiniteScroll: false,
+              viewportFraction: 0.93,
+            ),
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) {
+              final videoInfoItem = vm.multipleVideoInfo![itemIndex];
+              return SizedBox(
+                width: SizeConfig.to.screenWidth - 32,
+                // margin: AppInset.right8,
+                child: Column(
+                  children: <Widget>[
+                    // 썸네일 이미지
+                    VideoThumbnailImgWithPlayerBtn(
+                      onPlayerBtnClicked: () {
+                        vm.launchYoutubeApp(videoInfoItem.videoId);
+                      },
+                      posterImgUrl:
+                          videoInfoItem.detailInfo?.videoThumbnailUrl ?? '',
+                    ),
+                    AppSpace.size4,
+                    Container(
+                      padding: AppInset.horizontal8,
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              const Opacity(
+                                opacity: 1,
+                                child: Icon(
+                                  Icons.thumb_up,
+                                  color: Colors.white,
+                                  size: 22,
+                                ),
+                              ),
+                              AppSpace.size4,
+                              if (vm.multipleVideoInfo.hasData)
+                                Text(
+                                  videoInfoItem.detailInfo!.likeCount
+                                      .toString(),
+                                  style: AppTextStyle.body3,
+                                )
+                              else
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 2),
+                                  child: Shimmer(
+                                    color: AppColor.lightGrey,
+                                    child: const SizedBox(
+                                      height: 16,
+                                      width: 20,
+                                    ),
                                   ),
                                 ),
-                                AppSpace.size4,
-                                Obx(
-                                  () => vm.multipleVideoInfo.hasData
-                                      ? Text(
-                                          videoInfoItem.detailInfo!.likeCount
-                                              .toString(),
-                                          style: AppTextStyle.body3,
-                                        )
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 2),
-                                          child: Shimmer(
-                                            color: AppColor.lightGrey,
-                                            child: const SizedBox(
-                                              height: 16,
-                                              width: 20,
-                                            ),
-                                          ),
-                                        ),
+                            ],
+                          ),
+                          if (vm.multipleVideoInfo.hasData)
+                            Text(
+                              '조회수 ${Formatter.formatViewAndLikeCount(videoInfoItem.detailInfo?.viewCount, isViewCount: true)} · ${Formatter.getDateDifferenceFromNow(videoInfoItem.detailInfo!.uploadDate!)}',
+                              style: AppTextStyle.body3,
+                            )
+                          else
+                            Row(
+                              children: <Widget>[
+                                Shimmer(
+                                  child: Container(
+                                    color: AppColor.lightGrey.withOpacity(0.1),
+                                    height: 16,
+                                    width: 70,
+                                  ),
+                                ),
+                                AppSpace.size6,
+                                Shimmer(
+                                  child: Container(
+                                    color: AppColor.strongGrey,
+                                    height: 16,
+                                    width: 36,
+                                  ),
                                 ),
                               ],
                             ),
-                            Obx(
-                              () => vm.multipleVideoInfo.hasData
-                                  ? Text(
-                                      '조회수 ${Formatter.formatViewAndLikeCount(videoInfoItem.detailInfo?.viewCount, isViewCount: true)} · ${Formatter.getDateDifferenceFromNow(videoInfoItem.detailInfo!.uploadDate!)}',
-                                      style: AppTextStyle.body3,
-                                    )
-                                  : Row(
-                                      children: <Widget>[
-                                        Shimmer(
-                                          child: Container(
-                                            color: AppColor.lightGrey
-                                                .withOpacity(0.1),
-                                            height: 16,
-                                            width: 70,
-                                          ),
-                                        ),
-                                        AppSpace.size6,
-                                        Shimmer(
-                                          child: Container(
-                                            color: AppColor.strongGrey,
-                                            height: 16,
-                                            width: 36,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       );
@@ -229,13 +221,11 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SectionTitle(title: '컨텐츠'),
-            Obx(
-              () => VideoThumbnailImgWithPlayerBtn(
-                onPlayerBtnClicked: () {
-                  vm.launchYoutubeApp(vm.singleVideoId);
-                },
-                posterImgUrl: vm.singleVideoThumbnailUrl,
-              ),
+            VideoThumbnailImgWithPlayerBtn(
+              onPlayerBtnClicked: () {
+                vm.launchYoutubeApp(vm.singleVideoId);
+              },
+              posterImgUrl: vm.singleVideoThumbnailUrl,
             ),
             AppSpace.size4,
             SizedBox(
@@ -254,52 +244,50 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         ),
                       ),
                       AppSpace.size4,
-                      Obx(
-                        () => vm.singleLikesCount.hasData
-                            ? Text(
-                                vm.singleLikesCount!,
-                                style: AppTextStyle.body3,
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(left: 2),
-                                child: Shimmer(
-                                  color: AppColor.lightGrey,
-                                  child: const SizedBox(
-                                    height: 16,
-                                    width: 20,
-                                  ),
-                                ),
-                              ),
-                      ),
+                      if (vm.singleLikesCount.hasData)
+                        Text(
+                          vm.singleLikesCount!,
+                          style: AppTextStyle.body3,
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2),
+                          child: Shimmer(
+                            color: AppColor.lightGrey,
+                            child: const SizedBox(
+                              height: 16,
+                              width: 20,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
-                  Obx(
-                    () => vm.singleVideoViewCount.hasData &&
-                            vm.singleUploadDate.hasData
-                        ? Text(
-                            '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
-                            style: AppTextStyle.body3,
-                          )
-                        : Row(
-                            children: <Widget>[
-                              Shimmer(
-                                child: Container(
-                                  color: AppColor.lightGrey.withOpacity(0.1),
-                                  height: 16,
-                                  width: 70,
-                                ),
-                              ),
-                              AppSpace.size6,
-                              Shimmer(
-                                child: Container(
-                                  color: AppColor.strongGrey,
-                                  height: 16,
-                                  width: 36,
-                                ),
-                              ),
-                            ],
+                  if (vm.singleVideoViewCount.hasData &&
+                      vm.singleUploadDate.hasData)
+                    Text(
+                      '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
+                      style: AppTextStyle.body3,
+                    )
+                  else
+                    Row(
+                      children: <Widget>[
+                        Shimmer(
+                          child: Container(
+                            color: AppColor.lightGrey.withOpacity(0.1),
+                            height: 16,
+                            width: 70,
                           ),
-                  ),
+                        ),
+                        AppSpace.size6,
+                        Shimmer(
+                          child: Container(
+                            color: AppColor.strongGrey,
+                            height: 16,
+                            width: 36,
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -314,80 +302,77 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SectionTitle(title: '시즌 에피소드'),
-            Obx(
-              () => ListView.separated(
-                itemCount:
-                    vm.contentVideos.value?.multipleTypeVideos.length ?? 3,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final episodeItem =
-                      vm.contentVideos.value!.multipleTypeVideos[index];
-                  return Obx(
-                    () => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          '시즌 ${episodeItem.episodeNum}',
-                          style: AppTextStyle.body1,
-                        ),
-                        AppSpace.size2,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              width: vm.seasonEpisodeImgWidth,
-                              child: VideoThumbnailImgWithPlayerBtn(
-                                aspectRatio: 2 / 3,
-                                onPlayerBtnClicked: () {
-                                  vm.launchYoutubeApp(episodeItem.videoId);
-                                },
-                                posterImgUrl: episodeItem.tvSeasonInfo
-                                    ?.posterPathUrl?.prefixTmdbImgPath,
+            ListView.separated(
+              itemCount: vm.contentVideos.value?.multipleTypeVideos.length ?? 3,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                final episodeItem =
+                    vm.contentVideos.value!.multipleTypeVideos[index];
+                return Obx(
+                  () => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '시즌 ${episodeItem.episodeNum}',
+                        style: AppTextStyle.body1,
+                      ),
+                      AppSpace.size2,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            width: vm.seasonEpisodeImgWidth,
+                            child: VideoThumbnailImgWithPlayerBtn(
+                              aspectRatio: 2 / 3,
+                              onPlayerBtnClicked: () {
+                                vm.launchYoutubeApp(episodeItem.videoId);
+                              },
+                              posterImgUrl: episodeItem.tvSeasonInfo
+                                  ?.posterPathUrl?.prefixTmdbImgPath,
+                            ),
+                          ),
+                          AppSpace.size10,
+                          if (episodeItem.tvSeasonInfo?.description != null)
+                            Flexible(
+                              child: Text(
+                                episodeItem.tvSeasonInfo?.description ?? '',
+                                style: AppTextStyle.body3,
                               ),
                             ),
-                            AppSpace.size10,
-                            if (episodeItem.tvSeasonInfo?.description != null)
-                              Flexible(
-                                child: Text(
-                                  episodeItem.tvSeasonInfo?.description ?? '',
-                                  style: AppTextStyle.body3,
+                          // 데이터가 없으면 skeleton을 노출
+                          if (episodeItem.tvSeasonInfo?.description == null)
+                            Column(
+                              children: [
+                                SkeletonBox(
+                                  height: 16,
+                                  width: SizeConfig.to.screenWidth -
+                                      vm.seasonEpisodeImgWidth -
+                                      42,
                                 ),
-                              ),
-                            // 데이터가 없으면 skeleton을 노출
-                            if (episodeItem.tvSeasonInfo?.description == null)
-                              Column(
-                                children: [
-                                  SkeletonBox(
-                                    height: 16,
-                                    width: SizeConfig.to.screenWidth -
-                                        vm.seasonEpisodeImgWidth -
-                                        42,
-                                  ),
-                                  AppSpace.size2,
-                                  SkeletonBox(
-                                    height: 16,
-                                    width: SizeConfig.to.screenWidth -
-                                        vm.seasonEpisodeImgWidth -
-                                        42,
-                                  ),
-                                  AppSpace.size2,
-                                  SkeletonBox(
-                                    height: 16,
-                                    width: SizeConfig.to.screenWidth -
-                                        vm.seasonEpisodeImgWidth -
-                                        42,
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (_, __) => AppSpace.size16,
-              ),
+                                AppSpace.size2,
+                                SkeletonBox(
+                                  height: 16,
+                                  width: SizeConfig.to.screenWidth -
+                                      vm.seasonEpisodeImgWidth -
+                                      42,
+                                ),
+                                AppSpace.size2,
+                                SkeletonBox(
+                                  height: 16,
+                                  width: SizeConfig.to.screenWidth -
+                                      vm.seasonEpisodeImgWidth -
+                                      42,
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+              separatorBuilder: (_, __) => AppSpace.size16,
             ),
           ],
         ),

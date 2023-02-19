@@ -118,35 +118,8 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
     }
   }
 
-  /// Youtube Video Comment
-  Future<void> youtubeIntent() async {
-    // 유튜브 댓글
-    // final video = await YoutubeMetaData.yt.videos.get('9XdAsuXthXA');
-    // final video = await YoutubeMetaData.yt.channels.get(id);
-    // final commentList =
-    //     await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
-    // final videoInfo = video.thumbnails.highResUrl;
 
-    // final commentList =
-    // await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
-  }
 
-  /// Mock Json Data Video
-  Future<void> firestoreTest() async {
-    //   final responseResult = await _dataSource.loadBannerContentList();
-    //   final List<BannerContent> mockItemLis = responseResult;
-    // }
-    //
-    // Future<void> test() async {
-    //   final response = await http.head(
-    //       Uri.parse('https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg'));
-    //
-    //   if (response.statusCode == 200) {
-    //     print("TRUEÎ");
-    //   } else {
-    //     print("FAILED");
-    //   }
-  }
 
   Future<void> aim() async {
     try {
@@ -256,7 +229,7 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
 
     // _fetchContentListOfCategory();
 
-    youtubeIntent();
+
     update();
     // firebaseStoreTest();
 

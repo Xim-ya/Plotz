@@ -131,12 +131,21 @@ class ContentRepositoryImpl implements ContentRepository {
   }
 
   @override
-  Future<Result<List<CurationContent>>>
-      loadInProgressQurationList() async {
+  Future<Result<List<CurationContent>>> loadInProgressQurationList() async {
     try {
       final response = await _contentDataSource.loadInProgressQurationList();
       return Result.success(
           response.map(CurationContent.fromResponse).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<UserModel>> loadCuratorInfo(String contentId) async {
+    try {
+      final response = await _contentDataSource.loadCuratorInfo(contentId);
+      return Result.success(UserModel.fromCurationRes(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }

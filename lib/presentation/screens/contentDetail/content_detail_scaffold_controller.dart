@@ -28,15 +28,19 @@ class ContentDetailScaffoldController extends BaseViewModel
 
   // [정보] 탭이 클릭 되었을 때 1회 필요한 api call 실행
   void fetchResourcesIfNeeded() {
-    if (!ContentDetailViewModel.to.contentCreditList.hasData) {
+    if (ContentDetailViewModel.to.contentCreditList == null) {
       ContentDetailViewModel.to.fetchContentCreditInfo();
     }
 
-    if (!ContentDetailViewModel.to.youtubeChannelInfo.value.hasData) {
+    if (ContentDetailViewModel.to.youtubeChannelInfo.value == null) {
       ContentDetailViewModel.to.fetchYoutubeChannelInfo();
     }
 
-    if (!ContentDetailViewModel.to.contentImgUrlList.value.hasData) {
+    if(ContentDetailViewModel.to.curator == null) {
+      ContentDetailViewModel.to.fetchCuratorInfo();
+    }
+
+    if (ContentDetailViewModel.to.contentImgUrlList.value == null) {
       ContentDetailViewModel.to.fetchContentImgList();
     }
   }

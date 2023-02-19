@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {
@@ -39,10 +40,8 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     return storeDocumentAndReturnId('curation', docId: null, data: data);
   }
 
-
   @override
-  Future<List<CurationContentResponse>>
-      loadInProgressQurationList() async {
+  Future<List<CurationContentResponse>> loadInProgressQurationList() async {
     final docs = await getDocsWithContainingField('curation',
         fieldName: 'status', neededFieldName: 'inProgress');
 
@@ -54,9 +53,22 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       final curatorDoc = await curatorRef.get();
       final curatorName = await curatorDoc.get('name');
       final curatorImg = await curatorDoc.get('photoUrl');
-      return CurationContentResponse.fromDocument(e, curatorName: curatorName, curatorImg: curatorImg);
+      return CurationContentResponse.fromDocument(e,
+          curatorName: curatorName, curatorImg: curatorImg);
     }).toList();
 
     return Future.wait(resultList);
+  }
+
+  @override
+  Future<UserResponse> loadCuratorInfo(String contentId) async {
+    final doc = await getSpecificSubCollectionDoc('content',
+        docId: contentId,
+        subCollectionName: 'curator',
+        subCollectionDocId: 'main');
+
+    final DocumentReference<Map<String, dynamic>> docRef = doc.get('userRef');
+    final docData = await docRef.get();
+    return UserResponse.fromDocumentRes(docData);
   }
 }

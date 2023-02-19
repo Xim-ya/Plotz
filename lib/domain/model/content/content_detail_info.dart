@@ -8,6 +8,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class ContentDetailInfo {
   // 헤더 영역 및 공통 영역
+  final String originId;
   final int id;
   final String title; // 컨텐츠 제목
   final double rate; // 평점
@@ -21,6 +22,7 @@ class ContentDetailInfo {
   late List<SeasonInfo>? seasonInfoList; // 시즌 정보 리스트
 
   ContentDetailInfo({
+    required this.originId,
     required this.id,
     required this.posterImgUrl,
     required this.title,
@@ -52,6 +54,7 @@ class ContentDetailInfo {
     }
 
     return ContentDetailInfo(
+      originId: 'm-${response.id}',
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       id: response.id,
       title: response.title,
@@ -81,6 +84,7 @@ class ContentDetailInfo {
     }
 
     return ContentDetailInfo(
+      originId: 't-${response.id}',
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       id: response.id,
       title: response.name,

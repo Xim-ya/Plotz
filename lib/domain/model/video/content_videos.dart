@@ -29,20 +29,26 @@ class ContentVideos {
   // TODO: 추후 총합으로 수정 필요
   // 대표 조회 수
   int? get mainViewCount {
-    if (videos.isEmpty) return null;
-    return videos
-        .map((e) => e.detailInfo?.viewCount)
-        .reduce((value, element) => value ?? 0 + element!);
+    if (videos.isEmpty) {
+      return null;
+    }
+    int sum = 0;
+    for (ContentVideoItem video in videos) {
+      sum += video.detailInfo?.viewCount ?? 0;
+    }
+    return sum;
   }
 
-  // int? get mainViewCount => videos[0].detailInfo?.viewCount;
-  
   // 대표 좋아요 수
   int? get mainLikesCount {
-    if (videos.isEmpty) return null;
-    return videos
-        .map((e) => e.detailInfo?.likeCount)
-        .reduce((value, element) => value ?? 0 + element!);
+    if (videos.isEmpty) {
+      return null;
+    }
+    int sum = 0;
+    for (ContentVideoItem video in videos) {
+      sum += video.detailInfo?.likeCount ?? 0;
+    }
+    return sum;
   }
 
   /* Intents */

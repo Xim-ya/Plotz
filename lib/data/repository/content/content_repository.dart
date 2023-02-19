@@ -36,5 +36,8 @@ abstract class ContentRepository {
   // 진행중인 큐레이션 리스트 호출
   Future<Result<List<CurationContent>>> loadInProgressQurationList();
 
+  // 큐레이터 정보 호출
+  Future<Result<UserModel>> loadCuratorInfo(String contentId);
+
   static ContentRepository get to => Get.find();
 }

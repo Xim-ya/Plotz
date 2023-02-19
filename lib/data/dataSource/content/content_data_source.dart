@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class ContentDataSource {
@@ -30,4 +31,7 @@ abstract class ContentDataSource {
 
   // 진행중인 큐레이션 리스트 호출
   Future<List<CurationContentResponse>> loadInProgressQurationList();
+
+  // 큐레이터 정보 호출
+  Future<UserResponse> loadCuratorInfo(String contentId);
 }

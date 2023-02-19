@@ -136,6 +136,32 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
               ),
             ),
           ),
+          AppSpace.size40,
+
+          // 큐레이터 정보
+          const SectionTitle(title: '큐레이터', setLeftPadding: true),
+          Padding(
+            padding: AppInset.horizontal16,
+            child: Row(
+              children: <Widget>[
+                Obx(
+                  () => RoundProfileImg(size: 62, imgUrl: vm.curator?.photoUrl),
+                ),
+                AppSpace.size10,
+                SizedBox(
+                  width: SizeConfig.to.screenWidth - 104,
+                  child: Obx(
+                    () => Text(
+                      vm.curator?.name ?? '',
+                      style: AppTextStyle.headline3,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
 
           AppSpace.size40,
           // 기타 정보
@@ -162,7 +188,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                   ),
                   Row(
                     children: <Widget>[
-                      elseInfoItem(title: '총 조회수', content: vm.viewCount ?? ''),
+                      elseInfoItem(title: '총 조회수', content: vm.totalViewCount ?? ''),
                       elseInfoItem(
                           title: '영상 업로드일',
                           content: vm.youtubeUploadDate ?? ''),

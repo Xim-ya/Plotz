@@ -7,8 +7,12 @@ part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨�
 part 'controllerResources/content_detail_video_view_model.part.dart'; // 컨텐츠 비디오 섹션 뷰
 
 class ContentDetailViewModel extends BaseViewModel {
-  ContentDetailViewModel(this._loadContentOfVideoList, this._loadContentImgList,
-      this._loadContentMainDescription, this._loadContentCreditInfo,
+  ContentDetailViewModel(
+      this._contentRepository,
+      this._loadContentOfVideoList,
+      this._loadContentImgList,
+      this._loadContentMainDescription,
+      this._loadContentCreditInfo,
       {required argument})
       : _passedArgument = argument;
 
@@ -40,11 +44,17 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠 비디오(유튜브)
   final Rxn<ContentVideos> contentVideos = Rxn();
 
+  // 큐레이터 정보
+  final Rxn<UserModel> _curator = Rxn();
+
   /* [UseCase] */
   final LoadContentDetailInfoUseCase _loadContentMainDescription;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
   final LoadContentImgListUseCase _loadContentImgList;
   final LoadContentOfVideoListUseCase _loadContentOfVideoList;
+
+  /* Data Modules */
+  final ContentRepository _contentRepository;
 
   /* [Intent ] */
 
@@ -57,6 +67,20 @@ class ContentDetailViewModel extends BaseViewModel {
   }
 
   /// Networking Method
+
+  // 큐레이터 정보 호출
+  Future<void> fetchCuratorInfo() async {
+    final response = await _contentRepository
+        .loadCuratorInfo(_contentDescriptionInfo.value!.originId);
+    response.fold(
+      onSuccess: (data) {
+        _curator.value = data;
+      },
+      onFailure: (e) {
+        log('ContentDetailViewModel : $e');
+      },
+    );
+  }
 
   /// 컨텐츠 비디오 상세 정보 호출 & 데이터 매핑 로직
   /// 비동기에 유의
@@ -190,11 +214,10 @@ class ContentDetailViewModel extends BaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
-    
+
     await _fetchContentMainInfo();
     await fetchContentOfVideoList();
     await _fetchContentCommentList();
-
   }
 
   /* [Getters] */
