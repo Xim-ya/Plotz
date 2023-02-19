@@ -28,7 +28,14 @@ class ContentVideos {
 
   // TODO: 추후 총합으로 수정 필요
   // 대표 조회 수
-  int? get mainViewCount => videos[0].detailInfo?.likeCount;
+  int? get mainViewCount {
+    if (videos.isEmpty) return null;
+    return videos
+        .map((e) => e.detailInfo?.viewCount)
+        .reduce((value, element) => value ?? 0 + element!);
+  }
+
+  // int? get mainViewCount => videos[0].detailInfo?.viewCount;
 
   // 대표 좋아요 수
   int? get mainLikesCount => videos[0].detailInfo?.likeCount;
@@ -84,7 +91,4 @@ class ContentVideos {
         videos: response.map((e) => ContentVideoItem.fromResponse(e)).toList(),
         contentVideoFormat: getFormatType());
   }
-
-
-
 }

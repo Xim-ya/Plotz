@@ -38,7 +38,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                   GetBuilder<MyPageViewModel>(
                     builder:(_) => RoundProfileImg(
                       size: 58,
-                      imgUrl: vm.userInfo?.photoUrl ?? '',
+                      imgUrl: vm.userInfo?.photoUrl,
                     ),
                   ),
                   AppSpace.size10,

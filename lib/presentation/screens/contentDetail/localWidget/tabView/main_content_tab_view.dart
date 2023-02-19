@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/common/keep_alive_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
@@ -9,15 +10,17 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
   const MainContentTabView({Key? key}) : super(key: key);
 
   @override
-  Widget buildView(BuildContext context) => _MainContentTabViewScaffold(
-        youtubeContentSection: Obx(
-          () => vm.isVideoContentLoaded
-              ? const ContentVideoViewsByCase()
-              : buildContentVideoSectionSkeleton(),
-        ),
-        descriptionSection: buildDescriptionSection(),
-        commentSection: buildCommentSection(),
-      );
+  Widget buildView(BuildContext context) {
+    return _MainContentTabViewScaffold(
+      youtubeContentSection: Obx(
+        () => vm.isVideoContentLoaded
+            ? const ContentVideoViewsByCase()
+            : buildContentVideoSectionSkeleton(),
+      ),
+      descriptionSection: buildDescriptionSection(),
+      commentSection: buildCommentSection(),
+    );
+  }
 
   /// 컨텐츠 비디오 섹션 Skeleton View
   /// 컨텐츠 타입에 따라 각각 다른 스켈레톤 뷰를 보여줌

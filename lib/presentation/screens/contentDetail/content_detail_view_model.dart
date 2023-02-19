@@ -12,7 +12,6 @@ class ContentDetailViewModel extends BaseViewModel {
       {required argument})
       : _passedArgument = argument;
 
-
   // 이전 페이지에서 전달 받는 argument
   final ContentArgumentFormat _passedArgument;
 
@@ -84,19 +83,20 @@ class ContentDetailViewModel extends BaseViewModel {
     final responseRes = await _loadContentOfVideoList.call(
         passedArgument.contentType, passedArgument.originId);
 
-    responseRes.fold(onSuccess: (data) {
-      contentVideos.value = data;
-      print("데이터 결과 ${data.videos[0].videoId}");
+    responseRes.fold(
+      onSuccess: (data) {
+        contentVideos.value = data;
 
-      fetchAndMappedVideDetailFields().then((value) {
-        contentVideos.value!
-            .updateVideoDetailsLoadingState(); // <-- 컨텐츠 로드 완료 필드 값 업데이트
-      });
-    }, onFailure: (e) {
-      print("데이터 호출 실패");
-      AlertWidget.toast('유튜브 비디오 정보를 불러들이는데 실패했어요');
-      log('ContentDetailViewModel ${e.toString()}');
-    });
+        fetchAndMappedVideDetailFields().then((value) {
+          contentVideos.value!
+              .updateVideoDetailsLoadingState(); // <-- 컨텐츠 로드 완료 필드 값 업데이트
+        });
+      },
+      onFailure: (e) {
+        AlertWidget.toast('유튜브 비디오 정보를 불러들이는데 실패했어요');
+        log('ContentDetailViewModel ${e.toString()}');
+      },
+    );
   }
 
   // 컨텐츠 이미지 리스트 호출

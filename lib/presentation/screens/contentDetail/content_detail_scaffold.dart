@@ -111,11 +111,19 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
                     padding: const EdgeInsets.only(bottom: 80),
                     child: tabViews[0],
                   ),
+
                   SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
                     padding: const EdgeInsets.only(bottom: 80),
                     child: tabViews[1],
                   ),
+
+                  // KeepAliveScrollView(
+                  //   child: tabViews[0],
+                  // ),
+                  // KeepAliveScrollView(
+                  //   child: tabViews[1],
+                  // ),
                 ],
               ),
             ),
