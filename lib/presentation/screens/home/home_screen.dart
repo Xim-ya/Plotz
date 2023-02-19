@@ -69,9 +69,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           ),
         ),
         AppSpace.size6,
-        GetBuilder<HomeViewModel>(
-          init: vm,
-          builder: (_) => ContentPostSlider(
+        Obx(
+          () => ContentPostSlider(
             height: 200,
             itemCount: vm.topTenContents?.contentList?.length ?? 5,
             itemBuilder: (context, index) {
@@ -97,70 +96,64 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               }
             },
           ),
-        )
+        ),
       ];
 
   // 상단 배너 슬라이더
-  Widget _buildTopBannerSlider() => GetBuilder<HomeViewModel>(
-        init: vm,
-        builder: (_) {
-          return CarouselSlider.builder(
-            carouselController: vm.carouselController,
-            itemCount: vm.bannerContentList?.length ?? 2,
-            options: CarouselOptions(
-              autoPlay: true,
-              onPageChanged: (index, _) {
-                vm.onBannerSliderSwiped(index);
-              },
-              viewportFraction: 0.93,
-              aspectRatio: 337 / 276,
-            ),
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) {
-              if (vm.isBannerContentsLoaded) {
-                final BannerItem item = vm.bannerContentList![itemIndex];
-                return BannerItemView(
-                  title: item.title,
-                  description: item.description,
-                  imgUrl: item.imgUrl,
-                  onItemTapped: () {
-                    final argument = ContentArgumentFormat(
-                      contentId: item.id,
-                      contentType: item.type,
-                      posterImgUrl: item.backdropImgUrl,
-                      thumbnailUrl: item.imgUrl,
-                      videoId: item.videoId,
-                      originId: item.originId,
-                    );
-                    vm.routeToContentDetail(argument);
-                  },
-                );
-              } else {
-                return const BannerSkeletonItem();
-              }
+  Widget _buildTopBannerSlider() => Obx(
+        () => CarouselSlider.builder(
+          carouselController: vm.carouselController,
+          itemCount: vm.bannerContentList?.length ?? 2,
+          options: CarouselOptions(
+            autoPlay: true,
+            onPageChanged: (index, _) {
+              vm.onBannerSliderSwiped(index);
             },
-          );
-        },
+            viewportFraction: 0.93,
+            aspectRatio: 337 / 276,
+          ),
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) {
+            if (vm.isBannerContentsLoaded) {
+              final BannerItem item = vm.bannerContentList![itemIndex];
+              return BannerItemView(
+                title: item.title,
+                description: item.description,
+                imgUrl: item.imgUrl,
+                onItemTapped: () {
+                  final argument = ContentArgumentFormat(
+                    contentId: item.id,
+                    contentType: item.type,
+                    posterImgUrl: item.backdropImgUrl,
+                    thumbnailUrl: item.imgUrl,
+                    videoId: item.videoId,
+                    originId: item.originId,
+                  );
+                  vm.routeToContentDetail(argument);
+                },
+              );
+            } else {
+              return const BannerSkeletonItem();
+            }
+          },
+        ),
       );
 
   // 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
-        GetBuilder<HomeViewModel>(
-          init: vm,
-          builder: (_) {
-            if (vm.isBannerContentsLoaded) {
-              return CachedNetworkImage(
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
-                imageUrl: vm.selectedTopExposedContent!.backdropImgUrl
-                    .prefixTmdbImgPath,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
+        Obx(() {
+          if (vm.isBannerContentsLoaded) {
+            return CachedNetworkImage(
+              width: double.infinity,
+              fit: BoxFit.fitWidth,
+              imageUrl: vm
+                  .selectedTopExposedContent!.backdropImgUrl.prefixTmdbImgPath,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
         // Graident 레이어
         Positioned.fill(
           child: Container(
@@ -205,8 +198,9 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             GestureDetector(
               onTap: () {
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
+                // vm.update();
                 // LocalStorageService.to.deleteData(fieldName: 'topTen');
-                vm.firebaseStoreTest();
+                // vm.firebaseStoreTest();
               },
               child: Image.asset(
                 'assets/images/main_logo.png',

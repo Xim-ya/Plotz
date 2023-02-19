@@ -122,11 +122,11 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
   /// Youtube Video Comment
   Future<void> youtubeIntent() async {
     // 유튜브 댓글
-    final video = await YoutubeMetaData.yt.videos.get('9XdAsuXthXA');
+    // final video = await YoutubeMetaData.yt.videos.get('9XdAsuXthXA');
     // final video = await YoutubeMetaData.yt.channels.get(id);
     // final commentList =
     //     await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
-    final videoInfo = video.thumbnails.highResUrl;
+    // final videoInfo = video.thumbnails.highResUrl;
 
     // final commentList =
     // await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
@@ -258,6 +258,7 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
     // _fetchContentListOfCategory();
 
     youtubeIntent();
+    update();
     // firebaseStoreTest();
 
     // loadBannerContents();

@@ -35,15 +35,15 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               padding: AppInset.horizontal16,
               child: Row(
                 children: <Widget>[
-                  StateBox<MyPageViewModel>(
-                    child: RoundProfileImg(
+                  GetBuilder<MyPageViewModel>(
+                    builder:(_) => RoundProfileImg(
                       size: 58,
                       imgUrl: vm.userInfo?.photoUrl ?? '',
                     ),
                   ),
                   AppSpace.size10,
-                  StateBox<MyPageViewModel>(
-                    child: Text(
+                  GetBuilder<MyPageViewModel>(
+                    builder: (_) => Text(
                       '${vm.displayName ?? '-'}님',
                       style: AppTextStyle.title1
                           .copyWith(color: AppColor.mixedWhite),
@@ -90,8 +90,8 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                   color: AppColor.strongGrey,
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: StateBox<MyPageViewModel>(
-                  child: Row(
+                child: GetBuilder<MyPageViewModel>(
+                  builder:(_)  =>Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       _curationProgressRowItem(

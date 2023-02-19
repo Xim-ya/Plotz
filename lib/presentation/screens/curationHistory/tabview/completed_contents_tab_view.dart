@@ -6,8 +6,7 @@ class CompletedContentsTabView extends BaseView<CurationHistoryViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return GetBuilder<CurationHistoryViewModel>(
-      init: vm,
-      builder: (context) {
+      builder: (_) {
         if (vm.loading.isFalse) {
           return ContentsGridView(contents: vm.completedCurationList);
         } else {

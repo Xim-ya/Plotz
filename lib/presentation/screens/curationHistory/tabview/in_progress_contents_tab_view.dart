@@ -6,7 +6,6 @@ class InProgressContentTabView extends BaseView<CurationHistoryViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return GetBuilder<CurationHistoryViewModel>(
-      init: vm,
       builder: (context) {
         if (vm.loading.isFalse) {
           return ContentsGridView(contents: vm.inProgressCuration);
