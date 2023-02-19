@@ -60,7 +60,7 @@ class UserApiImpl with FirestoreHelper implements UserApi {
     );
 
     final resultList = docsRef.map((e) async {
-      final DocumentReference<Map<String, dynamic>> ref = e.get('data');
+      final DocumentReference<Map<String, dynamic>> ref = e.get('curationRef');
       final doc = await ref.get();
       return CurationContentResponse.fromUserResponseDoc(doc);
     }).toList();

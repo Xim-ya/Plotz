@@ -28,11 +28,6 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
   // 채널 구독자 수
   int? get subscriberCount => youtubeChannelInfo.value?.subscriberCount;
 
-  // 채널 영상 개수
-  String? get totalVideoCount =>
-      Formatter.formatViewAndLikeCount(youtubeChannelInfo.value?.totalViewCount,
-          isViewCount: true);
-
   // 채널 이미지 url
   String? get channelImgUrl => youtubeChannelInfo.value?.channelImgUrl;
 

@@ -12,7 +12,7 @@ extension HomeViewModelPart on HomeViewModel {
 
   // 선택된 배너 컨텐츠
   BannerItem? get selectedTopExposedContent =>
-      _bannerContent.value?.contentList[topExposedContentSliderIndex];
+      _bannerContent.value?.contentList[topExposedContentSliderIndex.value];
 
 
   // Top10 컨텐츠 로드 여부
@@ -26,6 +26,4 @@ extension HomeViewModelPart on HomeViewModel {
 
   // 카테고리 컨텐츠 collection
   CategoryContentCollection? get categoryContentCollection => _categoryContentCollection.value;
-
-
 }

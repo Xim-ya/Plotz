@@ -36,9 +36,14 @@ class ContentVideos {
   }
 
   // int? get mainViewCount => videos[0].detailInfo?.viewCount;
-
+  
   // 대표 좋아요 수
-  int? get mainLikesCount => videos[0].detailInfo?.likeCount;
+  int? get mainLikesCount {
+    if (videos.isEmpty) return null;
+    return videos
+        .map((e) => e.detailInfo?.likeCount)
+        .reduce((value, element) => value ?? 0 + element!);
+  }
 
   /* Intents */
   // 비디오 상세 정보 로딩 state 업데이트

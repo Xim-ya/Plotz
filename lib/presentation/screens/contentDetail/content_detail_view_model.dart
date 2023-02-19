@@ -155,20 +155,6 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
-  // // 유튜브 비디오 컨텐츠 정보 호출
-  // Future<void> _fetchYoutubeVideoContentInfo() async {
-  //   final responseResult = await YoutubeRepository.to
-  //       .loadYoutubeVideoContentInfo(youtubeContentId!);
-  //   responseResult.fold(
-  //     onSuccess: (data) {
-  //       _youtubeVideoContentInfo.value = data;
-  //     },
-  //     onFailure: (e) {
-  //       log(e.toString());
-  //     },
-  //   );
-  // }
-
   // 유튜브 채널 정보 호출
   Future<void> fetchYoutubeChannelInfo() async {
     final responseResult =
@@ -193,30 +179,22 @@ class ContentDetailViewModel extends BaseViewModel {
     if (youtubeVideoId == null) {
       return AlertWidget.toast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
     }
-    log('정상 런치 실패');
     if (!await launchUrl(
       Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
       mode: LaunchMode.externalApplication,
     )) {
-      throw 'Could not launch ';
+      throw '유튜브 앱(웹) 런치 실패';
     }
   }
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    
+    await _fetchContentMainInfo();
+    await fetchContentOfVideoList();
+    await _fetchContentCommentList();
 
-    // loading(true);
-
-    await Future.wait([
-      _fetchContentMainInfo().then(
-        (_) => fetchContentOfVideoList().then((_) async {
-          await Future.wait([
-            _fetchContentCommentList(),
-          ]);
-        }),
-      ),
-    ]);
   }
 
   /* [Getters] */

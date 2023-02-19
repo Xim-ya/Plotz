@@ -29,7 +29,7 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
   late double scrollOffset = 0;
   final RxBool showAppbarBackground = true.obs;
   RxBool showBlurAtAppBar = false.obs;
-  int topExposedContentSliderIndex = 0; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
+  RxInt topExposedContentSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
 
   /// Size
   final double appBarHeight = SizeConfig.to.statusBarHeight + 56;
@@ -46,8 +46,7 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
 
   /* [Intent] */
   void onBannerSliderSwiped(int index) {
-    topExposedContentSliderIndex = index;
-    update();
+    topExposedContentSliderIndex.value = index;
   }
 
   // 컨텐츠 상세 화면으로 이동

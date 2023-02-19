@@ -111,19 +111,11 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
                     padding: const EdgeInsets.only(bottom: 80),
                     child: tabViews[0],
                   ),
-
                   SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
                     padding: const EdgeInsets.only(bottom: 80),
                     child: tabViews[1],
                   ),
-
-                  // KeepAliveScrollView(
-                  //   child: tabViews[0],
-                  // ),
-                  // KeepAliveScrollView(
-                  //   child: tabViews[1],
-                  // ),
                 ],
               ),
             ),
@@ -151,8 +143,9 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
         // 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
         Obx(
           () => AnimatedPositioned(
-            bottom:
-                vm.showBackBtnOnTop.value ? -100 : SizeConfig.to.bottomInset,
+            bottom: vm.showBackBtnOnTop.value
+                ? -100
+                : SizeConfig.to.responsiveBottomInset,
             right: 14,
             duration: const Duration(milliseconds: 160),
             child: FloatingActionButton(
