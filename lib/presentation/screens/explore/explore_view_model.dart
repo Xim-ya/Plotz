@@ -1,31 +1,25 @@
 import 'dart:developer';
+import 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreViewModel extends BaseViewModel {
   /* Variables */
   // final Rxn<List<ExploreContent>> exploreContentList = Rxn();
-  final Rxn<ExploreContentModel> _exploreContentModel = Rxn();
+  final Rxn<List<NewExploreContent>> _exploreContents = Rxn();
   final RxInt swiperIndex = 0.obs;
   final RxBool loopIsOnProgress = false.obs;
 
   /* Controllers */
   late final CarouselController swiperController;
 
-  ExploreViewModel(
-      this._partialLoadContentUseCase, this._exploreContentsUseCase);
+  ExploreViewModel(this._exploreContentsUseCase);
 
   /* UseCases */
-  final PartialLoadContentUseCase _partialLoadContentUseCase;
   final LoadRandomPagedExploreContentsUseCase _exploreContentsUseCase;
 
   /* Intents */
   // 탐색 컨텐츠 리스트 재호출
   Future<void> reFetchExploreContent() async {}
-
-  // 컨텐츠 리스트 내부 필드값 업데이트
-  void updateContentListInfo() {
-    _partialLoadContentUseCase.updateExploreContentFields(swiperIndex.value);
-  }
 
   // 검색 스크린으로 이동
   void routeToSearch() {
@@ -39,22 +33,15 @@ class ExploreViewModel extends BaseViewModel {
 
   // swiper가 이동했을 때 관련 동작
   void onSwiperChanged(int index) {
-    // if (index == 6 && _exploreContentsUseCase.pagedAllowed == true) {
-    //   loadMoreContents();
-    // }
+    swiperIndex(index);
   }
 
-  void test() {
-    print('${exploreContentModel?.contents.length}');
-  }
-
-  Future<void> loadMoreContents() async {
-    final response = await _exploreContentsUseCase.pagedCall();
+  Future<void> refreshContent() async {
+    final response = await _exploreContentsUseCase.call();
     await response.fold(
       onSuccess: (data) async {
-        _exploreContentModel.value!.contents.addAll(data.contents);
+        _exploreContents.value = data;
         update();
-        await data.updateYoutubeChannelInfo();
       },
       onFailure: (e) {
         log('ExploreViewModel : $e');
@@ -65,20 +52,32 @@ class ExploreViewModel extends BaseViewModel {
   Future<void> loadRandomExploreContents() async {
     final response = await _exploreContentsUseCase.call();
     response.fold(onSuccess: (data) {
-      _exploreContentModel.value = data;
+      _exploreContents.value = data;
       update();
-      data.updateYoutubeChannelInfo();
     }, onFailure: (e) {
       log('ExploreViewModel : $e');
     });
   }
 
-  ExploreContentModel? get exploreContentModel => _exploreContentModel.value;
+  /* Getters */
 
-  bool get isContentLoaded => _exploreContentModel.value.hasData;
+  List<NewExploreContent>? get exploreContentList => _exploreContents.value;
 
-  List<ExploreContentItem>? get exploreContents =>
-      _exploreContentModel.value?.contents;
+  bool get isContentLoaded => _exploreContents.value.hasData;
+
+
+
+  // refresh 버튼 노출 여부
+  bool get showRefreshBtn {
+    if (_exploreContents.value == null) {
+      return false;
+    } else if (swiperIndex.value == 19 &&
+        _exploreContents.value![19].hasData) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Future<void> onInit() async {

@@ -1,4 +1,4 @@
-
+import 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreScreen extends BaseScreen<ExploreViewModel> {
@@ -16,15 +16,24 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   Widget buildActionButtons() {
     return Row(
       children: [
+        Obx(
+          () => AnimatedOpacity(
+            opacity: vm.showRefreshBtn ? 1 : 0,
+            duration: const Duration(milliseconds: 300),
+            child: Visibility(
+              visible: vm.showRefreshBtn,
+              child: IconInkWellButton.packageIcon(
+                icon: Icons.refresh,
+                size: 28,
+                onIconTapped: vm.refreshContent,
+              ),
+            ),
+          ),
+        ),
         IconInkWellButton.assetIcon(
           iconPath: 'assets/icons/search.svg',
           size: 40,
           onIconTapped: vm.routeToSearch,
-        ),
-        IconInkWellButton.packageIcon(
-          icon: Icons.refresh,
-          size: 28,
-          onIconTapped: vm.test,
         ),
       ],
     );
@@ -34,104 +43,104 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
     return GetBuilder<ExploreViewModel>(
       builder: (_) {
         return CarouselSlider.builder(
-            carouselController: vm.swiperController,
-            itemCount: vm.exploreContents?.length ?? 0,
-            options: CarouselOptions(
-              onPageChanged: (index, _) {
-                vm.onSwiperChanged(index);
+          carouselController: vm.swiperController,
+          itemCount: vm.exploreContentList?.length ?? 0,
+          options: CarouselOptions(
+            onPageChanged: (index, _) {
+              vm.onSwiperChanged(index);
+            },
+            disableCenter: true,
+            height: double.infinity,
+            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+            viewportFraction: 1,
+          ),
+          itemBuilder:
+              (BuildContext context, int parentIndex, int pageViewIndex) {
+            final contentItem = vm.exploreContentList![pageViewIndex];
+            return GestureDetector(
+              onTap: () {
+                vm.routeToContentDetail(ContentArgumentFormat(
+                  contentId:
+                      SplittedIdAndType.fromOriginId(contentItem.originId).id,
+                  contentType:
+                      SplittedIdAndType.fromOriginId(contentItem.originId).type,
+                  posterImgUrl: contentItem.posterImgUrl,
+                  title: contentItem.title,
+                  originId: contentItem.originId,
+                ));
               },
-              disableCenter: true,
-              height: double.infinity,
-              scrollDirection: Axis.vertical,
-              enableInfiniteScroll: false,
-              viewportFraction: 1,
-            ),
-            itemBuilder:
-                (BuildContext context, int parentIndex, int pageViewIndex) {
-              final contentItem = vm.exploreContents![pageViewIndex];
-              return GestureDetector(
-                onTap: () {
-                  vm.routeToContentDetail(ContentArgumentFormat(
-                    contentId: contentItem.id,
-                    videoId: contentItem.videoId,
-                    contentType: contentItem.type,
-                    posterImgUrl: contentItem.posterImgUrl,
-                    title: contentItem.title,
-                    originId: contentItem.originId,
-                  ));
-                },
-                child: Stack(
-                  children: [
-                    if (vm.isContentLoaded)
-                      CachedNetworkImage(
-                        imageUrl: contentItem.posterImgUrl.prefixTmdbImgPath,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
-                      )
-                    else
-                      const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColor.darkGrey,
-                        ),
-                      ),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: buildBackdropImg(),
-                    ),
-                    Positioned.fill(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.black,
-                              Colors.transparent,
-                              AppColor.black
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: <double>[0.06, 0.3, 0.92],
-                          ),
-                        ),
+              child: Stack(
+                children: [
+                  if (vm.isContentLoaded)
+                    CachedNetworkImage(
+                      imageUrl: contentItem.posterImgUrl.prefixTmdbImgPath,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  else
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColor.darkGrey,
                       ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      child: Padding(
-                        padding: AppInset.horizontal16,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ...buildContentInfoView(contentItem),
-                            ...buildChannelInfoView(contentItem),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: buildBackdropImg(),
+                  ),
+                  Positioned.fill(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black,
+                            Colors.transparent,
+                            AppColor.black
                           ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: <double>[0.06, 0.3, 0.92],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              );
-            });
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: Padding(
+                      padding: AppInset.horizontal16,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          ...buildContentInfoView(contentItem),
+                          ...buildChannelInfoView(contentItem),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
       },
     );
   }
 
   // 채널 정보
-  List<Widget> buildChannelInfoView(ExploreContentItem? item) => [
-        Obx(
-          () => GestureDetector(
-            onTap: () {},
-            child: ChannelInfoView(
-              imgUrl: item?.youtubeInfo.value?.channelImgUrl,
-              name: item?.youtubeInfo.value?.channelName,
-              subscriberCount: item?.youtubeInfo.value?.subscribers,
-            ),
+  List<Widget> buildChannelInfoView(NewExploreContent? item) => [
+        GestureDetector(
+          onTap: () {},
+          child: ChannelInfoView(
+            imgUrl: item?.channelLogoImgUrl,
+            name: item?.channelName,
+            subscriberCount: item?.subscribersCount,
           ),
         ),
         AppSpace.size20,
       ];
 
   // 컨텐츠 정보
-  List<Widget> buildContentInfoView(ExploreContentItem? item) => [
+  List<Widget> buildContentInfoView(NewExploreContent? item) => [
         // 제목 & 개봉년도
         Row(
           children: <Widget>[
@@ -156,23 +165,22 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         ),
         AppSpace.size6,
         // 컨텐츠 설명
-        Obx(
-          () => item?.youtubeInfo.value != null
-              ? SizedBox(
-                  width: SizeConfig.to.screenWidth - 32,
-                  child: Text(
-                    item!.youtubeInfo.value!.videoTitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.title1,
-                  ),
-                )
-              : SkeletonBox(
-                  height: 22,
-                  width: SizeConfig.to.screenWidth - 32,
-                  borderRadius: 2,
-                ),
-        ),
+        if (item?.videoTitle != null)
+          SizedBox(
+            width: SizeConfig.to.screenWidth - 32,
+            child: Text(
+              item!.videoTitle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyle.title1,
+            ),
+          )
+        else
+          SkeletonBox(
+            height: 22,
+            width: SizeConfig.to.screenWidth - 32,
+            borderRadius: 2,
+          ),
         AppSpace.size24,
       ];
 

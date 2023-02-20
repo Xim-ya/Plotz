@@ -167,6 +167,12 @@ mixin FirestoreHelper {
     return docRef.id;
   }
 
+  Future<void> addFieldOnDocument(String collectionName,
+      {required String? docId, required Map<String, dynamic> data}) async {
+    final docRef = _db.collection(collectionName).doc(docId);
+    await docRef.update(data);
+  }
+
   // 특정 subCollection의 dcoument 생성하고 데이터를 저장 하는 메소드
   Future<void> storeDocumentOnSubCollection(
     String collectionName, {

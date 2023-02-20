@@ -1,6 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreContentModel {
+class ExploreContentModel with FirestoreHelper {
   final List<ExploreContentItem> contents;
 
   ExploreContentModel({required this.contents});
@@ -27,19 +27,18 @@ class ExploreContentModel {
         channelRes: channelRes,
         videoRes: videoRes,
       );
-    }
-  }
 
-  Future<void> updateYoutubeChannelInfo2() async {
-    for (var e in contents) {
-      YoutubeExplode();
-      final channelRes =
-      await YoutubeMetaData.yt.channels.getByVideo(e.videoId);
-      final videoRes = await YoutubeMetaData.yt.videos.get(e.videoId);
-      e.youtubeInfo.value = ExploreContentYoutubeInfo.fromResponse(
-        channelRes: channelRes,
-        videoRes: videoRes,
-      );
+      final String channelId = channelRes.id.value;
+
+      Map<String, dynamic> data = {
+        'channelRef': db.collection('channel').doc(channelId)
+
+      };
+
+      await storeDocumentAndReturnId('content', docId: e.originId, data: data);
+
+      print(
+          'contentId : ${e.originId} / channelName : ${channelRes.title} / channelProfileImage :${channelRes.logoUrl}   / channelId ${channelRes.id} / videoTitle ${videoRes.title} / subscribersCount ${channelRes.subscribersCount}');
     }
   }
 }
@@ -55,9 +54,8 @@ class ExploreContentItem {
   late final Rxn<ExploreContentYoutubeInfo> youtubeInfo = Rxn(); // 컨텐츠 유튜브 정보
 
   ExploreContentItem(
-      {
-        required this.originId,
-        required this.id,
+      {required this.originId,
+      required this.id,
       required this.type,
       required this.videoId,
       required this.title,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:soon_sak/data/api/content/response/explore_content_response.dart';
 import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -133,4 +134,8 @@ class ContentDataSourceImpl
   @override
   Future<UserResponse> loadCuratorInfo(String contentId) =>
       loadResponseOrThrow(() => _api.loadCuratorInfo(contentId));
+
+  @override
+  Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) =>
+      loadResponseOrThrow(() => _api.loadExploreContents(ids));
 }

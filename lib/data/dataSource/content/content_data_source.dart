@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/content/response/explore_content_response.dart';
 import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -21,6 +22,12 @@ abstract class ContentDataSource {
 
   // 주어진 ids에 속한 컨텐츠 리스트 호출
   Future<List<BasicContentInfoResponse>> loadContainingIdsContents(
+      List<String> ids);
+
+
+  /// 탐색 컨텐츠 리스트 호출
+  /// 주어진 ids에 속한 컨텐츠 리스트 호출
+  Future<List<ExploreContentResponse>> loadExploreContents(
       List<String> ids);
 
   // 컨텐츠 비디오 정보 호출

@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -25,6 +26,11 @@ abstract class ContentRepository {
 
   // 주어진 ids에 속한 컨텐츠 리스트 호출
   Future<Result<ExploreContentModel>> loadContainingIdsContents(
+      List<String> ids);
+
+  /// 탐색 컨텐츠 리스트 호출
+  /// 주어진 ids에 속한 컨텐츠 리스트 호출
+  Future<Result<List<NewExploreContent>>> loadExploreContents(
       List<String> ids);
 
   // 컨텐츠 비디어 정보 호출

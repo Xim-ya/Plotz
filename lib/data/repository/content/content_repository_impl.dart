@@ -1,4 +1,5 @@
 import 'package:soon_sak/domain/exception/content/content_exception.dart';
+import 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -146,6 +147,18 @@ class ContentRepositoryImpl implements ContentRepository {
     try {
       final response = await _contentDataSource.loadCuratorInfo(contentId);
       return Result.success(UserModel.fromCurationRes(response));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<NewExploreContent>>> loadExploreContents(
+      List<String> ids) async {
+    try {
+      final response = await _contentDataSource.loadExploreContents(ids);
+      return Result.success(
+          response.map(NewExploreContent.fromResponse).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }

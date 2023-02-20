@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/content/response/explore_content_response.dart';
 import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -70,5 +71,24 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     final DocumentReference<Map<String, dynamic>> docRef = doc.get('userRef');
     final docData = await docRef.get();
     return UserResponse.fromDocumentRes(docData);
+  }
+
+  @override
+  Future<List<ExploreContentResponse>> loadExploreContents(
+      List<String> ids) async {
+    final docs = await getContainingDocs(collectionName: 'content', ids: ids);
+
+    final resultList = docs.map((e) async {
+      /// channel  필드는 참조 타입.
+      /// 가리키고 있는 document의 데이터를 가져오는 기능을 수행해야함 (channel 필드)
+      final DocumentReference<Map<String, dynamic>> channelRef =
+          e.get('channelRef');
+      final channelDoc = await channelRef.get();
+
+      return ExploreContentResponse.fromDocumentSnapshot(
+          contentSnapshot: e, channelSnapshot: channelDoc);
+    }).toList();
+
+    return Future.wait(resultList);
   }
 }

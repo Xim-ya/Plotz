@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.12
@@ -12,7 +13,7 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class LoadRandomPagedExploreContentsUseCase
-    extends BaseNoParamUseCase<Result<ExploreContentModel>> {
+    extends BaseNoParamUseCase<Result<List<NewExploreContent>>> {
   LoadRandomPagedExploreContentsUseCase(this._repository, this._service);
 
   final ContentRepository _repository;
@@ -22,7 +23,7 @@ class LoadRandomPagedExploreContentsUseCase
   final List<String> prevIds = [];
 
   Future<Result<ExploreContentModel>> pagedCall() async {
-    //  무작위로 10개 id 추출 (이전 호출한 id 리스트를 제외)
+    //  무작위로 20개 id 추출 (이전 호출한 id 리스트를 제외)
     final List<String> randomIdList = getRandomIdsExceptPrevIds(
         prevIds: prevIds, ids: _service.contentIdInfo!.originIdList);
 
@@ -31,9 +32,9 @@ class LoadRandomPagedExploreContentsUseCase
   }
 
   @override
-  Future<Result<ExploreContentModel>> call() async {
+  Future<Result<List<NewExploreContent>>> call() async {
     // 전체 컨텐츠 아이디 리스트 호출
-    await _service.prepare();
+    // await _service.prepare();
     final List<String> idList = _service.contentIdInfo!.originIdList;
 
     // 무작위로 20개의 id 리스트 추출
@@ -41,7 +42,7 @@ class LoadRandomPagedExploreContentsUseCase
     prevIds.addAll(randomIdList);
 
     // 추출한 10개의 아이디에 해당하는 컨텐츠 데이터 호출
-    return _repository.loadContainingIdsContents(randomIdList);
+    return _repository.loadExploreContents(randomIdList);
   }
 
   /// 무작위로 20개 id 추출 (이전 호출한 id 리스트를 제외)
