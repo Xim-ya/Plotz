@@ -32,31 +32,8 @@ class ContentService extends GetxService {
     }
   }
 
-  // 등록된 'TV' 컨텐츠 리스트 호출
-  Future<void> fetchAllOfRegisteredTvContent() async {
-    final responseResult = await _contentRepository.loadAllOfTvContentList();
-    responseResult.fold(
-      onSuccess: (data) {
-        totalListOfRegisteredTvContent.value = data;
-      },
-      onFailure: (e) {
-        log('[ContentService] - 전체 TV 컨텐츠 리스트 호출 실패');
-      },
-    );
-  }
 
-  Future<void> fetchAllOfRegisteredMovieContent() async {
-    final responseResult =
-        await ContentRepository.to.loadAllOfMovieContentList();
-    responseResult.fold(
-      onSuccess: (data) {
-        totalListOfRegisteredMovieContent.value = data;
-      },
-      onFailure: (e) {
-        log('[ContentService] - 전체 MOVIE 컨텐츠 리스트 호출 실패');
-      },
-    );
-  }
+
 
   Future<void> fetchTotalInfoList() async {
     final response = await _contentRepository.loadContentIdInfoList();

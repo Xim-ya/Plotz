@@ -20,7 +20,6 @@ abstract class DomainModules {
         fenix: true);
 
     // 컨텐츠
-    Get.lazyPut(() => PartialLoadContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedBannerContentUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedTopTenContentsUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadCachedCategoryContentCollectionUseCase(Get.find()),
@@ -34,8 +33,6 @@ abstract class DomainModules {
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadContentCreditInfoUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => LoadContentImgListUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => LoadExploreContentBySlierIndexUseCase(Get.find()),
-        fenix: true);
 
     // Video
     Get.lazyPut(() => LoadContentOfVideoListUseCase(Get.find()), fenix: true);

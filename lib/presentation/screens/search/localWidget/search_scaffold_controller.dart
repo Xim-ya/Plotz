@@ -26,7 +26,8 @@ class SearchScaffoldController extends BaseViewModel
           _selectedTabType = ContentType.movie;
           if (ContentService.to.totalListOfRegisteredMovieContent.value ==
               null) {
-            ContentService.to.fetchAllOfRegisteredMovieContent();
+            // TODO: 검색 로직 리팩토링 진행시 해당 부분 대응 필요
+            // ContentService.to.fetchAllOfRegisteredMovieContent();
           }
         }
 

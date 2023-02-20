@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:isolate';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:http/http.dart' as http;
 
@@ -62,7 +63,7 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
         _categoryContentCollection.value = data;
       },
       onFailure: (e) {
-        log('HomeViewModel > $e');
+        log('HomeViewModel : $e');
       },
     );
   }
@@ -98,18 +99,6 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
     Get.toNamed(AppRoutes.search);
   }
 
-  // 카테고리 & 해당 카테고리 컨텐츠 리스트 호출
-  Future<void> _fetchContentListOfCategory() async {
-    final responseResult =
-        await ContentRepository.to.loadContentListWithCategory();
-    responseResult.fold(onSuccess: (data) {
-      // contentListWithCategories.value = data;
-    }, onFailure: (e) {
-      AlertWidget.toast('카테고리 정보를 불러들이는데 실패하였습니다');
-      log(e.toString());
-    });
-  }
-
   void launchAnotherApp() async {
     if (!await launchUrl(
         Uri.parse('https://www.youtube.com/watch?v=zhdbtAqne_I&t=1162s'),
@@ -117,9 +106,6 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
       throw 'Could not launch ';
     }
   }
-
-
-
 
   Future<void> aim() async {
     try {
@@ -198,16 +184,19 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
     print('파이버에스 테스트 결과 ${data.get('title')}');
   }
 
-  Future<void> firebaseStoreTest() async {
-    final documentSnapshots = await getSubCollectionDocs('user',
-        docId: 'zyN1qU1gAkSdtpFCuDGS0GBTO9m2', subCollectionName: 'curation');
+  // Callback function for Text Button Event this should be a class member
+  void testIsolate() async {
+    var receivePort = ReceivePort();
+    // Here runMyIsolate methos should be a top level function
+    await Isolate.spawn(
+        runMyIsolate, [receivePort.sendPort, "My Custom Message"]);
+    print(await receivePort.first);
+  }
 
-    DocumentReference<Map<String, dynamic>> ref =
-        documentSnapshots[1].get('temp');
-
-    final data = await ref.get();
-
-    print(data.get('title'));
+  // We declare a static function here for an isolated callback function
+  static void runMyIsolate(List<dynamic> args) {
+    var sendPort = args[0] as SendPort;
+    Isolate.exit(sendPort, args);
   }
 
   @override
@@ -220,7 +209,6 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
       turnOnBlurInAppBar();
     });
 
-
     carouselController = CarouselController();
 
     await _fetchBannerContents();
@@ -228,7 +216,6 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
     await _fetchCategoryContentCollection();
 
     // _fetchContentListOfCategory();
-
 
     update();
     // firebaseStoreTest();

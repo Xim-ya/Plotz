@@ -86,7 +86,8 @@ class SearchViewModel extends BaseViewModel {
     });
 
     // 등록된 Movie & Tv 컨텐츠 정보 호출
-    ContentService.to.fetchAllOfRegisteredTvContent();
+    // TODO: 검색 로직 수정 시 제거된 부분 대응 필요
+    // ContentService.to.fetchAllOfRegisteredTvContent();
   }
 
   /* Getters */

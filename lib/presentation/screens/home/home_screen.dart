@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -197,6 +198,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
+                vm.testIsolate();
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
                 // vm.update();
                 // LocalStorageService.to.deleteData(fieldName: 'topTen');

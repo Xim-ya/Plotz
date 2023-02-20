@@ -37,6 +37,7 @@ export 'package:soon_sak/domain/base/base_use_case.dart';
 export 'package:soon_sak/domain/base/base_no_param_use_case.dart';
 export 'package:soon_sak/domain/base/base_two_param_use_case.dart';
 
+
 // App
 export 'package:soon_sak/app/config/theme_config.dart';
 export 'package:soon_sak/app/di/app_binding.dart';
@@ -53,6 +54,9 @@ export 'package:soon_sak/app/modules/domain_modules.dart';
 export 'package:soon_sak/app/modules/presentation_modules.dart';
 
 // Data
+
+export 'package:soon_sak/data/api/content/response/explore_content_response.dart';
+export 'package:soon_sak/data/api/user/response/user_response.dart';
 export 'package:soon_sak/data/dataSource/user/user_data_source.dart';
 export 'package:soon_sak/data/api/user/user_api.dart';
 export 'package:soon_sak/data/api/content/response/curation_content_response.dart';
@@ -104,6 +108,8 @@ export 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
 export 'package:soon_sak/data/repository/user/user_repository.dart';
 
 // Domain
+export 'package:soon_sak/domain/exception/content/content_exception.dart';
+export 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 export 'package:soon_sak/domain/exception/user/user_exception.dart';
 export 'package:soon_sak/domain/model/content/myPage/user_curation_summary.dart';
 export 'package:soon_sak/domain/enum/sns_type_enum.dart';
@@ -122,7 +128,6 @@ export 'package:soon_sak/domain/mixin/search_handler_mixin.dart';
 export 'package:soon_sak/domain/model/content/content.dart';
 export 'package:soon_sak/domain/useCase/search/search_paged_content_use_case.dart';
 export 'package:soon_sak/domain/enum/validation_state_enum.dart';
-export 'package:soon_sak/domain/useCase/explore/load_explore_content_by_slider_index_use_case.dart';
 export 'package:soon_sak/domain/useCase/explore/partial_load_content_use_case.dart';
 export 'package:soon_sak/domain/model/content/explore/explore_content_detail_info.dart';
 export 'package:soon_sak/domain/model/content/explore/explore_content_youtube_info.dart';

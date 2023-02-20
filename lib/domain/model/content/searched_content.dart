@@ -32,10 +32,10 @@ class SearchedContent{
     // 1. 등록된 전체 컨텐츠 리스트 데이터가 호출되어 있지 않다면. 리스트 호출
     if (contentType.isTv &&
         ContentService.to.totalListOfRegisteredTvContent.value == null) {
-      await ContentService.to.fetchAllOfRegisteredTvContent();
+      /*await ContentService.to.fetchAllOfRegisteredTvContent();*/
     } else if (contentType.isMovie &&
         ContentService.to.totalListOfRegisteredMovieContent.value == null) {
-      await ContentService.to.fetchAllOfRegisteredMovieContent();
+      // await ContentService.to.fetchAllOfRegisteredMovieContent();
     }
 
     // 2. 등록된 전체 컨텐츠의 [contentId] 값으로 검색된 결과 리스트의 등록 여부를 확인

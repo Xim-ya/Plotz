@@ -2,8 +2,10 @@ import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
 
 
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  print("ARANG !@#!@222");
   await Firebase.initializeApp(
     name: 'soonsak-15350',
     options: DefaultFirebaseOptions.currentPlatform,

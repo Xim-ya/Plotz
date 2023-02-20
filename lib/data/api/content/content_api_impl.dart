@@ -1,5 +1,3 @@
-import 'package:soon_sak/data/api/content/response/explore_content_response.dart';
-import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {
@@ -7,17 +5,6 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   Future<List<String>> loadTotalContentIdList() async {
     final aim = await getDocumentIdsFromCollection('content');
     return aim;
-  }
-
-  @override
-  Future<List<BasicContentInfoResponse>> loadContainingIdsContents(
-      List<String> ids) async {
-    final documentSnapshots =
-        await getContainingDocs(collectionName: 'content', ids: ids);
-
-    return documentSnapshots
-        .map(BasicContentInfoResponse.fromDocumentSnapshot)
-        .toList();
   }
 
   @override

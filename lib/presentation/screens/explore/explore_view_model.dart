@@ -1,8 +1,11 @@
 import 'dart:developer';
-import 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
+
+import 'package:flutter_isolate/flutter_isolate.dart';
+import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
+
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreViewModel extends BaseViewModel {
+class ExploreViewModel extends BaseViewModel  {
   /* Variables */
   // final Rxn<List<ExploreContent>> exploreContentList = Rxn();
   final Rxn<List<NewExploreContent>> _exploreContents = Rxn();
@@ -53,6 +56,7 @@ class ExploreViewModel extends BaseViewModel {
     final response = await _exploreContentsUseCase.call();
     response.fold(onSuccess: (data) {
       _exploreContents.value = data;
+      print('========== ExploreContent 호출 성공 ${data.length}');
       update();
     }, onFailure: (e) {
       log('ExploreViewModel : $e');
@@ -65,14 +69,11 @@ class ExploreViewModel extends BaseViewModel {
 
   bool get isContentLoaded => _exploreContents.value.hasData;
 
-
-
   // refresh 버튼 노출 여부
   bool get showRefreshBtn {
     if (_exploreContents.value == null) {
       return false;
-    } else if (swiperIndex.value == 19 &&
-        _exploreContents.value![19].hasData) {
+    } else if (swiperIndex.value == 19 && _exploreContents.value![19].hasData) {
       return true;
     } else {
       return false;
@@ -84,6 +85,7 @@ class ExploreViewModel extends BaseViewModel {
     super.onInit();
 
     swiperController = CarouselController();
+
     await loadRandomExploreContents();
   }
 }
