@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:soon_sak/domain/service/local_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.11
@@ -23,15 +24,19 @@ import 'package:soon_sak/utilities/index.dart';
 
 class LoadCachedCategoryContentCollectionUseCase
     extends BaseNoParamUseCase<Result<CategoryContentCollection>> {
-  LoadCachedCategoryContentCollectionUseCase(this._repository);
+  LoadCachedCategoryContentCollectionUseCase(this._repository, this._localStorageService);
 
   final StaticContentRepository _repository;
+  final LocalStorageService _localStorageService;
 
   @override
   Future<Result<CategoryContentCollection>> call() async {
     // 1. storage 데이터 존재 유무 확인
     final Object? localData =
-        await LocalStorageService.to.getData(fieldName: 'categoryCollection');
+        await _localStorageService.getData(key: 'categoryCollection');
+
+    // final Object? localData =
+    //     null;
 
     // 조건 : local data가 존재한다면
     if (localData.hasData) {

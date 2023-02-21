@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
 
-abstract class StaticContentDataSource with FireStoreErrorHandlerMixin {
+abstract class StaticContentDataSource  {
   // 홈 상단 배너 컨텐츠 정보 호출
   Future<BannerResponse> loadBannerContents();
 

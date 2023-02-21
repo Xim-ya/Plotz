@@ -1,28 +1,27 @@
-import 'dart:convert';
-import 'package:flutter_isolate/flutter_isolate.dart';
-import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentDataSourceImpl
-    with ApiErrorHandlerMixin, IsolateHelperMixin
+    with ApiErrorHandlerMixin, FirebaseIsolateHelper
     implements ContentDataSource {
   ContentDataSourceImpl(this._api);
 
   final ContentApi _api;
 
   @override
-  Future<List<String>> loadTotalContentIdList() async {
-    return loadWithIsolate(() => _api.loadTotalContentIdList());
-  }
+  Future<List<String>> loadTotalContentIdList() =>
+      _api.loadTotalContentIdList();
+
+  // () => loadResponseOrThrow(() => _api.loadTotalContentIdList()));
 
   @override
-  Future<List<VideoResponse>> loadVideoInfo(String id) {
-    return loadResponseOrThrow(() => _api.loadVideoInfo(id));
-  }
+  Future<List<VideoResponse>> loadVideoInfo(String id) =>
+      // loadResponseOrThrow(() => _api.loadVideoInfo(id));
+      loadWithFirebaseIsolate(
+          () => loadResponseOrThrow(() => _api.loadVideoInfo(id)));
 
   @override
   Future<String> requestContentRegistration(ContentRequest requestData) =>
-      loadResponseOrThrow(() => _api.requestContentRegistration(requestData));
+      _api.requestContentRegistration(requestData);
 
   @override
   Future<List<CurationContentResponse>> loadInProgressQurationList() =>
@@ -30,11 +29,13 @@ class ContentDataSourceImpl
 
   @override
   Future<UserResponse> loadCuratorInfo(String contentId) =>
-      loadResponseOrThrow(() => _api.loadCuratorInfo(contentId));
+      // loadResponseOrThrow(() => _api.loadCuratorInfo(contentId));
+      loadWithFirebaseIsolate(
+          () => loadResponseOrThrow(() => _api.loadCuratorInfo(contentId)));
 
   @override
-  Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) {
-    return loadWithIsolate(
-        () => loadResponseOrThrow(() => _api.loadExploreContents(ids)));
-  }
+  Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) =>
+      // loadResponseOrThrow(() => _api.loadExploreContents(ids));
+      loadWithFirebaseIsolate(
+          () => loadResponseOrThrow(() => _api.loadExploreContents(ids)));
 }

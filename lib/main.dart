@@ -5,7 +5,8 @@ import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  print("ARANG !@#!@222");
+  final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
+  BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
   await Firebase.initializeApp(
     name: 'soonsak-15350',
     options: DefaultFirebaseOptions.currentPlatform,

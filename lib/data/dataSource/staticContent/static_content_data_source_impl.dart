@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'package:soon_sak/domain/service/local_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:http/http.dart' as http;
 
-class StaticContentDataSourceImpl extends StaticContentDataSource {
-  StaticContentDataSourceImpl(this._api);
+class StaticContentDataSourceImpl implements StaticContentDataSource {
+  StaticContentDataSourceImpl(this._api, this._localStorage);
 
   final StaticContentApi _api;
+  final LocalStorageService _localStorage;
 
   final String baseUrl =
       'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app';
@@ -16,7 +18,7 @@ class StaticContentDataSourceImpl extends StaticContentDataSource {
     final jsonText = response.body;
 
     // LocalStorage에 받아온 response의 boy(jsonText) 저장
-    await LocalStorageService.to.saveData(fieldName: 'banner', data: jsonText);
+    await _localStorage.saveData(key: 'banner', data: jsonText);
     final data = jsonDecode(jsonText);
 
     return BannerResponse.fromJson(data);
@@ -28,16 +30,15 @@ class StaticContentDataSourceImpl extends StaticContentDataSource {
     final jsonText = response.body;
 
     // LocalStorage에 받아온 response의 boy(jsonText) 저장
-    await LocalStorageService.to.saveData(fieldName: 'topTen', data: jsonText);
+    await _localStorage.saveData(key: 'topTen', data: jsonText);
     final data = jsonDecode(jsonText);
 
     return TopTenContentResponse.fromJson(data);
   }
 
   @override
-  Future<ContentKeyResponse> loadStaticContentKeys() {
-    return loadResponseOrThrow(() => _api.loadStaticContentKeys());
-  }
+  Future<ContentKeyResponse> loadStaticContentKeys() =>
+      _api.loadStaticContentKeys();
 
   @override
   Future<CategoryContentCollectionResponse>
@@ -46,8 +47,7 @@ class StaticContentDataSourceImpl extends StaticContentDataSource {
     final jsonText = response.body;
 
     // LocalStorage에 받아온 response의 boy(jsonText) 저장
-    await LocalStorageService.to
-        .saveData(fieldName: 'categoryCollection', data: jsonText);
+    await _localStorage.saveData(key: 'categoryCollection', data: jsonText);
     final data = jsonDecode(jsonText);
 
     return CategoryContentCollectionResponse.fromJson(data);

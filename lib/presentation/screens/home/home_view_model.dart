@@ -1,11 +1,13 @@
 import 'dart:developer';
 import 'dart:isolate';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:soon_sak/domain/service/secure_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:http/http.dart' as http;
 
 part 'home_view_model.part.dart';
 
-class HomeViewModel extends BaseViewModel with FirestoreHelper {
+class HomeViewModel extends BaseViewModel {
   /// 임시
   final ContentDataSource _dataSource;
 
@@ -52,7 +54,9 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
 
   // 컨텐츠 상세 화면으로 이동
   void routeToContentDetail(ContentArgumentFormat routingArgument) {
-    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
+    if(loading.isFalse) {
+      Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
+    }
   }
 
   // 카테고리 컨텐츠 collection 정보 호출
@@ -176,32 +180,10 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
     );
   }
 
-  Future<void> document() async {
-    final documentReference = await getFirstSubCollectionDoc('user',
-        docId: 'zyN1qU1gAkSdtpFCuDGS0GBTO9m2', subCollectionName: 'curation');
-    DocumentReference<Map<String, dynamic>> ref = documentReference.get('temp');
-    final data = await ref.get();
-    print('파이버에스 테스트 결과 ${data.get('title')}');
-  }
-
-  // Callback function for Text Button Event this should be a class member
-  void testIsolate() async {
-    var receivePort = ReceivePort();
-    // Here runMyIsolate methos should be a top level function
-    await Isolate.spawn(
-        runMyIsolate, [receivePort.sendPort, "My Custom Message"]);
-    print(await receivePort.first);
-  }
-
-  // We declare a static function here for an isolated callback function
-  static void runMyIsolate(List<dynamic> args) {
-    var sendPort = args[0] as SendPort;
-    Isolate.exit(sendPort, args);
-  }
-
   @override
   Future<void> onInit() async {
     super.onInit();
+    loading(true);
 
     scrollController = ScrollController();
     scrollController.addListener(() {
@@ -211,9 +193,14 @@ class HomeViewModel extends BaseViewModel with FirestoreHelper {
 
     carouselController = CarouselController();
 
-    await _fetchBannerContents();
-    await _fetchTopTenContents();
-    await _fetchCategoryContentCollection();
+    await Future.wait([
+      _fetchBannerContents(),
+      _fetchTopTenContents(),
+      _fetchCategoryContentCollection()
+    ]).whenComplete(() {
+      loading(false);
+
+    });
 
     // _fetchContentListOfCategory();
 

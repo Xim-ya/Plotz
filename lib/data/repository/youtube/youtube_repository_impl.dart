@@ -1,19 +1,23 @@
-import 'package:soon_sak/domain/model/youtube/youtube_channel_info.dart';
+
+import 'package:soon_sak/data/dataSource/youtube/youtube_data_source.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class YoutubeRepositoryImpl extends YoutubeRepository {
+  YoutubeRepositoryImpl(this._dataSource);
+  final YoutubeDataSource _dataSource;
+
+
+
+
   /* 유튜브 컨텐츠 댓글 리스트 호출 */
   @override
   Future<Result<List<YoutubeContentComment>>> loadContentCommentList(
       String videoId) async {
     try {
       // 유튜브 댓글
-      final video = await YoutubeMetaData.yt.videos.get(videoId);
-      final commentList =
-          await YoutubeMetaData.yt.videos.commentsClient.getComments(video);
-      final result =
-          commentList!.map(YoutubeContentComment.fromResponse).toList();
-      return Result.success(result);
+      final response = await _dataSource.loadVideoComments(videoId);
+      final result= response?.map((e) => YoutubeContentComment.fromResponse(e)).toList();
+      return Result.success(result ?? []);
     } on Exception catch (e) {
       return Result.failure(e);
     }

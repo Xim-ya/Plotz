@@ -12,7 +12,10 @@ class YoutubeContentComment {
     'avatar_3.svg',
     'avatar_4.svg',
     'avatar_5.svg',
-    'avatar_6.svg'
+    'avatar_6.svg',
+    'avatar_7.svg',
+    'avatar_8.svg',
+    'avatar_9.svg'
   ];
 
   final String author; // 댓글 작성자 이름
@@ -20,17 +23,19 @@ class YoutubeContentComment {
   final String text; // 댓글 내용
   final bool isHearted; // 채널장 좋아요 여부.
 
-  YoutubeContentComment({required this.author,
-    required this.profileImgPath,
-    required this.text,
-    required this.isHearted});
+  YoutubeContentComment(
+      {required this.author,
+      required this.profileImgPath,
+      required this.text,
+      required this.isHearted});
 
   factory YoutubeContentComment.fromResponse(Comment response) {
-    final int randomNum = Random().nextInt(6) + 1;
+    final int randomNum = Random().nextInt(9) + 1;
     return YoutubeContentComment(
       author: response.author,
-      profileImgPath : 'avatar_$randomNum',
+      profileImgPath: 'avatar_$randomNum',
       text: response.text,
-      isHearted: response.isHearted,);
+      isHearted: response.isHearted,
+    );
   }
 }

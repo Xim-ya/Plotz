@@ -1,3 +1,6 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:soon_sak/domain/service/local_storage.dart';
+import 'package:soon_sak/domain/service/secure_storage.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -9,6 +12,7 @@ abstract class DomainModules {
     // Service
     Get.put(ContentService(Get.find()));
     Get.put(LocalStorageService());
+
   }
 
   static void dependencies() {
@@ -20,9 +24,9 @@ abstract class DomainModules {
         fenix: true);
 
     // 컨텐츠
-    Get.lazyPut(() => LoadCachedBannerContentUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => LoadCachedTopTenContentsUseCase(Get.find()), fenix: true);
-    Get.lazyPut(() => LoadCachedCategoryContentCollectionUseCase(Get.find()),
+    Get.lazyPut(() => LoadCachedBannerContentUseCase(Get.find(), Get.find()), fenix: true);
+    Get.lazyPut(() => LoadCachedTopTenContentsUseCase(Get.find(), Get.find()), fenix: true);
+    Get.lazyPut(() => LoadCachedCategoryContentCollectionUseCase(Get.find(), Get.find()),
         fenix: true);
     Get.lazyPut(
       () => RequestContentRegistrationUseCase(Get.find(), Get.find()),

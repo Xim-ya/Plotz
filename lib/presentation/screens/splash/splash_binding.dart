@@ -4,6 +4,7 @@ class SplashBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => UserService(Get.find()), fenix: true);
-    Get.lazyPut(() => SplashViewModel(Get.find(), Get.find()), fenix: true);
+    Get.lazyPut(() => SplashViewModel(Get.find(), Get.find(), Get.find()),
+        fenix: true);
   }
 }

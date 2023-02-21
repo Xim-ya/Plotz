@@ -1,5 +1,9 @@
 // import 'dart:developer';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'dart:io';
+// import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:sembast/sembast.dart';
+// import 'package:sembast/sembast_io.dart';
 // import 'package:soon_sak/utilities/index.dart';
 //
 // /* Created By Ximya - 2022.02.09
@@ -20,18 +24,30 @@
 // * */
 //
 // class LocalStorageService  extends GetxService {
-//   late FlutterSecureStorage storage;
+//   late Directory dir;
+//   late StoreRef store;
+//   late String dbPath;
 //
 //   // 로컬 스토리지 초기화 작업
 //   Future<void> initStorage() async {
-//     storage = new FlutterSecureStorage();
+//     // DatabaseFactory dbFactory = databaseFactoryIo;
+//
+//
+//
+//     store = StoreRef.main();
+//     dir = await getApplicationDocumentsDirectory();
+//     await dir.create(recursive: true);
+//     dbPath = join('${dir.path}/storeData', 'content.db');
+//
+//     print('dbPAth ===========> ${dir.path}   // d');
 //   }
 //
 //
 //   // 데이터 조회
-//   Future<String?> getData({required String key}) async {
+//   Future<Object?> getData({required String fieldName}) async {
 //     try {
-//       String? data = await storage.read(key: key);
+//       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
+//       var data = await store.record(fieldName).get(db);
 //       log('====== 로컬 데이터 읽기 성공 / RESULT : $data');
 //       return data;
 //     } catch (e) {
@@ -42,9 +58,10 @@
 //
 //   // 데이터 저장
 //   Future<void> saveData(
-//       {required String key, required String data}) async {
+//       {required String fieldName, required String data}) async {
 //     try {
-//       await storage.write(key: key, value: data);
+//       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
+//       await store.record(fieldName).put(db, data);
 //       log('====== 로컬 데이터 저장 성공');
 //     } catch (e) {
 //       log('====== 로컬 데이터 저장 실패 / $e');

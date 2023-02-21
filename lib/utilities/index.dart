@@ -54,7 +54,8 @@ export 'package:soon_sak/app/modules/domain_modules.dart';
 export 'package:soon_sak/app/modules/presentation_modules.dart';
 
 // Data
-
+export 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
+export 'package:soon_sak/data/mixin/firebase_isolate_helper_mixin.dart';
 export 'package:soon_sak/data/api/content/response/explore_content_response.dart';
 export 'package:soon_sak/data/api/user/response/user_response.dart';
 export 'package:soon_sak/data/dataSource/user/user_data_source.dart';
