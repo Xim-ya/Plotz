@@ -60,15 +60,21 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
             final contentItem = vm.exploreContentList![pageViewIndex];
             return GestureDetector(
               onTap: () {
-                vm.routeToContentDetail(ContentArgumentFormat(
-                  contentId:
-                      SplittedIdAndType.fromOriginId(contentItem.originId).id,
-                  contentType:
-                      SplittedIdAndType.fromOriginId(contentItem.originId).type,
-                  posterImgUrl: contentItem.posterImgUrl,
-                  title: contentItem.title,
-                  originId: contentItem.originId,
-                ));
+                vm.routeToContentDetail(
+                  ContentArgumentFormat(
+                    contentId:
+                        SplittedIdAndType.fromOriginId(contentItem.originId).id,
+                    contentType:
+                        SplittedIdAndType.fromOriginId(contentItem.originId)
+                            .type,
+                    posterImgUrl: contentItem.posterImgUrl,
+                    title: contentItem.title,
+                    originId: contentItem.originId,
+                    channelName: contentItem.channelName,
+                    channelLogoImgUrl: contentItem.channelLogoImgUrl,
+                    subscribersCount: contentItem.subscribersCount,
+                  ),
+                );
               },
               child: Stack(
                 children: [

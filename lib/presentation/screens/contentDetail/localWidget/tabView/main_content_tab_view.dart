@@ -44,8 +44,9 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
   }
 
   // 컨텐츠 설명(TMDB)
-  Widget buildDescriptionSection() => Obx(
-        () => vm.contentOverView.hasData
+  Widget buildDescriptionSection() =>
+      GetBuilder<ContentDetailViewModel>(builder: (_) {
+        return vm.contentOverView.hasData
             ? Text(
                 vm.contentOverView!,
                 style: AppTextStyle.title1
@@ -61,8 +62,8 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                 ),
                 separatorBuilder: (BuildContext context, int index) =>
                     AppSpace.size4,
-              ),
-      );
+              );
+      });
 
   // 댓글 - 유튜브 댓글
   Widget buildCommentSection() => Obx(

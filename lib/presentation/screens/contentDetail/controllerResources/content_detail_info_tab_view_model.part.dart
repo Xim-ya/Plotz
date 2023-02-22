@@ -14,7 +14,7 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
         isViewCount: false,
       );
 
-  // 좋아요 수  
+  // 좋아요 수
   String? get likesCount =>
       Formatter.formatViewAndLikeCount(contentVideos.value?.mainLikesCount);
 
@@ -26,13 +26,18 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
   String? get channelDescription => youtubeChannelInfo.value?.description;
 
   // 채널 구독자 수
-  int? get subscriberCount => youtubeChannelInfo.value?.subscriberCount;
+  int? get subscriberCount =>
+      _passedArgument.subscribersCount ??
+      youtubeChannelInfo.value?.subscriberCount;
 
   // 채널 이미지 url
-  String? get channelImgUrl => youtubeChannelInfo.value?.channelImgUrl;
+  String? get channelImgUrl =>
+      _passedArgument.channelLogoImgUrl ??
+      youtubeChannelInfo.value?.channelImgUrl;
 
   // 채널 명
-  String? get channelName => youtubeChannelInfo.value?.name;
+  String? get channelName =>
+      _passedArgument.channelName ?? youtubeChannelInfo.value?.name;
 
   /// 방영일
   /// 컨텐츠 타입이 영화일 경우 방영상태 대신 방영일을 보여줌

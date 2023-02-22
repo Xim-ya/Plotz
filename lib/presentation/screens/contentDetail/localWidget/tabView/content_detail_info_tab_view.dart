@@ -133,7 +133,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                       height: 18,
                     ),
                 ],
-              ),
+                ),
             ),
           ),
           AppSpace.size40,
@@ -145,18 +145,30 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
             child: Row(
               children: <Widget>[
                 Obx(
-                  () => RoundProfileImg(size: 62, imgUrl: vm.curator?.photoUrl),
+                  () => vm.curator?.photoUrl != null
+                      ? RoundProfileImg(size: 62, imgUrl: vm.curator?.photoUrl)
+                      : const SkeletonBox(
+                          width: 62,
+                          height: 62,
+                          borderRadius: 100,
+                        ),
                 ),
                 AppSpace.size10,
                 SizedBox(
                   width: SizeConfig.to.screenWidth - 104,
                   child: Obx(
-                    () => Text(
-                      vm.curator?.displayName ?? '',
-                      style: AppTextStyle.headline3,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    () => vm.curator?.displayName.hasData != null
+                        ? Text(
+                            vm.curator?.displayName ?? '',
+                            style: AppTextStyle.headline3,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : const SkeletonBox(
+                            height: 22,
+                            width: 100,
+                            borderRadius: 4,
+                          ),
                   ),
                 ),
               ],

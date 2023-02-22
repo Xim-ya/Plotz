@@ -86,6 +86,6 @@ class ExploreViewModel extends BaseViewModel  {
 
     swiperController = CarouselController();
 
-    // await loadRandomExploreContents();
+    await loadRandomExploreContents();
   }
 }

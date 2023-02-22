@@ -150,14 +150,12 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 컨텐츠 상세 정보(TMDB) 호출
   Future<void> _fetchContentMainInfo() async {
-    // final responseResult =
-    // await TmdbRepository.to.loadTmdbDetailResponse(passedArgument.contentId);
-    // 임시 파라미터
     final responseResult = await _loadContentMainDescription.call(
         passedArgument.contentType, passedArgument.contentId);
     responseResult.fold(
       onSuccess: (data) {
         _contentDescriptionInfo.value = data;
+        update();
       },
       onFailure: (e) {
         log(e.toString());
