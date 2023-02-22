@@ -3,7 +3,6 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-
 /** Created By Ximya - 2023.02.21
  *  네트워크 패키지 [Dio] 관련 설정
  *  compute 메소드를 적용하여 별도의 스레드에서 통신을 할 수 있도록 함.
@@ -32,7 +31,6 @@ class _AppDio with DioMixin implements Dio {
     );
     (transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
 
-
     final Dio tokenDio = Dio();
 
     tokenDio.options = options;
@@ -54,14 +52,12 @@ class _AppDio with DioMixin implements Dio {
   }
 }
 
-/** compute 메소드 적용 최상단 메소드에서 실행*/
-
+// compute 메소드 적용
+// 최상단 메소드에서 실행
 _parseAndDecode(String response) {
   return jsonDecode(response);
 }
 
 parseJson(String text) {
-  print('------ COMPUTE METHOD ACTIVATED ${text}');
   return compute(_parseAndDecode, text);
 }
-

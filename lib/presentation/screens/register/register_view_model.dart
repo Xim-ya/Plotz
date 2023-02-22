@@ -11,12 +11,16 @@ part 'controllerResource/confirm_curation_view_model.part.dart'; // 등록 컨�
 class RegisterViewModel extends BaseViewModel {
   RegisterViewModel(
       this._searchUseCase,
+      this._userService,
       this.validateVideoUrlUseCase,
       this._requestContentRegistrationUseCase,
       this._curationViewModel,
       this._myPageViewModel,
       {required contentType})
       : selectedContentType = contentType;
+
+  /* Data Modules */
+  final UserService _userService;
 
   /* ViewModel */
   final CurationViewModel _curationViewModel;
@@ -136,7 +140,7 @@ class RegisterViewModel extends BaseViewModel {
 
   Future<void> requestRegistration() async {
     final requestData = ContentRequest.fromContentModelWithUserId(
-        content: curationContent.value!, userId: UserService.to.userInfo!.id!);
+        content: curationContent.value!, userId: _userService.userInfo!.id!);
     final response = await _requestContentRegistrationUseCase.call(requestData);
     await response.fold(
       onSuccess: (data) async {

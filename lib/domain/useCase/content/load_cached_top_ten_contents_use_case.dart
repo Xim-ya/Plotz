@@ -41,7 +41,7 @@ class LoadCachedTopTenContentsUseCase
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
       // 2-a).Static content keysData 호출
-      final String keyResponse = _contentService.topTenContentKey;
+      final String keyResponse = _contentService.topTenContentKey!;
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {

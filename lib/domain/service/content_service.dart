@@ -4,6 +4,10 @@ import 'package:soon_sak/utilities/index.dart';
 /** Created By Ximya - 2022.12.24
  *  ContentService 모듈에서는 전역으로 사용되는
  *  모든 [content] 데이터와 관련된 객체와 메소드를 관리함.
+ *
+ *  관리하고 있는 리소스
+ *  1. 정적 컨텐츠 키 리스트
+ *  2. 모든 컨텐츠 id 값 (TODO : firebase 인덱싱 개념을 적용하면 배제할 필요 있음)
  * */
 
 class ContentService extends GetxService {
@@ -19,7 +23,7 @@ class ContentService extends GetxService {
   late final ContentIdInfoModel _contentTotalIdInfo;
 
   // 정적 컨텐츠 키 리스트
-  late final StaticContentKeys _staticContentKeys;
+  final Rxn<StaticContentKeys> _staticContentKeys = Rxn();
 
   /* Intents */
 
@@ -27,7 +31,7 @@ class ContentService extends GetxService {
   Future<void> fetchStaticContentKeys() async {
     final response = await _staticContentRepository.loadStaticContentKeys();
     response.fold(onSuccess: (data) {
-      _staticContentKeys = data;
+      _staticContentKeys.value = data;
     }, onFailure: (e) {
       log('ContentService : $e');
     });
@@ -46,6 +50,8 @@ class ContentService extends GetxService {
     );
   }
 
+
+  // Service 리소스 initialize 구문
   Future<void> prepare() async {
     await fetchTotalInfoList();
     await fetchStaticContentKeys();
@@ -53,10 +59,12 @@ class ContentService extends GetxService {
 
   ContentIdInfoModel? get contentIdInfo => _contentTotalIdInfo;
 
-  StaticContentKeys? get staticContentKeys => _staticContentKeys;
-  String get bannerKey => _staticContentKeys.bannerKey;
-  String get topTenContentKey => _staticContentKeys.topTenContentKey;
-  String get categoryContentKey => _staticContentKeys.categoryContentKey;
+  StaticContentKeys? get staticContentKeys => _staticContentKeys.value;
 
-  static ContentService get to => Get.find();
+  String? get bannerKey => _staticContentKeys.value?.bannerKey;
+
+  String? get topTenContentKey => _staticContentKeys.value?.topTenContentKey;
+
+  String? get categoryContentKey =>
+      _staticContentKeys.value?.categoryContentKey;
 }

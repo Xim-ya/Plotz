@@ -41,7 +41,7 @@ class LoadCachedBannerContentUseCase
     if (localData.hasData) {
       // if (localData.hasData) {
       // 2-a).Static content keysData 호출
-      final String keyResponse = _contentService.bannerKey;
+      final String keyResponse = _contentService.bannerKey!;
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {

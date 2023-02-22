@@ -1,24 +1,15 @@
-import 'dart:convert';
+
 import 'dart:developer';
-import 'dart:isolate';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:soon_sak/domain/service/secure_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:http/http.dart' as http;
-
 part 'home_view_model.part.dart';
 
 class HomeViewModel extends BaseViewModel {
-  /// 임시
-  final ContentDataSource _dataSource;
-  final StaticContentRepository _staticRepository;
 
   HomeViewModel(
     this._loadCachedCategoryContentCollectionUseCase,
     this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
-    this._dataSource,
-    this._staticRepository,
   );
 
   /* [Variables] */
@@ -210,16 +201,18 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
-    // await _fetchBannerContents();
-    // await _fetchTopTenContents();
-    // await _fetchCategoryContentCollection();
-    await Future.wait([
-      fetchBannerContents(),
-      _fetchTopTenContents(),
-      _fetchCategoryContentCollection()
-    ]).whenComplete(() {
-      loading(false);
-    });
+
+    await fetchBannerContents();
+    await _fetchTopTenContents();
+    await _fetchCategoryContentCollection();
+    loading(false);
+    // await Future.wait([
+    //   fetchBannerContents(),
+    //   _fetchTopTenContents(),
+    //   _fetchCategoryContentCollection()
+    // ]).whenComplete(() {
+    //   loading(false);
+    // });
 
     // _fetchContentListOfCategory();
 

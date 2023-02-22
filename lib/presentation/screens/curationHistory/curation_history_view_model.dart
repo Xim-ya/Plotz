@@ -3,7 +3,10 @@ import 'package:soon_sak/utilities/index.dart';
 
 class CurationHistoryViewModel extends BaseViewModel
     with GetSingleTickerProviderStateMixin {
-  CurationHistoryViewModel(this._userRepository);
+  CurationHistoryViewModel(this._userRepository, this._userService);
+
+  /* Data Modules */
+  final UserService _userService;
 
   /* Variables */
   final List<CurationContent> userCurationList = [];
@@ -37,7 +40,7 @@ class CurationHistoryViewModel extends BaseViewModel
 
   /* Intent */
   Future<void> _fetchUserCurationContents() async {
-    final userId = UserService.to.userInfo!.id;
+    final userId = _userService.userInfo!.id;
     final response = await _userRepository.loadUserCurationContentList(userId!);
     response.fold(
       onSuccess: (data) {

@@ -15,9 +15,11 @@ class LoginViewModel extends BaseViewModel {
   // 로그인 & 회원가입
   Future<void> signInAndUp(Sns social) async {
     final result = await _signInHandlerUseCase.call(social);
-    result.fold(
-      onSuccess: (data) {
-        Get.offAllNamed(AppRoutes.tabs);
+    await result.fold(
+      onSuccess: (data) async {
+        await launchServiceModules().whenComplete(() {
+          Get.offAllNamed(AppRoutes.tabs);
+        });
       },
       onFailure: (e) {
         log(e.toString());
@@ -27,5 +29,11 @@ class LoginViewModel extends BaseViewModel {
 
   Future<void> logOut() async {
     await _signOutHandlerUseCase.call(Sns.google);
+  }
+
+  /// 탭 스크린에 이동하기 전에 Splash 스크린에서
+  /// load가 필요한 모듈들을 실행
+  Future<void> launchServiceModules() async {
+    // await _localStorageService.prepare();
   }
 }

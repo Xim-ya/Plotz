@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:soon_sak/domain/service/local_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.11
@@ -43,7 +42,7 @@ class LoadCachedCategoryContentCollectionUseCase
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
       // 2-a).Static content keysData 호출
-      final String keyResponse = _contentService.categoryContentKey;
+      final String keyResponse = _contentService.categoryContentKey!;
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {

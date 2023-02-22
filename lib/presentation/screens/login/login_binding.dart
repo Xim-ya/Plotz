@@ -1,6 +1,5 @@
 import 'package:soon_sak/utilities/index.dart';
 
-
 class LoginBinding extends Bindings {
   @override
   void dependencies() {

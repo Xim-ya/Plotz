@@ -8,10 +8,11 @@ import 'package:soon_sak/utilities/index.dart';
 
 class RequestContentRegistrationUseCase
     extends BaseUseCase<ContentRequest, Result<void>> {
-  RequestContentRegistrationUseCase(this._contentRepository, this._userRepository);
+  RequestContentRegistrationUseCase(this._contentRepository, this._userRepository, this._userService);
 
   final ContentRepository _contentRepository;
   final UserRepository _userRepository;
+  final UserService _userService;
 
   @override
   Future<Result<void>> call(ContentRequest request) async {
@@ -20,7 +21,7 @@ class RequestContentRegistrationUseCase
       onSuccess: (data) async {
         final response = await _userRepository.addUserQurationInfo(
           qurationDocId: data,
-          userId: UserService.to.userInfo!.id!,
+          userId: _userService.userInfo!.id!,
         );
         return response.fold(
           onSuccess: (_) {

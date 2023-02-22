@@ -5,7 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:dio/dio.dart' as D;
 
 /* Created By Ximya - 2022.02.09
 *  값이 일정 기간동안 고정되어 있는 데이터의 API Call을 최소화 하기 위해
@@ -24,25 +23,18 @@ import 'package:dio/dio.dart' as D;
 *
 * */
 
-class LocalStorageService  extends GetxService {
+class LocalStorageService extends GetxService {
   late Directory dir;
   late StoreRef store;
   late String dbPath;
 
   // 로컬 스토리지 초기화 작업
   Future<void> initStorage() async {
-    // DatabaseFactory dbFactory = databaseFactoryIo;
-
-
-
     store = StoreRef.main();
     dir = await getApplicationDocumentsDirectory();
     await dir.create(recursive: true);
     dbPath = join('${dir.path}/storeData', 'content.db');
-
-    print('dbPAth ===========> ${dir.path}   // d');
   }
-
 
   // 데이터 조회
   Future<Object?> getData({required String fieldName}) async {
@@ -69,54 +61,7 @@ class LocalStorageService  extends GetxService {
     }
   }
 
-  // // 로컬 스토리지 데이터 존재 유무
-  // Future<bool> isLocalDataExist({required String fieldName}) async {
-  //   try {
-  //     var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
-  //     var data = await store.record(fieldName).get(db);
-  //     log('====== 로컬 데이터 읽기 성공 / RESULT : $data');
-  //     if (data.hasData) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     log('====== 로컬 데이터 읽기 실패 / $e');
-  //     return false;
-  //   }
-  // }
-
-
-  // 데이터 읽기
-  // Future<void> readData({required String fieldName}) async {
-  //   try {
-  //     var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
-  //     var data = await store.record(fieldName).get(db);
-  //     log('====== 로컬 데이터 읽기 성공 / RESULT : $data');
-  //   } catch (e) {
-  //     log('====== 로컬 데이터 읽기 실패 / $e');
-  //   }
-  // }
-
-
-
-  // 데이터 삭제
-  // Future<void> deleteData({required String fieldName}) async {
-  //   try {
-  //     var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
-  //     await store.record(fieldName).delete(db);
-  //     log('====== 로컬 데이터 삭제 성공');
-  //   } catch (e) {
-  //     log('====== 로컬 데이터 삭제 실패 : $e');
-  //   }
-  // }
-
-  // static LocalStorageService get to => Get.find();
-
-
-  @override
-  Future<void> onInit() async{
-    super.onInit();
+  Future<void> prepare() async {
     await initStorage();
   }
 }

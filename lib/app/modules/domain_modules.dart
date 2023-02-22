@@ -1,21 +1,13 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:soon_sak/domain/service/local_storage.dart';
-import 'package:soon_sak/domain/service/secure_storage.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class DomainModules {
   DomainModules._();
 
-  // 우선적으로 inject 되어야하는 모듈
-  static Future<void> _preLoadDependencies() async {
-    // Service
-    Get.put(LocalStorageService());
-    Get.put(ContentService(Get.find(), Get.find()));
-  }
+  static Future<void> dependencies() async {
 
-  static void dependencies() {
-    _preLoadDependencies();
+
+
 
     // 인증
     Get.lazyPut(() => SignOutUseCase(Get.find()), fenix: true);
@@ -36,7 +28,8 @@ abstract class DomainModules {
             Get.find(), Get.find(), Get.find()),
         fenix: true);
     Get.lazyPut(
-      () => RequestContentRegistrationUseCase(Get.find(), Get.find()),
+      () =>
+          RequestContentRegistrationUseCase(Get.find(), Get.find(), Get.find()),
       fenix: true,
     );
 

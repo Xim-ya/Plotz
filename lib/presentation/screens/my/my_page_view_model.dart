@@ -1,10 +1,11 @@
 import 'dart:developer';
-import 'package:soon_sak/data/repository/user/user_repository.dart';
-import 'package:soon_sak/domain/model/content/myPage/user_curation_summary.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class MyPageViewModel extends BaseViewModel {
-  MyPageViewModel(this._signOutHandlerUseCase, this._userRepository);
+  MyPageViewModel(this._signOutHandlerUseCase, this._userRepository, this._userService);
+
+  /* Data Modules */
+  UserService _userService;
 
   /* Variables */
   UserCurationSummary? curationSummary;
@@ -19,8 +20,8 @@ class MyPageViewModel extends BaseViewModel {
 
   // 유저 정보 호출
   Future<void> getUserInfo() async {
-    await UserService.to.getUserInfo(); // fetch 메소드 실행
-    userInfo = UserService.to.userInfo;
+    await _userService.getUserInfo(); // fetch 메소드 실행
+    userInfo = _userService.userInfo;
     update();
   }
 
@@ -46,7 +47,7 @@ class MyPageViewModel extends BaseViewModel {
 
   // 유저 큐레이션 내역 요약 정보 호출
   Future<void> fetchUserCurationSummary() async {
-    final userId = UserService.to.userInfo!.id!;
+    final userId = _userService.userInfo!.id!;
     final response = await _userRepository.loadUserCurationSummary(userId);
     response.fold(
       onSuccess: (data) {

@@ -34,12 +34,11 @@ class UserService extends GetxService {
     );
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    getUserInfo();
-    checkUserSignInState();
+  // 리소스 initialize 메소드
+  Future<void> prepare() async {
+    await getUserInfo();
+    await checkUserSignInState();
   }
 
-  static UserService get to => Get.find();
+
 }

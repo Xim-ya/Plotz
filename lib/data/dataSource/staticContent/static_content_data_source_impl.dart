@@ -3,9 +3,9 @@ import 'package:soon_sak/utilities/index.dart';
 
 
 class StaticContentDataSourceImpl implements StaticContentDataSource {
-  StaticContentDataSourceImpl(this._localStorage, this._newApi);
+  StaticContentDataSourceImpl(this._localStorage, this._api);
 
-  final StaticContentApi _newApi;
+  final StaticContentApi _api;
   final LocalStorageService _localStorage;
 
   final String baseUrl =
@@ -13,7 +13,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
 
   @override
   Future<BannerResponse> loadBannerContents() async {
-    final response = await _newApi.loadBannerContents();
+    final response = await _api.loadBannerContents();
     await _localStorage.saveData(fieldName: 'banner', data: jsonEncode(response.data));
     final json = jsonDecode(response.toString());
 
@@ -22,7 +22,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
 
   @override
   Future<TopTenContentResponse> loadTopTenContents() async {
-    final response = await _newApi.loadTopTenContents();
+    final response = await _api.loadTopTenContents();
     await _localStorage.saveData(fieldName: 'topTen', data: jsonEncode(response.data));
     final json = jsonDecode(response.toString());
 
@@ -34,7 +34,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
   Future<CategoryContentCollectionResponse>
       loadCategoryContentCollection() async {
 
-    final response = await _newApi.loadCategoryContentCollections();
+    final response = await _api.loadCategoryContentCollections();
     await _localStorage.saveData(fieldName: 'categoryCollection', data: jsonEncode(response.data));
     final json = jsonDecode(response.toString());
 
@@ -43,5 +43,5 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
 
   @override
   Future<ContentKeyResponse> loadStaticContentKeys() =>
-      _newApi.loadStaticContentKeys();
+      _api.loadStaticContentKeys();
 }
