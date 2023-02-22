@@ -1,16 +1,11 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
-import 'package:soon_sak/data/api/staticContent/new_static_content_api.dart';
-import 'package:soon_sak/data/resources/app_dio.dart';
-import 'package:soon_sak/domain/service/local_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:http/http.dart' as http;
+
 
 class StaticContentDataSourceImpl implements StaticContentDataSource {
-  StaticContentDataSourceImpl(this._api, this._localStorage, this._newApi);
+  StaticContentDataSourceImpl(this._localStorage, this._newApi);
 
-  final StaticContentApi _api;
-  final NewStaticContentApi _newApi;
+  final StaticContentApi _newApi;
   final LocalStorageService _localStorage;
 
   final String baseUrl =

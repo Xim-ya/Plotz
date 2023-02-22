@@ -78,7 +78,6 @@ export 'package:soon_sak/data/repository/auth/auth_repository_impl.dart';
 export 'package:soon_sak/data/repository/staticContent/static_content_repository_impl.dart';
 export 'package:soon_sak/data/api/staticContent/response/category_content_collection_response.dart';
 export 'package:soon_sak/data/dataSource/staticContent/static_content_data_source.dart';
-export 'package:soon_sak/data/api/staticContent/static_content_api.dart';
 export 'package:soon_sak/data/repository/youtube/youtube_repository.dart';
 export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_content_credit_response.dart';
 export 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
@@ -94,7 +93,7 @@ export 'package:soon_sak/data/repository/content/content_repository_impl.dart';
 export 'package:soon_sak/data/repository/tmdb/tmdb_repository.dart';
 export 'package:soon_sak/data/repository/tmdb/tmdb_repository_impl.dart';
 export 'package:soon_sak/data/api/staticContent/response/banner_response.dart';
-
+export 'package:soon_sak/data/api/staticContent/static_content_api.dart';
 export 'package:soon_sak/data/repository/staticContent/static_content_repository.dart';
 export 'package:soon_sak/data/api/staticContent/response/top_ten_content_response.dart';
 export 'package:soon_sak/data/mixin/fire_store_error_handler_mixin.dart';
@@ -107,6 +106,16 @@ export 'package:soon_sak/domain/useCase/search/search_paged_content_impl.dart';
 export 'package:soon_sak/domain/useCase/search/validate_video_url_use_case_impl.dart';
 export 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
 export 'package:soon_sak/data/repository/user/user_repository.dart';
+export 'package:soon_sak/data/api/staticContent/static_content_api_impl.dart';
+export 'package:soon_sak/data/api/user/user_api_impl.dart';
+export 'package:soon_sak/data/api/youtube/youtube_api.dart';
+export 'package:soon_sak/data/api/youtube/youtube_api_impl.dart';
+export 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
+export 'package:soon_sak/data/dataSource/auth/auth_data_source_impl.dart';
+export 'package:soon_sak/data/dataSource/user/user_data_source_impl.dart';
+export 'package:soon_sak/data/dataSource/youtube/youtube_data_sourc_impl.dart';
+export 'package:soon_sak/data/dataSource/youtube/youtube_data_source.dart';
+export 'package:soon_sak/data/repository/user/user_repository_impl.dart';
 
 // Domain
 export 'package:soon_sak/domain/exception/content/content_exception.dart';

@@ -1,16 +1,14 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:soon_sak/data/api/staticContent/new_static_content_api.dart';
 import 'package:soon_sak/data/api/staticContent/response/content_key_response.dart';
-import 'package:soon_sak/data/resources/app_dio.dart';
+import 'package:soon_sak/data/api/staticContent/static_content_api.dart';
 
-class NewStaticContentApiImpl implements NewStaticContentApi {
+class StaticContentApiImpl implements StaticContentApi {
   final Dio _dio;
   final String baseUrl =
       'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app';
 
-  NewStaticContentApiImpl(this._dio);
+  StaticContentApiImpl(this._dio);
 
   @override
   Future<Response<dynamic>> loadBannerContents() async{

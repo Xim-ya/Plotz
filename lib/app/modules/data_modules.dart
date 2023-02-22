@@ -1,19 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:soon_sak/data/api/staticContent/new_static_content_api.dart';
-import 'package:soon_sak/data/api/staticContent/response/new_static_content_api_impl.dart';
-import 'package:soon_sak/data/api/user/user_api.dart';
-import 'package:soon_sak/data/api/user/user_api_impl.dart';
-import 'package:soon_sak/data/api/youtube/youtube_api.dart';
-import 'package:soon_sak/data/api/youtube/youtube_api_impl.dart';
-import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
-import 'package:soon_sak/data/dataSource/auth/auth_data_source_impl.dart';
-import 'package:soon_sak/data/dataSource/user/user_data_source.dart';
-import 'package:soon_sak/data/dataSource/user/user_data_source_impl.dart';
-import 'package:soon_sak/data/dataSource/youtube/youtube_data_sourc_impl.dart';
-import 'package:soon_sak/data/dataSource/youtube/youtube_data_source.dart';
-import 'package:soon_sak/data/repository/user/user_repository.dart';
-import 'package:soon_sak/data/repository/user/user_repository_impl.dart';
-import 'package:soon_sak/data/resources/app_dio.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class DataModules {
@@ -40,12 +25,10 @@ abstract class DataModules {
         fenix: true);
 
     /* Static Content */
-    Get.lazyPut<NewStaticContentApi>(
-        () => NewStaticContentApiImpl(Get.find<Dio>()));
-    Get.lazyPut<StaticContentApi>(() => StaticContentApi(Get.find<Dio>()),
-        fenix: true);
+    Get.lazyPut<StaticContentApi>(
+        () => StaticContentApiImpl(Get.find<Dio>()));
     Get.lazyPut<StaticContentDataSource>(
-        () => StaticContentDataSourceImpl(Get.find(), Get.find(), Get.find()),
+        () => StaticContentDataSourceImpl(Get.find(), Get.find()),
         fenix: true);
     Get.lazyPut<StaticContentRepository>(
         () => StaticContentRepositoryImpl(Get.find()),
