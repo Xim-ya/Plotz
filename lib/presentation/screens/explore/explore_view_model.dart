@@ -1,16 +1,12 @@
 import 'dart:developer';
-
-import 'package:flutter_isolate/flutter_isolate.dart';
-import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
-
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreViewModel extends BaseViewModel  {
+class ExploreViewModel extends BaseViewModel {
   /* Variables */
-  // final Rxn<List<ExploreContent>> exploreContentList = Rxn();
-  final Rxn<List<NewExploreContent>> _exploreContents = Rxn();
+  final Rxn<List<ExploreContent>> _exploreContents = Rxn();
   final RxInt swiperIndex = 0.obs;
   final RxBool loopIsOnProgress = false.obs;
+  final RxBool alreadyShowedToast = false.obs;
 
   /* Controllers */
   late final CarouselController swiperController;
@@ -34,24 +30,44 @@ class ExploreViewModel extends BaseViewModel  {
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
-  // swiper가 이동했을 때 관련 동작
+  /// swiper가 이동했을 때 관련 동작
+  /// swiper Index 값을 통해 컨텐츠 데이터를 추가 호출
   void onSwiperChanged(int index) {
     swiperIndex(index);
+    final exploreContentsLength = _exploreContents.value!.length - 1;
+    if (index == exploreContentsLength) {
+      loadMoreContents();
+    }
   }
 
-  Future<void> refreshContent() async {
-    final response = await _exploreContentsUseCase.call();
-    await response.fold(
-      onSuccess: (data) async {
-        _exploreContents.value = data;
-        update();
-      },
-      onFailure: (e) {
-        log('ExploreViewModel : $e');
-      },
-    );
+
+  /// 컨텐츠 데이터 추가 호출
+  /// 추가할 데이터가 존재할 경우에만 호출을 진행함
+  /// 더 이상 호출 데이터가 없을 경우 'toast' 메세지를 띄움
+  Future<void> loadMoreContents() async {
+    if (_exploreContentsUseCase.moreCallIsAllowed.isTrue) {
+      final response = await _exploreContentsUseCase.loadMoreContents();
+      await response.fold(
+        onSuccess: (data) async {
+          _exploreContents.value?.addAll(data);
+          update();
+        },
+        onFailure: (e) {
+          log('ExploreViewModel : $e');
+        },
+      );
+    } else {
+      if (alreadyShowedToast.isFalse) {
+        unawaited(AlertWidget.animatedToast('마지막 컨텐츠 입니다'));
+        alreadyShowedToast(true); // 더 이상 토스트 메세를 노출하지 않음.
+      }
+    }
   }
 
+
+  /// 컨텐츠 데이터를 호출 (20개)
+  /// 랜덤하게 컨텐츠를 가져오며
+  /// 해당 메소드는 한번만 실행됨
   Future<void> loadRandomExploreContents() async {
     final response = await _exploreContentsUseCase.call();
     response.fold(onSuccess: (data) {
@@ -65,20 +81,10 @@ class ExploreViewModel extends BaseViewModel  {
 
   /* Getters */
 
-  List<NewExploreContent>? get exploreContentList => _exploreContents.value;
+  List<ExploreContent>? get exploreContentList => _exploreContents.value;
 
   bool get isContentLoaded => _exploreContents.value.hasData;
 
-  // refresh 버튼 노출 여부
-  bool get showRefreshBtn {
-    if (_exploreContents.value == null) {
-      return false;
-    } else if (swiperIndex.value == 19 && _exploreContents.value![19].hasData) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   @override
   Future<void> onInit() async {

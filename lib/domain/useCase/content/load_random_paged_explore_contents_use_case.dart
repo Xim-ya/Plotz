@@ -12,18 +12,16 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class LoadRandomPagedExploreContentsUseCase
-    extends BaseNoParamUseCase<Result<List<NewExploreContent>>> {
+    extends BaseNoParamUseCase<Result<List<ExploreContent>>> {
   LoadRandomPagedExploreContentsUseCase(this._repository, this._service);
 
   final ContentRepository _repository;
   final ContentService _service;
-
-  bool pagedAllowed = true;
+  RxBool moreCallIsAllowed = true.obs;
   final List<String> prevIds = [];
 
-
   @override
-  Future<Result<List<NewExploreContent>>> call() async {
+  Future<Result<List<ExploreContent>>> call() async {
     // 전체 컨텐츠 아이디 리스트 호출
     final List<String> idList = _service.contentIdInfo!.originIdList;
 
@@ -31,7 +29,29 @@ class LoadRandomPagedExploreContentsUseCase
     final List<String> randomIdList = getRandomIds(idList, 20);
     prevIds.addAll(randomIdList);
 
-    // 추출한 10개의 아이디에 해당하는 컨텐츠 데이터 호출
+    // 추출한 아이디에 해당하는 컨텐츠 데이터 호출
+    return _repository.loadExploreContents(randomIdList);
+  }
+
+  Future<Result<List<ExploreContent>>> loadMoreContents() async {
+    /// 아직 호출되지 않은 컨텐츠 id 추출
+    /// 전체 컨텐츠 리스트 - 호출된 컨텐츠
+    final List<String> waitingCallIds = _service.contentIdInfo!.originIdList
+        .where((element) => !prevIds.contains(element))
+        .toList();
+
+
+    // 다음 call에서 더 이상 호출 id가 없다면
+    if (waitingCallIds.length < 20) {
+      moreCallIsAllowed(false);
+    }
+
+    // 무작위로 20개의 id 리스트 추출
+    final List<String> randomIdList =
+        getRandomIds(waitingCallIds, waitingCallIds.length);
+    prevIds.addAll(randomIdList);
+
+  // 추출한 아이디에 해당하는 컨텐츠 데이터 호출
     return _repository.loadExploreContents(randomIdList);
   }
 
@@ -44,8 +64,7 @@ class LoadRandomPagedExploreContentsUseCase
     final random = Random();
     List<String> result = [];
 
-
-    if (filteredIds.length <= 20) {
+    if (filteredIds.length < 20) {
       for (int i = 0; i < filteredIds.length; i++) {
         int index = random.nextInt(filteredIds.length);
         result.add(filteredIds[index]);
@@ -59,7 +78,6 @@ class LoadRandomPagedExploreContentsUseCase
       return result;
     }
   }
-
 
   // 무작위로 id 리스트 추출
   List<String> getRandomIds(List<String> someArray, int count) {
@@ -77,13 +95,4 @@ class LoadRandomPagedExploreContentsUseCase
     return selectedElements;
   }
 }
-
-// Future<void> pagedCall() async {
-//   //  무작위로 20개 id 추출 (이전 호출한 id 리스트를 제외)
-//   final List<String> randomIdList = getRandomIdsExceptPrevIds(
-//       prevIds: prevIds, ids: _service.contentIdInfo!.originIdList);
-//
-//   pagedAllowed = false;
-//
-// }
 

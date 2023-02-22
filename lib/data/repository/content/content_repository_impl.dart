@@ -65,12 +65,12 @@ class ContentRepositoryImpl implements ContentRepository {
   }
 
   @override
-  Future<Result<List<NewExploreContent>>> loadExploreContents(
+  Future<Result<List<ExploreContent>>> loadExploreContents(
       List<String> ids) async {
     try {
       final response = await _contentDataSource.loadExploreContents(ids);
       return Result.success(
-          response.map((e) => NewExploreContent.fromResponse(e)).toList());
+          response.map((e) => ExploreContent.fromResponse(e)).toList());
     } on Exception catch (e) {
       return Result.failure(e);
     }

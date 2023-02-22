@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreScreen extends BaseScreen<ExploreViewModel> {
@@ -16,20 +15,6 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   Widget buildActionButtons() {
     return Row(
       children: [
-        Obx(
-          () => AnimatedOpacity(
-            opacity: vm.showRefreshBtn ? 1 : 0,
-            duration: const Duration(milliseconds: 300),
-            child: Visibility(
-              visible: vm.showRefreshBtn,
-              child: IconInkWellButton.packageIcon(
-                icon: Icons.refresh,
-                size: 28,
-                onIconTapped: vm.refreshContent,
-              ),
-            ),
-          ),
-        ),
         IconInkWellButton.assetIcon(
           iconPath: 'assets/icons/search.svg',
           size: 40,
@@ -133,7 +118,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
   }
 
   // 채널 정보
-  List<Widget> buildChannelInfoView(NewExploreContent? item) => [
+  List<Widget> buildChannelInfoView(ExploreContent? item) => [
         GestureDetector(
           onTap: () {},
           child: ChannelInfoView(
@@ -146,7 +131,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
       ];
 
   // 컨텐츠 정보
-  List<Widget> buildContentInfoView(NewExploreContent? item) => [
+  List<Widget> buildContentInfoView(ExploreContent? item) => [
         // 제목 & 개봉년도
         Row(
           children: <Widget>[

@@ -119,7 +119,6 @@ export 'package:soon_sak/data/repository/user/user_repository_impl.dart';
 
 // Domain
 export 'package:soon_sak/domain/exception/content/content_exception.dart';
-export 'package:soon_sak/domain/model/content/explore/new_explore_content.dart';
 export 'package:soon_sak/domain/exception/user/user_exception.dart';
 export 'package:soon_sak/domain/model/content/myPage/user_curation_summary.dart';
 export 'package:soon_sak/domain/enum/sns_type_enum.dart';

@@ -14,7 +14,7 @@ abstract class ContentRepository {
 
   /// 탐색 컨텐츠 리스트 호출
   /// 주어진 ids에 속한 컨텐츠 리스트 호출
-  Future<Result<List<NewExploreContent>>> loadExploreContents(
+  Future<Result<List<ExploreContent>>> loadExploreContents(
       List<String> ids);
 
   // 컨텐츠 비디어 정보 호출
