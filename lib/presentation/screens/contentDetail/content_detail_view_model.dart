@@ -214,9 +214,6 @@ class ContentDetailViewModel extends BaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
-
-    // loadWithIsolate(() =>  _fetchContentCommentList());
-
     await _fetchContentMainInfo();
     await fetchContentOfVideoList();
     await _fetchContentCommentList();

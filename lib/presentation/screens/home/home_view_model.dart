@@ -42,15 +42,14 @@ class HomeViewModel extends BaseViewModel {
       _loadCachedCategoryContentCollectionUseCase;
 
   /* [Intent] */
+  // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
     topExposedContentSliderIndex.value = index;
   }
 
   // 컨텐츠 상세 화면으로 이동
   void routeToContentDetail(ContentArgumentFormat routingArgument) {
-    if (loading.isFalse) {
       Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
-    }
   }
 
   // 카테고리 컨텐츠 collection 정보 호출
@@ -97,60 +96,6 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.search);
   }
 
-  void launchAnotherApp() async {
-    if (!await launchUrl(
-        Uri.parse('https://www.youtube.com/watch?v=zhdbtAqne_I&t=1162s'),
-        mode: LaunchMode.externalApplication)) {
-      throw 'Could not launch ';
-    }
-  }
-
-  Future<void> aim() async {
-    try {
-      final aim = await YoutubeMetaData.yt.videos.get('N16uIvWozVk');
-      print("just PAssted");
-    } on Exception catch (e) {
-      print("ARANG Exception Activate${e}");
-    }
-  }
-
-  Future<bool?> validateResponse() async {
-    const dynamic url = 'https://www.youtube.com/watch?v=N16uIvWozVk';
-    var response =
-        await http.get(url is String ? Uri.parse(url) : url, headers: {});
-
-    // final response = await http
-    //     .head(Uri.parse('https://www.youtube.com/watch?v=N16uIvWozVk'));
-
-    var request = response.request!;
-
-    if (response.statusCode == 200) {
-      print("FINALLY RETURNES TRUE");
-      return true;
-    }
-
-    if (request.url.host.endsWith('.google.com') &&
-        request.url.path.startsWith('/sorry/')) {
-      return false;
-    }
-
-    if (response.statusCode >= 500) {
-      return false;
-    }
-
-    if (response.statusCode == 429) {
-      return false;
-    }
-
-    if (response.statusCode >= 400) {
-      return false;
-    }
-  }
-
-  Future<void> testResponseResult() async {
-    // print(_bannerContent.key);
-  }
-
   Future<void> _fetchTopTenContents() async {
     final response = await _loadCachedTopTenContentsUseCase.call();
     response.fold(onSuccess: (data) {
@@ -161,7 +106,7 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
-  Future<void> fetchBannerContents() async {
+  Future<void> _fetchBannerContents() async {
     final response = await _loadBannerContentUseCase.call();
     response.fold(
       onSuccess: (data) {
@@ -174,19 +119,6 @@ class HomeViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> fetchTest() async {
-    final String text =
-        '{items: [{backdropImgUrl: /x9ezMgOtDPqHatHDvxEG0ILb6Ie.jpg, description: 영화가 끝나고 더 소름돋는 영화, id: m-210577, imgUrl: https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg, title: 나를 찾아줘, videoId: 9XdAsuXthXA}, {backdropImgUrl: /euYz4adiSHH0GE3YnTeh3uLfBvL.jpg, description: 하필이면 전직 특수 요원을 건드렸는데 개들이 싸움을 더 잘함 | 2022년 신작 중 가장 처절한 액션을 보여드립니다, id: t-111800, imgUrl: https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg, title: 올드맨, videoId: TXMtLF5OANI}, {backdropImgUrl: /ggFHVNu6YYI5L9pCfOacjizRGt.jpg, description: 《브레이킹 베드》 | 진짜 존나 재밌음, id: t-1396, imgUrl: https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg, title: 브레이킹 배드, videoId: KfbFaQJK7Sc}], key: 2022-02-21-AAA}';
-
-    // final Map<String, dynamic> data = jsonEncode(text);
-    // print(data);
-
-
-    // final response = await _staticRepository.loadBannerContentList();
-    // response.fold(onSuccess: (data) {
-    //   print('성성성공 ${data.contentList.length}');
-    // }, onFailure: (e) {});
-  }
 
   @override
   Future<void> onInit() async {
@@ -201,25 +133,11 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
-
-    await fetchBannerContents();
-    await _fetchTopTenContents();
-    await _fetchCategoryContentCollection();
-    loading(false);
-    // await Future.wait([
-    //   fetchBannerContents(),
-    //   _fetchTopTenContents(),
-    //   _fetchCategoryContentCollection()
-    // ]).whenComplete(() {
-    //   loading(false);
-    // });
-
-    // _fetchContentListOfCategory();
-
+    await Future.wait([
+      _fetchBannerContents(),
+      _fetchTopTenContents(),
+      _fetchCategoryContentCollection()
+    ]);
     update();
-    // firebaseStoreTest();
-
-    // loadBannerContents();
-    // aim();
   }
 }

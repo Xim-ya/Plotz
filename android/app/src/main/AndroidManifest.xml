@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.soon_sak">
    <application
-        android:label="soon_sak"
+        android:label="순삭"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
