@@ -7,39 +7,38 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class ContentService extends GetxService {
-  ContentService(this._contentRepository);
+  ContentService(this._contentRepository, this._staticContentRepository);
 
-  // 등록된 전체 tv 컨텐츠 리스트
-  final Rxn<List<SimpleContentInfo>> totalListOfRegisteredTvContent = Rxn();
-
-  // 등록된 전체 movie 컨텐츠 리스트
-  final Rxn<List<SimpleContentInfo>> totalListOfRegisteredMovieContent = Rxn();
-
-  late final ContentIdInfoModel _contentIdInfo;
-
-  ContentIdInfoModel? get contentIdInfo => _contentIdInfo;
-
+  /* Data Modules */
   final ContentRepository _contentRepository;
+  final StaticContentRepository _staticContentRepository;
 
-  /* Intent */
-  // 인자로 전달 받은 타입에 따라 등록된 전체 컨텐츠 리스트를 반환
-  List<SimpleContentInfo>? returnTotalListBaseOnType(
-      {required ContentType type}) {
-    if (type.isTv) {
-      return totalListOfRegisteredTvContent.value;
-    } else {
-      return totalListOfRegisteredMovieContent.value;
-    }
+  /* Variables */
+
+  // 전체 컨텐츠 id 정보 객체
+  late final ContentIdInfoModel _contentTotalIdInfo;
+
+  // 정적 컨텐츠 키 리스트
+  late final StaticContentKeys _staticContentKeys;
+
+  /* Intents */
+
+  // 정적 컨텐츠 키 리스트 호출
+  Future<void> fetchStaticContentKeys() async {
+    final response = await _staticContentRepository.loadStaticContentKeys();
+    response.fold(onSuccess: (data) {
+      _staticContentKeys = data;
+    }, onFailure: (e) {
+      log('ContentService : $e');
+    });
   }
 
-
-
-
+  // 전체 컨텐츠 id 정보 호출
   Future<void> fetchTotalInfoList() async {
     final response = await _contentRepository.loadContentIdInfoList();
     response.fold(
       onSuccess: (data) {
-        _contentIdInfo = ContentIdInfoModel(data);
+        _contentTotalIdInfo = ContentIdInfoModel(data);
       },
       onFailure: (e) {
         log('ContentService : $e');
@@ -47,10 +46,17 @@ class ContentService extends GetxService {
     );
   }
 
-
   Future<void> prepare() async {
     await fetchTotalInfoList();
+    await fetchStaticContentKeys();
   }
+
+  ContentIdInfoModel? get contentIdInfo => _contentTotalIdInfo;
+
+  StaticContentKeys? get staticContentKeys => _staticContentKeys;
+  String get bannerKey => _staticContentKeys.bannerKey;
+  String get topTenContentKey => _staticContentKeys.topTenContentKey;
+  String get categoryContentKey => _staticContentKeys.categoryContentKey;
 
   static ContentService get to => Get.find();
 }

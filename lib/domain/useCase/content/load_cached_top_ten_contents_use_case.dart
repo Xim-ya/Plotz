@@ -25,11 +25,12 @@ class LoadCachedTopTenContentsUseCase
     extends BaseNoParamUseCase<Result<TopTenContentsModel>> {
   LoadCachedTopTenContentsUseCase(
     this._repository,
-    this._localStorageService,
+    this._localStorageService, this._contentService,
   );
 
   final LocalStorageService _localStorageService;
   final StaticContentRepository _repository;
+  final ContentService _contentService;
 
   @override
   Future<Result<TopTenContentsModel>> call() async {
@@ -40,7 +41,7 @@ class LoadCachedTopTenContentsUseCase
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
       // 2-a).Static content keysData 호출
-      final String? keyResponse = await fetchContentKey();
+      final String keyResponse = _contentService.topTenContentKey;
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {
@@ -48,7 +49,7 @@ class LoadCachedTopTenContentsUseCase
         // 조건 : 최신 업데이트 된 키라면
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
-            jsonText: localData.toString(), givenKey: keyResponse!)) {
+            jsonText: localData.toString(), givenKey: keyResponse)) {
           final json = jsonDecode(localData.toString());
           final response = TopTenContentResponse.fromJson(json);
           final result = TopTenContentsModel.fromResponse(response);

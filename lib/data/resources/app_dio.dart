@@ -61,7 +61,7 @@ _parseAndDecode(String response) {
 }
 
 parseJson(String text) {
-  print('------- 99 ------ ${text}');
+  print('------ COMPUTE METHOD ACTIVATED ${text}');
   return compute(_parseAndDecode, text);
 }
 

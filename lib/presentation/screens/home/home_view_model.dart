@@ -68,7 +68,6 @@ class HomeViewModel extends BaseViewModel {
     response.fold(
       onSuccess: (data) {
         _categoryContentCollection.value = data;
-        print("AAAAA ------> ${data.items.length}");
       },
       onFailure: (e) {
         log('HomeViewModel : $e');

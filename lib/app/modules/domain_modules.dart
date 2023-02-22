@@ -11,9 +11,7 @@ abstract class DomainModules {
   static Future<void> _preLoadDependencies() async {
     // Service
     Get.put(LocalStorageService());
-    Get.put(ContentService(Get.find()));
-
-
+    Get.put(ContentService(Get.find(), Get.find()));
   }
 
   static void dependencies() {
@@ -25,9 +23,17 @@ abstract class DomainModules {
         fenix: true);
 
     // 컨텐츠
-    Get.lazyPut(() => LoadCachedBannerContentUseCase(Get.find(), Get.find()), fenix: true);
-    Get.lazyPut(() => LoadCachedTopTenContentsUseCase(Get.find(), Get.find()), fenix: true);
-    Get.lazyPut(() => LoadCachedCategoryContentCollectionUseCase(Get.find(), Get.find()),
+    Get.lazyPut(
+        () =>
+            LoadCachedBannerContentUseCase(Get.find(), Get.find(), Get.find()),
+        fenix: true);
+    Get.lazyPut(
+        () =>
+            LoadCachedTopTenContentsUseCase(Get.find(), Get.find(), Get.find()),
+        fenix: true);
+    Get.lazyPut(
+        () => LoadCachedCategoryContentCollectionUseCase(
+            Get.find(), Get.find(), Get.find()),
         fenix: true);
     Get.lazyPut(
       () => RequestContentRegistrationUseCase(Get.find(), Get.find()),

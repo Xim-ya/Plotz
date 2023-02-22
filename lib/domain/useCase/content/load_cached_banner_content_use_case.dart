@@ -23,10 +23,11 @@ import 'package:soon_sak/utilities/index.dart';
 
 class LoadCachedBannerContentUseCase
     extends BaseNoParamUseCase<Result<BannerModel>> {
-  LoadCachedBannerContentUseCase(this._repository, this._localStorageService);
+  LoadCachedBannerContentUseCase(this._repository, this._localStorageService, this._contentService);
 
   final StaticContentRepository _repository;
   final LocalStorageService _localStorageService;
+  final ContentService _contentService;
 
   @override
   Future<Result<BannerModel>> call() async {
@@ -40,7 +41,7 @@ class LoadCachedBannerContentUseCase
     if (localData.hasData) {
       // if (localData.hasData) {
       // 2-a).Static content keysData 호출
-      final String? keyResponse = await fetchContentKey();
+      final String keyResponse = _contentService.bannerKey;
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {
@@ -48,11 +49,10 @@ class LoadCachedBannerContentUseCase
         // 조건 : 최신 업데이트 된 키라면
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
-            jsonText: localData.toString(), givenKey: keyResponse!)) {
+            jsonText: localData.toString(), givenKey: keyResponse)) {
           final json = jsonDecode(localData.toString());
           final response = BannerResponse.fromJson(json);
           final result = BannerModel.fromResponse(response);
-          print("ASAP BANNER");
           return Result.success(result);
         }
         // 조건 : 최신 업데이트 키가 아니라면

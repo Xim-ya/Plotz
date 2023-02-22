@@ -24,11 +24,11 @@ class SearchScaffoldController extends BaseViewModel
           _selectedTabType = ContentType.tv;
         } else {
           _selectedTabType = ContentType.movie;
-          if (ContentService.to.totalListOfRegisteredMovieContent.value ==
-              null) {
-            // TODO: 검색 로직 리팩토링 진행시 해당 부분 대응 필요
-            // ContentService.to.fetchAllOfRegisteredMovieContent();
-          }
+          // if (ContentService.to.totalListOfRegisteredMovieContent.value ==
+          //     null) {
+          //   // TODO: 검색 로직 리팩토링 진행시 해당 부분 대응 필요
+          //   // ContentService.to.fetchAllOfRegisteredMovieContent();
+          // }
         }
 
         /// 2. paiginController 리셋

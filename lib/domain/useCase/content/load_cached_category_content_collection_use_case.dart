@@ -24,16 +24,18 @@ import 'package:soon_sak/utilities/index.dart';
 
 class LoadCachedCategoryContentCollectionUseCase
     extends BaseNoParamUseCase<Result<CategoryContentCollection>> {
-  LoadCachedCategoryContentCollectionUseCase(this._repository, this._localStorageService);
+  LoadCachedCategoryContentCollectionUseCase(this._repository,
+      this._localStorageService, this._contentService);
 
   final StaticContentRepository _repository;
   final LocalStorageService _localStorageService;
+  final ContentService _contentService;
 
   @override
   Future<Result<CategoryContentCollection>> call() async {
     // 1. storage 데이터 존재 유무 확인
     final Object? localData =
-        await _localStorageService.getData(fieldName: 'categoryCollection');
+    await _localStorageService.getData(fieldName: 'categoryCollection');
 
     // final Object? localData =
     //     null;
@@ -41,17 +43,15 @@ class LoadCachedCategoryContentCollectionUseCase
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
       // 2-a).Static content keysData 호출
-      final String? keyResponse = await fetchContentKey();
+      final String keyResponse = _contentService.categoryContentKey;
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {
-        print('AFS CATEGORY - 1');
         // 2-b). 'key' 값이 최신화 되어 있는지 확인
         // 조건 : 최신 업데이트 된 키라면
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
-            jsonText: localData.toString(), givenKey: keyResponse!)) {
-          print('AFS CATEGORY - 2 ');
+            jsonText: localData.toString(), givenKey: keyResponse)) {
           final json = jsonDecode(localData.toString());
           final response = CategoryContentCollectionResponse.fromJson(json);
           final result = CategoryContentCollection.fromResponse(response);
@@ -61,18 +61,15 @@ class LoadCachedCategoryContentCollectionUseCase
         // 조건 : 최신 업데이트 키가 아니라면
         // 실행 : 2-c) api 호출
         else {
-          print('AFS CATEGORY - 3 ');
           return fetchCategoryContentCollection();
         }
       }
       // 조건 : 키 값이 정상적으로 불러오지 못했다면
       // 실행 : 2-c) api 호출
       else {
-        print('AFS CATEGORY - 4 ');
         return fetchCategoryContentCollection();
       }
     } else {
-      print('AFS CATEGORY');
       // 조건 : local data가 존재하지 않는다면
       // 실행 :  api 호출
       return fetchCategoryContentCollection();
@@ -82,7 +79,7 @@ class LoadCachedCategoryContentCollectionUseCase
   /// 2-c)
   /// api 호출
   Future<Result<CategoryContentCollection>>
-      fetchCategoryContentCollection() async {
+  fetchCategoryContentCollection() async {
     final response = await _repository.loadCategoryContentCollection();
     return response.fold(
       onSuccess: Result.success,
@@ -101,7 +98,7 @@ class LoadCachedCategoryContentCollectionUseCase
     response.getOrThrow();
     return response.fold(
       onSuccess: (data) {
-        return data.categoryContent;
+        return data.categoryContentKey;
       },
       onFailure: (e) {
         log('====== Static Content Key 호출 실패 $e');
