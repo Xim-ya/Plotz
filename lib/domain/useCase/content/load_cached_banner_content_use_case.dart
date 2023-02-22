@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:soon_sak/domain/service/local_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.09
@@ -33,12 +32,13 @@ class LoadCachedBannerContentUseCase
   Future<Result<BannerModel>> call() async {
     // 1. storage 데이터 존재 유무 확인
     final Object? localData =
-        await _localStorageService.getData(key: 'banner');
+        await _localStorageService.getData(fieldName: 'banner');
 
     // final Object? localData = null;
 
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
+      // if (localData.hasData) {
       // 2-a).Static content keysData 호출
       final String? keyResponse = await fetchContentKey();
 
@@ -52,6 +52,7 @@ class LoadCachedBannerContentUseCase
           final json = jsonDecode(localData.toString());
           final response = BannerResponse.fromJson(json);
           final result = BannerModel.fromResponse(response);
+          print("ASAP BANNER");
           return Result.success(result);
         }
         // 조건 : 최신 업데이트 키가 아니라면

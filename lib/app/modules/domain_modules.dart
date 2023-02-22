@@ -10,8 +10,9 @@ abstract class DomainModules {
   // 우선적으로 inject 되어야하는 모듈
   static Future<void> _preLoadDependencies() async {
     // Service
-    Get.put(ContentService(Get.find()));
     Get.put(LocalStorageService());
+    Get.put(ContentService(Get.find()));
+
 
   }
 

@@ -1,12 +1,16 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:soon_sak/data/api/staticContent/new_static_content_api.dart';
+import 'package:soon_sak/data/resources/app_dio.dart';
 import 'package:soon_sak/domain/service/local_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:http/http.dart' as http;
 
 class StaticContentDataSourceImpl implements StaticContentDataSource {
-  StaticContentDataSourceImpl(this._api, this._localStorage);
+  StaticContentDataSourceImpl(this._api, this._localStorage, this._newApi);
 
   final StaticContentApi _api;
+  final NewStaticContentApi _newApi;
   final LocalStorageService _localStorage;
 
   final String baseUrl =
@@ -14,42 +18,35 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
 
   @override
   Future<BannerResponse> loadBannerContents() async {
-    final response = await http.get(Uri.parse('$baseUrl/banner.json'));
-    final jsonText = response.body;
+    final response = await _newApi.loadBannerContents();
+    await _localStorage.saveData(fieldName: 'banner', data: jsonEncode(response.data));
+    final json = jsonDecode(response.toString());
 
-    // LocalStorage에 받아온 response의 boy(jsonText) 저장
-    await _localStorage.saveData(key: 'banner', data: jsonText);
-    final data = jsonDecode(jsonText);
-
-    return BannerResponse.fromJson(data);
+    return BannerResponse.fromJson(json);
   }
 
   @override
   Future<TopTenContentResponse> loadTopTenContents() async {
-    final response = await http.get(Uri.parse('$baseUrl/topTenContent.json'));
-    final jsonText = response.body;
+    final response = await _newApi.loadTopTenContents();
+    await _localStorage.saveData(fieldName: 'topTen', data: jsonEncode(response.data));
+    final json = jsonDecode(response.toString());
 
-    // LocalStorage에 받아온 response의 boy(jsonText) 저장
-    await _localStorage.saveData(key: 'topTen', data: jsonText);
-    final data = jsonDecode(jsonText);
-
-    return TopTenContentResponse.fromJson(data);
+    return TopTenContentResponse.fromJson(json);
   }
 
-  @override
-  Future<ContentKeyResponse> loadStaticContentKeys() =>
-      _api.loadStaticContentKeys();
 
   @override
   Future<CategoryContentCollectionResponse>
       loadCategoryContentCollection() async {
-    final response = await http.get(Uri.parse('$baseUrl/categoryContent.json'));
-    final jsonText = response.body;
 
-    // LocalStorage에 받아온 response의 boy(jsonText) 저장
-    await _localStorage.saveData(key: 'categoryCollection', data: jsonText);
-    final data = jsonDecode(jsonText);
+    final response = await _newApi.loadCategoryContentCollections();
+    await _localStorage.saveData(fieldName: 'categoryCollection', data: jsonEncode(response.data));
+    final json = jsonDecode(response.toString());
 
-    return CategoryContentCollectionResponse.fromJson(data);
+    return CategoryContentCollectionResponse.fromJson(json);
   }
+
+  @override
+  Future<ContentKeyResponse> loadStaticContentKeys() =>
+      _newApi.loadStaticContentKeys();
 }

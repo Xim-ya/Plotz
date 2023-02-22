@@ -33,7 +33,7 @@ class LoadCachedCategoryContentCollectionUseCase
   Future<Result<CategoryContentCollection>> call() async {
     // 1. storage 데이터 존재 유무 확인
     final Object? localData =
-        await _localStorageService.getData(key: 'categoryCollection');
+        await _localStorageService.getData(fieldName: 'categoryCollection');
 
     // final Object? localData =
     //     null;
@@ -45,28 +45,34 @@ class LoadCachedCategoryContentCollectionUseCase
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {
+        print('AFS CATEGORY - 1');
         // 2-b). 'key' 값이 최신화 되어 있는지 확인
         // 조건 : 최신 업데이트 된 키라면
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
             jsonText: localData.toString(), givenKey: keyResponse!)) {
+          print('AFS CATEGORY - 2 ');
           final json = jsonDecode(localData.toString());
           final response = CategoryContentCollectionResponse.fromJson(json);
           final result = CategoryContentCollection.fromResponse(response);
+
           return Result.success(result);
         }
         // 조건 : 최신 업데이트 키가 아니라면
         // 실행 : 2-c) api 호출
         else {
+          print('AFS CATEGORY - 3 ');
           return fetchCategoryContentCollection();
         }
       }
       // 조건 : 키 값이 정상적으로 불러오지 못했다면
       // 실행 : 2-c) api 호출
       else {
+        print('AFS CATEGORY - 4 ');
         return fetchCategoryContentCollection();
       }
     } else {
+      print('AFS CATEGORY');
       // 조건 : local data가 존재하지 않는다면
       // 실행 :  api 호출
       return fetchCategoryContentCollection();

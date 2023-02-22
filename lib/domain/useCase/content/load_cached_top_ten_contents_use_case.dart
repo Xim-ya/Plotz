@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:soon_sak/domain/service/local_storage.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.02.09
@@ -36,8 +35,7 @@ class LoadCachedTopTenContentsUseCase
   Future<Result<TopTenContentsModel>> call() async {
     // 1. storage 데이터 존재 유무 확인
     final Object? localData =
-        await _localStorageService.getData(key: 'topTen');
-
+        await _localStorageService.getData(fieldName: 'topTen');
 
     // 조건 : local data가 존재한다면
     if (localData.hasData) {

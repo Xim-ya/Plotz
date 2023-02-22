@@ -198,7 +198,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-
+                vm.fetchBannerContents();
 
                 AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
                 // vm.update();

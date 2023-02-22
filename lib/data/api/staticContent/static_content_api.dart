@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:soon_sak/data/api/staticContent/response/json_string_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'static_content_api.g.dart';
@@ -14,11 +15,11 @@ abstract class StaticContentApi {
   Future<ContentKeyResponse> loadStaticContentKeys();
 
   @GET('/banner.json')
-  Future<BannerResponse> loadBannerContent();
+  Future<JsonResponse> loadBannerContent();
 
   @GET('/topTenContent.json')
-  Future<TopTenContentResponse> loadTopTenContent();
+  Future<JsonResponse> loadTopTenContent();
 
   @GET('/categoryContent.json')
-  Future<CategoryContentCollectionResponse> loadCategoryContentCollection();
+  Future<JsonResponse> loadCategoryContentCollection();
 }

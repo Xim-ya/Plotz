@@ -36,6 +36,7 @@ void _isolateEntry(_IsolateEntryPayload payload) async {
 
   final result = await function();
   payload.sendPort.send(result);
+
 }
 
 // Isolate Entry 모델

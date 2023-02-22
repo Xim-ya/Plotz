@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:isolate';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,12 +11,14 @@ part 'home_view_model.part.dart';
 class HomeViewModel extends BaseViewModel {
   /// 임시
   final ContentDataSource _dataSource;
+  final StaticContentRepository _staticRepository;
 
   HomeViewModel(
     this._loadCachedCategoryContentCollectionUseCase,
     this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
     this._dataSource,
+    this._staticRepository,
   );
 
   /* [Variables] */
@@ -54,7 +57,7 @@ class HomeViewModel extends BaseViewModel {
 
   // 컨텐츠 상세 화면으로 이동
   void routeToContentDetail(ContentArgumentFormat routingArgument) {
-    if(loading.isFalse) {
+    if (loading.isFalse) {
       Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
     }
   }
@@ -65,6 +68,7 @@ class HomeViewModel extends BaseViewModel {
     response.fold(
       onSuccess: (data) {
         _categoryContentCollection.value = data;
+        print("AAAAA ------> ${data.items.length}");
       },
       onFailure: (e) {
         log('HomeViewModel : $e');
@@ -167,7 +171,7 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
-  Future<void> _fetchBannerContents() async {
+  Future<void> fetchBannerContents() async {
     final response = await _loadBannerContentUseCase.call();
     response.fold(
       onSuccess: (data) {
@@ -178,6 +182,20 @@ class HomeViewModel extends BaseViewModel {
         log('HomeViewModel > $e');
       },
     );
+  }
+
+  Future<void> fetchTest() async {
+    final String text =
+        '{items: [{backdropImgUrl: /x9ezMgOtDPqHatHDvxEG0ILb6Ie.jpg, description: 영화가 끝나고 더 소름돋는 영화, id: m-210577, imgUrl: https://img.youtube.com/vi/9XdAsuXthXA/hqdefault.jpg, title: 나를 찾아줘, videoId: 9XdAsuXthXA}, {backdropImgUrl: /euYz4adiSHH0GE3YnTeh3uLfBvL.jpg, description: 하필이면 전직 특수 요원을 건드렸는데 개들이 싸움을 더 잘함 | 2022년 신작 중 가장 처절한 액션을 보여드립니다, id: t-111800, imgUrl: https://i.ytimg.com/vi/TXMtLF5OANI/maxresdefault.jpg, title: 올드맨, videoId: TXMtLF5OANI}, {backdropImgUrl: /ggFHVNu6YYI5L9pCfOacjizRGt.jpg, description: 《브레이킹 베드》 | 진짜 존나 재밌음, id: t-1396, imgUrl: https://i.ytimg.com/vi/KfbFaQJK7Sc/maxresdefault.jpg, title: 브레이킹 배드, videoId: KfbFaQJK7Sc}], key: 2022-02-21-AAA}';
+
+    // final Map<String, dynamic> data = jsonEncode(text);
+    // print(data);
+
+
+    // final response = await _staticRepository.loadBannerContentList();
+    // response.fold(onSuccess: (data) {
+    //   print('성성성공 ${data.contentList.length}');
+    // }, onFailure: (e) {});
   }
 
   @override
@@ -193,13 +211,15 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
+    // await _fetchBannerContents();
+    // await _fetchTopTenContents();
+    // await _fetchCategoryContentCollection();
     await Future.wait([
-      _fetchBannerContents(),
+      fetchBannerContents(),
       _fetchTopTenContents(),
       _fetchCategoryContentCollection()
     ]).whenComplete(() {
       loading(false);
-
     });
 
     // _fetchContentListOfCategory();

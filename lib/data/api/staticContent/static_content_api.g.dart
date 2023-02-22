@@ -45,13 +45,13 @@ class _StaticContentApi implements StaticContentApi {
   }
 
   @override
-  Future<BannerResponse> loadBannerContent() async {
+  Future<JsonResponse> loadBannerContent() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<BannerResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<JsonResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -63,18 +63,18 @@ class _StaticContentApi implements StaticContentApi {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BannerResponse.fromJson(_result.data!);
+    final value = JsonResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<TopTenContentResponse> loadTopTenContent() async {
+  Future<JsonResponse> loadTopTenContent() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<TopTenContentResponse>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<JsonResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -86,19 +86,18 @@ class _StaticContentApi implements StaticContentApi {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TopTenContentResponse.fromJson(_result.data!);
+    final value = JsonResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<CategoryContentCollectionResponse>
-      loadCategoryContentCollection() async {
+  Future<JsonResponse> loadCategoryContentCollection() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CategoryContentCollectionResponse>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<JsonResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -110,7 +109,7 @@ class _StaticContentApi implements StaticContentApi {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CategoryContentCollectionResponse.fromJson(_result.data!);
+    final value = JsonResponse.fromJson(_result.data!);
     return value;
   }
 

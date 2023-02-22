@@ -1,10 +1,6 @@
-import 'package:flutter/foundation.dart';
-import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class TmdbDataSourceImpl
-    with ApiErrorHandlerMixin, IsolateHelperMixin
-    implements TmdbDataSource {
+class TmdbDataSourceImpl implements TmdbDataSource {
   TmdbDataSourceImpl(this._api);
 
   final TmdbApi _api;
@@ -12,7 +8,7 @@ class TmdbDataSourceImpl
 // tmdb tv 컨텐츠 상세 정보
   @override
   Future<TmdbTvDetailResponse> loadTmdbTvDetailResponse(int tvId) async =>
-          _api.loadTmdbMovieDetailResponse(tvId);
+      _api.loadTmdbMovieDetailResponse(tvId);
 
 // tmdb tv 컨텐츠 크레딧 정보
   @override
@@ -29,18 +25,17 @@ class TmdbDataSourceImpl
   Future<TmdbMovieDetailResponse> loadTmdbMovieDetailResponse(
           int movieId) async =>
       _api.loadTmdbMovieDetailInfoResponse(movieId);
-        // loadWithIsolate(() =>  _api.loadTmdbMovieDetailInfoResponse(movieId));
+
 
   @override
   Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfoResponse(
           int movieId) async =>
       _api.loadMovieCreditInfo(movieId);
-     // loadWithIsolate(() => _api.loadMovieCreditInfo(movieId));
 
   @override
   Future<TmdbImagesResponse> loadTmdbMovieIContentImages(int movieId) async =>
       _api.loadMovieImages(movieId);
-      //      loadWithIsolate(() => _api.loadMovieImages(movieId));
+
 
   @override
   Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
