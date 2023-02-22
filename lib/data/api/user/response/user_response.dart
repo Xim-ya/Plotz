@@ -2,7 +2,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class UserResponse {
   final String? name;
-  final String? nickName;
+  final String? displayName;
   final String? email;
   late String? id;
   late String? photoUrl;
@@ -16,7 +16,7 @@ class UserResponse {
     this.email,
     this.photoUrl,
     this.token,
-    this.nickName,
+    this.displayName,
   });
 
   // FirebaseStore
@@ -25,7 +25,7 @@ class UserResponse {
     id: doc.get('id'),
     email: doc.get('email'),
     photoUrl: doc.get('photoUrl'),
-    nickName: doc.get('nickName'),
+    displayName: doc.get('displayName'),
     provider: Sns.fromOriginString(
       doc.get('provider'),
     ),
@@ -38,7 +38,7 @@ class UserResponse {
       'id': id,
       'name': name,
       'provider': provider.originString.toString(), // toString으로 포맷을 한번더 해줘야함
-      'nickName': nickName,
+      'displayName': displayName,
       'photoUrl': photoUrl,
       'email': email,
     };

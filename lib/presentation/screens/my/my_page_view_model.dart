@@ -13,7 +13,7 @@ class MyPageViewModel extends BaseViewModel {
   final SignOutUseCase _signOutHandlerUseCase;
   UserModel? userInfo;
 
-  String? get displayName => userInfo?.nickName ?? userInfo?.name;
+  String? get displayName => userInfo?.displayName ?? userInfo?.name;
 
   /* Data Modules */
   final UserRepository _userRepository;

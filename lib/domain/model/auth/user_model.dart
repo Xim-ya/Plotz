@@ -3,7 +3,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class UserModel {
   final String? name;
-  final String? nickName;
+  final String? displayName;
   final String? email;
   late String? id;
   late String? photoUrl;
@@ -17,16 +17,16 @@ class UserModel {
     this.email,
     this.photoUrl,
     this.token,
-    this.nickName,
+    this.displayName,
   });
 
   // FirebaseStore
   factory UserModel.fromDocumentRes(DocumentSnapshot doc) => UserModel(
-        name: doc.get('name'),
         id: doc.get('id'),
         email: doc.get('email'),
         photoUrl: doc.get('photoUrl'),
-        nickName: doc.get('nickName'),
+        name: doc.get('name'),
+        displayName: doc.get('displayName'),
         provider: Sns.fromOriginString(
           doc.get('provider'),
         ),
@@ -38,6 +38,7 @@ class UserModel {
       required GoogleSignInAuthentication authentication}) {
     return UserModel(
       name: account.displayName,
+      displayName: account.displayName,
       email: account.email,
       provider: Sns.google,
       photoUrl: account.photoUrl,
@@ -52,6 +53,7 @@ class UserModel {
           {required AuthorizationCredentialAppleID response}) =>
       UserModel(
         name: '${response.familyName}${response.givenName}',
+        displayName: '${response.familyName}${response.givenName}',
         email: response.email,
         provider: Sns.apple,
         token: UserToken(
@@ -64,6 +66,7 @@ class UserModel {
         id: response.id,
         photoUrl: response.photoUrl,
         name: response.name,
+        displayName: response.displayName,
       );
 
   // Instance -> Map (FireStore 저장 용도)
@@ -72,7 +75,7 @@ class UserModel {
       'id': id,
       'name': name,
       'provider': provider!.originString.toString(), // toString으로 포맷을 한번더 해줘야함
-      'nickName': nickName,
+      'displayName': displayName,
       'photoUrl': photoUrl,
       'email': email,
     };

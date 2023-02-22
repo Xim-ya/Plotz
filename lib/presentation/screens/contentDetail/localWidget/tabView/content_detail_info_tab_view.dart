@@ -152,7 +152,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                   width: SizeConfig.to.screenWidth - 104,
                   child: Obx(
                     () => Text(
-                      vm.curator?.name ?? '',
+                      vm.curator?.displayName ?? '',
                       style: AppTextStyle.headline3,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -188,7 +188,8 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                   ),
                   Row(
                     children: <Widget>[
-                      elseInfoItem(title: '총 조회수', content: vm.totalViewCount ?? ''),
+                      elseInfoItem(
+                          title: '총 조회수', content: vm.totalViewCount ?? ''),
                       elseInfoItem(
                           title: '영상 업로드일',
                           content: vm.youtubeUploadDate ?? ''),
