@@ -1,17 +1,14 @@
-import 'package:soon_sak/presentation/screens/newSearch/localWidget/new_search_scaffold.dart';
-import 'package:soon_sak/presentation/screens/newSearch/localWidget/new_searched_list_item.dart';
-import 'package:soon_sak/presentation/screens/newSearch/new_search_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
-  const NewSearchScreen({Key? key}) : super(key: key);
+class SearchScreen extends BaseScreen<SearchViewModel> {
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   bool get wrapWithSafeArea => false;
 
   @override
   Widget buildScreen(BuildContext context) {
-    return NewSearchScaffold(
+    return SearchScaffold(
       tabs: buildTabs(),
       tabViews: buildTabView(),
     );
@@ -25,7 +22,7 @@ class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
           firstPageErrorText: '드라마 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return NewSearchListItem(
+            return SearchListItem(
               contentType: ContentType.tv,
               item: searchedItem,
               onItemClicked: () {
@@ -42,7 +39,7 @@ class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
           firstPageErrorText: '영화 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return NewSearchListItem(
+            return SearchListItem(
               contentType: ContentType.movie,
               item: searchedItem,
               onItemClicked: () {

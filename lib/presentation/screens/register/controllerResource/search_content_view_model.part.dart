@@ -3,34 +3,46 @@ part of '../register_view_model.dart';
 extension FindContentViewModel on RegisterViewModel {
   /* Intent */
   // 컨텐츠 리스트 호출 - (pagination logic 적용)
-  Future<void> loadSearchedContentListByPaging() async {
-    await _searchUseCase.loadSearchedContentList(selectedContentType,
-        checkContentRegistration: true);
-  }
+  // Future<void> loadSearchedContentListByPaging() async {
+  //   await _searchUseCase.loadSearchedContentList(selectedContentType,
+  //       checkContentRegistration: true);
+  // }
+
 
   // 검색어가 입력되었을 때
-  void onSearchTermEntered(String searchedKeyword) {
-    _searchUseCase.onSearchTermEntered();
-  }
+  VoidCallback get onSearchTermEntered  => pagedSearchHandler.onSearchTermEntered;
+
+
 
   // 검색된 컨텐츠 선택 되었을 때
   void onSearchedContentTapped(SearchedContent content) {
-    _searchUseCase.onSearchedContentTapped(
-        content: content, contentType: selectedContentType);
+    _selectedContent.value = Content(
+      id: content.contentId,
+      type: selectedContentType,
+      detail: ContentDetail(
+        title: content.title,
+        posterImgUrl: content.posterImgUrl,
+        releaseDate: content.releaseDate,
+      ),
+    );
+
   }
 
   // 검색 바 'X' 버튼이 클릭 되었을 때
   void onCloseBtnTapped() {
-    _searchUseCase.onCloseBtnTapped();
+    pagedSearchHandler.onCloseBtnTapped();
   }
 
 
-  RxBool get showContentSbCloseBtn => _searchUseCase.showRoundCloseBtn;
-  RxBool get isContentSelected => (_searchUseCase.selectedContent.hasData).obs;
+  RxBool get showContentSbCloseBtn => pagedSearchHandler.showRoundClosedBtn;
+  RxBool get isContentSelected => (_selectedContent.hasData).obs;
   TextEditingController get textEditingController =>
-      _searchUseCase.textEditingController;
+      pagedSearchHandler.textEditingController;
   PagingController<int, SearchedContent> get pagingController =>
-      _searchUseCase.pagingController;
-  FocusNode get contentFormFocusNode => _searchUseCase.focusNode;
-  Content? get selectedContentDetail => _searchUseCase.selectedContent;
+      pagedSearchHandler.pagingController;
+  FocusNode get contentFormFocusNode => pagedSearchHandler.focusNode;
+  int? get selectedContentId  => _selectedContent.value?.id;
+  RxBool get isInitialState => pagedSearchHandler.isInitialState;
+
+  // Content? get selectedContentDetail => _searchUseCase.selectedContent;
 }

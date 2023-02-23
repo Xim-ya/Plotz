@@ -6,7 +6,7 @@ class UserApiImpl with FirestoreHelper implements UserApi {
   Future<void> addUserCurationInfo(
       {required String qurationDocId, required String userId}) async {
     final Map<String, dynamic> curationList = {
-      'data': db.collection('curation').doc(qurationDocId)
+      'curationRef': db.collection('curation').doc(qurationDocId)
     };
 
     // 초기 값

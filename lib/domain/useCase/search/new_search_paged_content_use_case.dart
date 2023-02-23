@@ -34,7 +34,6 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
   final PagingController<int, SearchedContent> pagingController =
       PagingController(firstPageKey: 1);
 
-
   /* Intents */
   VoidCallback get resetFieldValue => onCloseBtnTapped;
 
@@ -59,7 +58,7 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
   }
 
   // Paging Call 메소드
-  Future<void> fetchPage(int pageKey) async {
+  Future<void> fetchPage(int pageKey, {ContentType? forcedContentType}) async {
     /// 처음 pagingController listen 할 때는
     /// paging call 하지 않기 위해 예외처리 진행
     if (fieldController.text.isEmpty) {
@@ -71,12 +70,25 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
 
     /// 선택된 [ConteType] 에 따라 api call을 진행
     /// Movie & TV
-    if (selectedTabType.value.isTv) {
-      response = await _tmdbRepository.loadSearchedTvContentList(
-          query: fieldController.text, page: pageKey);
+
+    // 조건 : Viewmodel로부터 전달 받은 타입이 있을 경우
+    // TODO : 조건문 리팩토링 필요
+    if (forcedContentType.hasData) {
+      if (forcedContentType!.isTv) {
+        response = await _tmdbRepository.loadSearchedTvContentList(
+            query: fieldController.text, page: pageKey);
+      } else {
+        response = await _tmdbRepository.loadSearchedMovieContentList(
+            query: fieldController.text, page: pageKey);
+      }
     } else {
-      response = await _tmdbRepository.loadSearchedMovieContentList(
-          query: fieldController.text, page: pageKey);
+      if (selectedTabType.value.isTv) {
+        response = await _tmdbRepository.loadSearchedTvContentList(
+            query: fieldController.text, page: pageKey);
+      } else {
+        response = await _tmdbRepository.loadSearchedMovieContentList(
+            query: fieldController.text, page: pageKey);
+      }
     }
 
     final PagingController<int, SearchedContent> controller = pagingController;
@@ -106,7 +118,9 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
 
   /// UseCase init메소드
   /// pagingController event listen 설정
-  void initUseCase() {
-    pagingController.addPageRequestListener(fetchPage);
+  void initUseCase({ContentType? forcedContentType}) {
+    pagingController.addPageRequestListener((pageKey) {
+      fetchPage(pageKey, forcedContentType: forcedContentType);
+    });
   }
 }

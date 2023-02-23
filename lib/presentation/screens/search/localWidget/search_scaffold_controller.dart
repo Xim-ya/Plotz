@@ -1,12 +1,11 @@
-import 'package:soon_sak/presentation/screens/newSearch/new_search_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class NewSearchScaffoldController extends BaseViewModel
+class SearchScaffoldController extends BaseViewModel
     with GetSingleTickerProviderStateMixin {
-  NewSearchScaffoldController(this.searchViewModel);
+  SearchScaffoldController(this.searchViewModel);
 
   /* View Model */
-  final NewSearchViewModel searchViewModel;
+  final SearchViewModel searchViewModel;
   int selectedTabIndex = 0;
 
   /* Controllers */

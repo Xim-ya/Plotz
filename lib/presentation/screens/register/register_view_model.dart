@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
+import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
@@ -10,17 +11,20 @@ part 'controllerResource/confirm_curation_view_model.part.dart'; // 등록 컨�
 
 class RegisterViewModel extends BaseViewModel {
   RegisterViewModel(
-      this._searchUseCase,
       this._userService,
       this.validateVideoUrlUseCase,
       this._requestContentRegistrationUseCase,
       this._curationViewModel,
       this._myPageViewModel,
+      this.pagedSearchHandler,
       {required contentType})
       : selectedContentType = contentType;
 
   /* Data Modules */
   final UserService _userService;
+
+  // 선택된 컨텐츠 정보
+  final Rxn<Content> _selectedContent = Rxn();
 
   /* ViewModel */
   final CurationViewModel _curationViewModel;
@@ -43,7 +47,8 @@ class RegisterViewModel extends BaseViewModel {
   late PageController pageViewController;
 
   /* UseCases */
-  final SearchPagedContentUseCase _searchUseCase;
+  // final SearchPagedContentUseCase _searchUseCase;
+  final NewSearchedPagedContentUseCase pagedSearchHandler;
   final SearchValidateUrlUseCase validateVideoUrlUseCase;
   final RequestContentRegistrationUseCase _requestContentRegistrationUseCase;
 
@@ -122,8 +127,8 @@ class RegisterViewModel extends BaseViewModel {
     final response = await YoutubeMetaData.yt.channels.get(channelId);
 
     curationContent.value = Content(
-      id: selectedContentDetail!.id,
-      type: selectedContentDetail?.type,
+      id: _selectedContent.value!.id,
+      type: _selectedContent.value!.type,
       videoId: videoId,
       youtubeVideo: YoutubeVideo(
         channelName: response.title,
@@ -131,9 +136,9 @@ class RegisterViewModel extends BaseViewModel {
         subscriberCount: response.subscribersCount,
       ),
       detail: ContentDetail(
-        title: selectedContentDetail?.detail?.title,
-        posterImgUrl: selectedContentDetail?.detail?.posterImgUrl,
-        releaseDate: selectedContentDetail?.detail?.releaseDate,
+        title: _selectedContent.value?.detail?.title,
+        posterImgUrl: _selectedContent.value?.detail?.posterImgUrl,
+        releaseDate: _selectedContent.value?.detail?.releaseDate,
       ),
     );
   }
@@ -167,9 +172,7 @@ class RegisterViewModel extends BaseViewModel {
   void onInit() {
     super.onInit();
 
-    pagingController.addPageRequestListener((pageKey) {
-      loadSearchedContentListByPaging();
-    });
+    pagedSearchHandler.initUseCase(forcedContentType: selectedContentType);
 
     pageViewController = PageController();
   }

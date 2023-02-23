@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class NewSearchListItem extends StatelessWidget {
-  const NewSearchListItem(
+class SearchListItem extends StatelessWidget {
+  const SearchListItem(
       {Key? key,
         required this.contentType,
         required this.item,

@@ -3,7 +3,6 @@ import 'package:soon_sak/utilities/index.dart';
 class SearchValidateUrlImpl
     with SearchHandlerMixin
     implements SearchValidateUrlUseCase {
-
   @override
   final Rx<ValidationState> videoUrlValidState = ValidationState.initState.obs;
   @override
@@ -17,7 +16,6 @@ class SearchValidateUrlImpl
 
   @override
   ValidationState get isVideoValid => videoUrlValidState.value;
-
 
   // 비디오 url 유효성 검사
   Future<void> checkVideoIdValidation(String? videoId) async {
@@ -49,8 +47,7 @@ class SearchValidateUrlImpl
       }
     } else {
       fieldController.text = pasteUrl?.text ?? '';
-      final videoId =
-          Formatter.getVideoIdFromYoutubeUrl(fieldController.text);
+      final videoId = Formatter.getVideoIdFromYoutubeUrl(fieldController.text);
       await checkVideoIdValidation(videoId);
       exposeRoundCloseBtn(true);
     }
@@ -64,7 +61,7 @@ class SearchValidateUrlImpl
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(
       const Duration(milliseconds: 300),
-          () async {
+      () async {
         if (searchedKeyword == '') {
           videoUrlValidState(ValidationState.initState);
           return;
@@ -81,8 +78,6 @@ class SearchValidateUrlImpl
     );
   }
 
-
-
   // 검색창 'x' 버튼이 클릭 되었을 때
   @override
   void onCloseBtnTapped() {
@@ -92,16 +87,11 @@ class SearchValidateUrlImpl
   }
 
   @override
-  // TODO: implement textEditingController
-  TextEditingController get textEditingController => throw UnimplementedError();
+  TextEditingController get textEditingController => fieldController;
 
   @override
-  // TODO: implement focusNode
-  FocusNode get focusNode => throw UnimplementedError();
+  FocusNode get focusNode => fieldNode;
 
   @override
-  // TODO: implement showRoundCloseBtn
-  RxBool get showRoundCloseBtn => throw UnimplementedError();
-
-
+  RxBool get showRoundCloseBtn => exposeRoundCloseBtn;
 }

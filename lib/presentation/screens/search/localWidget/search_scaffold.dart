@@ -1,8 +1,8 @@
-import 'package:soon_sak/presentation/screens/newSearch/localWidget/new_search_scaffold_controller.dart';
+import 'package:soon_sak/presentation/screens/search/localWidget/search_scaffold_controller.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class NewSearchScaffold extends BaseView<NewSearchScaffoldController> {
-  const NewSearchScaffold({
+class SearchScaffold extends BaseView<SearchScaffoldController> {
+  const SearchScaffold({
     Key? key,
     required this.tabs,
     required this.tabViews,

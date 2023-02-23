@@ -4,9 +4,12 @@ import 'package:soon_sak/utilities/index.dart';
 /// TODO: PAGING 고도화 로직 필요
 /// Tabview를  제스처로 이동할 때 UX가 부자연스러움.
 /// PAGING Controller를 두 개로 분리 필요. (메모리를 너무 많이 사용하는지 사전에 확인 필요)
+/// NOTE By Ximya - 2023.02.23
+/// NOTE : Paging Controller를 두 개를 적용하면 setState Builder 오류 발생
+/// 자세한 원인 파악 필요.
 
-class NewSearchViewModel extends BaseViewModel {
-  NewSearchViewModel(this._pagedSearchHandler);
+class SearchViewModel extends BaseViewModel {
+  SearchViewModel(this._pagedSearchHandler);
 
   /* UseCases */
   final NewSearchedPagedContentUseCase _pagedSearchHandler;

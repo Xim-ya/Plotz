@@ -176,6 +176,9 @@ export 'package:soon_sak/domain/model/content/curation/curation_content.dart';
 export 'package:soon_sak/domain/model/content/register/content_request.dart';
 
 // Presentation
+export 'package:soon_sak/presentation/screens/search/localWidget/search_scaffold.dart';
+export 'package:soon_sak/presentation/screens/search/localWidget/searched_list_item.dart';
+export 'package:soon_sak/presentation/screens/search/search_view_model.dart';
 export 'package:soon_sak/presentation/screens/curation/curation_view_model.dart';
 export 'package:soon_sak/presentation/screens/curation/curation_screen.dart';
 export 'package:soon_sak/presentation/screens/register/register_view_model.dart';

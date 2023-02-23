@@ -26,9 +26,8 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
   Widget _buildSearchBar() => SearchBar(
         focusNode: vm.contentFormFocusNode,
         textEditingController: vm.textEditingController,
-        onChanged: vm.onSearchTermEntered,
-        onFieldSubmitted: (_) {
-          vm.loadSearchedContentListByPaging();
+        onChanged: (_) {
+          vm.onSearchTermEntered();
         },
         resetSearchValue: vm.onCloseBtnTapped,
         showRoundCloseBtn: vm.showContentSbCloseBtn,
@@ -40,6 +39,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
         padding: AppInset.top4 + AppInset.bottom104,
         focusNode: vm.contentFormFocusNode,
         pagingController: vm.pagingController,
+        isInitialState: vm.isInitialState,
         firstPageErrorText: '영화 제목을 입력해주세요',
         itemBuilder: (BuildContext context, dynamic item, int index) {
           final searchedItem = item as SearchedContent;
@@ -52,7 +52,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
               posterImgUrl: searchedItem.posterImgUrl,
               releaseDate: searchedItem.releaseDate,
               contentType: vm.selectedContentType,
-              isSelected: vm.selectedContentDetail?.id == item.contentId,
+              isSelected: vm.selectedContentId == item.contentId,
             ),
           );
         },

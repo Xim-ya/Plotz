@@ -1,5 +1,5 @@
-import 'package:soon_sak/presentation/screens/newSearch/new_search_binding.dart';
-import 'package:soon_sak/presentation/screens/newSearch/new_search_screen.dart';
+import 'package:soon_sak/presentation/screens/search/search_binding.dart';
+import 'package:soon_sak/presentation/screens/search/search_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.04
@@ -45,8 +45,8 @@ abstract class AppPages {
     // 검색
     GetPage(
       name: AppRoutes.search,
-      page: () => NewSearchScreen(),
-      binding: NewSearchBinding(),
+      page: () => SearchScreen(),
+      binding: SearchBinding(),
     ),
 
     // 등록

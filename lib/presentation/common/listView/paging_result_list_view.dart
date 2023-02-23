@@ -14,7 +14,7 @@ class PagingResultListView extends StatelessWidget {
     required this.focusNode,
     required this.pagingController,
     required this.itemBuilder,
-    this.isInitialState,
+    required this.isInitialState,
     required this.firstPageErrorText,
     this.physics,
     this.noItemsFoundText = '검색된 결과가 없습니다',
