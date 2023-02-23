@@ -15,10 +15,10 @@ abstract class TmdbDataSource {
   Future<TmdbImagesResponse> loadTmdbMovieIContentImages(int movieId);
 
   Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
-      String query);
+      {required String query, required int page});
 
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
-      String query);
+      {required String query, required int page});
 
 
   static TmdbDataSource get to => Get.find();

@@ -38,8 +38,9 @@ abstract class TmdbApi {
 
   // 'tv' 컨텐츠 검색 결과
   @GET(
-      '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query={query}')
+      '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page={page}&query={query}')
   Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
+      @Path('page') int key,
       @Path('query') String query);
 
   // 'movie' 컨텐츠 상세 정보
@@ -60,8 +61,9 @@ abstract class TmdbApi {
 
   // 'movie' 컨텐츠 검색 결과
   @GET(
-      '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query={query}')
+      '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page={page}&query={query}')
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
+      @Path('page') int key,
       @Path('query') String query);
 
 // @GET(

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:soon_sak/domain/model/content/search/search_content_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 202.02.02
@@ -15,42 +16,41 @@ mixin PagingHandlerMixin {
 
   /// mixin 되는 클래스로 전달 받는 변수
   String get searchedKeyword;
+
   TmdbRepository get repository;
+
   bool get isPagingAllowed;
+
+  final RxBool isInitialPageState = true.obs;
 
   /// 검색된 컨텐츠 리스트 호출
   /// paging 로직 적용
   Future<void> loadSearchedContentList(ContentType contentType,
       {required bool checkContentRegistration}) async {
-    Result<List<SearchedContent>> responseResult;
+    Result<SearchContentModel> responseResult;
 
-    if (contentType.isTv) {
-      responseResult =
-          await repository.loadSearchedTvContentList(searchedKeyword);
-    } else {
-      responseResult =
-          await repository.loadSearchedMovieContentList(searchedKeyword);
+    /// pagingController가 Listen 되고
+    /// 검색어가 없는 상태에서 Call하는 상태를 방지하기 위한 구문
+    if (isInitialPageState.isTrue) {
+      pagingController.appendPage([], 0);
+      isInitialPageState(false);
+      return;
     }
+
+    responseResult =  await repository.loadSearchedMovieContentList(query: '', page: 1);
 
     responseResult.fold(
       onSuccess: (data) {
-        // 등록된 컨텐츠인지 판별
-        if (checkContentRegistration) {
-          for (var content in data) {
-            content.checkIsContentRegistered(contentType: contentType);
-          }
-        }
-
-        final bool noMoreReturn = data.length < 20;
+        final bool noMoreReturn = data.contents.length < 20;
         if (limitPagingByPageLimit || noMoreReturn) {
           log('[PAGING] LAST LOAD');
-          pagingController.appendLastPage(data);
+          pagingController.appendLastPage(data.contents);
         } else {
           log('[PAGING] FIRST LOAD');
-          if (data.length < 20) {
-            pagingController.appendLastPage(data);
+          if (data.contents.length < 20) {
+            pagingController.appendLastPage(data.contents);
           } else {
-            pagingController.appendPage(data, pagingNextPageKey + 1);
+            pagingController.appendPage(data.contents, pagingNextPageKey + 1);
           }
         }
       },
@@ -79,7 +79,7 @@ mixin PagingHandlerMixin {
     }
 
     // 4. IOS space (공백) 연타시 '.'이 입력되는 현상이 있따면 검색 X
-    if (term.getLastCharacter == '' && term.contains(' ')) {
+    if (term.getLastCharacter == ' ' && term.contains('.')) {
       return false;
     }
 

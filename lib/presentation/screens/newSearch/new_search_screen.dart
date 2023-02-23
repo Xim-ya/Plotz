@@ -1,14 +1,16 @@
+import 'package:soon_sak/presentation/screens/newSearch/localWidget/new_search_scaffold.dart';
+import 'package:soon_sak/presentation/screens/newSearch/new_search_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchScreen extends BaseScreen<SearchViewModel> {
-  const SearchScreen({Key? key}) : super(key: key);
+class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
+  const NewSearchScreen({Key? key}) : super(key: key);
 
   @override
   bool get wrapWithSafeArea => false;
 
   @override
   Widget buildScreen(BuildContext context) {
-    return SearchScaffold(
+    return NewSearchScaffold(
       tabs: buildTabs(),
       tabViews: buildTabView(),
     );
@@ -17,6 +19,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   List<Widget> buildTabView() => [
         PagingResultListView(
           focusNode: vm.focusNode,
+          isInitialState: vm.isInitialState,
           pagingController: vm.pagingController,
           firstPageErrorText: '드라마 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
@@ -32,8 +35,8 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
           },
         ),
         PagingResultListView(
-
           focusNode: vm.focusNode,
+          isInitialState: vm.isInitialState,
           pagingController: vm.pagingController,
           firstPageErrorText: '영화 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
@@ -71,14 +74,12 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
             SearchBar(
               focusNode: vm.focusNode,
               textEditingController: vm.textEditingController,
-              onChanged: (_) {
-                vm.onSearchChanged();
-              },
+              onChanged: vm.onTextChanged,
               onFieldSubmitted: (value) {
-                // vm.loadSearchedContentListByPaging();
+                // vm.onTextChanged();
               },
               resetSearchValue: vm.resetSearchValue,
-              showRoundCloseBtn: vm.showRoundCloseBtn,
+              showRoundCloseBtn: false.obs,
               width: SizeConfig.to.screenWidth - 84,
             ),
             MaterialButton(
@@ -100,10 +101,10 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
     );
   }
 
-  // [TextField] OutLinedBorder 속성
-  OutlineInputBorder _fixedOutLinedBorder() {
-    return const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(6)),
-        borderSide: BorderSide(color: Colors.transparent));
-  }
+  // // [TextField] OutLinedBorder 속성
+  // OutlineInputBorder _fixedOutLinedBorder() {
+  //   return const OutlineInputBorder(
+  //       borderRadius: BorderRadius.all(Radius.circular(6)),
+  //       borderSide: BorderSide(color: Colors.transparent));
+  // }
 }

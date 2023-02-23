@@ -19,6 +19,7 @@ class SearchScaffoldController extends BaseViewModel
     /// 아래 1,2 메소들 실행
     tabController.addListener(
       () {
+        print("arang!@#!@#");
         // 1. 타입별로 Api을 하기 위해 컨텐츠 타입을 변경.
         if (tabController.index == 0) {
           _selectedTabType = ContentType.tv;
@@ -27,7 +28,7 @@ class SearchScaffoldController extends BaseViewModel
           // if (ContentService.to.totalListOfRegisteredMovieContent.value ==
           //     null) {
           //   // TODO: 검색 로직 리팩토링 진행시 해당 부분 대응 필요
-          //   // ContentService.to.fetchAllOfRegisteredMovieContent();
+          //   // ContentService.to.fetchAl lOfRegisteredMovieContent();
           // }
         }
 

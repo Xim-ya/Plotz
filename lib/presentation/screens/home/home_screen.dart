@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {

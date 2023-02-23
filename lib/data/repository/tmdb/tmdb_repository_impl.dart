@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/search/search_content_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TmdbRepositoryImpl implements TmdbRepository {
@@ -77,13 +78,12 @@ class TmdbRepositoryImpl implements TmdbRepository {
 
   // 'TV' 컨텐츠 검색 결과 리스트
   @override
-  Future<Result<List<SearchedContent>>> loadSearchedTvContentList(
-      String query) async {
+  Future<Result<SearchContentModel>> loadSearchedTvContentList(
+      {required String query, required int page}) async {
     try {
-      final response = await _dataSource.loadSearchedTvContentList(query);
-      return Result.success(
-        response.results.map(SearchedContent.fromTvResponse).toList(),
-      );
+      final response =
+          await _dataSource.loadSearchedTvContentList(query: query, page: page);
+      return Result.success(SearchContentModel.fromTvResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -91,13 +91,12 @@ class TmdbRepositoryImpl implements TmdbRepository {
 
   // 'Movie' 컨텐츠 검색 결과 리스트
   @override
-  Future<Result<List<SearchedContent>>> loadSearchedMovieContentList(
-      String query) async {
+  Future<Result<SearchContentModel>> loadSearchedMovieContentList(
+      {required String query, required int page}) async {
     try {
-      final response = await _dataSource.loadSearchedMovieContentList(query);
-      return Result.success(
-        response.results.map(SearchedContent.fromMovieResponse).toList(),
-      );
+      final response = await _dataSource.loadSearchedMovieContentList(
+          query: query, page: page);
+      return Result.success(SearchContentModel.fromMovieResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }

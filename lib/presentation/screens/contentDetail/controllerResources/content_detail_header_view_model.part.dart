@@ -25,7 +25,7 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
       : _contentDescriptionInfo.value?.title.obs;
 
   // 컨텐츠 TMDB 평점
-  String? get rate => _contentDescriptionInfo.value?.rate.toString();
+  String? get rate => _contentDescriptionInfo.value?.rate.toStringAsFixed(2);
 
   // 컨텐츠 장르 리스트
   String? get genre => Formatter.formatGenreListToSingleStr(

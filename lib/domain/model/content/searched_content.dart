@@ -7,7 +7,7 @@ import 'package:soon_sak/utilities/index.dart';
  * 핵심 정보를 load하고 이후에 받아올 수 있도록 함.
  * */
 
-class SearchedContent{
+class SearchedContent {
   final int contentId;
   final String? posterImgUrl; // 컨텐츠 포스트
   final String? title;
@@ -27,30 +27,11 @@ class SearchedContent{
   /// 등록된 컨텐츠인지 판별하는 메소드.
   /// 서버에 저장된 '등록된 모든 컨텐츠' 데이터를 기반으로 등록여부를 확인함.
   /// '서버에 등록된 컨텐츠 리스트' <--(비교)--> '검색된 결과 리스트'
-  Future<void> checkIsContentRegistered(
-      {required ContentType contentType}) async {
-    // // 1. 등록된 전체 컨텐츠 리스트 데이터가 호출되어 있지 않다면. 리스트 호출
-    // if (contentType.isTv &&
-    //     ContentService.to.totalListOfRegisteredTvContent.value == null) {
-    //   /*await ContentService.to.fetchAllOfRegisteredTvContent();*/
-    // } else if (contentType.isMovie &&
-    //     ContentService.to.totalListOfRegisteredMovieContent.value == null) {
-    //   // await ContentService.to.fetchAllOfRegisteredMovieContent();
-    // }
-    //
-    // // 2. 등록된 전체 컨텐츠의 [contentId] 값으로 검색된 결과 리스트의 등록 여부를 확인
-    // for (var element
-    //     in ContentService.to.returnTotalListBaseOnType(type: contentType)!) {
-    //   if (element.contentId == contentId) {
-    //     isRegisteredContent.value = ContentRegisteredValue.registered;
-    //     // TODO 필요 없으면 삭제
-    //     // youtubeVideoId = element.videoId;
-    //     break;
-    //   } else {
-    //     isRegisteredContent.value = ContentRegisteredValue.unRegistered;
-    //   }
-    // }
-  }
+  /// NOTE : 아래 로직 사용안함. 다만 컨텐츠 개수가 늘어날 때 loop 돌리는게 부담이 될 수 있음
+  /// 필요할 때 아래  로직을 사용
+  /// 일단 주석 처리
+  // Future<void> checkIsContentRegistered(
+  //     {required ContentType contentType}) async {}
 
   factory SearchedContent.fromMovieResponse(TmdbMovieDetailResponse response) {
     /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
@@ -73,7 +54,11 @@ class SearchedContent{
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.title,
       releaseDate: verifyReleaseDate(),
-      isRegisteredContent: ContentRegisteredValue.isLoading.obs,
+      isRegisteredContent: ContentService.to.contentIdInfo!.movieContentIdList
+              .contains(response.id)
+          ? ContentRegisteredValue.registered.obs
+          : ContentRegisteredValue.unRegistered.obs,
+      // isRegisteredContent:   ContentRegisteredValue.isLoading.obs,
     );
   }
 
@@ -98,7 +83,10 @@ class SearchedContent{
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.name,
       releaseDate: verifyReleaseDate(),
-      isRegisteredContent: ContentRegisteredValue.isLoading.obs,
+      isRegisteredContent:
+          ContentService.to.contentIdInfo!.tvContentIdList.contains(response.id)
+              ? ContentRegisteredValue.registered.obs
+              : ContentRegisteredValue.unRegistered.obs,
     );
   }
 }

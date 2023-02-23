@@ -11,6 +11,9 @@ class SearchViewModel extends BaseViewModel {
   // final SearchPagingContentUseCase _pagingHandler;
   final SearchPagedContentUseCase _pagingHandler;
 
+
+  RxBool get isInitialPageState => _pagingHandler.isInitialPageState;
+
   /* Intents */
 
   /// 검색된 컨텐츠 클릭 되었을 때

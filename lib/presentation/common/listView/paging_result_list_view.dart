@@ -14,6 +14,7 @@ class PagingResultListView extends StatelessWidget {
     required this.focusNode,
     required this.pagingController,
     required this.itemBuilder,
+    this.isInitialState,
     required this.firstPageErrorText,
     this.physics,
     this.noItemsFoundText = '검색된 결과가 없습니다',
@@ -22,6 +23,7 @@ class PagingResultListView extends StatelessWidget {
 
   final FocusNode focusNode;
   final PagingController pagingController;
+  final RxBool? isInitialState;
   final ItemWidgetBuilder<SearchedContent> itemBuilder;
   final String firstPageErrorText;
   final String? noItemsFoundText;
@@ -50,27 +52,44 @@ class PagingResultListView extends StatelessWidget {
             ),
           ),
 
-          /* 초기 화면 */
-          firstPageErrorIndicatorBuilder: (context) => Center(
-            child: Text(
-              firstPageErrorText,
-              style: AppTextStyle.headline3,
-            ),
-          ),
+          // /* 초기 화면 */
+          // firstPageErrorIndicatorBuilder: (context) => term!.isEmpty
+          //     ? Center(
+          //         child: Text(
+          //           firstPageErrorText,
+          //           style: AppTextStyle.headline3,
+          //         ),
+          //       )
+          //     : SizedBox(
+          //         child: Text(
+          //           'aim1',
+          //           style: AppTextStyle.headline1,
+          //         ),
+          //       ),
 
           /* 검색된 결과가 없을 때 */
-          noItemsFoundIndicatorBuilder: (context) => Center(
-            child: Text(
-              noItemsFoundText!,
-              style: AppTextStyle.title1,
-            ),
+          noItemsFoundIndicatorBuilder: (context) => Obx(
+            () => isInitialState!.isTrue
+                ? Center(
+                    child: Text(
+                      firstPageErrorText,
+                      style: AppTextStyle.headline3,
+                    ),
+                  )
+                : Center(
+                  child: SizedBox(
+                      child: Text(
+                        '검색된 결과가 없습니다',
+                        style: AppTextStyle.headline1,
+                      ),
+                    ),
+                ),
           ),
-
           /* 로딩 인디케이터 */
           firstPageProgressIndicatorBuilder: (context) {
             return const Center(
                 child: CircularProgressIndicator(
-              color: AppColor.darkGrey,
+              color: AppColor.red,
             ));
           },
           /* 검색 결과*/

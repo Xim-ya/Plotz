@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/search/search_content_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -17,9 +18,11 @@ abstract class TmdbRepository {
 
   Future<Result<List<String>>> loadMovieImgUrlList(int movieId);
 
-  Future<Result<List<SearchedContent>>> loadSearchedTvContentList(String query);
+  Future<Result<SearchContentModel>> loadSearchedTvContentList(
+      {required String query, required int page});
 
-  Future<Result<List<SearchedContent>>> loadSearchedMovieContentList(String query);
+  Future<Result<SearchContentModel>> loadSearchedMovieContentList(
+      {required String query, required int page});
 
   static TmdbRepository get to => Get.find();
 }

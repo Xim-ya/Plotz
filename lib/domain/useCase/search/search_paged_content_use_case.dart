@@ -11,6 +11,8 @@ abstract class SearchPagedContentUseCase {
 
   PagingController<int, SearchedContent> get pagingController;
 
+  RxBool get  isInitialPageState;
+
   Content? get selectedContent;
 
   RxBool get showRoundCloseBtn;
@@ -18,6 +20,8 @@ abstract class SearchPagedContentUseCase {
   FocusNode get focusNode;
 
   String get searchedKeyword;
+
+
 
   Future<void> loadSearchedContentList(ContentType contentType,
       {required bool checkContentRegistration});

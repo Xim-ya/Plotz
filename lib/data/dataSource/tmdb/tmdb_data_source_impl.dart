@@ -39,11 +39,11 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
   @override
   Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
-          String query) async =>
-      _api.loadSearchedTvContentList(query);
+      {required String query, required int page}) async =>
+      _api.loadSearchedTvContentList(page, query);
 
   @override
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
-          String query) async =>
-      _api.loadSearchedMovieContentList(query);
+      {required String query, required int page}) async =>
+      _api.loadSearchedMovieContentList(page, query);
 }

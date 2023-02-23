@@ -9,6 +9,10 @@ import 'package:soon_sak/utilities/index.dart';
  *  2. 호출한 컨텐츠 Id List에서 무작위로 20개의 id 추출
  *  3. 추출한 20개의 아이디에 해당하는 컨텐츠 데이터 호출
  *
+ *  Edited By Ximya - 2023.02.22
+ *  추가호출 로직추가
+ *  기존에 호출한 컨텐츠를 제외한 랜덤 컨텐츠 호출
+ *  더 이상 호출할 컨텐츠가 없을 경우 viewModel 레이에서 확인할 수 있도록 State 설정
  * */
 
 class LoadRandomPagedExploreContentsUseCase

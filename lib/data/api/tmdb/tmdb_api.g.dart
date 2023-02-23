@@ -91,7 +91,9 @@ class _TmdbApi implements TmdbApi {
 
   @override
   Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
-      query) async {
+    key,
+    query,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -104,7 +106,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query=${query}',
+              '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=${key}&query=${query}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -185,7 +187,9 @@ class _TmdbApi implements TmdbApi {
 
   @override
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
-      query) async {
+    key,
+    query,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -198,7 +202,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query=${query}',
+              '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=${key}&query=${query}',
               queryParameters: queryParameters,
               data: _data,
             )

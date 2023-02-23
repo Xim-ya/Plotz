@@ -40,7 +40,6 @@ class ExploreViewModel extends BaseViewModel {
     }
   }
 
-
   /// 컨텐츠 데이터 추가 호출
   /// 추가할 데이터가 존재할 경우에만 호출을 진행함
   /// 더 이상 호출 데이터가 없을 경우 'toast' 메세지를 띄움
@@ -64,7 +63,6 @@ class ExploreViewModel extends BaseViewModel {
     }
   }
 
-
   /// 컨텐츠 데이터를 호출 (20개)
   /// 랜덤하게 컨텐츠를 가져오며
   /// 해당 메소드는 한번만 실행됨
@@ -85,13 +83,12 @@ class ExploreViewModel extends BaseViewModel {
 
   bool get isContentLoaded => _exploreContents.value.hasData;
 
-
   @override
   Future<void> onInit() async {
     super.onInit();
 
     swiperController = CarouselController();
 
-    await loadRandomExploreContents();
+    // await loadRandomExploreContents();
   }
 }

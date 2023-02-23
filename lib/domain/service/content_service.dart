@@ -67,4 +67,6 @@ class ContentService extends GetxService {
 
   String? get categoryContentKey =>
       _staticContentKeys.value?.categoryContentKey;
+
+  static ContentService get to => Get.find();
 }
