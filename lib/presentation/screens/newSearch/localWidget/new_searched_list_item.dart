@@ -1,11 +1,11 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class NewSearchedListItem extends StatelessWidget {
-  const NewSearchedListItem(
+class NewSearchListItem extends StatelessWidget {
+  const NewSearchListItem(
       {Key? key,
-      required this.contentType,
-      required this.item,
-      required this.onItemClicked})
+        required this.contentType,
+        required this.item,
+        required this.onItemClicked})
       : super(key: key);
 
   final ContentType contentType;
@@ -138,10 +138,10 @@ class NewSearchedListItem extends StatelessWidget {
                     item.releaseDate != null
                         ? Formatter.dateToyyMMdd(item.releaseDate!)
                         : contentType.isTv
-                            ? '방영일 확인 불가'
-                            : '개봉일 확인 불가',
+                        ? '방영일 확인 불가'
+                        : '개봉일 확인 불가',
                     style:
-                        AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
+                    AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
                   ),
                 AppSpace.size2,
                 // 등록 여부 Indicator

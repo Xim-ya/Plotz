@@ -6,7 +6,7 @@ class SearchBar extends StatelessWidget {
     required this.focusNode,
     required this.textEditingController,
     required this.onChanged,
-    required this.onFieldSubmitted,
+    this.onFieldSubmitted,
     required this.resetSearchValue,
     required this.showRoundCloseBtn,
     this.showPrefixIcon = true,
@@ -17,7 +17,7 @@ class SearchBar extends StatelessWidget {
   final FocusNode focusNode;
   final TextEditingController textEditingController;
   final Function(String) onChanged;
-  final Function(String) onFieldSubmitted;
+  final Function(String)? onFieldSubmitted;
   final VoidCallback resetSearchValue;
   final RxBool showRoundCloseBtn;
   final double width;

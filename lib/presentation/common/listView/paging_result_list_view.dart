@@ -52,7 +52,7 @@ class PagingResultListView extends StatelessWidget {
             ),
           ),
 
-          /* 검색된 결과가 없을 때 */
+          /* 검색된 결과가 없을 때 & 초기 화면 문구 */
           noItemsFoundIndicatorBuilder: (context) => Obx(
             () => isInitialState!.isTrue
                 ? Center(
@@ -62,20 +62,36 @@ class PagingResultListView extends StatelessWidget {
                     ),
                   )
                 : Center(
-                  child: SizedBox(
+                    child: SizedBox(
                       child: Text(
                         '검색된 결과가 없습니다',
                         style: AppTextStyle.headline3,
                       ),
                     ),
-                ),
+                  ),
           ),
+
+          /* 에러 문구 */
+          firstPageErrorIndicatorBuilder: (context) {
+            return Expanded(
+              child: Center(
+                child: Text(
+                  '검색어 호출에 실패했어요\n다시 시도해주세요',
+                  style: AppTextStyle.headline3,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          },
+
           /* 로딩 인디케이터 */
           firstPageProgressIndicatorBuilder: (context) {
             return const Center(
-                child: CircularProgressIndicator(
-              color: AppColor.red,
-            ));
+              child: CircularProgressIndicator(
+                strokeWidth: 3.6,
+                color: AppColor.darkGrey,
+              ),
+            );
           },
           /* 검색 결과*/
           itemBuilder: itemBuilder,

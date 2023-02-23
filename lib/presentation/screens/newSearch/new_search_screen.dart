@@ -1,4 +1,5 @@
 import 'package:soon_sak/presentation/screens/newSearch/localWidget/new_search_scaffold.dart';
+import 'package:soon_sak/presentation/screens/newSearch/localWidget/new_searched_list_item.dart';
 import 'package:soon_sak/presentation/screens/newSearch/new_search_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -24,7 +25,7 @@ class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
           firstPageErrorText: '드라마 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return SearchedListItem(
+            return NewSearchListItem(
               contentType: ContentType.tv,
               item: searchedItem,
               onItemClicked: () {
@@ -41,7 +42,7 @@ class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
           firstPageErrorText: '영화 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return SearchedListItem(
+            return NewSearchListItem(
               contentType: ContentType.movie,
               item: searchedItem,
               onItemClicked: () {
@@ -77,10 +78,7 @@ class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
               onChanged: (_) {
                 vm.onTextChanged();
               },
-              onFieldSubmitted: (value) {
-                // vm.onTextChanged();
-              },
-              resetSearchValue: vm.resetSearchValue,
+              resetSearchValue: vm.onClosedBtnTapped,
               showRoundCloseBtn: vm.showRoundCloseBtn,
               width: SizeConfig.to.screenWidth - 84,
             ),

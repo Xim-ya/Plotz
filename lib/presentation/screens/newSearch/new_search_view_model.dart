@@ -6,33 +6,23 @@ import 'package:soon_sak/utilities/index.dart';
 /// PAGING Controller를 두 개로 분리 필요. (메모리를 너무 많이 사용하는지 사전에 확인 필요)
 
 class NewSearchViewModel extends BaseViewModel {
-  NewSearchViewModel(this.pagedSearchHandler);
+  NewSearchViewModel(this._pagedSearchHandler);
 
   /* UseCases */
-  final NewSearchedPagedContentUseCase pagedSearchHandler;
+  final NewSearchedPagedContentUseCase _pagedSearchHandler;
 
-  /* Variables */
-  Rx<ContentType> get selectedTabType => pagedSearchHandler.selectedTabType;
+  /* Variables (State) */
+  Rx<ContentType> get selectedTabType => _pagedSearchHandler.selectedTabType;
+  RxBool get isInitialState => _pagedSearchHandler.isInitialState;
+  RxBool get showRoundCloseBtn => _pagedSearchHandler.showRoundClosedBtn;
 
-  PagingController<int, SearchedContent> get pagingController =>
-      pagedSearchHandler.pagingController;
-
-  RxBool get showRoundCloseBtn => pagedSearchHandler.showRoundClosedBtn;
-
+  /* Controllers */
   TextEditingController get textEditingController =>
-      pagedSearchHandler.fieldController;
-
-  FocusNode get focusNode => pagedSearchHandler.fieldNode;
-
-  RxBool get isInitialState => pagedSearchHandler.isInitialState;
-
-  VoidCallback get onTextChanged => pagedSearchHandler.onSearchTermEntered;
-
-  @override
-  void onInit() {
-    pagedSearchHandler.initUseCase();
-    super.onInit();
-  }
+      _pagedSearchHandler.fieldController;
+  PagingController<int, SearchedContent> get pagingController =>
+      _pagedSearchHandler.pagingController;
+  FocusNode get focusNode => _pagedSearchHandler.fieldNode;
+  VoidCallback get onTextChanged => _pagedSearchHandler.onSearchTermEntered;
 
   /* Intents */
 
@@ -76,13 +66,11 @@ class NewSearchViewModel extends BaseViewModel {
   }
 
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때
-  void resetSearchValue() {}
+  VoidCallback get onClosedBtnTapped => _pagedSearchHandler.onCloseBtnTapped;
 
-  // 검색어가 입력되었을 때
-  void onSearchChanged() {
-    print('aim');
+  @override
+  void onInit() {
+    _pagedSearchHandler.initUseCase();
+    super.onInit();
   }
-
-  // 컨텐츠 리스트 호출 - (pagination logic 적용)
-  Future<void> loadSearchedContentListByPaging() async {}
 }

@@ -3,21 +3,17 @@ import 'package:soon_sak/utilities/index.dart';
 
 class NewSearchScaffoldController extends BaseViewModel
     with GetSingleTickerProviderStateMixin {
-  late final TabController tabController;
-  late final ScrollController scrollController;
+  NewSearchScaffoldController(this.searchViewModel);
 
   /* View Model */
   final NewSearchViewModel searchViewModel;
   int selectedTabIndex = 0;
 
   /* Controllers */
-
-
-  NewSearchScaffoldController(this.searchViewModel);
+  late final TabController tabController;
+  late final ScrollController scrollController;
 
   // /* Variables */
-  // ContentType _selectedTabType = ContentType.tv; // 선택된 탭 (컨텐츠 타입)
-
   /// 탭 인덱스가 변경될 때 마다
   /// 아래 1,2 메소들 실행
   void onTabClicked(int index) {
@@ -30,18 +26,20 @@ class NewSearchScaffoldController extends BaseViewModel
     } else {
       searchViewModel.selectedTabType.value = ContentType.movie;
     }
-    Future.delayed(
-        const Duration(milliseconds: 400), () => {searchViewModel.pagingController.refresh()});
+
+    /// 탭이 전환 되었을 때
+    /// paging call을 실행
+    /// 바로 Paging call을 시도하면 call 두번 실행되는 이슈가 있음
+    /// https://github.com/EdsonBueno/infinite_scroll_pagination/issues/136
+    /// 두번 call 되는 이슈를 막기 위해 0.4초 delayed 한 뒤에 실행
+    Future.delayed(const Duration(milliseconds: 400),
+        () => {searchViewModel.pagingController.refresh()});
   }
 
   @override
   void onInit() {
     super.onInit();
-
     tabController = TabController(length: 2, vsync: this);
     scrollController = ScrollController();
-
-    /// 탭 인덱스가 변경될 때 마다
-    /// 아래 1,2 메소들 실행
   }
 }
