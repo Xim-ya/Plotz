@@ -16,15 +16,20 @@ class SearchViewModel extends BaseViewModel {
 
   /* Variables (State) */
   Rx<ContentType> get selectedTabType => _pagedSearchHandler.selectedTabType;
+
   RxBool get isInitialState => _pagedSearchHandler.isInitialState;
+
   RxBool get showRoundCloseBtn => _pagedSearchHandler.showRoundClosedBtn;
 
   /* Controllers */
   TextEditingController get textEditingController =>
       _pagedSearchHandler.fieldController;
+
   PagingController<int, SearchedContent> get pagingController =>
       _pagedSearchHandler.pagingController;
+
   FocusNode get focusNode => _pagedSearchHandler.fieldNode;
+
   VoidCallback get onTextChanged => _pagedSearchHandler.onSearchTermEntered;
 
   /* Intents */
@@ -50,21 +55,23 @@ class SearchViewModel extends BaseViewModel {
           contentId: content.contentId,
           contentType: contentType,
           posterImgUrl: content.posterImgUrl,
-          // TODO: origin id 매핑 로직 필요
-          originId: '',
+          originId: Formatter.getOriginIdByTypeAndId(
+              type: selectedTabType.value, id: content.contentId),
         ),
       );
     } else {
       // 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
-      Get.dialog(AppDialog.dividedBtn(
-        title: '미등록 컨텐츠\n[${content.title}]',
-        description: '등록되어 있는 컨텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
-        leftBtnContent: '나중에',
-        rightBtnContent: '요청하기',
-        // TODO: 실제 요청 로직 추가 필요
-        onRightBtnClicked: Get.back,
-        onLeftBtnClicked: Get.back,
-      ));
+      Get.dialog(
+        AppDialog.dividedBtn(
+          title: '미등록 컨텐츠\n[${content.title}]',
+          description: '등록되어 있는 컨텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
+          leftBtnContent: '나중에',
+          rightBtnContent: '요청하기',
+          // TODO: 실제 요청 로직 추가 필요
+          onRightBtnClicked: Get.back,
+          onLeftBtnClicked: Get.back,
+        ),
+      );
     }
   }
 

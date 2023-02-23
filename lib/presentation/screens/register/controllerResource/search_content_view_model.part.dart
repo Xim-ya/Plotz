@@ -35,7 +35,7 @@ extension FindContentViewModel on RegisterViewModel {
 
 
   RxBool get showContentSbCloseBtn => pagedSearchHandler.showRoundClosedBtn;
-  RxBool get isContentSelected => (_selectedContent.hasData).obs;
+  RxBool get isContentSelected => (_selectedContent.value.hasData).obs;
   TextEditingController get textEditingController =>
       pagedSearchHandler.textEditingController;
   PagingController<int, SearchedContent> get pagingController =>

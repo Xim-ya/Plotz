@@ -144,6 +144,10 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   Future<void> requestRegistration() async {
+    if (curationContent.value == null || _userService.userInfo == null) {
+      unawaited(AlertWidget.newToast('선택된 데이터가 없습니다. 다시 시도해주세요'));
+    }
+
     final requestData = ContentRequest.fromContentModelWithUserId(
         content: curationContent.value!, userId: _userService.userInfo!.id!);
     final response = await _requestContentRegistrationUseCase.call(requestData);
@@ -151,10 +155,22 @@ class RegisterViewModel extends BaseViewModel {
       onSuccess: (data) async {
         log('컨텐츠 등록 성공');
         Get.back();
-        unawaited(AlertWidget.animatedToast(
-          '등록 절차를 거친 뒤 컨텐츠가 등록됩니다',
-          isUsedOnTabScreen: true,
-        ));
+        unawaited(
+          Get.dialog(
+            AppDialog.dividedBtn(
+              title:
+                  '[${_selectedContent.value!.detail!.title}]\n컨텐츠 등록이 완료되었어요',
+              description: '검토 후 순삭 컨텐츠에 정식 등록됩니다',
+              leftBtnContent: '큐레이션 내역',
+              rightBtnContent: '확인',
+              onRightBtnClicked: Get.back,
+              onLeftBtnClicked: () {
+                Get.toNamed(AppRoutes.curationHistory)!.whenComplete(Get.back);
+
+              },
+            ),
+          ),
+        );
 
         /// 다른 화면 데이터 갱신
         /// 1. 큐레이션 스크린 (진행 중 큐레이션 내역)
@@ -163,6 +179,7 @@ class RegisterViewModel extends BaseViewModel {
         await _myPageViewModel.fetchUserCurationSummary();
       },
       onFailure: (e) {
+        AlertWidget.toast('컨텐츠 등록 요청에 실패했습니다. 다시 시도해주세요');
         log('RegisterViewModel : $e');
       },
     );
