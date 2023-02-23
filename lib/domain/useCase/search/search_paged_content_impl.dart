@@ -50,4 +50,16 @@ class SearchPagedContentImpl
       ),
     );
   }
+
+  @override
+  // TODO: implement textEditingController
+  TextEditingController get textEditingController => throw UnimplementedError();
+
+  @override
+  // TODO: implement focusNode
+  FocusNode get focusNode => throw UnimplementedError();
+
+  @override
+  // TODO: implement showRoundCloseBtn
+  RxBool get showRoundCloseBtn => throw UnimplementedError();
 }

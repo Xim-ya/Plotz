@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:soon_sak/domain/model/content/search/search_content_model.dart';
+import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /// TODO: PAGING 고도화 로직 필요
@@ -8,90 +6,31 @@ import 'package:soon_sak/utilities/index.dart';
 /// PAGING Controller를 두 개로 분리 필요. (메모리를 너무 많이 사용하는지 사전에 확인 필요)
 
 class NewSearchViewModel extends BaseViewModel {
-  NewSearchViewModel(this._tmdbRepository);
-
-  /* Variables */
-  final Rx<ContentType> selectedTabType = Rx(ContentType.tv);
-
-  /* Data Modules */
-  final TmdbRepository _tmdbRepository;
+  NewSearchViewModel(this.pagedSearchHandler);
 
   /* UseCases */
-  final int _pageSize = 20;
-  final RxBool isInitialState = true.obs;
+  final NewSearchedPagedContentUseCase pagedSearchHandler;
 
-  /* Controllers */
-  Timer? _debounce;
-  final FocusNode focusNode = FocusNode();
-  final PagingController<int, SearchedContent> pagingController =
-      PagingController(firstPageKey: 1);
-  final PagingController<int, SearchedContent> moviePagingController =
-      PagingController(firstPageKey: 1);
-  final TextEditingController textEditingController = TextEditingController();
+  /* Variables */
+  Rx<ContentType> get selectedTabType => pagedSearchHandler.selectedTabType;
 
-  void test() {
-    pagingController.value = const PagingState(nextPageKey: 1, itemList: null);
-  }
+  PagingController<int, SearchedContent> get pagingController =>
+      pagedSearchHandler.pagingController;
 
-  Future<void> fetchPage(int pageKey) async {
-    print('---- FETCH API CALLED  SELECTED TYPE ${selectedTabType}');
-    if (textEditingController.text.isEmpty) {
-      pagingController.appendLastPage([]);
-      return;
-    }
+  RxBool get showRoundCloseBtn => pagedSearchHandler.showRoundClosedBtn;
 
-    Result<SearchContentModel> response;
+  TextEditingController get textEditingController =>
+      pagedSearchHandler.fieldController;
 
-    if (selectedTabType.value.isTv) {
-      response = await _tmdbRepository.loadSearchedTvContentList(
-          query: textEditingController.text, page: pageKey);
-    } else {
-      response = await _tmdbRepository.loadSearchedMovieContentList(
-          query: textEditingController.text, page: pageKey);
-    }
+  FocusNode get focusNode => pagedSearchHandler.fieldNode;
 
-    final PagingController<int, SearchedContent> controller = pagingController;
+  RxBool get isInitialState => pagedSearchHandler.isInitialState;
 
-    response.fold(onSuccess: (data) {
-      final searchedContents = data.contents;
-      final isLastPage = searchedContents.length < _pageSize;
-      if (isLastPage) {
-        log('LAST PAGE CALLED');
-        print('aim ${searchedContents.length}');
-        controller.appendLastPage(searchedContents);
-      } else {
-        log('FIRST PAGE CALLED');
-        final nextPageKey = pageKey + 1;
-        controller.appendPage(searchedContents, nextPageKey);
-      }
-    }, onFailure: (e) {
-      print(e);
-      controller.error = e;
-    });
-  }
-
-  void onTextChanged(String text) {
-    if (isInitialState.isTrue) isInitialState(false);
-
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(
-        const Duration(milliseconds: 300),
-        () => {
-              pagingController.refresh(),
-            });
-  }
+  VoidCallback get onTextChanged => pagedSearchHandler.onSearchTermEntered;
 
   @override
   void onInit() {
-    fetchPage(1);
-
-    pagingController.addPageRequestListener((pageKey) {
-      print('INIT FETCH STARTED');
-      fetchPage(pageKey);
-    });
-
-
-
+    pagedSearchHandler.initUseCase();
     super.onInit();
   }
 

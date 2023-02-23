@@ -52,21 +52,6 @@ class PagingResultListView extends StatelessWidget {
             ),
           ),
 
-          // /* 초기 화면 */
-          // firstPageErrorIndicatorBuilder: (context) => term!.isEmpty
-          //     ? Center(
-          //         child: Text(
-          //           firstPageErrorText,
-          //           style: AppTextStyle.headline3,
-          //         ),
-          //       )
-          //     : SizedBox(
-          //         child: Text(
-          //           'aim1',
-          //           style: AppTextStyle.headline1,
-          //         ),
-          //       ),
-
           /* 검색된 결과가 없을 때 */
           noItemsFoundIndicatorBuilder: (context) => Obx(
             () => isInitialState!.isTrue
@@ -80,7 +65,7 @@ class PagingResultListView extends StatelessWidget {
                   child: SizedBox(
                       child: Text(
                         '검색된 결과가 없습니다',
-                        style: AppTextStyle.headline1,
+                        style: AppTextStyle.headline3,
                       ),
                     ),
                 ),

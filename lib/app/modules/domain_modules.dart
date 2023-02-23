@@ -1,14 +1,11 @@
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
+import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class DomainModules {
   DomainModules._();
 
   static Future<void> dependencies() async {
-
-
-
-
     // 인증
     Get.lazyPut(() => SignOutUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => SignInAndUpHandlerUseCase(Get.find(), Get.find()),
@@ -54,5 +51,6 @@ abstract class DomainModules {
     Get.lazyPut<SearchPagedContentUseCase>(
         () => SearchPagedContentImpl(Get.find()),
         fenix: true);
+    Get.lazyPut(() => NewSearchedPagedContentUseCase(Get.find()), fenix: true);
   }
 }

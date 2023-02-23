@@ -13,7 +13,7 @@ class SearchValidateUrlImpl
   Timer? _debounce;
 
   @override
-  String get searchedKeyword => textEditingController.value.text;
+  String get searchedKeyword => fieldController.value.text;
 
   @override
   ValidationState get isVideoValid => videoUrlValidState.value;
@@ -34,7 +34,7 @@ class SearchValidateUrlImpl
   // 붙여넣기 버튼이 클릭 되었을 시
   @override
   Future<void> onPasteBtnTapped() async {
-    focusNode.unfocus(); // 키보드 가리기
+    fieldNode.unfocus(); // 키보드 가리기
 
     videoUrlValidState(ValidationState.isLoading);
     ClipboardData? pasteUrl = await Clipboard.getData('text/plain');
@@ -43,16 +43,16 @@ class SearchValidateUrlImpl
       unawaited(AlertWidget.newToast('복사된 링크가 없습니다'));
       if (searchedKeyword != '') {
         videoUrlValidState(ValidationState.invalid);
-        showRoundCloseBtn(true);
+        exposeRoundCloseBtn(true);
       } else {
         videoUrlValidState(ValidationState.initState);
       }
     } else {
-      textEditingController.text = pasteUrl?.text ?? '';
+      fieldController.text = pasteUrl?.text ?? '';
       final videoId =
-          Formatter.getVideoIdFromYoutubeUrl(textEditingController.text);
+          Formatter.getVideoIdFromYoutubeUrl(fieldController.text);
       await checkVideoIdValidation(videoId);
-      showRoundCloseBtn(true);
+      exposeRoundCloseBtn(true);
     }
   }
 
@@ -69,7 +69,7 @@ class SearchValidateUrlImpl
           videoUrlValidState(ValidationState.initState);
           return;
         }
-        showRoundCloseBtn(true);
+        exposeRoundCloseBtn(true);
         final videoId = Formatter.getVideoIdFromYoutubeUrl(searchedKeyword);
 
         if (videoId == null) {
@@ -86,10 +86,22 @@ class SearchValidateUrlImpl
   // 검색창 'x' 버튼이 클릭 되었을 때
   @override
   void onCloseBtnTapped() {
-    textEditingController.text = '';
-    showRoundCloseBtn(false);
+    fieldController.text = '';
+    exposeRoundCloseBtn(false);
     videoUrlValidState.value = ValidationState.initState;
   }
+
+  @override
+  // TODO: implement textEditingController
+  TextEditingController get textEditingController => throw UnimplementedError();
+
+  @override
+  // TODO: implement focusNode
+  FocusNode get focusNode => throw UnimplementedError();
+
+  @override
+  // TODO: implement showRoundCloseBtn
+  RxBool get showRoundCloseBtn => throw UnimplementedError();
 
 
 }

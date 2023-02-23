@@ -74,12 +74,14 @@ class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
             SearchBar(
               focusNode: vm.focusNode,
               textEditingController: vm.textEditingController,
-              onChanged: vm.onTextChanged,
+              onChanged: (_) {
+                vm.onTextChanged();
+              },
               onFieldSubmitted: (value) {
                 // vm.onTextChanged();
               },
               resetSearchValue: vm.resetSearchValue,
-              showRoundCloseBtn: false.obs,
+              showRoundCloseBtn: vm.showRoundCloseBtn,
               width: SizeConfig.to.screenWidth - 84,
             ),
             MaterialButton(
@@ -101,10 +103,10 @@ class NewSearchScreen extends BaseScreen<NewSearchViewModel> {
     );
   }
 
-  // // [TextField] OutLinedBorder 속성
-  // OutlineInputBorder _fixedOutLinedBorder() {
-  //   return const OutlineInputBorder(
-  //       borderRadius: BorderRadius.all(Radius.circular(6)),
-  //       borderSide: BorderSide(color: Colors.transparent));
-  // }
+// // [TextField] OutLinedBorder 속성
+// OutlineInputBorder _fixedOutLinedBorder() {
+//   return const OutlineInputBorder(
+//       borderRadius: BorderRadius.all(Radius.circular(6)),
+//       borderSide: BorderSide(color: Colors.transparent));
+// }
 }

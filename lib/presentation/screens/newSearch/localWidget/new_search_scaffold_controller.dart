@@ -10,6 +10,9 @@ class NewSearchScaffoldController extends BaseViewModel
   final NewSearchViewModel searchViewModel;
   int selectedTabIndex = 0;
 
+  /* Controllers */
+
+
   NewSearchScaffoldController(this.searchViewModel);
 
   // /* Variables */
@@ -28,7 +31,7 @@ class NewSearchScaffoldController extends BaseViewModel
       searchViewModel.selectedTabType.value = ContentType.movie;
     }
     Future.delayed(
-        const Duration(milliseconds: 400), () => {searchViewModel.test()});
+        const Duration(milliseconds: 400), () => {searchViewModel.pagingController.refresh()});
   }
 
   @override
