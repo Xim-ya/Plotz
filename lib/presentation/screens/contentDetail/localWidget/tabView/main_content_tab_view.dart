@@ -1,4 +1,5 @@
 import 'package:soon_sak/presentation/common/keep_alive_view.dart';
+import 'package:soon_sak/presentation/screens/contentDetail/localWidget/expandable_text_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.13
@@ -47,10 +48,9 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
   Widget buildDescriptionSection() =>
       GetBuilder<ContentDetailViewModel>(builder: (_) {
         return vm.contentOverView.hasData
-            ? Text(
-                vm.contentOverView!,
-                style: AppTextStyle.title1
-                    .copyWith(fontFamily: 'pretendard_regular'),
+            ? ExpandableTextView(
+                text: vm.contentOverView ?? '설명 없음',
+                maxLines: 4,
               )
             : ListView.separated(
                 shrinkWrap: true,

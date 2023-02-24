@@ -1,7 +1,10 @@
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.10
- * toast과
+ *  toast 메세지 UI로직
+ *  'flutter_styled_toast' & 'getx' 라이브러리를 이용함
+ *  위 라이브러리 global context를 기반하고 있기 때문에
+ *  static한 형태로 쉽게 사용이 가능함
  * */
 
 class AlertWidget {
@@ -34,7 +37,7 @@ class AlertWidget {
         margin: isUsedOnTabScreen.hasData && isUsedOnTabScreen == true
             ? AppInset.bottom46 + AppInset.horizontal8
             : AppInset.horizontal8,
-        padding: AppInset.horizontal24  + AppInset.vertical16,
+        padding: AppInset.horizontal24 + AppInset.vertical16,
         messageText: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,7 +52,6 @@ class AlertWidget {
       ),
     );
   }
-
 
   static Future<void> newToast(String message,
       {bool? isUsedOnTabScreen}) async {
