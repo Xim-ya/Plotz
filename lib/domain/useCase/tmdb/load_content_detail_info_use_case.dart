@@ -3,7 +3,7 @@ import 'package:soon_sak/utilities/index.dart';
 /** Created By Ximya - 2022-11-20
  *  [ContentDetailViewModel]에서 사용되는 useCase
  *  TMDB API에서 데이터를 받아옴.
- *  [contentId] 와[contentType]을 인자로 전달 받음.
+ *  [originId] 와[contentType]을 인자로 전달 받음.
  *  [contentType]값('tv' 'movie')에 따라 다른 Api를 호출
  * */
 

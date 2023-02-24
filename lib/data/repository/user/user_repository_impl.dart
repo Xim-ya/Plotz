@@ -39,4 +39,15 @@ class UserRepositoryImpl implements UserRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<void>> addUserWatchHistory(
+      WatchingHistoryRequest requestInfo) async {
+    try {
+      final response = await _dataSource.addUserWatchHistory(requestInfo);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

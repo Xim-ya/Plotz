@@ -1,4 +1,3 @@
-
 import 'package:soon_sak/utilities/index.dart';
 
 class UserApiImpl with FirestoreHelper implements UserApi {
@@ -66,5 +65,23 @@ class UserApiImpl with FirestoreHelper implements UserApi {
     }).toList();
 
     return Future.wait(resultList);
+  }
+
+  @override
+  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo) async {
+    final contentRef = db.collection('content').doc(requestInfo.originId);
+
+    final data = requestInfo.toMap(
+      contentRef: contentRef,
+    );
+
+    await cudSubCollectionDocument(
+      'user',
+      docId: requestInfo.userId,
+      subCollectionName: 'watchHistory',
+      subCollectionDocId: requestInfo.originId,
+      needUpdateFieldName: 'watchedDate',
+      data: data,
+    );
   }
 }

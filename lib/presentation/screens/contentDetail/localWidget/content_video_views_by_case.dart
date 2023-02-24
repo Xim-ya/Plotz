@@ -35,7 +35,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SectionTitle(title: '컨텐츠'),
-            VideoThumbnailImgWithPlayerBtn(
+            ImageViewWithPlayBtn(
               onPlayerBtnClicked: () {
                 vm.launchYoutubeApp(vm.singleVideoId);
               },
@@ -134,7 +134,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                 child: Column(
                   children: <Widget>[
                     // 썸네일 이미지
-                    VideoThumbnailImgWithPlayerBtn(
+                    ImageViewWithPlayBtn(
                       onPlayerBtnClicked: () {
                         vm.launchYoutubeApp(videoInfoItem.videoId);
                       },
@@ -221,7 +221,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SectionTitle(title: '컨텐츠'),
-            VideoThumbnailImgWithPlayerBtn(
+            ImageViewWithPlayBtn(
               onPlayerBtnClicked: () {
                 vm.launchYoutubeApp(vm.singleVideoId);
               },
@@ -323,7 +323,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         children: <Widget>[
                           SizedBox(
                             width: vm.seasonEpisodeImgWidth,
-                            child: VideoThumbnailImgWithPlayerBtn(
+                            child: ImageViewWithPlayBtn(
                               aspectRatio: 2 / 3,
                               onPlayerBtnClicked: () {
                                 vm.launchYoutubeApp(episodeItem.videoId);

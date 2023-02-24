@@ -11,6 +11,8 @@ class ContentDetailBinding extends Bindings {
               Get.find(),
               Get.find(),
               Get.find(),
+              Get.find(),
+              Get.find(),
             ),
         fenix: true);
   }

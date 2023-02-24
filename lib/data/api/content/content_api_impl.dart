@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/content/search/content_request.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {

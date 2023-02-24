@@ -167,7 +167,6 @@ mixin FirestoreHelper {
     return docRef.id;
   }
 
-
   // 특정 Document에 데이터를 업데이트 하는 메소드
   Future<void> addFieldOnDocument(String collectionName,
       {required String? docId, required Map<String, dynamic> data}) async {
@@ -190,6 +189,57 @@ mixin FirestoreHelper {
         .doc(subCollectionDocId);
 
     return docRef.set(data);
+  }
+
+  // SubCollection Document의 존재 여부를 확인하고
+  // 특정 필드값의 필드를 업데이트 or 새로운 document 생성 (CREATE or UPDATE)
+  // 해당 subCollection doucment 개수가 20개가 넘는다면
+  // 특정 필드값의 데이터를 기준으로 정렬하여 마지막 document를 삭제 (DELETE)
+  Future<void> cudSubCollectionDocument(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+    required String subCollectionDocId,
+    required String needUpdateFieldName,
+    required Map<String, dynamic> data,
+  }) async {
+    final CollectionReference collectionRef = _db.collection(collectionName);
+    final DocumentReference documentRef = collectionRef.doc(docId);
+    final CollectionReference subCollectionRef =
+        documentRef.collection(subCollectionName);
+    final DocumentReference subCollectionDocRef =
+        subCollectionRef.doc(subCollectionDocId);
+
+
+    // 기존 Doucment 존재 여부
+    final bool documentExists =
+        await _db.runTransaction<bool>((transaction) async {
+      final DocumentSnapshot snapshot =
+          await transaction.get(subCollectionDocRef);
+
+      // 존재한다면 특정 필드값 업데이트
+      if (snapshot.exists) {
+        transaction.update(
+            subCollectionDocRef, {needUpdateFieldName: Timestamp.now()});
+      } else {
+        // 존재 하지 않는다면 새로운 Document 추가
+        transaction.set(subCollectionDocRef, data);
+      }
+      return snapshot.exists;
+    });
+
+    if (!documentExists) {
+      final QuerySnapshot querySnapshot = await subCollectionRef
+          .orderBy(needUpdateFieldName, descending: true)
+          .get();
+
+      // collection의 Document document 개수가 20개가 넘는다면
+      // 마지막 document를 삭제
+      if (querySnapshot.docs.length > 20) {
+        final DocumentSnapshot oldestDocument = querySnapshot.docs.last;
+        await oldestDocument.reference.delete();
+      }
+    }
   }
 
   // 특정 field 값을 가지고 있는 document 리스트를 불러오는 메소드

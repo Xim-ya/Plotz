@@ -10,4 +10,8 @@ abstract class UserRepository {
 
   // 유저의 큐레이션 리스트 호출
   Future<Result<List<CurationContent>>> loadUserCurationContentList(String userId);
+
+  // 유저 시청 기록 추가
+  Future<Result<void>> addUserWatchHistory(WatchingHistoryRequest requestInfo);
+
 }

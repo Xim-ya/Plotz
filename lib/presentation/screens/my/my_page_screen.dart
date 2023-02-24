@@ -36,7 +36,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               child: Row(
                 children: <Widget>[
                   GetBuilder<MyPageViewModel>(
-                    builder:(_) => RoundProfileImg(
+                    builder: (_) => RoundProfileImg(
                       size: 58,
                       imgUrl: vm.userInfo?.photoUrl,
                     ),
@@ -91,7 +91,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: GetBuilder<MyPageViewModel>(
-                  builder:(_)  =>Row(
+                  builder: (_) => Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       _curationProgressRowItem(
@@ -133,8 +133,13 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             height: 168,
             itemCount: 12,
             itemBuilder: (BuildContext context, int index) {
-              return const ContentPostItem(
-                  ratio: 96 / 142, imgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg');
+              return ImageViewWithPlayBtn(
+                  aspectRatio: 1280 / 1920,
+                  onPlayerBtnClicked: () {},
+                  posterImgUrl:
+                      '/f2PVrphK0u81ES256lw3oAZuF3x.jpg'.prefixTmdbImgPath);
+              // return const ContentPostItem(
+              //     ratio: 96 / 142, imgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg');
             },
           ),
           AppSpace.size48,

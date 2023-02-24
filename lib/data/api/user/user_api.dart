@@ -1,3 +1,4 @@
+
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserApi {
@@ -11,5 +12,9 @@ abstract class UserApi {
 
   // 유저의 큐레이션 리스트 호출
   Future<List<CurationContentResponse>> loadUserCurationContentList(
-      String userId);
+    String userId,
+  );
+
+  // 유저 시청 기록 추가
+  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
 }

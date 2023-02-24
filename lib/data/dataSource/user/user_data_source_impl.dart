@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
 class UserDataSourceImpl
-    with FireStoreErrorHandlerMixin
+    with FireStoreErrorHandlerMixin, FirebaseIsolateHelper
     implements UserDataSource {
   UserDataSourceImpl(this._api);
 
@@ -25,5 +25,12 @@ class UserDataSourceImpl
   Future<List<CurationContentResponse>> loadUserCurationContentList(
       String userId) async {
     return loadResponseOrThrow(() => _api.loadUserCurationContentList(userId));
+  }
+
+  @override
+  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo) {
+    return loadResponseOrThrow(
+      () => _api.addUserWatchHistory(requestInfo),
+    );
   }
 }

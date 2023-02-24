@@ -1,3 +1,5 @@
+
+
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserDataSource {
@@ -11,4 +13,7 @@ abstract class UserDataSource {
 
   // 유저의 큐레이션 리스트 호출
   Future<List<CurationContentResponse>> loadUserCurationContentList(String userId);
+
+  // 유저 시청 기록 추가
+  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
 }

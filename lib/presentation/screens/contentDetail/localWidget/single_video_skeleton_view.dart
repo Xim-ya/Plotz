@@ -11,7 +11,7 @@ class SingleVideoSkeletonView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const SectionTitle(title: '컨텐츠'),
-          VideoThumbnailImgWithPlayerBtn(
+          ImageViewWithPlayBtn(
             onPlayerBtnClicked: () {
               AlertWidget.toast('잠시만 기다려 주세요. 데이터를 불러오고 있습니다.');
             },

@@ -5,8 +5,8 @@ import 'package:soon_sak/utilities/index.dart';
  *  Skeleton 로직도 포함.
  * */
 
-class VideoThumbnailImgWithPlayerBtn extends StatelessWidget {
-  const VideoThumbnailImgWithPlayerBtn(
+class ImageViewWithPlayBtn extends StatelessWidget {
+  const ImageViewWithPlayBtn(
       {Key? key,
       required this.onPlayerBtnClicked,
       required this.posterImgUrl,

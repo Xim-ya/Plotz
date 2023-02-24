@@ -115,6 +115,8 @@ export 'package:soon_sak/data/dataSource/user/user_data_source_impl.dart';
 export 'package:soon_sak/data/dataSource/youtube/youtube_data_sourc_impl.dart';
 export 'package:soon_sak/data/dataSource/youtube/youtube_data_source.dart';
 export 'package:soon_sak/data/repository/user/user_repository_impl.dart';
+export 'package:soon_sak/data/api/user/request/watching_history_request.dart';
+
 
 // Domain
 export 'package:soon_sak/domain/exception/content/content_exception.dart';
@@ -176,6 +178,7 @@ export 'package:soon_sak/domain/model/content/register/content_registration_requ
 export 'package:soon_sak/domain/model/content/search/content_request.dart';
 
 // Presentation
+export 'package:soon_sak/presentation/common/image/image_view_with_play_btn.dart';
 export 'package:soon_sak/presentation/screens/search/localWidget/search_scaffold.dart';
 export 'package:soon_sak/presentation/screens/search/localWidget/searched_list_item.dart';
 export 'package:soon_sak/presentation/screens/search/search_view_model.dart';
@@ -212,7 +215,6 @@ export 'package:soon_sak/presentation/common/sticky_delegate_container.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_scaffold_controller.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_scaffold.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/content_detail_info_tab_view.dart';
-export 'package:soon_sak/presentation/common/video_thumbnail_img_with_player_btn.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_view_model.dart';
 export 'package:soon_sak/presentation/common/round_profile_img.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/localWidget/section_title.dart';

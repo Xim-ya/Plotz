@@ -13,6 +13,8 @@ class ContentDetailViewModel extends BaseViewModel {
       this._loadContentImgList,
       this._loadContentMainDescription,
       this._loadContentCreditInfo,
+      this._userRepository,
+      this._userService,
       {required argument})
       : _passedArgument = argument;
 
@@ -55,8 +57,25 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /* Data Modules */
   final ContentRepository _contentRepository;
+  final UserRepository _userRepository;
+  final UserService _userService;
 
   /* [Intent ] */
+
+  /// 유저 시청 기록 추가
+  Future<void> addUserWatchHistory(String videoId) async {
+    final requestData = WatchingHistoryRequest(
+        userId: _userService.userInfo!.id!,
+        originId: _contentDescriptionInfo.value!.originId,
+        videoId: videoId);
+
+    final response = await _userRepository.addUserWatchHistory(requestData);
+    response.fold(onSuccess: (_) {
+      log('유저 시청기록 추가 성공');
+    }, onFailure: (e) {
+      log('ContentDetailViewModel : $e');
+    });
+  }
 
   /// 이전 페이지로 이동
   void onRouteBack() {
@@ -199,14 +218,20 @@ class ContentDetailViewModel extends BaseViewModel {
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
   Future<void> launchYoutubeApp(String? youtubeVideoId) async {
     if (youtubeVideoId == null) {
-      return AlertWidget.toast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
+      return AlertWidget.animatedToast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
     }
-    if (!await launchUrl(
-      Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
-      mode: LaunchMode.externalApplication,
-    )) {
+    try {
+      await launchUrl(
+        Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      await AlertWidget.animatedToast('비디오 정보를 불러오지 못했습니디');
       throw '유튜브 앱(웹) 런치 실패';
     }
+
+    // 시청기록 추가
+    await addUserWatchHistory(youtubeVideoId);
   }
 
   @override
