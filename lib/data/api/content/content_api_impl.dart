@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/search/content_request.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {
@@ -21,7 +22,8 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   }
 
   @override
-  Future<String> requestContentRegistration(ContentRequest requestData) {
+  Future<String> requestContentRegistration(
+      ContentRegistrationRequest requestData) {
     final Map<String, dynamic> data = requestData.toMap(
       curatorRef: db.collection('user').doc(requestData.curatorId),
     );
@@ -77,5 +79,11 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     }).toList();
 
     return Future.wait(resultList);
+  }
+
+  @override
+  Future<void> requestContent(ContentRequest requestInfo) async {
+    final data = requestInfo.toMap();
+    await storeDocument('requestContent', docId: null, data: data);
   }
 }

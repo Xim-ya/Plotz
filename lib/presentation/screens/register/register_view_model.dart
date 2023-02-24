@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
@@ -148,7 +147,7 @@ class RegisterViewModel extends BaseViewModel {
       unawaited(AlertWidget.newToast('선택된 데이터가 없습니다. 다시 시도해주세요'));
     }
 
-    final requestData = ContentRequest.fromContentModelWithUserId(
+    final requestData = ContentRegistrationRequest.fromContentModelWithUserId(
         content: curationContent.value!, userId: _userService.userInfo!.id!);
     final response = await _requestContentRegistrationUseCase.call(requestData);
     await response.fold(
@@ -159,7 +158,7 @@ class RegisterViewModel extends BaseViewModel {
           Get.dialog(
             AppDialog.dividedBtn(
               title:
-                  '[${_selectedContent.value!.detail!.title}]\n컨텐츠 등록이 완료되었어요',
+                  '[${_selectedContent.value!.detail!.title}]\n컨텐츠 요청이 완료되었어요',
               description: '검토 후 순삭 컨텐츠에 정식 등록됩니다',
               leftBtnContent: '큐레이션 내역',
               rightBtnContent: '확인',

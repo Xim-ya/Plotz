@@ -1,6 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class ContentRequest {
+class ContentRegistrationRequest {
   final String originId;
   final FieldValue requestDate;
   final String title;
@@ -9,7 +9,7 @@ class ContentRequest {
   final String status;
   final String videoId;
 
-  ContentRequest(
+  ContentRegistrationRequest(
       {required this.originId,
       required this.requestDate,
       required this.title,
@@ -18,9 +18,9 @@ class ContentRequest {
       required this.status,
       required this.videoId});
 
-  factory ContentRequest.fromContentModelWithUserId(
+  factory ContentRegistrationRequest.fromContentModelWithUserId(
           {required Content content, required String userId}) =>
-      ContentRequest(
+      ContentRegistrationRequest(
         originId: Formatter.getOriginIdByTypeAndId(
             type: content.type!, id: content.id),
         requestDate: FieldValue.serverTimestamp(),

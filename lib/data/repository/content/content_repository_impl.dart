@@ -5,7 +5,6 @@ class ContentRepositoryImpl implements ContentRepository {
 
   final ContentDataSource _contentDataSource;
 
-
   @override
   Future<Result<List<ContentIdInfoItem>>> loadContentIdInfoList() async {
     try {
@@ -16,9 +15,6 @@ class ContentRepositoryImpl implements ContentRepository {
       return Result.failure(e);
     }
   }
-
-
-
 
   @override
   Future<Result<ContentVideos>> loadContentVideoInfo(String id) async {
@@ -33,10 +29,10 @@ class ContentRepositoryImpl implements ContentRepository {
 
   @override
   Future<Result<String>> requestContentRegistration(
-      ContentRequest requestData) async {
+      ContentRegistrationRequest requestData) async {
     try {
       final response =
-      await _contentDataSource.requestContentRegistration(requestData);
+          await _contentDataSource.requestContentRegistration(requestData);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(ContentException.qurationRequestFailed());
@@ -71,6 +67,16 @@ class ContentRepositoryImpl implements ContentRepository {
       final response = await _contentDataSource.loadExploreContents(ids);
       return Result.success(
           response.map((e) => ExploreContent.fromResponse(e)).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> requestContent(ContentRequest requestInfo) async {
+    try {
+      final response = await _contentDataSource.requestContent(requestInfo);
+      return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
     }

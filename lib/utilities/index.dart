@@ -37,7 +37,6 @@ export 'package:soon_sak/domain/base/base_use_case.dart';
 export 'package:soon_sak/domain/base/base_no_param_use_case.dart';
 export 'package:soon_sak/domain/base/base_two_param_use_case.dart';
 
-
 // App
 export 'package:soon_sak/app/config/theme_config.dart';
 export 'package:soon_sak/app/di/app_binding.dart';
@@ -173,7 +172,8 @@ export 'package:soon_sak/domain/base/base_single_data_model.dart';
 export 'package:soon_sak/domain/enum/curation_status.dart';
 export 'package:soon_sak/domain/service/user_service.dart';
 export 'package:soon_sak/domain/model/content/curation/curation_content.dart';
-export 'package:soon_sak/domain/model/content/register/content_request.dart';
+export 'package:soon_sak/domain/model/content/register/content_registration_request.dart';
+export 'package:soon_sak/domain/model/content/search/content_request.dart';
 
 // Presentation
 export 'package:soon_sak/presentation/screens/search/localWidget/search_scaffold.dart';

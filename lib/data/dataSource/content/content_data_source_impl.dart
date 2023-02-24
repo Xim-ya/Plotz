@@ -17,7 +17,8 @@ class ContentDataSourceImpl
           () => loadResponseOrThrow(() => _api.loadVideoInfo(id)));
 
   @override
-  Future<String> requestContentRegistration(ContentRequest requestData) =>
+  Future<String> requestContentRegistration(
+          ContentRegistrationRequest requestData) =>
       loadWithFirebaseIsolate(
           () => _api.requestContentRegistration(requestData));
 
@@ -34,4 +35,8 @@ class ContentDataSourceImpl
   Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) =>
       loadWithFirebaseIsolate(
           () => loadResponseOrThrow(() => _api.loadExploreContents(ids)));
+
+  @override
+  Future<void> requestContent(ContentRequest requestInfo) =>
+      loadResponseOrThrow(() => _api.requestContent(requestInfo));
 }

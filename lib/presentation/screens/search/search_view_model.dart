@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -9,7 +11,12 @@ import 'package:soon_sak/utilities/index.dart';
 /// 자세한 원인 파악 필요.
 
 class SearchViewModel extends BaseViewModel {
-  SearchViewModel(this._pagedSearchHandler);
+  SearchViewModel(
+      this._pagedSearchHandler, this._contentRepository, this._userService);
+
+  /* Data Modules */
+  final ContentRepository _contentRepository;
+  final UserService _userService;
 
   /* UseCases */
   final NewSearchedPagedContentUseCase _pagedSearchHandler;
@@ -33,6 +40,28 @@ class SearchViewModel extends BaseViewModel {
   VoidCallback get onTextChanged => _pagedSearchHandler.onSearchTermEntered;
 
   /* Intents */
+
+  // 컨텐츠 요청
+  Future<void> requestContent(SearchedContent content) async {
+    final ContentRequest request = ContentRequest(
+        contentId: Formatter.getOriginIdByTypeAndId(
+            type: selectedTabType.value, id: content.contentId),
+        title: content.title ?? '제목 없음',
+        userId: _userService.userInfo!.id!);
+    final response = await _contentRepository.requestContent(request);
+    response.fold(
+      onSuccess: (data) {
+        AlertWidget.animatedToast('요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
+        Get.back();
+        log('컨텐츠 요청 성공');
+      },
+      onFailure: (e) {
+        AlertWidget.animatedToast('컨텐츠 요청에 실패했습니다. 다시 시도해주세요');
+        Get.back();
+        log('SearchViewModel : $e');
+      },
+    );
+  }
 
   /// 검색된 컨텐츠 클릭 되었을 때
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
@@ -68,7 +97,9 @@ class SearchViewModel extends BaseViewModel {
           leftBtnContent: '나중에',
           rightBtnContent: '요청하기',
           // TODO: 실제 요청 로직 추가 필요
-          onRightBtnClicked: Get.back,
+          onRightBtnClicked: () {
+            requestContent(content);
+          },
           onLeftBtnClicked: Get.back,
         ),
       );

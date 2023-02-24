@@ -21,7 +21,7 @@ abstract class ContentRepository {
   Future<Result<ContentVideos>> loadContentVideoInfo(String id);
 
   // 컨텐츠 등록 요청
-  Future<Result<String>> requestContentRegistration(ContentRequest requestData);
+  Future<Result<String>> requestContentRegistration(ContentRegistrationRequest requestData);
 
   // 진행중인 큐레이션 리스트 호출
   Future<Result<List<CurationContent>>> loadInProgressQurationList();
@@ -29,5 +29,8 @@ abstract class ContentRepository {
   // 큐레이터 정보 호출
   Future<Result<UserModel>> loadCuratorInfo(String contentId);
 
-  static ContentRepository get to => Get.find();
+  // 컨텐츠 등록 요청 (단순 요청)
+  Future<Result<void>> requestContent(ContentRequest requestInfo);
+
+  // static ContentRepository get to => Get.find();
 }

@@ -167,6 +167,8 @@ mixin FirestoreHelper {
     return docRef.id;
   }
 
+
+  // 특정 Document에 데이터를 업데이트 하는 메소드
   Future<void> addFieldOnDocument(String collectionName,
       {required String? docId, required Map<String, dynamic> data}) async {
     final docRef = _db.collection(collectionName).doc(docId);

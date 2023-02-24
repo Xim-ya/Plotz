@@ -1,4 +1,5 @@
 
+import 'package:soon_sak/domain/model/content/search/content_request.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class ContentApi {
@@ -14,11 +15,14 @@ abstract class ContentApi {
   Future<List<VideoResponse>> loadVideoInfo(String id);
 
   // 컨텐츠 등록 요청 (큐레이션)
-  Future<String> requestContentRegistration(ContentRequest requestData);
+  Future<String> requestContentRegistration(ContentRegistrationRequest requestData);
 
   // 진행중인 큐레이션 리스트 호출
   Future<List<CurationContentResponse>> loadInProgressQurationList();
 
   // 큐레이터 정보 호출
   Future<UserResponse> loadCuratorInfo(String contentId);
+
+  // 컨텐츠 등록 요청 (단순 요청)
+  Future<void> requestContent(ContentRequest requestInfo);
 }

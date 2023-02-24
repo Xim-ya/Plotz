@@ -198,7 +198,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
+                AlertWidget.toast('요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
+                // AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
                 // vm.update();
                 // LocalStorageService.to.deleteData(fieldName: 'topTen');
                 // vm.firebaseStoreTest();
