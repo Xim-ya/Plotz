@@ -29,7 +29,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           // 프로필
           GestureDetector(
             onTap: () {
-              vm.fetchUserCurationSummary();
+              print("-------- ${vm.watchHistoryList!.length}");
             },
             child: Padding(
               padding: AppInset.horizontal16,
@@ -129,18 +129,23 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             ),
           ),
           AppSpace.size14,
-          ContentPostSlider(
-            height: 168,
-            itemCount: 12,
-            itemBuilder: (BuildContext context, int index) {
-              return ImageViewWithPlayBtn(
+          Obx(
+            () => ContentPostSlider(
+              height: 168,
+              itemCount: vm.watchHistoryList?.length ?? 2,
+              itemBuilder: (BuildContext context, int index) {
+                final item = vm.watchHistoryList?[index];
+                return ImageViewWithPlayBtn(
                   aspectRatio: 1280 / 1920,
-                  onPlayerBtnClicked: () {},
-                  posterImgUrl:
-                      '/f2PVrphK0u81ES256lw3oAZuF3x.jpg'.prefixTmdbImgPath);
-              // return const ContentPostItem(
-              //     ratio: 96 / 142, imgUrl: '/f2PVrphK0u81ES256lw3oAZuF3x.jpg');
-            },
+                  onPlayerBtnClicked: () {
+                    vm.launchYoutubeApp(item, index);
+                  },
+                  posterImgUrl: item?.posterImgUrl != null
+                      ? item!.posterImgUrl!.prefixTmdbImgPath
+                      : null,
+                );
+              },
+            ),
           ),
           AppSpace.size48,
         ],

@@ -326,6 +326,8 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                             child: ImageViewWithPlayBtn(
                               aspectRatio: 2 / 3,
                               onPlayerBtnClicked: () {
+                                print(
+                                    "LAUCHED VIDEO ID => ${episodeItem.videoId}");
                                 vm.launchYoutubeApp(episodeItem.videoId);
                               },
                               posterImgUrl: episodeItem.tvSeasonInfo

@@ -7,6 +7,7 @@ class LoginBinding extends Bindings {
       () => LoginViewModel(
         Get.find(),
         Get.find(),
+        Get.find(),
       ),
       fenix: true,
     );

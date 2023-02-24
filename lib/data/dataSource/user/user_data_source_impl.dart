@@ -33,4 +33,13 @@ class UserDataSourceImpl
       () => _api.addUserWatchHistory(requestInfo),
     );
   }
+
+  @override
+  Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(
+          String userId) =>
+      loadWithFirebaseIsolate(
+        () => loadResponseOrThrow(
+          () => _api.loadUserWatchHistory(userId),
+        ),
+      );
 }

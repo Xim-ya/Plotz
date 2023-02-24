@@ -50,4 +50,17 @@ class UserRepositoryImpl implements UserRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory(
+      String userId) async {
+    try {
+      final response = await _dataSource.loadUserWatchHistory(userId);
+      return Result.success(
+        response.map(UserWatchHistoryItem.fromResponse).toList(),
+      );
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

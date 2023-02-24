@@ -14,4 +14,6 @@ abstract class UserRepository {
   // 유저 시청 기록 추가
   Future<Result<void>> addUserWatchHistory(WatchingHistoryRequest requestInfo);
 
+  Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory(String userId);
+
 }

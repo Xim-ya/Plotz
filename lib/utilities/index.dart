@@ -53,6 +53,7 @@ export 'package:soon_sak/app/modules/domain_modules.dart';
 export 'package:soon_sak/app/modules/presentation_modules.dart';
 
 // Data
+export 'package:soon_sak/data/api/user/response/user_watch_history_item_response.dart';
 export 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 export 'package:soon_sak/data/mixin/firebase_isolate_helper_mixin.dart';
 export 'package:soon_sak/data/api/content/response/explore_content_response.dart';
@@ -119,6 +120,7 @@ export 'package:soon_sak/data/api/user/request/watching_history_request.dart';
 
 
 // Domain
+export 'package:soon_sak/domain/model/content/myPage/user_watch_history_item.dart';
 export 'package:soon_sak/domain/exception/content/content_exception.dart';
 export 'package:soon_sak/domain/exception/user/user_exception.dart';
 export 'package:soon_sak/domain/model/content/myPage/user_curation_summary.dart';

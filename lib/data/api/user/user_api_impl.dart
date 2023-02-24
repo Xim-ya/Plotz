@@ -52,13 +52,13 @@ class UserApiImpl with FirestoreHelper implements UserApi {
   @override
   Future<List<CurationContentResponse>> loadUserCurationContentList(
       String userId) async {
-    final docsRef = await getSubCollectionDocs(
+    final docs = await getSubCollectionDocs(
       'user',
       docId: userId,
       subCollectionName: 'curationList',
     );
 
-    final resultList = docsRef.map((e) async {
+    final resultList = docs.map((e) async {
       final DocumentReference<Map<String, dynamic>> ref = e.get('curationRef');
       final doc = await ref.get();
       return CurationContentResponse.fromUserResponseDoc(doc);
@@ -75,13 +75,39 @@ class UserApiImpl with FirestoreHelper implements UserApi {
       contentRef: contentRef,
     );
 
+    print("USER API VIDEO ID ${data['videoId']} === =");
+
+
     await cudSubCollectionDocument(
-      'user',
-      docId: requestInfo.userId,
-      subCollectionName: 'watchHistory',
-      subCollectionDocId: requestInfo.originId,
-      needUpdateFieldName: 'watchedDate',
-      data: data,
+        'user',
+        docId: requestInfo.userId,
+        subCollectionName: 'watchHistory',
+        subCollectionDocId: requestInfo.originId,
+        firstMutableFieldName: 'watchedDate',
+        secondMutableFieldName: 'videoId',
+        data: data,
     );
+  }
+
+  @override
+  Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(
+      String userId,) async {
+    final docs = await getSubCollectionDocsByOrder('user',
+        docId: userId,
+        subCollectionName: 'watchHistory',
+        orderFieldName: 'watchedDate');
+
+    final resultList = docs.map((e) async {
+      final DocumentReference<Map<String, dynamic>> contentRef =
+      e.get('contentRef');
+      final contentDoc = await contentRef.get();
+
+      return UserWatchHistoryItemResponse.fromResponseDoc(
+        contentDoc: contentDoc,
+        doc: e,
+      );
+    }).toList();
+
+    return Future.wait(resultList);
   }
 }

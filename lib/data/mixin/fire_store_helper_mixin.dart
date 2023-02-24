@@ -80,6 +80,24 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
+  /// subCollection document 데이터 리스트를 불러오는 메소드
+  /// 특정 필드값을 기준으로 정렬됨
+  Future<List<DocumentSnapshot>> getSubCollectionDocsByOrder(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+    required String orderFieldName,
+  }) async {
+    QuerySnapshot snapshot = await _db
+        .collection(collectionName)
+        .doc(docId)
+        .collection(subCollectionName)
+        .orderBy(orderFieldName, descending: true)
+        .get();
+
+    return snapshot.docs;
+  }
+
   /// subCollection의 단일 document 데이터를 불러오는 메소드
   Future<QuerySnapshot> getSingleSubCollectionDoc(String collectionName,
       {required String docId, required String subCollectionName}) async {
@@ -200,7 +218,8 @@ mixin FirestoreHelper {
     required String docId,
     required String subCollectionName,
     required String subCollectionDocId,
-    required String needUpdateFieldName,
+    required String firstMutableFieldName,
+    required String secondMutableFieldName,
     required Map<String, dynamic> data,
   }) async {
     final CollectionReference collectionRef = _db.collection(collectionName);
@@ -210,7 +229,6 @@ mixin FirestoreHelper {
     final DocumentReference subCollectionDocRef =
         subCollectionRef.doc(subCollectionDocId);
 
-
     // 기존 Doucment 존재 여부
     final bool documentExists =
         await _db.runTransaction<bool>((transaction) async {
@@ -219,8 +237,10 @@ mixin FirestoreHelper {
 
       // 존재한다면 특정 필드값 업데이트
       if (snapshot.exists) {
-        transaction.update(
-            subCollectionDocRef, {needUpdateFieldName: Timestamp.now()});
+        transaction.update(subCollectionDocRef, {
+          firstMutableFieldName: Timestamp.now(),
+          secondMutableFieldName: data['videoId']
+        });
       } else {
         // 존재 하지 않는다면 새로운 Document 추가
         transaction.set(subCollectionDocRef, data);
@@ -230,7 +250,7 @@ mixin FirestoreHelper {
 
     if (!documentExists) {
       final QuerySnapshot querySnapshot = await subCollectionRef
-          .orderBy(needUpdateFieldName, descending: true)
+          .orderBy(firstMutableFieldName, descending: true)
           .get();
 
       // collection의 Document document 개수가 20개가 넘는다면

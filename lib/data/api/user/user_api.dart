@@ -1,4 +1,3 @@
-
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserApi {
@@ -17,4 +16,7 @@ abstract class UserApi {
 
   // 유저 시청 기록 추가
   Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
+
+  // 유저 시청 기록 호출
+  Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(String userId);
 }

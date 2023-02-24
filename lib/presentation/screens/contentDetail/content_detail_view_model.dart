@@ -64,6 +64,7 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /// 유저 시청 기록 추가
   Future<void> addUserWatchHistory(String videoId) async {
+    print("SHOW VIDEO ID ${videoId}");
     final requestData = WatchingHistoryRequest(
         userId: _userService.userInfo!.id!,
         originId: _contentDescriptionInfo.value!.originId,
@@ -72,6 +73,8 @@ class ContentDetailViewModel extends BaseViewModel {
     final response = await _userRepository.addUserWatchHistory(requestData);
     response.fold(onSuccess: (_) {
       log('유저 시청기록 추가 성공');
+      // 유저 시청 기록 업데이트
+      _userService.updateUserWatchHistory();
     }, onFailure: (e) {
       log('ContentDetailViewModel : $e');
     });

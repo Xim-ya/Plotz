@@ -16,4 +16,7 @@ abstract class UserDataSource {
 
   // 유저 시청 기록 추가
   Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
+
+  // 유저 시청 기록 호출
+  Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(String userId);
 }
