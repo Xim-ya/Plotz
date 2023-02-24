@@ -34,10 +34,10 @@ class AlertWidget {
         margin: isUsedOnTabScreen.hasData && isUsedOnTabScreen == true
             ? AppInset.bottom46 + AppInset.horizontal8
             : AppInset.horizontal8,
-        padding: AppInset.left24  + AppInset.vertical16,
-        messageText: Row(
+        padding: AppInset.horizontal24  + AppInset.vertical16,
+        messageText: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppSpace.size8,
             Text(
               message,
               style: AppTextStyle.body1.copyWith(color: Colors.white),
