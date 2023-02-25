@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ProfileSettingViewModel extends BaseViewModel {
@@ -11,8 +12,14 @@ class ProfileSettingViewModel extends BaseViewModel {
 
   /* Controllers */
   late TextEditingController textEditingController;
+  late ImagePicker _picker;
 
   /* Intents */
+
+  // 이미지 선택
+  void pickProfileImage() {
+    _picker.pickImage(source: ImageSource.gallery);
+  }
 
   // 프로필 정보 업데이트
   Future<void> updateUserProfile() async {
@@ -55,6 +62,7 @@ class ProfileSettingViewModel extends BaseViewModel {
   void onInit() {
     super.onInit();
     textEditingController = TextEditingController();
+    _picker = ImagePicker();
     textEditingController.text = userInfo.displayName!;
   }
 }

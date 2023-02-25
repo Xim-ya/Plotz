@@ -15,9 +15,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
             AppSpace.size16,
             // 프로필 이미지
             GestureDetector(
-              onTap: () {
-                vm.checkDuplicateName();
-              },
+              onTap: vm.pickProfileImage,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Stack(
@@ -62,10 +60,10 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
                     return '닉네임에는 한글, 알파벳, 숫자, 언더스코어(_), 하이픈(-)만 사용할 수 있습니다';
                   } else if (Regex.hasContainFWord(value)) {
                     return '비속어, 욕설 단어는 사용할 수 없습니다';
-                  } else if(Regex.hasContainOperationWord(value) || value == '순삭') {
+                  } else if (Regex.hasContainOperationWord(value) ||
+                      value == '순삭') {
                     return '사용할 수 없는 닉네임 입니다';
-                  }
-                  else {
+                  } else {
                     return null;
                   }
                 },

@@ -76,7 +76,6 @@ class MyPageViewModel extends BaseViewModel {
   Future<void> getUserInfo() async {
     // await _userService.getUserInfo(); // fetch 메소드 실행
     userInfo.value = _userService.userInfo.value;
-
   }
 
   // 큐레이팅 내역 스크린으로 라우팅
