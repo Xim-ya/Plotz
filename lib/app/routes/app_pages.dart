@@ -1,3 +1,5 @@
+import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
+import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
 import 'package:soon_sak/presentation/screens/search/search_binding.dart';
 import 'package:soon_sak/presentation/screens/search/search_screen.dart';
 import 'package:soon_sak/presentation/screens/setting/setting_binding.dart';
@@ -68,6 +70,12 @@ abstract class AppPages {
       name: AppRoutes.setting,
       page: () => SettingScreen(),
       binding: SettingBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.profileSetting,
+      page: () => ProfileSettingScreen(),
+      binding: ProfileSettingBinding(),
     )
   ];
 }

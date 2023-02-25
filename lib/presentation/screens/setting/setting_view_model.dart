@@ -11,6 +11,8 @@ class SettingViewModel extends BaseViewModel {
   /* UseCase*/
   final SignOutUseCase _signOutHandlerUseCase;
 
+  /* Intents */
+
   // 로그아웃
   Future<void> signOut() async {
     final userPlatform = _userService.userInfo!.provider!;
@@ -24,5 +26,10 @@ class SettingViewModel extends BaseViewModel {
         log(e.toString());
       },
     );
+  }
+
+  // 프로필 설정 이동
+  void routeToProfileSetting() {
+    Get.toNamed(AppRoutes.profileSetting);
   }
 }
