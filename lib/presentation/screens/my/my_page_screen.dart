@@ -18,9 +18,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               child: IconInkWellButton.packageIcon(
                 icon: Icons.settings,
                 size: 24,
-                onIconTapped: () {
-                  vm.signOut(Sns.google);
-                },
+                onIconTapped: vm.routeToSetting,
               ),
             ),
           ),
@@ -28,9 +26,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
 
           // 프로필
           GestureDetector(
-            onTap: () {
-              print("-------- ${vm.watchHistoryList!.length}");
-            },
+            onTap: () {},
             child: Padding(
               padding: AppInset.horizontal16,
               child: Row(

@@ -1,5 +1,7 @@
 import 'package:soon_sak/presentation/screens/search/search_binding.dart';
 import 'package:soon_sak/presentation/screens/search/search_screen.dart';
+import 'package:soon_sak/presentation/screens/setting/setting_binding.dart';
+import 'package:soon_sak/presentation/screens/setting/setting_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.04
@@ -34,7 +36,6 @@ abstract class AppPages {
       binding: TabsBinding(),
     ),
 
-
     // 컨텐츠 상세
     GetPage(
       name: AppRoutes.contentDetail,
@@ -62,5 +63,11 @@ abstract class AppPages {
       page: () => CurationHistoryScreen(),
       binding: CurationHistoryBinding(),
     ),
+
+    GetPage(
+      name: AppRoutes.setting,
+      page: () => SettingScreen(),
+      binding: SettingBinding(),
+    )
   ];
 }

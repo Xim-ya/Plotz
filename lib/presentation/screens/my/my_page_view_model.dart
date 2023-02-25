@@ -19,6 +19,10 @@ class MyPageViewModel extends BaseViewModel {
   String? get displayName => userInfo?.displayName ?? userInfo?.name;
 
   /* Intents */
+  // 설정 스크린으로 이동
+  void routeToSetting() {
+    Get.toNamed(AppRoutes.setting);
+  }
 
   // youtubeApp 실행
   Future<void> launchYoutubeApp(
@@ -27,10 +31,9 @@ class MyPageViewModel extends BaseViewModel {
       return AlertWidget.animatedToast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
     }
     try {
-      print("SELECTED CONTENT VIDEO ID ${selectedContent!.videoId}");
       await launchUrl(
         Uri.parse(
-            'https://www.youtube.com/watch?v=${selectedContent.videoId}'),
+            'https://www.youtube.com/watch?v=${selectedContent!.videoId}'),
         mode: LaunchMode.externalApplication,
       );
     } catch (e) {
