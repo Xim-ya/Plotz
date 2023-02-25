@@ -16,7 +16,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
             // 프로필 이미지
             GestureDetector(
               onTap: () {
-                print('CHANGE PROFILE IMAGE');
+                vm.checkDuplicateName();
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
@@ -144,7 +144,9 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
       ),
       actions: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            vm.updateUserProfile();
+          },
           child: Text(
             '완료',
             style:

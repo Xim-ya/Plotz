@@ -42,4 +42,14 @@ class UserDataSourceImpl
           () => _api.loadUserWatchHistory(userId),
         ),
       );
+
+  @override
+  Future<bool> checkDuplicateDisplayName(String inputName) =>
+      loadResponseOrThrow(() => _api.checkDuplicateDisplayName(inputName));
+
+  // 프로필 정보 업데이트
+  @override
+  Future<void> updateUserProfile(UserProfileRequest requestInfo) async {
+    return loadResponseOrThrow(() => _api.updateUserProfile(requestInfo));
+  }
 }

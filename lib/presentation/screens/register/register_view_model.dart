@@ -148,7 +148,7 @@ class RegisterViewModel extends BaseViewModel {
     }
 
     final requestData = ContentRegistrationRequest.fromContentModelWithUserId(
-        content: curationContent.value!, userId: _userService.userInfo!.id!);
+        content: curationContent.value!, userId: _userService.userInfo.value!.id!);
     final response = await _requestContentRegistrationUseCase.call(requestData);
     await response.fold(
       onSuccess: (data) async {

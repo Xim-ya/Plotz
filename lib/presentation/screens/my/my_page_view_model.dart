@@ -14,9 +14,9 @@ class MyPageViewModel extends BaseViewModel {
   final Rxn<List<UserWatchHistoryItem>> _watchHistoryList = Rxn(); // 시청 기록
 
   final SignOutUseCase _signOutHandlerUseCase;
-  UserModel? userInfo;
+  Rxn<UserModel> userInfo = Rxn();
 
-  String? get displayName => userInfo?.displayName ?? userInfo?.name;
+  String? get displayName => userInfo.value?.displayName;
 
   /* Intents */
   // 설정 스크린으로 이동
@@ -51,7 +51,7 @@ class MyPageViewModel extends BaseViewModel {
   Future<void> updateUserWatchHistory(
       UserWatchHistoryItem selectedContent) async {
     final requestData = WatchingHistoryRequest(
-      userId: _userService.userInfo!.id!,
+      userId: _userService.userInfo.value!.id!,
       originId: selectedContent.originId,
       videoId: selectedContent.videoId,
     );
@@ -75,8 +75,8 @@ class MyPageViewModel extends BaseViewModel {
   // 유저 정보 호출
   Future<void> getUserInfo() async {
     // await _userService.getUserInfo(); // fetch 메소드 실행
-    userInfo = _userService.userInfo;
-    update();
+    userInfo.value = _userService.userInfo.value;
+
   }
 
   // 큐레이팅 내역 스크린으로 라우팅
@@ -100,7 +100,7 @@ class MyPageViewModel extends BaseViewModel {
 
   // 유저 큐레이션 내역 요약 정보 호출
   Future<void> fetchUserCurationSummary() async {
-    final userId = _userService.userInfo!.id!;
+    final userId = _userService.userInfo.value!.id!;
     final response = await _userRepository.loadUserCurationSummary(userId);
     response.fold(
       onSuccess: (data) {
@@ -122,6 +122,12 @@ class MyPageViewModel extends BaseViewModel {
     await getUserInfo();
     await fetchUserCurationSummary();
     await _fetchUserWatchHistory();
+
+    /// 시청 기록 & 유저 프로필 정보의 데이터 변화를
+    /// listen 하고 ui를 업데이트 함.
+    _userService.userInfo.listen((_) {
+      userInfo.value = _userService.userInfo.value;
+    });
     _userService.userWatchHistory.listen((_) {
       _watchHistoryList.value = _userService.userWatchHistory.value;
     });

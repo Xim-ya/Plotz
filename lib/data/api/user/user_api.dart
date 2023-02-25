@@ -1,3 +1,4 @@
+
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserApi {
@@ -19,4 +20,10 @@ abstract class UserApi {
 
   // 유저 시청 기록 호출
   Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(String userId);
+
+  // 닉네임 중복 여부 확인
+  Future<bool> checkDuplicateDisplayName(String inputName);
+
+  // 프로필 정보 업데이트
+  Future<void> updateUserProfile(UserProfileRequest requestInfo);
 }

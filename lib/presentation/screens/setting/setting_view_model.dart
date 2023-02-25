@@ -15,7 +15,7 @@ class SettingViewModel extends BaseViewModel {
 
   // 로그아웃
   Future<void> signOut() async {
-    final userPlatform = _userService.userInfo!.provider!;
+    final userPlatform = _userService.userInfo.value!.provider!;
     final result = await _signOutHandlerUseCase.call(userPlatform);
     result.fold(
       onSuccess: (_) {

@@ -8,13 +8,13 @@ class UserService extends GetxService {
   final UserRepository _userRepository;
 
   late final bool isUserSignIn; // 유저 로그인 여부
-  UserModel? userInfo; // 유저 정보
+  final Rxn <UserModel> userInfo = Rxn(); // 유저 정보
   final Rxn<List<UserWatchHistoryItem>> userWatchHistory = Rxn(); // 유저 시청 기록
 
   /* Intents */
   // 유저 시청 기록 호출
   Future<void> updateUserWatchHistory() async {
-    final response = await _userRepository.loadUserWatchHistory(userInfo!.id!);
+    final response = await _userRepository.loadUserWatchHistory(userInfo.value!.id!);
     response.fold(
       onSuccess: (data) {
         userWatchHistory.value = data;
@@ -25,11 +25,12 @@ class UserService extends GetxService {
     );
   }
 
+  // 유저 정보 호출
   Future<void> getUserInfo() async {
     final response = await _authRepository.loadUserInfo();
     response.fold(
       onSuccess: (data) {
-        userInfo = data;
+        userInfo.value = data;
       },
       onFailure: (e) {
         log('UserService : $e');

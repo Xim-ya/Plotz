@@ -31,16 +31,16 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               padding: AppInset.horizontal16,
               child: Row(
                 children: <Widget>[
-                  GetBuilder<MyPageViewModel>(
-                    builder: (_) => RoundProfileImg(
+                  Obx(
+                    () => RoundProfileImg(
                       size: 58,
-                      imgUrl: vm.userInfo?.photoUrl,
+                      imgUrl: vm.userInfo.value?.photoUrl,
                     ),
                   ),
                   AppSpace.size10,
-                  GetBuilder<MyPageViewModel>(
-                    builder: (_) => Text(
-                      '${vm.displayName ?? '-'}님',
+                  Obx(
+                    () => Text(
+                      '${vm.userInfo.value?.displayName ?? '-'}님',
                       style: AppTextStyle.title1
                           .copyWith(color: AppColor.mixedWhite),
                     ),

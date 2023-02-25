@@ -14,6 +14,13 @@ abstract class UserRepository {
   // 유저 시청 기록 추가
   Future<Result<void>> addUserWatchHistory(WatchingHistoryRequest requestInfo);
 
+  // 유저 시청 기록 데이터 호출
   Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory(String userId);
+
+  // 닉네임 중복 여부 확인
+  Future<Result<bool>> checkDuplicateDisplayName(String inputName);
+
+  // 프로필 정보 업데이트
+  Future<Result<void>> updateUserProfile(UserProfileRequest requestInfo);
 
 }

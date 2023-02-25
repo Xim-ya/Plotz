@@ -63,4 +63,24 @@ class UserRepositoryImpl implements UserRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<bool>> checkDuplicateDisplayName(String inputName) async {
+    try {
+      final response = await _dataSource.checkDuplicateDisplayName(inputName);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserProfile(UserProfileRequest requestInfo) async {
+    try {
+      final response = await _dataSource.updateUserProfile(requestInfo);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

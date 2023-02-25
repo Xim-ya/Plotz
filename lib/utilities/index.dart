@@ -117,6 +117,7 @@ export 'package:soon_sak/data/dataSource/youtube/youtube_data_sourc_impl.dart';
 export 'package:soon_sak/data/dataSource/youtube/youtube_data_source.dart';
 export 'package:soon_sak/data/repository/user/user_repository_impl.dart';
 export 'package:soon_sak/data/api/user/request/watching_history_request.dart';
+export 'package:soon_sak/data/api/user/request/user_profile_request.dart';
 
 
 // Domain

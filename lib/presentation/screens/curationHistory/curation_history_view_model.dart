@@ -40,7 +40,7 @@ class CurationHistoryViewModel extends BaseViewModel
 
   /* Intent */
   Future<void> _fetchUserCurationContents() async {
-    final userId = _userService.userInfo!.id;
+    final userId = _userService.userInfo.value!.id;
     final response = await _userRepository.loadUserCurationContentList(userId!);
     response.fold(
       onSuccess: (data) {

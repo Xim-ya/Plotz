@@ -110,6 +110,38 @@ mixin FirestoreHelper {
     return snapshot;
   }
 
+  // collection의 dcoument리스트 중 특정 필드 값 데이터를 포함하고 있는지 확인
+  Future<bool> checkIfItContainField(
+    String collectionName, {
+    required String fieldName,
+    required String data,
+  }) async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection(collectionName)
+        .where(fieldName, isEqualTo: data)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // 특정 필드값을 업데이트 하는 메소드
+  Future<void> updateDocumentFields(
+    final String collectionName, {
+    required String docId,
+    required String firstFieldName,
+    required String firstFieldData,
+    required String secondFieldName,
+    required String secondFieldData,
+  }) async {
+    final docRef = _db.collection(collectionName).doc(docId);
+    await docRef.update(
+        {firstFieldName: firstFieldData, secondFieldName: secondFieldData});
+  }
+
   /// subCollection의 특정 document 데이터를 불러오는 메소드
   Future<DocumentSnapshot> getSpecificSubCollectionDoc(String collectionName,
       {required String docId,

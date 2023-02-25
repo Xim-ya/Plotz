@@ -77,21 +77,21 @@ class UserApiImpl with FirestoreHelper implements UserApi {
 
     print("USER API VIDEO ID ${data['videoId']} === =");
 
-
     await cudSubCollectionDocument(
-        'user',
-        docId: requestInfo.userId,
-        subCollectionName: 'watchHistory',
-        subCollectionDocId: requestInfo.originId,
-        firstMutableFieldName: 'watchedDate',
-        secondMutableFieldName: 'videoId',
-        data: data,
+      'user',
+      docId: requestInfo.userId,
+      subCollectionName: 'watchHistory',
+      subCollectionDocId: requestInfo.originId,
+      firstMutableFieldName: 'watchedDate',
+      secondMutableFieldName: 'videoId',
+      data: data,
     );
   }
 
   @override
   Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(
-      String userId,) async {
+    String userId,
+  ) async {
     final docs = await getSubCollectionDocsByOrder('user',
         docId: userId,
         subCollectionName: 'watchHistory',
@@ -99,7 +99,7 @@ class UserApiImpl with FirestoreHelper implements UserApi {
 
     final resultList = docs.map((e) async {
       final DocumentReference<Map<String, dynamic>> contentRef =
-      e.get('contentRef');
+          e.get('contentRef');
       final contentDoc = await contentRef.get();
 
       return UserWatchHistoryItemResponse.fromResponseDoc(
@@ -109,5 +109,25 @@ class UserApiImpl with FirestoreHelper implements UserApi {
     }).toList();
 
     return Future.wait(resultList);
+  }
+
+  @override
+  Future<bool> checkDuplicateDisplayName(String inputName) async {
+    final isContainedFieldValue = await checkIfItContainField(
+      'user',
+      fieldName: 'displayName',
+      data: inputName,
+    );
+    return isContainedFieldValue;
+  }
+
+  @override
+  Future<void> updateUserProfile(UserProfileRequest requestInfo) async {
+    await updateDocumentFields('user',
+        docId: requestInfo.userId,
+        firstFieldName: 'displayName',
+        firstFieldData: requestInfo.displayName,
+        secondFieldName: 'photoUrl',
+        secondFieldData: requestInfo.photoImgUrl);
   }
 }

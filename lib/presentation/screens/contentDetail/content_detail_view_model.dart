@@ -66,7 +66,7 @@ class ContentDetailViewModel extends BaseViewModel {
   Future<void> addUserWatchHistory(String videoId) async {
     print("SHOW VIDEO ID ${videoId}");
     final requestData = WatchingHistoryRequest(
-        userId: _userService.userInfo!.id!,
+        userId: _userService.userInfo.value!.id!,
         originId: _contentDescriptionInfo.value!.originId,
         videoId: videoId);
 

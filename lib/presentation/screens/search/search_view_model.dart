@@ -47,7 +47,7 @@ class SearchViewModel extends BaseViewModel {
         contentId: Formatter.getOriginIdByTypeAndId(
             type: selectedTabType.value, id: content.contentId),
         title: content.title ?? '제목 없음',
-        userId: _userService.userInfo!.id!);
+        userId: _userService.userInfo.value!.id!);
     final response = await _contentRepository.requestContent(request);
     response.fold(
       onSuccess: (data) {
