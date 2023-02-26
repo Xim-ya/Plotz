@@ -59,4 +59,8 @@ class UserDataSourceImpl
     return loadResponseOrThrow(() =>
         _api.uploadUserProfileImgAndReturnUrl(userId: userId, file: file));
   }
+
+  @override
+  Future<void> withdrawUser(String userId) async =>
+      loadResponseOrThrow(() => _api.withdrawUser(userId));
 }

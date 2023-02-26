@@ -98,6 +98,18 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
+  /// dcoumentID 변경
+  Future<void> changeDocId(String collectionName,
+      {required String docId}) async {
+    DocumentSnapshot<Map<String, dynamic>> oldDocumentSnapshot =
+        await _db.collection(collectionName).doc(docId).get();
+
+    final prevData = oldDocumentSnapshot.data()!;
+    prevData['withdrawnDate'] = FieldValue.serverTimestamp();
+    await _db.collection(collectionName).doc('WITHDRAWN-$docId').set(prevData);
+    await _db.collection(collectionName).doc(docId).delete();
+  }
+
   /// subCollection의 단일 document 데이터를 불러오는 메소드
   Future<QuerySnapshot> getSingleSubCollectionDoc(String collectionName,
       {required String docId, required String subCollectionName}) async {
@@ -141,15 +153,14 @@ mixin FirestoreHelper {
     String? secondFieldData,
   }) async {
     final docRef = _db.collection(collectionName).doc(docId);
-    if(firstFieldData == null) {
+    if (firstFieldData == null) {
       await docRef.update({secondFieldName!: secondFieldData});
-    } else if(secondFieldData == null) {
+    } else if (secondFieldData == null) {
       await docRef.update({firstFieldName!: firstFieldData});
     } else {
       await docRef.update(
           {firstFieldName!: firstFieldData, secondFieldName!: secondFieldData});
     }
-
   }
 
   /// subCollection의 특정 document 데이터를 불러오는 메소드

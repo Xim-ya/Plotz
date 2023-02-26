@@ -14,6 +14,9 @@ abstract class UserDataSource {
   Future<List<CurationContentResponse>> loadUserCurationContentList(
       String userId);
 
+  // 유저 회원탈퇴
+  Future<void> withdrawUser(String userId);
+
   // 유저 시청 기록 추가
   Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
 

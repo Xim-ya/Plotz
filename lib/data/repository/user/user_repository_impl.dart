@@ -97,4 +97,14 @@ class UserRepositoryImpl implements UserRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<void>> withdrawUser(String userId) async {
+    try {
+      final response = await _dataSource.withdrawUser(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

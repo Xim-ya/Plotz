@@ -38,7 +38,6 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
       subCollectionName: 'curationSummary',
     );
 
-
     final doc = snapshot.docs;
 
     if (doc.isNotEmpty) {
@@ -127,12 +126,11 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
 
   @override
   Future<void> updateUserProfile(UserProfileRequest requestInfo) async {
-
     await updateDocumentFields('user',
         docId: requestInfo.userId,
         firstFieldName: 'displayName',
         firstFieldData: requestInfo.displayName,
-        secondFieldName:  'photoUrl',
+        secondFieldName: 'photoUrl',
         secondFieldData: requestInfo.photoImgUrl);
   }
 
@@ -142,5 +140,13 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
     final downLoadUrl = await storeFileAndReturnDownloadUrl('profileImg',
         fileId: userId, file: file);
     return downLoadUrl;
+  }
+
+  /// 실제 AUTH 데이터를 삭제하진 않고
+  /// User document 이름을 아래와 같이 변경함
+  /// ex) WITHDRAW-userId
+  @override
+  Future<void> withdrawUser(String userId) async {
+    await changeDocId('user', docId: userId);
   }
 }

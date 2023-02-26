@@ -11,6 +11,9 @@ abstract class UserRepository {
   Future<Result<UserCurationSummary>> loadUserCurationSummary(
       final String userId);
 
+  // 유저 회원탈퇴
+  Future<Result<void>> withdrawUser(String userId);
+
   // 유저의 큐레이션 리스트 호출
   Future<Result<List<CurationContent>>> loadUserCurationContentList(
       String userId);

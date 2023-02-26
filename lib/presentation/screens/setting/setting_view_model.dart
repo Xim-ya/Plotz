@@ -3,15 +3,29 @@ import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
 class SettingViewModel extends BaseViewModel {
-  SettingViewModel(this._signOutHandlerUseCase, this._userService);
+  SettingViewModel(
+      this._signOutHandlerUseCase, this._userService, this._userRepository);
 
   /* Data Modules */
   final UserService _userService;
+  final UserRepository _userRepository;
 
   /* UseCase*/
   final SignOutUseCase _signOutHandlerUseCase;
 
   /* Intents */
+
+  // 회원탈퇴
+  Future<void> withDrawUser() async {
+    final response =
+        await _userRepository.withdrawUser(_userService.userInfo.value!.id!);
+    response.fold(onSuccess: (data) {
+      print('회원탈퇴 성공');
+      signOut();
+    }, onFailure: (e) {
+      log('SettingViewModel : $e');
+    });
+  }
 
   // 로그아웃
   Future<void> signOut() async {
