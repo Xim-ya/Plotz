@@ -1,5 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
+import 'presentation/common/layout/response_layout_builder.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.splash,
       builder: (context, child) {
         SizeConfig.to.init(context); // Size Config 초기화
-        return EasyLoading.init()(context, child); // Easy 로딩 컨텐츠스트 초기화
+        return ResponsiveLayoutBuilder(context, child);
       },
     );
   }

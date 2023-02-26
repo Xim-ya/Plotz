@@ -37,12 +37,9 @@ class CurationGridItemView extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Colors.grey,
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: CachedNetworkImage(
-                    imageUrl: curatorProfileImgUrl,
-                    height: 36,
-                  ),
+                child: RoundProfileImg(
+                  size: 36,
+                  imgUrl: curatorProfileImgUrl,
                 ),
               ),
               AppSpace.size4,

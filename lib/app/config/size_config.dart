@@ -18,10 +18,11 @@ class SizeConfig {
   // 초기화 구문
   void init(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final bool isTablet = mediaQuery.size.width > 600;
     statusBarHeight = mediaQuery.padding.top;
     bottomInset = mediaQuery.padding.bottom;
-    screenWidth = mediaQuery.size.width;
-    screenHeight = mediaQuery.size.height;
+    screenWidth = isTablet ? 375 : mediaQuery.size.width;
+    screenHeight = isTablet ? 812 : mediaQuery.size.height;
     responsiveBottomInset =
         mediaQuery.padding.bottom == 0 ? 16 : mediaQuery.padding.bottom;
   }

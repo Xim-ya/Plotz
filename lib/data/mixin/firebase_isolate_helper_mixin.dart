@@ -10,13 +10,14 @@ mixin FirebaseIsolateHelper {
     final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
 
     // 3 백그라운드 isolate에서 실행할 함수를 전달하며 새로운 isolate 생성
-   final isolate =  await Isolate.spawn(
-        _isolateEntry,
-        _IsolateEntryPayload(
-          function: function,
-          sendPort: receivePort.sendPort,
-          rootIsolateToken: rootIsolateToken,
-        ));
+    final isolate = await Isolate.spawn(
+      _isolateEntry,
+      _IsolateEntryPayload(
+        function: function,
+        sendPort: receivePort.sendPort,
+        rootIsolateToken: rootIsolateToken,
+      ),
+    );
 
     // 7. 백그라운드 isolate로부터 데이터를 수신하고 리턴.
     return receivePort.first.then(
@@ -49,11 +50,11 @@ void _isolateEntry(_IsolateEntryPayload payload) async {
     return Future.error(e.toString());
   }
   await Firebase.initializeApp();
+
   /// 중요!! FireBaseStore을 이용하고 있기 때문에
   /// Firebase sdk를 initialize 해줘야함
   /// 별도의 스레드에서 실행되기 때문에
   /// [main.dart]에서 생성되는 것과는 무관함.
-
 
   final result = await function();
   payload.sendPort.send(result);
