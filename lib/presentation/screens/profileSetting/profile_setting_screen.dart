@@ -28,7 +28,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
                               vm.pickedImgFile.value!,
                               height: 84,
                               width: 84,
-                              fit: BoxFit.fitHeight,
+                              fit: BoxFit.cover,
                             ));
                       } else {
                         return Obx(

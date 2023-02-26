@@ -21,7 +21,7 @@ class RoundProfileImg extends StatelessWidget {
                   color: Colors.grey,
                   image:
                       DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                ),
+                ),`
               ),
               placeholder: (context, url) => const SizedBox(),
               errorWidget: (context, url, error) => const Icon(Icons.error),
