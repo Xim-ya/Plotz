@@ -196,21 +196,22 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                AlertWidget.animatedToast(
-                    '요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
-                // AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
-                // vm.update();
-                // LocalStorageService.to.deleteData(fieldName: 'topTen');
-                // vm.firebaseStoreTest();
-              },
-              child: Image.asset(
-                'assets/images/main_logo.png',
-                height: 40,
-                width: 40,
-              ),
-            ),
+            const SizedBox(),
+            // GestureDetector(
+            //   onTap: () {
+            //     AlertWidget.animatedToast(
+            //         '요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
+            //     // AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
+            //     // vm.update();
+            //     // LocalStorageService.to.deleteData(fieldName: 'topTen');
+            //     // vm.firebaseStoreTest();
+            //   },
+            //   child: SvgPicture.asset(
+            //     'assets/icons/main_logo.svg',
+            //     height: 40,
+            //     width: 40,
+            //   ),
+            // ),
             IconInkWellButton.assetIcon(
               iconPath: 'assets/icons/search.svg',
               size: 40,
