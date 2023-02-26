@@ -25,8 +25,6 @@ class ExploreContentResponse {
   factory ExploreContentResponse.fromDocumentSnapshot(
       {required DocumentSnapshot<Object?> contentSnapshot,
       required DocumentSnapshot<Object?> channelSnapshot}) {
-    print(
-        '${channelSnapshot.get('name')} ---- ${channelSnapshot.get('subscribersCount')}');
     return ExploreContentResponse(
         id: contentSnapshot.get('id'),
         title: contentSnapshot.get('title'),

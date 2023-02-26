@@ -2,15 +2,27 @@ import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
 import 'presentation/common/layout/response_layout_builder.dart';
 
+/// Root
+/// 초기화 메소드 순서 중요 (변경X)
 void main() async {
+  // Flutter Engine 초기화
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Isolate 토큰 생성 및 초기화
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
+
+  // FireBase 초기화
   await Firebase.initializeApp(
     name: 'soonsak-15350',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  // Portrait 고정
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
