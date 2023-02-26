@@ -1,9 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
 
-
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
@@ -28,7 +26,7 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.splash,
       builder: (context, child) {
         SizeConfig.to.init(context); // Size Config 초기화
-        return EasyLoading.init()(context, child);
+        return EasyLoading.init()(context, child); // Easy 로딩 컨텐츠스트 초기화
       },
     );
   }

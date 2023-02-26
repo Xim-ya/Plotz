@@ -128,7 +128,6 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   @override
   Future<void> updateUserProfile(UserProfileRequest requestInfo) async {
 
-    print("UPDATE USER PROFILE ${requestInfo.photoImgUrl}");
     await updateDocumentFields('user',
         docId: requestInfo.userId,
         firstFieldName: 'displayName',

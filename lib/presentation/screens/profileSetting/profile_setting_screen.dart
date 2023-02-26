@@ -61,27 +61,11 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
 
             // 닉네임 입력 Field
             Form(
+              key: vm.formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: TextFormField(
-                validator: (value) {
-                  if (value == null || value == '') {
-                    return '닉네임을 입력해주세요';
-                  } else if (Regex.hasSpaceOnString(value)) {
-                    return '닉네임에는 공백을 사용할 수 없습니다';
-                  } else if (value.trim().length < 2 ||
-                      value.trim().length > 10) {
-                    return '닉네임은 2에서 10글자 사이여야 합니다';
-                  } else if (Regex.hasProperCharacter(value)) {
-                    return '닉네임에는 한글, 알파벳, 숫자, 언더스코어(_), 하이픈(-)만 사용할 수 있습니다';
-                  } else if (Regex.hasContainFWord(value)) {
-                    return '비속어, 욕설 단어는 사용할 수 없습니다';
-                  } else if (Regex.hasContainOperationWord(value) ||
-                      value == '순삭') {
-                    return '사용할 수 없는 닉네임 입니다';
-                  } else {
-                    return null;
-                  }
-                },
+                focusNode: vm.focusNode,
+                validator: vm.nickNameValidation,
                 onFieldSubmitted: (_) {},
                 keyboardAppearance: Brightness.dark,
                 onChanged: (_) {},

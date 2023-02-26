@@ -32,7 +32,7 @@ class AlertWidget {
       {bool? isUsedOnTabScreen}) async {
     Get.showSnackbar(
       GetSnackBar(
-        backgroundColor: AppColor.black,
+        backgroundColor: Colors.black,
         borderRadius: 8,
         margin: isUsedOnTabScreen.hasData && isUsedOnTabScreen == true
             ? AppInset.bottom46 + AppInset.horizontal8
