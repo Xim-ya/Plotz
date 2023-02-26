@@ -20,11 +20,27 @@ class SettingViewModel extends BaseViewModel {
     final response =
         await _userRepository.withdrawUser(_userService.userInfo.value!.id!);
     response.fold(onSuccess: (data) {
-      print('회원탈퇴 성공');
-      signOut();
+      signOut().whenComplete(() {
+        AlertWidget.animatedToast('회원탈퇴 처리 되었습니다');
+      });
     }, onFailure: (e) {
       log('SettingViewModel : $e');
     });
+  }
+
+  // 회원탈퇴 안내 모달
+  void showWithdrawnInoModal() {
+    Get.dialog(
+      AppDialog.dividedBtn(
+        title: '회원 탈퇴',
+        description: '탈퇴 시 기존 큐레이팅 내역 및 개인정보가 삭제됩니다.\n정말 탈퇴하시겠습니까?',
+        leftBtnContent: '취소',
+        rightBtnContent: '탈퇴',
+        // TODO: 실제 요청 로직 추가 필요
+        onRightBtnClicked: withDrawUser,
+        onLeftBtnClicked: Get.back,
+      ),
+    );
   }
 
   // 로그아웃
