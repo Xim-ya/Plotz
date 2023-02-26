@@ -145,7 +145,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
             child: Row(
               children: <Widget>[
                 Obx(
-                  () => vm.curator?.photoUrl != null
+                  () => vm.curator != null
                       ? RoundProfileImg(size: 62, imgUrl: vm.curator?.photoUrl)
                       : const SkeletonBox(
                           width: 62,
@@ -159,7 +159,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                   child: Obx(
                     () => vm.curator?.displayName.hasData != null
                         ? Text(
-                            vm.curator?.displayName ?? '',
+                            vm.curator?.displayName ?? '익명',
                             style: AppTextStyle.headline3,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

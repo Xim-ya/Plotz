@@ -7,10 +7,10 @@ class UserResponse {
   late String? id;
   late String? photoUrl;
   final UserToken? token;
-  final Sns provider;
+  final Sns? provider;
 
   UserResponse({
-    required this.provider,
+     this.provider,
     this.id,
     this.name,
     this.email,
@@ -37,10 +37,10 @@ class UserResponse {
     return {
       'id': id,
       'name': name,
-      'provider': provider.originString.toString(), // toString으로 포맷을 한번더 해줘야함
+      'provider': provider?.originString.toString(), // toString으로 포맷을 한번더 해줘야함
       'displayName': displayName,
       'photoUrl': photoUrl,
       'email': email,
     };
   }
-}
+} 

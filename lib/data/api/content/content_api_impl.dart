@@ -40,8 +40,8 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       final DocumentReference<Map<String, dynamic>> curatorRef =
           e.get('curator');
       final curatorDoc = await curatorRef.get();
-      final curatorName = await curatorDoc.get('displayName');
-      final curatorImg = await curatorDoc.get('photoUrl');
+      final String? curatorName = curatorDoc.data()?['displayName'];
+      final String? curatorImg = curatorDoc.data()?['photoUrl'];
       return CurationContentResponse.fromDocument(e,
           curatorName: curatorName, curatorImg: curatorImg);
     }).toList();
@@ -58,7 +58,11 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
 
     final DocumentReference<Map<String, dynamic>> docRef = doc.get('userRef');
     final docData = await docRef.get();
-    return UserResponse.fromDocumentRes(docData);
+    if (docData.exists) {
+      return UserResponse.fromDocumentRes(docData);
+    } else {
+      return UserResponse();
+    }
   }
 
   @override

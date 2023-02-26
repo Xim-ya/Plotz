@@ -77,8 +77,8 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
                         final item = vm.inProgressCurations[index];
                         return CurationGridItemView(
                           posterImgUrl: item.posterImgUrl,
-                          curatorProfileImgUrl: item.curatorProfileImgUrl!,
-                          curatorName: item.curatorName!,
+                          curatorProfileImgUrl: item.curatorProfileImgUrl,
+                          curatorName: item.curatorName,
                         );
                       } else {
                         return const CurationGridItemSkeletonView();

@@ -23,7 +23,7 @@ class CurationContentResponse {
   });
 
   factory CurationContentResponse.fromDocument(DocumentSnapshot snapshot,
-      {required String curatorName, required String curatorImg}) {
+      {required String? curatorName, required String? curatorImg}) {
     return CurationContentResponse(
       curatorDisplayName: curatorName,
       curatorProfileImgUrl: curatorImg,

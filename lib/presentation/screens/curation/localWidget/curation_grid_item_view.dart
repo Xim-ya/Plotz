@@ -9,8 +9,8 @@ class CurationGridItemView extends StatelessWidget {
       : super(key: key);
 
   final String? posterImgUrl;
-  final String curatorProfileImgUrl;
-  final String curatorName;
+  final String? curatorProfileImgUrl;
+  final String? curatorName;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,8 @@ class CurationGridItemView extends StatelessWidget {
               SizedBox(
                 width: (SizeConfig.to.screenWidth - 32) / 2 - 56,
                 child: Text(
-                  '$curatorName님',
+                  curatorName.hasData ?
+                  '$curatorName님' : '익명유저',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.title3,
@@ -57,6 +58,6 @@ class CurationGridItemView extends StatelessWidget {
           ),
         ),
       ],
-    );
+    );  
   }
 }
