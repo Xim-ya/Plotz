@@ -63,6 +63,7 @@ dependencies:
 
 
   #Utils
+  flutter_cache_manager: ^3.3.0
   image_picker: ^0.8.6+3 # 이미지 피커
   either_dart: ^0.3.0
   intl: ^0.17.0 # DATE

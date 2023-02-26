@@ -1,7 +1,7 @@
 class UserProfileRequest {
   final String userId;
-  final String photoImgUrl;
-  final String displayName;
+  final String? photoImgUrl;
+  final String? displayName;
 
   UserProfileRequest({
     required this.photoImgUrl,

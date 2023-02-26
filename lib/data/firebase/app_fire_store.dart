@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
-/** Created By Ximya - 2022.02.12
- *  Firebase Instance를 싱글톤으로 관리 관리
+/** Created By Ximya - 2023.02.12
+ *  FireStore Instance를 싱글톤으로 관리 ㄹ
  * */
 
 class AppFireStore {

@@ -1,6 +1,9 @@
+import 'dart:io';
+
+import 'package:soon_sak/data/mixin/fire_storage_helper_mixin.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class UserApiImpl with FirestoreHelper implements UserApi {
+class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   @override
   Future<void> addUserCurationInfo(
       {required String qurationDocId, required String userId}) async {
@@ -34,6 +37,7 @@ class UserApiImpl with FirestoreHelper implements UserApi {
       docId: userId,
       subCollectionName: 'curationSummary',
     );
+
 
     final doc = snapshot.docs;
 
@@ -123,11 +127,21 @@ class UserApiImpl with FirestoreHelper implements UserApi {
 
   @override
   Future<void> updateUserProfile(UserProfileRequest requestInfo) async {
+
+    print("UPDATE USER PROFILE ${requestInfo.photoImgUrl}");
     await updateDocumentFields('user',
         docId: requestInfo.userId,
         firstFieldName: 'displayName',
         firstFieldData: requestInfo.displayName,
-        secondFieldName: 'photoUrl',
+        secondFieldName:  'photoUrl',
         secondFieldData: requestInfo.photoImgUrl);
+  }
+
+  @override
+  Future<String> uploadUserProfileImgAndReturnUrl(
+      {required String userId, required File file}) async {
+    final downLoadUrl = await storeFileAndReturnDownloadUrl('profileImg',
+        fileId: userId, file: file);
+    return downLoadUrl;
   }
 }

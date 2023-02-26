@@ -128,18 +128,28 @@ mixin FirestoreHelper {
     }
   }
 
-  // 특정 필드값을 업데이트 하는 메소드
+  /// 특정 필드값을 업데이트 하는 메소드
+  /// 최대 2개의 필드 값을 업데이트할 수 있고
+  /// 두 번째 필드 값 정보가 없다면
+  /// 첫 번째 필드 값에 해당하는 정보만 업데이트
   Future<void> updateDocumentFields(
     final String collectionName, {
     required String docId,
-    required String firstFieldName,
-    required String firstFieldData,
-    required String secondFieldName,
-    required String secondFieldData,
+    String? firstFieldName,
+    String? firstFieldData,
+    String? secondFieldName,
+    String? secondFieldData,
   }) async {
     final docRef = _db.collection(collectionName).doc(docId);
-    await docRef.update(
-        {firstFieldName: firstFieldData, secondFieldName: secondFieldData});
+    if(firstFieldData == null) {
+      await docRef.update({secondFieldName!: secondFieldData});
+    } else if(secondFieldData == null) {
+      await docRef.update({firstFieldName!: firstFieldData});
+    } else {
+      await docRef.update(
+          {firstFieldName!: firstFieldData, secondFieldName!: secondFieldData});
+    }
+
   }
 
   /// subCollection의 특정 document 데이터를 불러오는 메소드

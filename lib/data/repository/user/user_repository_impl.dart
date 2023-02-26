@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:soon_sak/utilities/index.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -78,6 +80,18 @@ class UserRepositoryImpl implements UserRepository {
   Future<Result<void>> updateUserProfile(UserProfileRequest requestInfo) async {
     try {
       final response = await _dataSource.updateUserProfile(requestInfo);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<String>> uploadUserProfileImgAndReturnUrl(
+      {required String userId, required File file}) async {
+    try {
+      final response = await _dataSource.uploadUserProfileImgAndReturnUrl(
+          userId: userId, file: file);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserApi {
@@ -26,4 +28,7 @@ abstract class UserApi {
 
   // 프로필 정보 업데이트
   Future<void> updateUserProfile(UserProfileRequest requestInfo);
+
+  // 프로필 사진 정보 저장 (Storage)
+  Future<String> uploadUserProfileImgAndReturnUrl({required String userId, required File file});
 }

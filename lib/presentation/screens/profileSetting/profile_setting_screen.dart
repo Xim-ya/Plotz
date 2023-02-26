@@ -20,11 +20,26 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
                 borderRadius: BorderRadius.circular(100),
                 child: Stack(
                   children: [
-                    RoundProfileImg(size: 84, imgUrl: vm.userInfo.photoUrl),
+                    Obx(() {
+                      if (vm.pickedImgFile.value.hasData) {
+                        return ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.file(
+                              vm.pickedImgFile.value!,
+                              height: 84,
+                              width: 84,
+                              fit: BoxFit.fitHeight,
+                            ));
+                      } else {
+                        return Obx(
+                          () => RoundProfileImg(size: 84, imgUrl: vm.photoUrl),
+                        );
+                      }
+                    }),
                     Positioned(
                       bottom: 0,
                       child: Container(
-                        color: Colors.black.withOpacity(0.4),
+                        color: Colors.black.withOpacity(0.6),
                         height: 20,
                         width: 84,
                         child: Center(
@@ -142,11 +157,9 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
       ),
       actions: [
         TextButton(
-          onPressed: () {
-            vm.updateUserProfile();
-          },
+          onPressed: vm.saveProfileChanges,
           child: Text(
-            '완료',
+            '저장',
             style:
                 AppTextStyle.title2.copyWith(fontFamily: 'pretendard_medium'),
           ),

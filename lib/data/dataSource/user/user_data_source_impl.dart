@@ -52,4 +52,11 @@ class UserDataSourceImpl
   Future<void> updateUserProfile(UserProfileRequest requestInfo) async {
     return loadResponseOrThrow(() => _api.updateUserProfile(requestInfo));
   }
+
+  @override
+  Future<String> uploadUserProfileImgAndReturnUrl(
+      {required String userId, required file}) {
+    return loadResponseOrThrow(() =>
+        _api.uploadUserProfileImgAndReturnUrl(userId: userId, file: file));
+  }
 }
