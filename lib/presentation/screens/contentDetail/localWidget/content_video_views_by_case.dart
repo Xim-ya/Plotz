@@ -326,8 +326,6 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                             child: ImageViewWithPlayBtn(
                               aspectRatio: 2 / 3,
                               onPlayerBtnClicked: () {
-                                print(
-                                    "LAUCHED VIDEO ID => ${episodeItem.videoId}");
                                 vm.launchYoutubeApp(episodeItem.videoId);
                               },
                               posterImgUrl: episodeItem.tvSeasonInfo
@@ -338,7 +336,11 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                           if (episodeItem.tvSeasonInfo?.description != null)
                             Flexible(
                               child: Text(
-                                episodeItem.tvSeasonInfo?.description ?? '',
+                                episodeItem.tvSeasonInfo?.description == null ||
+                                        episodeItem.tvSeasonInfo?.description ==
+                                            ''
+                                    ? '내용 없음'
+                                    : episodeItem.tvSeasonInfo!.description,
                                 style: AppTextStyle.body3,
                               ),
                             ),

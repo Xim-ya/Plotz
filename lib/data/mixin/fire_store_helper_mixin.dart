@@ -128,7 +128,7 @@ mixin FirestoreHelper {
     required String fieldName,
     required String data,
   }) async {
-    final querySnapshot = await FirebaseFirestore.instance
+    final querySnapshot = await _db
         .collection(collectionName)
         .where(fieldName, isEqualTo: data)
         .get();

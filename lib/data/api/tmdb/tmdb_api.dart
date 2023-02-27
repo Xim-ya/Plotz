@@ -9,11 +9,10 @@ import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_detail_respo
 
 part 'tmdb_api.g.dart';
 
+
 @RestApi(baseUrl: 'https://api.themoviedb.org/3')
 abstract class TmdbApi {
   factory TmdbApi(Dio dio, {String baseUrl}) = _TmdbApi;
-
-  /*** New One ***/
 
   // 'tv' 컨텐츠 상세 정보
   @GET('/tv/{tvId}')
@@ -36,6 +35,7 @@ abstract class TmdbApi {
   Future<TmdbImagesResponse> loadTvImages(
       {@Path('tvId') required int tvId,
       @Query('api_key') required String apiKey});
+
 
   // 'tv' 컨텐츠 검색 결과
   @GET('/search/tv')
