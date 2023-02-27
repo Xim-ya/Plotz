@@ -1,19 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_content_credit_response.dart';
+import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_content_image_response.dart';
+import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_movie_content_list_wrapped_response.dart';
+import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_movie_detail_response.dart';
+import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_content_list_wrapped_response.dart';
+import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
 
 part 'tmdb_api.g.dart';
-
-// https://api.themoviedb.org/3/tv/111800?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1
-
-// 인기 드라마 컨텐츠
-// "https://api.themoviedb.org/3/tv/popular?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1";
-
-// "https://api.themoviedb.org/3/movie/438148/similar?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1"
-
-// 인기 영화 컨텐츠
-// "https://api.themoviedb.org/3/movie/popular?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1"
-// https://api.themoviedb.org/3/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query=닥터
 
 @RestApi(baseUrl: 'https://api.themoviedb.org/3')
 abstract class TmdbApi {
@@ -22,103 +16,65 @@ abstract class TmdbApi {
   /*** New One ***/
 
   // 'tv' 컨텐츠 상세 정보
-  @GET(
-      '/tv/{tvId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-  Future<TmdbTvDetailResponse> loadTmdbMovieDetailResponse(
-      @Path('tvId') int tvId);
+  @GET('/tv/{tvId}')
+  Future<TmdbTvDetailResponse> loadTmdbMovieDetailResponse({
+    @Path('tvId') required int tvId,
+    @Query('api_key') required String apiKey,
+    @Query('language') required String language,
+  });
 
   // 'tv' 컨텐츠 credit 정보
-  @GET(
-      '/tv/{tvId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-  Future<TmdbContentCreditResponse> loadTvCreditInfo(@Path('tvId') int tvId);
+  @GET('/tv/{tvId}/credits')
+  Future<TmdbContentCreditResponse> loadTvCreditInfo({
+    @Path('tvId') required int tvId,
+    @Query('api_key') required String apiKey,
+    @Query('language') required String language,
+  });
 
   // 'tv' 컨텐츠 이미지 리스트
-  @GET('/tv/{tvId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
-  Future<TmdbImagesResponse> loadTvImages(@Path('tvId') int tvId);
+  @GET('/tv/{tvId}/images')
+  Future<TmdbImagesResponse> loadTvImages(
+      {@Path('tvId') required int tvId,
+      @Query('api_key') required String apiKey});
 
   // 'tv' 컨텐츠 검색 결과
-  @GET(
-      '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page={page}&query={query}')
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
-      @Path('page') int key,
-      @Path('query') String query);
+  @GET('/search/tv')
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList({
+    @Query('api_key') required String apiKey,
+    @Query('language') required String language,
+    @Query('page') required int page,
+    @Query('query') required String query,
+  });
 
   // 'movie' 컨텐츠 상세 정보
-  @GET(
-      '/movie/{movieId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailInfoResponse(
-      @Path('movieId') int movieId);
+  @GET('/movie/{movieId}')
+  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailInfoResponse({
+    @Path('movieId') required int movieId,
+    @Query('api_key') required String apiKey,
+    @Query('language') required String language,
+  });
 
   // 'movie' 컨텐츠 credit 정보
-  @GET(
-      '/movie/{movieId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-  Future<TmdbContentCreditResponse> loadMovieCreditInfo(
-      @Path('movieId') int movieId);
+  @GET('/movie/{movieId}/credits')
+  Future<TmdbContentCreditResponse> loadMovieCreditInfo({
+    @Path('movieId') required int movieId,
+    @Query('api_key') required String apiKey,
+    @Query('language') required String language,
+  });
 
   // 'movie' 컨텐츠 이미지 리스트
-  @GET('/movie/{movieId}/images?api_key=b40235ce96defc556ca26d48159f5f13')
-  Future<TmdbImagesResponse> loadMovieImages(@Path('movieId') int movieId);
+  @GET('/movie/{movieId}/images')
+  Future<TmdbImagesResponse> loadMovieImages({
+    @Path('movieId') required int movieId,
+    @Query('api_key') required String apiKey,
+  });
 
   // 'movie' 컨텐츠 검색 결과
-  @GET(
-      '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page={page}&query={query}')
-  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
-      @Path('page') int key,
-      @Path('query') String query);
-
-// @GET(
-//     '/movie/{movieId}/similar?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-// Future<TmdbMovieResponse> loadSimilarMovieList(@Path('movieId') int movieId);
-/*** Old One ***/
-//`인기 영화` 호출
-// @GET(
-//     '/movie/popular?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-// Future<TmdbMovieResponse> loadPopularMovie();
-//
-// // `인기 드라마` 호출
-// @GET(
-//     "/tv/popular?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1")
-// Future<TmdbPopularDramaResponse> loadPopularDrama();
-// // https://api.themoviedb.org/3/movie/453395/videos?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1
-//
-// // 영화 `비디오 정보` 호출 (예고판 키값 등등)
-// @GET(
-//     "/movie/{movieId}/videos?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1")
-// Future<TmdbMovieVideoInfoResponse> loadTmdbMovieVideoInfo(
-//     @Path("movieId") int movieId);
-//
-// // https://api.themoviedb.org/3/movie/${453395}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1
-// // `영화 크래딧` 정보 호출 (출연진 정보 등등)
-// @GET(
-//     "/movie/{movieId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1")
-// Future<TmdbMovieCreditResponse> loadMovieCreditInfo(
-//     @Path("movieId") int movieId);
-//
-// @GET(
-//     "/movie/{movieId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1")
-// Future<TmdbMovieDetailInfoResponse> loadMovieDetailInfo(
-//     @Path('movieId') int movieId);
-//
-// // `드라마 크래딧` 정보 호출 (출연진 정보 등등)
-// @GET(
-//     '/tv/{dramaId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1')
-// Future<TmdbDramaCreditResponse> loadDramaCreditInfo(
-//     @Path("dramaId") int dramaId);
-//
-// // '장르'로 영화 리스트 정보 호출
-// @GET(
-//     '/discover/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page={page}&with_genres={genreId}')
-// Future<TmdbGenreMovieListResponse> loadMovieListByGenreResponse(
-//     @Path('genreId') int genreId, @Path('page') int page);
-//
-// @GET(
-//     '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query={query}')
-// Future<TmdbMovieResponse> loadMovieSearchList(@Path('query') String query);
-//
-// // 유사 영화 컨텐츠 검색
-// // https://api.themoviedb.org/3/movie/{movieId}/similar?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1
-// // searchAnndSimilarContentList
-
+  @GET('/search/movie')
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList({
+    @Query('api_key') required String apiKey,
+    @Query('language') required String language,
+    @Query('page') required int page,
+    @Query('query') required String query,
+  });
 }
-
-// https://api.themoviedb.org/3/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1&query=닥터

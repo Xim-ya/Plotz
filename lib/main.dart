@@ -2,11 +2,13 @@ import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
 import 'presentation/common/layout/response_layout_builder.dart';
 
+
 /// Root
 /// 초기화 메소드 순서 중요 (변경X)
 void main() async {
   // Flutter Engine 초기화
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
 
   // Isolate 토큰 생성 및 초기화
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;

@@ -70,6 +70,7 @@ dependencies:
   intl: ^0.17.0 # DATE
   flutter_launcher_icons: ^0.12.0 # 앱 로고
   flutter_isolate: ^2.0.4
+  flutter_dotenv: ^5.0.2
 
 
 dev_dependencies:
@@ -88,6 +89,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/mocks/
+    - .env
 
 
   fonts:

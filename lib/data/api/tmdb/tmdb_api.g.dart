@@ -21,9 +21,16 @@ class _TmdbApi implements TmdbApi {
   String? baseUrl;
 
   @override
-  Future<TmdbTvDetailResponse> loadTmdbMovieDetailResponse(tvId) async {
+  Future<TmdbTvDetailResponse> loadTmdbMovieDetailResponse({
+    required tvId,
+    required apiKey,
+    required language,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'language': language,
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -34,7 +41,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/tv/${tvId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1',
+              '/tv/${tvId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -44,9 +51,16 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbContentCreditResponse> loadTvCreditInfo(tvId) async {
+  Future<TmdbContentCreditResponse> loadTvCreditInfo({
+    required tvId,
+    required apiKey,
+    required language,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'language': language,
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -57,7 +71,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/tv/${tvId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1',
+              '/tv/${tvId}/credits',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -67,9 +81,12 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbImagesResponse> loadTvImages(tvId) async {
+  Future<TmdbImagesResponse> loadTvImages({
+    required tvId,
+    required apiKey,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'api_key': apiKey};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
@@ -80,7 +97,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/tv/${tvId}/images?api_key=b40235ce96defc556ca26d48159f5f13',
+              '/tv/${tvId}/images',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -90,12 +107,19 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
-    key,
-    query,
-  ) async {
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList({
+    required apiKey,
+    required language,
+    required page,
+    required query,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'language': language,
+      r'page': page,
+      r'query': query,
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -106,7 +130,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/search/tv?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=${key}&query=${query}',
+              '/search/tv',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -116,10 +140,16 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailInfoResponse(
-      movieId) async {
+  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailInfoResponse({
+    required movieId,
+    required apiKey,
+    required language,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'language': language,
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -130,7 +160,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/movie/${movieId}?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1',
+              '/movie/${movieId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -140,9 +170,16 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbContentCreditResponse> loadMovieCreditInfo(movieId) async {
+  Future<TmdbContentCreditResponse> loadMovieCreditInfo({
+    required movieId,
+    required apiKey,
+    required language,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'language': language,
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -153,7 +190,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/movie/${movieId}/credits?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=1',
+              '/movie/${movieId}/credits',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -163,9 +200,12 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbImagesResponse> loadMovieImages(movieId) async {
+  Future<TmdbImagesResponse> loadMovieImages({
+    required movieId,
+    required apiKey,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'api_key': apiKey};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
@@ -176,7 +216,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/movie/${movieId}/images?api_key=b40235ce96defc556ca26d48159f5f13',
+              '/movie/${movieId}/images',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -186,12 +226,19 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
-    key,
-    query,
-  ) async {
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList({
+    required apiKey,
+    required language,
+    required page,
+    required query,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'language': language,
+      r'page': page,
+      r'query': query,
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -202,7 +249,7 @@ class _TmdbApi implements TmdbApi {
     )
             .compose(
               _dio.options,
-              '/search/movie?api_key=b40235ce96defc556ca26d48159f5f13&language=ko-KR&page=${key}&query=${query}',
+              '/search/movie',
               queryParameters: queryParameters,
               data: _data,
             )

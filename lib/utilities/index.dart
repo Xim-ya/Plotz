@@ -12,8 +12,7 @@ export 'dart:async';
 export 'package:flutter/services.dart';
 
 // External Packages
-
-
+export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_easyloading/flutter_easyloading.dart';
 export 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';

@@ -51,13 +51,13 @@ class SearchViewModel extends BaseViewModel {
     final response = await _contentRepository.requestContent(request);
     response.fold(
       onSuccess: (data) {
-        AlertWidget.animatedToast('요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
         Get.back();
+        AlertWidget.animatedToast('요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
         log('컨텐츠 요청 성공');
       },
       onFailure: (e) {
-        AlertWidget.animatedToast('컨텐츠 요청에 실패했습니다. 다시 시도해주세요');
         Get.back();
+        AlertWidget.animatedToast('컨텐츠 요청에 실패했습니다. 다시 시도해주세요');
         log('SearchViewModel : $e');
       },
     );

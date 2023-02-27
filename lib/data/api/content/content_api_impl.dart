@@ -87,6 +87,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override
   Future<void> requestContent(ContentRequest requestInfo) async {
     final data = requestInfo.toMap();
-    await storeDocument('requestContent', docId: null, data: data);
+    await storeDocument('requestContent',
+        docId: requestInfo.contentId, data: data);
   }
 }
