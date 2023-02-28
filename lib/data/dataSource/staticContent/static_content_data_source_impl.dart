@@ -8,8 +8,8 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
   final StaticContentApi _api;
   final LocalStorageService _localStorage;
 
-  final String baseUrl =
-      'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app';
+  // final String baseUrl =
+  //     'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app';
 
   @override
   Future<BannerResponse> loadBannerContents() async {

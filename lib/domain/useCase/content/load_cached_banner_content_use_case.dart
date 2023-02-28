@@ -50,6 +50,7 @@ class LoadCachedBannerContentUseCase
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
             jsonText: localData.toString(), givenKey: keyResponse)) {
+          print("ARANG@@");
           final json = jsonDecode(localData.toString());
           final response = BannerResponse.fromJson(json);
           final result = BannerModel.fromResponse(response);

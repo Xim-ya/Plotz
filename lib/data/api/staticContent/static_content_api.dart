@@ -21,4 +21,6 @@ abstract class StaticContentApi {
   // Static Content 키 리스트
   Future<ContentKeyResponse> loadStaticContentKeys();
 
+
+
 }
