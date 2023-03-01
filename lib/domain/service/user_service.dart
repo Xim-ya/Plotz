@@ -52,16 +52,25 @@ class UserService extends GetxService {
     );
   }
 
+  /// 네트워크 상태를 관찰하는 메소드
+  /// 네트워크가 불안정할 시 snackBar message를 보여줌
+  /// 맨 처음 로드시에는 무조건 [ConnectivityResult.none]을 반환하여
+  /// [isReadyToActivate] boolean 값으로 snackbar message 노출 여부를 결정함
+  void listenNetworkConnection() {
+    bool isReadyToActivate = false;
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (isReadyToActivate && result == ConnectivityResult.none) {
+        Get.snackbar('네트워크 불안정', 'Wi-Fi 또는 데이터를 활성화 해주세요.');
+      } else {
+        isReadyToActivate = true;
+      }
+    });
+  }
+
   // 리소스 initialize 메소드
   Future<void> prepare() async {
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if (!(result == ConnectivityResult.mobile ||
-          result == ConnectivityResult.wifi)) {
-        print("네트워크 불안정 ${result}");
-      }
-      print("${result}");
-    });
     await getUserInfo();
     await checkUserSignInState();
+    listenNetworkConnection();
   }
 }

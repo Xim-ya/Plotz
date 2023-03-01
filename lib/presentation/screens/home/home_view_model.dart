@@ -120,6 +120,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
 
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -139,5 +140,9 @@ class HomeViewModel extends BaseViewModel {
       _fetchCategoryContentCollection()
     ]);
     update();
+
+
+
+
   }
 }
