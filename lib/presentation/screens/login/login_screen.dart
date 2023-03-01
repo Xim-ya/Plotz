@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:soon_sak/utilities/index.dart';
 
 class LoginScreen extends BaseScreen<LoginViewModel> {
@@ -67,12 +69,13 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                   },
                 ),
                 AppSpace.size20,
-                SnsLoginButton(
-                  sns: Sns.apple,
-                  onBtnTapped: () {
-                    vm.signInAndUp(Sns.apple);
-                  },
-                ),
+                if (Platform.isIOS)
+                  SnsLoginButton(
+                    sns: Sns.apple,
+                    onBtnTapped: () {
+                      vm.signInAndUp(Sns.apple);
+                    },
+                  ),
               ],
             ),
           ),
