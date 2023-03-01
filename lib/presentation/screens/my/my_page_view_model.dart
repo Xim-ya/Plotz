@@ -115,9 +115,7 @@ class MyPageViewModel extends BaseViewModel {
   /* Getters */
   List<UserWatchHistoryItem>? get watchHistoryList => _watchHistoryList.value;
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
+  Future<void> prepare() async {
     await getUserInfo();
     await fetchUserCurationSummary();
     await _fetchUserWatchHistory();
@@ -130,5 +128,12 @@ class MyPageViewModel extends BaseViewModel {
     _userService.userWatchHistory.listen((_) {
       _watchHistoryList.value = _userService.userWatchHistory.value;
     });
+    loading(false);
+  }
+
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    loading(true);
   }
 }

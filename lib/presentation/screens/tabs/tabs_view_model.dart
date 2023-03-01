@@ -3,6 +3,14 @@ import 'dart:io';
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsViewModel extends BaseViewModel {
+  TabsViewModel(
+      this._exploreViewModel, this._curationViewModel, this._myPageViewModel);
+
+  /* ViewModels */
+  final ExploreViewModel _exploreViewModel;
+  final CurationViewModel _curationViewModel;
+  final MyPageViewModel _myPageViewModel;
+
   /* Variables */
 
   /// State Variables
@@ -12,12 +20,31 @@ class TabsViewModel extends BaseViewModel {
   /* Intents */
 
   /// UI Interaction
-  // 네비게이션 바 아이템이 선택 되었을 때
+  /// 네비게이션 바 아이템이 선택 되었을 때
+  /// 탭별로 Api 호출을 나누기 위해 각 ViewModel prepare 메소드를 실행시킴
+  /// 중복호출을 막기 위해 한번 호출된 메소드는 호출하지 않도록 예외처리
   void onBottomNavBarItemTapped(int index) async {
     selectedTabIndex(index);
 
-    if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
-      print("현재 파이버에시 크리틱을 사용 중 입니다");
+    switch (index) {
+      case 0:
+        // Get.toNamed('/tab1');
+        break;
+      case 1:
+        if (_exploreViewModel.loading.isTrue) {
+          await _exploreViewModel.prepare();
+        }
+        break;
+      case 2:
+        if (_curationViewModel.loading.isTrue) {
+          await _curationViewModel.prepare();
+        }
+        break;
+      case 3:
+        if (_myPageViewModel.loading.isTrue) {
+          await _myPageViewModel.prepare();
+        }
+        break;
     }
   }
 }

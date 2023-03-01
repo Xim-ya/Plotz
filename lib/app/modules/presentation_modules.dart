@@ -5,7 +5,6 @@ abstract class PresentationModules {
 
   static void dependencies() {
     // 탭 스크린
-    Get.lazyPut(() => TabsViewModel(), fenix: true);
     Get.lazyPut(
         () => HomeViewModel(
             Get.find(), Get.find(), Get.find()),
@@ -14,7 +13,7 @@ abstract class PresentationModules {
     // 컨텐츠 상세화면
     Get.lazyPut(() => ContentDetailScaffoldController(), fenix: true);
 
-    // 탐색
+     // 탐색
     Get.lazyPut(() => ExploreViewModel(Get.find()), fenix: true);
 
     // 큐레이션

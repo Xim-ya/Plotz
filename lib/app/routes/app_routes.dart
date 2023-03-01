@@ -22,6 +22,9 @@ abstract class AppRoutes {
   // 등록
   static const register = '/register';
 
+  // 탐색
+  static const explore = '/explore';
+
   // 큐레이션 내역
   static const curationHistory = '/curationHistory';
 
@@ -30,5 +33,4 @@ abstract class AppRoutes {
 
   // 프로필 설정
   static const profileSetting = '/profile_setting';
-
 }

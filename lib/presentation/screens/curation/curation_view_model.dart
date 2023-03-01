@@ -20,7 +20,7 @@ class CurationViewModel extends BaseViewModel {
         if (data.isEmpty) {
           isInProgressCurationEmpty = true;
         } else {
-          if(isInProgressCurationEmpty == true) {
+          if (isInProgressCurationEmpty == true) {
             isInProgressCurationEmpty = false;
           }
           inProgressCurations.clear();
@@ -53,13 +53,15 @@ class CurationViewModel extends BaseViewModel {
         : 4; // 4 == 스켈레톤 뷰 개수
   }
 
+  Future<void> prepare() async {
+    loading(false);
+    await fetchInProgressQurationList();
+  }
+
   @override
   void onInit() {
     super.onInit();
-
-
-    fetchInProgressQurationList();
-
+    loading(true);
     randomContentImg = RandomImg(
       tvImgPath: tvImgPathList.randomItem(),
       movieImgPath: movieImgPathList.randomItem(),

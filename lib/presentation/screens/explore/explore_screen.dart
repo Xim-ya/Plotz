@@ -18,7 +18,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         IconInkWellButton.assetIcon(
           iconPath: 'assets/icons/search.svg',
           size: 40,
-          onIconTapped: vm.loadRandomExploreContents,
+          onIconTapped: vm.routeToSearch,
         ),
       ],
     );

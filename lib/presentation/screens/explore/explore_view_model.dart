@@ -83,12 +83,16 @@ class ExploreViewModel extends BaseViewModel {
 
   bool get isContentLoaded => _exploreContents.value.hasData;
 
+  Future<void> prepare() async {
+    print("EXPLORE VIEW MODEL PREAPRE");
+    await loadRandomExploreContents();
+    loading(false);
+  }
+
   @override
   Future<void> onInit() async {
     super.onInit();
-
     swiperController = CarouselController();
-
-    await loadRandomExploreContents();
+    loading(true);
   }
 }

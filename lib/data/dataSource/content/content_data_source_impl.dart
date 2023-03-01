@@ -24,7 +24,7 @@ class ContentDataSourceImpl
 
   @override
   Future<List<CurationContentResponse>> loadInProgressQurationList() =>
-      loadResponseOrThrow(() => _api.loadInProgressQurationList());
+      loadWithFirebaseIsolate(() => _api.loadInProgressQurationList());
 
   @override
   Future<UserResponse> loadCuratorInfo(String contentId) =>
@@ -33,7 +33,8 @@ class ContentDataSourceImpl
 
   @override
   Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) =>
-      loadResponseOrThrow(() => _api.loadExploreContents(ids));
+      loadWithFirebaseIsolate(
+          () => loadResponseOrThrow(() => _api.loadExploreContents(ids)));
 
   @override
   Future<void> requestContent(ContentRequest requestInfo) =>
