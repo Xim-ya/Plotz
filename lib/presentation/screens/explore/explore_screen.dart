@@ -29,7 +29,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
       builder: (_) {
         return CarouselSlider.builder(
           carouselController: vm.swiperController,
-          itemCount: vm.exploreContentList?.length ?? 0,
+          itemCount: vm.exploreContentList?.length ?? 1,
           options: CarouselOptions(
             onPageChanged: (index, _) {
               vm.onSwiperChanged(index);
@@ -42,13 +42,15 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
           ),
           itemBuilder:
               (BuildContext context, int parentIndex, int pageViewIndex) {
-            final contentItem = vm.exploreContentList![pageViewIndex];
+            final contentItem = vm.exploreContentList?[pageViewIndex];
             return GestureDetector(
               onTap: () {
+                if (!vm.isContentLoaded) return;
                 vm.routeToContentDetail(
                   ContentArgumentFormat(
                     contentId:
-                        SplittedIdAndType.fromOriginId(contentItem.originId).id,
+                        SplittedIdAndType.fromOriginId(contentItem!.originId)
+                            .id,
                     contentType:
                         SplittedIdAndType.fromOriginId(contentItem.originId)
                             .type,
@@ -65,7 +67,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
                 children: [
                   if (vm.isContentLoaded)
                     CachedNetworkImage(
-                      imageUrl: contentItem.posterImgUrl.prefixTmdbImgPath,
+                      imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
                       height: double.infinity,
                       fit: BoxFit.cover,
                     )
@@ -119,13 +121,10 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
 
   // 채널 정보
   List<Widget> buildChannelInfoView(ExploreContent? item) => [
-        GestureDetector(
-          onTap: () {},
-          child: ChannelInfoView(
-            imgUrl: item?.channelLogoImgUrl,
-            name: item?.channelName,
-            subscriberCount: item?.subscribersCount,
-          ),
+        ChannelInfoView(
+          imgUrl: item?.channelLogoImgUrl,
+          name: item?.channelName,
+          subscriberCount: item?.subscribersCount,
         ),
         AppSpace.size20,
       ];

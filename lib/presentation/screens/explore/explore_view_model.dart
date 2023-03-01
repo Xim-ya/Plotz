@@ -81,7 +81,7 @@ class ExploreViewModel extends BaseViewModel {
 
   List<ExploreContent>? get exploreContentList => _exploreContents.value;
 
-  bool get isContentLoaded => _exploreContents.value.hasData;
+  bool get isContentLoaded => _exploreContents.value.hasData && loading.isFalse;
 
   Future<void> prepare() async {
     print("EXPLORE VIEW MODEL PREAPRE");
