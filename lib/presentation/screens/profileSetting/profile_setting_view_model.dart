@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -120,11 +121,14 @@ class ProfileSettingViewModel extends BaseViewModel {
   Future<void> pickProfileImage() async {
     focusNode.unfocus();
     try {
+      await EasyLoading.show();
       final imageSource = await _picker.pickImage(source: ImageSource.gallery);
       if (imageSource.hasData) {
         pickedImgFile.value = File(imageSource!.path);
       }
+      unawaited(EasyLoading.dismiss());
     } catch (e) {
+      unawaited(EasyLoading.dismiss());
       log(e.toString());
       await AlertWidget.animatedToast('사진첩에서 정상적으로 이미지를 불러오지 못했어요. 다시 시도해주세요');
     }
