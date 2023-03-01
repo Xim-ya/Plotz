@@ -19,6 +19,7 @@ export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_easyloading/flutter_easyloading.dart';
 export 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
 export 'package:get/get.dart';
+export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:shimmer_animation/shimmer_animation.dart';
 export 'package:carousel_slider/carousel_slider.dart';
@@ -127,6 +128,7 @@ export 'package:soon_sak/data/repository/version/version_repository.dart';
 
 
 // Domain
+export 'package:soon_sak/domain/enum/tab_loading_state_enum.dart';
 export 'package:soon_sak/domain/model/version/version_info.dart';
 export 'package:soon_sak/domain/model/content/myPage/user_watch_history_item.dart';
 export 'package:soon_sak/domain/exception/content/content_exception.dart';

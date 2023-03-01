@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/utilities/index.dart';
 
 class UserService extends GetxService {
@@ -8,13 +9,14 @@ class UserService extends GetxService {
   final UserRepository _userRepository;
 
   late final bool isUserSignIn; // 유저 로그인 여부
-  final Rxn <UserModel> userInfo = Rxn(); // 유저 정보
+  final Rxn<UserModel> userInfo = Rxn(); // 유저 정보
   final Rxn<List<UserWatchHistoryItem>> userWatchHistory = Rxn(); // 유저 시청 기록
 
   /* Intents */
   // 유저 시청 기록 호출
   Future<void> updateUserWatchHistory() async {
-    final response = await _userRepository.loadUserWatchHistory(userInfo.value!.id!);
+    final response =
+        await _userRepository.loadUserWatchHistory(userInfo.value!.id!);
     response.fold(
       onSuccess: (data) {
         userWatchHistory.value = data;
@@ -52,9 +54,14 @@ class UserService extends GetxService {
 
   // 리소스 initialize 메소드
   Future<void> prepare() async {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (!(result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi)) {
+        print("네트워크 불안정 ${result}");
+      }
+      print("${result}");
+    });
     await getUserInfo();
     await checkUserSignInState();
   }
-
-
 }

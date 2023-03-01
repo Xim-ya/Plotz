@@ -12,11 +12,11 @@ class MyPageViewModel extends BaseViewModel {
   /* Variables */
   UserCurationSummary? curationSummary; //  큐레이션 내역 요약 정보
   final Rxn<List<UserWatchHistoryItem>> _watchHistoryList = Rxn(); // 시청 기록
-
   final SignOutUseCase _signOutHandlerUseCase;
   Rxn<UserModel> userInfo = Rxn();
 
   String? get displayName => userInfo.value?.displayName;
+  TabLoadingState loadingState = TabLoadingState.initState;
 
   /* Intents */
   // 설정 스크린으로 이동
@@ -116,9 +116,11 @@ class MyPageViewModel extends BaseViewModel {
   List<UserWatchHistoryItem>? get watchHistoryList => _watchHistoryList.value;
 
   Future<void> prepare() async {
+    loadingState = TabLoadingState.loading;
     await getUserInfo();
     await fetchUserCurationSummary();
     await _fetchUserWatchHistory();
+    loadingState = TabLoadingState.done;
 
     /// 시청 기록 & 유저 프로필 정보의 데이터 변화를
     /// listen 하고 ui를 업데이트 함.
@@ -128,12 +130,10 @@ class MyPageViewModel extends BaseViewModel {
     _userService.userWatchHistory.listen((_) {
       _watchHistoryList.value = _userService.userWatchHistory.value;
     });
-    loading(false);
   }
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    loading(true);
   }
 }

@@ -1,4 +1,6 @@
 import 'dart:developer';
+
+import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreViewModel extends BaseViewModel {
@@ -7,6 +9,7 @@ class ExploreViewModel extends BaseViewModel {
   final RxInt swiperIndex = 0.obs;
   final RxBool loopIsOnProgress = false.obs;
   final RxBool alreadyShowedToast = false.obs;
+  TabLoadingState loadingState = TabLoadingState.initState;
 
   /* Controllers */
   late final CarouselController swiperController;
@@ -81,18 +84,18 @@ class ExploreViewModel extends BaseViewModel {
 
   List<ExploreContent>? get exploreContentList => _exploreContents.value;
 
-  bool get isContentLoaded => _exploreContents.value.hasData && loading.isFalse;
+  bool get isContentLoaded =>
+      _exploreContents.value.hasData && loadingState.isDone;
 
   Future<void> prepare() async {
-    print("EXPLORE VIEW MODEL PREAPRE");
+    loadingState = TabLoadingState.loading;
     await loadRandomExploreContents();
-    loading(false);
+    loadingState = TabLoadingState.done;
   }
 
   @override
   Future<void> onInit() async {
     super.onInit();
     swiperController = CarouselController();
-    loading(true);
   }
 }

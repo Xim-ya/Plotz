@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsViewModel extends BaseViewModel {
@@ -27,21 +28,18 @@ class TabsViewModel extends BaseViewModel {
     selectedTabIndex(index);
 
     switch (index) {
-      case 0:
-        // Get.toNamed('/tab1');
-        break;
       case 1:
-        if (_exploreViewModel.loading.isTrue) {
+        if (_exploreViewModel.loadingState.isInitState) {
           await _exploreViewModel.prepare();
         }
         break;
       case 2:
-        if (_curationViewModel.loading.isTrue) {
+        if (_curationViewModel.loadingState.isInitState) {
           await _curationViewModel.prepare();
         }
         break;
       case 3:
-        if (_myPageViewModel.loading.isTrue) {
+        if (_myPageViewModel.loadingState.isInitState) {
           await _myPageViewModel.prepare();
         }
         break;
