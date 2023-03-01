@@ -133,7 +133,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                       height: 18,
                     ),
                 ],
-                ),
+              ),
             ),
           ),
           AppSpace.size40,
@@ -256,22 +256,36 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
     );
   }
 
-  // 기타정보 > 리스트 아이템
+  /// 기타정보 > 리스트 아이템
+  /// elseInfoItem 2 * 2 형태의 그리드뷰 아이템으로 사용되고 있음
+  /// textOverFlow를 구현하기 위해
+  /// painter을 이용
+  ///
+  /// 컨텐츠 텍스트 넓이는  (전체 넓이 / 2) - 32(양 옆 패딩) - 'title'의 텍스트 크기
+  /// 로 계산할 수 있음
   Expanded elseInfoItem({required String title, required String content}) {
+    TextSpan titleSpan = TextSpan(
+      text: title,
+      style: AppTextStyle.body2.copyWith(color: Colors.white),
+    );
+    TextPainter painter = TextPainter(
+      text: titleSpan,
+      textAlign: TextAlign.left,
+      textDirection: TextDirection.ltr,
+    );
+    painter.layout();
     return Expanded(
       child: Row(
-        children: <Widget>[
-          Text(
-            title,
-            style: AppTextStyle.body2.copyWith(color: Colors.white),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-          Text(
-            ' : $content',
-            style: AppTextStyle.body2.copyWith(color: Colors.white),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
+        children: [
+          RichText(text: titleSpan),
+          SizedBox(
+            width: (SizeConfig.to.screenWidth / 2) - 32 - painter.width,
+            child: Text(
+              ' : $content',
+              style: AppTextStyle.body2.copyWith(color: Colors.white),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
           ),
         ],
       ),

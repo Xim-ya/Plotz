@@ -5,6 +5,7 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
 
   @override
   Widget buildView(BuildContext context) {
+    print(SizeConfig.to.screenHeight);
     return RegisterVideoLinkPageViewScaffold(
       onBackgroundLayerTapped: vm.videoFormFocusNode.unfocus,
       leadingTitle: _buildLeadingTitle(),
@@ -81,7 +82,7 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
 
   // 주소 복사 방법 설명
   Widget _buildPateIntroductinoView() => Positioned(
-        bottom: 0,
+        bottom: SizeConfig.to.screenWidth < 600 ? -50 : 0,
         child: Obx(
           () => AnimatedOpacity(
             opacity: vm.videoUrlValidState.isValid ? 0 : 1,
