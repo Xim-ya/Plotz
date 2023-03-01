@@ -2,7 +2,6 @@ import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
 import 'presentation/common/layout/response_layout_builder.dart';
 
-
 /// Root
 /// 초기화 메소드 순서 중요 (변경X)
 void main() async {
@@ -14,11 +13,23 @@ void main() async {
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
 
+  // final packageInfo = await PackageInfo.fromPlatform();
+  // String appName = packageInfo.appName;
+  // String packageName = packageInfo.packageName;
+  // String version = packageInfo.version;
+  // String buildNumber = packageInfo.buildNumber;
+  // print('PACKAGE MANAGER');
+  // print(appName);
+  // print(packageName);
+  // print(version);
+  // print(buildNumber);
+
   // FireBase 초기화
   await Firebase.initializeApp(
-    name: 'soonsak-15350',
+    name: dotenv.env['FIREBASE_KEY']!,
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
 
   // Portrait 고정
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -32,6 +43,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Soon Sak',

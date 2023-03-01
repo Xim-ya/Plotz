@@ -23,7 +23,7 @@ class AppDialog extends Dialog {
     required String title,
     required VoidCallback onBtnClicked,
     String? description,
-    required String btnContent,
+    String? btnContent,
   }) =>
       AppDialog(
         title: title,
@@ -55,7 +55,7 @@ class AppDialog extends Dialog {
   final String? description;
   final VoidCallback onBtnClicked;
   final VoidCallback? onLeftBtnClicked;
-  final String btnContent;
+  final String? btnContent;
   final String? leftBtnContent;
 
   @override
@@ -151,7 +151,7 @@ class AppDialog extends Dialog {
                         onPressed: onBtnClicked,
                         child: Center(
                           child: Text(
-                            btnContent,
+                            btnContent ?? '확인',
                             style: AppTextStyle.title1
                                 .copyWith(color: AppColor.yellow),
                           ),
@@ -185,7 +185,7 @@ class AppDialog extends Dialog {
                   height: 50,
                   child: Center(
                     child: Text(
-                      '확인',
+                      btnContent ?? '확인',
                       style:
                           AppTextStyle.title1.copyWith(color: AppColor.yellow),
                     ),

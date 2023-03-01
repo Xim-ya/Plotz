@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:soon_sak/data/api/version/version_api.dart';
+import 'package:soon_sak/data/dataSource/version/version_data_sourcel_impl.dart';
 import 'package:soon_sak/data/firebase/app_fire_storage.dart';
+import 'package:soon_sak/data/repository/version/version_repository_impl.dart';
 import 'package:soon_sak/data/resources/app_dio.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -8,6 +11,13 @@ abstract class DataModules {
 
   static Future<void> getDependencies() async {
     Get.put<Dio>(AppDio.getInstance(), permanent: true);
+
+    /* Version */
+    Get.lazyPut(() => VersionApi(Get.find()), fenix: true);
+    Get.lazyPut<VersionDataSource>(() => VersionDataSourceImpl(Get.find()),
+        fenix: true);
+    Get.lazyPut<VersionRepository>(() => VersionRepositoryImpl(Get.find()),
+        fenix: true);
 
     /* Static Content */
     Get.lazyPut<StaticContentApi>(() => StaticContentApiImpl(Get.find()),

@@ -12,6 +12,8 @@ export 'dart:async';
 export 'package:flutter/services.dart';
 
 // External Packages
+export 'package:pub_semver/pub_semver.dart';
+export 'package:package_info_plus/package_info_plus.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -53,6 +55,7 @@ export 'package:soon_sak/app/modules/domain_modules.dart';
 export 'package:soon_sak/app/modules/presentation_modules.dart';
 
 // Data
+export 'package:soon_sak/data/api/version/response/version_response.dart';
 export 'package:soon_sak/data/api/user/response/user_watch_history_item_response.dart';
 export 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 export 'package:soon_sak/data/mixin/firebase_isolate_helper_mixin.dart';
@@ -118,9 +121,12 @@ export 'package:soon_sak/data/dataSource/youtube/youtube_data_source.dart';
 export 'package:soon_sak/data/repository/user/user_repository_impl.dart';
 export 'package:soon_sak/data/api/user/request/watching_history_request.dart';
 export 'package:soon_sak/data/api/user/request/user_profile_request.dart';
+export 'package:soon_sak/data/dataSource/version/version_data_source.dart';
+export 'package:soon_sak/data/repository/version/version_repository.dart';
 
 
 // Domain
+export 'package:soon_sak/domain/model/version/version_info.dart';
 export 'package:soon_sak/domain/model/content/myPage/user_watch_history_item.dart';
 export 'package:soon_sak/domain/exception/content/content_exception.dart';
 export 'package:soon_sak/domain/exception/user/user_exception.dart';

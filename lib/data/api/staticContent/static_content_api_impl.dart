@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:soon_sak/data/api/staticContent/response/content_key_response.dart';
 import 'package:soon_sak/data/api/staticContent/static_content_api.dart';
 
 class StaticContentApiImpl implements StaticContentApi {
   final Dio _dio;
   final String baseUrl =
-      'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app';
+      'https://${dotenv.env['FIREBASE_KEY']!}-default-rtdb.asia-southeast1.firebasedatabase.app';
 
   StaticContentApiImpl(this._dio);
 
@@ -34,7 +35,4 @@ class StaticContentApiImpl implements StaticContentApi {
     final json = jsonDecode(response.toString());
     return ContentKeyResponse.fromJson(json);
   }
-
-
-
 }
