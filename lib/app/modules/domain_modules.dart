@@ -8,7 +8,8 @@ abstract class DomainModules {
 
   static Future<void> dependencies() async {
     // 버전
-    Get.lazyPut(() => CheckVersionAndNetworkUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => CheckVersionAndNetworkUseCase(Get.find(), Get.find()),
+        fenix: true);
 
     // 인증
     Get.lazyPut(() => SignOutUseCase(Get.find()), fenix: true);

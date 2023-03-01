@@ -16,9 +16,10 @@ import 'dart:io' show Platform, exit;
  * */
 
 class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
-  CheckVersionAndNetworkUseCase(this._repository);
+  CheckVersionAndNetworkUseCase(this._repository, this._userService);
 
   final VersionRepository _repository;
+  final UserService _userService;
 
   @override
   Future<Result<void>> call() async {
@@ -34,6 +35,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
+
     String platformPath = Platform.isIOS ? 'ios' : 'android';
 
     final response = await _repository.loadVersionInfo(platformPath);
@@ -41,6 +43,9 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
       onSuccess: (version) {
         final serverVersionCode = Version.parse(version.versionCode);
         final appVersionCode = Version.parse(packageInfo.version);
+
+        // 서비스 모듈 버전 정보 저장
+        _userService.currentVersionNum = version.versionCode;
 
         /// 조건 : 시스템 점건 중이거나 작동을 할 수 있는 상태라면
         /// 시스템 점검 모달 노출

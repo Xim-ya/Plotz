@@ -62,4 +62,9 @@ class SettingViewModel extends BaseViewModel {
   void routeToProfileSetting() {
     Get.toNamed(AppRoutes.profileSetting);
   }
+
+
+  /* Getters */
+  String get currentVersionNum => _userService.currentVersionNum;
+
 }

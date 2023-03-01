@@ -8,6 +8,7 @@ class UserService extends GetxService {
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
 
+  late final String currentVersionNum;
   late final bool isUserSignIn; // 유저 로그인 여부
   final Rxn<UserModel> userInfo = Rxn(); // 유저 정보
   final Rxn<List<UserWatchHistoryItem>> userWatchHistory = Rxn(); // 유저 시청 기록
