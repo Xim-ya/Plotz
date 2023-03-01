@@ -3,7 +3,7 @@ import 'package:soon_sak/utilities/index.dart';
 class ThemeConfig {
   final _theme = ThemeData(
     appBarTheme: AppBarTheme(
-      brightness: Brightness.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
 
     // 플랫폼별 라우팅 애니메이션 속성

@@ -1,4 +1,3 @@
-
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -10,7 +9,6 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
   @override
   bool get wrapWithSafeArea => false;
 
-
   @override
   Widget? buildBottomNavigationBar(BuildContext context) =>
       const _BottomNavigationBar();
@@ -20,7 +18,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
     return Obx(
       () => AnimatedIndexedStack(
         index: vm.selectedTabIndex.value,
-        children:  <Widget>[
+        children: <Widget>[
           HomeScreen(),
           ExploreScreen(),
           CurationScreen(),
@@ -29,6 +27,8 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
       ),
     );
   }
+
+
 }
 
 class _BottomNavigationBar extends BaseView<TabsViewModel> {

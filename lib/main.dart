@@ -1,6 +1,5 @@
 import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
-import 'package:flutter/services.dart' as service;
 import 'presentation/common/layout/response_layout_builder.dart';
 
 /// Root
@@ -14,10 +13,9 @@ void main() async {
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
 
-  service.SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.blue,
-    statusBarColor: Colors.pink,
-  ));
+
+
+
 
   /// FireBase 초기화
   // FIrebase Crashlytics 설정

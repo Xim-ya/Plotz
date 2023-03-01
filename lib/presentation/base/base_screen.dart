@@ -15,6 +15,7 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     // Getx Controller(VM) 초기화
     initViewModel();
 
