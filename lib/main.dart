@@ -13,29 +13,21 @@ void main() async {
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
 
-  // final packageInfo = await PackageInfo.fromPlatform();
-  // String appName = packageInfo.appName;
-  // String packageName = packageInfo.packageName;
-  // String version = packageInfo.version;
-  // String buildNumber = packageInfo.buildNumber;
-  // print('PACKAGE MANAGER');
-  // print(appName);
-  // print(packageName);
-  // print(version);
-  // print(buildNumber);
-
   // FireBase 초기화
-  await Firebase.initializeApp(
-    name: dotenv.env['FIREBASE_KEY']!,
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await runZonedGuarded<Future<void>>(() async {
+    await Firebase.initializeApp(
+      name: dotenv.env['FIREBASE_KEY']!,
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  // Portrait 고정
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(const MyApp());
-  });
+    // Portrait 고정
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+        .then((_) {
+      runApp(const MyApp());
+    });
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
 class MyApp extends StatelessWidget {
@@ -43,8 +35,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Soon Sak',

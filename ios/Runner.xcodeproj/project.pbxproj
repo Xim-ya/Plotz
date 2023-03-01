@@ -144,6 +144,8 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				5456C96379EA338E8E916390 /* [CP] Embed Pods Frameworks */,
+				2267F6A3A49C5BD88D07BCC2 /* [firebase_crashlytics] Crashlytics Upload Symbols */,
+				2AC1FD5929AF240500EA587F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -203,6 +205,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2267F6A3A49C5BD88D07BCC2 /* [firebase_crashlytics] Crashlytics Upload Symbols */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}\"",
+				"\"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\"",
+			);
+			name = "[firebase_crashlytics] Crashlytics Upload Symbols";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/FirebaseCrashlytics/upload-symbols\" --flutter-project \"$PROJECT_DIR/firebase_app_id_file.json\" ";
+		};
+		2AC1FD5929AF240500EA587F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#FirebaseCrashlytics\n${PODS_ROOT}/FirebaseCrashlytics/run\n";
+		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -248,7 +287,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 		AE21E6C0141AD7719BE51F51 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -15,5 +15,9 @@ class TabsViewModel extends BaseViewModel {
   // 네비게이션 바 아이템이 선택 되었을 때
   void onBottomNavBarItemTapped(int index) async {
     selectedTabIndex(index);
+
+    if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+      print("현재 파이버에시 크리틱을 사용 중 입니다");
+    }
   }
 }
