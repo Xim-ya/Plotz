@@ -125,7 +125,7 @@ class ContentDetailViewModel extends BaseViewModel {
   }
 
   // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
-  Future<void> fetchContentOfVideoList() async {
+  Future<void> _fetchContentOfVideoList() async {
     final responseRes = await _loadContentOfVideoList.call(
         passedArgument.contentType, passedArgument.originId);
 
@@ -240,8 +240,13 @@ class ContentDetailViewModel extends BaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
-    await _fetchContentMainInfo();
-    await fetchContentOfVideoList();
+    await Future.wait([
+      _fetchContentMainInfo(),
+      _fetchContentOfVideoList(),
+    ]);
+
+    // await _fetchContentMainInfo();
+    // await _fetchContentOfVideoList();
     await _fetchContentCommentList();
   }
 

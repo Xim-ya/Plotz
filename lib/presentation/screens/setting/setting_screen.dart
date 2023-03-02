@@ -12,27 +12,31 @@ class SettingScreen extends BaseScreen<SettingViewModel> {
         _settingMenu(title: '프로필 설정', onTap: vm.routeToProfileSetting),
         _settingMenu(title: '로그아웃', onTap: vm.signOut),
         _settingMenu(title: '회원탈퇴', onTap: vm.showWithdrawnInoModal),
-        Container(
-          margin: AppInset.all16,
-          child: RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: '현재 버전  ',
-                  style: AppTextStyle.title2
-                      .copyWith(fontFamily: 'pretendard_regular'),
-                ),
-                TextSpan(
-                  text: vm.currentVersionNum,
-                  style: AppTextStyle.title2.copyWith(
-                    fontFamily: 'pretendard_regular',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        _versionMenu(),
       ],
+    );
+  }
+
+  Container _versionMenu() {
+    return Container(
+      margin: AppInset.all16,
+      child: RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+              text: '현재 버전  ',
+              style: AppTextStyle.title2
+                  .copyWith(fontFamily: 'pretendard_regular'),
+            ),
+            TextSpan(
+              text: vm.currentVersionNum,
+              style: AppTextStyle.title2.copyWith(
+                fontFamily: 'pretendard_regular',
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

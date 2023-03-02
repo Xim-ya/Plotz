@@ -25,16 +25,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
   Future<Result<void>> call() async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
-    /// 조건 : 네트워크가 연결이 안되어 있다면
-    /// 네트워크 불안정 모달 노출
-    if (!(connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi)) {
-      showNetworkIsBadModal();
-      return Result.failure(Exception('네트워크 불안정'));
-    }
-
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
 
     String platformPath = Platform.isIOS ? 'ios' : 'android';
 
@@ -64,6 +55,15 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         return Result.success(null);
       },
       onFailure: (e) {
+        /// 조건 : 네트워크가 연결이 안되어 있다면
+        /// 네트워크 불안정 모달 노출
+        if (!(connectivityResult == ConnectivityResult.mobile ||
+            connectivityResult == ConnectivityResult.wifi)) {
+          showNetworkIsBadModal();
+          return Result.failure(Exception('네트워크 불안정'));
+        }
+
+        /// 알 수 없는 오류라면
         somethingIsWrongModal();
         log('CheckVersionInfoUseCase : $e');
         return Result.failure(Exception('알 수 없는 오류'));

@@ -71,7 +71,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
           separatorBuilder: (__, _) => AppSpace.size12,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: vm.commentList?.length ?? 10,
+          itemCount: vm.commentList?.length ?? 5,
           itemBuilder: (context, index) {
             if (vm.commentList.hasData) {
               final YoutubeContentComment item = vm.commentList![index];
