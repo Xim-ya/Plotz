@@ -11,6 +11,7 @@ class SettingScreen extends BaseScreen<SettingViewModel> {
       children: <Widget>[
         _settingMenu(title: '프로필 설정', onTap: vm.routeToProfileSetting),
         _settingMenu(title: '로그아웃', onTap: vm.signOut),
+        _settingMenu(title: '개인정보 및 약관', onTap: vm.routeToTerms),
         _settingMenu(title: '회원탈퇴', onTap: vm.showWithdrawnInoModal),
         _versionMenu(),
       ],

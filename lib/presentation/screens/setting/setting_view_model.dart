@@ -28,6 +28,15 @@ class SettingViewModel extends BaseViewModel {
     });
   }
 
+  //개인정보 및 약관으로 이동
+  Future<void> routeToTerms() async {
+    await launchUrl(
+      Uri.parse(
+          'https://puzzle-heather-876.notion.site/c2a63470f4ad471a95e57009ba9dfa3a'),
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
   // 회원탈퇴 안내 모달
   void showWithdrawnInoModal() {
     Get.dialog(
@@ -63,8 +72,6 @@ class SettingViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.profileSetting);
   }
 
-
   /* Getters */
   String get currentVersionNum => _userService.currentVersionNum;
-
 }
