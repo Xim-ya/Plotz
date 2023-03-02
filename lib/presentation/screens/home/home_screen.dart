@@ -28,7 +28,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: vm.categoryContentCollection?.items.length ?? 4,
-            separatorBuilder: (__, _) => AppSpace.size16,
+            separatorBuilder: (__, _) => AppSpace.size26,
             itemBuilder: (context, index) {
               if (vm.categoryContentCollection.hasData) {
                 final item = vm.categoryContentCollection!.items[index];

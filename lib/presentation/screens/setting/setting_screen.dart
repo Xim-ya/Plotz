@@ -12,6 +12,7 @@ class SettingScreen extends BaseScreen<SettingViewModel> {
         _settingMenu(title: '프로필 설정', onTap: vm.routeToProfileSetting),
         _settingMenu(title: '로그아웃', onTap: vm.signOut),
         _settingMenu(title: '개인정보 및 약관', onTap: vm.routeToTerms),
+        _settingMenu(title: '피드백 및 문의사항', onTap: vm.goToKakaoOneonOne),
         _settingMenu(title: '회원탈퇴', onTap: vm.showWithdrawnInoModal),
         _versionMenu(),
       ],

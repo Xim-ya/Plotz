@@ -37,6 +37,14 @@ class SettingViewModel extends BaseViewModel {
     );
   }
 
+  // 이메일 피드백
+  void goToKakaoOneonOne() async {
+    await launchUrl(
+      Uri.parse('http://pf.kakao.com/_XVDxmxj/chat'),
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
   // 회원탈퇴 안내 모달
   void showWithdrawnInoModal() {
     Get.dialog(
