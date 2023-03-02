@@ -34,19 +34,26 @@ class ExploreViewModel extends BaseViewModel {
   }
 
   /// swiper가 이동했을 때 관련 동작
-  /// swiper Index 값을 통해 컨텐츠 데이터를 추가 호출
+  /// swiper Index 값을 기준으로 컨텐츠 데이터를 추가 호출
+  /// 호출 시점 : 총 컨텐츠 길이 - 4
+  /// 더 이상 호출할 메세지가 없을 경우
+  /// 유저에게 toast 메세지를 띄움 (마지막 컨텐츠에서)
   void onSwiperChanged(int index) {
     swiperIndex(index);
     final exploreContentsLength = _exploreContents.value!.length - 1;
-    if (index == exploreContentsLength) {
-      loadMoreContents();
+    if (index + 4 == exploreContentsLength) {
+      loadMoreContents(index);
+    }
+
+    if (index == exploreContentsLength && alreadyShowedToast.isFalse) {
+      unawaited(
+          AlertWidget.animatedToast('마지막 컨텐츠 입니다', isUsedOnTabScreen: true));
+      alreadyShowedToast(true); // 더 이상 토스트 메세를 노출하지 않음.
     }
   }
 
   /// 컨텐츠 데이터 추가 호출
-  /// 추가할 데이터가 존재할 경우에만 호출을 진행함
-  /// 더 이상 호출 데이터가 없을 경우 'toast' 메세지를 띄움
-  Future<void> loadMoreContents() async {
+  Future<void> loadMoreContents(int swiperIndex) async {
     if (_exploreContentsUseCase.moreCallIsAllowed.isTrue) {
       final response = await _exploreContentsUseCase.loadMoreContents();
       await response.fold(
@@ -55,15 +62,13 @@ class ExploreViewModel extends BaseViewModel {
           update();
         },
         onFailure: (e) {
+          AlertWidget.animatedToast(
+            '데이터를 불러오지 못했습니다',
+            isUsedOnTabScreen: true,
+          );
           log('ExploreViewModel : $e');
         },
       );
-    } else {
-      if (alreadyShowedToast.isFalse) {
-        unawaited(
-            AlertWidget.animatedToast('마지막 컨텐츠 입니다', isUsedOnTabScreen: true));
-        alreadyShowedToast(true); // 더 이상 토스트 메세를 노출하지 않음.
-      }
     }
   }
 
@@ -77,6 +82,10 @@ class ExploreViewModel extends BaseViewModel {
       print('========== ExploreContent 호출 성공 ${data.length}');
       update();
     }, onFailure: (e) {
+      AlertWidget.animatedToast(
+        '데이터를 불러오지 못했습니다',
+        isUsedOnTabScreen: true,
+      );
       log('ExploreViewModel : $e');
     });
   }
