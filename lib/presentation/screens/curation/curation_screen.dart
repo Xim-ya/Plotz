@@ -14,7 +14,7 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
             AppSpace.size34,
             // 리딩 문구
             Text(
-              '재미있는\n리뷰 컨텐츠를 등록해주세요!',
+              '재미있는\n리뷰 콘텐츠를 등록해주세요!',
               style: AppTextStyle.headline1,
             ),
             AppSpace.size22,
