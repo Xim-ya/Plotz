@@ -58,8 +58,9 @@ class UserRepositoryImpl implements UserRepository {
       String userId) async {
     try {
       final response = await _dataSource.loadUserWatchHistory(userId);
+      response.removeWhere((e) => e == null);
       return Result.success(
-        response.map(UserWatchHistoryItem.fromResponse).toList(),
+        response.map((e) => UserWatchHistoryItem.fromResponse(e!)).toList()
       );
     } on Exception catch (e) {
       return Result.failure(e);

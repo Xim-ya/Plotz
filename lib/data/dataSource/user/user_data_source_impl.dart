@@ -35,7 +35,7 @@ class UserDataSourceImpl
   }
 
   @override
-  Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(
+  Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
           String userId) =>
       loadWithFirebaseIsolate(
         () => loadResponseOrThrow(

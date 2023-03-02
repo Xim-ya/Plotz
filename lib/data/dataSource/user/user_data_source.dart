@@ -21,7 +21,7 @@ abstract class UserDataSource {
   Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
 
   // 유저 시청 기록 호출
-  Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(
+  Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
       String userId);
 
   // 닉네임 중복 여부 확인

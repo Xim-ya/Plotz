@@ -92,26 +92,29 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   }
 
   @override
-  Future<List<UserWatchHistoryItemResponse>> loadUserWatchHistory(
-    String userId,
-  ) async {
+  Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
+      String userId,
+      ) async {
     final docs = await getSubCollectionDocsByOrder('user',
         docId: userId,
         subCollectionName: 'watchHistory',
         orderFieldName: 'watchedDate');
 
     final resultList = docs.map((e) async {
-      final DocumentReference<Map<String, dynamic>> contentRef =
-          e.get('contentRef');
-      final contentDoc = await contentRef.get();
-
-      return UserWatchHistoryItemResponse.fromResponseDoc(
-        contentDoc: contentDoc,
-        doc: e,
-      );
+      try {
+        final DocumentReference<Map<String, dynamic>> contentRef =
+        e.get('contentRef');
+        final contentDoc = await contentRef.get();
+        return UserWatchHistoryItemResponse.fromResponseDoc(
+          contentDoc: contentDoc,
+          doc: e,
+        );
+      } catch (e) {
+        return null;
+      }
     }).toList();
 
-    return Future.wait(resultList);
+    return Future.wait(resultList.where((element) => element != null));
   }
 
   @override
