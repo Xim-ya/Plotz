@@ -32,7 +32,7 @@ class ContentDetailScaffoldController extends BaseViewModel
       ContentDetailViewModel.to.fetchContentCreditInfo();
     }
 
-    if (ContentDetailViewModel.to.youtubeChannelInfo.value == null) {
+    if (ContentDetailViewModel.to.channelInfo.value == null) {
       ContentDetailViewModel.to.fetchYoutubeChannelInfo();
     }
 

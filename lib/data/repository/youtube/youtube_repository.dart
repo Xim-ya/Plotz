@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/youtube/youtube_channel_info.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -6,13 +5,11 @@ import 'package:soon_sak/utilities/index.dart';
 * */
 
 abstract class YoutubeRepository {
-  Future<Result<List<YoutubeContentComment>>> loadContentCommentList(String videoId);
+  Future<Result<List<YoutubeContentComment>>> loadContentCommentList(
+      String videoId);
 
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(
       String videoId);
-
-  Future<Result<YoutubeChannelInfo>> loadYoutubeChannelInfo(String videoId);
-
 
   static YoutubeRepository get to => Get.find();
 }

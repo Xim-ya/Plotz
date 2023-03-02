@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -77,6 +78,17 @@ class ContentRepositoryImpl implements ContentRepository {
     try {
       final response = await _contentDataSource.requestContent(requestInfo);
       return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ChannelInfo>> loadChannelInfo(String contentId) async {
+    try {
+      final response = await _contentDataSource.loadChannelInfo(contentId);
+
+      return Result.success(ChannelInfo.fromResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }

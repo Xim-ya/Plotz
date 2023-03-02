@@ -128,7 +128,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           Obx(
             () => ContentPostSlider(
               height: 168,
-              itemCount: vm.watchHistoryList?.length ?? 2,
+              itemCount: vm.watchHistoryList?.length ?? 5,
               itemBuilder: (BuildContext context, int index) {
                 final item = vm.watchHistoryList?[index];
                 return ImageViewWithPlayBtn(

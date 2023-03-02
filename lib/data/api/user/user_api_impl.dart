@@ -101,6 +101,8 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
         orderFieldName: 'watchedDate');
 
     final resultList = docs.map((e) async {
+      /// 시청 기록 데이터가 유효할 경우에만 객체를 리턴
+      /// 반대의 경우 null을 리턴함
       try {
         final DocumentReference<Map<String, dynamic>> contentRef =
         e.get('contentRef');
@@ -114,7 +116,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
       }
     }).toList();
 
-    return Future.wait(resultList.where((element) => element != null));
+    return Future.wait(resultList);
   }
 
   @override

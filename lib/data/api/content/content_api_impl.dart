@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/content/response/channel_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {
@@ -50,22 +51,6 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   }
 
   @override
-  Future<UserResponse> loadCuratorInfo(String contentId) async {
-    final doc = await getSpecificSubCollectionDoc('content',
-        docId: contentId,
-        subCollectionName: 'curator',
-        subCollectionDocId: 'main');
-
-    final DocumentReference<Map<String, dynamic>> docRef = doc.get('userRef');
-    final docData = await docRef.get();
-    if (docData.exists) {
-      return UserResponse.fromDocumentRes(docData);
-    } else {
-      return UserResponse();
-    }
-  }
-
-  @override
   Future<List<ExploreContentResponse>> loadExploreContents(
       List<String> ids) async {
     final docs = await getContainingDocs(collectionName: 'content', ids: ids);
@@ -89,5 +74,38 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     final data = requestInfo.toMap();
     await storeDocument('requestContent',
         docId: requestInfo.contentId, data: data);
+  }
+
+  @override
+  Future<ChannelResponse> loadChannelInfo(String contentId) async {
+    final doc = await getSpecificSubCollectionDoc('content',
+        docId: contentId,
+        subCollectionName: 'channel',
+        subCollectionDocId: 'main');
+
+    final DocumentReference<Map<String, dynamic>> docRef =
+        doc.get('channelRef');
+    final docData = await docRef.get();
+    if (docData.exists) {
+      return ChannelResponse.fromDocumentRes(docData);
+    } else {
+      return ChannelResponse();
+    }
+  }
+
+  @override
+  Future<UserResponse> loadCuratorInfo(String contentId) async {
+    final doc = await getSpecificSubCollectionDoc('content',
+        docId: contentId,
+        subCollectionName: 'curator',
+        subCollectionDocId: 'main');
+
+    final DocumentReference<Map<String, dynamic>> docRef = doc.get('userRef');
+    final docData = await docRef.get();
+    if (docData.exists) {
+      return UserResponse.fromDocumentRes(docData);
+    } else {
+      return UserResponse();
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -14,14 +15,14 @@ abstract class ContentRepository {
 
   /// 탐색 컨텐츠 리스트 호출
   /// 주어진 ids에 속한 컨텐츠 리스트 호출
-  Future<Result<List<ExploreContent>>> loadExploreContents(
-      List<String> ids);
+  Future<Result<List<ExploreContent>>> loadExploreContents(List<String> ids);
 
   // 컨텐츠 비디어 정보 호출
   Future<Result<ContentVideos>> loadContentVideoInfo(String id);
 
   // 컨텐츠 등록 요청
-  Future<Result<String>> requestContentRegistration(ContentRegistrationRequest requestData);
+  Future<Result<String>> requestContentRegistration(
+      ContentRegistrationRequest requestData);
 
   // 진행중인 큐레이션 리스트 호출
   Future<Result<List<CurationContent>>> loadInProgressQurationList();
@@ -29,8 +30,11 @@ abstract class ContentRepository {
   // 큐레이터 정보 호출
   Future<Result<UserModel>> loadCuratorInfo(String contentId);
 
+  // 채널 정보 호출
+  Future<Result<ChannelInfo>> loadChannelInfo(String contentId);
+
   // 컨텐츠 등록 요청 (단순 요청)
   Future<Result<void>> requestContent(ContentRequest requestInfo);
 
-  // static ContentRepository get to => Get.find();
+// static ContentRepository get to => Get.find();
 }

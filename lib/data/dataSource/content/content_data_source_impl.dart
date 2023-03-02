@@ -39,4 +39,9 @@ class ContentDataSourceImpl
   @override
   Future<void> requestContent(ContentRequest requestInfo) =>
       loadResponseOrThrow(() => _api.requestContent(requestInfo));
+
+  @override
+  Future<ChannelResponse> loadChannelInfo(String contentId) =>
+      loadWithFirebaseIsolate(
+          () => loadResponseOrThrow(() => _api.loadChannelInfo(contentId)));
 }

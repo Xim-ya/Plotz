@@ -23,21 +23,20 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
       Formatter.getDateDifferenceFromNow(contentVideos.value?.mainUploadDate);
 
   // 채널 설명
-  String? get channelDescription => youtubeChannelInfo.value?.description;
+  String? get channelDescription => channelInfo.value?.description;
 
   // 채널 구독자 수
   int? get subscriberCount =>
       _passedArgument.subscribersCount ??
-      youtubeChannelInfo.value?.subscriberCount;
+      channelInfo.value?.subscribersCount;
 
   // 채널 이미지 url
   String? get channelImgUrl =>
-      _passedArgument.channelLogoImgUrl ??
-      youtubeChannelInfo.value?.channelImgUrl;
+      _passedArgument.channelLogoImgUrl ?? channelInfo.value?.logoImgUrl;
 
   // 채널 명
   String? get channelName =>
-      _passedArgument.channelName ?? youtubeChannelInfo.value?.name;
+      _passedArgument.channelName ?? channelInfo.value?.name;
 
   /// 방영일
   /// 컨텐츠 타입이 영화일 경우 방영상태 대신 방영일을 보여줌

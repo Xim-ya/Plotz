@@ -55,7 +55,7 @@ mixin FirestoreHelper {
     return results;
   }
 
-  /// subCollection의 단일 document 데이터를 불러오는 메소드
+  /// subCollection의 첫 번쟤 단일 document 데이터를 불러오는 메소드
   Future<QueryDocumentSnapshot> getFirstSubCollectionDoc(String collectionName,
       {required String docId, required String subCollectionName}) async {
     QuerySnapshot snapshot = await _db

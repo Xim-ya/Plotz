@@ -41,7 +41,7 @@ class ContentDetailViewModel extends BaseViewModel {
   final Rxn<List<ContentEpisodeInfoItem>> _contentEpisodeList = Rxn();
 
   // 유튜브 채널
-  final Rxn<YoutubeChannelInfo> youtubeChannelInfo = Rxn();
+  final Rxn<ChannelInfo> channelInfo = Rxn();
 
   // 컨텐츠 비디오(유튜브)
   final Rxn<ContentVideos> contentVideos = Rxn();
@@ -64,7 +64,6 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /// 유저 시청 기록 추가
   Future<void> addUserWatchHistory(String videoId) async {
-    print("SHOW VIDEO ID ${videoId}");
     final requestData = WatchingHistoryRequest(
         userId: _userService.userInfo.value!.id!,
         originId: _contentDescriptionInfo.value!.originId,
@@ -201,19 +200,14 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 유튜브 채널 정보 호출
   Future<void> fetchYoutubeChannelInfo() async {
-    final responseResult =
-        await YoutubeRepository.to.loadYoutubeChannelInfo(youtubeContentId!);
-    responseResult.fold(onSuccess: (data) {
-      youtubeChannelInfo.value = data;
+    final response = await _contentRepository
+        .loadChannelInfo(_contentDescriptionInfo.value!.originId);
+
+    response.fold(onSuccess: (channel) {
+      channelInfo.value = channel;
     }, onFailure: (e) {
-      // TODO: Repository 레이어에서 Exception 처리
-      if (e.runtimeType == VideoUnavailableException) {
-        AlertWidget.toast('업로더가 비디오를 삭제했습니다');
-      } else {
-        AlertWidget.toast('유튜브 정보를 불러오는데 실패하였습니다');
-      }
-      log(e.toString());
-      log('${e.runtimeType} 타입'); // -> VideoUnavailableException (비디오 유실)
+      AlertWidget.animatedToast('채널 정보를 받아오지 못했습니다');
+      log('ChannelDetailViewModel : $e');
     });
   }
 
@@ -244,9 +238,6 @@ class ContentDetailViewModel extends BaseViewModel {
       _fetchContentMainInfo(),
       _fetchContentOfVideoList(),
     ]);
-
-    // await _fetchContentMainInfo();
-    // await _fetchContentOfVideoList();
     await _fetchContentCommentList();
   }
 

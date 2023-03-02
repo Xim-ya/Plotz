@@ -125,9 +125,11 @@ export 'package:soon_sak/data/api/user/request/watching_history_request.dart';
 export 'package:soon_sak/data/api/user/request/user_profile_request.dart';
 export 'package:soon_sak/data/dataSource/version/version_data_source.dart';
 export 'package:soon_sak/data/repository/version/version_repository.dart';
+export 'package:soon_sak/data/api/content/response/channel_response.dart';
 
 
 // Domain
+export 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 export 'package:soon_sak/domain/enum/tab_loading_state_enum.dart';
 export 'package:soon_sak/domain/model/version/version_info.dart';
 export 'package:soon_sak/domain/model/content/myPage/user_watch_history_item.dart';
@@ -181,7 +183,6 @@ export 'package:soon_sak/domain/service/content_service.dart';
 export 'package:soon_sak/domain/useCase/tmdb/load_content_credit_info_use_case.dart';
 export 'package:soon_sak/domain/useCase/tmdb/load_content_img_list_use_case.dart';
 export 'package:soon_sak/domain/model/content/content_argument_format.dart';
-export 'package:soon_sak/domain/model/youtube/youtube_channel_info.dart';
 export 'package:soon_sak/domain/base/base_single_data_model.dart';
 export 'package:soon_sak/domain/enum/curation_status.dart';
 export 'package:soon_sak/domain/service/user_service.dart';

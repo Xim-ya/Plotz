@@ -1,4 +1,5 @@
 
+
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class ContentDataSource {
@@ -22,6 +23,9 @@ abstract class ContentDataSource {
 
   // 큐레이터 정보 호출
   Future<UserResponse> loadCuratorInfo(String contentId);
+
+  // 채널 정보 호출
+  Future<ChannelResponse> loadChannelInfo(String contentId);
 
   // 컨텐츠 등록 요청 (단순 요청)
   Future<void> requestContent(ContentRequest requestInfo);
