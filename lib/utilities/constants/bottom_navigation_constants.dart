@@ -14,7 +14,7 @@ enum BottomNavigationConstants {
     icon: Icon(Icons.video_call),
   ),
   school(
-    label: '마에페이지',
+    label: '마이페이지',
     icon: Icon(Icons.person),
   );
 
