@@ -32,7 +32,13 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
             await signUp(data);
             return Result.success(null);
           },
-          onFailure: Result.failure,
+          onFailure: (e) {
+            final errorText = e.toString();
+            if(errorText.contains('600 seconds before or after the current time, null')) {
+            Get.snackbar('로그인 오류', '디바이스의 시간 설정을 확인 해주세요');
+            }
+            return Result.failure(e);
+          },
         );
 
       case Sns.apple:

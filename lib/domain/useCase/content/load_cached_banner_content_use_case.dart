@@ -39,7 +39,7 @@ class LoadCachedBannerContentUseCase
 
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
-      // if (localData.hasData) {
+      // if (localData.hasData) { 
       // 2-a).Static content keysData 호출
       final String keyResponse = _contentService.bannerKey!;
 
@@ -50,7 +50,6 @@ class LoadCachedBannerContentUseCase
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
             jsonText: localData.toString(), givenKey: keyResponse)) {
-          print("ARANG@@");
           final json = jsonDecode(localData.toString());
           final response = BannerResponse.fromJson(json);
           final result = BannerModel.fromResponse(response);

@@ -110,6 +110,7 @@ class ContentDetailViewModel extends BaseViewModel {
       // Tv 컨텐츠 일 경우 시즌 정보 업데이트
       if (_contentDescriptionInfo.value?.seasonInfoList != null &&
           passedArgument.contentType == ContentType.tv) {
+        print("aim!@");
         await e
             .mappingTvSeasonInfo(
                 seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!)
@@ -234,10 +235,9 @@ class ContentDetailViewModel extends BaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
-    await Future.wait([
-      _fetchContentMainInfo(),
-      _fetchContentOfVideoList(),
-    ]);
+
+    await _fetchContentMainInfo();
+    await _fetchContentOfVideoList();
     await _fetchContentCommentList();
   }
 

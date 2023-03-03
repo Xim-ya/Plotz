@@ -26,6 +26,7 @@ class LoginViewModel extends BaseViewModel {
         });
       },
       onFailure: (e) {
+        Get.snackbar('로그인이 중단되었습니다', '다시 시도해주세요');
         log(e.toString());
       },
     );

@@ -41,6 +41,8 @@ class HomeViewModel extends BaseViewModel {
   final LoadCachedCategoryContentCollectionUseCase
       _loadCachedCategoryContentCollectionUseCase;
 
+
+
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {

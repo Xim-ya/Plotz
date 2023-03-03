@@ -14,8 +14,10 @@ class BannerResponse {
 
   BannerResponse(this.key, this.items);
 
-  factory BannerResponse.fromJson(Map<String, dynamic> json) =>
-      _$BannerResponseFromJson(json);
+  factory BannerResponse.fromJson(Map<String, dynamic> json) {
+    return _$BannerResponseFromJson(json);
+  }
+
 }
 
 
