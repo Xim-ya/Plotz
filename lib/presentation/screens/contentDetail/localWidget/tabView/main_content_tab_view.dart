@@ -19,7 +19,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
             : buildContentVideoSectionSkeleton(),
       ),
       descriptionSection: buildDescriptionSection(),
-      commentSection: buildCommentSection(),
+      channelSection: buildChannelSection(),
     );
   }
 
@@ -65,121 +65,156 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
               );
       });
 
-  // 댓글 - 유튜브 댓글
-  Widget buildCommentSection() => Obx(
-        () => ListView.separated(
-          separatorBuilder: (__, _) => AppSpace.size12,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: vm.commentList?.length ?? 5,
-          itemBuilder: (context, index) {
-            if (vm.commentList.hasData) {
-              final YoutubeContentComment item = vm.commentList![index];
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 38,
-                    width: 38,
-                    decoration: const BoxDecoration(
-                      color: Colors.grey,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.center,
-                      children: [
-                        Positioned(
-                          bottom: 0,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: SizedBox(
-                              child: SvgPicture.asset(
-                                'assets/icons/${item.profileImgPath}.svg',
-                                height: 33,
-                                fit: BoxFit.fitWidth,
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (item.isHearted)
-                          Positioned(
-                            top: -2,
-                            right: 0,
-                            child: SvgPicture.asset(
-                              'assets/icons/heart_ic.svg',
-                              height: 12,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  AppSpace.size8,
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          item.author,
-                          style:
-                              AppTextStyle.body1.copyWith(color: Colors.white),
-                        ),
-                        Text(
-                          item.text,
-                          style: AppTextStyle.body1
-                              .copyWith(fontFamily: 'pretendard_regular'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Shimmer(
-                      child: const SizedBox(
-                        height: 38,
-                        width: 38,
-                      ),
-                    ),
-                  ),
-                  AppSpace.size8,
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Shimmer(
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            height: 20,
-                            width: 60,
-                          ),
-                        ),
-                        AppSpace.size4,
-                        Shimmer(
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            height: 20,
-                            width: SizeConfig.to.screenWidth * 0.6,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            }
-          },
-        ),
-      );
+
+  // 채널 - 채널정보
+  Widget buildChannelSection() =>      Obx(
+        () => Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ChannelInfoView(
+            nameTextWidth: SizeConfig.to.screenWidth - 104,
+            imgSize: 62,
+            imgUrl: vm.channelImgUrl,
+            name: vm.channelName,
+            subscriberCount: vm.subscriberCount,
+          ),
+          AppSpace.size8,
+          // 채널 설명
+          if (vm.channelDescription.hasData)
+            Text(
+              vm.channelDescription!,
+              style: AppTextStyle.body2,
+            )
+          else
+            const SkeletonBox(
+              width: double.infinity,
+              height: 18,
+            ),
+        ],
+      ),
+    ),
+  );
+
+
+  /// 댓글 - 유튜브 댓글
+  /// 이해할 수 없지만 애플 가이드라인에 위배된다고 함.
+  /// 일단 삭제
+  // Widget buildChannelSection() => Obx(
+  //       () => ListView.separated(
+  //         separatorBuilder: (__, _) => AppSpace.size12,
+  //         physics: const NeverScrollableScrollPhysics(),
+  //         shrinkWrap: true,
+  //         itemCount: vm.commentList?.length ?? 5,
+  //         itemBuilder: (context, index) {
+  //           if (vm.commentList.hasData) {
+  //             final YoutubeContentComment item = vm.commentList![index];
+  //             return Row(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: <Widget>[
+  //                 Container(
+  //                   height: 38,
+  //                   width: 38,
+  //                   decoration: const BoxDecoration(
+  //                     color: Colors.grey,
+  //                     shape: BoxShape.circle,
+  //                   ),
+  //                   child: Stack(
+  //                     clipBehavior: Clip.none,
+  //                     alignment: Alignment.center,
+  //                     children: [
+  //                       Positioned(
+  //                         bottom: 0,
+  //                         child: ClipRRect(
+  //                           borderRadius: BorderRadius.circular(100),
+  //                           child: SizedBox(
+  //                             child: SvgPicture.asset(
+  //                               'assets/icons/${item.profileImgPath}.svg',
+  //                               height: 33,
+  //                               fit: BoxFit.fitWidth,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                       if (item.isHearted)
+  //                         Positioned(
+  //                           top: -2,
+  //                           right: 0,
+  //                           child: SvgPicture.asset(
+  //                             'assets/icons/heart_ic.svg',
+  //                             height: 12,
+  //                           ),
+  //                         ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 AppSpace.size8,
+  //                 Flexible(
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: <Widget>[
+  //                       Text(
+  //                         item.author,
+  //                         style:
+  //                             AppTextStyle.body1.copyWith(color: Colors.white),
+  //                       ),
+  //                       Text(
+  //                         item.text,
+  //                         style: AppTextStyle.body1
+  //                             .copyWith(fontFamily: 'pretendard_regular'),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             );
+  //           } else {
+  //             return Row(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: <Widget>[
+  //                 ClipRRect(
+  //                   borderRadius: BorderRadius.circular(100),
+  //                   child: Shimmer(
+  //                     child: const SizedBox(
+  //                       height: 38,
+  //                       width: 38,
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 AppSpace.size8,
+  //                 Flexible(
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: <Widget>[
+  //                       Shimmer(
+  //                         child: Container(
+  //                           decoration: const BoxDecoration(
+  //                             shape: BoxShape.circle,
+  //                           ),
+  //                           height: 20,
+  //                           width: 60,
+  //                         ),
+  //                       ),
+  //                       AppSpace.size4,
+  //                       Shimmer(
+  //                         child: Container(
+  //                           decoration: const BoxDecoration(
+  //                             shape: BoxShape.circle,
+  //                           ),
+  //                           height: 20,
+  //                           width: SizeConfig.to.screenWidth * 0.6,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             );
+  //           }
+  //         },
+  //       ),
+  //     );
 }
 
 class _MainContentTabViewScaffold extends StatelessWidget {
@@ -187,12 +222,12 @@ class _MainContentTabViewScaffold extends StatelessWidget {
       {Key? key,
       required this.youtubeContentSection,
       required this.descriptionSection,
-      required this.commentSection})
+      required this.channelSection})
       : super(key: key);
 
   final Widget youtubeContentSection;
   final Widget descriptionSection;
-  final Widget commentSection;
+  final Widget channelSection;
 
   @override
   Widget build(BuildContext context) {
@@ -209,12 +244,9 @@ class _MainContentTabViewScaffold extends StatelessWidget {
         AppSpace.size40,
         const Padding(
           padding: AppInset.horizontal16,
-          child: SectionTitle(title: '댓글'),
+          child: SectionTitle(title: '채널'),
         ),
-        Padding(
-          padding: AppInset.horizontal16,
-          child: commentSection,
-        )
+        channelSection,
       ],
     );
   }

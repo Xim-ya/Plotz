@@ -8,7 +8,7 @@ enum Sns {
       textColor: Colors.black,
       bgColor: Colors.white),
   apple(
-      name: '애플',
+      name: 'Apple',
       originString: 'apple',
       logoPath: 'apple_logo.svg',
       textColor: Colors.white,

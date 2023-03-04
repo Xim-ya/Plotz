@@ -106,38 +106,6 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
           ),
           AppSpace.size40,
 
-          // 채널정보
-          const SectionTitle(title: '채널', setLeftPadding: true),
-          Obx(
-            () => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ChannelInfoView(
-                    imgSize: 62,
-                    imgUrl: vm.channelImgUrl,
-                    name: vm.channelName,
-                    subscriberCount: vm.subscriberCount,
-                  ),
-                  AppSpace.size8,
-                  // 채널 설명
-                  if (vm.channelDescription.hasData)
-                    Text(
-                      vm.channelDescription!,
-                      style: AppTextStyle.body2,
-                    )
-                  else
-                    const SkeletonBox(
-                      width: double.infinity,
-                      height: 18,
-                    ),
-                ],
-              ),
-            ),
-          ),
-          AppSpace.size40,
-
           // 큐레이터 정보
           const SectionTitle(title: '큐레이터', setLeftPadding: true),
           Padding(

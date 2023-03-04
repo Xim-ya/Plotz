@@ -237,8 +237,7 @@ class ContentDetailViewModel extends BaseViewModel {
     super.onInit();
 
     await _fetchContentMainInfo();
-    await _fetchContentOfVideoList();
-    await _fetchContentCommentList();
+    await Future.wait([_fetchContentOfVideoList(), fetchYoutubeChannelInfo()]);
   }
 
   /* [Getters] */

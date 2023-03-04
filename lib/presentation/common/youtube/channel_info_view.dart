@@ -56,7 +56,7 @@ class ChannelInfoView extends StatelessWidget {
                   style:
                       AppTextStyle.headline3.copyWith(fontSize: nameFontSize),
                   maxLines: 1,
-                  overflow: TextOverflow.clip,
+                  overflow: TextOverflow.ellipsis,
                 ),
               )
             else ...[
