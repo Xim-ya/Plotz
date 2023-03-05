@@ -122,22 +122,19 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                         ),
                 ),
                 AppSpace.size10,
-                SizedBox(
-                  width: SizeConfig.to.screenWidth - 104,
-                  child: Obx(
-                    () => vm.curator?.displayName.hasData != null
-                        ? Text(
-                            vm.curator?.displayName ?? '익명',
-                            style: AppTextStyle.headline3,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : const SkeletonBox(
-                            height: 22,
-                            width: 100,
-                            borderRadius: 4,
-                          ),
-                  ),
+                Obx(
+                  () => vm.curator?.displayName.hasData != null
+                      ? Text(
+                          vm.curator?.displayName ?? '익명',
+                          style: AppTextStyle.headline3,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : const SkeletonBox(
+                          height: 22,
+                          width: 50,
+                          borderRadius: 4,
+                        ),
                 ),
               ],
             ),

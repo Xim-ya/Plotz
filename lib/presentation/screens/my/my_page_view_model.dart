@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -35,6 +36,14 @@ class MyPageViewModel extends BaseViewModel {
         Uri.parse(
             'https://www.youtube.com/watch?v=${selectedContent!.videoId}'),
         mode: LaunchMode.externalApplication,
+      );
+      unawaited(
+        AppAnalytics.instance.logEvent(
+          name: 'playContent',
+          parameters: {
+            'myPage': selectedContent.originId,
+          },
+        ),
       );
     } catch (e) {
       await AlertWidget.animatedToast('비디오 정보를 불러오지 못했습니디');

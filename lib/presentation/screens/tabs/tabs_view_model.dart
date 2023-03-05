@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'dart:async';
 import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -28,17 +27,27 @@ class TabsViewModel extends BaseViewModel {
     selectedTabIndex(index);
 
     switch (index) {
+      case 0:
+        unawaited(AppAnalytics.instance
+            .logScreenView(screenClass: 'HomeScreen', screenName: 'HomeTab'));
+        break;
       case 1:
+        unawaited(AppAnalytics.instance.logScreenView(
+            screenClass: 'ExploreScreen', screenName: 'ExploreTab'));
         if (_exploreViewModel.loadingState.isInitState) {
           await _exploreViewModel.prepare();
         }
         break;
       case 2:
+        unawaited(AppAnalytics.instance.logScreenView(
+            screenClass: 'CurationScreen', screenName: 'CurationTab'));
         if (_curationViewModel.loadingState.isInitState) {
           await _curationViewModel.prepare();
         }
         break;
       case 3:
+        unawaited(AppAnalytics.instance.logScreenView(
+            screenClass: 'MyPageScreen', screenName: 'MyPageTab'));
         if (_myPageViewModel.loadingState.isInitState) {
           await _myPageViewModel.prepare();
         }

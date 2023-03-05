@@ -14,12 +14,6 @@ class LoadContentOfVideoListUseCase
 
   @override
   Future<Result<ContentVideos>> call(ContentType firstReq, String secondReq) {
-    // firstReq -> [contentType] / secondRequest -> [Query]
-    // if (firstReq == ContentType.tv) {
-    //   return _repository.loadDramaContentVideoList(secondReq);
-    // } else {
-    //   return _repository.loadMovieContentVideoList(secondReq);
-    // }
     return _repository.loadContentVideoInfo(secondReq);
   }
 }

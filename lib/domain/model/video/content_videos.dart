@@ -26,7 +26,6 @@ class ContentVideos {
   // 대표 영상 업로드일
   String? get mainUploadDate => videos[0].detailInfo?.uploadDate;
 
-  // TODO: 추후 총합으로 수정 필요
   // 대표 조회 수
   int? get mainViewCount {
     if (videos.isEmpty) {

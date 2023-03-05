@@ -30,6 +30,8 @@ class ExploreViewModel extends BaseViewModel {
 
   // 컨텐츠 상세페이지로 이동
   void routeToContentDetail(ContentArgumentFormat routingArgument) {
+    AppAnalytics.instance.logEvent(
+        name: 'goToContent', parameters: {'explore': routingArgument.originId});
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 

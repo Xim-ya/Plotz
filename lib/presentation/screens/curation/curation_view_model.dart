@@ -37,6 +37,10 @@ class CurationViewModel extends BaseViewModel {
 
   // 컨텐츠 등록 스크린으로 이동
   void routeToRegister({required ContentType contentType}) {
+    AppAnalytics.instance.logEvent(
+      name: 'goToCurationProgress',
+      parameters: {'type': contentType.name},
+    );
     Get.toNamed(AppRoutes.register, arguments: contentType);
   }
 

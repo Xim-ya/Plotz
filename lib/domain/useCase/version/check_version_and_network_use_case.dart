@@ -111,12 +111,13 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
       onBtnClicked: () async {
         Get.back();
         if (Platform.isIOS) {
-          // TODO : 앱 코드 변경 필요
           await launchUrl(
-            Uri.parse('https://apps.apple.com'),
+            Uri.parse(
+                'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197'),
             mode: LaunchMode.externalApplication,
           );
         } else if (Platform.isAndroid) {
+          // TODO : 앱 코드 변경 필요[ANDROID]
           await launchUrl(
             Uri.parse('https://play.google.com/store'),
             mode: LaunchMode.externalApplication,

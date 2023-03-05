@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:ui';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
@@ -41,7 +43,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                       posterImgUrl: item.contents[nestedIndex].posterImgUrl,
                       originId: item.contents[nestedIndex].originId,
                     );
-                    vm.routeToContentDetail(argument);
+                    vm.routeToContentDetail(argument, sectionType: 'category');
                   },
                 );
               } else {
@@ -84,7 +86,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                       posterImgUrl: item.posterImgUrl,
                       originId: item.originId,
                     );
-                    vm.routeToContentDetail(argument);
+                    vm.routeToContentDetail(argument, sectionType: 'topTen');
                   },
                   child: ContentPostItem(
                     imgUrl: vm.topTenContents!.contentList![index].posterImgUrl
@@ -130,7 +132,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     videoTitle: item.title,
                     originId: item.originId,
                   );
-                  vm.routeToContentDetail(argument);
+                  vm.routeToContentDetail(argument, sectionType: 'banner');
                 },
               );
             } else {
@@ -197,21 +199,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             const SizedBox(),
-            // GestureDetector(
-            //   onTap: () {
-            //     AlertWidget.animatedToast(
-            //         '요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
-            //     // AlertWidget.toast('이렇게 토스트 메세지가 나옵니다');
-            //     // vm.update();
-            //     // LocalStorageService.to.deleteData(fieldName: 'topTen');
-            //     // vm.firebaseStoreTest();
-            //   },
-            //   child: SvgPicture.asset(
-            //     'assets/icons/main_logo.svg',
-            //     height: 40,
-            //     width: 40,
-            //   ),
-            // ),
             IconInkWellButton.assetIcon(
               iconPath: 'assets/icons/search.svg',
               size: 40,

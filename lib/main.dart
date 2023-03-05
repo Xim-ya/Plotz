@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'firebase_options.dart';
 import 'presentation/common/layout/response_layout_builder.dart';
@@ -13,19 +14,19 @@ void main() async {
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
 
-
-
-
-
   /// FireBase 초기화
-  // FIrebase Crashlytics 설정
+  // Firebase Crashlytics 설정
   await runZonedGuarded<Future<void>>(() async {
     await Firebase.initializeApp(
-      name: dotenv.env['FIREBASE_KEY']!,
+      name: dotenv.env['FIREBASE_KEY'],
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    Get.put(AppAnalytics(), permanent: true);
+    await AppAnalytics.instance.setAnalyticsCollectionEnabled(true);
+    await AppAnalytics.instance.logAppOpen();
+
 
     // Portrait 고정
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeConfig.basicTheme,
       getPages: AppPages.routes,
       initialBinding: AppBinding(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: AppAnalytics.instance)
+      ],
       initialRoute: AppRoutes.splash,
       builder: (context, child) {
         SizeConfig.to.init(context); // Size Config 초기화

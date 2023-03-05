@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -110,7 +111,6 @@ class ContentDetailViewModel extends BaseViewModel {
       // Tv 컨텐츠 일 경우 시즌 정보 업데이트
       if (_contentDescriptionInfo.value?.seasonInfoList != null &&
           passedArgument.contentType == ContentType.tv) {
-        print("aim!@");
         await e
             .mappingTvSeasonInfo(
                 seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!)
@@ -200,7 +200,7 @@ class ContentDetailViewModel extends BaseViewModel {
   }
 
   // 유튜브 채널 정보 호출
-  Future<void> fetchYoutubeChannelInfo() async {
+  Future<void> _fetchYoutubeChannelInfo() async {
     final response = await _contentRepository
         .loadChannelInfo(_contentDescriptionInfo.value!.originId);
 
@@ -223,6 +223,14 @@ class ContentDetailViewModel extends BaseViewModel {
         Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),
         mode: LaunchMode.externalApplication,
       );
+      unawaited(
+        AppAnalytics.instance.logEvent(
+          name: 'playContent',
+          parameters: {
+            'contentDetail': _contentDescriptionInfo.value?.title ?? '데이터 없음'
+          },
+        ),
+      );
     } catch (e) {
       await AlertWidget.animatedToast('비디오 정보를 불러오지 못했습니디');
       throw '유튜브 앱(웹) 런치 실패';
@@ -236,8 +244,11 @@ class ContentDetailViewModel extends BaseViewModel {
   Future<void> onInit() async {
     super.onInit();
 
+    /// NOTE 호출 순서 주의 [_fetchContentMainInfo]가
+    /// 무조건 선행 되어야 함
     await _fetchContentMainInfo();
-    await Future.wait([_fetchContentOfVideoList(), fetchYoutubeChannelInfo()]);
+    await _fetchContentOfVideoList();
+    await _fetchYoutubeChannelInfo();
   }
 
   /* [Getters] */

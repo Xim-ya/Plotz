@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum Sns {
   google(
-      name: '구글',
+      name: '구글', 
       originString: 'google',
       logoPath: 'google_logo.svg',
       textColor: Colors.black,

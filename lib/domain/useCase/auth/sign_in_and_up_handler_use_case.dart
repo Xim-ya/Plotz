@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:soon_sak/app/analytics/app_analytics.dart';
 import 'package:soon_sak/utilities/constants/basic_profile_img_list_constants.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -34,8 +35,9 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
           },
           onFailure: (e) {
             final errorText = e.toString();
-            if(errorText.contains('600 seconds before or after the current time, null')) {
-            Get.snackbar('로그인 오류', '디바이스의 시간 설정을 확인 해주세요');
+            if (errorText.contains(
+                '600 seconds before or after the current time, null')) {
+              Get.snackbar('로그인 오류', '디바이스의 시간 설정을 확인 해주세요');
             }
             return Result.failure(e);
           },
@@ -68,6 +70,10 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
               .randomItem(); // 프로필 이미지가 없을 경우 랜덤 기본 프로필 이미지로 필드 값 업데이트
           await _authRepository.saveUserInfo(userInfo); // 서버에 유저 정보 저장
           await _userService.getUserInfo(); // service 레이어 유저 정보 업데이트
+          await AppAnalytics.instance.logSignUp(
+            signUpMethod:
+                userInfo.provider?.originString ?? 'undefined_provider',
+          ); // Analytics 설정
           return;
         }
       },

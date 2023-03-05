@@ -42,6 +42,7 @@ export 'package:soon_sak/domain/base/base_no_param_use_case.dart';
 export 'package:soon_sak/domain/base/base_two_param_use_case.dart';
 
 // App
+export 'package:soon_sak/app/analytics/app_analytics.dart';
 export 'package:soon_sak/app/config/theme_config.dart';
 export 'package:soon_sak/app/di/app_binding.dart';
 export 'package:soon_sak/app/routes/app_pages.dart';

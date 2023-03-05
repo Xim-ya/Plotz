@@ -148,7 +148,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
             Text(
               item?.releaseDate.hasData ?? false
                   ? Formatter.dateToyyMMdd(item!.releaseDate)
-                  : '-',
+                  : '',
               style: AppTextStyle.alert2,
             ),
           ],

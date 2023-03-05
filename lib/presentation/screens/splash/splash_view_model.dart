@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:soon_sak/domain/useCase/version/check_version_and_network_use_case.dart';
@@ -13,7 +14,6 @@ class SplashViewModel extends BaseViewModel with FirestoreHelper {
 
   /* UseCase */
   final CheckVersionAndNetworkUseCase _checkVersionAndNetworkUseCase;
-
 
   // 버전 및 네트워크 상태 확인
   Future<void> checkVersionAndNetwork() async {
