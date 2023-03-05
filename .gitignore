@@ -9,6 +9,8 @@
 .history
 .svn/
 .env
+key.properties
+app/key.jks
 migrate_working_dir/
 
 # IntelliJ related

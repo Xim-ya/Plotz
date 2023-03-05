@@ -77,7 +77,8 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
               },
               resetSearchValue: vm.onClosedBtnTapped,
               showRoundCloseBtn: vm.showRoundCloseBtn,
-              width: SizeConfig.to.screenWidth - 84,
+              width: SizeConfig.to.screenWidth - 88,
+              // width: SizeConfig.to.screenWidth - 84,
             ),
             MaterialButton(
               minWidth: 40,
