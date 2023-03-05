@@ -12,7 +12,8 @@ class SignOutUseCase extends BaseUseCase<Sns, Result<void>> {
         final response = await _authRepository.googleSignOut();
         return response;
       case Sns.apple:
-        return Result.failure(Exception());
+        final response = await _authRepository.appleSignOut();
+        return response;
     }
   }
 }

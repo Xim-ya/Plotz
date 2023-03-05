@@ -64,4 +64,9 @@ class AuthApiImpl with FirestoreHelper implements AuthApi {
     final doc = await getDocFromId('user', docId: userId);
     return UserModel.fromDocumentRes(doc);
   }
+
+  @override
+  Future<void> triggerAppleSignOut() async {
+    await _auth.signOut();
+  }
 }

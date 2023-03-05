@@ -7,7 +7,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource _dataSource;
 
   @override
-  Future<Result<bool>> isUserSignedIn() async{
+  Future<Result<bool>> isUserSignedIn() async {
     try {
       final response = await _dataSource.isUserSignedIn();
 
@@ -92,6 +92,16 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<UserModel>> loadUserInfo() async {
     try {
       final response = await _dataSource.loadUserInfo();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> appleSignOut() async {
+    try {
+      final response = await _dataSource.triggerAppleSignOut();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

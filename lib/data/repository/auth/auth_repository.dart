@@ -21,4 +21,7 @@ abstract class AuthRepository {
 
   // 구글 로그아웃
   Future<Result<void>> googleSignOut();
+
+  // 애플 로그아웃
+  Future<Result<void>> appleSignOut();
 }

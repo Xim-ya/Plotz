@@ -40,7 +40,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>사진첩에 접근하기 위해 권한을 허용해주세요</string>
+	<string>프로필 이미지를 변경하려면 앱에서 사진 라이브러리에 액세스 할 수 있어야 합니다.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

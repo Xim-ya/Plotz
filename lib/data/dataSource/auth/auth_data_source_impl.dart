@@ -35,4 +35,8 @@ class AuthDataSourceImpl
   @override
   Future<void> triggerGoogleSignOut() =>
       loadResponseOrThrow(() => _api.triggerGoogleSignOut());
+
+  @override
+  Future<void> triggerAppleSignOut() =>
+      loadResponseOrThrow(() => _api.triggerAppleSignOut());
 }

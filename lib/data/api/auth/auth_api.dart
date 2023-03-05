@@ -22,4 +22,9 @@ abstract class AuthApi {
 
   // 구글 로그아웃
   Future<void> triggerGoogleSignOut();
+
+  // 애플 로그아웃
+  Future<void> triggerAppleSignOut();
+
+
 }
