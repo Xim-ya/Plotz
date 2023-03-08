@@ -52,6 +52,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
           return Result.failure(Exception('업데이트 필요'));
         }
 
+
         return Result.success(null);
       },
       onFailure: (e) {
