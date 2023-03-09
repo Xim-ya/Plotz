@@ -8,16 +8,19 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'firebase_options_dev.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
-class ProdFirebaseOptions {
+class DevFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,35 +49,23 @@ class ProdFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB_KolUuNZziRow5pjFHgD2RX5miTjcUmY',
-    appId: '1:1061021294637:web:4e2e366eabbede58d418a4',
-    messagingSenderId: '1061021294637',
-    projectId: 'soonsak-15350',
-    authDomain: 'soonsak-15350.firebaseapp.com',
-    databaseURL: 'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'soonsak-15350.appspot.com',
-    measurementId: 'G-W154CJ1TY9',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD8uLI0nazM-2o9y1-mvSmi9vXrNEPl2Fo',
-    appId: '1:1061021294637:android:c89bd4094ac7a778d418a4',
-    messagingSenderId: '1061021294637',
-    projectId: 'soonsak-15350',
-    databaseURL: 'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'soonsak-15350.appspot.com',
+    apiKey: 'AIzaSyAgt43UjgzQPA4OIcttxKajMq78yVryfpY',
+    appId: '1:436064136115:android:91bfb65316f279451139c6',
+    messagingSenderId: '436064136115',
+    projectId: 'soonsakdev',
+    databaseURL: 'https://soonsakdev-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'soonsakdev.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBKuFSxnz3HVm8EJpsKx55_3QWqZXKg7H0',
-    appId: '1:1061021294637:ios:68b27f3b476537fed418a4',
-    messagingSenderId: '1061021294637',
-    projectId: 'soonsak-15350',
-    databaseURL: 'https://soonsak-15350-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'soonsak-15350.appspot.com',
-    androidClientId: '1061021294637-7illq6jigflrj08cbkbi8jmjep8l9eel.apps.googleusercontent.com',
-    iosClientId: '1061021294637-i1qloceu0r1lrfo3ic22ps83pqg5ta6v.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAWE2lqZiL7j38l9ZQuCXm5ZtlciENf4DU',
+    appId: '1:436064136115:ios:2a208d2980ea0db11139c6',
+    messagingSenderId: '436064136115',
+    projectId: 'soonsakdev',
+    databaseURL: 'https://soonsakdev-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'soonsakdev.appspot.com',
+    iosClientId: '436064136115-rdfg913k6usfca27j54segdvaq9gl2u3.apps.googleusercontent.com',
     iosBundleId: 'com.soonSak',
   );
 }

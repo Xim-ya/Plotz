@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "436064136115",
+    "firebase_url": "https://soonsakdev-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "soonsakdev",
+    "storage_bucket": "soonsakdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436064136115:android:a0412c8b33def25d1139c6",
+        "android_client_info": {
+          "package_name": "com.soon_sak.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436064136115-e73n9tgtdmedfe69kcorvthudfmpb60s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgt43UjgzQPA4OIcttxKajMq78yVryfpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436064136115-e73n9tgtdmedfe69kcorvthudfmpb60s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "436064136115-osdqc7s0u45prpnik7mndrqta92edcrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.soonSak.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436064136115:android:91bfb65316f279451139c6",
+        "android_client_info": {
+          "package_name": "com.soon_sak.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436064136115-e73n9tgtdmedfe69kcorvthudfmpb60s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgt43UjgzQPA4OIcttxKajMq78yVryfpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436064136115-e73n9tgtdmedfe69kcorvthudfmpb60s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "436064136115-osdqc7s0u45prpnik7mndrqta92edcrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.soonSak.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

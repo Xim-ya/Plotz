@@ -50,7 +50,6 @@ class ContentService extends GetxService {
     );
   }
 
-
   // Service 리소스 initialize 구문
   Future<void> prepare() async {
     await fetchTotalInfoList();

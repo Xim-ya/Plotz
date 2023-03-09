@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1061021294637-nfaepoo23u3lic7s0hchdp3dic1ho4hl</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1061021294637-fadcb107161nikk5grp53ee09pobtej0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBKuFSxnz3HVm8EJpsKx55_3QWqZXKg7H0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1061021294637</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.soonSak</string>
+	<key>PROJECT_ID</key>
+	<string>soonsak-15350</string>
+	<key>STORAGE_BUCKET</key>
+	<string>soonsak-15350.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1061021294637:ios:e087ac5654812d2cd418a4</string>
+</dict>
+</plist>

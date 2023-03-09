@@ -30,8 +30,8 @@ class ExploreContentResponse {
         title: contentSnapshot.get('title'),
         releaseDate: contentSnapshot.get('releaseDate'),
         posterImgUrl: contentSnapshot.get('posterImgUrl'),
-        channelName: channelSnapshot.get('name'),
         channelLogoImgUrl: channelSnapshot.get('logoImgUrl'),
+        channelName: channelSnapshot.get('name'),
         videoTitle: contentSnapshot.get('videoTitle'),
         subscribersCount: channelSnapshot.get('subscribersCount'));
   }

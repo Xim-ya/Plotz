@@ -51,6 +51,20 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    // Flavor 설정
+    flavorDimensions "env"
+    productFlavors {
+        dev {
+            dimension "env"
+            applicationId "com.soon_sak.dev"
+        }
+        prod {
+            dimension "env"
+            applicationId "com.soon_sak"
+        }
+    }
+
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.soon_sak"

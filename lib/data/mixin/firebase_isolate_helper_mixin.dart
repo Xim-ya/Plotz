@@ -54,7 +54,7 @@ void _isolateEntry(_IsolateEntryPayload payload) async {
   /// 중요!! FireBaseStore을 이용하고 있기 때문에
   /// Firebase sdk를 initialize 해줘야함
   /// 별도의 스레드에서 실행되기 때문에
-  /// [main.dart]에서 생성되는 것과는 무관함.
+  /// [myApp.dart]에서 생성되는 것과는 무관함.
 
   final result = await function();
   payload.sendPort.send(result);
