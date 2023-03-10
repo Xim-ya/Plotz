@@ -17,7 +17,6 @@ class BannerModel  {
 class BannerItem {
   final String originId;
   final int id;
-  final String videoId;
   final ContentType type;
   final String title;
   final String description;
@@ -27,7 +26,6 @@ class BannerItem {
   BannerItem({
     required this.originId,
     required this.id,
-    required this.videoId,
     required this.type,
     required this.title,
     required this.description,
@@ -38,7 +36,6 @@ class BannerItem {
   factory BannerItem.fromResponse(BannerItemResponse response) => BannerItem(
     originId: response.id,
         id: SplittedIdAndType.fromOriginId(response.id).id,
-        videoId: response.videoId,
         type: SplittedIdAndType.fromOriginId(response.id).type,
         title: response.title,
         description: response.description,
