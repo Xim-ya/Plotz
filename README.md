@@ -21,7 +21,7 @@
 
 <div align="center">
 <h3>다운로드 링크</h3>
-<div style="display : flex; justify-content: center">
+<div style="display : flex; justify-content: center; flex-direction: row">
   <a href="https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197">
   	<img src="https://velog.velcdn.com/images/ximya_hf/post/f393f426-f940-4b9f-a0a3-6d8c3047467f/image.png" style="width : 50px"/>
   </a>
@@ -31,4 +31,8 @@
   </a>
 </div>
 </div>
+
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FXim-ya%2FSoonSack%2Fhit-counter&count_bg=%23E30914&title_bg=%23101010&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 
