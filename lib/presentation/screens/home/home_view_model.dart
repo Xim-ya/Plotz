@@ -15,12 +15,9 @@ class HomeViewModel extends BaseViewModel {
   /* [Variables] */
 
   /// Data
-  final Rxn<BannerModel> _bannerContent = Rxn();
-  final Rxn<TopTenContentsModel> _topTenContents = Rxn();
-  final Rxn<CategoryContentCollection> _categoryContentCollection = Rxn();
-
-  // final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
-  //     Rxn(); // 카테고리 및 카테고리 컨텐츠
+  final Rxn<BannerModel> _bannerContent = Rxn(); // 배너 컨텐츠
+  final Rxn<TopTenContentsModel> _topTenContents = Rxn(); // Top10 컨텐츠
+  final Rxn<CategoryContentCollection> _categoryContentCollection = Rxn(); // 카테고리 컬렉션
 
   /// State
   late double scrollOffset = 0;
@@ -101,6 +98,7 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.search);
   }
 
+  // Top10 컨텐츠 호출
   Future<void> _fetchTopTenContents() async {
     final response = await _loadCachedTopTenContentsUseCase.call();
     response.fold(onSuccess: (data) {
@@ -111,6 +109,7 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  // 배너 컨텐츠 호출
   Future<void> _fetchBannerContents() async {
     final response = await _loadBannerContentUseCase.call();
     response.fold(
@@ -139,6 +138,7 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
+    // 병렬 호출
     await Future.wait([
       _fetchBannerContents(),
       _fetchTopTenContents(),
