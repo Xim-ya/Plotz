@@ -47,7 +47,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
   // 컨텐츠 설명(TMDB)
   Widget buildDescriptionSection() =>
       GetBuilder<ContentDetailViewModel>(builder: (_) {
-        return vm.contentOverView.hasData
+        return vm.contentOverView.hasData && vm.contentOverView == ''
             ? ExpandableTextView(
                 text: vm.contentOverView ?? '설명 없음',
                 maxLines: 4,
