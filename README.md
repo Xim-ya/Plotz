@@ -4,10 +4,11 @@
 </div>
 
 
+
 <br/>
 <br/>
 
-<div style="display: flex; justify-content: space-evenly">
+<div style="display: flex; justify-content: center">
     <img style="width: 200px" src="https://user-images.githubusercontent.com/75591730/224562862-367bf6aa-15ef-4282-94b6-6b4eb029fa9b.png"/>
     <img style="width: 200px" src="https://user-images.githubusercontent.com/75591730/224562868-86dea025-e6e2-4da4-80ba-c9aad19f62a7.png"/>
     <img style="width: 200px" src="https://user-images.githubusercontent.com/75591730/224562871-de0d4699-d2f5-44c3-ae08-d85fd3695289.png"/>
@@ -18,18 +19,18 @@
 <br/>
 <br/>
 
-
+<div style="justify-content: space-around"></div>
 <div align="center">
 <h3>다운로드 링크</h3>
-<div style="display : flex; justify-content: center; flex-direction: row">
+<div style="display: flex; justify-content: space-around; flex-direction: row; width:120px; height: 50px;">
   <a href="https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197">
-  	<img src="https://velog.velcdn.com/images/ximya_hf/post/f393f426-f940-4b9f-a0a3-6d8c3047467f/image.png" style="width : 50px"/>
+    <img src="https://user-images.githubusercontent.com/75591730/224565151-1d936ca8-e75c-4f11-916f-b1ff002dc105.png" style="width: 50px; height: 50px"/>
   </a>
-  <div style="width: 12px"></div>
-    <a href="https://play.google.com/store/apps/details?id=com.soon_sak">
-  	<img src="https://velog.velcdn.com/images/ximya_hf/post/a626c32d-2b7b-4d40-b1fb-03dc7792b111/image.png" style="width : 50px"/>
+  <a href="https://play.google.com/store/apps/details?id=com.soon_sak">
+    <img src="https://user-images.githubusercontent.com/75591730/224565154-7ed1a888-231b-4dd9-be21-7793db77a7b2.png" style="width: 50px; height: 50px"/>
   </a>
 </div>
+<div style="height: 6px"></div>
 </div>
 
 
