@@ -203,7 +203,7 @@ export 'package:soon_sak/presentation/screens/explore/explore_screen.dart';
 export 'package:soon_sak/presentation/screens/my/my_page_screen.dart';
 export 'package:soon_sak/presentation/screens/curation/localWidget/start_curation_button.dart';
 export 'package:soon_sak/presentation/screens/register/pageView/confirm_curation_page_view.dart';
-export 'package:soon_sak/presentation/common/listView/paging_result_list_view.dart';
+export 'package:soon_sak/presentation/common/listView/paging_searched_result_list_view.dart';
 export 'package:soon_sak/presentation/screens/register/localWidget/search_content_page_view_scaffold.dart';
 export 'package:soon_sak/presentation/screens/register/localWidget/searched_content_item_btn.dart';
 export 'package:soon_sak/presentation/screens/register/localWidget/register_video_link_page_view_scaffold.dart';

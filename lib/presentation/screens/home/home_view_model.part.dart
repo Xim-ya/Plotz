@@ -25,5 +25,6 @@ extension HomeViewModelPart on HomeViewModel {
 
 
   // 카테고리 컨텐츠 collection
-  CategoryContentCollection? get categoryContentCollection => _categoryContentCollection.value;
+  List<CategoryContentSection>? get categoryContentCollection => loadPagedCategoryCollectionUseCase.categoryContentCollection.value;
+  // CategoryContentCollection? get categoryContentCollection => _categoryContentCollection.value;
 }

@@ -14,6 +14,9 @@ abstract class StaticContentDataSource  {
   // 카테고리 컨텐츠 모음 정보 호출
   Future<CategoryContentCollectionResponse> loadCategoryContentCollection();
 
+  // NEW : 카테고리 컨텐츠 모음 정보 호출
+  Future<CategoryContentCollectionResponse> newLoadCategoryContentCollection(int page);
+
 
 
 }

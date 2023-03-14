@@ -29,7 +29,6 @@ class HomeScaffold extends StatelessWidget {
       child: Stack(
         children: [
           SingleChildScrollView(
-            controller: scrollController,
             child: Stack(
               children: <Widget>[
                 Stack(

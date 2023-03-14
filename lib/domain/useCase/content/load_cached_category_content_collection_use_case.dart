@@ -36,21 +36,21 @@ class LoadCachedCategoryContentCollectionUseCase
     final Object? localData =
     await _localStorageService.getData(fieldName: 'categoryCollection');
 
-    // final Object? localData =
-    //     null;
-
     // 조건 : local data가 존재한다면
     if (localData.hasData) {
+      print("BP - 1");
       // 2-a).Static content keysData 호출
       final String keyResponse = _contentService.categoryContentKey!;
 
       // 조건 : 키 값이 정상적으로 받아왔다면
       if (keyResponse.hasData) {
+        print("BP - 2");
         // 2-b). 'key' 값이 최신화 되어 있는지 확인
         // 조건 : 최신 업데이트 된 키라면
         // 실행 : 2-c) 로컬 데이터로 리턴
         if (isUpdatedKey(
             jsonText: localData.toString(), givenKey: keyResponse)) {
+          print("BP - 3");
           final json = jsonDecode(localData.toString());
           final response = CategoryContentCollectionResponse.fromJson(json);
           final result = CategoryContentCollection.fromResponse(response);
@@ -60,15 +60,18 @@ class LoadCachedCategoryContentCollectionUseCase
         // 조건 : 최신 업데이트 키가 아니라면
         // 실행 : 2-c) api 호출
         else {
+          print("BP - 4");
           return fetchCategoryContentCollection();
         }
       }
       // 조건 : 키 값이 정상적으로 불러오지 못했다면
       // 실행 : 2-c) api 호출
       else {
+        print("BP - 5");
         return fetchCategoryContentCollection();
       }
     } else {
+      print("BP - 6");
       // 조건 : local data가 존재하지 않는다면
       // 실행 :  api 호출
       return fetchCategoryContentCollection();
@@ -79,7 +82,7 @@ class LoadCachedCategoryContentCollectionUseCase
   /// api 호출
   Future<Result<CategoryContentCollection>>
   fetchCategoryContentCollection() async {
-    final response = await _repository.loadCategoryContentCollection();
+    final response = await _repository.loadCategoryContentCollection(1);
     return response.fold(
       onSuccess: Result.success,
       onFailure: (e) {

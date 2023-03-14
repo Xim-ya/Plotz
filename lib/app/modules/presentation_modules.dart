@@ -7,7 +7,7 @@ abstract class PresentationModules {
     // 탭 스크린
     Get.lazyPut(
         () => HomeViewModel(
-            Get.find(), Get.find(), Get.find()),
+            Get.find(), Get.find(), Get.find(), Get.find()),
         fenix: true);
 
     // 컨텐츠 상세화면

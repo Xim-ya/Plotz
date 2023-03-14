@@ -15,7 +15,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   }
 
   List<Widget> buildTabView() => [
-        PagingResultListView(
+        PagingSearchedResultListView(
           focusNode: vm.focusNode,
           isInitialState: vm.isInitialState,
           pagingController: vm.pagingController,
@@ -32,7 +32,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
             );
           },
         ),
-        PagingResultListView(
+        PagingSearchedResultListView(
           focusNode: vm.focusNode,
           isInitialState: vm.isInitialState,
           pagingController: vm.pagingController,

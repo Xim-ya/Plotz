@@ -19,7 +19,7 @@ import 'package:soon_sak/utilities/index.dart';
 *  - db: content.db
 *    1) field : banner <-- 홈 스크린 배너 데이터
 *    2) field : topTen <-- 홈 스크린 TopTen 컨텐츠 리스트 데이터
-*    3) field : categoryCollection <-- 홈 스크린 카테고리 컨텐츠 데이터
+*    3) field : categoryCollection1 <-- 홈 스크린 카테고리 컨텐츠 데이터
 *
 * */
 
@@ -58,6 +58,18 @@ class LocalStorageService extends GetxService {
       log('====== 로컬 데이터 저장 성공');
     } catch (e) {
       log('====== 로컬 데이터 저장 실패 / $e');
+    }
+  }
+
+  // 데이터 삭제
+  Future<void> deleteData(
+      {required String fieldName}) async {
+    try {
+      var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
+      await store.record(fieldName).delete(db);
+      log('====== 로컬 데이터 삭제 성공');
+    } catch (e) {
+      log('====== 로컬 데이터 삭제 실패 / $e');
     }
   }
 

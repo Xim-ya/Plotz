@@ -34,7 +34,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
       );
 
   // 검색 결과 리스트
-  Widget _buildSearchedListView() => PagingResultListView(
+  Widget _buildSearchedListView() => PagingSearchedResultListView(
         physics: const NeverScrollableScrollPhysics(),
         padding: AppInset.top4 + AppInset.bottom104,
         focusNode: vm.contentFormFocusNode,
