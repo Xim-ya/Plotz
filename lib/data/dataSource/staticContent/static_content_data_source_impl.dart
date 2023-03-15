@@ -24,21 +24,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
         fieldName: 'topTen', data: jsonEncode(response.data));
     final json = jsonDecode(response.toString());
 
-    print('aim - 4 --> ${jsonDecode(response.toString())}');
-
     return TopTenContentResponse.fromJson(json);
-  }
-
-  @override
-  Future<CategoryContentCollectionResponse>
-      loadCategoryContentCollection() async {
-    final response = await _api.loadCategoryContentCollections(1);
-    await _localStorage.saveData(
-        fieldName: 'categoryCollection1',
-        data: jsonEncode(response.data['categoryContent']['page1']));
-    final json = response.data['categoryContent']['page1'];
-
-    return CategoryContentCollectionResponse.fromJson(json);
   }
 
   @override
@@ -53,9 +39,9 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
     } else {
       final response = await _api.loadCategoryContentCollections(page);
       await _localStorage.saveData(
-          fieldName: 'categoryCollection1',
-          data: jsonEncode(response.data['categoryContent']['page1']));
-      final json = response.data['categoryContent']['page1'];
+          fieldName: 'categoryCollection$page',
+          data: jsonEncode(response.data['categoryContent']['page$page']));
+      final json = response.data['categoryContent']['page$page'];
       return CategoryContentCollectionResponse.fromJson(json);
     }
   }

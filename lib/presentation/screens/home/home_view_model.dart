@@ -56,11 +56,6 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
-  void fetchNewCollectionPage() {
-    loadPagedCategoryCollectionUseCase.call();
-    update();
-  }
-
   /// UI Intent Method
   // AppBar Blur효과 avtivate 여부
   void turnOnBlurInAppBar() {
@@ -150,7 +145,5 @@ class HomeViewModel extends BaseViewModel {
       _fetchBannerContents(),
       _fetchTopTenContents(),
     ]);
-
-
   }
 }

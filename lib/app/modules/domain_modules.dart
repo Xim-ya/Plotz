@@ -27,10 +27,6 @@ abstract class DomainModules {
             LoadCachedTopTenContentsUseCase(Get.find(), Get.find(), Get.find()),
         fenix: true);
     Get.lazyPut(
-        () => LoadCachedCategoryContentCollectionUseCase(
-            Get.find(), Get.find(), Get.find()),
-        fenix: true);
-    Get.lazyPut(
       () =>
           RequestContentRegistrationUseCase(Get.find(), Get.find(), Get.find()),
       fenix: true,

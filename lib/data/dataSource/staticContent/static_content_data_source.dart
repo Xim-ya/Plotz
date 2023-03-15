@@ -11,9 +11,6 @@ abstract class StaticContentDataSource  {
   // 고정 컨텐츠 key 값 호출
   Future<ContentKeyResponse> loadStaticContentKeys();
 
-  // 카테고리 컨텐츠 모음 정보 호출
-  Future<CategoryContentCollectionResponse> loadCategoryContentCollection();
-
   // NEW : 카테고리 컨텐츠 모음 정보 호출
   Future<CategoryContentCollectionResponse> newLoadCategoryContentCollection(int page);
 

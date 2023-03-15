@@ -22,6 +22,13 @@ import 'package:soon_sak/utilities/index.dart';
  *  1) 캐싱 로직 - DataSource
  *  2) 페이징 로직 - UseCase
  *
+ *
+ *  *** NOTE ****
+ *  [addPageRequestListener]가 순간 여러번 호출 되는 이슈가 존재
+ *  라이브러리의 고질적인 문제로 판단됨
+ *  이를 해결하기 위해 debounce delayed를 주어 중복 호출을 막음
+ *  이슈 출처 : https://github.com/EdsonBueno/infinite_scroll_pagination/issues/172
+ *
  * */
 
 class LoadPagedCategoryCollectionUseCase {
@@ -38,21 +45,20 @@ class LoadPagedCategoryCollectionUseCase {
 
   /* Variables */
   final Rxn<List<CategoryContentSection>> categoryContentCollection = Rxn();
-  int currentPage = 0;
+  int currentPage = 1;
   bool isPagingAvailable = true;
   bool isInitialState = true;
+  Timer? _debounce;
 
   /* Controller */
   PagingController<int, CategoryContentSection> pagingController =
-      PagingController<int, CategoryContentSection>(firstPageKey: 0);
+      PagingController<int, CategoryContentSection>(firstPageKey: 1);
 
   /* Intents */
-
   // 'key' 값이 최신화 되어 있는지 확인
   bool _isRecentKey({required String jsonText, required String givenKey}) {
     Map<String, dynamic> data = json.decode(jsonText);
     final response = CategoryContentCollectionResponse.fromJson(data);
-
     if (response.key == givenKey) {
       return true;
     } else {
@@ -72,13 +78,13 @@ class LoadPagedCategoryCollectionUseCase {
         .loadCategoryContentCollection(currentPage);
     return response.fold(
       onSuccess: (data) {
-        final bool isLastPage = currentPage + 1 > 2;
+        final bool isLastPage = currentPage >= 2;
         if (isLastPage) {
           isPagingAvailable = false;
           pagingController.appendLastPage(data.items);
         } else {
-          pagingController.appendPage(data.items, currentPage + 1);
           currentPage = currentPage + 1;
+          pagingController.appendPage(data.items, currentPage + 1);
         }
       },
       onFailure: (e) {
@@ -91,20 +97,24 @@ class LoadPagedCategoryCollectionUseCase {
 
   /// UseCase init메소드
   /// pagingController event listen 설정
-  void initUseCase()  {
+  void initUseCase() {
     pagingController.addPageRequestListener((pageKey) {
-      call();
+      if (_debounce?.isActive ?? false) _debounce!.cancel();
+      _debounce = Timer(const Duration(milliseconds: 50), _fetchPage);
     });
   }
 
-  Future<void> call() async {
-    if (isPagingAvailable == false) {
+
+  Future<void> _fetchPage() async {
+    // 최대 불러올 수 있는 페이지 이미 다 불러왔다면 메소드 종료
+    if (currentPage > 2) {
       return;
     }
+
     final Object? localData = await _localStorageService.getData(
         fieldName: 'categoryCollection$currentPage');
 
-    final String? keyResponse = _contentService.categoryContentKey;
+    final String? keyResponse =  _contentService.returnCategoryContentKey(currentPage);
 
     /// 한 가지 조건으로 분기됨
     /// 로컬 데이터가 있고

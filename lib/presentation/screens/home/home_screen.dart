@@ -43,7 +43,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
     },
   );
 
-  // 상단 'Top10' 포스트 슬라이더
+  /// 상단 'Top10' 포스트 슬라이더
   List<Widget> _buildTopTenContentSlider() => [
         AppSpace.size40,
         Padding(
@@ -84,7 +84,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
       ];
 
-  // 상단 배너 슬라이더
+  /// 상단 배너 슬라이더
   Widget _buildTopBannerSlider() => Obx(
         () => CarouselSlider.builder(
           carouselController: vm.carouselController,
@@ -126,7 +126,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
       );
 
-  // 배경 위젯 - Poster + Gradient Image 로 구성됨.
+  /// 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
         Obx(() {
           if (vm.isBannerContentsLoaded) {
@@ -161,7 +161,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         )
       ];
 
-  // 애니메이션 앱바 - 스크롤 동작 및 offset에 따라 blur animation이 적용됨.
+  /// 애니메이션 앱바 - 스크롤 동작 및 offset에 따라 blur animation이 적용됨.
   List<Widget> _buildAnimationAppbar() {
     return [
       Obx(
