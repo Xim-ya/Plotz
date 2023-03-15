@@ -120,6 +120,11 @@ class HomeViewModel extends BaseViewModel {
     );
   }
 
+  Future<void> test()async {
+    await _fetchBannerContents();
+
+  }
+
   @override
   void onReady() {
      loadPagedCategoryCollectionUseCase.initUseCase();
@@ -153,7 +158,7 @@ class HomeViewModel extends BaseViewModel {
 
     // // 병렬 호출
     await Future.wait([
-      _fetchBannerContents(),
+      // _fetchBannerContents(),
       _fetchTopTenContents(),
     ]);
 

@@ -22,7 +22,7 @@ class PagedCategoryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return PagedSliverList.separated(
       pagingController: pagingController,
-      separatorBuilder: (__, _) => AppSpace.size12,
+      separatorBuilder: (__, _) => AppSpace.size26,
       builderDelegate: PagedChildBuilderDelegate<CategoryContentSection>(
         // animateTransitions: true,
 

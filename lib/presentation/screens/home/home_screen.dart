@@ -26,10 +26,11 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: vm.appBarHeight), // 커스텀 앱바와 간격을 맞추기 위한 위젯
-
+                      SizedBox(height: vm.appBarHeight),
+                      // 커스텀 앱바와 간격을 맞추기 위한 위젯
                       _buildTopBannerSlider(),
                       ..._buildTopTenContentSlider(),
+                      AppSpace.size32,
                     ],
                   ),
                 ],
@@ -52,21 +53,13 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                 );
               },
             ),
+            const SliverToBoxAdapter(
+              child: AppSpace.size72,
+            ),
           ],
         ),
         ..._buildAnimationAppbar(),
       ],
-    );
-
-    return HomeScaffold(
-      scrollController: vm.scrollController,
-      animationAppbar: _buildAnimationAppbar(),
-      stackedGradientPosterBg: _buildStackedGradientPosterBg(),
-      topBannerSlider: _buildTopBannerSlider(),
-      topTenContentSlider: _buildTopTenContentSlider(),
-      categoryContentCollectionList: _buildPagedListView(),
-      body: _buildBody(),
-      appBarHeight: vm.appBarHeight,
     );
   }
 
@@ -175,8 +168,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   // 상단 배너 슬라이더
   Widget _buildTopBannerSlider() => Container(
-
-    child: Obx(
+        child: Obx(
           () => CarouselSlider.builder(
             carouselController: vm.carouselController,
             itemCount: vm.bannerContentList?.length ?? 2,
@@ -216,7 +208,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             },
           ),
         ),
-  );
+      );
 
   // 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
@@ -238,7 +230,12 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.black, Colors.transparent,AppColor.black, AppColor.black],
+                colors: [
+                  Colors.black,
+                  Colors.transparent,
+                  AppColor.black,
+                  AppColor.black
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: <double>[0.0, 0.5, 0.7, 1.0],
