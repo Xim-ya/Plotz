@@ -5,15 +5,12 @@ import 'package:soon_sak/utilities/index.dart';
  *  list item을 처리하는 builder부분을 부무 위젯(클래스)이 참조할 수 있도록 함.
  * */
 
-
-
 class PagedCategoryListView extends StatelessWidget {
   const PagedCategoryListView({
     Key? key,
     required this.pagingController,
     required this.itemBuilder,
   }) : super(key: key);
-
 
   final PagingController pagingController;
   final ItemWidgetBuilder<CategoryContentSection> itemBuilder;
@@ -49,13 +46,14 @@ class PagedCategoryListView extends StatelessWidget {
 
         /* 로딩 인디케이터 */
         firstPageProgressIndicatorBuilder: (context) {
-          return ListView.separated(
-              separatorBuilder: (_, __) => AppSpace.size26,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 4,
-              itemBuilder: (_, __) =>
-                  const CategoryContentSectionSkeletonView());
+          return Column(
+            children: const [
+              CategoryContentSectionSkeletonView(),
+              CategoryContentSectionSkeletonView(),
+              CategoryContentSectionSkeletonView(),
+              CategoryContentSectionSkeletonView(),
+            ],
+          );
         },
         /* 검색 결과*/
         itemBuilder: itemBuilder,

@@ -9,7 +9,6 @@ part 'home_view_model.part.dart';
 class HomeViewModel extends BaseViewModel {
   HomeViewModel(
     this.loadPagedCategoryCollectionUseCase,
-    this._loadCachedCategoryContentCollectionUseCase,
     this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
   );
@@ -40,8 +39,6 @@ class HomeViewModel extends BaseViewModel {
   final LoadPagedCategoryCollectionUseCase loadPagedCategoryCollectionUseCase;
   final LoadCachedBannerContentUseCase _loadBannerContentUseCase;
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
-  final LoadCachedCategoryContentCollectionUseCase
-      _loadCachedCategoryContentCollectionUseCase;
 
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
@@ -120,11 +117,6 @@ class HomeViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> test()async {
-    await _fetchBannerContents();
-
-  }
-
   @override
   void onReady() {
      loadPagedCategoryCollectionUseCase.initUseCase();
@@ -133,8 +125,13 @@ class HomeViewModel extends BaseViewModel {
 
   @override
   Future<void> onInit() async {
-
     super.onInit();
+    /// NOTE : api call 호출 메소드 순서에 주의
+    /// 어떤 이유에서 pagingController [initUseCase] 메소드가
+    /// [Future.wait] 동작 후에 실행이 안됨
+    /// 선 호출 할 수 있도록 함.
+    /// TODO: 이후에 원인을 파학하고 수정
+    loadPagedCategoryCollectionUseCase.initUseCase();
 
     unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
     loading(true);
@@ -148,23 +145,11 @@ class HomeViewModel extends BaseViewModel {
     carouselController = CarouselController();
 
 
-    /// NOTE : api call 호출 메소드 순서에 주의
-    /// 어떤 이유에서 pagingController [initUseCase] 메소드가
-    /// [Future.wait] 동작 후에 실행이 안됨
-    /// TODO: 이후에 원인을 파학하고 수정
-
-    await loadPagedCategoryCollectionUseCase.call();
-
-
-    // // 병렬 호출
+    // 병렬 호출
     await Future.wait([
-      // _fetchBannerContents(),
+      _fetchBannerContents(),
       _fetchTopTenContents(),
     ]);
-
-    // update();
-
-
 
 
   }

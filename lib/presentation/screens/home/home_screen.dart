@@ -13,117 +13,35 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Stack(
-      children: [
-        CustomScrollView(
-          shrinkWrap: true,
-          controller: vm.scrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Stack(
-                children: [
-                  ..._buildStackedGradientPosterBg(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: vm.appBarHeight),
-                      // 커스텀 앱바와 간격을 맞추기 위한 위젯
-                      _buildTopBannerSlider(),
-                      ..._buildTopTenContentSlider(),
-                      AppSpace.size32,
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            PagedCategoryListView(
-              pagingController: vm.pagingController,
-              itemBuilder: (BuildContext context, dynamic item, int index) {
-                return CategoryContentSectionView(
-                  contentSectionData: item,
-                  onContentTapped: (nestedIndex) {
-                    final argument = ContentArgumentFormat(
-                      contentId: item.contents[nestedIndex].id,
-                      contentType: item.contents[nestedIndex].contentType,
-                      posterImgUrl: item.contents[nestedIndex].posterImgUrl,
-                      originId: item.contents[nestedIndex].originId,
-                    );
-                    vm.routeToContentDetail(argument, sectionType: 'category');
-                  },
-                );
-              },
-            ),
-            const SliverToBoxAdapter(
-              child: AppSpace.size72,
-            ),
-          ],
-        ),
-        ..._buildAnimationAppbar(),
-      ],
-    );
+    return HomeScaffold(
+        animationAppbar: _buildAnimationAppbar(),
+        scrollController: vm.scrollController,
+        appBarHeight: vm.appBarHeight,
+        stackedGradientPosterBg: _buildStackedGradientPosterBg(),
+        topBannerSlider: _buildTopBannerSlider(),
+        topTenContentSlider: _buildTopTenContentSlider(),
+        categoryContentCollectionList: _buildCategoryCollection());
   }
 
   /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
-  List<Widget> _buildPagedListView() => [
-        PagedCategoryListView(
-          pagingController: vm.pagingController,
-          itemBuilder: (BuildContext context, dynamic item, int index) {
-            return CategoryContentSectionView(
-              contentSectionData: item,
-              onContentTapped: (nestedIndex) {
-                final argument = ContentArgumentFormat(
-                  contentId: item.contents[nestedIndex].id,
-                  contentType: item.contents[nestedIndex].contentType,
-                  posterImgUrl: item.contents[nestedIndex].posterImgUrl,
-                  originId: item.contents[nestedIndex].originId,
-                );
-                vm.routeToContentDetail(argument, sectionType: 'category');
-              },
-            );
-          },
-        ),
-        AppSpace.size72,
-      ];
-
-  /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
-  List<Widget> _buildCategoryContentCollectionList() => [
-        GetBuilder<HomeViewModel>(
-          builder: (_) {
-            return ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: vm.categoryContentCollection?.length ?? 4,
-              separatorBuilder: (__, _) => AppSpace.size26,
-              itemBuilder: (context, index) {
-                if (vm.categoryContentCollection.hasData) {
-                  final item = vm.categoryContentCollection![index];
-                  return CategoryContentSectionView(
-                    contentSectionData: item,
-                    onContentTapped: (nestedIndex) {
-                      final argument = ContentArgumentFormat(
-                        contentId: item.contents[nestedIndex].id,
-                        contentType: item.contents[nestedIndex].contentType,
-                        posterImgUrl: item.contents[nestedIndex].posterImgUrl,
-                        originId: item.contents[nestedIndex].originId,
-                      );
-                      vm.routeToContentDetail(argument,
-                          sectionType: 'category');
-                    },
-                  );
-                } else {
-                  return const CategoryContentSectionSkeletonView();
-                }
-              },
-            );
-          },
-        ),
-        AppSpace.size72,
-      ];
-
-  // 임시 body
-  List<Widget> _buildBody() => [
-        AppSpace.size72,
-      ];
+  Widget _buildCategoryCollection() =>
+  PagedCategoryListView(
+    pagingController: vm.pagingController,
+    itemBuilder: (BuildContext context, dynamic item, int index) {
+      return CategoryContentSectionView(
+        contentSectionData: item,
+        onContentTapped: (nestedIndex) {
+          final argument = ContentArgumentFormat(
+            contentId: item.contents[nestedIndex].id,
+            contentType: item.contents[nestedIndex].contentType,
+            posterImgUrl: item.contents[nestedIndex].posterImgUrl,
+            originId: item.contents[nestedIndex].originId,
+          );
+          vm.routeToContentDetail(argument, sectionType: 'category');
+        },
+      );
+    },
+  );
 
   // 상단 'Top10' 포스트 슬라이더
   List<Widget> _buildTopTenContentSlider() => [
@@ -167,46 +85,44 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       ];
 
   // 상단 배너 슬라이더
-  Widget _buildTopBannerSlider() => Container(
-        child: Obx(
-          () => CarouselSlider.builder(
-            carouselController: vm.carouselController,
-            itemCount: vm.bannerContentList?.length ?? 2,
-            options: CarouselOptions(
-              autoPlay: true,
-              onPageChanged: (index, _) {
-                vm.onBannerSliderSwiped(index);
-              },
-              viewportFraction: 0.93,
-              aspectRatio: 337 / 276,
-              // aspectRatio: 337 / 250,
-            ),
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) {
-              if (vm.isBannerContentsLoaded) {
-                final BannerItem item = vm.bannerContentList![itemIndex];
-                return BannerItemView(
-                  title: item.title,
-                  description: item.description,
-                  imgUrl: item.imgUrl,
-                  onItemTapped: () {
-                    final argument = ContentArgumentFormat(
-                      contentId: item.id,
-                      contentType: item.type,
-                      posterImgUrl: item.backdropImgUrl,
-                      thumbnailUrl: item.imgUrl,
-                      // videoId: item.videoId,
-                      videoTitle: item.title,
-                      originId: item.originId,
-                    );
-                    vm.routeToContentDetail(argument, sectionType: 'banner');
-                  },
-                );
-              } else {
-                return const BannerSkeletonItem();
-              }
+  Widget _buildTopBannerSlider() => Obx(
+        () => CarouselSlider.builder(
+          carouselController: vm.carouselController,
+          itemCount: vm.bannerContentList?.length ?? 2,
+          options: CarouselOptions(
+            autoPlay: true,
+            onPageChanged: (index, _) {
+              vm.onBannerSliderSwiped(index);
             },
+            viewportFraction: 0.93,
+            aspectRatio: 337 / 276,
+            // aspectRatio: 337 / 250,
           ),
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) {
+            if (vm.isBannerContentsLoaded) {
+              final BannerItem item = vm.bannerContentList![itemIndex];
+              return BannerItemView(
+                title: item.title,
+                description: item.description,
+                imgUrl: item.imgUrl,
+                onItemTapped: () {
+                  final argument = ContentArgumentFormat(
+                    contentId: item.id,
+                    contentType: item.type,
+                    posterImgUrl: item.backdropImgUrl,
+                    thumbnailUrl: item.imgUrl,
+                    // videoId: item.videoId,
+                    videoTitle: item.title,
+                    originId: item.originId,
+                  );
+                  vm.routeToContentDetail(argument, sectionType: 'banner');
+                },
+              );
+            } else {
+              return const BannerSkeletonItem();
+            }
+          },
         ),
       );
 

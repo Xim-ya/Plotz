@@ -91,13 +91,9 @@ class LoadPagedCategoryCollectionUseCase {
 
   /// UseCase init메소드
   /// pagingController event listen 설정
-  Future<void> initUseCase() async {
-
-
+  void initUseCase()  {
     pagingController.addPageRequestListener((pageKey) {
-      print('아랑 ${pageKey}');
       call();
-
     });
   }
 
@@ -105,8 +101,6 @@ class LoadPagedCategoryCollectionUseCase {
     if (isPagingAvailable == false) {
       return;
     }
-
-    print('아크릴 ${currentPage}');
     final Object? localData = await _localStorageService.getData(
         fieldName: 'categoryCollection$currentPage');
 
@@ -119,7 +113,6 @@ class LoadPagedCategoryCollectionUseCase {
     if (localData.hasData &&
         _isRecentKey(
             jsonText: localData.toString(), givenKey: keyResponse ?? '')) {
-      print('bp - 2');
       await _appendData();
     }
 
@@ -129,7 +122,6 @@ class LoadPagedCategoryCollectionUseCase {
     else {
       await _deleteLocalStorageField();
       await _appendData();
-      print('bp - 3');
     }
   }
 }
