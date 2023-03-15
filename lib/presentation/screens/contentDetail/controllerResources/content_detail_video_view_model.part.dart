@@ -28,10 +28,10 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
   /* [ContentVideoFormat] - single 타입 리소스 (movie, tv)*/
   // 유튜브 영상 썸네일 이미지
   String? get singleVideoThumbnailUrl =>
-      passedArgument.thumbnailUrl ??
       contentVideos.value?.singleTypeVideo.detailInfo?.videoThumbnailUrl;
 
-  String? get singleVideoId => passedArgument.videoId ?? contentVideos.value?.singleTypeVideo.videoId;
+  String? get singleVideoId =>
+      passedArgument.videoId ?? contentVideos.value?.singleTypeVideo.videoId;
 
   // 유튜브 컨텐츠 조회수
   String? get singleVideoViewCount => Formatter.formatViewAndLikeCount(
