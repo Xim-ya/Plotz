@@ -8,8 +8,8 @@ import 'package:soon_sak/utilities/index.dart';
  *  ex) final ItemWidgetBuilder<SearchedContent> itemBuilder <-- 매개 변수로 넘김;
  * */
 
-class PagingResultListView extends StatelessWidget {
-  const PagingResultListView({
+class PagingSearchedResultListView extends StatelessWidget {
+  const PagingSearchedResultListView({
     Key? key,
     required this.focusNode,
     required this.pagingController,

@@ -10,10 +10,17 @@ class ContentKeyResponse {
   @JsonKey(name: 'topTenContentKey')
   final String topTenContentKey;
 
-  @JsonKey(name: 'categoryContent')
-  final String categoryContent;
+  @JsonKey(name: 'categoryContent1')
+  final String categoryContent1;
 
-  ContentKeyResponse(this.categoryContent, {required this.bannerKey, required this.topTenContentKey});
+  @JsonKey(name: 'categoryContent2')
+  final String categoryContent2;
+
+  ContentKeyResponse(
+      {required this.bannerKey,
+      required this.topTenContentKey,
+      required this.categoryContent1,
+      required this.categoryContent2});
 
   factory ContentKeyResponse.fromJson(Map<String, dynamic> json) =>
       _$ContentKeyResponseFromJson(json);

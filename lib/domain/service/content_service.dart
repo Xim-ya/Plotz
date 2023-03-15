@@ -64,8 +64,16 @@ class ContentService extends GetxService {
 
   String? get topTenContentKey => _staticContentKeys.value?.topTenContentKey;
 
-  String? get categoryContentKey =>
-      _staticContentKeys.value?.categoryContentKey;
+
+  String? returnCategoryContentKey(int currentPage) {
+    return currentPage == 1 ? _staticContentKeys.value?.categoryContentKey1 : _staticContentKeys.value?.categoryContentKey2;
+  }
+
+  // String? get categoryContentKey1 =>
+  //     _staticContentKeys.value?.categoryContentKey1;
+  //
+  // String? get categoryContentKey2 =>
+  //     _staticContentKeys.value?.categoryContentKey2;
 
   static ContentService get to => Get.find();
 }

@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
 import 'package:soon_sak/utilities/index.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,55 +14,36 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   Widget buildScreen(BuildContext context) {
     return HomeScaffold(
-      scrollController: vm.scrollController,
-      animationAppbar: _buildAnimationAppbar(),
-      stackedGradientPosterBg: _buildStackedGradientPosterBg(),
-      topBannerSlider: _buildTopBannerSlider(),
-      topTenContentSlider: _buildTopTenContentSlider(),
-      categoryContentCollectionList: _buildCategoryContentCollectionList(),
-      body: _buildBody(),
-      appBarHeight: vm.appBarHeight,
-    );
+        animationAppbar: _buildAnimationAppbar(),
+        scrollController: vm.scrollController,
+        appBarHeight: vm.appBarHeight,
+        stackedGradientPosterBg: _buildStackedGradientPosterBg(),
+        topBannerSlider: _buildTopBannerSlider(),
+        topTenContentSlider: _buildTopTenContentSlider(),
+        categoryContentCollectionList: _buildCategoryCollection());
   }
 
   /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
-  List<Widget> _buildCategoryContentCollectionList() => [
-        Obx(
-          () => ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: vm.categoryContentCollection?.items.length ?? 4,
-            separatorBuilder: (__, _) => AppSpace.size26,
-            itemBuilder: (context, index) {
-              if (vm.categoryContentCollection.hasData) {
-                final item = vm.categoryContentCollection!.items[index];
-                return CategoryContentSectionView(
-                  contentSectionData: item,
-                  onContentTapped: (nestedIndex) {
-                    final argument = ContentArgumentFormat(
-                      contentId: item.contents[nestedIndex].id,
-                      contentType: item.contents[nestedIndex].contentType,
-                      posterImgUrl: item.contents[nestedIndex].posterImgUrl,
-                      originId: item.contents[nestedIndex].originId,
-                    );
-                    vm.routeToContentDetail(argument, sectionType: 'category');
-                  },
-                );
-              } else {
-                return const CategoryContentSectionSkeletonView();
-              }
-            },
-          ),
-        ),
-        AppSpace.size72,
-      ];
+  Widget _buildCategoryCollection() =>
+  PagedCategoryListView(
+    pagingController: vm.pagingController,
+    itemBuilder: (BuildContext context, dynamic item, int index) {
+      return CategoryContentSectionView(
+        contentSectionData: item,
+        onContentTapped: (nestedIndex) {
+          final argument = ContentArgumentFormat(
+            contentId: item.contents[nestedIndex].id,
+            contentType: item.contents[nestedIndex].contentType,
+            posterImgUrl: item.contents[nestedIndex].posterImgUrl,
+            originId: item.contents[nestedIndex].originId,
+          );
+          vm.routeToContentDetail(argument, sectionType: 'category');
+        },
+      );
+    },
+  );
 
-  // 임시 body
-  List<Widget> _buildBody() => [
-        AppSpace.size72,
-      ];
-
-  // 상단 'Top10' 포스트 슬라이더
+  /// 상단 'Top10' 포스트 슬라이더
   List<Widget> _buildTopTenContentSlider() => [
         AppSpace.size40,
         Padding(
@@ -101,7 +84,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
       ];
 
-  // 상단 배너 슬라이더
+  /// 상단 배너 슬라이더
   Widget _buildTopBannerSlider() => Obx(
         () => CarouselSlider.builder(
           carouselController: vm.carouselController,
@@ -113,6 +96,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             },
             viewportFraction: 0.93,
             aspectRatio: 337 / 276,
+            // aspectRatio: 337 / 250,
           ),
           itemBuilder:
               (BuildContext context, int itemIndex, int pageViewIndex) {
@@ -142,7 +126,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         ),
       );
 
-  // 배경 위젯 - Poster + Gradient Image 로 구성됨.
+  /// 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
         Obx(() {
           if (vm.isBannerContentsLoaded) {
@@ -162,17 +146,22 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.black, Colors.transparent, AppColor.black],
+                colors: [
+                  Colors.black,
+                  Colors.transparent,
+                  AppColor.black,
+                  AppColor.black
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                stops: <double>[0.0, 0.5, 1.0],
+                stops: <double>[0.0, 0.5, 0.7, 1.0],
               ),
             ),
           ),
         )
       ];
 
-  // 애니메이션 앱바 - 스크롤 동작 및 offset에 따라 blur animation이 적용됨.
+  /// 애니메이션 앱바 - 스크롤 동작 및 offset에 따라 blur animation이 적용됨.
   List<Widget> _buildAnimationAppbar() {
     return [
       Obx(

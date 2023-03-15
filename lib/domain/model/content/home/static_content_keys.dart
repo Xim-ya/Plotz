@@ -3,18 +3,21 @@ import 'package:soon_sak/utilities/index.dart';
 class StaticContentKeys {
   final String bannerKey;
   final String topTenContentKey;
-  final String categoryContentKey;
+  final String categoryContentKey1;
+  final String categoryContentKey2;
 
   StaticContentKeys({
     required this.bannerKey,
     required this.topTenContentKey,
-    required this.categoryContentKey,
+    required this.categoryContentKey1,
+    required this.categoryContentKey2,
   });
 
   factory StaticContentKeys.fromResponse(ContentKeyResponse response) =>
       StaticContentKeys(
         bannerKey: response.bannerKey,
         topTenContentKey: response.topTenContentKey,
-        categoryContentKey: response.categoryContent,
+        categoryContentKey1: response.categoryContent1,
+        categoryContentKey2: response.categoryContent2,
       );
 }

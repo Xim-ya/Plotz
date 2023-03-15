@@ -14,7 +14,8 @@ abstract class StaticContentRepository {
   Future<Result<StaticContentKeys>> loadStaticContentKeys();
 
   // 카테고리 컨텐츠 모음 정보 호출
-  Future<Result<CategoryContentCollection>> loadCategoryContentCollection();
+  Future<Result<CategoryContentCollection>> loadCategoryContentCollection(
+      int page);
 
   static StaticContentRepository get to => Get.find();
 }
