@@ -28,15 +28,20 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
   }
 
   @override
-  Future<CategoryContentCollectionResponse> newLoadCategoryContentCollection(
+  Future<CategoryContentCollectionResponse> loadCategoryContentCollection(
       int page) async {
     final Object? localData =
         await _localStorage.getData(fieldName: 'categoryCollection$page');
 
+    /// 조건 : LocalStorage에 데이터가 존재한다면
+    /// Api call을 하지 않고 LocalStorage에서 데이터를 가져옴
     if (localData.hasData) {
       final json = jsonDecode(localData.toString());
       return CategoryContentCollectionResponse.fromJson(json);
-    } else {
+    }
+    /// LocalStorage에 데이터가 없다면
+    /// 서버로부터 데이터를 가져옴
+    else {
       final response = await _api.loadCategoryContentCollections(page);
       await _localStorage.saveData(
           fieldName: 'categoryCollection$page',

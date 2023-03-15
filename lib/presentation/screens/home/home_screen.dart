@@ -112,8 +112,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     contentType: item.type,
                     posterImgUrl: item.backdropImgUrl,
                     thumbnailUrl: item.imgUrl,
-                    // videoId: item.videoId,
-                    videoTitle: item.title,
+                    videoTitle: item.description,
                     originId: item.originId,
                   );
                   vm.routeToContentDetail(argument, sectionType: 'banner');
