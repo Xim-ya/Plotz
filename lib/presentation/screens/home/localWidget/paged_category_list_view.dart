@@ -49,8 +49,11 @@ class PagedCategoryListView extends StatelessWidget {
           return Column(
             children: const [
               CategoryContentSectionSkeletonView(),
+              AppSpace.size26,
               CategoryContentSectionSkeletonView(),
+              AppSpace.size26,
               CategoryContentSectionSkeletonView(),
+              AppSpace.size26,
               CategoryContentSectionSkeletonView(),
             ],
           );
