@@ -18,7 +18,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
     return Obx(
       () => AnimatedIndexedStack(
         index: vm.selectedTabIndex.value,
-        children: <Widget>[
+        children: const <Widget>[
           HomeScreen(),
           ExploreScreen(),
           CurationScreen(),
@@ -27,8 +27,6 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
       ),
     );
   }
-
-
 }
 
 class _BottomNavigationBar extends BaseView<TabsViewModel> {
@@ -39,20 +37,31 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
     return Obx(
       () => Theme(
         data: Theme.of(context).copyWith(
-          canvasColor: AppColor.strongGrey, // Bg 컬러
+          canvasColor: AppColor.black, // Bg 컬러
         ),
-        child: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            for (final tab in BottomNavigationConstants.values)
-              BottomNavigationBarItem(
-                icon: tab.icon,
-                label: tab.label,
-              )
-          ],
-          currentIndex: vm.selectedTabIndex.value,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.white,
-          onTap: vm.onBottomNavBarItemTapped,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: AppColor.strongGrey,
+                width: vm.selectedTabIndex.value == 1 ? 0.0 : 0.4,
+              ),
+            ),
+          ),
+          child: BottomNavigationBar(
+            items: <BottomNavigationBarItem>[
+              for (final tab in BottomNavigationConstants.values)
+                BottomNavigationBarItem(
+                  icon: tab.icon,
+                  label: tab.label,
+                )
+            ],
+            currentIndex: vm.selectedTabIndex.value,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: const Color(0xFF515151),
+            onTap: vm.onBottomNavBarItemTapped,
+          ),
         ),
       ),
     );

@@ -32,7 +32,7 @@ abstract class DomainModules {
       fenix: true,
     );
     Get.lazyPut(() => LoadPagedCategoryCollectionUseCase(
-        Get.find(), Get.find(), Get.find()));
+        Get.find(), Get.find(), Get.find()), fenix: true);
 
     // TMDB
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);

@@ -8,6 +8,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1061021294637:android:82e5221913a97fcad418a4",
+        "android_client_info": {
+          "package_name": "com.soonSac.soon_sak_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8uLI0nazM-2o9y1-mvSmi9vXrNEPl2Fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061021294637-6hoj5shv388otdag88delcopft6shtao.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1061021294637-58rpa0o3b9n1euk2vkt5c6e72jurit5n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.soonSac.soonSakAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1061021294637:android:c89bd4094ac7a778d418a4",
         "android_client_info": {
           "package_name": "com.soon_sak"
@@ -15,7 +51,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "1061021294637-7illq6jigflrj08cbkbi8jmjep8l9eel.apps.googleusercontent.com",
+          "client_id": "1061021294637-0n7oqu52jmmu35k9u2u5gofmhfnmhks7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soon_sak",
+            "certificate_hash": "baa9dd06346d657f5df765a5c7dd61e726e5d5b2"
+          }
+        },
+        {
+          "client_id": "1061021294637-f6j1jf7el4nd3llqrjgudpkvs0ur3fgv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soon_sak",
+            "certificate_hash": "49a0492f9f15281483f9e05153a0a50b1c0da1ee"
+          }
+        },
+        {
+          "client_id": "1061021294637-vud185dvgl6tkssrbpvcbr7g0cnpimk2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.soon_sak",
@@ -40,10 +92,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1061021294637-63pis3kq3rn2dc86g7rh0t6s35bsjjor.apps.googleusercontent.com",
+              "client_id": "1061021294637-58rpa0o3b9n1euk2vkt5c6e72jurit5n.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.soonSak"
+                "bundle_id": "com.soonSac.soonSakAdmin"
               }
             }
           ]

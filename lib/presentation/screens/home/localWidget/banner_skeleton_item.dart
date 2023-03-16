@@ -10,7 +10,7 @@ class BannerSkeletonItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 4),
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(

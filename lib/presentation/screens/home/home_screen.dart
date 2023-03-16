@@ -86,41 +86,43 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   /// 상단 배너 슬라이더
   Widget _buildTopBannerSlider() => Obx(
-        () => CarouselSlider.builder(
-          carouselController: vm.carouselController,
-          itemCount: vm.bannerContentList?.length ?? 2,
-          options: CarouselOptions(
-            autoPlay: true,
-            onPageChanged: (index, _) {
-              vm.onBannerSliderSwiped(index);
+        () => Container(
+          child: CarouselSlider.builder(
+            carouselController: vm.carouselController,
+            itemCount: vm.bannerContentList?.length ?? 2,
+            options: CarouselOptions(
+              autoPlay: true,
+              onPageChanged: (index, _) {
+                vm.onBannerSliderSwiped(index);
+              },
+              viewportFraction: 0.93,
+              aspectRatio: 337 / 276,
+              // aspectRatio: 337 / 276,
+            ),
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) {
+              if (vm.isBannerContentsLoaded) {
+                final BannerItem item = vm.bannerContentList![itemIndex];
+                return BannerItemView(
+                  title: item.title,
+                  description: item.description,
+                  imgUrl: item.imgUrl,
+                  onItemTapped: () {
+                    final argument = ContentArgumentFormat(
+                      contentId: item.id,
+                      contentType: item.type,
+                      posterImgUrl: item.backdropImgUrl,
+                      videoTitle: item.description,
+                      originId: item.originId,
+                    );
+                    vm.routeToContentDetail(argument, sectionType: 'banner');
+                  },
+                );
+              } else {
+                return const BannerSkeletonItem();
+              }
             },
-            viewportFraction: 0.93,
-            aspectRatio: 337 / 276,
-            // aspectRatio: 337 / 250,
           ),
-          itemBuilder:
-              (BuildContext context, int itemIndex, int pageViewIndex) {
-            if (vm.isBannerContentsLoaded) {
-              final BannerItem item = vm.bannerContentList![itemIndex];
-              return BannerItemView(
-                title: item.title,
-                description: item.description,
-                imgUrl: item.imgUrl,
-                onItemTapped: () {
-                  final argument = ContentArgumentFormat(
-                    contentId: item.id,
-                    contentType: item.type,
-                    posterImgUrl: item.backdropImgUrl,
-                    videoTitle: item.description,
-                    originId: item.originId,
-                  );
-                  vm.routeToContentDetail(argument, sectionType: 'banner');
-                },
-              );
-            } else {
-              return const BannerSkeletonItem();
-            }
-          },
         ),
       );
 

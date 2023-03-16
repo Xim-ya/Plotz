@@ -23,6 +23,8 @@ void main() async {
   // Environment(BuildType.development);
 
   Get.put(AppAnalytics(), permanent: true);
+  await AppAnalytics.instance.setAnalyticsCollectionEnabled(false);
+
 
   // Portrait 고정
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])

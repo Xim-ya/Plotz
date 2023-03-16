@@ -88,6 +88,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
+
   @override
   Future<Result<UserModel>> loadUserInfo() async {
     try {

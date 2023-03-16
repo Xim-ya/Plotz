@@ -38,6 +38,12 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         // 서비스 모듈 버전 정보 저장
         _userService.currentVersionNum = version.versionCode;
 
+        if (version.systemAvailable == 'R' &&
+            serverVersionCode != appVersionCode) {
+          showSystemIsNotAvailableModal();
+          return Result.failure(Exception('배포 진행 중'));
+        }
+
         /// 조건 : 시스템 점건 중이거나 작동을 할 수 있는 상태라면
         /// 시스템 점검 모달 노출
         if (version.systemAvailable == 'N') {

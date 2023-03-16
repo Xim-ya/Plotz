@@ -45,8 +45,8 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
       final response = await _api.loadCategoryContentCollections(page);
       await _localStorage.saveData(
           fieldName: 'categoryCollection$page',
-          data: jsonEncode(response.data['categoryContent']['page$page']));
-      final json = response.data['categoryContent']['page$page'];
+          data: jsonEncode(response.data['page$page']));
+      final json = response.data['page$page'];
       return CategoryContentCollectionResponse.fromJson(json);
     }
   }

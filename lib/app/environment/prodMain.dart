@@ -21,9 +21,6 @@ void main() async {
       options: ProdFirebaseOptions.currentPlatform,
     );
 
-
-
-
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     Get.put(AppAnalytics(), permanent: true);
     await AppAnalytics.instance.setAnalyticsCollectionEnabled(true);
