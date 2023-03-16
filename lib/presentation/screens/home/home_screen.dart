@@ -111,7 +111,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     contentId: item.id,
                     contentType: item.type,
                     posterImgUrl: item.backdropImgUrl,
-                    thumbnailUrl: item.imgUrl,
                     videoTitle: item.description,
                     originId: item.originId,
                   );
