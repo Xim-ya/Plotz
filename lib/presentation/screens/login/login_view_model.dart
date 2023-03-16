@@ -14,11 +14,6 @@ class LoginViewModel extends BaseViewModel {
   final SignOutUseCase _signOutHandlerUseCase;
   final SignInAndUpHandlerUseCase _signInHandlerUseCase;
 
-  Future<void> checkUserState() async {}
-
-  Future<void> aim() async{
-    Get.offAllNamed(AppRoutes.tabs);
-  }
 
   // 로그인 & 회원가입
   Future<void> signInAndUp(Sns social) async {

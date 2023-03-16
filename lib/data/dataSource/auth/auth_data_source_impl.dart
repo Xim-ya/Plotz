@@ -39,4 +39,8 @@ class AuthDataSourceImpl
   @override
   Future<void> triggerAppleSignOut() =>
       loadResponseOrThrow(() => _api.triggerAppleSignOut());
+
+  @override
+  Future<void> updateLoginDate(String userId) =>
+      loadResponseOrThrow(() => _api.updateLoginDate(userId));
 }

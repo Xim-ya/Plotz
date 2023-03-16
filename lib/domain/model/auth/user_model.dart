@@ -74,6 +74,7 @@ class UserModel {
     return {
       'id': id,
       'name': name,
+      'lastLoginDate': FieldValue.serverTimestamp(),
       'provider': provider!.originString.toString(), // toString으로 포맷을 한번더 해줘야함
       'displayName': displayName,
       'photoUrl': photoUrl,

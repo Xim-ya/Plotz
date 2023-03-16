@@ -44,15 +44,10 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                GestureDetector(
-                  onTap: (){
-                    vm.aim();
-                  },
-                  child: Text(
-                    '순식간에 즐기는\n영화 드라마 리뷰 영상',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyle.headline1,
-                  ),
+                Text(
+                  '순식간에 즐기는\n영화 드라마 리뷰 영상',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyle.headline1,
                 ),
                 AppSpace.size20,
               ],

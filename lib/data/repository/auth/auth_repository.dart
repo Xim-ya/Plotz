@@ -24,4 +24,7 @@ abstract class AuthRepository {
 
   // 애플 로그아웃
   Future<Result<void>> appleSignOut();
+
+  // 유저 접속일 최신화
+  Future<Result<void>> updateLoginDate(String userId);
 }
