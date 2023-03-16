@@ -26,9 +26,6 @@ class BannerItemResponse {
   @JsonKey(name: 'id')
   String id;
 
-  @JsonKey(name: 'videoId')
-  String videoId;
-
   @JsonKey(name: 'title')
   String title;
 
@@ -43,7 +40,6 @@ class BannerItemResponse {
 
   BannerItemResponse(
       {required this.id,
-        required this.videoId,
         required this.title,
         required this.description,
         required this.imgUrl,
