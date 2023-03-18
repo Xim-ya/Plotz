@@ -26,5 +26,8 @@ abstract class AuthApi {
   // 애플 로그아웃
   Future<void> triggerAppleSignOut();
 
+  // 유저 접속일 최신화
+  Future<void> updateLoginDate(String userId);
+
 
 }

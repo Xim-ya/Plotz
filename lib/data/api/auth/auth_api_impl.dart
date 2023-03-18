@@ -69,4 +69,10 @@ class AuthApiImpl with FirestoreHelper implements AuthApi {
   Future<void> triggerAppleSignOut() async {
     await _auth.signOut();
   }
+
+  @override
+  Future<void> updateLoginDate(String userId) async {
+    final data = {'lastLoginDate': FieldValue.serverTimestamp()};
+    return updateDocumentField('user', docId: userId, data: data);
+  }
 }

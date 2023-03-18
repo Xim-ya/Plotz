@@ -50,7 +50,7 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
     // 검색어 Debounce 설정 0.3초
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(
-      const Duration(milliseconds: 300),
+      const Duration(milliseconds: 250),
       () => {
         pagingController.refresh(),
       },

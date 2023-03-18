@@ -8,7 +8,8 @@ part of 'content_key_response.dart';
 
 ContentKeyResponse _$ContentKeyResponseFromJson(Map<String, dynamic> json) =>
     ContentKeyResponse(
-      json['categoryContent'] as String,
       bannerKey: json['bannerKey'] as String,
       topTenContentKey: json['topTenContentKey'] as String,
+      categoryContent1: json['categoryContent1'] as String,
+      categoryContent2: json['categoryContent2'] as String,
     );

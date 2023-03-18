@@ -20,22 +20,32 @@ class BannerItemView extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 4),
       width: double.infinity,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          GestureDetector(
-            child: Text(
-              title,
-              style: AppTextStyle.headline2.copyWith(color: Colors.white),
+          SizedBox(
+            height: 92,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyle.headline2.copyWith(color: Colors.white),
+                ),
+                AppSpace.size2,
+                Text(
+                  description,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style:
+                  AppTextStyle.headline3.copyWith(color: AppColor.lightGrey),
+                ),
+                AppSpace.size8,
+              ],
             ),
           ),
-          AppSpace.size2,
-          Text(
-            '$description\n',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: AppTextStyle.headline3.copyWith(color: AppColor.lightGrey),
-          ),
-          AppSpace.size8,
+
           // 배너 이미지
           ImageViewWithPlayBtn(
             showPlayerBtn: false,

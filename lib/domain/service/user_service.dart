@@ -41,6 +41,18 @@ class UserService extends GetxService {
     );
   }
 
+  // 유저 접속일 최신화
+  Future<void> updateUserLoginDate(String userId) async {
+    final response = await _authRepository.updateLoginDate(userId);
+    response.fold(
+      onSuccess: (_) {},
+      onFailure: (e) {
+        log('UserService - 유저 접속일 최신화 실패 $e');
+      },
+    );
+  }
+
+  // 유저 등록 여부 확인
   Future<void> checkUserSignInState() async {
     final response = await _authRepository.isUserSignedIn();
     response.fold(

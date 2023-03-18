@@ -37,9 +37,9 @@ class StaticContentRepositoryImpl extends StaticContentRepository {
 
   @override
   Future<Result<CategoryContentCollection>>
-      loadCategoryContentCollection() async {
+      loadCategoryContentCollection(int page) async {
     try {
-      final response = await _dataSource.loadCategoryContentCollection();
+      final response = await _dataSource.loadCategoryContentCollection(page);
       return Result.success(CategoryContentCollection.fromResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);

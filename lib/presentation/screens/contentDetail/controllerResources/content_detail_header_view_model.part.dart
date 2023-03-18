@@ -19,10 +19,17 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
       ? passedArgument.videoTitle!.obs
       : contentVideos.value?.singleTypeVideo.detailInfo?.videoTitle.obs;
 
+  // TODO: 블로그 포스팅용 예시 이후에 삭제 필요
+  // RxString? get headerContentDesc => passedArgument.videoTitle.hasData
+  //     ? passedArgument.videoTitle!.obs
+  //     : contentVideos.value?.singleTypeVideo.detailInfo?.videoTitle.obs;
+
   // 컨텐츠 제목
   RxString? get headerTitle => passedArgument.title.hasData
       ? passedArgument.title!.obs
       : _contentDescriptionInfo.value?.title.obs;
+
+
 
   // 컨텐츠 TMDB 평점
   String? get rate => _contentDescriptionInfo.value?.rate.toStringAsFixed(2);

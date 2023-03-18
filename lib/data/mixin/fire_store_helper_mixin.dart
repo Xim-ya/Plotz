@@ -217,7 +217,6 @@ mixin FirestoreHelper {
 
     // subCollection이 기존에도 생성되어 있다면 특정 필드값 increase
     if (subCollectionDoc.docs.isNotEmpty) {
-      print('// subCollection이 기존에도 생성되어 있다면 특정 필드값 increase');
       await secondSubCollectionRef
           .doc(subCollectionDoc.docs.single.id)
           .update({secondSubCollectionFieldName: FieldValue.increment(1)});
@@ -239,11 +238,13 @@ mixin FirestoreHelper {
   }
 
   // 특정 Document에 데이터를 업데이트 하는 메소드
-  Future<void> addFieldOnDocument(String collectionName,
+  Future<void> updateDocumentField(String collectionName,
       {required String? docId, required Map<String, dynamic> data}) async {
     final docRef = _db.collection(collectionName).doc(docId);
     await docRef.update(data);
   }
+
+
 
   // 특정 subCollection의 dcoument 생성하고 데이터를 저장 하는 메소드
   Future<void> storeDocumentOnSubCollection(

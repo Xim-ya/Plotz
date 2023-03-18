@@ -10,6 +10,8 @@ import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_detail_respo
 part 'tmdb_api.g.dart';
 
 
+
+
 @RestApi(baseUrl: 'https://api.themoviedb.org/3')
 abstract class TmdbApi {
   factory TmdbApi(Dio dio, {String baseUrl}) = _TmdbApi;

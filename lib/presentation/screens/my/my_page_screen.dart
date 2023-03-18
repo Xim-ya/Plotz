@@ -126,22 +126,31 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           ),
           AppSpace.size14,
           Obx(
-            () => ContentPostSlider(
-              height: 168,
-              itemCount: vm.watchHistoryList?.length ?? 5,
-              itemBuilder: (BuildContext context, int index) {
-                final item = vm.watchHistoryList?[index];
-                return ImageViewWithPlayBtn(
-                  aspectRatio: 1280 / 1920,
-                  onPlayerBtnClicked: () {
-                    vm.launchYoutubeApp(item, index);
-                  },
-                  posterImgUrl: item?.posterImgUrl != null
-                      ? item!.posterImgUrl!.prefixTmdbImgPath
-                      : null,
-                );
-              },
-            ),
+            () => vm.watchHistoryList != null && vm.watchHistoryList!.isEmpty
+                ? Padding(
+                    padding: AppInset.left16,
+                    child: Text(
+                      '시청 기록이 없어요',
+                      style: AppTextStyle.body1
+                          .copyWith(color: AppColor.lightGrey),
+                    ),
+                  )
+                : ContentPostSlider(
+                    height: 168,
+                    itemCount: vm.watchHistoryList?.length ?? 5,
+                    itemBuilder: (BuildContext context, int index) {
+                      final item = vm.watchHistoryList?[index];
+                      return ImageViewWithPlayBtn(
+                        aspectRatio: 1280 / 1920,
+                        onPlayerBtnClicked: () {
+                          vm.launchYoutubeApp(item, index);
+                        },
+                        posterImgUrl: item?.posterImgUrl != null
+                            ? item!.posterImgUrl!.prefixTmdbImgPath
+                            : null,
+                      );
+                    },
+                  ),
           ),
           AppSpace.size48,
         ],

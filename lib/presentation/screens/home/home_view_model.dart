@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:http/http.dart' as http;
 
@@ -7,7 +8,7 @@ part 'home_view_model.part.dart';
 
 class HomeViewModel extends BaseViewModel {
   HomeViewModel(
-    this._loadCachedCategoryContentCollectionUseCase,
+    this.loadPagedCategoryCollectionUseCase,
     this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
   );
@@ -15,12 +16,8 @@ class HomeViewModel extends BaseViewModel {
   /* [Variables] */
 
   /// Data
-  final Rxn<BannerModel> _bannerContent = Rxn();
-  final Rxn<TopTenContentsModel> _topTenContents = Rxn();
-  final Rxn<CategoryContentCollection> _categoryContentCollection = Rxn();
-
-  // final Rxn<List<CategoryBaseContentList>> contentListWithCategories =
-  //     Rxn(); // 카테고리 및 카테고리 컨텐츠
+  final Rxn<BannerModel> _bannerContent = Rxn(); // 배너 컨텐츠
+  final Rxn<TopTenContentsModel> _topTenContents = Rxn(); // Top10 컨텐츠
 
   /// State
   late double scrollOffset = 0;
@@ -35,11 +32,13 @@ class HomeViewModel extends BaseViewModel {
   late ScrollController scrollController;
   late CarouselController carouselController;
 
+  PagingController<int, CategoryContentSection> get pagingController =>
+      loadPagedCategoryCollectionUseCase.pagingController;
+
   /* [UseCase] */
+  final LoadPagedCategoryCollectionUseCase loadPagedCategoryCollectionUseCase;
   final LoadCachedBannerContentUseCase _loadBannerContentUseCase;
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
-  final LoadCachedCategoryContentCollectionUseCase
-      _loadCachedCategoryContentCollectionUseCase;
 
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
@@ -55,19 +54,6 @@ class HomeViewModel extends BaseViewModel {
         parameters: {sectionType: routingArgument.originId});
 
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
-  }
-
-  // 카테고리 컨텐츠 collection 정보 호출
-  Future<void> _fetchCategoryContentCollection() async {
-    final response = await _loadCachedCategoryContentCollectionUseCase.call();
-    response.fold(
-      onSuccess: (data) {
-        _categoryContentCollection.value = data;
-      },
-      onFailure: (e) {
-        log('HomeViewModel : $e');
-      },
-    );
   }
 
   /// UI Intent Method
@@ -101,6 +87,7 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.search);
   }
 
+  // Top10 컨텐츠 호출
   Future<void> _fetchTopTenContents() async {
     final response = await _loadCachedTopTenContentsUseCase.call();
     response.fold(onSuccess: (data) {
@@ -111,6 +98,7 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  // 배너 컨텐츠 호출
   Future<void> _fetchBannerContents() async {
     final response = await _loadBannerContentUseCase.call();
     response.fold(
@@ -125,8 +113,20 @@ class HomeViewModel extends BaseViewModel {
   }
 
   @override
+  void onReady() {
+     loadPagedCategoryCollectionUseCase.initUseCase();
+    super.onReady();
+  }
+
+  @override
   Future<void> onInit() async {
     super.onInit();
+    /// NOTE : api call 호출 메소드 순서에 주의
+    /// 어떤 이유에서 pagingController [initUseCase] 메소드가
+    /// [Future.wait] 동작 후에 실행이 안됨
+    /// 선 호출 할 수 있도록 함.
+    /// TODO: 이후에 원인을 파학하고 수정
+    loadPagedCategoryCollectionUseCase.initUseCase();
 
     unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
     loading(true);
@@ -139,11 +139,11 @@ class HomeViewModel extends BaseViewModel {
 
     carouselController = CarouselController();
 
+
+    // 병렬 호출
     await Future.wait([
       _fetchBannerContents(),
       _fetchTopTenContents(),
-      _fetchCategoryContentCollection()
     ]);
-    update();
   }
 }

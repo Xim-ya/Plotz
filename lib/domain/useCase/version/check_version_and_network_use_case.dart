@@ -38,12 +38,28 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         // 서비스 모듈 버전 정보 저장
         _userService.currentVersionNum = version.versionCode;
 
-        /// 조건 : 시스템 점건 중이거나 작동을 할 수 있는 상태라면
-        /// 시스템 점검 모달 노출
-        if (version.systemAvailable == 'N') {
+
+        /// 1.0.2 배포용 코드
+        /// 이후 삭제
+        /// 임시 주석
+        if (version.systemAvailable == 'N' && serverVersionCode > appVersionCode) {
           showSystemIsNotAvailableModal();
           return Result.failure(Exception('시스템 점검 중'));
         }
+
+        if (version.systemAvailable == 'R' &&
+            serverVersionCode != appVersionCode) {
+          showSystemIsNotAvailableModal();
+          return Result.failure(Exception('배포 진행 중'));
+        }
+
+        /// 조건 : 시스템 점건 중이거나 작동을 할 수 있는 상태라면
+        /// 시스템 점검 모달 노출
+        /// 임시 주석
+        // if (version.systemAvailable == 'N') {
+        //   showSystemIsNotAvailableModal();
+        //   return Result.failure(Exception('시스템 점검 중'));
+        // }
 
         /// 조건: 서버 버전이 현재 앱 버전보다 높다면
         /// 앱 업데이트 모달 노출
@@ -51,7 +67,6 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
           showNeedUpdateModal();
           return Result.failure(Exception('업데이트 필요'));
         }
-
 
         return Result.success(null);
       },
@@ -108,25 +123,28 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
   }
 
   void showNeedUpdateModal() {
-    Get.dialog(AppDialog.singleBtn(
-      onBtnClicked: () async {
-        Get.back();
-        if (Platform.isIOS) {
-          await launchUrl(
-            Uri.parse(
-                'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197'),
-            mode: LaunchMode.externalApplication,
-          );
-        } else if (Platform.isAndroid) {
-          // TODO : 앱 코드 변경 필요[ANDROID]
-          await launchUrl(
-            Uri.parse('https://play.google.com/store'),
-            mode: LaunchMode.externalApplication,
-          );
-        }
-      },
-      title: '업데이트 안내',
-      description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
-    ));
+    Get.dialog(
+      AppDialog.singleBtn(
+        onBtnClicked: () async {
+          Get.back();
+          if (Platform.isIOS) {
+            await launchUrl(
+              Uri.parse(
+                  'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197'),
+              mode: LaunchMode.externalApplication,
+            );
+          } else if (Platform.isAndroid) {
+            // TODO : 앱 코드 변경 필요[ANDROID]
+            await launchUrl(
+              Uri.parse(
+                  'https://play.google.com/store/apps/details?id=com.soon_sak'),
+              mode: LaunchMode.externalApplication,
+            );
+          }
+        },
+        title: '업데이트 안내',
+        description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
+      ),
+    );
   }
 }

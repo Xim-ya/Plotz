@@ -88,6 +88,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
+
   @override
   Future<Result<UserModel>> loadUserInfo() async {
     try {
@@ -102,6 +103,16 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<void>> appleSignOut() async {
     try {
       final response = await _dataSource.triggerAppleSignOut();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateLoginDate(String userId) async {
+    try {
+      final response = await _dataSource.updateLoginDate(userId);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

@@ -17,7 +17,6 @@ BannerResponse _$BannerResponseFromJson(Map<String, dynamic> json) =>
 BannerItemResponse _$BannerItemResponseFromJson(Map<String, dynamic> json) =>
     BannerItemResponse(
       id: json['id'] as String,
-      videoId: json['videoId'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       imgUrl: json['imgUrl'] as String,

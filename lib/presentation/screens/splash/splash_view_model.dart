@@ -30,6 +30,8 @@ class SplashViewModel extends BaseViewModel with FirestoreHelper {
     await _userService.prepare();
     if (_userService.isUserSignIn) {
       await launchServiceModules().whenComplete(() {
+        // 유저 접속일 최신화
+        _userService.updateUserLoginDate(_userService.userInfo.value!.id!);
         Get.offAllNamed(AppRoutes.tabs);
       });
     } else {

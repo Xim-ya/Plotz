@@ -61,6 +61,18 @@ class LocalStorageService extends GetxService {
     }
   }
 
+  // 데이터 삭제
+  Future<void> deleteData(
+      {required String fieldName}) async {
+    try {
+      var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
+      await store.record(fieldName).delete(db);
+      log('====== 로컬 데이터 삭제 성공');
+    } catch (e) {
+      log('====== 로컬 데이터 삭제 실패 / $e');
+    }
+  }
+
   Future<void> prepare() async {
     await initStorage();
   }
