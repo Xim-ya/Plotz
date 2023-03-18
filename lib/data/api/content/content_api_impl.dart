@@ -1,4 +1,3 @@
-import 'package:soon_sak/data/api/content/response/channel_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {
@@ -41,7 +40,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       /// curator 필드는 참조 타입.
       /// 가리키고 있는 document의 데이터를 가져오는 기능을 수행해야함 (curator 필드)
       final DocumentReference<Map<String, dynamic>> curatorRef =
-          e.get('curator');
+      e.get('curator');
       final curatorDoc = await curatorRef.get();
       final String? curatorName = curatorDoc.data()?['displayName'];
       final String? curatorImg = curatorDoc.data()?['photoUrl'];
@@ -61,7 +60,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       /// channel  필드는 참조 타입.
       /// 가리키고 있는 document의 데이터를 가져오는 기능을 수행해야함 (channel 필드)
       final DocumentReference<Map<String, dynamic>> channelRef =
-          e.get('channelRef');
+      e.get('channelRef');
       final channelDoc = await channelRef.get();
 
       return ExploreContentResponse.fromDocumentSnapshot(
@@ -86,7 +85,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
         subCollectionDocId: 'main');
 
     final DocumentReference<Map<String, dynamic>> docRef =
-        doc.get('channelRef');
+    doc.get('channelRef');
     final docData = await docRef.get();
     if (docData.exists) {
       return ChannelResponse.fromDocumentRes(docData);

@@ -45,7 +45,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '순식간에 즐기는\n영화 드라마 리뷰 영상',
+                  '순식간에 즐기는\n유튜브 영화 드라마 리뷰 영상',
                   textAlign: TextAlign.center,
                   style: AppTextStyle.headline1,
                 ),

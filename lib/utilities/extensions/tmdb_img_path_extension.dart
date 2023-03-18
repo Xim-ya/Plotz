@@ -4,6 +4,6 @@
 
 extension TmdbImgPathExtension on String {
   String get prefixTmdbImgPath {
-    return 'https://image.tmdb.org/t/p/original${this}';
+    return 'https://image.tmdb.org/t/p/original$this';
   }
 }

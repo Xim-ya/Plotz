@@ -21,6 +21,7 @@ class LoginViewModel extends BaseViewModel {
     await result.fold(
       onSuccess: (data) async {
         await launchServiceModules().whenComplete(() {
+          _userService.updateUserLoginDate(_userService.userInfo.value!.id!);
           Get.offAllNamed(AppRoutes.tabs);
         });
       },

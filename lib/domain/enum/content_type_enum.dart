@@ -28,7 +28,7 @@ enum ContentType {
   }
 
   String get getTypeCharacter {
-    if (this == ContentType.tv) {
+    if (isTv) {
       return 't';
     } else {
       return 'm';
