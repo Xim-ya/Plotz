@@ -19,7 +19,8 @@ import 'package:soon_sak/utilities/index.dart';
 *  - db: content.db
 *    1) field : banner <-- 홈 스크린 배너 데이터
 *    2) field : topTen <-- 홈 스크린 TopTen 컨텐츠 리스트 데이터
-*    3) field : categoryCollection <-- 홈 스크린 카테고리 컨텐츠 데이터
+*    3) field : categoryCollection1 <-- 홈 스크린 카테고리 컨텐츠 데이터
+*    3) field : categoryCollection2
 *
 * */
 
@@ -27,6 +28,8 @@ class LocalStorageService extends GetxService {
   late Directory dir;
   late StoreRef store;
   late String dbPath;
+
+
 
   // 로컬 스토리지 초기화 작업
   Future<void> initStorage() async {

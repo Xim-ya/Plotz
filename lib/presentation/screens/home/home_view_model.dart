@@ -1,8 +1,5 @@
-import 'dart:async';
 import 'dart:developer';
-import 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:http/http.dart' as http;
 
 part 'home_view_model.part.dart';
 
@@ -16,19 +13,17 @@ class HomeViewModel extends BaseViewModel {
   /* [Variables] */
 
   /// Data
-  final Rxn<BannerModel> _bannerContent = Rxn(); // 배너 컨텐츠
+  final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
   final Rxn<TopTenContentsModel> _topTenContents = Rxn(); // Top10 컨텐츠
 
   /// State
-  late double scrollOffset = 0;
-  final RxBool showAppbarBackground = true.obs;
-  RxBool showBlurAtAppBar = false.obs;
-  RxInt topExposedContentSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
+  final RxBool enableAppBarBgBlur = false.obs; // 앱바 Blur 효과 enable 여부
+  final RxInt _bannerContentsSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
 
   /// Size
   final double appBarHeight = SizeConfig.to.statusBarHeight + 56;
 
-  ///  Controllers
+  /* [Controllers] */
   late ScrollController scrollController;
   late CarouselController carouselController;
 
@@ -43,7 +38,7 @@ class HomeViewModel extends BaseViewModel {
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
-    topExposedContentSliderIndex.value = index;
+    _bannerContentsSliderIndex.value = index;
   }
 
   // 컨텐츠 상세 화면으로 이동
@@ -56,12 +51,11 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
-  /// UI Intent Method
-  // AppBar Blur효과 avtivate 여부
-  void turnOnBlurInAppBar() {
+  // AppBar Blur효과 enable & disable 메소드
+  void _manageAppBarBgEffect(double offset) {
     // Status Bar Height 보다 offest이 작을 땐 Blur 처리 X
-    if (scrollOffset <= SizeConfig.to.statusBarHeight) {
-      showBlurAtAppBar(false);
+    if (offset <= SizeConfig.to.statusBarHeight) {
+      enableAppBarBgBlur(false);
       return;
     } else {
       /** 중복 할당을 방지하기 위해. 조건 두가지를 추가.
@@ -70,13 +64,13 @@ class HomeViewModel extends BaseViewModel {
        * */
       if (scrollController.position.userScrollDirection ==
               ScrollDirection.forward &&
-          showBlurAtAppBar.isTrue) {
-        showBlurAtAppBar(false);
+          enableAppBarBgBlur.isTrue) {
+        enableAppBarBgBlur(false);
         return;
       } else if (scrollController.position.userScrollDirection ==
               ScrollDirection.reverse &&
-          showBlurAtAppBar.isFalse) {
-        showBlurAtAppBar(true);
+          enableAppBarBgBlur.isFalse) {
+        enableAppBarBgBlur(true);
         return;
       }
     }
@@ -90,12 +84,14 @@ class HomeViewModel extends BaseViewModel {
   // Top10 컨텐츠 호출
   Future<void> _fetchTopTenContents() async {
     final response = await _loadCachedTopTenContentsUseCase.call();
-    response.fold(onSuccess: (data) {
-      _topTenContents.value = data;
-      update();
-    }, onFailure: (e) {
-      log('HomeViewModel > $e');
-    });
+    response.fold(
+      onSuccess: (data) {
+        _topTenContents.value = data;
+      },
+      onFailure: (e) {
+        log('HomeViewModel > $e');
+      },
+    );
   }
 
   // 배너 컨텐츠 호출
@@ -103,8 +99,7 @@ class HomeViewModel extends BaseViewModel {
     final response = await _loadBannerContentUseCase.call();
     response.fold(
       onSuccess: (data) {
-        _bannerContent.value = data;
-        update();
+        _bannerContents.value = data;
       },
       onFailure: (e) {
         log('HomeViewModel > $e');
@@ -113,14 +108,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   @override
-  void onReady() {
-     loadPagedCategoryCollectionUseCase.initUseCase();
-    super.onReady();
-  }
-
-  @override
   Future<void> onInit() async {
     super.onInit();
+    unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
+
     /// NOTE : api call 호출 메소드 순서에 주의
     /// 어떤 이유에서 pagingController [initUseCase] 메소드가
     /// [Future.wait] 동작 후에 실행이 안됨
@@ -128,17 +119,12 @@ class HomeViewModel extends BaseViewModel {
     /// TODO: 이후에 원인을 파학하고 수정
     loadPagedCategoryCollectionUseCase.initUseCase();
 
-    unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
-    loading(true);
-
     scrollController = ScrollController();
     scrollController.addListener(() {
-      scrollOffset = scrollController.offset;
-      turnOnBlurInAppBar();
+      _manageAppBarBgEffect(scrollController.offset);
     });
 
     carouselController = CarouselController();
-
 
     // 병렬 호출
     await Future.wait([
