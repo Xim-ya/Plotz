@@ -105,9 +105,8 @@ export 'package:soon_sak/data/api/staticContent/response/top_ten_content_respons
 export 'package:soon_sak/data/mixin/fire_store_error_handler_mixin.dart';
 export 'package:soon_sak/domain/useCase/auth/sign_in_and_up_handler_use_case.dart';
 export 'package:soon_sak/domain/useCase/auth/sign_out_use_case.dart';
-export 'package:soon_sak/domain/useCase/content/load_cached_category_content_collection_use_case.dart';
-export 'package:soon_sak/domain/useCase/content/load_cached_top_ten_contents_use_case.dart';
-export 'package:soon_sak/domain/useCase/content/load_random_paged_explore_contents_use_case.dart';
+export 'package:soon_sak/domain/useCase/content/home/load_cached_top_ten_contents_use_case.dart';
+export 'package:soon_sak/domain/useCase/explore/load_random_paged_explore_contents_use_case.dart';
 export 'package:soon_sak/domain/useCase/search/search_paged_content_impl.dart';
 export 'package:soon_sak/domain/useCase/search/validate_video_url_use_case_impl.dart';
 export 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
@@ -130,6 +129,7 @@ export 'package:soon_sak/data/api/content/response/channel_response.dart';
 
 
 // Domain
+export 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
 export 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 export 'package:soon_sak/domain/enum/tab_loading_state_enum.dart';
 export 'package:soon_sak/domain/model/version/version_info.dart';
@@ -146,14 +146,13 @@ export 'package:soon_sak/domain/model/content/explore/explore_content_model.dart
 export 'package:soon_sak/domain/model/auth/user_model.dart';
 export 'package:soon_sak/domain/model/content/home/banner_model.dart';
 export 'package:soon_sak/domain/service/local_storage_service.dart';
-export 'package:soon_sak/domain/useCase/content/load_cached_banner_content_use_case.dart';
+export 'package:soon_sak/domain/useCase/content/home/load_cached_banner_content_use_case.dart';
 export 'package:soon_sak/domain/useCase/search/search_validate_url_use_case.dart';
 export 'package:soon_sak/domain/mixin/paging_handler_mixin.dart';
 export 'package:soon_sak/domain/mixin/search_handler_mixin.dart';
 export 'package:soon_sak/domain/model/content/content.dart';
 export 'package:soon_sak/domain/useCase/search/search_paged_content_use_case.dart';
 export 'package:soon_sak/domain/enum/validation_state_enum.dart';
-export 'package:soon_sak/domain/useCase/explore/partial_load_content_use_case.dart';
 export 'package:soon_sak/domain/model/content/explore/explore_content_detail_info.dart';
 export 'package:soon_sak/domain/model/content/explore/explore_content_youtube_info.dart';
 export 'package:soon_sak/domain/model/content/explore_content_id_info.dart';
