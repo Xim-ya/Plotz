@@ -8,6 +8,11 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
   // 컨텐츠 이미지 리스트
   List<String>? get contentImgList => contentImgUrlList.value;
 
+  // 컨텐츠 이미지 존재 여부 (일부 컨텐츠에서 컨텐츠 이미지가 존재 하지 않음)
+  bool? get contentImgExist {
+    return contentImgUrlList.value?.isNotEmpty ?? true ? true : false;
+  }
+
   // 총 조회수
   String? get totalViewCount => Formatter.formatViewAndLikeCount(
         contentVideos.value?.mainViewCount,
@@ -27,8 +32,7 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
 
   // 채널 구독자 수
   int? get subscriberCount =>
-      _passedArgument.subscribersCount ??
-      channelInfo.value?.subscribersCount;
+      _passedArgument.subscribersCount ?? channelInfo.value?.subscribersCount;
 
   // 채널 이미지 url
   String? get channelImgUrl =>
@@ -47,6 +51,11 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
 
   // 출연진 정보
   List<ContentCreditInfo>? get contentCreditList => _contentCreditList.value;
+
+  // 출연진 정보 존재 여부 (다큐멘터리의 경우 데이터가 존재 하지 않음)
+  bool? get isCreditNotEmpty {
+    return _contentCreditList.value?.isNotEmpty ?? true ? true : false;
+  }
 
   // 출연진 정보 개수
   int? get creditCount => _contentCreditList.value?.length;
