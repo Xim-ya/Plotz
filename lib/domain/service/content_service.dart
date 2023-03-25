@@ -24,7 +24,7 @@ class ContentService extends GetxService {
 
   // 정적 컨텐츠 키 리스트
   final Rxn<StaticContentKeys> _staticContentKeys = Rxn();
-  
+
 
   /* Intents */
   // 정적 컨텐츠 키 리스트 호출
