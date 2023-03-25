@@ -79,7 +79,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
 
   @override
   Future<ChannelResponse> loadChannelInfo(String contentId) async {
-    final doc = await getSpecificSubCollectionDoc('content',
+    final doc = await getSubCollectionDoc('content',
         docId: contentId,
         subCollectionName: 'channel',
         subCollectionDocId: 'main');
@@ -96,7 +96,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
 
   @override
   Future<UserResponse> loadCuratorInfo(String contentId) async {
-    final doc = await getSpecificSubCollectionDoc('content',
+    final doc = await getSubCollectionDoc('content',
         docId: contentId,
         subCollectionName: 'curator',
         subCollectionDocId: 'main');

@@ -209,6 +209,7 @@ export 'package:soon_sak/presentation/screens/register/localWidget/register_vide
 export 'package:soon_sak/presentation/screens/register/localWidget/url_validation_indicator.dart';
 export 'package:soon_sak/presentation/common/button/linear_background_bottom_floating_btn.dart';
 export 'package:soon_sak/presentation/common/image/linear_layered_poster_img.dart';
+export 'package:soon_sak/presentation/common/keep_alive_view.dart';
 export 'package:soon_sak/presentation/screens/login/localWidget/sns_login_button.dart';
 export 'package:soon_sak/presentation/screens/login/login_view_model.dart';
 export 'package:soon_sak/presentation/screens/home/localWidget/banner_item.dart';

@@ -14,13 +14,17 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const SectionTitle(title: '출연진', setLeftPadding: true),
+          Obx(
+            () => vm.isCreditNotEmpty ?? true
+                ? const SectionTitle(title: '출연진', setLeftPadding: true)
+                : const SizedBox(),
+          ),
           // 출연진 - PageView Slider
           Obx(
             () => CarouselSlider.builder(
               itemCount: vm.contentCreditList.hasData ? vm.sliderCount : 2,
               options: CarouselOptions(
-                height: 224,
+                height: vm.isCreditNotEmpty ?? true ? 224 : 0,
                 enableInfiniteScroll: false,
                 viewportFraction: 0.93,
               ),
@@ -104,8 +108,8 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
               },
             ),
           ),
-          AppSpace.size40,
-
+          Obx(() =>
+              vm.isCreditNotEmpty ?? true ? AppSpace.size40 : const SizedBox()),
           // 큐레이터 정보
           const SectionTitle(title: '큐레이터', setLeftPadding: true),
           Padding(
@@ -177,7 +181,9 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
             ),
           ),
           AppSpace.size40,
-          const SectionTitle(title: '컨텐츠 이미지', setLeftPadding: true),
+          Obx(() => vm.contentImgExist ?? true
+              ? const SectionTitle(title: '컨텐츠 이미지', setLeftPadding: true)
+              : const SizedBox()),
           Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),

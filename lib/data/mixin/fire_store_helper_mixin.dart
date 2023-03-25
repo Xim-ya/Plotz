@@ -164,7 +164,7 @@ mixin FirestoreHelper {
   }
 
   /// subCollection의 특정 document 데이터를 불러오는 메소드
-  Future<DocumentSnapshot> getSpecificSubCollectionDoc(String collectionName,
+  Future<DocumentSnapshot> getSubCollectionDoc(String collectionName,
       {required String docId,
       required String subCollectionName,
       required String subCollectionDocId}) async {
