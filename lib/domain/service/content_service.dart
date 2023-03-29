@@ -25,8 +25,8 @@ class ContentService extends GetxService {
   // 정적 컨텐츠 키 리스트
   final Rxn<StaticContentKeys> _staticContentKeys = Rxn();
 
-  /* Intents */
 
+  /* Intents */
   // 정적 컨텐츠 키 리스트 호출
   Future<void> fetchStaticContentKeys() async {
     final response = await _staticContentRepository.loadStaticContentKeys();
@@ -64,16 +64,9 @@ class ContentService extends GetxService {
 
   String? get topTenContentKey => _staticContentKeys.value?.topTenContentKey;
 
+  String? returnCategoryContentKey(int currentPage) =>
+     currentPage == 1 ? _staticContentKeys.value?.categoryContentKey1 : _staticContentKeys.value?.categoryContentKey2;
 
-  String? returnCategoryContentKey(int currentPage) {
-    return currentPage == 1 ? _staticContentKeys.value?.categoryContentKey1 : _staticContentKeys.value?.categoryContentKey2;
-  }
-
-  // String? get categoryContentKey1 =>
-  //     _staticContentKeys.value?.categoryContentKey1;
-  //
-  // String? get categoryContentKey2 =>
-  //     _staticContentKeys.value?.categoryContentKey2;
 
   static ContentService get to => Get.find();
 }
