@@ -34,7 +34,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SectionTitle(title: '컨텐츠'),
+            const SectionTitle(title: '콘텐츠'),
             ImageViewWithPlayBtn(
               onPlayerBtnClicked: () {
                 vm.launchYoutubeApp(vm.singleVideoId);
@@ -115,7 +115,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
         children: <Widget>[
           const Padding(
             padding: AppInset.horizontal16,
-            child: SectionTitle(title: '컨텐츠'),
+            child: SectionTitle(title: '콘텐츠'),
           ),
           CarouselSlider.builder(
             itemCount:
@@ -220,7 +220,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SectionTitle(title: '컨텐츠'),
+            const SectionTitle(title: '콘텐츠'),
             ImageViewWithPlayBtn(
               onPlayerBtnClicked: () {
                 vm.launchYoutubeApp(vm.singleVideoId);
