@@ -18,7 +18,7 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
 
   /* Variables */
   final Rx<ContentType> selectedTabType = Rx(ContentType.tv); // 선택된 탭
-  final int _pageSize = 20; // 최대 호출 가능한 페이지 사이즈
+  final int _pageSize = 2; // 최대 호출 가능한 페이지 사이즈
   final RxBool isInitialState = true.obs; // 검색 이벤트가 일어나기 초기 상태
   RxBool get showRoundClosedBtn => exposeRoundCloseBtn; // 검색타 'X' 버튼 노출여부
   TextEditingController get textEditingController =>
@@ -100,7 +100,7 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
         /// TMDB Search API 기준
         /// Response 20개가 넘지 않으면 다음 page가 없다고 판단
         /// 이때 [appedLastPage]를 적용하여 마지막 page call 로직을 적용
-        final isLastPage = searchedContents.length < _pageSize;
+        final isLastPage = pageKey >= _pageSize;
         if (isLastPage) {
           log('LAST PAGE CALLED');
           controller.appendLastPage(searchedContents);

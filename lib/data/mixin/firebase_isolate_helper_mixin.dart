@@ -1,15 +1,36 @@
+import 'dart:async';
+import 'dart:collection';
 import 'dart:isolate';
 import 'package:soon_sak/utilities/index.dart';
 
 mixin FirebaseIsolateHelper {
-  Future<T> loadWithFirebaseIsolate<T>(Future<T> Function() function) async {
-    // 1. Isolate로부터 수신할 데이터를 위한 ReceivePort 생성
-    final ReceivePort receivePort = ReceivePort();
+  // 동시에 실행할 수 있는 Isolate의 최대 개수
+  static const int _maxIsolates = 5;
+  // 현재 실행 중인 Isolate의 수
+  int _currentIsolates = 0;
+  // 작업 큐
+  final Queue<Function> _taskQueue = Queue();
 
-    // 2. Root isolate의 BinaryMessenger를 가져오기 위한 RootIsolateToken 생성
+  // 작업을 큐에 추가하고 실행
+  Future<T> loadWithFirebaseIsolate<T>(Future<T> Function() function) async {
+    if (_currentIsolates < _maxIsolates) {
+      _currentIsolates++;
+      return _executeIsolate(function);
+    } else {
+      final completer = Completer<T>();
+      _taskQueue.add(() async {
+        final result = await _executeIsolate(function);
+        completer.complete(result);
+      });
+      return completer.future;
+    }
+  }
+
+  // 실제 Isolate 실행 로직
+  Future<T> _executeIsolate<T>(Future<T> Function() function) async {
+    final ReceivePort receivePort = ReceivePort();
     final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
 
-    // 3 백그라운드 isolate에서 실행할 함수를 전달하며 새로운 isolate 생성
     final isolate = await Isolate.spawn(
       _isolateEntry,
       _IsolateEntryPayload(
@@ -19,9 +40,10 @@ mixin FirebaseIsolateHelper {
       ),
     );
 
-    // 7. 백그라운드 isolate로부터 데이터를 수신하고 리턴.
     return receivePort.first.then(
-      (dynamic data) {
+          (dynamic data) {
+        _currentIsolates--;
+        _runNextTask();
         if (data is T) {
           isolate.kill(priority: Isolate.immediate);
           return data;
@@ -32,15 +54,19 @@ mixin FirebaseIsolateHelper {
       },
     );
   }
+
+  // 작업 큐에서 다음 작업을 실행
+  void _runNextTask() {
+    if (_taskQueue.isNotEmpty) {
+      final nextTask = _taskQueue.removeFirst();
+      nextTask();
+    }
+  }
 }
 
 // 6. 백그라운드 isolate에서 실행될 함수 (entry)
 void _isolateEntry(_IsolateEntryPayload payload) async {
   final Function function = payload.function;
-
-  // 중요!! Isolate Background 스레드를 초기화 (3.7 버전)
-  // 출처 : https://medium.com/flutter/introducing-background-isolate-channels-7a299609cad8
-  // BackgroundIsolateBinaryMessenger.ensureInitialized(payload.rootIsolateToken);
 
   try {
     BackgroundIsolateBinaryMessenger.ensureInitialized(
@@ -50,11 +76,6 @@ void _isolateEntry(_IsolateEntryPayload payload) async {
     return Future.error(e.toString());
   }
   await Firebase.initializeApp();
-
-  /// 중요!! FireBaseStore을 이용하고 있기 때문에
-  /// Firebase sdk를 initialize 해줘야함
-  /// 별도의 스레드에서 실행되기 때문에
-  /// [myApp.dart]에서 생성되는 것과는 무관함.
 
   final result = await function();
   payload.sendPort.send(result);
