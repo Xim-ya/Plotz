@@ -67,6 +67,9 @@ class SettingViewModel extends BaseViewModel {
     result.fold(
       onSuccess: (_) {
         Get.offAllNamed(AppRoutes.login);
+        Get.put(
+          SignInAndUpHandlerUseCase(Get.find(), Get.find()),
+        );
       },
       onFailure: (e) {
         AlertWidget.animatedToast('로그아웃에 실패했습니다. 다시 시도 시도해주세요');

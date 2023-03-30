@@ -11,7 +11,6 @@ class HomeViewModel extends BaseViewModel {
   );
 
   /* [Variables] */
-
   /// Data
   final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
   final Rxn<TopTenContentsModel> _topTenContents = Rxn(); // Top10 컨텐츠
