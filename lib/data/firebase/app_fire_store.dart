@@ -9,3 +9,4 @@ class AppFireStore {
 
   static FirebaseFirestore get getInstance => Get.find<AppFireStore>().db;
 }
+
