@@ -7,10 +7,10 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   Widget buildScreen(BuildContext context) {
     return ContentDetailScaffold(
       header: _buildHeader(),
-      headerBackdropImgUrl: vm.headerBackdropImg,
-      rateAndGenreView: _buildRateAndGenreView(),
       tabs: _buildTab(),
       tabViews: _buildTabBarViews(),
+      rateAndGenreView: _buildRateAndGenreView(),
+      headerBgImgUrl: vm.headerBackdropImg,
     );
   }
 

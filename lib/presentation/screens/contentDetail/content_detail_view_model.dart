@@ -204,12 +204,15 @@ class ContentDetailViewModel extends BaseViewModel {
     final response = await _contentRepository
         .loadChannelInfo(_contentDescriptionInfo.value!.originId);
 
-    response.fold(onSuccess: (channel) {
-      channelInfo.value = channel;
-    }, onFailure: (e) {
-      AlertWidget.animatedToast('채널 정보를 받아오지 못했습니다');
-      log('ChannelDetailViewModel : $e');
-    });
+    response.fold(
+      onSuccess: (channel) {
+        channelInfo.value = channel;
+      },
+      onFailure: (e) {
+        AlertWidget.animatedToast('채널 정보를 받아오지 못했습니다');
+        log('ChannelDetailViewModel : $e');
+      },
+    );
   }
 
   /// Routing Method

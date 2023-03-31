@@ -11,15 +11,15 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
     required this.tabViews,
     required this.tabs,
     required this.header,
+    required this.headerBgImgUrl,
     required this.rateAndGenreView,
-    required this.headerBackdropImgUrl,
   }) : super(key: key);
 
   final Widget header;
   final List<Tab> tabs;
   final List<Widget> tabViews;
+  final String headerBgImgUrl;
   final Widget rateAndGenreView;
-  final String headerBackdropImgUrl;
 
   @override
   Widget buildView(BuildContext context) {
@@ -29,11 +29,21 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           () => AnimatedPositioned(
             top: vm.headerBgOffset,
             duration: const Duration(milliseconds: 40),
-            child: CachedNetworkImage(
-              width: SizeConfig.to.screenWidth,
-              fit: BoxFit.fitWidth,
-              imageUrl: headerBackdropImgUrl.prefixTmdbImgPath,
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+            child: Stack(
+              children: [
+                CachedNetworkImage(
+                  width: SizeConfig.to.screenWidth,
+                  fit: BoxFit.fitWidth,
+                  imageUrl:
+                  headerBgImgUrl.prefixTmdbImgPath,
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+                Positioned(
+                  top: 180,
+                  right: 16,
+                  child: rateAndGenreView,
+                ),
+              ],
             ),
           ),
         ),
@@ -52,14 +62,6 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           ),
         ),
 
-        // Rate & Genre 뷰
-        Obx(
-          () => AnimatedPositioned(
-              top: 180 - vm.headerBgOffset,
-              right: 16,
-              duration: const Duration(milliseconds: 200),
-              child: rateAndGenreView),
-        ),
         DefaultTabController(
           length: 2,
           child: NestedScrollView(
@@ -158,4 +160,14 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
       ],
     );
   }
+}
+
+// 헤더 백그라운드에서 사용되는 데이터 파라미터
+class ContentDetailHeaderBgParam {
+  final String posterImgUrl;
+  final String? rate;
+  final String? genre;
+
+  ContentDetailHeaderBgParam(
+      {required this.posterImgUrl, required this.rate, required this.genre});
 }
