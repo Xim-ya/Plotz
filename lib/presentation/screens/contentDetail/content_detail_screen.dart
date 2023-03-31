@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/screens/contentDetail/localWidget/new_content_detail_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
@@ -5,7 +6,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return ContentDetailScaffold(
+    return NewContentDetailScaffold(
       header: _buildHeader(),
       tabs: _buildTab(),
       tabViews: _buildTabBarViews(),
@@ -16,6 +17,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
 
   // 탭뷰
   List<Widget> _buildTabBarViews() => [
+        // Container(),
         const MainContentTabView(),
         const ContentDetailInfoTabView(),
       ];
