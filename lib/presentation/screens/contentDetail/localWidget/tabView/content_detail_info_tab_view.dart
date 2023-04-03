@@ -185,7 +185,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
   // 콘텐츠 이미지
   _buildContentImgSection() => [
         Obx(() => vm.contentImgExist ?? true
-            ? const SectionTitle(title: '컨텐츠 이미지', setLeftPadding: true)
+            ? const SectionTitle(title: '콘텐츠 이미지', setLeftPadding: true)
             : const SizedBox()),
         Container(
             decoration: BoxDecoration(

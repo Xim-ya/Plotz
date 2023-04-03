@@ -158,8 +158,8 @@ class RegisterViewModel extends BaseViewModel {
           Get.dialog(
             AppDialog.dividedBtn(
               title:
-                  '[${_selectedContent.value!.detail!.title}]\n컨텐츠 요청이 완료되었어요',
-              description: '검토 후 순삭 컨텐츠에 정식 등록됩니다',
+                  '[${_selectedContent.value!.detail!.title}]\n콘텐츠 요청이 완료되었어요',
+              description: '검토 후 순삭 콘텐츠에 정식 등록됩니다',
               leftBtnContent: '큐레이션 내역',
               rightBtnContent: '확인',
               onRightBtnClicked: Get.back,
@@ -174,11 +174,11 @@ class RegisterViewModel extends BaseViewModel {
         /// 다른 화면 데이터 갱신
         /// 1. 큐레이션 스크린 (진행 중 큐레이션 내역)
         /// 2. 마이페이지 스크린 (큐레이션 내역)
-        await _curationViewModel.fetchInProgressQurationList();
+        await _curationViewModel.fetchInProgressCurationList();
         await _myPageViewModel.fetchUserCurationSummary();
       },
       onFailure: (e) {
-        AlertWidget.toast('컨텐츠 등록 요청에 실패했습니다. 다시 시도해주세요');
+        AlertWidget.toast('콘텐츠 등록 요청에 실패했습니다. 다시 시도해주세요');
         log('RegisterViewModel : $e');
       },
     );
@@ -189,7 +189,6 @@ class RegisterViewModel extends BaseViewModel {
     super.onInit();
 
     pagedSearchHandler.initUseCase(forcedContentType: selectedContentType);
-
     pageViewController = PageController();
   }
 }

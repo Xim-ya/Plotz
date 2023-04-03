@@ -123,4 +123,11 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
       fetchPage(pageKey, forcedContentType: forcedContentType);
     });
   }
+
+  /// UseCase에서 사용하는 컨트롤러 Dispose
+  void disposeUseCase() {
+    textEditingController.dispose();
+    pagingController.dispose();
+    focusNode.dispose();
+  }
 }

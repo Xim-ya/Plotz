@@ -53,11 +53,11 @@ class SearchViewModel extends BaseViewModel {
       onSuccess: (data) {
         Get.back();
         AlertWidget.animatedToast('요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
-        log('컨텐츠 요청 성공');
+        log('콘텐츠 요청 성공');
       },
       onFailure: (e) {
         Get.back();
-        AlertWidget.animatedToast('컨텐츠 요청에 실패했습니다. 다시 시도해주세요');
+        AlertWidget.animatedToast('콘텐츠 요청에 실패했습니다. 다시 시도해주세요');
         log('SearchViewModel : $e');
       },
     );
@@ -92,8 +92,8 @@ class SearchViewModel extends BaseViewModel {
       // 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
       Get.dialog(
         AppDialog.dividedBtn(
-          title: '미등록 컨텐츠\n[${content.title}]',
-          description: '등록되어 있는 컨텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
+          title: '미등록 콘텐츠\n[${content.title}]',
+          description: '등록되어 있는 콘텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
           leftBtnContent: '나중에',
           rightBtnContent: '요청하기',
           // TODO: 실제 요청 로직 추가 필요
