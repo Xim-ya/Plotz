@@ -14,11 +14,11 @@ class ContentDetailBinding extends Bindings {
         Get.find(),
         Get.find(),
       ),
-      fenix: false,
+      fenix: true,
     );
 
     // 컨텐츠 상세화면
-    Get.lazyPut(() => ContentDetailScaffoldController(), fenix: false);
+    Get.lazyPut(() => ContentDetailScaffoldController(Get.find()), fenix: false);
 
     // fenix를 true로 설정하는것도 고려해볼 수 있음
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: false);

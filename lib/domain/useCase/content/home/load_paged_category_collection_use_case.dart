@@ -82,6 +82,7 @@ class LoadPagedCategoryCollectionUseCase {
         if (isLastPage) {
           isPagingAvailable = false;
           pagingController.appendLastPage(data.items);
+          disposeController(); // 더 이상 페이징할 데이터가 없으면 컨트롤러를 dispose
         } else {
           currentPage = currentPage + 1;
           pagingController.appendPage(data.items, currentPage + 1);
@@ -104,7 +105,6 @@ class LoadPagedCategoryCollectionUseCase {
     });
   }
 
-
   Future<void> _fetchPage() async {
     // 최대 불러올 수 있는 페이지 이미 다 불러왔다면 메소드 종료
     if (currentPage > 2) {
@@ -114,7 +114,8 @@ class LoadPagedCategoryCollectionUseCase {
     final Object? localData = await _localStorageService.getData(
         fieldName: 'categoryCollection$currentPage');
 
-    final String? keyResponse =  _contentService.returnCategoryContentKey(currentPage);
+    final String? keyResponse =
+        _contentService.returnCategoryContentKey(currentPage);
 
     /// 한 가지 조건으로 분기됨
     /// 로컬 데이터가 있고
@@ -133,5 +134,9 @@ class LoadPagedCategoryCollectionUseCase {
       await _deleteLocalStorageField();
       await _appendData();
     }
+  }
+
+  void disposeController() {
+    pagingController.dispose();
   }
 }

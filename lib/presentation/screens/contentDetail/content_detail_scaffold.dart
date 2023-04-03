@@ -34,8 +34,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
                 CachedNetworkImage(
                   width: SizeConfig.to.screenWidth,
                   fit: BoxFit.fitWidth,
-                  imageUrl:
-                  headerBgImgUrl.prefixTmdbImgPath,
+                  imageUrl: headerBgImgUrl.prefixTmdbImgPath,
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
                 Positioned(
@@ -69,10 +68,8 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    header,
-                  ]),
+                SliverToBoxAdapter(
+                  child: header,
                 ),
                 SliverPersistentHeader(
                   pinned: true,
@@ -132,7 +129,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             left: 12,
             duration: const Duration(milliseconds: 100),
             child: IconButton(
-              onPressed: ContentDetailViewModel.to.onRouteBack,
+              onPressed: vm.contentDetailViewModel.onRouteBack,
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
@@ -160,14 +157,4 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
       ],
     );
   }
-}
-
-// 헤더 백그라운드에서 사용되는 데이터 파라미터
-class ContentDetailHeaderBgParam {
-  final String posterImgUrl;
-  final String? rate;
-  final String? genre;
-
-  ContentDetailHeaderBgParam(
-      {required this.posterImgUrl, required this.rate, required this.genre});
 }

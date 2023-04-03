@@ -7,6 +7,10 @@ import 'package:soon_sak/utilities/index.dart';
 
 class ContentDetailScaffoldController extends BaseViewModel
     with GetSingleTickerProviderStateMixin {
+  ContentDetailScaffoldController(this.contentDetailViewModel);
+
+  final ContentDetailViewModel contentDetailViewModel;
+
   late final TabController tabController;
   late final ScrollController scrollController;
 
@@ -28,16 +32,16 @@ class ContentDetailScaffoldController extends BaseViewModel
 
   // [정보] 탭이 클릭 되었을 때 1회 필요한 api call 실행
   void fetchResourcesIfNeeded() {
-    if (ContentDetailViewModel.to.contentCreditList == null) {
-      ContentDetailViewModel.to.fetchContentCreditInfo();
+    if (contentDetailViewModel.contentCreditList == null) {
+      contentDetailViewModel.fetchContentCreditInfo();
     }
 
-    if(ContentDetailViewModel.to.curator == null) {
-      ContentDetailViewModel.to.fetchCuratorInfo();
+    if (contentDetailViewModel.curator == null) {
+      contentDetailViewModel.fetchCuratorInfo();
     }
 
-    if (ContentDetailViewModel.to.contentImgUrlList.value == null) {
-      ContentDetailViewModel.to.fetchContentImgList();
+    if (contentDetailViewModel.contentImgUrlList.value == null) {
+      contentDetailViewModel.fetchContentImgList();
     }
   }
 
@@ -58,6 +62,7 @@ class ContentDetailScaffoldController extends BaseViewModel
   @override
   void onInit() {
     super.onInit();
+
     tabController = TabController(length: 2, vsync: this);
     scrollController = ScrollController();
 
@@ -72,6 +77,13 @@ class ContentDetailScaffoldController extends BaseViewModel
       }
     });
   }
+
+  // @override
+  // void onClose() {
+  //   tabController.dispose();
+  //   scrollController.dispose();
+  //   super.onClose();
+  // }
 
   double get headerBgOffset =>
       scrollOffset.value == null ? 0 : -scrollOffset.value! * 0.5;
