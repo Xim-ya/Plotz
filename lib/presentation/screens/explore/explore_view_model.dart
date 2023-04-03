@@ -49,7 +49,7 @@ class ExploreViewModel extends BaseViewModel {
 
     if (index == exploreContentsLength && alreadyShowedToast.isFalse) {
       unawaited(
-          AlertWidget.animatedToast('마지막 컨텐츠 입니다', isUsedOnTabScreen: true));
+          AlertWidget.animatedToast('마지막 콘텐츠 입니다', isUsedOnTabScreen: true));
       alreadyShowedToast(true); // 더 이상 토스트 메세를 노출하지 않음.
     }
   }
@@ -110,4 +110,6 @@ class ExploreViewModel extends BaseViewModel {
     super.onInit();
     swiperController = CarouselController();
   }
+
+
 }

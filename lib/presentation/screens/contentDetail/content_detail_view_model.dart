@@ -120,7 +120,9 @@ class ContentDetailViewModel extends BaseViewModel {
         });
       }
 
-      await e.updateVideoDetails(); // 비디오 상세 정보 업데이트
+      /// 비디오 상세 정보 업데이트
+      /// Youtube Api가 실행되는 부분
+      await e.updateVideoDetails();
     }
   }
 
@@ -152,7 +154,7 @@ class ContentDetailViewModel extends BaseViewModel {
     responseRes.fold(onSuccess: (data) {
       contentImgUrlList.value = data;
     }, onFailure: (e) {
-      AlertWidget.toast('컨텐츠 이미지 정보를 불러들이는 데 실패했습니다');
+      AlertWidget.toast('콘텐츠 이미지 정보를 불러들이는 데 실패했습니다');
       log(e.toString());
     });
   }
@@ -245,6 +247,8 @@ class ContentDetailViewModel extends BaseViewModel {
 
   @override
   Future<void> onInit() async {
+
+
     super.onInit();
 
     /// NOTE 호출 순서 주의 [_fetchContentMainInfo]가
@@ -253,6 +257,8 @@ class ContentDetailViewModel extends BaseViewModel {
     await _fetchContentOfVideoList();
     await _fetchYoutubeChannelInfo();
   }
+
+
 
   /* [Getters] */
   // 유튜브 컨텐츠 id
@@ -270,5 +276,5 @@ class ContentDetailViewModel extends BaseViewModel {
   // Argument (이전 스크린에서 전달 받은 인자)
   ContentArgumentFormat get passedArgument => _passedArgument;
 
-  static ContentDetailViewModel get to => Get.find<ContentDetailViewModel>();
+
 }
