@@ -31,6 +31,7 @@ class LocalStorageService extends GetxService {
 
 
 
+
   // 로컬 스토리지 초기화 작업
   Future<void> initStorage() async {
     store = StoreRef.main();

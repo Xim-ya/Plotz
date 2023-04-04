@@ -102,7 +102,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
   }
 
   OutlineInputBorder _errorBorder() {
-    return OutlineInputBorder(
+    return const OutlineInputBorder(
       borderSide: BorderSide(color: AppColor.red, width: 0.6),
     );
   }
