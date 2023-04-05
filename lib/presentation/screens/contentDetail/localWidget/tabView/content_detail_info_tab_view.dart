@@ -39,6 +39,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                 (BuildContext context, int parentIndex, int pageViewIndex) {
               /// Top Content Section
               return ListView.separated(
+                addAutomaticKeepAlives: true,
                 separatorBuilder: (__, _) => AppSpace.size16,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

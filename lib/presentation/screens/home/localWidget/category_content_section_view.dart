@@ -15,7 +15,6 @@ import 'package:soon_sak/utilities/index.dart';
  *
  * */
 
-
 class CategoryContentSectionView extends StatelessWidget {
   const CategoryContentSectionView({
     Key? key,

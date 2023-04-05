@@ -7,12 +7,13 @@ class ConfirmCurationPageView extends BaseView<RegisterViewModel> {
   @override
   Widget buildView(BuildContext context) {
     return ConfirmCurationPageScaffold(
-        leadingText: '입력된 컨텐츠\n정보가 맞는지 확인해주세요!',
-        responsiveHInset: vm.responsiveHInset,
-        posterImg: _buildPosterImg(),
-        channelInfoView: _buildChannelInfoView(),
-        contentDetailInfoView: _buildContentDetailInfoView(),
-        bottomFixedBtn: _buildBottomFixedBtn());
+      leadingText: '입력된 컨텐츠\n정보가 맞는지 확인해주세요!',
+      responsiveHInset: vm.responsiveHInset,
+      posterImg: _buildPosterImg(),
+      channelInfoView: _buildChannelInfoView(),
+      contentDetailInfoView: _buildContentDetailInfoView(),
+      bottomFixedBtn: _buildBottomFixedBtn(),
+    );
   }
 
   Widget _buildPosterImg() => Obx(

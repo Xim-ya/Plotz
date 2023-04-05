@@ -41,8 +41,6 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
         },
       );
 
-
-
   /// 상단 'Top10' 포스트 슬라이더
   List<Widget> _buildTopTenContentSlider() => [
         AppSpace.size40,
@@ -71,9 +69,11 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                     );
                     vm.routeToContentDetail(argument, sectionType: 'topTen');
                   },
-                  child: ContentPostItem(
-                    imgUrl: vm.topTenContents!.contentList![index].posterImgUrl
-                        .prefixTmdbImgPath,
+                  child: KeepAliveView(
+                    child: ContentPostItem(
+                      imgUrl: vm.topTenContents!.contentList![index]
+                          .posterImgUrl.prefixTmdbImgPath,
+                    ),
                   ),
                 );
               } else {

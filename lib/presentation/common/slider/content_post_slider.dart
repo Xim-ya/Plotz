@@ -17,6 +17,8 @@ class ContentPostSlider extends StatelessWidget {
     return SizedBox(
       height: height,
       child: ListView.separated(
+        addRepaintBoundaries: false,
+        addAutomaticKeepAlives: true,
         separatorBuilder: (__, _) => AppSpace.size8,
         padding: const EdgeInsets.only(left: 16),
         scrollDirection: Axis.horizontal,
