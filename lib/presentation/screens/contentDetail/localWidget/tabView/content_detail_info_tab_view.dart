@@ -189,43 +189,47 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
             ? const SectionTitle(title: '콘텐츠 이미지', setLeftPadding: true)
             : const SizedBox()),
         Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+          ),
+          height: 186,
+          child: Obx(
+            () => ListView.separated(
+              separatorBuilder: (__, _) => AppSpace.size10,
+              padding: const EdgeInsets.only(left: 16),
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: vm.contentImgList?.length ?? 0,
+              itemBuilder: (context, index) {
+                final imgItem = vm.contentImgList![index];
+                return KeepAliveView(
+                  child: CachedNetworkImage(
+                    fit: BoxFit.contain,
+                    imageUrl: imgItem.prefixTmdbImgPath,
+                    height: 100,
+                    width: SizeConfig.to.screenWidth - 32,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                    placeholder: (context, url) => Shimmer(
+                      child: Container(
+                        color: AppColor.black,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Center(child: Icon(Icons.error)),
+                  ),
+                );
+              },
             ),
-            height: 186,
-            child: Obx(
-              () => ListView.separated(
-                  separatorBuilder: (__, _) => AppSpace.size10,
-                  padding: const EdgeInsets.only(left: 16),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: vm.contentImgList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final imgItem = vm.contentImgList![index];
-                    return CachedNetworkImage(
-                      fit: BoxFit.contain,
-                      imageUrl: imgItem.prefixTmdbImgPath,
-                      height: 100,
-                      width: SizeConfig.to.screenWidth - 32,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                      placeholder: (context, url) => Shimmer(
-                        child: Container(
-                          color: AppColor.black,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Center(child: Icon(Icons.error)),
-                    );
-                  }),
-            ))
+          ),
+        )
       ];
 
   /// 기타정보 > 리스트 아이템
