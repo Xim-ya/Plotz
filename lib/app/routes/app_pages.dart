@@ -30,7 +30,8 @@ abstract class AppPages {
         binding: LoginBinding()),
 
     // 탭
-    GetPage(name: AppRoutes.tabs, page: TabsScreen.new, binding: TabsBinding()),
+    GetPage(
+        name: AppRoutes.tabs, page: () => TabsScreen(), binding: TabsBinding()),
 
     // 홈
     GetPage(
@@ -80,3 +81,14 @@ abstract class AppPages {
     )
   ];
 }
+
+// class Test {
+//   final Widget Function() page;
+//   Test({required this.page});
+//
+//
+// }
+
+// class Test2 {
+//   final aim = Test(page: TabsScreen.new);
+// }
