@@ -32,16 +32,11 @@ class ContentDetailScaffoldController extends BaseViewModel
 
   // [정보] 탭이 클릭 되었을 때 1회 필요한 api call 실행
   void fetchResourcesIfNeeded() {
-    if (contentDetailViewModel.contentCreditList == null) {
+    if (tabController.index == 1) {
       contentDetailViewModel.fetchContentCreditInfo();
-    }
-
-    if (contentDetailViewModel.curator == null) {
       contentDetailViewModel.fetchCuratorInfo();
-    }
-
-    if (contentDetailViewModel.contentImgUrlList.value == null) {
       contentDetailViewModel.fetchContentImgList();
+      tabController.removeListener(fetchResourcesIfNeeded);
     }
   }
 
@@ -71,11 +66,7 @@ class ContentDetailScaffoldController extends BaseViewModel
       scrollOffset.value = scrollController.offset;
     });
 
-    tabController.addListener(() {
-      if (tabController.index == 1) {
-        fetchResourcesIfNeeded();
-      }
-    });
+    tabController.addListener(fetchResourcesIfNeeded);
   }
 
   // @override
