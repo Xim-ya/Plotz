@@ -25,8 +25,48 @@ class SplashViewModel extends BaseViewModel with FirestoreHelper {
     });
   }
 
+  void check({required GetPageBuilder page}) {
+    assert(() {
+      bool isLambda = false;
+
+      try {
+        final closure = page as dynamic;
+        final closureType = closure.runtimeType;
+        isLambda = closureType.toString().contains("=>");
+      } catch (e) {
+        // do nothing
+      }
+
+      if (!isLambda) {
+        throw AssertionError(
+            'Please use the correct syntax for creating the page instance. Instead of "TabsScreen.new", use "() => TabsScreen()".');
+      }
+
+      return true;
+    }());
+  }
+
+  void testForGetx() {
+
+
+    print('Test STARTS');
+    GetPageBuilder literFunc = HomeScreen.new;
+    GetPageBuilder lamda = () => HomeScreen();
+
+    print(literFunc.runtimeType == lamda.runtimeType);
+    print('LiterFunc: toString => ${literFunc.toString()} / ${literFunc.toString().contains('_Location')}');
+    print('lamda Runtype ${lamda.runtimeType}');
+    print('literal Runtype ${literFunc.runtimeType}');
+    print(lamda.toString());
+
+    print('check');
+    check(page: literFunc);
+
+  }
+
   // 라우팅 핸들러
   Future<void> handleRoute() async {
+    testForGetx();
     await _userService.prepare();
     if (_userService.isUserSignIn) {
       await launchServiceModules().whenComplete(() {

@@ -3,7 +3,6 @@ import 'package:soon_sak/utilities/index.dart';
 class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override
   Future<List<String>> loadTotalContentIdList() async {
-    print("should be able to reach");
     final aim = await getDocumentIdsFromCollection('content');
     print(aim.length);
     return aim;

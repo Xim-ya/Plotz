@@ -179,6 +179,7 @@ class ContentDetailViewModel extends BaseViewModel {
     responseResult.fold(
       onSuccess: (data) {
         _contentDescriptionInfo.value = data;
+        print("데이터 fetch 성공");
         update();
       },
       onFailure: (e) {
@@ -245,10 +246,25 @@ class ContentDetailViewModel extends BaseViewModel {
     await addUserWatchHistory(youtubeVideoId);
   }
 
+  Future<void> repeatComputeTest() async {
+    DateTime startTime = DateTime.now();
+
+    for (int i = 0; i < 30; i++) {
+      await _fetchContentMainInfo();
+    }
+
+    // 메소드 실행이 완료된 후의 시간을 종료 시간으로 기록
+    DateTime endTime = DateTime.now();
+
+    // 두 시간의 차이를 계산
+    Duration elapsedTime = endTime.difference(startTime);
+
+    // 실행 시간 출력
+    print('비동기 메소드 실행 시간: ${elapsedTime.inMilliseconds} 초');
+  }
+
   @override
   Future<void> onInit() async {
-
-
     super.onInit();
 
     /// NOTE 호출 순서 주의 [_fetchContentMainInfo]가
@@ -256,9 +272,9 @@ class ContentDetailViewModel extends BaseViewModel {
     await _fetchContentMainInfo();
     await _fetchContentOfVideoList();
     await _fetchYoutubeChannelInfo();
+
+
   }
-
-
 
   /* [Getters] */
   // 유튜브 컨텐츠 id
@@ -275,6 +291,4 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // Argument (이전 스크린에서 전달 받은 인자)
   ContentArgumentFormat get passedArgument => _passedArgument;
-
-
 }
