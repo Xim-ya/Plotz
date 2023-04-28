@@ -13,12 +13,12 @@ class TabsBinding extends Bindings {
 
     Get.lazyPut(
       () => LoadPagedCategoryCollectionUseCase(
-          Get.find(), Get.find(), Get.find()),
+          Get.find(), Get.find(), Get.find(),),
       fenix: false,
     );
 
     // 컨텐츠
     Get.put(
-        LoadCachedTopTenContentsUseCase(Get.find(), Get.find(), Get.find()));
+        LoadCachedTopTenContentsUseCase(Get.find(), Get.find(), Get.find()),);
   }
 }
