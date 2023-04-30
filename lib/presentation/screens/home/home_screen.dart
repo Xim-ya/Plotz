@@ -1,9 +1,6 @@
-import 'dart:developer';
 import 'dart:ui';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,12 +11,13 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   Widget buildScreen(BuildContext context) {
     return HomeScaffold(
-        animationAppbar: _buildAnimationAppbar(),
-        scrollController: vm.scrollController,
-        stackedGradientPosterBg: _buildStackedGradientPosterBg(),
-        topBannerSlider: _buildTopBannerSlider(),
-        topTenContentSlider: _buildTopTenContentSlider(),
-        categoryContentCollectionList: _buildCategoryCollection());
+      animationAppbar: _buildAnimationAppbar(),
+      scrollController: vm.scrollController,
+      stackedGradientPosterBg: _buildStackedGradientPosterBg(),
+      topBannerSlider: _buildTopBannerSlider(),
+      topTenContentSlider: _buildTopTenContentSlider(),
+      categoryContentCollectionList: _buildCategoryCollection(),
+    );
   }
 
   /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
@@ -40,6 +38,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           );
         },
       );
+
 
   /// 상단 'Top10' 포스트 슬라이더
   List<Widget> _buildTopTenContentSlider() => [

@@ -20,7 +20,7 @@ class ContentKeyResponse {
       {required this.bannerKey,
       required this.topTenContentKey,
       required this.categoryContent1,
-      required this.categoryContent2});
+      required this.categoryContent2,});
 
   factory ContentKeyResponse.fromJson(Map<String, dynamic> json) =>
       _$ContentKeyResponseFromJson(json);

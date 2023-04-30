@@ -76,18 +76,18 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
     if (forcedContentType.hasData) {
       if (forcedContentType!.isTv) {
         response = await _tmdbRepository.loadSearchedTvContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       } else {
         response = await _tmdbRepository.loadSearchedMovieContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       }
     } else {
       if (selectedTabType.value.isTv) {
         response = await _tmdbRepository.loadSearchedTvContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       } else {
         response = await _tmdbRepository.loadSearchedMovieContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       }
     }
 

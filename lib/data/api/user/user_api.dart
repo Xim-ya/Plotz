@@ -5,11 +5,11 @@ import 'package:soon_sak/utilities/index.dart';
 abstract class UserApi {
   // 유저 큐레이션 정보 추가
   Future<void> addUserCurationInfo(
-      {required String qurationDocId, required String userId});
+      {required String qurationDocId, required String userId,});
 
   // 유저 큐레이션 요약 정보 호출
   Future<UserCurationSummaryResponse> loadUserCurationSummary(
-      final String userId);
+      final String userId,);
 
   // 유저 회원탈퇴
   Future<void> withdrawUser(String userId);
@@ -24,7 +24,7 @@ abstract class UserApi {
 
   // 유저 시청 기록 호출
   Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
-      String userId);
+      String userId,);
 
   // 닉네임 중복 여부 확인
   Future<bool> checkDuplicateDisplayName(String inputName);
@@ -34,5 +34,5 @@ abstract class UserApi {
 
   // 프로필 사진 정보 저장 (Storage)
   Future<String> uploadUserProfileImgAndReturnUrl(
-      {required String userId, required File file});
+      {required String userId, required File file,});
 }

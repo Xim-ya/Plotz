@@ -2,8 +2,6 @@ import 'package:flutter/painting.dart';
 
 abstract class AppInset {
   AppInset._();
-
-  /* 얘네 꼭 필요한가? */
   static const top4 = EdgeInsets.only(top: 4);
   static const top6 = EdgeInsets.only(top: 6);
   static const top8 = EdgeInsets.only(top: 8);

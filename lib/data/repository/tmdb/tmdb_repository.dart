@@ -19,10 +19,10 @@ abstract class TmdbRepository {
   Future<Result<List<String>>> loadMovieImgUrlList(int movieId);
 
   Future<Result<SearchContentModel>> loadSearchedTvContentList(
-      {required String query, required int page});
+      {required String query, required int page,});
 
   Future<Result<SearchContentModel>> loadSearchedMovieContentList(
-      {required String query, required int page});
+      {required String query, required int page,});
 
   static TmdbRepository get to => Get.find();
 }

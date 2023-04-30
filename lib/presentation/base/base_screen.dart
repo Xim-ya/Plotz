@@ -15,21 +15,24 @@ abstract class BaseScreen<T extends BaseViewModel> extends GetView<T> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     // Getx Controller(VM) 초기화
-    initViewModel();
+    // initViewModel();
+
+
 
     return ConditionalWillPopScope(
-        shouldAddCallback: preventSwipeBack,
-        onWillPop: () async {
-          return false;
-        },
-        child: Container(
-          color: unSafeAreaColor,
-          child: wrapWithSafeArea
-              ? SafeArea(child: _buildScaffold(context))
-              : _buildScaffold(context),
-        ));
+      shouldAddCallback: preventSwipeBack,
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        color: unSafeAreaColor,
+        child: wrapWithSafeArea
+            ? SafeArea(child: _buildScaffold(context))
+            : _buildScaffold(context),
+      ),
+    );
   }
 
   Widget _buildScaffold(BuildContext context) {

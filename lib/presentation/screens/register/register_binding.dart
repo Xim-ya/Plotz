@@ -1,5 +1,4 @@
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
-import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class RegisterBinding extends Bindings {

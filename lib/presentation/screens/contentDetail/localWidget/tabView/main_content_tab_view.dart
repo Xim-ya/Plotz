@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/common/keep_alive_view.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/expandable_text_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -84,7 +83,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                 AppSpace.size4,
           );
         }
-      });
+      },);
 
   // 채널 - 채널정보
   Widget buildChannelSection() => Obx(

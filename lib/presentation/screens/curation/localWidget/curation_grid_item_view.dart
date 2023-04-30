@@ -5,7 +5,7 @@ class CurationGridItemView extends StatelessWidget {
       {Key? key,
       required this.posterImgUrl,
       required this.curatorProfileImgUrl,
-      required this.curatorName})
+      required this.curatorName,})
       : super(key: key);
 
   final String? posterImgUrl;

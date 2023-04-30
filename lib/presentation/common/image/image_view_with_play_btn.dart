@@ -13,7 +13,7 @@ class ImageViewWithPlayBtn extends StatelessWidget {
       this.checkValidation,
       this.showPlayerBtn = true,
       this.aspectRatio = 16 / 9,
-      required})
+      required,})
       : super(key: key);
 
   final void Function()? checkValidation;
@@ -37,7 +37,7 @@ class ImageViewWithPlayBtn extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.cover),
+                            image: imageProvider, fit: BoxFit.cover,),
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),

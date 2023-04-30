@@ -3,7 +3,7 @@ import 'package:soon_sak/utilities/index.dart';
 import 'presentation/common/layout/response_layout_builder.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

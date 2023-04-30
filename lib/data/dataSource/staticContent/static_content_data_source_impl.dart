@@ -11,7 +11,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
   Future<BannerResponse> loadBannerContents() async {
     final response = await _api.loadBannerContents();
     await _localStorage.saveData(
-        fieldName: 'banner', data: jsonEncode(response.data));
+        fieldName: 'banner', data: jsonEncode(response.data),);
     final json = jsonDecode(response.toString());
 
     return BannerResponse.fromJson(json);
@@ -21,7 +21,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
   Future<TopTenContentResponse> loadTopTenContents() async {
     final response = await _api.loadTopTenContents();
     await _localStorage.saveData(
-        fieldName: 'topTen', data: jsonEncode(response.data));
+        fieldName: 'topTen', data: jsonEncode(response.data),);
     final json = jsonDecode(response.toString());
 
     return TopTenContentResponse.fromJson(json);
@@ -29,7 +29,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
 
   @override
   Future<CategoryContentCollectionResponse> loadCategoryContentCollection(
-      int page) async {
+      int page,) async {
     final Object? localData =
         await _localStorage.getData(fieldName: 'categoryCollection$page');
 
@@ -45,7 +45,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
       final response = await _api.loadCategoryContentCollections(page);
       await _localStorage.saveData(
           fieldName: 'categoryCollection$page',
-          data: jsonEncode(response.data['page$page']));
+          data: jsonEncode(response.data['page$page']),);
       final json = response.data['page$page'];
       return CategoryContentCollectionResponse.fromJson(json);
     }

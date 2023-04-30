@@ -23,7 +23,7 @@ class TmdbRepositoryImpl implements TmdbRepository {
     try {
       final response = await _dataSource.loadTmdbTvCastInfoResponse(tvId);
       return Result.success(
-          response.cast.map((e) => ContentCreditInfo.fromResponse(e)).toList());
+          response.cast.map(ContentCreditInfo.fromResponse).toList(),);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -35,7 +35,7 @@ class TmdbRepositoryImpl implements TmdbRepository {
     try {
       final response = await _dataSource.loadTmdbTvIContentImages(tvId);
       return Result.success(
-          response.backdrops.map((e) => e.file_path).toList());
+          response.backdrops.map((e) => e.file_path).toList(),);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -46,7 +46,7 @@ class TmdbRepositoryImpl implements TmdbRepository {
     try {
       final response = await _dataSource.loadTmdbMovieDetailResponse(movieId);
       return Result.success(
-          ContentDetailInfo.fromMovieDetailResponse(response));
+          ContentDetailInfo.fromMovieDetailResponse(response),);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -54,12 +54,12 @@ class TmdbRepositoryImpl implements TmdbRepository {
 
   @override
   Future<Result<List<ContentCreditInfo>>> loadMovieCreditInfo(
-      int movieId) async {
+      int movieId,) async {
     try {
       final response =
           await _dataSource.loadTmdbMovieCreditInfoResponse(movieId);
       return Result.success(
-          response.cast.map((e) => ContentCreditInfo.fromResponse(e)).toList());
+          response.cast.map(ContentCreditInfo.fromResponse).toList(),);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -70,7 +70,7 @@ class TmdbRepositoryImpl implements TmdbRepository {
     try {
       final response = await _dataSource.loadTmdbMovieIContentImages(movieId);
       return Result.success(
-          response.backdrops.map((e) => e.file_path).toList());
+          response.backdrops.map((e) => e.file_path).toList(),);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -79,7 +79,7 @@ class TmdbRepositoryImpl implements TmdbRepository {
   // 'TV' 컨텐츠 검색 결과 리스트
   @override
   Future<Result<SearchContentModel>> loadSearchedTvContentList(
-      {required String query, required int page}) async {
+      {required String query, required int page,}) async {
     try {
       final response =
           await _dataSource.loadSearchedTvContentList(query: query, page: page);
@@ -92,10 +92,10 @@ class TmdbRepositoryImpl implements TmdbRepository {
   // 'Movie' 컨텐츠 검색 결과 리스트
   @override
   Future<Result<SearchContentModel>> loadSearchedMovieContentList(
-      {required String query, required int page}) async {
+      {required String query, required int page,}) async {
     try {
       final response = await _dataSource.loadSearchedMovieContentList(
-          query: query, page: page);
+          query: query, page: page,);
       return Result.success(SearchContentModel.fromMovieResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);

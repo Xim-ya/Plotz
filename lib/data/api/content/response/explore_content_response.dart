@@ -24,7 +24,7 @@ class ExploreContentResponse {
 
   factory ExploreContentResponse.fromDocumentSnapshot(
       {required DocumentSnapshot<Object?> contentSnapshot,
-      required DocumentSnapshot<Object?> channelSnapshot}) {
+      required DocumentSnapshot<Object?> channelSnapshot,}) {
     return ExploreContentResponse(
         id: contentSnapshot.get('id'),
         title: contentSnapshot.get('title'),
@@ -33,6 +33,6 @@ class ExploreContentResponse {
         channelLogoImgUrl: channelSnapshot.get('logoImgUrl'),
         channelName: channelSnapshot.get('name'),
         videoTitle: contentSnapshot.get('videoTitle'),
-        subscribersCount: channelSnapshot.get('subscribersCount'));
+        subscribersCount: channelSnapshot.get('subscribersCount'),);
   }
 }

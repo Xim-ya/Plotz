@@ -41,7 +41,7 @@ class BannerSkeletonItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             child: const AspectRatio(
                 aspectRatio: 16 / 9,
-                child: SkeletonBox()
+                child: SkeletonBox(),
             ),
           ),
         ],

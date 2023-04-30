@@ -8,7 +8,7 @@ class ConfirmCurationPageScaffold extends StatelessWidget {
       required this.posterImg,
       required this.channelInfoView,
       required this.contentDetailInfoView,
-      required this.bottomFixedBtn})
+      required this.bottomFixedBtn,})
       : super(key: key);
 
   final String leadingText;
@@ -80,7 +80,7 @@ class ConfirmCurationPageScaffold extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.only(
-                    bottom: SizeConfig.to.responsiveBottomInset),
+                    bottom: SizeConfig.to.responsiveBottomInset,),
                 child: bottomFixedBtn,
               ),
             ],

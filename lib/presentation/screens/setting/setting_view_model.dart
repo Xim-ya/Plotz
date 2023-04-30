@@ -4,7 +4,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class SettingViewModel extends BaseViewModel {
   SettingViewModel(
-      this._signOutHandlerUseCase, this._userService, this._userRepository);
+      this._signOutHandlerUseCase, this._userService, this._userRepository,);
 
   /* Data Modules */
   final UserService _userService;
@@ -25,20 +25,20 @@ class SettingViewModel extends BaseViewModel {
       });
     }, onFailure: (e) {
       log('SettingViewModel : $e');
-    });
+    },);
   }
 
   //개인정보 및 약관으로 이동
   Future<void> routeToTerms() async {
     await launchUrl(
       Uri.parse(
-          'https://puzzle-heather-876.notion.site/c2a63470f4ad471a95e57009ba9dfa3a'),
+          'https://puzzle-heather-876.notion.site/c2a63470f4ad471a95e57009ba9dfa3a',),
       mode: LaunchMode.externalApplication,
     );
   }
 
   // 이메일 피드백
-  void goToKakaoOneonOne() async {
+  Future<void> goToKakaoOneonOne() async {
     await launchUrl(
       Uri.parse('http://pf.kakao.com/_XVDxmxj/chat'),
       mode: LaunchMode.externalApplication,

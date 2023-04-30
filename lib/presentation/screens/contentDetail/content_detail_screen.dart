@@ -71,7 +71,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
                 Obx(
                   () => vm.headerTitle.hasData
                       ? Text(vm.headerTitle!.value,
-                          style: AppTextStyle.headline2)
+                          style: AppTextStyle.headline2,)
                       : Shimmer(
                           color: AppColor.lightGrey,
                           child: const SizedBox(

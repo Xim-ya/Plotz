@@ -15,7 +15,7 @@ class LoadContentDetailInfoUseCase extends BaseTwoParamUseCase<ContentType,
 
   @override
   Future<Result<ContentDetailInfo>> call(
-      ContentType firstReq, int secondReq) async {
+      ContentType firstReq, int secondReq,) async {
     /// firstReq -> [contentType] / secondRequest -> [contentId]
     if (firstReq == ContentType.tv) {
       return _repository.loadTmdbTvDetailResponse(secondReq);

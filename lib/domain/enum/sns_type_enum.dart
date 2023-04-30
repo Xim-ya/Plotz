@@ -6,13 +6,13 @@ enum Sns {
       originString: 'google',
       logoPath: 'google_logo.svg',
       textColor: Colors.black,
-      bgColor: Colors.white),
+      bgColor: Colors.white,),
   apple(
       name: 'Apple',
       originString: 'apple',
       logoPath: 'apple_logo.svg',
       textColor: Colors.white,
-      bgColor: Colors.black);
+      bgColor: Colors.black,);
 
   final String name;
   final String originString;
@@ -25,7 +25,7 @@ enum Sns {
       required this.logoPath,
       required this.textColor,
       required this.bgColor,
-      required this.originString});
+      required this.originString,});
 
   factory Sns.fromOriginString(String originId) {
     switch (originId) {

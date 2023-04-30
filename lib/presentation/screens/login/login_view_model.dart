@@ -3,7 +3,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class LoginViewModel extends BaseViewModel {
   LoginViewModel(this._signInHandlerUseCase,
-      this._userService);
+      this._userService,);
 
   bool isUserSignIn = false;
 

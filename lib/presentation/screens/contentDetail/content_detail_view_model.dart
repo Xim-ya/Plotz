@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -16,7 +15,7 @@ class ContentDetailViewModel extends BaseViewModel {
       this._loadContentCreditInfo,
       this._userRepository,
       this._userService,
-      {required argument})
+      {required argument,})
       : _passedArgument = argument;
 
   // 이전 페이지에서 전달 받는 argument
@@ -68,7 +67,7 @@ class ContentDetailViewModel extends BaseViewModel {
     final requestData = WatchingHistoryRequest(
         userId: _userService.userInfo.value!.id!,
         originId: _contentDescriptionInfo.value!.originId,
-        videoId: videoId);
+        videoId: videoId,);
 
     final response = await _userRepository.addUserWatchHistory(requestData);
     response.fold(onSuccess: (_) {
@@ -77,7 +76,7 @@ class ContentDetailViewModel extends BaseViewModel {
       _userService.updateUserWatchHistory();
     }, onFailure: (e) {
       log('ContentDetailViewModel : $e');
-    });
+    },);
   }
 
   /// 이전 페이지로 이동
@@ -113,7 +112,7 @@ class ContentDetailViewModel extends BaseViewModel {
           passedArgument.contentType == ContentType.tv) {
         await e
             .mappingTvSeasonInfo(
-                seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!)
+                seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!,)
             .then((value) {
           // 로딩 State 업데이트
           contentVideos.value!.updateSeasonInfoLoadingState();
@@ -129,7 +128,7 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
   Future<void> _fetchContentOfVideoList() async {
     final responseRes = await _loadContentOfVideoList.call(
-        passedArgument.contentType, passedArgument.originId);
+        passedArgument.contentType, passedArgument.originId,);
 
     responseRes.fold(
       onSuccess: (data) {
@@ -150,36 +149,36 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠 이미지 리스트 호출
   Future<void> fetchContentImgList() async {
     final responseRes = await _loadContentImgList.call(
-        passedArgument.contentType, passedArgument.contentId);
+        passedArgument.contentType, passedArgument.contentId,);
     responseRes.fold(onSuccess: (data) {
       contentImgUrlList.value = data;
     }, onFailure: (e) {
       AlertWidget.toast('콘텐츠 이미지 정보를 불러들이는 데 실패했습니다');
       log(e.toString());
-    });
+    },);
   }
 
   // 컨텐츠 credit 정보 호출
   Future<void> fetchContentCreditInfo() async {
     final responseRes = await _loadContentCreditInfo.call(
-        passedArgument.contentType, passedArgument.contentId);
+        passedArgument.contentType, passedArgument.contentId,);
 
     responseRes.fold(onSuccess: (data) {
       _contentCreditList.value = data;
     }, onFailure: (e) {
       AlertWidget.toast('출연진 정보를 불러들이는 데 실패했습니다');
       log(e.toString());
-    });
+    },);
   }
 
   // 컨텐츠 상세 정보(TMDB) 호출
   Future<void> _fetchContentMainInfo() async {
     final responseResult = await _loadContentMainDescription.call(
-        passedArgument.contentType, passedArgument.contentId);
+        passedArgument.contentType, passedArgument.contentId,);
     responseResult.fold(
       onSuccess: (data) {
         _contentDescriptionInfo.value = data;
-        print("데이터 fetch 성공");
+        print('데이터 fetch 성공');
         update();
       },
       onFailure: (e) {

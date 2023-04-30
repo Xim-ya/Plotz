@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:soon_sak/utilities/index.dart';
 
 class VideoResponse {
   final int order;
@@ -8,7 +6,7 @@ class VideoResponse {
   VideoResponse({required this.order, required this.videoId});
 
   factory VideoResponse.fromJson(
-      Map<String, dynamic> json) {
+      Map<String, dynamic> json,) {
     return VideoResponse(
       order: json['order'],
       videoId: json['videoId'],

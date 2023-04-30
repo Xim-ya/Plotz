@@ -20,7 +20,7 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 // tmdb tv 컨텐츠 크레딧 정보
   @override
   Future<TmdbContentCreditResponse> loadTmdbTvCastInfoResponse(
-          int tvId) async =>
+          int tvId,) async =>
       _api.loadTvCreditInfo(tvId: tvId, apiKey: _apiKey, language: 'ko-KR');
 
 // tmdb tv 이미지 리스트
@@ -30,7 +30,7 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
   @override
   Future<TmdbMovieDetailResponse> loadTmdbMovieDetailResponse(
-          int movieId) async =>
+          int movieId,) async =>
       _api.loadTmdbMovieDetailInfoResponse(
         movieId: movieId,
         apiKey: _apiKey,
@@ -39,7 +39,7 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
   @override
   Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfoResponse(
-          int movieId) async =>
+          int movieId,) async =>
       _api.loadMovieCreditInfo(
         movieId: movieId,
         apiKey: _apiKey,
@@ -52,13 +52,13 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
   @override
   Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
-          {required String query, required int page}) async =>
+          {required String query, required int page,}) async =>
       _api.loadSearchedTvContentList(
-          apiKey: _apiKey, language: _language, page: page, query: query);
+          apiKey: _apiKey, language: _language, page: page, query: query,);
 
   @override
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
-          {required String query, required int page}) async =>
+          {required String query, required int page,}) async =>
       _api.loadSearchedMovieContentList(
-          apiKey: _apiKey, language: _language, page: page, query: query);
+          apiKey: _apiKey, language: _language, page: page, query: query,);
 }

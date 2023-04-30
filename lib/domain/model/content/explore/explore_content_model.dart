@@ -6,13 +6,13 @@ class ExploreContentModel with FirestoreHelper {
   ExploreContentModel({required this.contents});
 
   factory ExploreContentModel.fromResponse(
-      List<BasicContentInfoResponse> response) {
+      List<BasicContentInfoResponse> response,) {
     final List<BasicContentInfoResponse> shuffledList = response;
     shuffledList.shuffle();
 
     return ExploreContentModel(
       contents:
-          shuffledList.map((e) => ExploreContentItem.fromResponse(e)).toList(),
+          shuffledList.map(ExploreContentItem.fromResponse).toList(),
     );
   }
 
@@ -38,7 +38,7 @@ class ExploreContentModel with FirestoreHelper {
       await storeDocumentAndReturnId('content', docId: e.originId, data: data);
 
       print(
-          'contentId : ${e.originId} / channelName : ${channelRes.title} / channelProfileImage :${channelRes.logoUrl}   / channelId ${channelRes.id} / videoTitle ${videoRes.title} / subscribersCount ${channelRes.subscribersCount}');
+          'contentId : ${e.originId} / channelName : ${channelRes.title} / channelProfileImage :${channelRes.logoUrl}   / channelId ${channelRes.id} / videoTitle ${videoRes.title} / subscribersCount ${channelRes.subscribersCount}',);
     }
   }
 }
@@ -60,7 +60,7 @@ class ExploreContentItem {
       required this.videoId,
       required this.title,
       required this.posterImgUrl,
-      required this.releaseDate});
+      required this.releaseDate,});
 
   factory ExploreContentItem.fromResponse(BasicContentInfoResponse response) =>
       ExploreContentItem(

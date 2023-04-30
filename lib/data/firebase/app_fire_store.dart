@@ -4,9 +4,10 @@ import 'package:soon_sak/utilities/index.dart';
  *  FireStore Instance를 싱글톤으로 관리
  * */
 
-class AppFireStore {
-  FirebaseFirestore db = FirebaseFirestore.instance;
+abstract class AppFireStore {
+  AppFireStore._(); // 생성자를 private으로 설정
 
-  static FirebaseFirestore get getInstance => Get.find<AppFireStore>().db;
+  static final FirebaseFirestore _db = FirebaseFirestore.instance; // 인스턴스를 private로 선언하고 초기화
+
+  static FirebaseFirestore get getInstance => _db; // public getter를 통해 인스턴스에 접근
 }
-

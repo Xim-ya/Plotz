@@ -38,7 +38,7 @@ class ContentDetailInfo {
 
   // ContentType == movie인 response
   factory ContentDetailInfo.fromMovieDetailResponse(
-      TmdbMovieDetailResponse response) {
+      TmdbMovieDetailResponse response,) {
     List<String> formattedGenre = [];
 
     if (response.genres.hasData) {
@@ -68,7 +68,7 @@ class ContentDetailInfo {
 
   // ContentType == tv인 response
   factory ContentDetailInfo.fromTvDetailResponse(
-      TmdbTvDetailResponse response) {
+      TmdbTvDetailResponse response,) {
     List<String> formattedGenre = [];
 
     if (response.genres.hasData) {
@@ -97,7 +97,7 @@ class ContentDetailInfo {
       airStatus: _translateTvContentStatus(response.status!),
       backDropImgUrl: response.backdrop_path,
       seasonInfoList:
-          response.seasons?.map((e) => SeasonInfo.fromResponse(e)).toList(),
+          response.seasons?.map(SeasonInfo.fromResponse).toList(),
     );
   }
 }

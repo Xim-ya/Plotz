@@ -8,13 +8,13 @@ class ContentCreditInfo {
   final String role; // 역할
 
   ContentCreditInfo(
-      {required this.profilePath, required this.name, required this.role});
+      {required this.profilePath, required this.name, required this.role,});
 
   factory ContentCreditInfo.fromResponse(TmdbCastInfoItemResponse response) =>
       ContentCreditInfo(
           profilePath: response.profile_path,
           name: response.name,
-          role: _departmentTranslateMapping(response.known_for_department));
+          role: _departmentTranslateMapping(response.known_for_department),);
 }
 
 /// 특정 TMDB API에서 한국어를 지원안하는 경우가 있기 때문에

@@ -52,7 +52,7 @@ class ConfirmCurationPageView extends BaseView<RegisterViewModel> {
         Obx(() {
           if (vm.releaseDate.hasData) {
             return Text(Formatter.dateToyyyyMMdd(vm.releaseDate!),
-                style: AppTextStyle.body2.copyWith(color: AppColor.lightGrey));
+                style: AppTextStyle.body2.copyWith(color: AppColor.lightGrey),);
           } else {
             return const SizedBox();
           }

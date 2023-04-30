@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/common/keep_alive_view.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/detail_info_tab_view_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -39,7 +38,6 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                 (BuildContext context, int parentIndex, int pageViewIndex) {
               /// Top Content Section
               return ListView.separated(
-                addAutomaticKeepAlives: true,
                 separatorBuilder: (__, _) => AppSpace.size16,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -50,7 +48,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                   if (vm.contentCreditList.hasData) {
                     final ContentCreditInfo creditItem = vm.contentCreditList![
                         vm.creditIndex(
-                            parentIndex: parentIndex, childIndex: childIndex)];
+                            parentIndex: parentIndex, childIndex: childIndex,)];
                     return Row(
                       children: <Widget>[
                         RoundProfileImg(
@@ -100,7 +98,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                             AppSpace.size8,
                             Shimmer(
                               color: AppColor.mixedWhite,
-                              child: Container(
+                              child: const SizedBox(
                                 height: 18,
                                 width: 30,
                               ),
@@ -116,7 +114,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
           ),
         ),
         Obx(() =>
-            vm.isCreditNotEmpty ?? true ? AppSpace.size40 : const SizedBox()),
+            vm.isCreditNotEmpty ?? true ? AppSpace.size40 : const SizedBox(),),
       ];
 
   /// 큐레이터
@@ -166,16 +164,16 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                     elseInfoItem(title: '방영일', content: vm.releaseDate ?? '-')
                   else
                     elseInfoItem(
-                        title: '방영상태', content: vm.contentAirStatus ?? '-'),
+                        title: '방영상태', content: vm.contentAirStatus ?? '-',),
                   elseInfoItem(title: '총 좋아요 수', content: vm.likesCount ?? '-'),
                 ],
               ),
               Row(
                 children: <Widget>[
                   elseInfoItem(
-                      title: '총 조회수', content: vm.totalViewCount ?? ''),
+                      title: '총 조회수', content: vm.totalViewCount ?? '',),
                   elseInfoItem(
-                      title: '영상 업로드일', content: vm.youtubeUploadDate ?? ''),
+                      title: '영상 업로드일', content: vm.youtubeUploadDate ?? '',),
                 ],
               ),
             ],
@@ -187,7 +185,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
   _buildContentImgSection() => [
         Obx(() => vm.contentImgExist ?? true
             ? const SectionTitle(title: '콘텐츠 이미지', setLeftPadding: true)
-            : const SizedBox()),
+            : const SizedBox(),),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),

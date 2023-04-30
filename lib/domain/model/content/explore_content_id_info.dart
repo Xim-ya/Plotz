@@ -7,14 +7,14 @@ class ExploreContentIdInfo {
 
   ExploreContentIdInfo({required this.contentId,
     required this.videoId,
-    required this.contentType});
+    required this.contentType,});
 
 
   factory ExploreContentIdInfo.fromJson(Map<String, dynamic> json) {
     return ExploreContentIdInfo(
         contentId: SplittedIdAndType.fromOriginId(json['contentId']).id,
         videoId: json['videoId'],
-        contentType: SplittedIdAndType.fromOriginId(json['contentId']).type);
+        contentType: SplittedIdAndType.fromOriginId(json['contentId']).type,);
   }
 }
 

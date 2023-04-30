@@ -10,7 +10,7 @@ class BannerModel  {
   factory BannerModel.fromResponse(BannerResponse response) {
     return BannerModel(
         key: response.key,
-        contentList: response.items.map(BannerItem.fromResponse).toList());
+        contentList: response.items.map(BannerItem.fromResponse).toList(),);
   }
 }
 

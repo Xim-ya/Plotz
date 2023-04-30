@@ -1,4 +1,3 @@
-import 'package:soon_sak/data/api/user/response/user_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserModel {
@@ -35,7 +34,7 @@ class UserModel {
   // 구글 로그인 시
   factory UserModel.fromGoogleSignInRes(
       {required GoogleSignInAccount account,
-      required GoogleSignInAuthentication authentication}) {
+      required GoogleSignInAuthentication authentication,}) {
     return UserModel(
       name: account.displayName,
       displayName: account.displayName,
@@ -44,13 +43,13 @@ class UserModel {
       photoUrl: account.photoUrl,
       token: UserToken(
           idToken: authentication.idToken,
-          accessToken: authentication.accessToken),
+          accessToken: authentication.accessToken,),
     );
   }
 
   // 애플 로그인 시
   factory UserModel.fromAppleSignInRes(
-          {required AuthorizationCredentialAppleID response}) =>
+          {required AuthorizationCredentialAppleID response,}) =>
       UserModel(
         name: '${response.familyName}${response.givenName}',
         displayName: '${response.familyName}${response.givenName}',
@@ -58,7 +57,7 @@ class UserModel {
         provider: Sns.apple,
         token: UserToken(
             idToken: response.identityToken,
-            accessToken: response.authorizationCode),
+            accessToken: response.authorizationCode,),
       );
 
   // 큐레이터 Response

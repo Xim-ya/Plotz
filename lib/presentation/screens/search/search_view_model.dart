@@ -12,7 +12,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class SearchViewModel extends BaseViewModel {
   SearchViewModel(
-      this._pagedSearchHandler, this._contentRepository, this._userService);
+      this._pagedSearchHandler, this._contentRepository, this._userService,);
 
   /* Data Modules */
   final ContentRepository _contentRepository;
@@ -45,9 +45,9 @@ class SearchViewModel extends BaseViewModel {
   Future<void> requestContent(SearchedContent content) async {
     final ContentRequest request = ContentRequest(
         contentId: Formatter.getOriginIdByTypeAndId(
-            type: selectedTabType.value, id: content.contentId),
+            type: selectedTabType.value, id: content.contentId,),
         title: content.title ?? '제목 없음',
-        userId: _userService.userInfo.value!.id!);
+        userId: _userService.userInfo.value!.id!,);
     final response = await _contentRepository.requestContent(request);
     response.fold(
       onSuccess: (data) {
@@ -66,7 +66,7 @@ class SearchViewModel extends BaseViewModel {
   /// 검색된 컨텐츠 클릭 되었을 때
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped(
-      {required SearchedContent content, required ContentType contentType}) {
+      {required SearchedContent content, required ContentType contentType,}) {
     // 키보드 가리기
 
     final registeredValue = content.isRegisteredContent.value;
@@ -85,7 +85,7 @@ class SearchViewModel extends BaseViewModel {
           contentType: contentType,
           posterImgUrl: content.posterImgUrl,
           originId: Formatter.getOriginIdByTypeAndId(
-              type: selectedTabType.value, id: content.contentId),
+              type: selectedTabType.value, id: content.contentId,),
         ),
       );
     } else {

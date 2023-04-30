@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -25,14 +24,14 @@ class MyPageViewModel extends BaseViewModel {
 
   // youtubeApp 실행
   Future<void> launchYoutubeApp(
-      UserWatchHistoryItem? selectedContent, int index) async {
+      UserWatchHistoryItem? selectedContent, int index,) async {
     if (selectedContent?.videoId == null) {
       return AlertWidget.animatedToast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
     }
     try {
       await launchUrl(
         Uri.parse(
-            'https://www.youtube.com/watch?v=${selectedContent!.videoId}'),
+            'https://www.youtube.com/watch?v=${selectedContent!.videoId}',),
         mode: LaunchMode.externalApplication,
       );
       unawaited(
@@ -56,7 +55,7 @@ class MyPageViewModel extends BaseViewModel {
 
   /// 유저 시청 기록 추가
   Future<void> updateUserWatchHistory(
-      UserWatchHistoryItem selectedContent) async {
+      UserWatchHistoryItem selectedContent,) async {
     final requestData = WatchingHistoryRequest(
       userId: _userService.userInfo.value!.id!,
       originId: selectedContent.originId,
@@ -70,7 +69,7 @@ class MyPageViewModel extends BaseViewModel {
       _userService.updateUserWatchHistory();
     }, onFailure: (e) {
       log('ContentDetailViewModel : $e');
-    });
+    },);
   }
 
   // 유저 시청 기록 호출

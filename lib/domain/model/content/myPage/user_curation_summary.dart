@@ -12,7 +12,7 @@ class UserCurationSummary {
   });
 
   factory UserCurationSummary.fromResponse(
-          UserCurationSummaryResponse response) =>
+          UserCurationSummaryResponse response,) =>
       UserCurationSummary(
         completedCount: response.completedCount,
         inProgressCount: response.inProgressCount,

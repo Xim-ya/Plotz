@@ -31,7 +31,7 @@ class ExploreViewModel extends BaseViewModel {
   // 컨텐츠 상세페이지로 이동
   void routeToContentDetail(ContentArgumentFormat routingArgument) {
     AppAnalytics.instance.logEvent(
-        name: 'goToContent', parameters: {'explore': routingArgument.originId});
+        name: 'goToContent', parameters: {'explore': routingArgument.originId},);
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
@@ -49,7 +49,7 @@ class ExploreViewModel extends BaseViewModel {
 
     if (index == exploreContentsLength && alreadyShowedToast.isFalse) {
       unawaited(
-          AlertWidget.animatedToast('마지막 콘텐츠 입니다', isUsedOnTabScreen: true));
+          AlertWidget.animatedToast('마지막 콘텐츠 입니다', isUsedOnTabScreen: true),);
       alreadyShowedToast(true); // 더 이상 토스트 메세를 노출하지 않음.
     }
   }
@@ -89,7 +89,7 @@ class ExploreViewModel extends BaseViewModel {
         isUsedOnTabScreen: true,
       );
       log('ExploreViewModel : $e');
-    });
+    },);
   }
 
   /* Getters */

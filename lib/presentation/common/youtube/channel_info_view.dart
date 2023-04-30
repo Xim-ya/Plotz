@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.12.30

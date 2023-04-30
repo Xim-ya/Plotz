@@ -39,7 +39,7 @@ class SearchPagedContentImpl
   // 검색된 컨텐츠가 선택 되었을 때
   @override
   void onSearchedContentTapped(
-      {required SearchedContent content, required ContentType contentType}) {
+      {required SearchedContent content, required ContentType contentType,}) {
     _selectedContent.value = Content(
       id: content.contentId,
       type: contentType,

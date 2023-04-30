@@ -1,4 +1,3 @@
-import 'package:soon_sak/data/dataSource/auth/auth_data_source.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class AuthDataSourceImpl
@@ -14,11 +13,11 @@ class AuthDataSourceImpl
 
   @override
   Future<bool> isUserSignedIn() =>
-      loadResponseOrThrow(() => _api.isUserSignedIn());
+      loadResponseOrThrow(_api.isUserSignedIn);
 
   @override
   Future<UserModel> loadUserInfo() =>
-      loadResponseOrThrow(() => _api.loadUserInfo());
+      loadResponseOrThrow(_api.loadUserInfo);
 
   @override
   Future<void> saveUserInfo(UserModel userInfo) =>
@@ -26,19 +25,19 @@ class AuthDataSourceImpl
 
   @override
   Future<AuthorizationCredentialAppleID> triggerAppleSignIn() =>
-      loadResponseOrThrow(() => _api.triggerAppleSignIn());
+      loadResponseOrThrow(_api.triggerAppleSignIn);
 
   @override
   Future<GoogleSignInAccount?> triggerGoogleSignIn() =>
-      loadResponseOrThrow(() => _api.triggerGoogleSignIn());
+      loadResponseOrThrow(_api.triggerGoogleSignIn);
 
   @override
   Future<void> triggerGoogleSignOut() =>
-      loadResponseOrThrow(() => _api.triggerGoogleSignOut());
+      loadResponseOrThrow(_api.triggerGoogleSignOut);
 
   @override
   Future<void> triggerAppleSignOut() =>
-      loadResponseOrThrow(() => _api.triggerAppleSignOut());
+      loadResponseOrThrow(_api.triggerAppleSignOut);
 
   @override
   Future<void> updateLoginDate(String userId) =>

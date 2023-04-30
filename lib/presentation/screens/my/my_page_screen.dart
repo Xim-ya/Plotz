@@ -92,7 +92,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                     children: <Widget>[
                       _curationProgressRowItem(
                           title: '진행중',
-                          count: vm.curationSummary?.inProgressCount ?? 0),
+                          count: vm.curationSummary?.inProgressCount ?? 0,),
                       Container(
                         height: 24,
                         width: 1,
@@ -100,7 +100,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                       ),
                       _curationProgressRowItem(
                           title: '등록 완료',
-                          count: vm.curationSummary?.completedCount ?? 0),
+                          count: vm.curationSummary?.completedCount ?? 0,),
                       Container(
                         height: 24,
                         width: 1,
@@ -108,10 +108,10 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                       ),
                       _curationProgressRowItem(
                           title: '보류',
-                          count: vm.curationSummary?.onHoldCount ?? 0),
+                          count: vm.curationSummary?.onHoldCount ?? 0,),
                     ],
                   ),
-                )),
+                ),),
           ),
 
           AppSpace.size64,

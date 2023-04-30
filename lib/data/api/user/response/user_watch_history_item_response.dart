@@ -1,4 +1,3 @@
-import 'package:soon_sak/data/api/content/response/curation_content_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserWatchHistoryItemResponse {
@@ -14,7 +13,7 @@ class UserWatchHistoryItemResponse {
 
   factory UserWatchHistoryItemResponse.fromResponseDoc(
       {required DocumentSnapshot contentDoc,
-      required DocumentSnapshot doc}) {
+      required DocumentSnapshot doc,}) {
     return UserWatchHistoryItemResponse(
       originId: contentDoc.get('id'),
       posterImgUrl: contentDoc.get('posterImgUrl'),

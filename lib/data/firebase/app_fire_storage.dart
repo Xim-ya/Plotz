@@ -6,7 +6,15 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class AppFireStorage {
-  FirebaseStorage db = FirebaseStorage.instance;
+  AppFireStorage._();
 
-  static FirebaseStorage get getInstance => Get.find<AppFireStorage>().db;
+  static final FirebaseStorage _db = FirebaseStorage.instance;
+
+  static FirebaseStorage get getInstance => _db;
 }
+
+// class AppFireStorage {
+//   FirebaseStorage db = FirebaseStorage.instance;
+//
+//   static FirebaseStorage get getInstance => Get.find<AppFireStorage>().db;
+// }

@@ -1,5 +1,3 @@
-import 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
-import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
 import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/domain/useCase/version/check_version_and_network_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -10,11 +8,11 @@ abstract class DomainModules {
   static Future<void> dependencies() async {
     // 버전
     Get.lazyPut(() => CheckVersionAndNetworkUseCase(Get.find(), Get.find()),
-        fenix: false);
+        fenix: false,);
 
     // 인증
     Get.lazyPut(() => SignInAndUpHandlerUseCase(Get.find(), Get.find()),
-        fenix: false);
+        fenix: false,);
 
     // Explore
     Get.lazyPut(

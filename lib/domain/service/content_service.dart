@@ -34,7 +34,7 @@ class ContentService extends GetxService {
       _staticContentKeys.value = data;
     }, onFailure: (e) {
       log('ContentService : $e');
-    });
+    },);
   }
 
   // 전체 컨텐츠 id 정보 호출

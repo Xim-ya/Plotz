@@ -27,7 +27,7 @@ class ContentIdInfoItem {
   final ContentType type; // 컨텐츠 타입 (movie or tv)
 
   ContentIdInfoItem(
-      {required this.originId, required this.id, required this.type});
+      {required this.originId, required this.id, required this.type,});
 
   factory ContentIdInfoItem.fromOriginId(String originId) {
     return ContentIdInfoItem(

@@ -117,7 +117,7 @@ class PretendardTextStyle extends TextStyle {
       fontWeight: fontWeight,
       height: height / size,
       letterSpacing: letterSpacing,
-      leadingDistribution: TextLeadingDistribution.even);
+      leadingDistribution: TextLeadingDistribution.even,);
 
   factory PretendardTextStyle.regular({
     required double size,
@@ -127,7 +127,7 @@ class PretendardTextStyle extends TextStyle {
     double? letterSpacing,
   }) =>
       PretendardTextStyle(
-          pretendardRegular, color, size, fontWeight, height, letterSpacing);
+          pretendardRegular, color, size, fontWeight, height, letterSpacing,);
 
   factory PretendardTextStyle.semiBold({
     required double size,
@@ -137,7 +137,7 @@ class PretendardTextStyle extends TextStyle {
     double? letterSpacing,
   }) =>
       PretendardTextStyle(
-          pretendardSemiBold, color, size, fontWeight, height, letterSpacing);
+          pretendardSemiBold, color, size, fontWeight, height, letterSpacing,);
 
   factory PretendardTextStyle.medium({
     required double size,
@@ -147,7 +147,7 @@ class PretendardTextStyle extends TextStyle {
     double? letterSpacing,
   }) =>
       PretendardTextStyle(
-          pretendardMedium, color, size, fontWeight, height, letterSpacing);
+          pretendardMedium, color, size, fontWeight, height, letterSpacing,);
 
   factory PretendardTextStyle.bold({
     required double size,
@@ -157,5 +157,5 @@ class PretendardTextStyle extends TextStyle {
     double? letterSpacing,
   }) =>
       PretendardTextStyle(
-          pretendardBold, color, size, fontWeight, height, letterSpacing);
+          pretendardBold, color, size, fontWeight, height, letterSpacing,);
 }

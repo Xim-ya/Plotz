@@ -19,7 +19,7 @@ class UserCurationContentResponse {
   });
 
   factory UserCurationContentResponse.fromDocument(DocumentSnapshot snapshot,
-      {required String curatorName, required String curatorImg}) {
+      {required String curatorName, required String curatorImg,}) {
     return UserCurationContentResponse(
       posterImgUrl: snapshot.get('posterImgUrl'),
       requestDate:

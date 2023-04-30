@@ -1,5 +1,4 @@
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_view_model.dart';
-import 'package:soon_sak/utilities/constants/regex.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
@@ -29,7 +28,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
                               height: 84,
                               width: 84,
                               fit: BoxFit.cover,
-                            ));
+                            ),);
                       } else {
                         return Obx(
                           () => RoundProfileImg(size: 84, imgUrl: vm.photoUrl),
@@ -74,7 +73,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
                 style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
-                    fontFamily: 'pretendard_regular'),
+                    fontFamily: 'pretendard_regular',),
                 decoration: InputDecoration(
                   border: _outLinedBorder(),
                   filled: true,
@@ -120,7 +119,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
   OutlineInputBorder _fixedOutLinedBorder() {
     return const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(6)),
-        borderSide: BorderSide(color: Colors.transparent));
+        borderSide: BorderSide(color: Colors.transparent),);
   }
 
   @override

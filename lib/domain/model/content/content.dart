@@ -19,7 +19,7 @@ class Content {
       this.videoId,
       this.type,
       this.detail,
-      this.youtubeVideo});
+      this.youtubeVideo,});
 }
 
 class YoutubeVideo {
@@ -32,7 +32,7 @@ class YoutubeVideo {
       {this.title,
       this.channelName,
       this.channelImg,
-      this.subscriberCount}); // 채널 이미지
+      this.subscriberCount,}); // 채널 이미지
 
 }
 
@@ -63,7 +63,7 @@ class ContentDetail {
 
   // ContentType == movie인 response
   factory ContentDetail.fromMovieDetailResponse(
-      TmdbMovieDetailResponse response) {
+      TmdbMovieDetailResponse response,) {
     List<String> formattedGenre = [];
 
     if (response.genres.hasData) {
@@ -117,7 +117,7 @@ class ContentDetail {
       airStatus: _translateTvContentStatus(response.status!),
       backDropImgUrl: response.backdrop_path,
       seasonInfoList:
-          response.seasons?.map((e) => SeasonInfo.fromResponse(e)).toList(),
+          response.seasons?.map(SeasonInfo.fromResponse).toList(),
     );
   }
 }

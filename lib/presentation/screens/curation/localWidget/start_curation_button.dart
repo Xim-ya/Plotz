@@ -11,7 +11,7 @@ import 'dart:math' as math;
 
 class StartCurationButton extends StatelessWidget {
   const StartCurationButton(
-      {Key? key, required this.contentType, required this.onBtnTapped, required this.imgPath})
+      {Key? key, required this.contentType, required this.onBtnTapped, required this.imgPath,})
       : super(key: key);
 
   final ContentType contentType;

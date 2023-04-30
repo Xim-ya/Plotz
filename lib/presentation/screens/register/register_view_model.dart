@@ -16,7 +16,7 @@ class RegisterViewModel extends BaseViewModel {
       this._curationViewModel,
       this._myPageViewModel,
       this.pagedSearchHandler,
-      {required contentType})
+      {required contentType,})
       : selectedContentType = contentType;
 
   /* Data Modules */
@@ -143,12 +143,12 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   Future<void> requestRegistration() async {
-    if (curationContent.value == null || _userService.userInfo == null) {
+    if (curationContent.value == null) {
       unawaited(AlertWidget.newToast('선택된 데이터가 없습니다. 다시 시도해주세요'));
     }
 
     final requestData = ContentRegistrationRequest.fromContentModelWithUserId(
-        content: curationContent.value!, userId: _userService.userInfo.value!.id!);
+        content: curationContent.value!, userId: _userService.userInfo.value!.id!,);
     final response = await _requestContentRegistrationUseCase.call(requestData);
     await response.fold(
       onSuccess: (data) async {

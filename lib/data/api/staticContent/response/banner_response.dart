@@ -43,7 +43,7 @@ class BannerItemResponse {
         required this.title,
         required this.description,
         required this.imgUrl,
-        required this.backdropImgUrl});
+        required this.backdropImgUrl,});
 
   factory BannerItemResponse.fromJson(Map<String, dynamic> json) =>
       _$BannerItemResponseFromJson(json);

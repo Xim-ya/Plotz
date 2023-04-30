@@ -6,7 +6,7 @@ class SearchContentPageViewScaffold extends StatelessWidget {
       required this.header,
       required this.searchBar,
       required this.searchedListView,
-      required this.bottomFixedStepBtn})
+      required this.bottomFixedStepBtn,})
       : super(key: key);
 
   final Widget header;
@@ -45,7 +45,7 @@ class SearchContentPageViewScaffold extends StatelessWidget {
                         ),
                       ),
                       searchBar,
-                    ]),
+                    ],),
                   ),
                 )
               ];

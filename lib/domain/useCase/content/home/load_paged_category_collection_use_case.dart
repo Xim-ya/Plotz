@@ -69,7 +69,7 @@ class LoadPagedCategoryCollectionUseCase {
   // Storage 데이터 삭제 (초기화)
   Future<void> _deleteLocalStorageField() async {
     await _localStorageService.deleteData(
-        fieldName: 'categoryCollection$currentPage');
+        fieldName: 'categoryCollection$currentPage',);
   }
 
   // Paging Controller 데이터 추가
@@ -112,7 +112,7 @@ class LoadPagedCategoryCollectionUseCase {
     }
 
     final Object? localData = await _localStorageService.getData(
-        fieldName: 'categoryCollection$currentPage');
+        fieldName: 'categoryCollection$currentPage',);
 
     final String? keyResponse =
         _contentService.returnCategoryContentKey(currentPage);
@@ -123,7 +123,7 @@ class LoadPagedCategoryCollectionUseCase {
     /// Local Storage 데이터를 초기화하지 않음
     if (localData.hasData &&
         _isRecentKey(
-            jsonText: localData.toString(), givenKey: keyResponse ?? '')) {
+            jsonText: localData.toString(), givenKey: keyResponse ?? '',)) {
       await _appendData();
     }
 

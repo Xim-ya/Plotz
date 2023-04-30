@@ -64,12 +64,12 @@ mixin FirebaseIsolateHelper {
 }
 
 // 6. 백그라운드 isolate에서 실행될 함수 (entry)
-void _isolateEntry(_IsolateEntryPayload payload) async {
+Future<void> _isolateEntry(_IsolateEntryPayload payload) async {
   final Function function = payload.function;
 
   try {
     BackgroundIsolateBinaryMessenger.ensureInitialized(
-        payload.rootIsolateToken);
+        payload.rootIsolateToken,);
   } on MissingPluginException catch (e) {
     print(e.toString());
     return Future.error(e.toString());
