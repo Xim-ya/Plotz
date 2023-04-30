@@ -6,10 +6,10 @@ import 'package:soon_sak/utilities/index.dart';
 
 abstract class YoutubeRepository {
   Future<Result<List<YoutubeContentComment>>> loadContentCommentList(
-      String videoId);
+      String videoId,);
 
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(
-      String videoId);
+      String videoId,);
 
   static YoutubeRepository get to => Get.find();
 }

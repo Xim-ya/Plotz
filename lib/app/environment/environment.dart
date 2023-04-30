@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:soon_sak/myApp.dart';
 
-
-
 enum BuildType {
   development,
   production,

@@ -18,6 +18,6 @@ class SplittedIdAndType {
     final List<String> splittedOrigin = originId.split('-');
     return SplittedIdAndType(
         id: int.parse(splittedOrigin[1]),
-        type: ContentType.fromString(splittedOrigin[0]));
+        type: ContentType.fromString(splittedOrigin[0]),);
   }
 }

@@ -12,7 +12,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class SearchViewModel extends BaseViewModel {
   SearchViewModel(
-      this._pagedSearchHandler, this._contentRepository, this._userService);
+      this._pagedSearchHandler, this._contentRepository, this._userService,);
 
   /* Data Modules */
   final ContentRepository _contentRepository;
@@ -45,19 +45,19 @@ class SearchViewModel extends BaseViewModel {
   Future<void> requestContent(SearchedContent content) async {
     final ContentRequest request = ContentRequest(
         contentId: Formatter.getOriginIdByTypeAndId(
-            type: selectedTabType.value, id: content.contentId),
+            type: selectedTabType.value, id: content.contentId,),
         title: content.title ?? '제목 없음',
-        userId: _userService.userInfo.value!.id!);
+        userId: _userService.userInfo.value!.id!,);
     final response = await _contentRepository.requestContent(request);
     response.fold(
       onSuccess: (data) {
         Get.back();
         AlertWidget.animatedToast('요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
-        log('컨텐츠 요청 성공');
+        log('콘텐츠 요청 성공');
       },
       onFailure: (e) {
         Get.back();
-        AlertWidget.animatedToast('컨텐츠 요청에 실패했습니다. 다시 시도해주세요');
+        AlertWidget.animatedToast('콘텐츠 요청에 실패했습니다. 다시 시도해주세요');
         log('SearchViewModel : $e');
       },
     );
@@ -66,7 +66,7 @@ class SearchViewModel extends BaseViewModel {
   /// 검색된 컨텐츠 클릭 되었을 때
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped(
-      {required SearchedContent content, required ContentType contentType}) {
+      {required SearchedContent content, required ContentType contentType,}) {
     // 키보드 가리기
 
     final registeredValue = content.isRegisteredContent.value;
@@ -85,15 +85,15 @@ class SearchViewModel extends BaseViewModel {
           contentType: contentType,
           posterImgUrl: content.posterImgUrl,
           originId: Formatter.getOriginIdByTypeAndId(
-              type: selectedTabType.value, id: content.contentId),
+              type: selectedTabType.value, id: content.contentId,),
         ),
       );
     } else {
       // 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
       Get.dialog(
         AppDialog.dividedBtn(
-          title: '미등록 컨텐츠\n[${content.title}]',
-          description: '등록되어 있는 컨텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
+          title: '미등록 콘텐츠\n[${content.title}]',
+          description: '등록되어 있는 콘텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
           leftBtnContent: '나중에',
           rightBtnContent: '요청하기',
           // TODO: 실제 요청 로직 추가 필요

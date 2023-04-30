@@ -33,8 +33,6 @@ dependencies:
   flutter_staggered_grid_view: ^0.6.2 # 그리드뷰
   visibility_detector: ^0.4.0+2 #위젯 노출 여부 감지
 
-
-
   #State Controller
   get: ^4.6.5
 
@@ -47,6 +45,7 @@ dependencies:
   dio: ^4.0.6
   json_annotation: ^4.7.0
   async: ^2.9.0
+
 
   #Firebase
   firebase_core: ^2.4.1
@@ -77,12 +76,12 @@ dependencies:
   #Utils
   flutter_cache_manager: ^3.3.0
   image_picker: ^0.8.6+3 # 이미지 피커
-  either_dart: ^0.3.0
   intl: ^0.17.0 # DATE
   flutter_launcher_icons: ^0.12.0 # 앱 로고
   flutter_isolate: ^2.0.4
   flutter_dotenv: ^5.0.2
 
+  
 
 
 

@@ -9,7 +9,7 @@ class LinearLayeredPosterImg extends StatelessWidget {
       this.linearColor = AppColor.black,
       this.linearStep = const [0.1, 0.5, 1.0],
       this.linearBeginPosition = Alignment.topCenter,
-      this.linearEndPosition = Alignment.bottomCenter})
+      this.linearEndPosition = Alignment.bottomCenter,})
       : super(key: key);
 
   final double? borderRadius;

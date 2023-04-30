@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentRepositoryImpl implements ContentRepository {
@@ -11,7 +10,7 @@ class ContentRepositoryImpl implements ContentRepository {
     try {
       final response = await _contentDataSource.loadTotalContentIdList();
       return Result.success(
-          response.map((e) => ContentIdInfoItem.fromOriginId(e)).toList());
+          response.map(ContentIdInfoItem.fromOriginId).toList(),);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -30,12 +29,12 @@ class ContentRepositoryImpl implements ContentRepository {
 
   @override
   Future<Result<String>> requestContentRegistration(
-      ContentRegistrationRequest requestData) async {
+      ContentRegistrationRequest requestData,) async {
     try {
       final response =
           await _contentDataSource.requestContentRegistration(requestData);
       return Result.success(response);
-    } on Exception catch (e) {
+    } on Exception {
       return Result.failure(ContentException.qurationRequestFailed());
     }
   }
@@ -45,7 +44,7 @@ class ContentRepositoryImpl implements ContentRepository {
     try {
       final response = await _contentDataSource.loadInProgressQurationList();
       return Result.success(
-          response.map(CurationContent.fromResponse).toList());
+          response.map(CurationContent.fromResponse).toList(),);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -63,11 +62,11 @@ class ContentRepositoryImpl implements ContentRepository {
 
   @override
   Future<Result<List<ExploreContent>>> loadExploreContents(
-      List<String> ids) async {
+      List<String> ids,) async {
     try {
       final response = await _contentDataSource.loadExploreContents(ids);
       return Result.success(
-          response.map((e) => ExploreContent.fromResponse(e)).toList());
+          response.map(ExploreContent.fromResponse).toList(),);
     } on Exception catch (e) {
       return Result.failure(e);
     }

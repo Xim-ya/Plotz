@@ -27,7 +27,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
               item: searchedItem,
               onItemClicked: () {
                 vm.onSearchedContentTapped(
-                    content: searchedItem, contentType: ContentType.tv);
+                    content: searchedItem, contentType: ContentType.tv,);
               },
             );
           },

@@ -9,32 +9,32 @@ class ContentDataSourceImpl
 
   @override
   Future<List<String>> loadTotalContentIdList() =>
-      loadWithFirebaseIsolate(() => _api.loadTotalContentIdList());
+      loadWithFirebaseIsolate(_api.loadTotalContentIdList);
 
   @override
   Future<List<VideoResponse>> loadVideoInfo(String id) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadVideoInfo(id)));
+          () => loadResponseOrThrow(() => _api.loadVideoInfo(id)),);
 
   @override
   Future<String> requestContentRegistration(
-          ContentRegistrationRequest requestData) =>
+          ContentRegistrationRequest requestData,) =>
       loadWithFirebaseIsolate(
-          () => _api.requestContentRegistration(requestData));
+          () => _api.requestContentRegistration(requestData),);
 
   @override
   Future<List<CurationContentResponse>> loadInProgressQurationList() =>
-      loadWithFirebaseIsolate(() => _api.loadInProgressQurationList());
+      loadWithFirebaseIsolate(_api.loadInProgressQurationList);
 
   @override
   Future<UserResponse> loadCuratorInfo(String contentId) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadCuratorInfo(contentId)));
+          () => loadResponseOrThrow(() => _api.loadCuratorInfo(contentId)),);
 
   @override
   Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadExploreContents(ids)));
+          () => loadResponseOrThrow(() => _api.loadExploreContents(ids)),);
 
   @override
   Future<void> requestContent(ContentRequest requestInfo) =>
@@ -43,5 +43,5 @@ class ContentDataSourceImpl
   @override
   Future<ChannelResponse> loadChannelInfo(String contentId) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadChannelInfo(contentId)));
+          () => loadResponseOrThrow(() => _api.loadChannelInfo(contentId)),);
 }

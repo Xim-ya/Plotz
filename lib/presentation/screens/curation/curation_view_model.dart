@@ -14,7 +14,7 @@ class CurationViewModel extends BaseViewModel {
   final ContentRepository _contentRepository;
 
   // 진행중인 큐레이션 리스트 호출
-  Future<void> fetchInProgressQurationList() async {
+  Future<void> fetchInProgressCurationList() async {
     final response = await _contentRepository.loadInProgressQurationList();
     response.fold(
       onSuccess: (data) {
@@ -60,7 +60,7 @@ class CurationViewModel extends BaseViewModel {
 
   Future<void> prepare() async {
     loadingState = TabLoadingState.loading;
-    await fetchInProgressQurationList();
+    await fetchInProgressCurationList();
     loadingState = TabLoadingState.done;
   }
 

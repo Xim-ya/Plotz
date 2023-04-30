@@ -14,7 +14,7 @@ class IconInkWellButton extends StatelessWidget {
       this.iconPath,
       this.color = Colors.white,
       required this.size,
-      required this.onIconTapped});
+      required this.onIconTapped,});
 
   final String? iconPath;
   final IconData? icon;
@@ -26,16 +26,16 @@ class IconInkWellButton extends StatelessWidget {
   factory IconInkWellButton.assetIcon(
           {required String iconPath,
           required double size,
-          required VoidCallback onIconTapped}) =>
+          required VoidCallback onIconTapped,}) =>
       IconInkWellButton(
-          iconPath: iconPath, size: size, onIconTapped: onIconTapped);
+          iconPath: iconPath, size: size, onIconTapped: onIconTapped,);
 
   // Flutter Package Icon 포맷
   factory IconInkWellButton.packageIcon(
           {Color? color = Colors.white,
           required IconData icon,
           required double size,
-          required VoidCallback onIconTapped}) =>
+          required VoidCallback onIconTapped,}) =>
       IconInkWellButton(
         icon: icon,
         size: size,
@@ -60,7 +60,7 @@ class IconInkWellButton extends StatelessWidget {
               width: size,
             )
           : Padding(
-              padding: EdgeInsets.all(6),
+              padding: const EdgeInsets.all(6),
               child: Icon(
                 icon,
                 size: size,

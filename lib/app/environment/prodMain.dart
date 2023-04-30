@@ -7,7 +7,7 @@ import 'package:soon_sak/utilities/index.dart';
 void main() async {
   // Flutter Engine 초기화
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
 
   // Isolate 토큰 생성 및 초기화
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
@@ -31,5 +31,5 @@ void main() async {
         .then((_) {
       Environment(BuildType.production).run();
     });
-  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),);
 }

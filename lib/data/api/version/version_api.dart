@@ -9,7 +9,7 @@ final String firebaseKey = Environment.baseUrl;
 
 @RestApi(
     baseUrl:
-        'https://\$firebaseKey-default-rtdb.asia-southeast1.firebasedatabase.app')
+        'https://\$firebaseKey-default-rtdb.asia-southeast1.firebasedatabase.app',)
 abstract class VersionApi {
   factory VersionApi(Dio dio, {String baseUrl}) = _VersionApi;
 

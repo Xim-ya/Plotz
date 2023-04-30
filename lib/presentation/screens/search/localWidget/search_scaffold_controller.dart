@@ -32,7 +32,7 @@ class SearchScaffoldController extends BaseViewModel
     /// https://github.com/EdsonBueno/infinite_scroll_pagination/issues/136
     /// 두번 call 되는 이슈를 막기 위해 0.4초 delayed 한 뒤에 실행
     Future.delayed(const Duration(milliseconds: 400),
-        () => {searchViewModel.pagingController.refresh()});
+        () => {searchViewModel.pagingController.refresh()},);
   }
 
   @override

@@ -12,7 +12,7 @@ class ContentEpisodeInfoItem {
       {required this.overview,
       required this.posterUrl,
       required this.seasonNumber,
-      required this.youtubeVideoId});
+      required this.youtubeVideoId,});
 
   factory ContentEpisodeInfoItem.fromJson(Map<String, dynamic> json) {
     return ContentEpisodeInfoItem(

@@ -10,10 +10,10 @@ class ExploreContentYoutubeInfo {
       {required this.videoTitle,
         required this.channelImgUrl,
         required this.channelName,
-        required this.subscribers}); // 구독자 수
+        required this.subscribers,}); // 구독자 수
 
   factory ExploreContentYoutubeInfo.fromResponse(
-      {required Channel channelRes, required Video videoRes}) {
+      {required Channel channelRes, required Video videoRes,}) {
     return ExploreContentYoutubeInfo(
       videoTitle: videoRes.title,
       channelImgUrl: channelRes.logoUrl,

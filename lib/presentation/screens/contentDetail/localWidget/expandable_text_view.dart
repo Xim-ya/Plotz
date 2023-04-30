@@ -11,7 +11,7 @@ class ExpandableTextView extends StatefulWidget {
   final int maxLines;
 
   const ExpandableTextView(
-      {super.key, required this.text, required this.maxLines});
+      {super.key, required this.text, required this.maxLines,});
 
   @override
   _ExpandableTextViewState createState() => _ExpandableTextViewState();

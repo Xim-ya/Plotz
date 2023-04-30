@@ -36,7 +36,7 @@ abstract class TmdbApi {
   @GET('/tv/{tvId}/images')
   Future<TmdbImagesResponse> loadTvImages(
       {@Path('tvId') required int tvId,
-      @Query('api_key') required String apiKey});
+      @Query('api_key') required String apiKey,});
 
 
   // 'tv' 컨텐츠 검색 결과

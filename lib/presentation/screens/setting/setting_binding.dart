@@ -4,6 +4,7 @@ import 'package:soon_sak/utilities/index.dart';
 class SettingBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => SettingViewModel(Get.find(), Get.find(), Get.find()));
+    Get.lazyPut(() => SettingViewModel(Get.find(), Get.find(), Get.find()), fenix: false);
+    Get.lazyPut(() => SignOutUseCase(Get.find()), fenix: false);
   }
 }

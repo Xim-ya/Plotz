@@ -41,11 +41,11 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
 
   // 유튜브 컨텐츠 좋아요 수
   String? get singleLikesCount => Formatter.formatViewAndLikeCount(
-      contentVideos.value?.singleTypeVideo.detailInfo?.likeCount);
+      contentVideos.value?.singleTypeVideo.detailInfo?.likeCount,);
 
   // 유튜브 컨텐츠 업로드 일자
   String? get singleUploadDate => Formatter.getDateDifferenceFromNow(
-      contentVideos.value?.singleTypeVideo.detailInfo?.uploadDate);
+      contentVideos.value?.singleTypeVideo.detailInfo?.uploadDate,);
 
   /* [ContentVideoFormat] - multiple 타입 리소스  */
 

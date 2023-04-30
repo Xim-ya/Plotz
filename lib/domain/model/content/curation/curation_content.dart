@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/enum/curation_status.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CurationContent {

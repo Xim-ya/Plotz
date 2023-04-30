@@ -34,7 +34,7 @@ class TmdbImageItemResponse {
   int width;
 
   TmdbImageItemResponse(this.aspect_ratio, this.height, this.file_path,
-      this.vote_average, this.vote_count, this.width);
+      this.vote_average, this.vote_count, this.width,);
 
   factory TmdbImageItemResponse.fromJson(Map<String, dynamic> json) =>
       _$TmdbImageItemResponseFromJson(json);

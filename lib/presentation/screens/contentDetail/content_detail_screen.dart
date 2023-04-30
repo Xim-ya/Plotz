@@ -7,15 +7,16 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   Widget buildScreen(BuildContext context) {
     return ContentDetailScaffold(
       header: _buildHeader(),
-      headerBackdropImgUrl: vm.headerBackdropImg,
-      rateAndGenreView: _buildRateAndGenreView(),
       tabs: _buildTab(),
       tabViews: _buildTabBarViews(),
+      rateAndGenreView: _buildRateAndGenreView(),
+      headerBgImgUrl: vm.headerBackdropImg,
     );
   }
 
   // 탭뷰
   List<Widget> _buildTabBarViews() => [
+        // Container(),
         const MainContentTabView(),
         const ContentDetailInfoTabView(),
       ];
@@ -70,7 +71,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
                 Obx(
                   () => vm.headerTitle.hasData
                       ? Text(vm.headerTitle!.value,
-                          style: AppTextStyle.headline2)
+                          style: AppTextStyle.headline2,)
                       : Shimmer(
                           color: AppColor.lightGrey,
                           child: const SizedBox(
@@ -120,7 +121,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   // 탭바
   List<Tab> _buildTab() {
     return const [
-      Tab(text: '컨텐츠', height: 42),
+      Tab(text: '콘텐츠', height: 42),
       Tab(text: '정보', height: 42),
     ];
   }

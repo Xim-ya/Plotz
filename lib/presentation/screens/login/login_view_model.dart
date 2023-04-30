@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
 class LoginViewModel extends BaseViewModel {
-  LoginViewModel(this._signOutHandlerUseCase, this._signInHandlerUseCase,
-      this._userService);
+  LoginViewModel(this._signInHandlerUseCase,
+      this._userService,);
 
   bool isUserSignIn = false;
 
@@ -11,7 +11,6 @@ class LoginViewModel extends BaseViewModel {
   final UserService _userService;
 
   /* UseCases*/
-  final SignOutUseCase _signOutHandlerUseCase;
   final SignInAndUpHandlerUseCase _signInHandlerUseCase;
 
 
@@ -32,9 +31,6 @@ class LoginViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> logOut() async {
-    await _signOutHandlerUseCase.call(Sns.google);
-  }
 
   /// 탭 스크린에 이동하기 전에 Splash 스크린에서
   /// load가 필요한 모듈들을 실행

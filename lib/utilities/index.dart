@@ -77,7 +77,7 @@ export 'package:soon_sak/data/api/auth/auth_api.dart';
 export 'package:soon_sak/data/api/auth/auth_api_impl.dart';
 export 'package:soon_sak/data/dataSource/staticContent/static_content_data_source_impl.dart';
 export 'package:soon_sak/data/api/content/content_api.dart';
-export 'package:soon_sak/data/api/content/content_api_impl.dart';
+
 export 'package:soon_sak/data/firebase/app_fire_store.dart';
 export 'package:soon_sak/data/repository/auth/auth_repository.dart';
 export 'package:soon_sak/data/repository/auth/auth_repository_impl.dart';

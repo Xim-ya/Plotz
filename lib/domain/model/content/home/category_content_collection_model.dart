@@ -44,10 +44,10 @@ class CategoryContentItem {
       {required this.id,
         required this.originId,
       required this.contentType,
-      required this.posterImgUrl});
+      required this.posterImgUrl,});
 
   factory CategoryContentItem.fromResponse(
-          CategoryContentItemResponse response) =>
+          CategoryContentItemResponse response,) =>
       CategoryContentItem(
         originId: response.id,
         id: SplittedIdAndType.fromOriginId(response.id).id,

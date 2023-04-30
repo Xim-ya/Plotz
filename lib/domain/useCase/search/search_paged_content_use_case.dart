@@ -29,12 +29,12 @@ abstract class SearchPagedContentUseCase {
 
 
   Future<void> loadSearchedContentList(ContentType contentType,
-      {required bool checkContentRegistration});
+      {required bool checkContentRegistration,});
 
   Future<void> onSearchTermEntered();
 
   void onSearchedContentTapped(
-      {required SearchedContent content, required ContentType contentType});
+      {required SearchedContent content, required ContentType contentType,});
 
   void onCloseBtnTapped();
 }

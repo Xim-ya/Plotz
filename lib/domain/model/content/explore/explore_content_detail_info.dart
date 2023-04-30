@@ -13,7 +13,7 @@ class ExploreContentDetailInfo {
 
   // 영화
   factory ExploreContentDetailInfo.fromMovieResponse(
-      TmdbMovieDetailResponse response) {
+      TmdbMovieDetailResponse response,) {
     /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
     /// 검증 로직이 필요
     String? verifiedReleaseDate() {
@@ -32,12 +32,12 @@ class ExploreContentDetailInfo {
     return ExploreContentDetailInfo(
         posterImg: response.poster_path ?? response.backdrop_path,
         title: response.title,
-        releaseDate: verifiedReleaseDate());
+        releaseDate: verifiedReleaseDate(),);
   }
 
   // 드라마
   factory ExploreContentDetailInfo.fromTvResponse(
-      TmdbTvDetailResponse response) {
+      TmdbTvDetailResponse response,) {
     /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
     /// 검증 로직이 필요
     String? verifyReleaseDate() {
@@ -56,6 +56,6 @@ class ExploreContentDetailInfo {
     return ExploreContentDetailInfo(
         posterImg: response.poster_path ?? response.backdrop_path,
         title: response.name,
-        releaseDate: verifyReleaseDate());
+        releaseDate: verifyReleaseDate(),);
   }
 }

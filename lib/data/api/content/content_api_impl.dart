@@ -3,7 +3,6 @@ import 'package:soon_sak/utilities/index.dart';
 class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override
   Future<List<String>> loadTotalContentIdList() async {
-    print("should be able to reach");
     final aim = await getDocumentIdsFromCollection('content');
     print(aim.length);
     return aim;
@@ -19,12 +18,12 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
 
     final listRes = documentSnapshots.get('items') as List<dynamic>;
 
-    return listRes.map((e) => VideoResponse.fromJson(e)).toList();
+    return listRes.map<VideoResponse>((item) => VideoResponse.fromJson(item)).toList();
   }
 
   @override
   Future<String> requestContentRegistration(
-      ContentRegistrationRequest requestData) {
+      ContentRegistrationRequest requestData,) {
     final Map<String, dynamic> data = requestData.toMap(
       curatorRef: db.collection('user').doc(requestData.curatorId),
     );
@@ -34,7 +33,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override
   Future<List<CurationContentResponse>> loadInProgressQurationList() async {
     final docs = await getDocsWithContainingField('curation',
-        fieldName: 'status', neededFieldName: 'inProgress');
+        fieldName: 'status', neededFieldName: 'inProgress',);
 
     final resultList = docs.map((e) async {
       /// curator 필드는 참조 타입.
@@ -45,7 +44,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       final String? curatorName = curatorDoc.data()?['displayName'];
       final String? curatorImg = curatorDoc.data()?['photoUrl'];
       return CurationContentResponse.fromDocument(e,
-          curatorName: curatorName, curatorImg: curatorImg);
+          curatorName: curatorName, curatorImg: curatorImg,);
     }).toList();
 
     return Future.wait(resultList);
@@ -53,7 +52,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
 
   @override
   Future<List<ExploreContentResponse>> loadExploreContents(
-      List<String> ids) async {
+      List<String> ids,) async {
     final docs = await getContainingDocs(collectionName: 'content', ids: ids);
 
     final resultList = docs.map((e) async {
@@ -64,7 +63,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       final channelDoc = await channelRef.get();
 
       return ExploreContentResponse.fromDocumentSnapshot(
-          contentSnapshot: e, channelSnapshot: channelDoc);
+          contentSnapshot: e, channelSnapshot: channelDoc,);
     }).toList();
 
     return Future.wait(resultList);
@@ -74,7 +73,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   Future<void> requestContent(ContentRequest requestInfo) async {
     final data = requestInfo.toMap();
     await storeDocument('requestContent',
-        docId: requestInfo.contentId, data: data);
+        docId: requestInfo.contentId, data: data,);
   }
 
   @override
@@ -82,7 +81,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     final doc = await getSubCollectionDoc('content',
         docId: contentId,
         subCollectionName: 'channel',
-        subCollectionDocId: 'main');
+        subCollectionDocId: 'main',);
 
     final DocumentReference<Map<String, dynamic>> docRef =
     doc.get('channelRef');
@@ -99,7 +98,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     final doc = await getSubCollectionDoc('content',
         docId: contentId,
         subCollectionName: 'curator',
-        subCollectionDocId: 'main');
+        subCollectionDocId: 'main',);
 
     final DocumentReference<Map<String, dynamic>> docRef = doc.get('userRef');
     final docData = await docRef.get();

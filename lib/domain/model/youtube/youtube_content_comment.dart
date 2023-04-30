@@ -27,7 +27,7 @@ class YoutubeContentComment {
       {required this.author,
       required this.profileImgPath,
       required this.text,
-      required this.isHearted});
+      required this.isHearted,});
 
   factory YoutubeContentComment.fromResponse(Comment response) {
     final int randomNum = Random().nextInt(9) + 1;
