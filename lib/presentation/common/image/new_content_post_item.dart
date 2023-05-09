@@ -8,12 +8,17 @@ class NewContentPostItem extends StatelessWidget {
   const NewContentPostItem({
     Key? key,
     required this.imgUrl,
+    required this.title,
     this.borderRadius = 4,
     this.height = 140,
     this.width = 92,
   }) : super(key: key);
 
+  factory NewContentPostItem.createSkeleton() =>
+      const NewContentPostItem(imgUrl: null, title: null);
+
   final String? imgUrl;
+  final String? title;
   final double borderRadius;
   final double height;
   final double width;
@@ -22,7 +27,7 @@ class NewContentPostItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
-      child: imgUrl.hasData
+      child: imgUrl.hasData && title.hasData
           ? SizedBox(
               width: 92,
               child: Column(
@@ -51,7 +56,7 @@ class NewContentPostItem extends StatelessWidget {
                   ),
                   AppSpace.size4,
                   Text(
-                    '그해 우리는',
+                    title ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: PretendardTextStyle.regular(
