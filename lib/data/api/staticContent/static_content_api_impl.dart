@@ -39,5 +39,11 @@ class StaticContentApiImpl implements StaticContentApi {
     return ContentKeyResponse.fromJson(json);
   }
 
+  @override
+  Future<Response<dynamic>> loadTopPositionedCollection() async {
+    final response = await _dio.get('$baseUrl/topPositionedCollection.json');
+    return response;
+  }
+
 
 }

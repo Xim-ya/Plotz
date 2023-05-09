@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class StaticContentRepositoryImpl extends StaticContentRepository {
@@ -36,11 +37,21 @@ class StaticContentRepositoryImpl extends StaticContentRepository {
   }
 
   @override
-  Future<Result<CategoryContentCollection>>
-      loadCategoryContentCollection(int page) async {
+  Future<Result<CategoryContentCollection>> loadCategoryContentCollection(
+      int page) async {
     try {
       final response = await _dataSource.loadCategoryContentCollection(page);
       return Result.success(CategoryContentCollection.fromResponse(response));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<TopPositionedCollection>> loadTopPositionedCollection() async {
+    try {
+      final response = await _dataSource.loadTopPositionedCollection();
+      return Result.success(TopPositionedCollection.fromResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }

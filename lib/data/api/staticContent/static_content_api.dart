@@ -18,6 +18,9 @@ abstract class StaticContentApi {
   // 카테고리 Collection 리스트
   Future<Response<dynamic>> loadCategoryContentCollections(int index);
 
+  // 상단 노출 Collection 리스트
+  Future<Response<dynamic>> loadTopPositionedCollection();
+
   // Static Content 키 리스트
   Future<ContentKeyResponse> loadStaticContentKeys();
 }

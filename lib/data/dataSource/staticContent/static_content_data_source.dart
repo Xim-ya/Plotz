@@ -1,7 +1,7 @@
+import 'package:soon_sak/data/api/staticContent/response/top_positioned_collection_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-
-abstract class StaticContentDataSource  {
+abstract class StaticContentDataSource {
   // 홈 상단 배너 컨텐츠 정보 호출
   Future<BannerResponse> loadBannerContents();
 
@@ -12,8 +12,9 @@ abstract class StaticContentDataSource  {
   Future<ContentKeyResponse> loadStaticContentKeys();
 
   // NEW : 카테고리 컨텐츠 모음 정보 호출
-  Future<CategoryContentCollectionResponse> loadCategoryContentCollection(int page);
+  Future<CategoryContentCollectionResponse> loadCategoryContentCollection(
+      int page);
 
-
-
+  // 상단 노출 Collection 리스트
+  Future<TopPositionedCollectionResponse> loadTopPositionedCollection();
 }
