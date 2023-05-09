@@ -25,49 +25,68 @@ class NewHomeScreen extends BaseScreen<HomeViewModel> {
   }
 
   List<Widget> _buildTopPositionedContentSliderList() {
-    return List.generate(3, (index) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              '여름엔 청춘',
-              style: AppTextStyle.title2,
+    return List.generate(
+      vm.topPositionedCategory.value?.length ?? 3,
+      (categoryIndex) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Obx(
+                () => vm.isTopPositionedCollectionLoaded
+                    ? Text(
+                        vm.selectedTopPositionedCategory(categoryIndex).title,
+                        style: AppTextStyle.title2,
+                      )
+                    : const SkeletonBox(
+                        padding: AppInset.vertical4,
+                        width: 108,
+                        height: 16,
+                      ),
+              ),
             ),
-          ),
-          AppSpace.size7,
-          Obx(
-            () => ContentPostSlider(
-              height: 158,
-              itemCount: vm.topTenContents?.contentList?.length ?? 5,
-              itemBuilder: (context, index) {
-                if (vm.isTopTenContentsLoaded) {
-                  final item = vm.topTenContents!.contentList![index];
-                  return GestureDetector(
-                    onTap: () {
-                      final argument = ContentArgumentFormat(
-                        contentId: item.contentId,
-                        contentType: item.contentType,
-                        posterImgUrl: item.posterImgUrl,
-                        originId: item.originId,
-                      );
-                      vm.routeToContentDetail(argument, sectionType: 'topTen');
-                    },
-                    child: NewContentPostItem(
-                      imgUrl: vm.topTenContents!.contentList![index]
-                          .posterImgUrl.prefixTmdbImgPath,
-                    ),
-                  );
-                } else {
-                  return const NewContentPostItem(imgUrl: null);
-                }
-              },
+            AppSpace.size7,
+            Obx(
+              () => ContentPostSlider(
+                height: 158,
+                itemCount: vm.topPositionedCategory.value?[categoryIndex].items
+                        .length ??
+                    5,
+                itemBuilder: (context, index) {
+                  if (vm.isTopPositionedCollectionLoaded) {
+                    final item = vm
+                        .selectedTopPositionedCategory(categoryIndex)
+                        .items[index];
+                    return GestureDetector(
+                      onTap: () {
+                        final argument = ContentArgumentFormat(
+                          contentId: item.contentId,
+                          contentType: item.contentType,
+                          posterImgUrl: item.posterImgUrl,
+                          originId: item.originId,
+                          title: item.title,
+                        );
+                        vm.routeToContentDetail(
+                          argument,
+                          sectionType: 'topTen',
+                        );
+                      },
+                      child: NewContentPostItem(
+                        imgUrl: item.posterImgUrl.prefixTmdbImgPath,
+                        title: item.title,
+                      ),
+                    );
+                  } else {
+                    return NewContentPostItem.createSkeleton();
+                  }
+                },
+              ),
             ),
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildStackedAppBar() => Padding(
@@ -177,8 +196,9 @@ class _BannerSlider extends BaseView<HomeViewModel> {
       () => Stack(
         children: [
           GestureDetector(
-            onTap: (){
-              print(vm.topPositionedCategory.value?.length ?? " NONE ");
+            onTap: () {
+              vm.test();
+              // print(vm.topPositionedCategory.value?.length ?? " NONE ");
             },
             child: CarouselSlider.builder(
               carouselController: vm.carouselController,

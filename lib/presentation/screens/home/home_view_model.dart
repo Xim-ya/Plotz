@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
+import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'home_view_model.part.dart';
@@ -6,19 +8,24 @@ part 'home_view_model.part.dart';
 class HomeViewModel extends BaseViewModel {
   HomeViewModel(
     this.loadPagedCategoryCollectionUseCase,
+    this._loadCachedTopPositionedContentsUseCase,
     this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
   );
 
   /* [Variables] */
 
+
   /// Data
   final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
+  final Rxn<List<TopPositionedCategory>> topPositionedCategory =
+      Rxn(); // 상단 노출 콜렉션(카테고리)
   final Rxn<TopTenContentsModel> _topTenContents = Rxn(); // Top10 컨텐츠
 
   /// State
   final RxBool enableAppBarBgBlur = false.obs; // 앱바 Blur 효과 enable 여부
-  final RxInt _bannerContentsSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
+  final RxInt bannerContentsSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
+  final RxDouble bannerInfoOpacity = 1.0.obs;
 
   /// Size
   final double appBarHeight = SizeConfig.to.statusBarHeight + 56;
@@ -34,11 +41,35 @@ class HomeViewModel extends BaseViewModel {
   final LoadPagedCategoryCollectionUseCase loadPagedCategoryCollectionUseCase;
   final LoadCachedBannerContentUseCase _loadBannerContentUseCase;
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
+  final LoadCachedTopPositionedContentsUseCase
+      _loadCachedTopPositionedContentsUseCase;
+
+  Future<void> test() async{
+    // await _loadCachedTopPositionedContentsUseCase.deleteLocalStorageField();
+    // await _fetchTopPositionedCollection();
+  }
 
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
-    _bannerContentsSliderIndex.value = index;
+    bannerContentsSliderIndex.value = index;
+  }
+
+  /// Banner 슬라이더가 scroll 되었을 때
+  /// [Carousel의] onScrollChange 파라미터 값(double)을 fade in-out 애니메이션 효과를 설정
+  void onBannerSliderScrolled(double? position) {
+    if (position.hasData) {
+      final integerRemoved = position!.remainder(1.0).toStringAsFixed(3);
+      final remain = 1 - double.parse(integerRemoved);
+
+      if (remain > 0.6) {
+        bannerInfoOpacity(remain);
+      } else if (remain > 0.48 && remain < 0.5) {
+        bannerInfoOpacity(0);
+      } else {
+        bannerInfoOpacity(double.parse(integerRemoved));
+      }
+    }
   }
 
   // 컨텐츠 상세 화면으로 이동
@@ -107,6 +138,16 @@ class HomeViewModel extends BaseViewModel {
     );
   }
 
+  // 상단 노출 카테고리 컬렉션 호출
+  Future<void> _fetchTopPositionedCollection() async {
+    final response = await _loadCachedTopPositionedContentsUseCase.call();
+    response.fold(onSuccess: (data) {
+      topPositionedCategory.value = data;
+    }, onFailure: (e) {
+      log('HomeViewModel > $e');
+    });
+  }
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -129,6 +170,7 @@ class HomeViewModel extends BaseViewModel {
     // 병렬 호출
     await Future.wait([
       _fetchBannerContents(),
+      _fetchTopPositionedCollection(),
       _fetchTopTenContents(),
     ]);
   }
