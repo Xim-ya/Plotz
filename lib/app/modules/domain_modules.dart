@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
 import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
@@ -31,8 +32,11 @@ abstract class DomainModules {
           RequestContentRegistrationUseCase(Get.find(), Get.find(), Get.find()),
       fenix: true,
     );
-    Get.lazyPut(() => LoadPagedCategoryCollectionUseCase(
-        Get.find(), Get.find(), Get.find()), fenix: true);
+    Get.lazyPut(
+        () => LoadPagedCategoryCollectionUseCase(
+            Get.find(), Get.find(), Get.find()),
+        fenix: true);
+
 
     // TMDB
     Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: true);

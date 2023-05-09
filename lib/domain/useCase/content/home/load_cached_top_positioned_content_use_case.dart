@@ -1,0 +1,97 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:soon_sak/data/api/staticContent/response/top_positioned_collection_response.dart';
+import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
+import 'package:soon_sak/utilities/index.dart';
+
+/** Created By Ximya - 2022.02.09
+ *  홈 스크린 위치한 TopTen10 컨텐츠 정보를 불러오는 메소드
+ *  Local Storage에 배너 컨텐츠 정보가 저장되어 있을 경우 api call을 따로 하지 않고 우회함.
+ *  API call 최소화하고 LocalStorage에 접근해 데이터를 빠르게 받기 위함 (캐싱)
+ *
+ *  상세 로직은 아래와 같음.
+ *
+ *  1. 로컬 데이터가 존재하고
+ *  2. 최신화된 키를 보유하고 있다면
+ *  ==> Local에서 데이터 반환
+ *
+ *  반대의 경우 API Call
+ *
+ * */
+
+class LoadCachedTopPositionedContentsUseCase
+    extends BaseNoParamUseCase<Result<List<TopPositionedCategory>>> {
+  LoadCachedTopPositionedContentsUseCase(
+    this._repository,
+    this._localStorageService,
+    this._contentService,
+  );
+
+  final LocalStorageService _localStorageService;
+  final StaticContentRepository _repository;
+  final ContentService _contentService;
+
+  @override
+  Future<Result<List<TopPositionedCategory>>> call() async {
+    // 1. storage 데이터 존재 유무 확인
+    final Object? localData = await _localStorageService.getData(
+        fieldName: 'topPositionedCollection');
+    final String keyResponse = _contentService.topTenContentKey!;
+
+    /// 조건 (AND)
+    /// LocalStorage에 데이터가 존재한다면,
+    /// 배너키 데이터가 존재한다면
+    /// 최신화된 키라면
+    if (localData.hasData &&
+        keyResponse.hasData &&
+        _isUpdatedKey(
+          jsonText: localData.toString(),
+          givenKey: keyResponse,
+        )) {
+      return _getTopPositionedDataFromLocal(localData!);
+    } else {
+      // 조건 : local data가 존재하지 않는다면
+      // 실행 :  api 호출
+      return fetchTopTenContent();
+    }
+  }
+
+  // Storage 데이터 삭제 (초기화)
+  Future<void> deleteLocalStorageField() async {
+    await _localStorageService.deleteData(
+        fieldName: 'topPositionedCollection');
+  }
+
+  /// api 호출
+  Future<Result<List<TopPositionedCategory>>> fetchTopTenContent() async {
+    final response = await _repository.loadTopPositionedCollection();
+    return response.fold(
+      onSuccess: (data) => Result.success(data.categories),
+      onFailure: (e) {
+        log('=== LoadCachedTopPositionedContentsUseCase / 2-c) / api 호출 실패 \n $e');
+        return Result.failure(e);
+      },
+    );
+  }
+
+  // LocalStorage로부터 데이터 반환
+  Future<Result<List<TopPositionedCategory>>> _getTopPositionedDataFromLocal(
+      Object localData) async {
+    final json = jsonDecode(localData.toString());
+    final response = TopPositionedCollectionResponse.fromJson(json);
+    final result = TopPositionedCollection.fromResponse(response);
+    return Result.success(result.categories);
+  }
+
+  /// 'key' 값이 최신화 되어 있는지 확인
+  bool _isUpdatedKey({required String jsonText, required String givenKey}) {
+    Map<String, dynamic> data = json.decode(jsonText);
+    final response = TopPositionedCollectionResponse.fromJson(data);
+
+    if (response.key == givenKey) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
