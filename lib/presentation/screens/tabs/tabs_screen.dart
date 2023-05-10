@@ -39,14 +39,14 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
     return Obx(
       () => Theme(
         data: Theme.of(context).copyWith(
-          canvasColor: AppColor.black, // Bg 컬러
+          canvasColor: AppColor.newBlack, // Bg 컬러
         ),
         child: Container(
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
-                color: AppColor.strongGrey,
-                width: vm.selectedTabIndex.value == 1 ? 0.0 : 0.4,
+                color: AppColor.gray06,
+                width: vm.selectedTabIndex.value == 1 ? 0.0 : 0.75,
               ),
             ),
           ),
@@ -54,14 +54,19 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
             items: <BottomNavigationBarItem>[
               for (final tab in BottomNavigationConstants.values)
                 BottomNavigationBarItem(
-                  icon: tab.icon,
+                  icon: SvgPicture.asset(
+                    'assets/icons/${tab.iconPath}',
+                    color: vm.isTabSelected(tab.indexedKey)
+                        ? AppColor.main
+                        : AppColor.gray04,
+                  ),
                   label: tab.label,
                 )
             ],
             currentIndex: vm.selectedTabIndex.value,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: const Color(0xFF515151),
+            selectedItemColor: AppColor.main,
+            unselectedItemColor: AppColor.gray04,
             onTap: vm.onBottomNavBarItemTapped,
           ),
         ),
