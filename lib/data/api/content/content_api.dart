@@ -1,5 +1,3 @@
-import 'package:soon_sak/data/api/content/response/channel_response.dart';
-import 'package:soon_sak/domain/model/content/search/content_request.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class ContentApi {

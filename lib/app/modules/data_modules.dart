@@ -1,7 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:soon_sak/data/api/channel/channel_api.dart';
+import 'package:soon_sak/data/api/channel/channel_api_impl.dart';
 import 'package:soon_sak/data/api/version/version_api.dart';
+import 'package:soon_sak/data/dataSource/channel/channel_data_source.dart';
+import 'package:soon_sak/data/dataSource/channel/channel_data_source_impl.dart';
 import 'package:soon_sak/data/dataSource/version/version_data_sourcel_impl.dart';
 import 'package:soon_sak/data/firebase/app_fire_storage.dart';
+import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/repository/channel/channel_respository_impl.dart';
 import 'package:soon_sak/data/repository/version/version_repository_impl.dart';
 import 'package:soon_sak/data/resources/app_dio.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -33,6 +39,13 @@ abstract class DataModules {
     Get.lazyPut<YoutubeApi>(() => YoutubeApiImpl(), fenix: true);
     Get.lazyPut<YoutubeDataSource>(() => YoutubeDataSourceImpl(Get.find()),
         fenix: true);
+
+    /* Channel */
+    Get.lazyPut<ChannelRepository>(() => ChannelRepositoryImpl(Get.find()),
+        fenix: true);
+    Get.lazyPut<ChannelDataSource>(() => ChannelDataSourceImpl(Get.find()),
+        fenix: true);
+    Get.lazyPut<ChannelApi>(() => ChannelApiImpl(), fenix: true);
 
     /* Auth */
     Get.lazyPut<AuthApi>(() => AuthApiImpl(), fenix: true);
