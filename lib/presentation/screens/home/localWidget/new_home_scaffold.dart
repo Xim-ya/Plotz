@@ -19,8 +19,9 @@ class NewHomeScaffold extends StatelessWidget {
     required this.scrollController,
     required this.stackedGradientPosterBg,
     required this.topBannerSlider,
-    required this.topTenContentSlider,
+    required this.topTenSlider,
     required this.categoryContentCollectionList,
+    required this.channelSlider,
     required this.stackedTopGradient,
     required this.stackedAppBar,
     required this.topPositionedContentSliderList,
@@ -29,9 +30,10 @@ class NewHomeScaffold extends StatelessWidget {
   final Widget stackedAppBar;
   final List<Widget> stackedGradientPosterBg;
   final Widget topBannerSlider;
-  final Widget topTenContentSlider;
+  final Widget topTenSlider;
   final Widget categoryContentCollectionList;
   final Widget stackedTopGradient;
+  final Widget channelSlider;
   final List<Widget> topPositionedContentSliderList;
   final ScrollController scrollController;
 
@@ -53,18 +55,19 @@ class NewHomeScaffold extends StatelessWidget {
                       topBannerSlider,
                       AppSpace.size32,
                       topPositionedContentSliderList[0],
-                      topTenContentSlider,
+                      topTenSlider,
+                      AppSpace.size14,
                       topPositionedContentSliderList[1],
                       AppSpace.size32,
+                      channelSlider,
+                      AppSpace.size32,
+
                     ],
                   ),
                 ],
               ),
             ),
             categoryContentCollectionList,
-            const SliverToBoxAdapter(
-              child: AppSpace.size72,
-            ),
           ],
         ),
         stackedTopGradient,

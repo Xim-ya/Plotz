@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -11,16 +13,16 @@ class HomeViewModel extends BaseViewModel {
     this._loadCachedTopPositionedContentsUseCase,
     this._loadCachedTopTenContentsUseCase,
     this._loadBannerContentUseCase,
+    this._channelRepository,
   );
 
   /* [Variables] */
-
-
   /// Data
   final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
   final Rxn<List<TopPositionedCategory>> topPositionedCategory =
       Rxn(); // 상단 노출 콜렉션(카테고리)
   final Rxn<TopTenContentsModel> _topTenContents = Rxn(); // Top10 컨텐츠
+  final Rxn<List<ChannelModel>> _channelList = Rxn(); // 채널 리스트
 
   /// State
   final RxBool enableAppBarBgBlur = false.obs; // 앱바 Blur 효과 enable 여부
@@ -37,6 +39,9 @@ class HomeViewModel extends BaseViewModel {
   PagingController<int, CategoryContentSection> get pagingController =>
       loadPagedCategoryCollectionUseCase.pagingController;
 
+  /* [Repository] */
+  final ChannelRepository _channelRepository;
+
   /* [UseCase] */
   final LoadPagedCategoryCollectionUseCase loadPagedCategoryCollectionUseCase;
   final LoadCachedBannerContentUseCase _loadBannerContentUseCase;
@@ -44,7 +49,7 @@ class HomeViewModel extends BaseViewModel {
   final LoadCachedTopPositionedContentsUseCase
       _loadCachedTopPositionedContentsUseCase;
 
-  Future<void> test() async{
+  Future<void> test() async {
     // await _loadCachedTopPositionedContentsUseCase.deleteLocalStorageField();
     // await _fetchTopPositionedCollection();
   }
@@ -64,7 +69,7 @@ class HomeViewModel extends BaseViewModel {
 
       if (remain > 0.6) {
         bannerInfoOpacity(remain);
-      } else if (remain > 0.48 && remain < 0.5) {
+      } else if (remain > 0.48 && remain < 0.52) {
         bannerInfoOpacity(0);
       } else {
         bannerInfoOpacity(double.parse(integerRemoved));
@@ -110,6 +115,19 @@ class HomeViewModel extends BaseViewModel {
   // 검색 스크린으로 이동
   void routeToSearch() {
     Get.toNamed(AppRoutes.search);
+  }
+
+  // 채널 리스트 호출
+  Future<void> _fetchChannelList() async {
+    final response = await _channelRepository.loadChannelsBaseOnSubscribers();
+    response.fold(
+      onSuccess: (data) {
+        _channelList.value = data;
+      },
+      onFailure: (e) {
+        log('HomeViewModel : 채널 리스트 호출 실패');
+      },
+    );
   }
 
   // Top10 컨텐츠 호출
@@ -172,6 +190,7 @@ class HomeViewModel extends BaseViewModel {
       _fetchBannerContents(),
       _fetchTopPositionedCollection(),
       _fetchTopTenContents(),
+      _fetchChannelList(),
     ]);
   }
 }

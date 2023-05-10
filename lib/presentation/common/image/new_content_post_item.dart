@@ -34,25 +34,30 @@ class NewContentPostItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CachedNetworkImage(
-                    height: 140,
-                    fit: BoxFit.cover,
-                    imageUrl: imgUrl!.prefixTmdbImgPath,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.75, color: AppColor.gray06),
+                    ),
+                    child: CachedNetworkImage(
+                      height: 140,
+                      fit: BoxFit.cover,
+                      imageUrl: imgUrl!.prefixTmdbImgPath,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    placeholder: (context, url) => Shimmer(
-                      child: Container(
-                        color: AppColor.black,
+                      placeholder: (context, url) => Shimmer(
+                        child: Container(
+                          color: AppColor.black,
+                        ),
                       ),
+                      errorWidget: (context, url, error) =>
+                          const Center(child: Icon(Icons.error)),
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Center(child: Icon(Icons.error)),
                   ),
                   AppSpace.size4,
                   Text(

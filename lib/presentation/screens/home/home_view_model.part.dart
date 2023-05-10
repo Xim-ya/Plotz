@@ -26,10 +26,19 @@ extension HomeViewModelPart on HomeViewModel {
   TopTenContentsModel? get topTenContents => _topTenContents.value;
 
   // 상단 노출 카테고리, index를 기준으론 필요 카테고리를 반환
-  TopPositionedCategory selectedTopPositionedCategory(int index) => topPositionedCategory.value![index];
+  TopPositionedCategory selectedTopPositionedCategory(int index) =>
+      topPositionedCategory.value![index];
 
   // 상단 노출 카테고리 콜렉션 로드 여부
-  bool get isTopPositionedCollectionLoaded => topPositionedCategory.value.hasData;
+  bool get isTopPositionedCollectionLoaded =>
+      topPositionedCategory.value.hasData;
 
+  // 채널 리스트 개수
+  int get countOfChannelList => _channelList.value?.length ?? 5;
 
+  // 채널 데이터 로드 여부
+  bool get isChannelListLoaded => _channelList.value.hasData;
+
+  // 채널리스트 요소 (인덱스 기준)
+  ChannelModel channelItem(int index) => _channelList.value![index];
 }

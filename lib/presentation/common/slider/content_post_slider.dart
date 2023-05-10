@@ -18,7 +18,7 @@ class ContentPostSlider extends StatelessWidget {
       height: height,
       child: ListView.separated(
         separatorBuilder: (__, _) => AppSpace.size8,
-        padding: const EdgeInsets.only(left: 16),
+        padding: AppInset.left16,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemCount: itemCount,

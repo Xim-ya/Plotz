@@ -11,19 +11,24 @@ class NewHomeScreen extends BaseScreen<HomeViewModel> {
   bool get wrapWithSafeArea => false;
 
   @override
+  Color? get screenBackgroundColor => AppColor.newBlack;
+
+  @override
   Widget buildScreen(BuildContext context) {
     return NewHomeScaffold(
       stackedTopGradient: _buildStackedTopGradient(),
       stackedAppBar: _buildStackedAppBar(),
       topBannerSlider: const _BannerSlider(),
-      topTenContentSlider: const _TopTenContentSlider(),
+      topTenSlider: const _TopTenContentSlider(),
+      channelSlider: const _ChannelSlider(),
       scrollController: vm.scrollController,
       stackedGradientPosterBg: _buildStackedGradientPosterBg(),
-      categoryContentCollectionList: _buildCategoryCollection(),
+      categoryContentCollectionList: const _PagedCategoryCollection(),
       topPositionedContentSliderList: _buildTopPositionedContentSliderList(),
     );
   }
 
+  // 상단 노출 카테고리 리스트
   List<Widget> _buildTopPositionedContentSliderList() {
     return List.generate(
       vm.topPositionedCategory.value?.length ?? 3,
@@ -49,7 +54,7 @@ class NewHomeScreen extends BaseScreen<HomeViewModel> {
             AppSpace.size7,
             Obx(
               () => ContentPostSlider(
-                height: 158,
+                height: 160,
                 itemCount: vm.topPositionedCategory.value?[categoryIndex].items
                         .length ??
                     5,
@@ -131,25 +136,6 @@ class NewHomeScreen extends BaseScreen<HomeViewModel> {
         ),
       );
 
-  /// 카테고리 리스트 - 각 리스트 안에 포스트 슬라이더 위젯이 구성되어 있음.
-  Widget _buildCategoryCollection() => PagedCategoryListView(
-        pagingController: vm.pagingController,
-        itemBuilder: (BuildContext context, dynamic item, int index) {
-          return CategoryContentSectionView(
-            contentSectionData: item,
-            onContentTapped: (nestedIndex) {
-              final argument = ContentArgumentFormat(
-                contentId: item.contents[nestedIndex].id,
-                contentType: item.contents[nestedIndex].contentType,
-                posterImgUrl: item.contents[nestedIndex].posterImgUrl,
-                originId: item.contents[nestedIndex].originId,
-              );
-              vm.routeToContentDetail(argument, sectionType: 'category');
-            },
-          );
-        },
-      );
-
   /// 배경 위젯 - Poster + Gradient Image 로 구성됨.
   List<Widget> _buildStackedGradientPosterBg() => [
         Obx(() {
@@ -212,8 +198,6 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                 },
                 onScrolled: vm.onBannerSliderScrolled,
                 viewportFraction: 1,
-                // aspectRatio: 375 / 500,
-                // aspectRatio: 337 / 276,
               ),
               itemBuilder:
                   (BuildContext context, int itemIndex, int pageViewIndex) {
@@ -313,6 +297,32 @@ class _BannerSlider extends BaseView<HomeViewModel> {
   }
 }
 
+// 페이징 로직이 적용되어 있는 카테고리 컬렉션 리스트
+class _PagedCategoryCollection extends BaseView<HomeViewModel> {
+  const _PagedCategoryCollection({Key? key}) : super(key: key);
+
+  @override
+  Widget buildView(BuildContext context) {
+    return PagedCategoryListView(
+      pagingController: vm.pagingController,
+      itemBuilder: (BuildContext context, dynamic item, int index) {
+        return CategoryContentSectionView(
+          contentSectionData: item,
+          onContentTapped: (nestedIndex) {
+            final argument = ContentArgumentFormat(
+              contentId: item.contents[nestedIndex].id,
+              contentType: item.contents[nestedIndex].contentType,
+              posterImgUrl: item.contents[nestedIndex].posterImgUrl,
+              originId: item.contents[nestedIndex].originId,
+            );
+            vm.routeToContentDetail(argument, sectionType: 'category');
+          },
+        );
+      },
+    );
+  }
+}
+
 class _TopTenContentSlider extends BaseView<HomeViewModel> {
   const _TopTenContentSlider({Key? key}) : super(key: key);
 
@@ -332,32 +342,174 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
         AppSpace.size7,
         Obx(
           () => ContentPostSlider(
-            height: 158,
+            height: 168,
             itemCount: vm.topTenContents?.contentList?.length ?? 5,
             itemBuilder: (context, index) {
-              if (vm.isTopTenContentsLoaded) {
-                final item = vm.topTenContents!.contentList![index];
-                return GestureDetector(
-                  onTap: () {
-                    final argument = ContentArgumentFormat(
-                      contentId: item.contentId,
-                      contentType: item.contentType,
-                      posterImgUrl: item.posterImgUrl,
-                      originId: item.originId,
-                    );
-                    vm.routeToContentDetail(argument, sectionType: 'topTen');
-                  },
-                  child: ContentPostItem(
-                    imgUrl: vm.topTenContents!.contentList![index].posterImgUrl
-                        .prefixTmdbImgPath,
+              return Stack(
+                clipBehavior: Clip.none,
+                children: <Widget>[
+                  Builder(builder: (context) {
+                    if (vm.isTopTenContentsLoaded) {
+                      final item = vm.topTenContents!.contentList![index];
+                      return GestureDetector(
+                        onTap: () {
+                          final argument = ContentArgumentFormat(
+                            contentId: item.contentId,
+                            contentType: item.contentType,
+                            posterImgUrl: item.posterImgUrl,
+                            originId: item.originId,
+                          );
+                          vm.routeToContentDetail(argument,
+                              sectionType: 'topTen');
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 0.75, color: AppColor.gray06)),
+                            child: CachedNetworkImage(
+                              imageUrl: item.posterImgUrl.prefixTmdbImgPath,
+                              height: 140,
+                              width: 220,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0.75,
+                            color: AppColor.gray06,
+                          ),
+                        ),
+                        child: const SkeletonBox(
+                          borderRadius: 4,
+                          height: 140,
+                          width: 220,
+                        ),
+                      );
+                    }
+                  }),
+
+                  // 하단 Gradient
+                  Positioned(
+                    bottom: 26,
+                    child: Container(
+                      height: 49,
+                      width: 220,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromRGBO(15, 15, 15, 0.0),
+                            Color.fromRGBO(15, 15, 15, 0.8),
+                          ],
+                          stops: [0.0, 1.0],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              } else {
-                return const ContentPostItem(imgUrl: null);
-              }
+                  Positioned(
+                    left: -4,
+                    bottom: 13.5,
+                    child: Text(
+                      '${index + 1}st',
+                      style: AppTextStyle.web2,
+                    ),
+                  ),
+                ],
+              );
             },
           ),
         ),
+      ],
+    );
+  }
+}
+
+/// 2023.05.09
+/// [정렬 기준]
+/// - 추후 기능을 보완해야겠지만 일단 구독자순으로 상위 20개의 데이터를 불러오는것으로 합의함
+///
+///  채널 슬라이드
+///
+class _ChannelSlider extends BaseView<HomeViewModel> {
+  const _ChannelSlider({Key? key}) : super(key: key);
+
+  @override
+  Widget buildView(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: AppInset.left16,
+          child: Text(
+            '놓치지 말아야 할 리뷰어',
+            style: AppTextStyle.title2,
+          ),
+        ),
+        AppSpace.size7,
+        SizedBox(
+          height: 112.75,
+          child: Obx(
+            () => ListView.separated(
+              padding: AppInset.left18,
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (_, __) => AppSpace.size12,
+              itemCount: vm.countOfChannelList,
+              itemBuilder: (context, index) {
+                if (vm.isChannelListLoaded) {
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border:
+                              Border.all(color: AppColor.gray06, width: 0.75),
+                        ),
+                        child: RoundProfileImg(
+                          size: 88,
+                          imgUrl: vm.channelItem(index).logoImgUrl,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        width: 88,
+                        child: Text(
+                          vm.channelItem(index).name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyle.alert2,
+                        ),
+                      )
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: const <Widget>[
+                      SkeletonBox(
+                        borderRadius: 44,
+                        height: 88,
+                        width: 88,
+                      ),
+                      SizedBox(height: 7),
+                      SkeletonBox(
+                        height: 16,
+                        width: 56,
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
+          ),
+        )
       ],
     );
   }
