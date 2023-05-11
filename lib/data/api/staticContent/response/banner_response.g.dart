@@ -21,4 +21,6 @@ BannerItemResponse _$BannerItemResponseFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       imgUrl: json['imgUrl'] as String,
       backdropImgUrl: json['backdropImgUrl'] as String,
+      genres:
+          (json['genres'] as List<dynamic>).map((e) => e as String).toList(),
     );
