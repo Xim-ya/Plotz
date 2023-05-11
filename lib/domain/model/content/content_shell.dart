@@ -15,28 +15,31 @@ class ContentPosterShell {
   final int contentId;
   final ContentType contentType;
   final String posterImgUrl;
+  final String title;
 
   ContentPosterShell({
+    required this.title,
     required this.originId,
     required this.contentId,
     required this.contentType,
     required this.posterImgUrl,
-  }); 
+  });
 
   factory ContentPosterShell.fromResponse(TopTenContentItemResponse response) =>
       ContentPosterShell(
+        title: response.title,
         originId: response.id,
         contentId: SplittedIdAndType.fromOriginId(response.id).id,
         contentType: SplittedIdAndType.fromOriginId(response.id).type,
-        posterImgUrl: response.posterImgUrl,
+        posterImgUrl: response.imgUrl,
       );
 
-  // // Form Mock Json Data Response
-  // factory ContentPosterShell.fromJson(Map<String, dynamic> json) {
-  //   return ContentPosterShell(
-  //     contentId:  SplittedIdAndType.fromOriginId(json['id']).id,
-  //     posterImgUrl: json['posterImgUrl'],
-  //     contentType: SplittedIdAndType.fromOriginId(json['id']).type,
-  //     );
-  // }
+// // Form Mock Json Data Response
+// factory ContentPosterShell.fromJson(Map<String, dynamic> json) {
+//   return ContentPosterShell(
+//     contentId:  SplittedIdAndType.fromOriginId(json['id']).id,
+//     posterImgUrl: json['posterImgUrl'],
+//     contentType: SplittedIdAndType.fromOriginId(json['id']).type,
+//     );
+// }
 }
