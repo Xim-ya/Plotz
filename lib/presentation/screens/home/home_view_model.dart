@@ -17,6 +17,7 @@ class HomeViewModel extends BaseViewModel {
   );
 
   /* [Variables] */
+
   /// Data
   final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
   final Rxn<List<TopPositionedCategory>> topPositionedCategory =
@@ -27,6 +28,7 @@ class HomeViewModel extends BaseViewModel {
   /// State
   final RxBool enableAppBarBgBlur = false.obs; // 앱바 Blur 효과 enable 여부
   final RxInt bannerContentsSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
+  final RxDouble appBarLogoOpacity = 1.0.obs; // 앱 바 로고 opacity
   final RxDouble bannerInfoOpacity = 1.0.obs;
 
   /// Size
@@ -87,28 +89,17 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
-  // AppBar Blur효과 enable & disable 메소드
-  void _manageAppBarBgEffect(double offset) {
-    // Status Bar Height 보다 offest이 작을 땐 Blur 처리 X
-    if (offset <= SizeConfig.to.statusBarHeight) {
-      enableAppBarBgBlur(false);
-      return;
+  // AppBar Logo Opacity 설정 메소드
+  void _manageAppBarLogoOpacity(double offset) {
+    // 왜 이게 난 더 직관적이지..?
+    // guar let문 느낌이 나서 더 좋음
+    if (scrollController.offset < 390 && appBarLogoOpacity.value == 1.0) return;
+    if (scrollController.offset >= 390 && appBarLogoOpacity.value == 0) return;
+
+    if (scrollController.offset >= 390) {
+      appBarLogoOpacity(0.0);
     } else {
-      /** 중복 할당을 방지하기 위해. 조건 두가지를 추가.
-       * [scrollController.position.userScrollDirection] 유저가 아래로 스크롤하고
-       * [showBlurAtAppBar.isTrue] blur값이 true로 선언되어 있다면 값을 변경.
-       * */
-      if (scrollController.position.userScrollDirection ==
-              ScrollDirection.forward &&
-          enableAppBarBgBlur.isTrue) {
-        enableAppBarBgBlur(false);
-        return;
-      } else if (scrollController.position.userScrollDirection ==
-              ScrollDirection.reverse &&
-          enableAppBarBgBlur.isFalse) {
-        enableAppBarBgBlur(true);
-        return;
-      }
+      appBarLogoOpacity(1.0);
     }
   }
 
@@ -180,7 +171,7 @@ class HomeViewModel extends BaseViewModel {
 
     scrollController = ScrollController();
     scrollController.addListener(() {
-      _manageAppBarBgEffect(scrollController.offset);
+      _manageAppBarLogoOpacity(scrollController.offset);
     });
 
     carouselController = CarouselController();

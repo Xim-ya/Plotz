@@ -70,6 +70,7 @@ class LoadCachedTopTenContentsUseCase
   // LocalStorage로부터 데이터 반환
   Future<Result<TopTenContentsModel>> _getTopTenModelFromLocal(
       Object localData) async {
+
     final json = jsonDecode(localData.toString());
     final response = TopTenContentResponse.fromJson(json);
     final result = TopTenContentsModel.fromResponse(response);

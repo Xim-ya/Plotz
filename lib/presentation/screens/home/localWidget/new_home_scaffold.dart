@@ -61,13 +61,15 @@ class NewHomeScaffold extends StatelessWidget {
                       AppSpace.size32,
                       channelSlider,
                       AppSpace.size32,
-
                     ],
                   ),
                 ],
               ),
             ),
             categoryContentCollectionList,
+            const SliverToBoxAdapter(
+              child: AppSpace.size52,
+            ),
           ],
         ),
         stackedTopGradient,

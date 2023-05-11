@@ -12,10 +12,10 @@ class SplashScreen extends BaseScreen<SplashViewModel> {
     return Container(
       color: AppColor.black,
       child: Center(
-        child: SvgPicture.asset('assets/icons/main_logo.svg',
+          child: SvgPicture.asset(
+        'assets/icons/new_logo.svg',
         width: 190,
-        )
-      ),
+      )),
     );
   }
 }

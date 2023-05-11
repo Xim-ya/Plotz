@@ -32,7 +32,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
               final argument = ContentArgumentFormat(
                 contentId: item.contents[nestedIndex].id,
                 contentType: item.contents[nestedIndex].contentType,
-                posterImgUrl: item.contents[nestedIndex].posterImgUrl,
+                posterImgUrl: item.contents[nestedIndex].imgUrl,
                 originId: item.contents[nestedIndex].originId,
               );
               vm.routeToContentDetail(argument, sectionType: 'category');

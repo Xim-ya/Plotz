@@ -12,6 +12,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
     required this.tabs,
     required this.header,
     required this.rateAndGenreView,
+    required this.headerBgImg,
     required this.headerBackdropImgUrl,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
   final List<Widget> tabViews;
   final Widget rateAndGenreView;
   final String headerBackdropImgUrl;
+  final Widget headerBgImg;
 
   @override
   Widget buildView(BuildContext context) {
@@ -29,12 +31,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           () => AnimatedPositioned(
             top: vm.headerBgOffset,
             duration: const Duration(milliseconds: 40),
-            child: CachedNetworkImage(
-              width: SizeConfig.to.screenWidth,
-              fit: BoxFit.fitWidth,
-              imageUrl: headerBackdropImgUrl.prefixTmdbImgPath,
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
+            child: headerBgImg,
           ),
         ),
 

@@ -11,6 +11,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
       rateAndGenreView: _buildRateAndGenreView(),
       tabs: _buildTab(),
       tabViews: _buildTabBarViews(),
+      headerBgImg: const _HeaderBgImg(),
     );
   }
 
@@ -145,4 +146,18 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   // 데이터가 로딩 중이라면 swipback을 지원하지 않음.
   @override
   bool get preventSwipeBack => vm.loading.isTrue ? true : false;
+}
+
+class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
+  const _HeaderBgImg({Key? key}) : super(key: key);
+
+  @override
+  Widget buildView(BuildContext context) {
+    return Obx(() => CachedNetworkImage(
+          width: SizeConfig.to.screenWidth,
+          fit: BoxFit.fitWidth,
+          imageUrl: vm.headerBackdropImg.prefixTmdbImgPath,
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ));
+  }
 }

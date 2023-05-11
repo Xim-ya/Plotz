@@ -9,9 +9,9 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
 
   /// 헤더 영역 이미지
   String get headerBackdropImg =>
-      passedArgument.posterImgUrl ??
+      passedArgument.posterImgUrl.obs.value ??
       _contentDescriptionInfo.value?.posterImgUrl ??
-      '';
+      '123';
 
   /// 컨텐츠 설명 부분 (유튜브 컨텐츠 제목)
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
@@ -28,8 +28,6 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   RxString? get headerTitle => passedArgument.title.hasData
       ? passedArgument.title!.obs
       : _contentDescriptionInfo.value?.title.obs;
-
-
 
   // 컨텐츠 TMDB 평점
   String? get rate => _contentDescriptionInfo.value?.rate.toStringAsFixed(2);

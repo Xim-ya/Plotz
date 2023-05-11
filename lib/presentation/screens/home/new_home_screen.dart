@@ -101,7 +101,15 @@ class NewHomeScreen extends BaseScreen<HomeViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            SvgPicture.asset('assets/icons/new_logo.svg'),
+            Obx(
+              () => IgnorePointer(
+                child: AnimatedOpacity(
+                  opacity: vm.appBarLogoOpacity.value,
+                  duration: const Duration(milliseconds: 300),
+                  child: SvgPicture.asset('assets/icons/new_logo.svg'),
+                ),
+              ),
+            ),
             // TODO ICON INWELL BUTTON MODULE 수정 필요
             MaterialButton(
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -183,8 +191,15 @@ class _BannerSlider extends BaseView<HomeViewModel> {
         children: [
           GestureDetector(
             onTap: () {
-              vm.test();
-              // print(vm.topPositionedCategory.value?.length ?? " NONE ");
+              if (vm.isBannerContentsLoaded) {
+                final argument = ContentArgumentFormat(
+                  contentId: vm.selectedBannerContent!.id,
+                  contentType: vm.selectedBannerContent!.type,
+                  videoTitle: vm.selectedBannerContent!.description,
+                  originId: vm.selectedBannerContent!.originId,
+                );
+                vm.routeToContentDetail(argument, sectionType: 'banner');
+              }
             },
             child: CarouselSlider.builder(
               carouselController: vm.carouselController,
@@ -208,7 +223,7 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                     fit: BoxFit.fitHeight,
                   );
                 } else {
-                  return const BannerSkeletonItem();
+                  return const SizedBox();
                 }
               },
             ),
@@ -264,7 +279,7 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                         ),
                         AppSpace.size4,
                         Text(
-                          '코미디 · 드라마 · 스릴러',
+                          vm.selectedBannerContent?.genre ?? '',
                           style: AppTextStyle.alert2.copyWith(
                               color: AppColor.gray03, letterSpacing: -0.2),
                         ),
@@ -356,26 +371,66 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
                           final argument = ContentArgumentFormat(
                             contentId: item.contentId,
                             contentType: item.contentType,
-                            posterImgUrl: item.posterImgUrl,
                             originId: item.originId,
                           );
                           vm.routeToContentDetail(argument,
                               sectionType: 'topTen');
                         },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Container(
-                            decoration: BoxDecoration(
+                        child: Stack(children: <Widget>[
+                          CachedNetworkImage(
+                            height: 140,
+                            width: 220,
+                            fit: BoxFit.cover,
+                            imageUrl: item.posterImgUrl.prefixTmdbImgPath,
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
                                 border: Border.all(
-                                    width: 0.75, color: AppColor.gray06)),
-                            child: CachedNetworkImage(
-                              imageUrl: item.posterImgUrl.prefixTmdbImgPath,
-                              height: 140,
+                                  width: 0.75,
+                                  color: AppColor.gray06,
+                                ),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) => Shimmer(
+                              child: Container(
+                                color: AppColor.black,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Center(child: Icon(Icons.error)),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            child: Container(
+                              height: 49,
                               width: 220,
-                              fit: BoxFit.cover,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color.fromRGBO(15, 15, 15, 0.0),
+                                    Color.fromRGBO(15, 15, 15, 0.8),
+                                  ],
+                                  stops: [0.0, 1.0],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Positioned(
+                            right: 8,
+                            bottom: 6,
+                            child: Text(
+                              item.title,
+                              style: AppTextStyle.title3,
+                            ),
+                          )
+                        ]),
                       );
                     } else {
                       return Container(
@@ -393,27 +448,6 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
                       );
                     }
                   }),
-
-                  // 하단 Gradient
-                  Positioned(
-                    bottom: 26,
-                    child: Container(
-                      height: 49,
-                      width: 220,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color.fromRGBO(15, 15, 15, 0.0),
-                            Color.fromRGBO(15, 15, 15, 0.8),
-                          ],
-                          stops: [0.0, 1.0],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ),
-                  ),
                   Positioned(
                     left: -4,
                     bottom: 13.5,
