@@ -7,30 +7,38 @@ import 'package:soon_sak/utilities/index.dart';
  *  홈 스크린 상단에 BackDrop 이미지가 존재하기 때문에
  *  전체 Sliver 레이아웃을 Stack으로 한번 감쌈
  *
+ *
+ *  NOTE:
+ *  [PagingListView.seperated]를 적용하기 위해 Sliver Layout이 적용되어야 함.
+ *
  * */
 
 class HomeScaffold extends StatelessWidget {
   const HomeScaffold({
     Key? key,
-    required this.animationAppbar,
     required this.scrollController,
     required this.stackedGradientPosterBg,
     required this.topBannerSlider,
-    required this.topTenContentSlider,
+    required this.topTenSlider,
     required this.categoryContentCollectionList,
+    required this.channelSlider,
+    required this.stackedTopGradient,
+    required this.stackedAppBar,
+    required this.topPositionedContentSliderList,
   }) : super(key: key);
 
-  final List<Widget> animationAppbar;
+  final Widget stackedAppBar;
   final List<Widget> stackedGradientPosterBg;
   final Widget topBannerSlider;
-  final List<Widget> topTenContentSlider;
+  final Widget topTenSlider;
   final Widget categoryContentCollectionList;
+  final Widget stackedTopGradient;
+  final Widget channelSlider;
+  final List<Widget> topPositionedContentSliderList;
   final ScrollController scrollController;
-
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         CustomScrollView(
@@ -40,14 +48,18 @@ class HomeScaffold extends StatelessWidget {
             SliverToBoxAdapter(
               child: Stack(
                 children: [
-                  ...stackedGradientPosterBg,
+                  // ...stackedGradientPosterBg,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: SizeConfig.to.statusBarHeight + 56),
-                      // 커스텀 앱바와 간격을 맞추기 위한 위젯
                       topBannerSlider,
-                      ...topTenContentSlider,
+                      AppSpace.size32,
+                      topPositionedContentSliderList[0],
+                      topTenSlider,
+                      AppSpace.size14,
+                      topPositionedContentSliderList[1],
+                      AppSpace.size32,
+                      channelSlider,
                       AppSpace.size32,
                     ],
                   ),
@@ -56,11 +68,12 @@ class HomeScaffold extends StatelessWidget {
             ),
             categoryContentCollectionList,
             const SliverToBoxAdapter(
-              child: AppSpace.size72,
+              child: AppSpace.size52,
             ),
           ],
         ),
-        ...animationAppbar,
+        stackedTopGradient,
+        stackedAppBar,
       ],
     );
   }
