@@ -31,7 +31,7 @@ class ExploreViewModel extends BaseViewModel {
   // 컨텐츠 상세페이지로 이동
   void routeToContentDetail(ContentArgumentFormat routingArgument) {
     AppAnalytics.instance.logEvent(
-        name: 'goToContent', parameters: {'explore': routingArgument.originId});
+        name: 'goToContent', parameters: {'explore': routingArgument.originId},);
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
@@ -49,7 +49,7 @@ class ExploreViewModel extends BaseViewModel {
 
     if (index == exploreContentsLength && alreadyShowedToast.isFalse) {
       unawaited(
-          AlertWidget.animatedToast('마지막 컨텐츠 입니다', isUsedOnTabScreen: true));
+          AlertWidget.animatedToast('마지막 콘텐츠 입니다', isUsedOnTabScreen: true),);
       alreadyShowedToast(true); // 더 이상 토스트 메세를 노출하지 않음.
     }
   }
@@ -89,7 +89,7 @@ class ExploreViewModel extends BaseViewModel {
         isUsedOnTabScreen: true,
       );
       log('ExploreViewModel : $e');
-    });
+    },);
   }
 
   /* Getters */
@@ -101,7 +101,16 @@ class ExploreViewModel extends BaseViewModel {
 
   Future<void> prepare() async {
     loadingState = TabLoadingState.loading;
+    DateTime startTime = DateTime.now();
     await loadRandomExploreContents();
+    // 메소드 실행이 완료된 후의 시간을 종료 시간으로 기록
+    DateTime endTime = DateTime.now();
+
+    // 두 시간의 차이를 계산
+    Duration elapsedTime = endTime.difference(startTime);
+
+    // 실행 시간 출력
+    print('Explore 비동기 메소드 실행 시간: ${elapsedTime.inMilliseconds} 초');
     loadingState = TabLoadingState.done;
   }
 
@@ -110,4 +119,6 @@ class ExploreViewModel extends BaseViewModel {
     super.onInit();
     swiperController = CarouselController();
   }
+
+
 }

@@ -161,8 +161,8 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                               AppSpace.size4,
                               if (vm.multipleVideoInfo.hasData)
                                 Text(
-                                  videoInfoItem.detailInfo!.likeCount
-                                      .toString(),
+                                  videoInfoItem.detailInfo?.likeCount
+                                      .toString() ?? '',
                                   style: AppTextStyle.body3,
                                 )
                               else

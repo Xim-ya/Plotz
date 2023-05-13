@@ -47,7 +47,7 @@ class ContentVideoItem {
   // Tv 컨텐츠 시즌 리스트 정보를 호출
   // 호출한 정보를 조건으로 [_tvSeasonInfo] 값에 매핑시켜 관리.
   Future<void> mappingTvSeasonInfo(
-      {required List<SeasonInfo> seasonInfoList}) async {
+      {required List<SeasonInfo> seasonInfoList,}) async {
     for (var ele in seasonInfoList) {
       // 시즌 넘버가 일치한다면 값을 업데이트 함.
       if (ele.seasonNum == episodeNum) {
@@ -58,7 +58,7 @@ class ContentVideoItem {
 
   factory ContentVideoItem.fromJson(Map<String, dynamic> json) {
     return ContentVideoItem(
-        episodeNum: json['order'], videoId: json['videoId']);
+        episodeNum: json['order'], videoId: json['videoId'],);
   }
 
   factory ContentVideoItem.fromResponse(VideoResponse response) {

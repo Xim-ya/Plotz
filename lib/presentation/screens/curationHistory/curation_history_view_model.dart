@@ -60,7 +60,7 @@ class CurationHistoryViewModel extends BaseViewModel
     loading(true);
     tabController = TabController(length: 3, vsync: this);
 
-
     _fetchUserCurationContents();
   }
+
 }

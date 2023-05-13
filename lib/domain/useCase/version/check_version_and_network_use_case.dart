@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:io' show Platform, exit;
 
@@ -88,7 +87,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
       },
       title: '시스템 점검 안내',
       description: '시스템 점검으로 서비스 이용이 제한됩니다',
-    ));
+    ),);
   }
 
   void somethingIsWrongModal() {
@@ -99,7 +98,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
       },
       title: '오류',
       description: '알 수 없는 오류가 발생했습니다',
-    ));
+    ),);
   }
 
   void showNetworkIsBadModal() {
@@ -110,7 +109,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
       },
       title: '네트워크 불안정',
       description: 'Wi-Fi 또는 데이터를 활성화 해주세요.',
-    ));
+    ),);
   }
 
   void showNeedUpdateModal() {
@@ -121,14 +120,14 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
           if (Platform.isIOS) {
             await launchUrl(
               Uri.parse(
-                  'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197'),
+                  'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',),
               mode: LaunchMode.externalApplication,
             );
           } else if (Platform.isAndroid) {
             // TODO : 앱 코드 변경 필요[ANDROID]
             await launchUrl(
               Uri.parse(
-                  'https://play.google.com/store/apps/details?id=com.soon_sak'),
+                  'https://play.google.com/store/apps/details?id=com.soon_sak',),
               mode: LaunchMode.externalApplication,
             );
           }

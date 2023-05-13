@@ -5,6 +5,8 @@ class ExploreBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => ExploreViewModel(Get.find()));
+
+
   }
 
 }

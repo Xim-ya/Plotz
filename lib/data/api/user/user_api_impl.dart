@@ -6,7 +6,7 @@ import 'package:soon_sak/utilities/index.dart';
 class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   @override
   Future<void> addUserCurationInfo(
-      {required String qurationDocId, required String userId}) async {
+      {required String qurationDocId, required String userId,}) async {
     final Map<String, dynamic> curationList = {
       'curationRef': db.collection('curation').doc(qurationDocId)
     };
@@ -26,12 +26,12 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
         firstSubCollectionDocId: qurationDocId,
         secondSubCollectionName: 'curationSummary',
         secondSubCollectionData: curationSummary,
-        secondSubCollectionFieldName: 'inProgressCount');
+        secondSubCollectionFieldName: 'inProgressCount',);
   }
 
   @override
   Future<UserCurationSummaryResponse> loadUserCurationSummary(
-      String userId) async {
+      String userId,) async {
     final snapshot = await getSingleSubCollectionDoc(
       'user',
       docId: userId,
@@ -54,7 +54,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
 
   @override
   Future<List<CurationContentResponse>> loadUserCurationContentList(
-      String userId) async {
+      String userId,) async {
     final docs = await getSubCollectionDocs(
       'user',
       docId: userId,
@@ -98,7 +98,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
     final docs = await getSubCollectionDocsByOrder('user',
         docId: userId,
         subCollectionName: 'watchHistory',
-        orderFieldName: 'watchedDate');
+        orderFieldName: 'watchedDate',);
 
     final resultList = docs.map((e) async {
       /// 시청 기록 데이터가 유효할 경우에만 객체를 리턴
@@ -136,14 +136,14 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
         firstFieldName: 'displayName',
         firstFieldData: requestInfo.displayName,
         secondFieldName: 'photoUrl',
-        secondFieldData: requestInfo.photoImgUrl);
+        secondFieldData: requestInfo.photoImgUrl,);
   }
 
   @override
   Future<String> uploadUserProfileImgAndReturnUrl(
-      {required String userId, required File file}) async {
+      {required String userId, required File file,}) async {
     final downLoadUrl = await storeFileAndReturnDownloadUrl('profileImg',
-        fileId: userId, file: file);
+        fileId: userId, file: file,);
     return downLoadUrl;
   }
 

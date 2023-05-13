@@ -35,6 +35,7 @@ class LocalStorageService extends GetxService {
 
 
 
+
   // 로컬 스토리지 초기화 작업
   Future<void> initStorage() async {
     store = StoreRef.main();
@@ -58,7 +59,7 @@ class LocalStorageService extends GetxService {
 
   // 데이터 저장
   Future<void> saveData(
-      {required String fieldName, required Object data}) async {
+      {required String fieldName, required Object data,}) async {
     try {
       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).put(db, data);
@@ -70,7 +71,7 @@ class LocalStorageService extends GetxService {
 
   // 데이터 삭제
   Future<void> deleteData(
-      {required String fieldName}) async {
+      {required String fieldName,}) async {
     try {
       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).delete(db);

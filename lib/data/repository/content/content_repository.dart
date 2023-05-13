@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -22,7 +21,7 @@ abstract class ContentRepository {
 
   // 컨텐츠 등록 요청
   Future<Result<String>> requestContentRegistration(
-      ContentRegistrationRequest requestData);
+      ContentRegistrationRequest requestData,);
 
   // 진행중인 큐레이션 리스트 호출
   Future<Result<List<CurationContent>>> loadInProgressQurationList();

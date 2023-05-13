@@ -34,7 +34,7 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
 
   // 컨텐츠 장르 리스트
   String? get genre => Formatter.formatGenreListToSingleStr(
-      _contentDescriptionInfo.value?.genreList);
+      _contentDescriptionInfo.value?.genreList,);
 
   // 컨텐츠 개봉일
   String? get releaseDate => _contentDescriptionInfo.value?.releaseDate != null

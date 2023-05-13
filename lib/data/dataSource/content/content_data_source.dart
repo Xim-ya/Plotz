@@ -10,7 +10,7 @@ abstract class ContentDataSource {
   /// 탐색 컨텐츠 리스트 호출
   /// 주어진 ids에 속한 컨텐츠 리스트 호출
   Future<List<ExploreContentResponse>> loadExploreContents(
-      List<String> ids);
+      List<String> ids,);
 
   // 컨텐츠 비디오 정보 호출
   Future<List<VideoResponse>> loadVideoInfo(String id);

@@ -65,24 +65,24 @@ class ContentVideos {
 
   factory ContentVideos.fromDramaJson(List<Map<String, dynamic>> json) {
     return ContentVideos(
-        videos: json.map((e) => ContentVideoItem.fromJson(e)).toList(),
+        videos: json.map(ContentVideoItem.fromJson).toList(),
         // 비디오 response 개수에 따라 타입이 결정됨.
         contentVideoFormat: json.length > 1
             ? ContentVideoFormat.multipleTv
-            : ContentVideoFormat.singleTv);
+            : ContentVideoFormat.singleTv,);
   }
 
   factory ContentVideos.fromMovieJson(List<Map<String, dynamic>> json) {
     return ContentVideos(
-        videos: json.map((e) => ContentVideoItem.fromJson(e)).toList(),
+        videos: json.map(ContentVideoItem.fromJson).toList(),
         // 비디오 response 개수에 따라 타입이 결정됨.
         contentVideoFormat: json.length > 1
             ? ContentVideoFormat.multipleMovie
-            : ContentVideoFormat.singleMovie);
+            : ContentVideoFormat.singleMovie,);
   }
 
   factory ContentVideos.fromResponse(List<VideoResponse> response,
-      {required String id}) {
+      {required String id,}) {
     final ContentType type = SplittedIdAndType.fromOriginId(id).type;
 
     ContentVideoFormat getFormatType() {
@@ -98,7 +98,7 @@ class ContentVideos {
     }
 
     return ContentVideos(
-        videos: response.map((e) => ContentVideoItem.fromResponse(e)).toList(),
-        contentVideoFormat: getFormatType());
+        videos: response.map(ContentVideoItem.fromResponse).toList(),
+        contentVideoFormat: getFormatType(),);
   }
 }

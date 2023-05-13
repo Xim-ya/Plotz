@@ -12,7 +12,7 @@ class SeasonInfo {
       required this.seasonNum,
       required this.name,
       required this.description,
-      required this.posterPathUrl});
+      required this.posterPathUrl,});
 
   factory SeasonInfo.fromResponse(SeasonResponse response) => SeasonInfo(
         airDate: response.air_date,

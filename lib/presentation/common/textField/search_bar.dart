@@ -41,7 +41,7 @@ class SearchBar extends StatelessWidget {
             style: const TextStyle(
                 fontSize: 16,
                 color: Colors.white,
-                fontFamily: 'pretendard_regular'),
+                fontFamily: 'pretendard_regular',),
             decoration: InputDecoration(
               filled: true,
               contentPadding:
@@ -98,7 +98,7 @@ class SearchBar extends StatelessWidget {
                     ),
                   ),
                 )
-              : const SizedBox()),
+              : const SizedBox(),),
         ],
       ),
     );
@@ -108,6 +108,6 @@ class SearchBar extends StatelessWidget {
   OutlineInputBorder _fixedOutLinedBorder() {
     return const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(6)),
-        borderSide: BorderSide(color: Colors.transparent));
+        borderSide: BorderSide(color: Colors.transparent),);
   }
 }

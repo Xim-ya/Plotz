@@ -6,7 +6,7 @@ class BannerItemView extends StatelessWidget {
       required this.title,
       required this.description,
       required this.onItemTapped,
-      required this.imgUrl})
+      required this.imgUrl,})
       : super(key: key);
 
   final String title;

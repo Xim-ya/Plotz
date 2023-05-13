@@ -26,7 +26,7 @@ mixin PagingHandlerMixin {
   /// 검색된 컨텐츠 리스트 호출
   /// paging 로직 적용
   Future<void> loadSearchedContentList(ContentType contentType,
-      {required bool checkContentRegistration}) async {
+      {required bool checkContentRegistration,}) async {
     Result<SearchContentModel> responseResult;
 
     /// pagingController가 Listen 되고

@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/common/keep_alive_view.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/expandable_text_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -84,7 +83,7 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
                 AppSpace.size4,
           );
         }
-      });
+      },);
 
   // 채널 - 채널정보
   Widget buildChannelSection() => Obx(
@@ -236,14 +235,16 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
 //     );
 }
 
+/// 메인 컨텐츠 탭 레이아웃 Scaffold 모듈
+/// KeepAlive를 감싸서 불필요한 렌더링을 막음
 class _MainContentTabViewScaffold extends StatelessWidget {
-  const _MainContentTabViewScaffold(
-      {Key? key,
-      required this.youtubeContentSection,
-      required this.descriptionSection,
-      required this.descriptionTitle,
-      required this.channelSection})
-      : super(key: key);
+  const _MainContentTabViewScaffold({
+    Key? key,
+    required this.youtubeContentSection,
+    required this.descriptionSection,
+    required this.descriptionTitle,
+    required this.channelSection,
+  }) : super(key: key);
 
   final Widget youtubeContentSection;
   final Widget descriptionSection;
@@ -252,19 +253,21 @@ class _MainContentTabViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        youtubeContentSection,
-        ...descriptionTitle,
-        Padding(padding: AppInset.horizontal16, child: descriptionSection),
-        AppSpace.size40,
-        const Padding(
-          padding: AppInset.horizontal16,
-          child: SectionTitle(title: '채널'),
-        ),
-        channelSection,
-      ],
+    return KeepAliveView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          youtubeContentSection,
+          ...descriptionTitle,
+          Padding(padding: AppInset.horizontal16, child: descriptionSection),
+          AppSpace.size40,
+          const Padding(
+            padding: AppInset.horizontal16,
+            child: SectionTitle(title: '채널'),
+          ),
+          channelSection,
+        ],
+      ),
     );
   }
 }

@@ -76,18 +76,18 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
     if (forcedContentType.hasData) {
       if (forcedContentType!.isTv) {
         response = await _tmdbRepository.loadSearchedTvContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       } else {
         response = await _tmdbRepository.loadSearchedMovieContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       }
     } else {
       if (selectedTabType.value.isTv) {
         response = await _tmdbRepository.loadSearchedTvContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       } else {
         response = await _tmdbRepository.loadSearchedMovieContentList(
-            query: fieldController.text, page: pageKey);
+            query: fieldController.text, page: pageKey,);
       }
     }
 
@@ -122,5 +122,12 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
     pagingController.addPageRequestListener((pageKey) {
       fetchPage(pageKey, forcedContentType: forcedContentType);
     });
+  }
+
+  /// UseCase에서 사용하는 컨트롤러 Dispose
+  void disposeUseCase() {
+    textEditingController.dispose();
+    pagingController.dispose();
+    focusNode.dispose();
   }
 }

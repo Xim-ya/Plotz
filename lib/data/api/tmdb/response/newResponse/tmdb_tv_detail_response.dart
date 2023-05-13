@@ -72,7 +72,7 @@ class TmdbTvDetailResponse {
       this.seasons,
       this.status,
       this.vote_average,
-      this.vote_count);
+      this.vote_count,);
 
   factory TmdbTvDetailResponse.fromJson(Map<String, dynamic> json) =>
       _$TmdbTvDetailResponseFromJson(json);
@@ -103,7 +103,7 @@ class SeasonResponse {
   int season_number;
 
   SeasonResponse(this.air_date, this.episode_count, this.id, this.name,
-      this.overview, this.poster_path, this.season_number);
+      this.overview, this.poster_path, this.season_number,);
 
   factory SeasonResponse.fromJson(Map<String, dynamic> json) =>
       _$SeasonResponseFromJson(json);
@@ -135,7 +135,7 @@ class NextEpisodeInfoResponse {
 
 
   NextEpisodeInfoResponse(this.air_date, this.episode_count, this.id, this.name,
-      this.overview, this.production_code, this.season_number);
+      this.overview, this.production_code, this.season_number,);
 
   factory NextEpisodeInfoResponse.fromJson(Map<String, dynamic> json) =>
       _$NextEpisodeInfoResponseFromJson(json);

@@ -7,12 +7,13 @@ class CategoryBaseContentList {
   CategoryBaseContentList({required this.category, required this.contents});
 
   factory CategoryBaseContentList.fromJson(Map<String, dynamic> json) {
-    final Iterable contentListRes = json['contents'];
+    final List<dynamic> contentListRes = json['contents'] as List<dynamic>;
 
     return CategoryBaseContentList(
-        category: json['category'],
-        contents: contentListRes
-            .map((e) => PosterExposureContent.fromJson(e))
-            .toList());
+      category: json['category'],
+      contents: contentListRes
+          .map<PosterExposureContent>((content) => PosterExposureContent.fromJson(content))
+          .toList(),
+    );
   }
 }

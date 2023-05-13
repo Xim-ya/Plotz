@@ -12,6 +12,6 @@ class TmdbMovieContentListWrappedResponse {
   TmdbMovieContentListWrappedResponse(this.page, this.results);
 
   factory TmdbMovieContentListWrappedResponse.fromJson(
-          Map<String, dynamic> json) =>
+          Map<String, dynamic> json,) =>
       _$TmdbMovieContentListWrappedResponseFromJson(json);
 }

@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -33,7 +32,7 @@ class Formatter {
       return num.toString();
     } else if (num > 1000 && num < 10000) {
       final subString = strNum.substring(0, 2);
-      final result = RegExp(r'.{1}')
+      final result = RegExp('.{1}')
           .allMatches(subString)
           .map((e) => e.group(0))
           .join('.');
@@ -42,7 +41,7 @@ class Formatter {
     } else if (num >= 10000) {
       if (strNum.length == 5) {
         final subString = strNum.substring(0, 2);
-        final result = RegExp(r'.{1}')
+        final result = RegExp('.{1}')
             .allMatches(subString)
             .map((e) => e.group(0))
             .join('.');

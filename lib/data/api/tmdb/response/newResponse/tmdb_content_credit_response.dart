@@ -62,7 +62,7 @@ class TmdbCastInfoItemResponse {
       this.profile_path,
       this.cast_id,
       this.character,
-      this.credit_id);
+      this.credit_id,);
 
   factory TmdbCastInfoItemResponse.fromJson(Map<String, dynamic> json) =>
       _$TmdbCastInfoItemResponseFromJson(json);

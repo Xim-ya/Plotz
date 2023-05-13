@@ -19,11 +19,6 @@ abstract class BaseView<T extends BaseViewModel> extends GetView<T> {
     return buildView(context);
   }
 
-  @mustCallSuper
-  void initViewModel() {
-    vm.initialized;
-  }
-
   Widget buildView(BuildContext context);
 }
 

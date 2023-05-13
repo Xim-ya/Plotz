@@ -29,7 +29,7 @@ class AlertWidget {
   }
 
   static Future<void> animatedToast(String message,
-      {bool? isUsedOnTabScreen}) async {
+      {bool? isUsedOnTabScreen,}) async {
     Get.showSnackbar(
       GetSnackBar(
         backgroundColor: Colors.black,
@@ -54,7 +54,7 @@ class AlertWidget {
   }
 
   static Future<void> newToast(String message,
-      {bool? isUsedOnTabScreen}) async {
+      {bool? isUsedOnTabScreen,}) async {
     showToastWidget(
       Container(
         key: const Key('toast'),

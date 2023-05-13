@@ -13,7 +13,7 @@ abstract class ContentApi {
 
   // 컨텐츠 등록 요청 (큐레이션)
   Future<String> requestContentRegistration(
-      ContentRegistrationRequest requestData);
+      ContentRegistrationRequest requestData,);
 
   // 진행중인 큐레이션 리스트 호출
   Future<List<CurationContentResponse>> loadInProgressQurationList();

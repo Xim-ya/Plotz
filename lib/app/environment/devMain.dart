@@ -1,5 +1,4 @@
 import 'package:soon_sak/app/environment/environment.dart';
-import 'package:soon_sak/firebase_options.dart';
 import 'package:soon_sak/firebase_options_dev.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -8,7 +7,7 @@ import 'package:soon_sak/utilities/index.dart';
 void main() async {
   // Flutter Engine 초기화
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
 
   // Isolate 토큰 생성 및 초기화
   final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;

@@ -5,7 +5,7 @@ class ContentPostSlider extends StatelessWidget {
       {Key? key,
       required this.height,
       required this.itemCount,
-      required this.itemBuilder})
+      required this.itemBuilder,})
       : super(key: key);
 
   final double height;
@@ -17,6 +17,7 @@ class ContentPostSlider extends StatelessWidget {
     return SizedBox(
       height: height,
       child: ListView.separated(
+        addRepaintBoundaries: false,
         separatorBuilder: (__, _) => AppSpace.size8,
         padding: AppInset.left16 + AppInset.right12,
         scrollDirection: Axis.horizontal,

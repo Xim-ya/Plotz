@@ -12,7 +12,7 @@ class UserWatchHistoryItem {
   });
 
   factory UserWatchHistoryItem.fromResponse(
-          UserWatchHistoryItemResponse response) =>
+          UserWatchHistoryItemResponse response,) =>
       UserWatchHistoryItem(
         originId: response.originId,
         videoId: response.videoId,

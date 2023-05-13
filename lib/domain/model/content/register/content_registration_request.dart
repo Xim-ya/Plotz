@@ -16,13 +16,13 @@ class ContentRegistrationRequest {
       required this.posterImgUrl,
       required this.curatorId,
       required this.status,
-      required this.videoId});
+      required this.videoId,});
 
   factory ContentRegistrationRequest.fromContentModelWithUserId(
-          {required Content content, required String userId}) =>
+          {required Content content, required String userId,}) =>
       ContentRegistrationRequest(
         originId: Formatter.getOriginIdByTypeAndId(
-            type: content.type!, id: content.id),
+            type: content.type!, id: content.id,),
         requestDate: FieldValue.serverTimestamp(),
         title: content.detail!.title!,
         posterImgUrl: content.detail!.posterImgUrl,

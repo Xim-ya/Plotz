@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -98,7 +97,7 @@ class ProfileSettingViewModel extends BaseViewModel {
   // 이미지 업로드 및 downloadImgUrl 값 리턴 (FireStore)
   Future<String?> storeImgFileAndReturnUrl(File file) async {
     final response = await _userRepository.uploadUserProfileImgAndReturnUrl(
-        userId: _userService.userInfo.value!.id!, file: file);
+        userId: _userService.userInfo.value!.id!, file: file,);
     return await response.fold(
       onSuccess: (imageUrl) async {
         return imageUrl;

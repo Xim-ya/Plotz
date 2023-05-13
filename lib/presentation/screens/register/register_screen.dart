@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/screens/register/register_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class RegisterScreen extends BaseScreen<RegisterViewModel> {

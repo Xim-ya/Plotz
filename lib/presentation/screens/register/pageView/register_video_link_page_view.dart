@@ -74,7 +74,7 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
             () => Padding(
               padding: AppInset.left4 + AppInset.top6,
               child: UrlValidationIndicator(
-                  validationState: vm.videoUrlValidState),
+                  validationState: vm.videoUrlValidState,),
             ),
           ),
         ],
@@ -127,7 +127,7 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        bottom: SizeConfig.to.responsiveBottomInset),
+                        bottom: SizeConfig.to.responsiveBottomInset,),
                     child: LinearBgBottomFloatingBtn(
                       text: '다음',
                       onTap: vm.onFloatingStepBtnTapped,

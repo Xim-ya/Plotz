@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/common/keep_alive_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.03.27
@@ -11,7 +10,7 @@ class ContentInfoTabViewScaffold extends StatelessWidget {
       required this.creditSection,
       required this.curatorView,
       required this.elseInfoView,
-      required this.contentImgSection})
+      required this.contentImgSection,})
       : super(key: key);
 
   final List<Widget> creditSection;

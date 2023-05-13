@@ -16,8 +16,8 @@ class ResponsiveLayoutBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        EasyLoading.init()(context, child);
         if (constraints.maxWidth > 600) {
+          EasyLoading.init()(context, child);
           // 태블릿 디바이스일 경우
           return Stack(
             children: [

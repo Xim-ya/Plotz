@@ -5,7 +5,7 @@ class CurationHistoryScaffold extends StatelessWidget {
       {Key? key,
       required this.tabController,
       required this.tabs,
-      required this.tabViews})
+      required this.tabViews,})
       : super(key: key);
 
   final TabController tabController;

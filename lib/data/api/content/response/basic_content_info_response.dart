@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 @JsonSerializable(createToJson: false)
@@ -18,7 +17,7 @@ class BasicContentInfoResponse {
   });
 
   factory BasicContentInfoResponse.fromDocumentSnapshot(
-      DocumentSnapshot<Object?> snapshot) {
+      DocumentSnapshot<Object?> snapshot,) {
     return BasicContentInfoResponse(
       id: snapshot.get('id'),
       title: snapshot.get('title'),

@@ -17,7 +17,6 @@ class HomeViewModel extends BaseViewModel {
   );
 
   /* [Variables] */
-
   /// Data
   final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
   final Rxn<List<TopPositionedCategory>> topPositionedCategory =
@@ -81,10 +80,10 @@ class HomeViewModel extends BaseViewModel {
 
   // 컨텐츠 상세 화면으로 이동
   void routeToContentDetail(ContentArgumentFormat routingArgument,
-      {required String sectionType}) {
+      {required String sectionType,}) {
     AppAnalytics.instance.logEvent(
         name: 'goToContent',
-        parameters: {sectionType: routingArgument.originId});
+        parameters: {sectionType: routingArgument.originId},);
 
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }

@@ -15,7 +15,7 @@ class LoadContentCreditInfoUseCase extends BaseTwoParamUseCase<ContentType, int,
 
   @override
   Future<Result<List<ContentCreditInfo>>> call(
-      ContentType firstReq, int secondReq) async {
+      ContentType firstReq, int secondReq,) async {
     /// firstReq -> [contentType] / secondRequest -> [contentId]
     if (firstReq == ContentType.tv) {
       return _repository.loadTvCreditInfo(secondReq);

@@ -5,7 +5,7 @@ class ContentPostItem extends StatelessWidget {
       {Key? key,
       required this.imgUrl,
       this.borderRadius = 6,
-      this.ratio = 1280 / 1920})
+      this.ratio = 1280 / 1920,})
       : super(key: key);
 
   final String? imgUrl;

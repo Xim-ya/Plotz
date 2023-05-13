@@ -14,3 +14,4 @@ class VersionInfo {
         systemAvailable: response.systemAvailable,
       );
 }
+

@@ -1,4 +1,3 @@
-import 'package:soon_sak/presentation/common/keep_alive_view.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/detail_info_tab_view_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -49,7 +48,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                   if (vm.contentCreditList.hasData) {
                     final ContentCreditInfo creditItem = vm.contentCreditList![
                         vm.creditIndex(
-                            parentIndex: parentIndex, childIndex: childIndex)];
+                            parentIndex: parentIndex, childIndex: childIndex,)];
                     return Row(
                       children: <Widget>[
                         RoundProfileImg(
@@ -99,7 +98,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                             AppSpace.size8,
                             Shimmer(
                               color: AppColor.mixedWhite,
-                              child: Container(
+                              child: const SizedBox(
                                 height: 18,
                                 width: 30,
                               ),
@@ -115,7 +114,7 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
           ),
         ),
         Obx(() =>
-            vm.isCreditNotEmpty ?? true ? AppSpace.size40 : const SizedBox()),
+            vm.isCreditNotEmpty ?? true ? AppSpace.size40 : const SizedBox(),),
       ];
 
   /// 큐레이터
@@ -165,16 +164,16 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
                     elseInfoItem(title: '방영일', content: vm.releaseDate ?? '-')
                   else
                     elseInfoItem(
-                        title: '방영상태', content: vm.contentAirStatus ?? '-'),
+                        title: '방영상태', content: vm.contentAirStatus ?? '-',),
                   elseInfoItem(title: '총 좋아요 수', content: vm.likesCount ?? '-'),
                 ],
               ),
               Row(
                 children: <Widget>[
                   elseInfoItem(
-                      title: '총 조회수', content: vm.totalViewCount ?? ''),
+                      title: '총 조회수', content: vm.totalViewCount ?? '',),
                   elseInfoItem(
-                      title: '영상 업로드일', content: vm.youtubeUploadDate ?? ''),
+                      title: '영상 업로드일', content: vm.youtubeUploadDate ?? '',),
                 ],
               ),
             ],
@@ -185,46 +184,50 @@ class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
   // 콘텐츠 이미지
   _buildContentImgSection() => [
         Obx(() => vm.contentImgExist ?? true
-            ? const SectionTitle(title: '컨텐츠 이미지', setLeftPadding: true)
-            : const SizedBox()),
+            ? const SectionTitle(title: '콘텐츠 이미지', setLeftPadding: true)
+            : const SizedBox(),),
         Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+          ),
+          height: 186,
+          child: Obx(
+            () => ListView.separated(
+              separatorBuilder: (__, _) => AppSpace.size10,
+              padding: const EdgeInsets.only(left: 16),
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: vm.contentImgList?.length ?? 0,
+              itemBuilder: (context, index) {
+                final imgItem = vm.contentImgList![index];
+                return KeepAliveView(
+                  child: CachedNetworkImage(
+                    fit: BoxFit.contain,
+                    imageUrl: imgItem.prefixTmdbImgPath,
+                    height: 100,
+                    width: SizeConfig.to.screenWidth - 32,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                    placeholder: (context, url) => Shimmer(
+                      child: Container(
+                        color: AppColor.black,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Center(child: Icon(Icons.error)),
+                  ),
+                );
+              },
             ),
-            height: 186,
-            child: Obx(
-              () => ListView.separated(
-                  separatorBuilder: (__, _) => AppSpace.size10,
-                  padding: const EdgeInsets.only(left: 16),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: vm.contentImgList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final imgItem = vm.contentImgList![index];
-                    return CachedNetworkImage(
-                      fit: BoxFit.contain,
-                      imageUrl: imgItem.prefixTmdbImgPath,
-                      height: 100,
-                      width: SizeConfig.to.screenWidth - 32,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                      placeholder: (context, url) => Shimmer(
-                        child: Container(
-                          color: AppColor.black,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Center(child: Icon(Icons.error)),
-                    );
-                  }),
-            ))
+          ),
+        )
       ];
 
   /// 기타정보 > 리스트 아이템

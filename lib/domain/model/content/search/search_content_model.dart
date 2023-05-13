@@ -8,17 +8,17 @@ class SearchContentModel {
 
   // Tv Response
   factory SearchContentModel.fromTvResponse(
-          TmdbTvContentListWrappedResponse response) =>
+          TmdbTvContentListWrappedResponse response,) =>
       SearchContentModel(
           page: response.page,
           contents:
-              response.results.map(SearchedContent.fromTvResponse).toList());
+              response.results.map(SearchedContent.fromTvResponse).toList(),);
 
   // Movie Response
   factory SearchContentModel.fromMovieResponse(
-          TmdbMovieContentListWrappedResponse response) =>
+          TmdbMovieContentListWrappedResponse response,) =>
       SearchContentModel(
           page: response.page,
           contents:
-              response.results.map(SearchedContent.fromMovieResponse).toList());
+              response.results.map(SearchedContent.fromMovieResponse).toList(),);
 }

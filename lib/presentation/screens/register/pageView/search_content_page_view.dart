@@ -77,7 +77,7 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
                 ),
                 Container(
                   padding: EdgeInsets.only(
-                      bottom: SizeConfig.to.responsiveBottomInset),
+                      bottom: SizeConfig.to.responsiveBottomInset,),
                   child: LinearBgBottomFloatingBtn(
                     text: '다음',
                     onTap: vm.onFloatingStepBtnTapped,

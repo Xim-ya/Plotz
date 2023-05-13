@@ -1,8 +1,13 @@
-import 'package:soon_sak/utilities/index.dart';
+// import 'package:soon_sak/utilities/index.dart';
 
+import 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+@immutable
 class ThemeConfig {
   final _theme = ThemeData(
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
 

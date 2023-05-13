@@ -5,7 +5,7 @@ class SearchListItem extends StatelessWidget {
       {Key? key,
         required this.contentType,
         required this.item,
-        required this.onItemClicked})
+        required this.onItemClicked,})
       : super(key: key);
 
   final ContentType contentType;

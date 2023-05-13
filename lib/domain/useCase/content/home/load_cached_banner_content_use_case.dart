@@ -20,7 +20,7 @@ import 'package:soon_sak/utilities/index.dart';
 class LoadCachedBannerContentUseCase
     extends BaseNoParamUseCase<Result<BannerModel>> {
   LoadCachedBannerContentUseCase(
-      this._repository, this._localStorageService, this._contentService);
+      this._repository, this._localStorageService, this._contentService,);
 
   final StaticContentRepository _repository;
   final LocalStorageService _localStorageService;

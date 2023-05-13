@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:soon_sak/domain/useCase/version/check_version_and_network_use_case.dart';
@@ -6,7 +5,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class SplashViewModel extends BaseViewModel with FirestoreHelper {
   SplashViewModel(this._userService, this._contentService,
-      this._localStorageService, this._checkVersionAndNetworkUseCase);
+      this._localStorageService, this._checkVersionAndNetworkUseCase,);
 
   final UserService _userService;
   final ContentService _contentService;
@@ -22,11 +21,35 @@ class SplashViewModel extends BaseViewModel with FirestoreHelper {
       handleRoute();
     }, onFailure: (e) {
       log('버전 정보 및 네트워크 확인 실패');
-    });
+    },);
   }
+
+  void check({required GetPageBuilder page}) {
+    assert(() {
+      bool isLambda = false;
+
+      try {
+        final closure = page as dynamic;
+        final closureType = closure.runtimeType;
+        isLambda = closureType.toString().contains('=>');
+      } catch (e) {
+        // do nothing
+      }
+
+      if (!isLambda) {
+        throw AssertionError(
+            'Please use the correct syntax for creating the page instance. Instead of "TabsScreen.new", use "() => TabsScreen()".',);
+      }
+
+      return true;
+    }());
+  }
+
+
 
   // 라우팅 핸들러
   Future<void> handleRoute() async {
+
     await _userService.prepare();
     if (_userService.isUserSignIn) {
       await launchServiceModules().whenComplete(() {

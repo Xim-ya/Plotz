@@ -63,7 +63,7 @@ class LoadRandomPagedExploreContentsUseCase
   /// 이전 호출한 ids 리스트 제외한 ids의 길이가 20 이하라면
   /// 남은 id 리스트 모두 호출
   List<String> getRandomIdsExceptPrevIds(
-      {required List<String> prevIds, required List<String> ids}) {
+      {required List<String> prevIds, required List<String> ids,}) {
     final filteredIds = ids.toSet().difference(prevIds.toSet()).toList();
     final random = Random();
     List<String> result = [];
