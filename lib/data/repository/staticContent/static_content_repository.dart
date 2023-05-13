@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class StaticContentRepository {
@@ -12,7 +13,10 @@ abstract class StaticContentRepository {
 
   // 카테고리 컨텐츠 모음 정보 호출
   Future<Result<CategoryContentCollection>> loadCategoryContentCollection(
-      int page,);
+      int page);
+
+  // 상단 노출 Collection 리스트
+  Future<Result<TopPositionedCollection>> loadTopPositionedCollection();
 
   static StaticContentRepository get to => Get.find();
 }

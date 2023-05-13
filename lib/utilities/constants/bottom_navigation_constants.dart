@@ -1,28 +1,33 @@
-import 'package:soon_sak/utilities/index.dart';
-
 enum BottomNavigationConstants {
   home(
+    indexedKey: 0,
     label: '홈',
-    icon: Icon(Icons.home),
+    iconPath: 'tab_home.svg',
   ),
   business(
+    indexedKey: 1,
     label: '탐색',
-    icon: Icon(Icons.video_collection),
+    iconPath: 'tab_explore.svg',
   ),
   curation(
+    indexedKey: 2,
     label: '큐레이션',
-    icon: Icon(Icons.video_call),
+    iconPath: 'tab_curation.svg',
   ),
   school(
+    indexedKey: 3  ,
     label: '마이페이지',
-    icon: Icon(Icons.person),
+    iconPath: 'tab_my_page.svg',
   );
 
+
+  final int indexedKey;
   final String label;
-  final Icon icon;
+  final String iconPath;
 
   const BottomNavigationConstants({
+    required this.indexedKey,
     required this.label,
-    required this.icon,
+    required this.iconPath,
   });
 }

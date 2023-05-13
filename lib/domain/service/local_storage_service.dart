@@ -22,6 +22,10 @@ import 'package:soon_sak/utilities/index.dart';
 *    3) field : categoryCollection1 <-- 홈 스크린 카테고리 컨텐츠 데이터
 *    3) field : categoryCollection2
 *
+*
+* ** NEW ONE **
+*    4) field: topPositionedCollection
+*
 * */
 
 class LocalStorageService extends GetxService {

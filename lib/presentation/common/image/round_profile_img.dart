@@ -7,6 +7,7 @@ class RoundProfileImg extends StatelessWidget {
   final double size;
   final String? imgUrl;
 
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -24,7 +25,12 @@ class RoundProfileImg extends StatelessWidget {
                 ),
               ),
               placeholder: (context, url) => const SizedBox(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) => Container(
+                color: Colors.grey.withOpacity(0.1),
+                child: const Center(
+                  child: Icon(Icons.error),
+                ),
+              ),
             )
           : Image.asset(
               'assets/images/blanck_profile.png',

@@ -79,6 +79,22 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
+  // collection document 데이터 리스트를 불러오는 메소드
+  // 특정 필드값을 기준으로 정렬됨
+  // 최대 불러올 수 있는 데이터 개수가 정해져 있음
+  Future<List<DocumentSnapshot>> getDocsByOrderWithLimit(
+    String collectionName, {
+    required String orderFieldName,
+    required int limitCount,
+  }) async {
+    QuerySnapshot snapshot = await _db
+        .collection(collectionName)
+        .orderBy(orderFieldName, descending: true)
+        .limit(limitCount)
+        .get();
+    return snapshot.docs;
+  }
+
   /// subCollection document 데이터 리스트를 불러오는 메소드
   /// 특정 필드값을 기준으로 정렬됨
   Future<List<DocumentSnapshot>> getSubCollectionDocsByOrder(
@@ -242,8 +258,6 @@ mixin FirestoreHelper {
     final docRef = _db.collection(collectionName).doc(docId);
     await docRef.update(data);
   }
-
-
 
   // 특정 subCollection의 dcoument 생성하고 데이터를 저장 하는 메소드
   Future<void> storeDocumentOnSubCollection(

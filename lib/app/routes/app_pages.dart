@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/screens/home/home_screen.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
 import 'package:soon_sak/presentation/screens/search/search_binding.dart';
@@ -18,81 +19,64 @@ abstract class AppPages {
   static final routes = [
     // 스플래쉬
     GetPage(
-      name: AppRoutes.splash,
-      page: SplashScreen.new,
-      binding: SplashBinding(),
-    ),
+        name: AppRoutes.splash,
+        page: () => SplashScreen(),
+        binding: SplashBinding()),
 
     // 로그인
     GetPage(
-      name: AppRoutes.login,
-      page: LoginScreen.new,
-      binding: LoginBinding(),
-    ),
+        name: AppRoutes.login,
+        page: () => LoginScreen(),
+        binding: LoginBinding()),
 
     // 탭
-    GetPage(
-      name: AppRoutes.tabs,
-      page: TabsScreen.new,
-      binding: TabsBinding(),
-    ),
+    GetPage(name: AppRoutes.tabs, page: TabsScreen.new, binding: TabsBinding()),
 
     // 홈
     GetPage(
       name: AppRoutes.home,
-      page: HomeScreen.new,
+      page: () => HomeScreen(),
       binding: TabsBinding(),
     ),
 
     // 컨텐츠 상세
     GetPage(
       name: AppRoutes.contentDetail,
-      page: ContentDetailScreen.new,
+      page: () => ContentDetailScreen(),
       binding: ContentDetailBinding(),
     ),
 
     // 검색
     GetPage(
       name: AppRoutes.search,
-      page: SearchScreen.new,
+      page: () => SearchScreen(),
       binding: SearchBinding(),
     ),
 
     // 등록
     GetPage(
       name: AppRoutes.register,
-      page: RegisterScreen.new,
+      page: () => RegisterScreen(),
       binding: RegisterBinding(),
     ),
 
     // 큐레이션 내력
     GetPage(
       name: AppRoutes.curationHistory,
-      page: CurationHistoryScreen.new,
+      page: () => CurationHistoryScreen(),
       binding: CurationHistoryBinding(),
     ),
 
     GetPage(
       name: AppRoutes.setting,
-      page: SettingScreen.new,
+      page: () => SettingScreen(),
       binding: SettingBinding(),
     ),
 
     GetPage(
       name: AppRoutes.profileSetting,
-      page: ProfileSettingScreen.new,
+      page: () => ProfileSettingScreen(),
       binding: ProfileSettingBinding(),
     )
   ];
 }
-
-// class Test {
-//   final Widget Function() page;
-//   Test({required this.page});
-//
-//
-// }
-
-// class Test2 {
-//   final aim = Test(page: TabsScreen.new);
-// }

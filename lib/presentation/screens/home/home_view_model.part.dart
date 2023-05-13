@@ -13,11 +13,32 @@ extension HomeViewModelPart on HomeViewModel {
 
   // 선택된 배너 컨텐츠 포스터 이미지
   String? get selectedBannerContentBackdropImgUrl => _bannerContents
-      .value?.contentList[_bannerContentsSliderIndex.value].backdropImgUrl;
+      .value?.contentList[bannerContentsSliderIndex.value].backdropImgUrl;
+
+  // 선택된 배너 콘텐츠
+  BannerItem? get selectedBannerContent =>
+      _bannerContents.value?.contentList[bannerContentsSliderIndex.value];
 
   // Top10 컨텐츠 로드 여부
   bool get isTopTenContentsLoaded => _topTenContents.value.hasData;
 
   // Top10 컨텐츠
   TopTenContentsModel? get topTenContents => _topTenContents.value;
+
+  // 상단 노출 카테고리, index를 기준으론 필요 카테고리를 반환
+  TopPositionedCategory selectedTopPositionedCategory(int index) =>
+      topPositionedCategory.value![index];
+
+  // 상단 노출 카테고리 콜렉션 로드 여부
+  bool get isTopPositionedCollectionLoaded =>
+      topPositionedCategory.value.hasData;
+
+  // 채널 리스트 개수
+  int get countOfChannelList => _channelList.value?.length ?? 5;
+
+  // 채널 데이터 로드 여부
+  bool get isChannelListLoaded => _channelList.value.hasData;
+
+  // 채널리스트 요소 (인덱스 기준)
+  ChannelModel channelItem(int index) => _channelList.value![index];
 }

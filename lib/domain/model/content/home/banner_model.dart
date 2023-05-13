@@ -22,9 +22,11 @@ class BannerItem {
   final String description;
   final String imgUrl;
   final String backdropImgUrl;
+  final String genre;
 
   BannerItem({
     required this.originId,
+    required this.genre,
     required this.id,
     required this.type,
     required this.title,
@@ -38,6 +40,7 @@ class BannerItem {
         id: SplittedIdAndType.fromOriginId(response.id).id,
         type: SplittedIdAndType.fromOriginId(response.id).type,
         title: response.title,
+        genre: Formatter.formatGenreListToSingleStr2(response.genres) ?? '장르 없음',
         description: response.description,
         imgUrl: response.imgUrl,
         backdropImgUrl: response.backdropImgUrl,

@@ -19,7 +19,7 @@ class PagedCategoryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return PagedSliverList.separated(
       pagingController: pagingController,
-      separatorBuilder: (__, _) => AppSpace.size26,
+      separatorBuilder: (__, _) => AppSpace.size32,
       builderDelegate: PagedChildBuilderDelegate<CategoryContentSection>(
         // animateTransitions: true,
 
@@ -47,15 +47,15 @@ class PagedCategoryListView extends StatelessWidget {
         /* 로딩 인디케이터 */
         firstPageProgressIndicatorBuilder: (context) {
           return Column(
-            children: const [
-              CategoryContentSectionSkeletonView(),
-              AppSpace.size26,
-              CategoryContentSectionSkeletonView(),
-              AppSpace.size26,
-              CategoryContentSectionSkeletonView(),
-              AppSpace.size26,
-              CategoryContentSectionSkeletonView(),
-            ],
+            children: List.generate(
+              4,
+              (index) => Column(
+                children: const [
+                  CategoryContentSectionSkeletonView(),
+                  AppSpace.size32,
+                ],
+              ),
+            ),
           );
         },
         /* 검색 결과*/

@@ -7,16 +7,16 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   Widget buildScreen(BuildContext context) {
     return ContentDetailScaffold(
       header: _buildHeader(),
+      headerBackdropImgUrl: vm.headerBackdropImg,
+      rateAndGenreView: _buildRateAndGenreView(),
       tabs: _buildTab(),
       tabViews: _buildTabBarViews(),
-      rateAndGenreView: _buildRateAndGenreView(),
-      headerBgImgUrl: vm.headerBackdropImg,
+      headerBgImg: const _HeaderBgImg(),
     );
   }
 
   // 탭뷰
   List<Widget> _buildTabBarViews() => [
-        // Container(),
         const MainContentTabView(),
         const ContentDetailInfoTabView(),
       ];
@@ -71,7 +71,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
                 Obx(
                   () => vm.headerTitle.hasData
                       ? Text(vm.headerTitle!.value,
-                          style: AppTextStyle.headline2,)
+                          style: AppTextStyle.headline2)
                       : Shimmer(
                           color: AppColor.lightGrey,
                           child: const SizedBox(
@@ -121,7 +121,7 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   // 탭바
   List<Tab> _buildTab() {
     return const [
-      Tab(text: '콘텐츠', height: 42),
+      Tab(text: '컨텐츠', height: 42),
       Tab(text: '정보', height: 42),
     ];
   }
@@ -146,4 +146,18 @@ class ContentDetailScreen extends BaseScreen<ContentDetailViewModel> {
   // 데이터가 로딩 중이라면 swipback을 지원하지 않음.
   @override
   bool get preventSwipeBack => vm.loading.isTrue ? true : false;
+}
+
+class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
+  const _HeaderBgImg({Key? key}) : super(key: key);
+
+  @override
+  Widget buildView(BuildContext context) {
+    return Obx(() => CachedNetworkImage(
+          width: SizeConfig.to.screenWidth,
+          fit: BoxFit.fitWidth,
+          imageUrl: vm.headerBackdropImg.prefixTmdbImgPath,
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ));
+  }
 }

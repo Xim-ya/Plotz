@@ -1,5 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
+import '../../../common/image/new_content_post_item.dart';
+
 /** Edited By Ximya - 2023.03.21
  *  [HomeScreen]의 카테고리 섹션 영역 부분 섹션뷰 -> 각 개별 카테고리 '제목' + '컨텐츠 리스트'
  *  [PagedListView]적용 되어 있는데 리스트뷰의 itemBuilder 리턴 값으로 해당 모듈이 사용됨
@@ -35,14 +37,14 @@ class CategoryContentSectionView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               contentSectionData.title,
-              style: AppTextStyle.headline3,
+              style: AppTextStyle.title2,
               maxLines: 1,
               overflow: TextOverflow.fade,
             ),
           ),
-          AppSpace.size8,
+          AppSpace.size7,
           ContentPostSlider(
-            height: 180,
+            height: 160,
             itemCount: contentSectionData.contents.length,
             itemBuilder: (context, index) {
               final contentItem = contentSectionData.contents[index];
@@ -50,7 +52,10 @@ class CategoryContentSectionView extends StatelessWidget {
                 onTap: () {
                   onContentTapped(index);
                 },
-                child: ContentPostItem(imgUrl: contentItem.posterImgUrl),
+                child: NewContentPostItem(
+                  imgUrl: contentItem.posterImgUrl,
+                  title: '임시 제목',
+                ),
               );
             },
           ),

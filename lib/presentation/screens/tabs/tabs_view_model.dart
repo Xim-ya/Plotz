@@ -53,4 +53,8 @@ class TabsViewModel extends BaseViewModel {
         break;
     }
   }
+
+
+  // 탭 선택 여부
+  bool isTabSelected(int index) => selectedTabIndex.value == index;
 }

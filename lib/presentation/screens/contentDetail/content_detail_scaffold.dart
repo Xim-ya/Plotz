@@ -11,15 +11,17 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
     required this.tabViews,
     required this.tabs,
     required this.header,
-    required this.headerBgImgUrl,
     required this.rateAndGenreView,
+    required this.headerBgImg,
+    required this.headerBackdropImgUrl,
   }) : super(key: key);
 
   final Widget header;
   final List<Tab> tabs;
   final List<Widget> tabViews;
-  final String headerBgImgUrl;
   final Widget rateAndGenreView;
+  final String headerBackdropImgUrl;
+  final Widget headerBgImg;
 
   @override
   Widget buildView(BuildContext context) {
@@ -29,21 +31,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           () => AnimatedPositioned(
             top: vm.headerBgOffset,
             duration: const Duration(milliseconds: 40),
-            child: Stack(
-              children: [
-                CachedNetworkImage(
-                  width: SizeConfig.to.screenWidth,
-                  fit: BoxFit.fitWidth,
-                  imageUrl: headerBgImgUrl.prefixTmdbImgPath,
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
-                Positioned(
-                  top: 180,
-                  right: 16,
-                  child: rateAndGenreView,
-                ),
-              ],
-            ),
+            child: headerBgImg,
           ),
         ),
 
@@ -61,6 +49,14 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
           ),
         ),
 
+        // Rate & Genre 뷰
+        Obx(
+          () => AnimatedPositioned(
+              top: 180 - vm.headerBgOffset,
+              right: 16,
+              duration: const Duration(milliseconds: 200),
+              child: rateAndGenreView),
+        ),
         DefaultTabController(
           length: 2,
           child: NestedScrollView(
@@ -68,8 +64,10 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
-                SliverToBoxAdapter(
-                  child: header,
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    header,
+                  ]),
                 ),
                 SliverPersistentHeader(
                   pinned: true,
@@ -129,7 +127,7 @@ class ContentDetailScaffold extends BaseView<ContentDetailScaffoldController> {
             left: 12,
             duration: const Duration(milliseconds: 100),
             child: IconButton(
-              onPressed: vm.contentDetailViewModel.onRouteBack,
+              onPressed: ContentDetailViewModel.to.onRouteBack,
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,

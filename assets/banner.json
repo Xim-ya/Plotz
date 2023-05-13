@@ -1,0 +1,42 @@
+{
+  "banner": {
+    "items": [
+      {
+        "backdropImgUrl": "/wu8Sg8NXQlmBpt4oGhkU1SOGhqq.jpg",
+        "description": "SF물 싫어하는 사람도 요건 무조건 재미있음 SF물 싫어하는 사람도 요건 무조건 재미있음 SF물 싫어하는 사람도 요건 무조건 재미있음 SF물 싫어하는 사람도 요건 무조건 재미있음 SF물 싫어하는 사람도 요건 무조건 재미있음",
+        "id": "t-93740",
+        "imgUrl": "https://www.themoviedb.org/t/p/original/eBTMLBwTPnsg8ExfxxOazXl4YD3.jpg",
+        "title": "파운데이션",
+        "genres": [
+          "Sci-Fi & Fantasy",
+          "드라마"
+        ]
+      },
+      {
+        "backdropImgUrl": "/p1SlVBoMxrQZrlyDPjYvG0OICwl.jpg",
+        "description": "디카프리오에게 오스카를 준 영화",
+        "id": "m-281957",
+        "imgUrl": "https://www.themoviedb.org/t/p/w1066_and_h600_bestv2/sGOw65ZmfgGfistCjuNsazjs6j9.jpg",
+        "title": "레버넌트",
+        "genres": [
+          "서부",
+          "드라마",
+          "모험"
+        ]
+      },
+      {
+        "backdropImgUrl": "/e0m8FmYKnygmGxFSeVRBP413yYc.jpg",
+        "description": "13년 전 발생한 미제사건에 숨겨진 충격적인 비밀",
+        "id": "m-290751",
+        "imgUrl": "https://www.themoviedb.org/t/p/w1066_and_h600_bestv2/hAtRKAi24kw4wyGB2IyvmFdVGHC.jpg",
+        "title": "시크릿 인 데어 아이즈",
+        "genres": [
+          "코미디",
+          "스릴러",
+          "드라마"
+        ]
+      }
+    ],
+    "key": "2022-03-20-BBB"
+  }
+}

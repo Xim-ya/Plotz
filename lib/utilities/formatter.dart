@@ -6,6 +6,10 @@ class Formatter {
   static String? formatGenreListToSingleStr(List<String>? genreList) =>
       genreList == null ? '-' : genreList.join(' / ');
 
+  static String? formatGenreListToSingleStr2(List<String>? genreList) =>
+      genreList == null ? '-' : genreList.join(' · ');
+
+
   // Date Format
   static String dateToyyMMdd(String date) {
     return DateFormat('yy.MM.dd').format(DateTime.parse(date));
