@@ -1,4 +1,4 @@
-import 'package:soon_sak/presentation/screens/explore/explore_binding.dart';
+import 'package:soon_sak/presentation/screens/home/home_screen.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
 import 'package:soon_sak/presentation/screens/search/search_binding.dart';

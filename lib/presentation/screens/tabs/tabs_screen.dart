@@ -1,4 +1,4 @@
-import 'package:soon_sak/presentation/screens/home/new_home_screen.dart';
+import 'package:soon_sak/presentation/screens/home/home_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -21,7 +21,7 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
         index: vm.selectedTabIndex.value,
         children: const <Widget>[
           // HomeScreen(),
-          NewHomeScreen(),
+          HomeScreen(),
           ExploreScreen(),
           CurationScreen(),
           MyPageScreen(),

@@ -224,7 +224,6 @@ export 'package:soon_sak/presentation/screens/register/pageView/search_content_p
 export 'package:soon_sak/presentation/common/dialog/app_dialog.dart';
 export 'package:soon_sak/presentation/common/textField/search_bar.dart';
 export 'package:soon_sak/presentation/common/animated_index_stack.dart';
-export 'package:soon_sak/presentation/screens/home/home_screen.dart';
 export 'package:soon_sak/presentation/common/sticky_delegate_container.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_scaffold_controller.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_scaffold.dart';
@@ -240,7 +239,6 @@ export 'package:soon_sak/presentation/screens/tabs/tabs_screen.dart';
 export 'package:soon_sak/presentation/common/image/content_post_item.dart';
 export 'package:soon_sak/presentation/common/slider/content_post_slider.dart';
 export 'package:soon_sak/presentation/common/button/icon_ink_well_button.dart';
-export 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 export 'package:soon_sak/presentation/screens/home/home_view_model.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_binding.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_screen.dart';
