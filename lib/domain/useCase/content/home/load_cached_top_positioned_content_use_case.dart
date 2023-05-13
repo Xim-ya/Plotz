@@ -36,7 +36,7 @@ class LoadCachedTopPositionedContentsUseCase
     // 1. storage 데이터 존재 유무 확인
     final Object? localData = await _localStorageService.getData(
         fieldName: 'topPositionedCollection');
-    final String keyResponse = _contentService.topTenContentKey!;
+    final String keyResponse = _contentService.topPositionedCollectionKey!;
 
     /// 조건 (AND)
     /// LocalStorage에 데이터가 존재한다면,
@@ -58,8 +58,7 @@ class LoadCachedTopPositionedContentsUseCase
 
   // Storage 데이터 삭제 (초기화)
   Future<void> deleteLocalStorageField() async {
-    await _localStorageService.deleteData(
-        fieldName: 'topPositionedCollection');
+    await _localStorageService.deleteData(fieldName: 'topPositionedCollection');
   }
 
   /// api 호출

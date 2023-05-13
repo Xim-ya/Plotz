@@ -14,8 +14,6 @@ class CategoryContentCollection {
         key: response.key,
         items: response.items.map(CategoryContentSection.fromResponse).toList(),
       );
-
-
 }
 
 class CategoryContentSection {

@@ -12,4 +12,5 @@ ContentKeyResponse _$ContentKeyResponseFromJson(Map<String, dynamic> json) =>
       topTenContentKey: json['topTenContentKey'] as String,
       categoryContent1: json['categoryContent1'] as String,
       categoryContent2: json['categoryContent2'] as String,
+      topPositionedCollectionKey: json['topPositionedCollectionKey'] as String,
     );
