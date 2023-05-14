@@ -13,6 +13,9 @@ abstract class AppRoutes {
   // 홈
   static const home = '/home';
 
+  // 채널 상세
+  static const channelDetail = '/channelDetail';
+
   // 컨텐츠 상세
   static const contentDetail = '/content_detail';
 

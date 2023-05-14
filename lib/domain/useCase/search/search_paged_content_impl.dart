@@ -2,7 +2,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 
 class SearchPagedContentImpl
-    with SearchHandlerMixin, PagingHandlerMixin
+    with SearchHandlerMixin, PagingSearchHandlerMixin
     implements SearchPagedContentUseCase {
   SearchPagedContentImpl(this._repository);
 

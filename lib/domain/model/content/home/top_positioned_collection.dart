@@ -28,6 +28,6 @@ class TopPositionedCategory {
       TopPositionedCategory(
           title: response.title,
           items: response.items
-              .map((e) => NewContentPosterShell.fromResponse(e))
+              .map((e) => NewContentPosterShell.fromTopPositionedCategory(e))
               .toList());
 }

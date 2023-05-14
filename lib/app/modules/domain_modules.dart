@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
@@ -36,6 +37,9 @@ abstract class DomainModules {
         () => LoadPagedCategoryCollectionUseCase(
             Get.find(), Get.find(), Get.find()),
         fenix: true);
+
+
+
 
 
     // TMDB

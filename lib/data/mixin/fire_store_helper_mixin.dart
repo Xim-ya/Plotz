@@ -1,6 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:soon_sak/data/firebase/app_fire_store.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.15
  *  FireStore 관련 네트워킹 메소드 기능을 관리하는 mixin 모듈
@@ -10,8 +11,10 @@ mixin FirestoreHelper {
   final _db = AppFireStore.getInstance;
 
   // 특정 id의 document 데이터를 불러오는 메소드
-  Future<DocumentSnapshot> getDocFromId(String collectionName,
-      {required String docId,}) async {
+  Future<DocumentSnapshot> getDocFromId(
+    String collectionName, {
+    required String docId,
+  }) async {
     final ref = _db.collection(collectionName).doc(docId);
     final doc = await ref.get();
     return doc;
@@ -19,7 +22,8 @@ mixin FirestoreHelper {
 
   // Collection에서 속한 Document ID List를 불러오는 메소드
   Future<List<String>> getDocumentIdsFromCollection(
-      String collectionName,) async {
+    String collectionName,
+  ) async {
     List<String> documentIds = [];
     QuerySnapshot snapshot = await _db.collection(collectionName).get();
     for (var document in snapshot.docs) {
@@ -28,12 +32,38 @@ mixin FirestoreHelper {
     return documentIds;
   }
 
+  // 특정 필드 값을 가지고 있는 documents를 가져오는 메소드
+  Future<List<DocumentSnapshot>> getDocumentsByFieldValue(String collectionName,
+      {required String fieldName,
+      required dynamic fieldValue,
+        required int pageSize,
+      required DocumentSnapshot? lastDocument}) async {
+    if (lastDocument.hasData) {
+      QuerySnapshot snapshot = await _db
+          .collection(collectionName)
+          .where(fieldName, isEqualTo: fieldValue)
+          .limit(pageSize)
+          .startAfterDocument(lastDocument!)
+          .get();
+      return snapshot.docs;
+    } else {
+      QuerySnapshot snapshot = await _db
+          .collection(collectionName)
+          .where(fieldName, isEqualTo: fieldValue)
+          .limit(pageSize)
+          .get();
+      return snapshot.docs;
+    }
+  }
+
   /// 주어진 id List에 해당하는 Document 데이터를 불러오는 메소도
   /// FireStore where In 인덱싱 쿼리 메소드는
   /// 10개의 제한이 있기 때문에
   /// 전달 받은 [ids] 10개 단위로 나누어 호출
-  Future<List<DocumentSnapshot>> getContainingDocs(
-      {required String collectionName, required List<String> ids,}) async {
+  Future<List<DocumentSnapshot>> getContainingDocs({
+    required String collectionName,
+    required List<String> ids,
+  }) async {
     List<DocumentSnapshot> results = [];
 
     List<List<String>> idChunks = [];
@@ -55,8 +85,11 @@ mixin FirestoreHelper {
   }
 
   /// subCollection의 첫 번쟤 단일 document 데이터를 불러오는 메소드
-  Future<QueryDocumentSnapshot> getFirstSubCollectionDoc(String collectionName,
-      {required String docId, required String subCollectionName,}) async {
+  Future<QueryDocumentSnapshot> getFirstSubCollectionDoc(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+  }) async {
     QuerySnapshot snapshot = await _db
         .collection(collectionName)
         .doc(docId)
@@ -68,8 +101,11 @@ mixin FirestoreHelper {
   }
 
   /// subCollection document 데이터 리스트를 불러오는 메소드
-  Future<List<DocumentSnapshot>> getSubCollectionDocs(String collectionName,
-      {required String docId, required String subCollectionName,}) async {
+  Future<List<DocumentSnapshot>> getSubCollectionDocs(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+  }) async {
     QuerySnapshot snapshot = await _db
         .collection(collectionName)
         .doc(docId)
@@ -114,8 +150,10 @@ mixin FirestoreHelper {
   }
 
   /// dcoumentID 변경
-  Future<void> changeDocId(String collectionName,
-      {required String docId,}) async {
+  Future<void> changeDocId(
+    String collectionName, {
+    required String docId,
+  }) async {
     DocumentSnapshot<Map<String, dynamic>> oldDocumentSnapshot =
         await _db.collection(collectionName).doc(docId).get();
 
@@ -126,8 +164,11 @@ mixin FirestoreHelper {
   }
 
   /// subCollection의 단일 document 데이터를 불러오는 메소드
-  Future<QuerySnapshot> getSingleSubCollectionDoc(String collectionName,
-      {required String docId, required String subCollectionName,}) async {
+  Future<QuerySnapshot> getSingleSubCollectionDoc(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+  }) async {
     QuerySnapshot snapshot = await _db
         .collection(collectionName)
         .doc(docId)
@@ -174,15 +215,18 @@ mixin FirestoreHelper {
       await docRef.update({firstFieldName!: firstFieldData});
     } else {
       await docRef.update(
-          {firstFieldName!: firstFieldData, secondFieldName!: secondFieldData},);
+        {firstFieldName!: firstFieldData, secondFieldName!: secondFieldData},
+      );
     }
   }
 
   /// subCollection의 특정 document 데이터를 불러오는 메소드
-  Future<DocumentSnapshot> getSubCollectionDoc(String collectionName,
-      {required String docId,
-      required String subCollectionName,
-      required String subCollectionDocId,}) async {
+  Future<DocumentSnapshot> getSubCollectionDoc(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+    required String subCollectionDocId,
+  }) async {
     DocumentSnapshot snapshot = await _db
         .collection(collectionName)
         .doc(docId)
@@ -194,8 +238,11 @@ mixin FirestoreHelper {
   }
 
   /// document를 생성하고 데이터를 저장하는 메소드
-  Future<void> storeDocument(String collectionName,
-      {required String? docId, required Map<String, dynamic> data,}) {
+  Future<void> storeDocument(
+    String collectionName, {
+    required String? docId,
+    required Map<String, dynamic> data,
+  }) {
     final docRef = _db.collection(collectionName).doc(docId);
     return docRef.set(data);
   }
@@ -245,16 +292,22 @@ mixin FirestoreHelper {
 
   /// document를 생성하고 데이터를 저장하는 메소드
   //  생성한 document의 id값을 리턴함
-  Future<String> storeDocumentAndReturnId(String collectionName,
-      {required String? docId, required Map<String, dynamic> data,}) async {
+  Future<String> storeDocumentAndReturnId(
+    String collectionName, {
+    required String? docId,
+    required Map<String, dynamic> data,
+  }) async {
     final docRef = _db.collection(collectionName).doc(docId);
     await docRef.set(data);
     return docRef.id;
   }
 
   // 특정 Document에 데이터를 업데이트 하는 메소드
-  Future<void> updateDocumentField(String collectionName,
-      {required String? docId, required Map<String, dynamic> data,}) async {
+  Future<void> updateDocumentField(
+    String collectionName, {
+    required String? docId,
+    required Map<String, dynamic> data,
+  }) async {
     final docRef = _db.collection(collectionName).doc(docId);
     await docRef.update(data);
   }
@@ -331,9 +384,10 @@ mixin FirestoreHelper {
 
   // 특정 field 값을 가지고 있는 document 리스트를 불러오는 메소드
   Future<List<DocumentSnapshot>> getDocsWithContainingField(
-      String collectionName,
-      {required String fieldName,
-      required String neededFieldName,}) async {
+    String collectionName, {
+    required String fieldName,
+    required String neededFieldName,
+  }) async {
     final snapshot = await _db
         .collection(collectionName)
         .where(fieldName, isEqualTo: neededFieldName)

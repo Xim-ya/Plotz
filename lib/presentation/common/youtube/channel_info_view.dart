@@ -67,7 +67,7 @@ class ChannelInfoView extends StatelessWidget {
             ],
             if (subscriberCount.hasData)
               Text(
-                '구독자 ${Formatter.formatViewAndLikeCount(subscriberCount)}명',
+                '구독자 ${Formatter.formatNumberWithUnit(subscriberCount)}명',
                 style: AppTextStyle.body1.copyWith(
                   color: AppColor.lightGrey,
                   fontSize: subscriberFontSize,

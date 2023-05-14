@@ -7,7 +7,6 @@ class RoundProfileImg extends StatelessWidget {
   final double size;
   final String? imgUrl;
 
-
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -24,7 +23,7 @@ class RoundProfileImg extends StatelessWidget {
                       DecorationImage(image: imageProvider, fit: BoxFit.cover),
                 ),
               ),
-              placeholder: (context, url) => const SizedBox(),
+              placeholder: (context, url) => const SkeletonBox(),
               errorWidget: (context, url, error) => Container(
                 color: Colors.grey.withOpacity(0.1),
                 child: const Center(

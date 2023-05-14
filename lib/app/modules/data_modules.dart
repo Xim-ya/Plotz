@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/api/channel/channel_api_impl.dart';
+import 'package:soon_sak/data/api/content/content_api_impl.dart';
 import 'package:soon_sak/data/api/version/version_api.dart';
 import 'package:soon_sak/data/dataSource/channel/channel_data_source.dart';
 import 'package:soon_sak/data/dataSource/channel/channel_data_source_impl.dart';
@@ -66,8 +67,8 @@ abstract class DataModules {
     Get.lazyPut(() => Dio(), fenix: true);
 
     /* FireBase */
-    Get.lazyPut(() => AppFireStore(), fenix: true);
-    Get.lazyPut(() => AppFireStorage(), fenix: true);
+    Get.lazyPut(() => AppFireStore.getInstance, fenix: true);
+    Get.lazyPut(() => AppFireStorage.getInstance, fenix: true);
 
     /* Content */
     Get.lazyPut<ContentApi>(() => ContentApiImpl(), fenix: true);
