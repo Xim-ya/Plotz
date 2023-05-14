@@ -498,31 +498,36 @@ class _ChannelSlider extends BaseView<HomeViewModel> {
               itemCount: vm.countOfChannelList,
               itemBuilder: (context, index) {
                 if (vm.isChannelListLoaded) {
-                  return Column(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: AppColor.gray06, width: 0.75),
+                  return GestureDetector(
+                    onTap: () {
+                      vm.routeToChannelDetail(vm.channelItem(index));
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border:
+                                Border.all(color: AppColor.gray06, width: 0.75),
+                          ),
+                          child: RoundProfileImg(
+                            size: 88,
+                            imgUrl: vm.channelItem(index).logoImgUrl,
+                          ),
                         ),
-                        child: RoundProfileImg(
-                          size: 88,
-                          imgUrl: vm.channelItem(index).logoImgUrl,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      SizedBox(
-                        width: 88,
-                        child: Text(
-                          vm.channelItem(index).name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyle.alert2,
-                        ),
-                      )
-                    ],
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          width: 88,
+                          child: Text(
+                            vm.channelItem(index).name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyle.alert2,
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 } else {
                   return Column(
