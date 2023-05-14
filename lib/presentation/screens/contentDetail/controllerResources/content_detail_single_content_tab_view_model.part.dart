@@ -22,7 +22,7 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
       : _youtubeVideoContentInfo.value?.videoThumbnailUrl.obs;
 
   // 유튜브 컨텐츠 조회수
-  String? get viewCount => Formatter.formatViewAndLikeCount(
+  String? get viewCount => Formatter.formatNumberWithUnit(
         contentVideos.value?.mainViewCount,
         isViewCount: true,
       );

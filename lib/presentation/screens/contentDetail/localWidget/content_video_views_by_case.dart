@@ -180,7 +180,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                           ),
                           if (vm.multipleVideoInfo.hasData)
                             Text(
-                              '조회수 ${Formatter.formatViewAndLikeCount(videoInfoItem.detailInfo?.viewCount, isViewCount: true)} · ${Formatter.getDateDifferenceFromNow(videoInfoItem.detailInfo!.uploadDate!)}',
+                              '조회수 ${Formatter.formatNumberWithUnit(videoInfoItem.detailInfo?.viewCount, isViewCount: true)} · ${Formatter.getDateDifferenceFromNow(videoInfoItem.detailInfo!.uploadDate!)}',
                               style: AppTextStyle.body3,
                             )
                           else
