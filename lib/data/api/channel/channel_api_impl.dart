@@ -9,11 +9,13 @@ import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.
 import 'package:soon_sak/utilities/index.dart';
 
 class ChannelApiImpl with FirestoreHelper implements ChannelApi {
+  final _db = AppFireStore.getInstance;
+
   @override
   Future<List<ChannelBasicResponse>> loadChannelsBaseOnSubscribers() async {
     final docs = await getDocsByOrderWithLimit(
       'channel',
-      orderFieldName: 'subscribersCount',
+      orderFieldName: 'totalContent',
       limitCount: 20,
     );
 
@@ -32,5 +34,61 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
     );
 
     return docs.map((e) => ChannelContentItemResponse.fromDocument(e)).toList();
+  }
+
+  @override
+  Future<void> setChannelField() async {
+    // 채널 snapshot
+    QuerySnapshot channelSnapshot = await _db.collection('channel').get();
+
+    // 채널 Documents
+    List<DocumentSnapshot> channelDocs = channelSnapshot.docs;
+
+    // 채널 Documents loop
+    await Future.forEach(channelDocs, (DocumentSnapshot e) async {
+      // 콘텐츠 snapshot
+      final contentSnapshot = await _db
+          .collection('content')
+          .where('channelRef',
+              isEqualTo: AppFireStore.getInstance.doc('/channel/${e.id}'))
+          .get();
+
+      // 콘텐츠 개수
+      final contentsLength = contentSnapshot.docs.length;
+      print('/channel/${e.id}');
+      await updateDocumentFieldsTest(
+        'channel',
+        docId: e.id,
+        firstFieldName: 'totalContent',
+        firstFieldData: contentsLength,
+      ).whenComplete(() => print("${e.id} 저장 완료"));
+    });
+  }
+
+  @override
+  Future<void> removeZeroContainedChannel() async {
+    // 채널 snapshot
+    QuerySnapshot channelSnapshot = await _db.collection('channel').get();
+
+    // 채널 Documents
+    List<DocumentSnapshot> channelDocs = channelSnapshot.docs;
+
+    // 채널 Documents loop
+    await Future.forEach(channelDocs, (DocumentSnapshot e) async {
+      // 콘텐츠 snapshot
+      final contentSnapshot = await _db
+          .collection('content')
+          .where('channelRef',
+              isEqualTo: AppFireStore.getInstance.doc('/channel/${e.id}'))
+          .get();
+
+      // 콘텐츠 개수
+      final contentsLength = contentSnapshot.docs.length;
+
+      if (contentsLength == 0) {
+        await deleteDocument('channel', docId: e.id);
+        print("채널 삭제됨");
+      }
+    });
   }
 }
