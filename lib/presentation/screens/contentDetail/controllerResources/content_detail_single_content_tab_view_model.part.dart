@@ -32,4 +32,5 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
 
   // 시즌 에피소드 섹션 포스터 이미지 넓이
   double get seasonEpisodeImgWidth => (SizeConfig.to.screenWidth - 32) * 0.397;
+
 }
