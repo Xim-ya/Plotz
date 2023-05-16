@@ -28,6 +28,7 @@ void main() async {
   // Portrait 고정
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Environment(BuildType.development).run();
   });
 }
