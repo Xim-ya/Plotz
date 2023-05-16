@@ -1,11 +1,13 @@
 import 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/color_config.dart';
 import 'package:soon_sak/presentation/base/new_base_view_model.dart';
 
 @immutable
-abstract class NewBaseScreen<T extends NewBaseViewModel> extends StatelessWidget {
+abstract class NewBaseScreen<T extends NewBaseViewModel>
+    extends StatelessWidget {
   const NewBaseScreen({Key? key}) : super(key: key);
 
   @override
