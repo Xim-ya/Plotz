@@ -28,8 +28,9 @@ class HomeViewModel extends BaseViewModel {
 
   /// State
   final RxInt bannerContentsSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
-  final RxDouble appBarLogoOpacity = 1.0.obs; // 앱 바 로고 opacity
   final RxDouble bannerInfoOpacity = 1.0.obs; // 상단 배너 정보 섹션 opacity
+  // 상단 gradient box enable 여부
+  final RxBool isScrolledOnPosition = false.obs;
 
   /* [Controllers] */
   late ScrollController scrollController;
@@ -84,17 +85,17 @@ class HomeViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
-  // AppBar Logo Opacity 설정 메소드
-  void _manageAppBarLogoOpacity(double offset) {
+  // 스크롤 동작 관련 이벤트
+  void _manageInteractionOnScroll() {
     // 왜 이게 난 더 직관적이지..?
     // guard let문 느낌이 나서 더 좋음
-    if (scrollController.offset < 390 && appBarLogoOpacity.value == 1.0) return;
-    if (scrollController.offset >= 390 && appBarLogoOpacity.value == 0) return;
+    if (scrollController.offset < 390 && isScrolledOnPosition.isFalse) return;
+    if (scrollController.offset >= 390 && isScrolledOnPosition.isTrue) return;
 
     if (scrollController.offset >= 390) {
-      appBarLogoOpacity(0.0);
+      isScrolledOnPosition(true);
     } else {
-      appBarLogoOpacity(1.0);
+      isScrolledOnPosition(false);
     }
   }
 
@@ -171,7 +172,7 @@ class HomeViewModel extends BaseViewModel {
 
     scrollController = ScrollController();
     scrollController.addListener(() {
-      _manageAppBarLogoOpacity(scrollController.offset);
+      _manageInteractionOnScroll();
     });
 
     carouselController = CarouselController();
