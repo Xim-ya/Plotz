@@ -100,11 +100,15 @@ abstract class AppTextStyle {
     letterSpacing: -0.2,
   );
 
-  /// 2022.10.28 by Max
-  /// 차트 라벨
-  static TextStyle lineChartLabel = PretendardTextStyle.regular(
+  static TextStyle desc = PretendardTextStyle.regular(
     size: 10,
-    height: 18,
+    height: 14,
+    letterSpacing: -0.2,
+  );
+
+  static TextStyle nav = PretendardTextStyle.regular(
+    size: 10,
+    letterSpacing: -0.2,
   );
 }
 
