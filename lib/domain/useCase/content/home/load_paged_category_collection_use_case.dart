@@ -90,6 +90,8 @@ class LoadPagedCategoryCollectionUseCase {
         }
       },
       onFailure: (e) {
+        _localStorageService.deleteData(
+            fieldName: 'categoryCollection$currentPage');
         log('=== LoadCachedCategoryContentUseCase / 2-c) / api 호출 실패 \n $e');
 
         return null;

@@ -130,6 +130,9 @@ class HomeViewModel extends BaseViewModel {
         _topTenContents.value = data;
       },
       onFailure: (e) {
+        AlertWidget.animatedToast('인기 콘텐츠를 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true);
+
         log('HomeViewModel > $e');
       },
     );
@@ -143,6 +146,9 @@ class HomeViewModel extends BaseViewModel {
         _bannerContents.value = data;
       },
       onFailure: (e) {
+        AlertWidget.animatedToast('배너 콘텐츠 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true);
+        _loadBannerContentUseCase.deleteLocalData();
         log('HomeViewModel > $e');
       },
     );
@@ -154,6 +160,9 @@ class HomeViewModel extends BaseViewModel {
     response.fold(onSuccess: (data) {
       topPositionedCategory.value = data;
     }, onFailure: (e) {
+      AlertWidget.animatedToast('일부 콘텐츠를 불러오는데 실패했습니다',
+          isUsedOnTabScreen: true);
+      _loadCachedTopPositionedContentsUseCase.deleteLocalStorageField();
       log('HomeViewModel > $e');
     });
   }

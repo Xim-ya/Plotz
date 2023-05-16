@@ -41,4 +41,5 @@ extension HomeViewModelPart on HomeViewModel {
 
   // 채널리스트 요소 (인덱스 기준)
   ChannelModel channelItem(int index) => _channelList.value![index];
+
 }

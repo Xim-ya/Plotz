@@ -20,7 +20,10 @@ import 'package:soon_sak/utilities/index.dart';
 class LoadCachedBannerContentUseCase
     extends BaseNoParamUseCase<Result<BannerModel>> {
   LoadCachedBannerContentUseCase(
-      this._repository, this._localStorageService, this._contentService,);
+    this._repository,
+    this._localStorageService,
+    this._contentService,
+  );
 
   final StaticContentRepository _repository;
   final LocalStorageService _localStorageService;
@@ -67,7 +70,6 @@ class LoadCachedBannerContentUseCase
     return Result.success(result);
   }
 
-
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
     Map<String, dynamic> data = json.decode(jsonText);
@@ -77,5 +79,10 @@ class LoadCachedBannerContentUseCase
     } else {
       return false;
     }
+  }
+
+  // 로컬 데이터 삭제
+  Future<void> deleteLocalData() async {
+    await _localStorageService.deleteData(fieldName: 'banner');
   }
 }
