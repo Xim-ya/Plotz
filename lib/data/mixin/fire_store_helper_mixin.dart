@@ -32,11 +32,13 @@ mixin FirestoreHelper {
     return documentIds;
   }
 
+  // 특정 필드 값
+
   // 특정 필드 값을 가지고 있는 documents를 가져오는 메소드
   Future<List<DocumentSnapshot>> getDocumentsByFieldValue(String collectionName,
       {required String fieldName,
       required dynamic fieldValue,
-        required int pageSize,
+      required int pageSize,
       required DocumentSnapshot? lastDocument}) async {
     if (lastDocument.hasData) {
       QuerySnapshot snapshot = await _db
@@ -220,6 +222,30 @@ mixin FirestoreHelper {
     }
   }
 
+  /// 특정 필드값을 업데이트 하는 메소드
+  /// 최대 2개의 필드 값을 업데이트할 수 있고
+  /// 두 번째 필드 값 정보가 없다면
+  /// 첫 번째 필드 값에 해당하는 정보만 업데이트
+  Future<void> updateDocumentFieldsTest(
+    final String collectionName, {
+    required String docId,
+    String? firstFieldName,
+    dynamic firstFieldData,
+    String? secondFieldName,
+    dynamic secondFieldData,
+  }) async {
+    final docRef = _db.collection(collectionName).doc(docId);
+    if (firstFieldData == null) {
+      await docRef.update({secondFieldName!: secondFieldData});
+    } else if (secondFieldData == null) {
+      await docRef.update({firstFieldName!: firstFieldData});
+    } else {
+      await docRef.update(
+        {firstFieldName!: firstFieldData, secondFieldName!: secondFieldData},
+      );
+    }
+  }
+
   /// subCollection의 특정 document 데이터를 불러오는 메소드
   Future<DocumentSnapshot> getSubCollectionDoc(
     String collectionName, {
@@ -288,6 +314,11 @@ mixin FirestoreHelper {
       await secondSubCollectionRef.add(secondSubCollectionData);
     }
     return;
+  }
+
+  //  특정 document 삭제
+  Future<void> deleteDocument(String collectionName, {required String docId}) {
+    return _db.collection(collectionName).doc(docId).delete();
   }
 
   /// document를 생성하고 데이터를 저장하는 메소드
