@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:soon_sak/app/config/app_insets.dart';
 import 'package:soon_sak/app/config/app_space_config.dart';
 import 'package:soon_sak/app/config/color_config.dart';
 import 'package:soon_sak/app/config/font_config.dart';
@@ -20,9 +21,10 @@ class PagedGridListView<T> extends StatelessWidget {
     return PagedSliverGrid<int, T>(
       pagingController: pagingController,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8.0,
-        crossAxisSpacing: 8.0,
+        crossAxisCount: 3,
+        mainAxisSpacing: 24,
+        crossAxisSpacing: 8,
+        childAspectRatio: 109 / 199,
       ),
       builderDelegate: PagedChildBuilderDelegate<T>(
         // animateTransitions: true,
@@ -31,7 +33,7 @@ class PagedGridListView<T> extends StatelessWidget {
         newPageProgressIndicatorBuilder: (context) => const Center(
           child: CircularProgressIndicator(
             strokeWidth: 3.6,
-            color: AppColor.darkGrey,
+            color: AppColor.gray06,
           ),
         ),
 
@@ -40,7 +42,7 @@ class PagedGridListView<T> extends StatelessWidget {
           return Expanded(
             child: Center(
               child: Text(
-                '카테고리 정보를 불러오는데 실패했어요',
+                '콘텐츠를 불러오는데 실패했어요',
                 style: AppTextStyle.headline3,
                 textAlign: TextAlign.center,
               ),
@@ -50,15 +52,9 @@ class PagedGridListView<T> extends StatelessWidget {
 
         /* 로딩 인디케이터 */
         firstPageProgressIndicatorBuilder: (context) {
-          return Column(
-            children: List.generate(
-              4,
-              (index) => Column(
-                children: const [
-                  CategoryContentSectionSkeletonView(),
-                  AppSpace.size32,
-                ],
-              ),
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColor.gray06,
             ),
           );
         },
