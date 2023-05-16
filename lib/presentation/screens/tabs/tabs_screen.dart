@@ -20,7 +20,6 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
       () => AnimatedIndexedStack(
         index: vm.selectedTabIndex.value,
         children: const <Widget>[
-          // HomeScreen(),
           HomeScreen(),
           ExploreScreen(),
           CurationScreen(),
@@ -51,21 +50,26 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
             ),
           ),
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             items: <BottomNavigationBarItem>[
               for (final tab in BottomNavigationConstants.values)
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/${tab.iconPath}',
-                    color: vm.isTabSelected(tab.indexedKey)
-                        ? AppColor.main
-                        : AppColor.gray04,
+                  icon: Padding(
+                    padding: const EdgeInsets.only(bottom: 5.76),
+                    child: SvgPicture.asset(
+                      'assets/icons/${tab.iconPath}',
+                      color: vm.isTabSelected(tab.indexedKey)
+                          ? AppColor.main
+                          : AppColor.gray04,
+                    ),
                   ),
                   label: tab.label,
                 )
             ],
             currentIndex: vm.selectedTabIndex.value,
-            type: BottomNavigationBarType.fixed,
             selectedItemColor: AppColor.main,
+            selectedLabelStyle: AppTextStyle.nav,
+            unselectedLabelStyle: AppTextStyle.nav,
             unselectedItemColor: AppColor.gray04,
             onTap: vm.onBottomNavBarItemTapped,
           ),

@@ -34,13 +34,13 @@ extension ContentDetailVideoViewModel on ContentDetailViewModel {
       passedArgument.videoId ?? contentVideos.value?.singleTypeVideo.videoId;
 
   // 유튜브 컨텐츠 조회수
-  String? get singleVideoViewCount => Formatter.formatViewAndLikeCount(
+  String? get singleVideoViewCount => Formatter.formatNumberWithUnit(
         contentVideos.value?.singleTypeVideo.detailInfo?.viewCount,
         isViewCount: true,
       );
 
   // 유튜브 컨텐츠 좋아요 수
-  String? get singleLikesCount => Formatter.formatViewAndLikeCount(
+  String? get singleLikesCount => Formatter.formatNumberWithUnit(
       contentVideos.value?.singleTypeVideo.detailInfo?.likeCount,);
 
   // 유튜브 컨텐츠 업로드 일자

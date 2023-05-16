@@ -153,11 +153,13 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget buildView(BuildContext context) {
-    return Obx(() => CachedNetworkImage(
-          width: SizeConfig.to.screenWidth,
-          fit: BoxFit.fitWidth,
-          imageUrl: vm.headerBackdropImg.prefixTmdbImgPath,
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-        ));
+    return Obx(
+      () => CachedNetworkImage(
+        width: SizeConfig.to.screenWidth,
+        fit: BoxFit.fitWidth,
+        imageUrl: vm.headerBackdropImg.prefixTmdbImgPath,
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      ),
+    );
   }
 }

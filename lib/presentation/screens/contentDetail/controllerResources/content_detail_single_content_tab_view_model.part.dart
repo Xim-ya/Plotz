@@ -22,7 +22,7 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
       : _youtubeVideoContentInfo.value?.videoThumbnailUrl.obs;
 
   // 유튜브 컨텐츠 조회수
-  String? get viewCount => Formatter.formatViewAndLikeCount(
+  String? get viewCount => Formatter.formatNumberWithUnit(
         contentVideos.value?.mainViewCount,
         isViewCount: true,
       );
@@ -32,4 +32,5 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
 
   // 시즌 에피소드 섹션 포스터 이미지 넓이
   double get seasonEpisodeImgWidth => (SizeConfig.to.screenWidth - 32) * 0.397;
+
 }

@@ -1,4 +1,5 @@
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
@@ -104,7 +105,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             Obx(
               () => IgnorePointer(
                 child: AnimatedOpacity(
-                  opacity: vm.appBarLogoOpacity.value,
+                  opacity: vm.isScrolledOnPosition.value ? 0 : 1,
                   duration: const Duration(milliseconds: 300),
                   child: SvgPicture.asset('assets/icons/new_logo.svg'),
                 ),
@@ -125,21 +126,14 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       );
 
   Widget _buildStackedTopGradient() => IgnorePointer(
-        child: Container(
-          height: 148,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF000000),
-                Color.fromRGBO(15, 15, 15, 0.8177),
-                Color.fromRGBO(15, 15, 15, 0.62),
-                Colors.transparent,
-              ],
-              stops: [0.0, 0.3539, 0.5168, 1.0],
-              // stops: [0.0, 0.1823, 0.375, 1.0],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+        child: Obx(
+          () => AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
+            height: vm.isScrolledOnPosition.value ? 172 : 88,
+            decoration: BoxDecoration(
+                gradient: vm.isScrolledOnPosition.value
+                    ? AppGradient.topToBottom
+                    : AppGradient.homeBottomToTop),
           ),
         ),
       );
@@ -498,31 +492,36 @@ class _ChannelSlider extends BaseView<HomeViewModel> {
               itemCount: vm.countOfChannelList,
               itemBuilder: (context, index) {
                 if (vm.isChannelListLoaded) {
-                  return Column(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: AppColor.gray06, width: 0.75),
+                  return GestureDetector(
+                    onTap: () {
+                      vm.routeToChannelDetail(vm.channelItem(index));
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border:
+                                Border.all(color: AppColor.gray06, width: 0.75),
+                          ),
+                          child: RoundProfileImg(
+                            size: 88,
+                            imgUrl: vm.channelItem(index).logoImgUrl,
+                          ),
                         ),
-                        child: RoundProfileImg(
-                          size: 88,
-                          imgUrl: vm.channelItem(index).logoImgUrl,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      SizedBox(
-                        width: 88,
-                        child: Text(
-                          vm.channelItem(index).name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyle.alert2,
-                        ),
-                      )
-                    ],
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          width: 88,
+                          child: Text(
+                            vm.channelItem(index).name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyle.alert2,
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 } else {
                   return Column(

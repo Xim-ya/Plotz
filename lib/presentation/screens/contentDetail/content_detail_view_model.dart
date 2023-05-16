@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
@@ -8,15 +9,15 @@ part 'controllerResources/content_detail_video_view_model.part.dart'; // 컨텐�
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel(
-      this._contentRepository,
-      this._loadContentOfVideoList,
-      this._loadContentImgList,
-      this._loadContentMainDescription,
-      this._loadContentCreditInfo,
-      this._userRepository,
-      this._userService,
-      {required argument,})
-      : _passedArgument = argument;
+    this._contentRepository,
+    this._loadContentOfVideoList,
+    this._loadContentImgList,
+    this._loadContentMainDescription,
+    this._loadContentCreditInfo,
+    this._userRepository,
+    this._userService, {
+    required argument,
+  }) : _passedArgument = argument;
 
   // 이전 페이지에서 전달 받는 argument
   final ContentArgumentFormat _passedArgument;
@@ -65,18 +66,22 @@ class ContentDetailViewModel extends BaseViewModel {
   /// 유저 시청 기록 추가
   Future<void> addUserWatchHistory(String videoId) async {
     final requestData = WatchingHistoryRequest(
-        userId: _userService.userInfo.value!.id!,
-        originId: _contentDescriptionInfo.value!.originId,
-        videoId: videoId,);
+      userId: _userService.userInfo.value!.id!,
+      originId: _contentDescriptionInfo.value!.originId,
+      videoId: videoId,
+    );
 
     final response = await _userRepository.addUserWatchHistory(requestData);
-    response.fold(onSuccess: (_) {
-      log('유저 시청기록 추가 성공');
-      // 유저 시청 기록 업데이트
-      _userService.updateUserWatchHistory();
-    }, onFailure: (e) {
-      log('ContentDetailViewModel : $e');
-    },);
+    response.fold(
+      onSuccess: (_) {
+        log('유저 시청기록 추가 성공');
+        // 유저 시청 기록 업데이트
+        _userService.updateUserWatchHistory();
+      },
+      onFailure: (e) {
+        log('ContentDetailViewModel : $e');
+      },
+    );
   }
 
   /// 이전 페이지로 이동
@@ -112,7 +117,8 @@ class ContentDetailViewModel extends BaseViewModel {
           passedArgument.contentType == ContentType.tv) {
         await e
             .mappingTvSeasonInfo(
-                seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!,)
+          seasonInfoList: _contentDescriptionInfo.value!.seasonInfoList!,
+        )
             .then((value) {
           // 로딩 State 업데이트
           contentVideos.value!.updateSeasonInfoLoadingState();
@@ -128,7 +134,9 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
   Future<void> _fetchContentOfVideoList() async {
     final responseRes = await _loadContentOfVideoList.call(
-        passedArgument.contentType, passedArgument.originId,);
+      passedArgument.contentType,
+      passedArgument.originId,
+    );
 
     responseRes.fold(
       onSuccess: (data) {
@@ -149,32 +157,44 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠 이미지 리스트 호출
   Future<void> fetchContentImgList() async {
     final responseRes = await _loadContentImgList.call(
-        passedArgument.contentType, passedArgument.contentId,);
-    responseRes.fold(onSuccess: (data) {
-      contentImgUrlList.value = data;
-    }, onFailure: (e) {
-      AlertWidget.toast('콘텐츠 이미지 정보를 불러들이는 데 실패했습니다');
-      log(e.toString());
-    },);
+      passedArgument.contentType,
+      passedArgument.contentId,
+    );
+    responseRes.fold(
+      onSuccess: (data) {
+        contentImgUrlList.value = data;
+      },
+      onFailure: (e) {
+        AlertWidget.toast('콘텐츠 이미지 정보를 불러들이는 데 실패했습니다');
+        log(e.toString());
+      },
+    );
   }
 
   // 컨텐츠 credit 정보 호출
   Future<void> fetchContentCreditInfo() async {
     final responseRes = await _loadContentCreditInfo.call(
-        passedArgument.contentType, passedArgument.contentId,);
+      passedArgument.contentType,
+      passedArgument.contentId,
+    );
 
-    responseRes.fold(onSuccess: (data) {
-      _contentCreditList.value = data;
-    }, onFailure: (e) {
-      AlertWidget.toast('출연진 정보를 불러들이는 데 실패했습니다');
-      log(e.toString());
-    },);
+    responseRes.fold(
+      onSuccess: (data) {
+        _contentCreditList.value = data;
+      },
+      onFailure: (e) {
+        AlertWidget.toast('출연진 정보를 불러들이는 데 실패했습니다');
+        log(e.toString());
+      },
+    );
   }
 
   // 컨텐츠 상세 정보(TMDB) 호출
   Future<void> _fetchContentMainInfo() async {
     final responseResult = await _loadContentMainDescription.call(
-        passedArgument.contentType, passedArgument.contentId,);
+      passedArgument.contentType,
+      passedArgument.contentId,
+    );
     responseResult.fold(
       onSuccess: (data) {
         _contentDescriptionInfo.value = data;
@@ -271,8 +291,6 @@ class ContentDetailViewModel extends BaseViewModel {
     await _fetchContentMainInfo();
     await _fetchContentOfVideoList();
     await _fetchYoutubeChannelInfo();
-
-
   }
 
   /* [Getters] */

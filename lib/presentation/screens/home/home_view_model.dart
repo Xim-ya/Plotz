@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
+import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -17,6 +18,7 @@ class HomeViewModel extends BaseViewModel {
   );
 
   /* [Variables] */
+
   /// Data
   final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
   final Rxn<List<TopPositionedCategory>> topPositionedCategory =
@@ -25,13 +27,10 @@ class HomeViewModel extends BaseViewModel {
   final Rxn<List<ChannelModel>> _channelList = Rxn(); // 채널 리스트
 
   /// State
-  final RxBool enableAppBarBgBlur = false.obs; // 앱바 Blur 효과 enable 여부
   final RxInt bannerContentsSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
-  final RxDouble appBarLogoOpacity = 1.0.obs; // 앱 바 로고 opacity
-  final RxDouble bannerInfoOpacity = 1.0.obs;
-
-  /// Size
-  final double appBarHeight = SizeConfig.to.statusBarHeight + 56;
+  final RxDouble bannerInfoOpacity = 1.0.obs; // 상단 배너 정보 섹션 opacity
+  // 상단 gradient box enable 여부
+  final RxBool isScrolledOnPosition = false.obs;
 
   /* [Controllers] */
   late ScrollController scrollController;
@@ -49,11 +48,6 @@ class HomeViewModel extends BaseViewModel {
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
   final LoadCachedTopPositionedContentsUseCase
       _loadCachedTopPositionedContentsUseCase;
-
-  Future<void> test() async {
-    // await _loadCachedTopPositionedContentsUseCase.deleteLocalStorageField();
-    // await _fetchTopPositionedCollection();
-  }
 
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
@@ -79,32 +73,40 @@ class HomeViewModel extends BaseViewModel {
   }
 
   // 컨텐츠 상세 화면으로 이동
-  void routeToContentDetail(ContentArgumentFormat routingArgument,
-      {required String sectionType,}) {
+  void routeToContentDetail(
+    ContentArgumentFormat routingArgument, {
+    required String sectionType,
+  }) {
     AppAnalytics.instance.logEvent(
-        name: 'goToContent',
-        parameters: {sectionType: routingArgument.originId},);
+      name: 'goToContent',
+      parameters: {sectionType: routingArgument.originId},
+    );
 
     Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
   }
 
-  // AppBar Logo Opacity 설정 메소드
-  void _manageAppBarLogoOpacity(double offset) {
+  // 스크롤 동작 관련 이벤트
+  void _manageInteractionOnScroll() {
     // 왜 이게 난 더 직관적이지..?
-    // guar let문 느낌이 나서 더 좋음
-    if (scrollController.offset < 390 && appBarLogoOpacity.value == 1.0) return;
-    if (scrollController.offset >= 390 && appBarLogoOpacity.value == 0) return;
+    // guard let문 느낌이 나서 더 좋음
+    if (scrollController.offset < 390 && isScrolledOnPosition.isFalse) return;
+    if (scrollController.offset >= 390 && isScrolledOnPosition.isTrue) return;
 
     if (scrollController.offset >= 390) {
-      appBarLogoOpacity(0.0);
+      isScrolledOnPosition(true);
     } else {
-      appBarLogoOpacity(1.0);
+      isScrolledOnPosition(false);
     }
   }
 
   // 검색 스크린으로 이동
   void routeToSearch() {
     Get.toNamed(AppRoutes.search);
+  }
+
+  // 채널 상세 스크린으로 이동
+  void routeToChannelDetail(ChannelModel channel) {
+    Get.toNamed(AppRoutes.home + AppRoutes.channelDetail, arguments: channel);
   }
 
   // 채널 리스트 호출
@@ -128,6 +130,9 @@ class HomeViewModel extends BaseViewModel {
         _topTenContents.value = data;
       },
       onFailure: (e) {
+        AlertWidget.animatedToast('인기 콘텐츠를 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true);
+
         log('HomeViewModel > $e');
       },
     );
@@ -141,6 +146,9 @@ class HomeViewModel extends BaseViewModel {
         _bannerContents.value = data;
       },
       onFailure: (e) {
+        AlertWidget.animatedToast('배너 콘텐츠 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true);
+        _loadBannerContentUseCase.deleteLocalData();
         log('HomeViewModel > $e');
       },
     );
@@ -152,6 +160,9 @@ class HomeViewModel extends BaseViewModel {
     response.fold(onSuccess: (data) {
       topPositionedCategory.value = data;
     }, onFailure: (e) {
+      AlertWidget.animatedToast('일부 콘텐츠를 불러오는데 실패했습니다',
+          isUsedOnTabScreen: true);
+      _loadCachedTopPositionedContentsUseCase.deleteLocalStorageField();
       log('HomeViewModel > $e');
     });
   }
@@ -170,7 +181,7 @@ class HomeViewModel extends BaseViewModel {
 
     scrollController = ScrollController();
     scrollController.addListener(() {
-      _manageAppBarLogoOpacity(scrollController.offset);
+      _manageInteractionOnScroll();
     });
 
     carouselController = CarouselController();

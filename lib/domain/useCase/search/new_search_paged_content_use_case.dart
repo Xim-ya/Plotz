@@ -6,7 +6,7 @@ import 'package:soon_sak/utilities/index.dart';
 /** Created By Ximya -2023.02.23
  * Paging이 적용되어 있는 검색 결과 호출 usecase
  * [SearchHandlerMxin] 모듈을 결합되어 있는 형태
- * [PagingHandlerMixin]을 따로 만들어 사용했었지만,
+ * [PagingSearchHandlerMixin]을 따로 만들어 사용했었지만,
  * 오히려 유지보수성과 가독을 고려하지 못해서 paging 관련 리소스는 해당
  * usecase 모둘에서 사용함.
  * TODO : 좀 더 고민이 필요

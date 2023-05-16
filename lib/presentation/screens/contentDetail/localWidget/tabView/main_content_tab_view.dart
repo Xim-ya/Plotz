@@ -92,12 +92,16 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ChannelInfoView(
-                nameTextWidth: SizeConfig.to.screenWidth - 104,
-                imgSize: 62,
-                imgUrl: vm.channelImgUrl,
-                name: vm.channelName,
-                subscriberCount: vm.subscriberCount,
+              GestureDetector(
+                onTap: (){},
+
+                child: ChannelInfoView(
+                  nameTextWidth: SizeConfig.to.screenWidth - 104,
+                  imgSize: 62,
+                  imgUrl: vm.channelImgUrl,
+                  name: vm.channelName,
+                  subscriberCount: vm.subscriberCount,
+                ),
               ),
               AppSpace.size8,
               // 채널 설명

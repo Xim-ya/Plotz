@@ -15,21 +15,25 @@ void main() async {
 
   /// FireBase 초기화
   // Firebase Crashlytics 설정
-  await runZonedGuarded<Future<void>>(() async {
-    await Firebase.initializeApp(
-      name: dotenv.env['FIREBASE_KEY'],
-      options: ProdFirebaseOptions.currentPlatform,
-    );
+  await runZonedGuarded<Future<void>>(
+    () async {
+      await Firebase.initializeApp(
+        name: dotenv.env['FIREBASE_KEY'],
+        options: ProdFirebaseOptions.currentPlatform,
+      );
 
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-    Get.put(AppAnalytics(), permanent: true);
-    await AppAnalytics.instance.setAnalyticsCollectionEnabled(true);
-    await AppAnalytics.instance.logAppOpen();
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      Get.put(AppAnalytics(), permanent: true);
+      await AppAnalytics.instance.setAnalyticsCollectionEnabled(true);
+      await AppAnalytics.instance.logAppOpen();
 
-    // Portrait 고정
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-        .then((_) {
-      Environment(BuildType.production).run();
-    });
-  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),);
+      // Portrait 고정
+      await SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp]).then((_) {
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+        Environment(BuildType.production).run();
+      });
+    },
+    (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),
+  );
 }

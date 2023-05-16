@@ -1,3 +1,5 @@
+import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
+import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
 import 'package:soon_sak/presentation/screens/home/home_screen.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
@@ -34,10 +36,16 @@ abstract class AppPages {
 
     // 홈
     GetPage(
-      name: AppRoutes.home,
-      page: () => HomeScreen(),
-      binding: TabsBinding(),
-    ),
+        name: AppRoutes.home,
+        page: () => HomeScreen(),
+        binding: TabsBinding(),
+        children: [
+          GetPage(
+            name: AppRoutes.channelDetail,
+            page: () => ChannelDetailScreen(),
+            binding: ChannelDetailBinding(),
+          )
+        ]),
 
     // 컨텐츠 상세
     GetPage(

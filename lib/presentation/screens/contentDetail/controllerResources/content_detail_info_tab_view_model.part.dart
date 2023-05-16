@@ -14,14 +14,14 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
   }
 
   // 총 조회수
-  String? get totalViewCount => Formatter.formatViewAndLikeCount(
+  String? get totalViewCount => Formatter.formatNumberWithUnit(
         contentVideos.value?.mainViewCount,
         isViewCount: false,
       );
 
   // 좋아요 수
   String? get likesCount =>
-      Formatter.formatViewAndLikeCount(contentVideos.value?.mainLikesCount);
+      Formatter.formatNumberWithUnit(contentVideos.value?.mainLikesCount);
 
   // 유튜브 컨텐츠 업로드 일자
   String? get youtubeUploadDate =>
