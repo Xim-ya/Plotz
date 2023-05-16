@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_content_list.dart';
@@ -39,22 +38,21 @@ class LoadPagedChannelContentsUseCase {
         final bool isLastPage = data.contents.length < pageSize;
         if (isLastPage) {
           pagingController.appendLastPage(data.contents);
-          print("마지막 호출");
         } else {
           final nextPageKey = pagingController.value.itemList?.length ??
               0 + data.contents.length;
           pagingController.appendPage(data.contents, nextPageKey);
           lastPagedDocument = data.lastDocument;
-          print("첫 번째 호출");
         }
       },
       onFailure: (e) {
         log('LoadPagedChannelCOntentsUseCase - $e');
+        AlertWidget.animatedToast('콘텐츠를 불러오는데 실패했습니다');
       },
     );
   }
 
-  void initPaging({required String channelId}) {
+  void initUseCase({required String channelId}) {
     pagingController.addPageRequestListener((pageKey) {
       if (_debounce?.isActive ?? false) _debounce!.cancel();
       _debounce = Timer(const Duration(milliseconds: 50), () {
