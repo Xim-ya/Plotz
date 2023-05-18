@@ -50,6 +50,9 @@ dependencies:
   # DI
   get_it: ^7.2.0
 
+  # Route
+  go_router: ^7.0.1
+
   #Firebase
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
