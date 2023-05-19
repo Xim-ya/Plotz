@@ -7,12 +7,14 @@ class ChannelDetailScaffold extends StatelessWidget {
     required this.channelInfoView,
     required this.pagedPosterGridView,
     required this.scrollController,
+    required this.appBar,
     required this.stackedTopGradientBox,
   }) : super(key: key);
 
   final ScrollController scrollController;
   final Widget channelInfoView;
   final Widget pagedPosterGridView;
+  final Widget appBar;
   final Widget stackedTopGradientBox;
 
   @override
@@ -60,17 +62,7 @@ class ChannelDetailScaffold extends StatelessWidget {
       // 앱바
       Positioned(
         top: SizeConfig.to.statusBarHeight,
-        child: SizedBox(
-          height: 42,
-          child: IconButton(
-            onPressed: Get.back,
-            icon: SvgPicture.asset(
-              'assets/icons/left_arrow.svg',
-              height: 24,
-              width: 24,
-            ),
-          ),
-        ),
+        child: appBar,
       ),
     ]);
   }

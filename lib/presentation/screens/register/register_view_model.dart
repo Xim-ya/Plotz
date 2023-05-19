@@ -23,7 +23,7 @@ class RegisterViewModel extends BaseViewModel {
   final UserService _userService;
 
   // 선택된 컨텐츠 정보
-  final Rxn<Content> _selectedContent = Rxn();
+  Content? _selectedContent;
 
   /* ViewModel */
   final CurationViewModel _curationViewModel;
@@ -126,8 +126,8 @@ class RegisterViewModel extends BaseViewModel {
     final response = await YoutubeMetaData.yt.channels.get(channelId);
 
     curationContent.value = Content(
-      id: _selectedContent.value!.id,
-      type: _selectedContent.value!.type,
+      id: _selectedContent!.id,
+      type: _selectedContent!.type,
       videoId: videoId,
       youtubeVideo: YoutubeVideo(
         channelName: response.title,
@@ -135,9 +135,9 @@ class RegisterViewModel extends BaseViewModel {
         subscriberCount: response.subscribersCount,
       ),
       detail: ContentDetail(
-        title: _selectedContent.value?.detail?.title,
-        posterImgUrl: _selectedContent.value?.detail?.posterImgUrl,
-        releaseDate: _selectedContent.value?.detail?.releaseDate,
+        title: _selectedContent?.detail?.title,
+        posterImgUrl: _selectedContent?.detail?.posterImgUrl,
+        releaseDate: _selectedContent?.detail?.releaseDate,
       ),
     );
   }
@@ -158,7 +158,7 @@ class RegisterViewModel extends BaseViewModel {
           Get.dialog(
             AppDialog.dividedBtn(
               title:
-                  '[${_selectedContent.value!.detail!.title}]\n콘텐츠 요청이 완료되었어요',
+                  '[${_selectedContent!.detail!.title}]\n콘텐츠 요청이 완료되었어요',
               description: '검토 후 순삭 콘텐츠에 정식 등록됩니다',
               leftBtnContent: '큐레이션 내역',
               rightBtnContent: '확인',

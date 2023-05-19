@@ -20,7 +20,7 @@ abstract class SearchValidateUrlUseCase {
 
   ValidationState get isVideoValid;
 
-  RxBool get showRoundCloseBtn;
+  bool get showRoundCloseBtn;
 
   // 붙여넣기 버튼이 클릭 되었을 시
   Future<void> onPasteBtnTapped();

@@ -1,7 +1,7 @@
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
-import 'package:soon_sak/presentation/base/new_base_screen.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/presentation/common/gridView/paged_grid_list_view.dart';
 import 'package:soon_sak/presentation/common/image/circle_img.dart';
@@ -18,6 +18,8 @@ class ChannelDetailScreen extends NewBaseScreen<ChannelDetailViewModel> {
   @override
   Widget buildScreen(BuildContext context) {
     return ChannelDetailScaffold(
+      appBar: const _AppBar(),
+      // channelInfoView:  Container(),
       channelInfoView: const _ChannelInfoView(),
       pagedPosterGridView: const _PagedPosterGridView(),
       scrollController: vm(context).scrollController,
@@ -26,8 +28,8 @@ class ChannelDetailScreen extends NewBaseScreen<ChannelDetailViewModel> {
   }
 
   @override
-  ChannelDetailViewModel createViewModel() => Get.put(
-      ChannelDetailViewModel(Get.find(), Get.find(), argument: Get.arguments));
+  ChannelDetailViewModel createViewModel(BuildContext context) =>
+      GetIt.I<ChannelDetailViewModel>();
 }
 
 /// 페이징이 적용되어 있는 포스터 그리드 뷰
@@ -101,14 +103,19 @@ class _ChannelInfoView extends NewBaseView<ChannelDetailViewModel> {
           size: 90,
         ),
         AppSpace.size8,
-        SizedBox(
-          width: double.infinity - 32,
-          child: Text(
-            vm(context).channelInfo.name,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyle.headline1,
+        GestureDetector(
+          onTap: () {
+            context.push('/temp');
+          },
+          child: SizedBox(
+            width: double.infinity - 32,
+            child: Text(
+              vm(context).channelInfo.name,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyle.headline1,
+            ),
           ),
         ),
         AppSpace.size4,
@@ -156,6 +163,25 @@ class _StackedTopGradientBox extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget {
+  const _AppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 42,
+      child: IconButton(
+        onPressed: context.pop,
+        icon: SvgPicture.asset(
+          'assets/icons/left_arrow.svg',
+          height: 24,
+          width: 24,
+        ),
+      ),
     );
   }
 }

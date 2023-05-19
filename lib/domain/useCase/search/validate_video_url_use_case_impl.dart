@@ -41,7 +41,7 @@ class SearchValidateUrlImpl
       unawaited(AlertWidget.newToast('복사된 링크가 없습니다'));
       if (searchedKeyword != '') {
         videoUrlValidState(ValidationState.invalid);
-        exposeRoundCloseBtn(true);
+        exposeRoundCloseBtn = true;
       } else {
         videoUrlValidState(ValidationState.initState);
       }
@@ -49,7 +49,7 @@ class SearchValidateUrlImpl
       fieldController.text = pasteUrl?.text ?? '';
       final videoId = Formatter.getVideoIdFromYoutubeUrl(fieldController.text);
       await checkVideoIdValidation(videoId);
-      exposeRoundCloseBtn(true);
+      exposeRoundCloseBtn = true;
     }
   }
 
@@ -66,7 +66,7 @@ class SearchValidateUrlImpl
           videoUrlValidState(ValidationState.initState);
           return;
         }
-        exposeRoundCloseBtn(true);
+        exposeRoundCloseBtn = true;
         final videoId = Formatter.getVideoIdFromYoutubeUrl(searchedKeyword);
 
         if (videoId == null) {
@@ -82,7 +82,7 @@ class SearchValidateUrlImpl
   @override
   void onCloseBtnTapped() {
     fieldController.text = '';
-    exposeRoundCloseBtn(false);
+    exposeRoundCloseBtn = false;
     videoUrlValidState.value = ValidationState.initState;
   }
 
@@ -93,5 +93,5 @@ class SearchValidateUrlImpl
   FocusNode get focusNode => fieldNode;
 
   @override
-  RxBool get showRoundCloseBtn => exposeRoundCloseBtn;
+  bool get showRoundCloseBtn => exposeRoundCloseBtn;
 }

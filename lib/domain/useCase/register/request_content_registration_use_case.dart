@@ -18,7 +18,7 @@ class RequestContentRegistrationUseCase
     final response = await _contentRepository.requestContentRegistration(request);
     return response.fold(
       onSuccess: (data) async {
-        final response = await _userRepository.addUserQurationInfo(
+        final response = await _userRepository.addUserCurationInfo(
           qurationDocId: data,
           userId: _userService.userInfo.value!.id!,
         );

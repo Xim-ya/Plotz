@@ -1,15 +1,12 @@
+import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class TabsBinding extends Bindings {
+class TabsBinding extends CustomBindings {
   @override
-  void dependencies() {
-    Get.lazyPut(() => TabsViewModel(Get.find(), Get.find(), Get.find()),
-        fenix: true);
+  void dependencies() {}
 
-    Get.put(
-      LoadCachedTopPositionedContentsUseCase(
-          Get.find(), Get.find(), Get.find()),
-    );
-  }
+  @override
+  void unRegisterDependencies() {}
 }

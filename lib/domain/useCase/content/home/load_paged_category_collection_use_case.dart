@@ -32,11 +32,13 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class LoadPagedCategoryCollectionUseCase {
-  LoadPagedCategoryCollectionUseCase(
-    this._staticContentRepository,
-    this._localStorageService,
-    this._contentService,
-  );
+  LoadPagedCategoryCollectionUseCase({
+    required StaticContentRepository staticContentRepository,
+    required LocalStorageService localStorageService,
+    required ContentService contentService,
+  })  : _staticContentRepository = staticContentRepository,
+        _localStorageService = localStorageService,
+        _contentService = contentService;
 
   /* Data Modules */
   final StaticContentRepository _staticContentRepository;

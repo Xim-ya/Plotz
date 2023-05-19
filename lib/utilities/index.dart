@@ -34,8 +34,11 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:polygon/polygon.dart';
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+export 'package:get_it/get_it.dart';
 
 // BaseModule
+export 'package:soon_sak/presentation/base/new_base_view_model.dart';
+export 'package:soon_sak/presentation/base/new_base_screen.dart';
 export 'package:soon_sak/presentation/base/base_view_model.dart';
 export 'package:soon_sak/domain/base/base_use_case.dart';
 export 'package:soon_sak/domain/base/base_no_param_use_case.dart';
@@ -126,7 +129,6 @@ export 'package:soon_sak/data/api/user/request/user_profile_request.dart';
 export 'package:soon_sak/data/dataSource/version/version_data_source.dart';
 export 'package:soon_sak/data/repository/version/version_repository.dart';
 export 'package:soon_sak/data/api/content/response/channel_response.dart';
-
 
 // Domain
 export 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
@@ -259,7 +261,6 @@ export 'package:soon_sak/presentation/screens/register/register_binding.dart';
 export 'package:soon_sak/presentation/screens/register/register_screen.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/curation_history_binding.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/curation_history_screen.dart';
-export 'package:soon_sak/presentation/screens/splash/splash_binding.dart';
 export 'package:soon_sak/presentation/screens/splash/splash_screen.dart';
 export 'package:soon_sak/presentation/screens/splash/splash_view_model.dart';
 export 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_skeleton_view.dart';
@@ -281,3 +282,4 @@ export 'package:soon_sak/utilities/extensions/check_null_state_extension.dart';
 export 'package:soon_sak/utilities/extensions/tmdb_img_path_extension.dart';
 export 'package:soon_sak/utilities/formatter.dart';
 export 'package:soon_sak/presentation/common/alert/alert_widget.dart';
+export 'package:soon_sak/app/di/locator/locator.dart';

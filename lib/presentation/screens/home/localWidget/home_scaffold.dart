@@ -17,7 +17,6 @@ class HomeScaffold extends StatelessWidget {
   const HomeScaffold({
     Key? key,
     required this.scrollController,
-    required this.stackedGradientPosterBg,
     required this.topBannerSlider,
     required this.topTenSlider,
     required this.categoryContentCollectionList,
@@ -28,7 +27,6 @@ class HomeScaffold extends StatelessWidget {
   }) : super(key: key);
 
   final Widget stackedAppBar;
-  final List<Widget> stackedGradientPosterBg;
   final Widget topBannerSlider;
   final Widget topTenSlider;
   final Widget categoryContentCollectionList;
@@ -48,7 +46,6 @@ class HomeScaffold extends StatelessWidget {
             SliverToBoxAdapter(
               child: Stack(
                 children: [
-                  // ...stackedGradientPosterBg,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

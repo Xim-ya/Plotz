@@ -4,7 +4,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserRepository {
   // 유저 큐레이션 정보 추가
-  Future<Result<void>> addUserQurationInfo(
+  Future<Result<void>> addUserCurationInfo(
       {required String qurationDocId, required String userId,});
 
   // 유저 큐레이션 요약 정보 호출

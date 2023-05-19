@@ -29,15 +29,17 @@ abstract class DataModules {
     /* Static Content */
     Get.lazyPut<StaticContentApi>(() => StaticContentApiImpl(Get.find()),
         fenix: true);
-    Get.lazyPut<StaticContentDataSource>(
-        () => StaticContentDataSourceImpl(Get.find(), Get.find()),
-        fenix: true);
+    // Get.lazyPut<StaticContentDataSource>(
+    //     () => StaticContentDataSourceImpl(Get.find(), Get.find()),
+    //     fenix: true);
     Get.lazyPut<StaticContentRepository>(
         () => StaticContentRepositoryImpl(Get.find()),
         fenix: true);
 
     /* Youtube */
     Get.lazyPut<YoutubeApi>(() => YoutubeApiImpl(), fenix: true);
+    Get.lazyPut<YoutubeRepository>(() => YoutubeRepositoryImpl(Get.find()),
+        fenix: true);
     Get.lazyPut<YoutubeDataSource>(() => YoutubeDataSourceImpl(Get.find()),
         fenix: true);
 
@@ -50,17 +52,17 @@ abstract class DataModules {
 
     /* Auth */
     Get.lazyPut<AuthApi>(() => AuthApiImpl(), fenix: true);
-    Get.lazyPut<AuthDataSource>(() => AuthDataSourceImpl(Get.find()),
-        fenix: true);
-    Get.lazyPut<AuthRepository>(() => AuthRepositoryImpl(Get.find()),
-        fenix: true);
+    // Get.lazyPut<AuthDataSource>(() => AuthDataSourceImpl(Get.find()),
+    //     fenix: true);
+    // Get.lazyPut<AuthRepository>(() => AuthRepositoryImpl(Get.find()),
+    //     fenix: true);
 
     /* User */
     Get.lazyPut<UserApi>(() => UserApiImpl(), fenix: true);
-    Get.lazyPut<UserDataSource>(() => UserDataSourceImpl(Get.find()),
-        fenix: true);
-    Get.lazyPut<UserRepository>(() => UserRepositoryImpl(Get.find()),
-        fenix: true);
+    // Get.lazyPut<UserDataSource>(() => UserDataSourceImpl(Get.find()),
+    //     fenix: true);
+    // Get.lazyPut<UserRepository>(() => UserRepositoryImpl(Get.find()),
+    //     fenix: true);
 
     /* Dio */
 
@@ -85,8 +87,5 @@ abstract class DataModules {
     Get.lazyPut<TmdbDataSource>(() => TmdbDataSourceImpl(Get.find()),
         fenix: true);
 
-    /* Youtube */
-    Get.lazyPut<YoutubeRepository>(() => YoutubeRepositoryImpl(Get.find()),
-        fenix: true);
   }
 }

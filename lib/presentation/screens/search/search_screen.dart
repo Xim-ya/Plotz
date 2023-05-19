@@ -1,6 +1,7 @@
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchScreen extends BaseScreen<SearchViewModel> {
+class SearchScreen extends NewBaseScreen<SearchViewModel> {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
@@ -10,15 +11,15 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   Widget buildScreen(BuildContext context) {
     return SearchScaffold(
       tabs: buildTabs(),
-      tabViews: buildTabView(),
+      tabViews: buildTabView(context),
     );
   }
 
-  List<Widget> buildTabView() => [
+  List<Widget> buildTabView(BuildContext context) => [
         PagingSearchedResultListView(
-          focusNode: vm.focusNode,
-          isInitialState: vm.isInitialState,
-          pagingController: vm.pagingController,
+          focusNode: vm(context).focusNode,
+          isInitialState: vm(context).isInitialState,
+          pagingController: vm(context).pagingController,
           firstPageErrorText: '드라마 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
@@ -26,16 +27,18 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
               contentType: ContentType.tv,
               item: searchedItem,
               onItemClicked: () {
-                vm.onSearchedContentTapped(
-                    content: searchedItem, contentType: ContentType.tv,);
+                vm(context).onSearchedContentTapped(
+                  content: searchedItem,
+                  contentType: ContentType.tv,
+                );
               },
             );
           },
         ),
         PagingSearchedResultListView(
-          focusNode: vm.focusNode,
-          isInitialState: vm.isInitialState,
-          pagingController: vm.pagingController,
+          focusNode: vm(context).focusNode,
+          isInitialState: vm(context).isInitialState,
+          pagingController: vm(context).pagingController,
           firstPageErrorText: '영화 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
@@ -43,7 +46,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
               contentType: ContentType.movie,
               item: searchedItem,
               onItemClicked: () {
-                vm.onSearchedContentTapped(
+                vm(context).onSearchedContentTapped(
                   content: searchedItem,
                   contentType: ContentType.movie,
                 );
@@ -70,13 +73,13 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
         child: Row(
           children: [
             SearchBar(
-              focusNode: vm.focusNode,
-              textEditingController: vm.textEditingController,
+              focusNode: vm(context).focusNode,
+              textEditingController: vm(context).textEditingController,
               onChanged: (_) {
-                vm.onTextChanged();
+                vm(context).onTextChanged();
               },
-              resetSearchValue: vm.onClosedBtnTapped,
-              showRoundCloseBtn: vm.showRoundCloseBtn,
+              resetSearchValue: vm(context).onClosedBtnTapped,
+              showRoundCloseBtn: vm(context).showRoundCloseBtn,
               width: SizeConfig.to.screenWidth - 88,
               // width: SizeConfig.to.screenWidth - 84,
             ),
@@ -85,7 +88,9 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              onPressed: Get.back,
+              onPressed: () {
+                vm(context).test();
+              },
               child: Center(
                 child: Text(
                   '취소',
@@ -98,6 +103,10 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
       ),
     );
   }
+
+  @override
+  SearchViewModel createViewModel(BuildContext context) =>
+      locator<SearchViewModel>();
 
 // // [TextField] OutLinedBorder 속성
 // OutlineInputBorder _fixedOutLinedBorder() {

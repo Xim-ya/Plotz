@@ -1,8 +1,12 @@
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
-class MyPageViewModel extends BaseViewModel {
-  MyPageViewModel(this._userRepository, this._userService);
+class MyPageViewModel extends NewBaseViewModel {
+  MyPageViewModel(
+      {required UserRepository userRepository,
+      required UserService userService})
+      : _userService = userService,
+        _userRepository = userRepository;
 
   /* Data Modules */
   final UserService _userService;
@@ -10,10 +14,10 @@ class MyPageViewModel extends BaseViewModel {
 
   /* Variables */
   UserCurationSummary? curationSummary; //  큐레이션 내역 요약 정보
-  final Rxn<List<UserWatchHistoryItem>> _watchHistoryList = Rxn(); // 시청 기록
-  Rxn<UserModel> userInfo = Rxn();
+  List<UserWatchHistoryItem>? watchHistoryList; // 시청 기록
+  UserModel? userInfo;
 
-  String? get displayName => userInfo.value?.displayName;
+  String? get displayName => userInfo?.displayName;
   TabLoadingState loadingState = TabLoadingState.initState;
 
   /* Intents */
@@ -24,14 +28,17 @@ class MyPageViewModel extends BaseViewModel {
 
   // youtubeApp 실행
   Future<void> launchYoutubeApp(
-      UserWatchHistoryItem? selectedContent, int index,) async {
+    UserWatchHistoryItem? selectedContent,
+    int index,
+  ) async {
     if (selectedContent?.videoId == null) {
       return AlertWidget.animatedToast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
     }
     try {
       await launchUrl(
         Uri.parse(
-            'https://www.youtube.com/watch?v=${selectedContent!.videoId}',),
+          'https://www.youtube.com/watch?v=${selectedContent!.videoId}',
+        ),
         mode: LaunchMode.externalApplication,
       );
       unawaited(
@@ -55,7 +62,8 @@ class MyPageViewModel extends BaseViewModel {
 
   /// 유저 시청 기록 추가
   Future<void> updateUserWatchHistory(
-      UserWatchHistoryItem selectedContent,) async {
+    UserWatchHistoryItem selectedContent,
+  ) async {
     final requestData = WatchingHistoryRequest(
       userId: _userService.userInfo.value!.id!,
       originId: selectedContent.originId,
@@ -63,25 +71,30 @@ class MyPageViewModel extends BaseViewModel {
     );
 
     final response = await _userRepository.addUserWatchHistory(requestData);
-    response.fold(onSuccess: (_) {
-      log('유저 시청기록 추가 성공');
-      // 유저 시청 기록 업데이트
-      _userService.updateUserWatchHistory();
-    }, onFailure: (e) {
-      log('ContentDetailViewModel : $e');
-    },);
+    response.fold(
+      onSuccess: (_) {
+        log('유저 시청기록 추가 성공');
+        // 유저 시청 기록 업데이트
+        _userService.updateUserWatchHistory();
+        notifyListeners();
+      },
+      onFailure: (e) {
+        log('ContentDetailViewModel : $e');
+      },
+    );
   }
 
   // 유저 시청 기록 호출
   Future<void> _fetchUserWatchHistory() async {
     await _userService.updateUserWatchHistory();
-    _watchHistoryList.value = _userService.userWatchHistory.value;
+    watchHistoryList = _userService.userWatchHistory.value;
+    notifyListeners();
   }
 
   // 유저 정보 호출
   Future<void> getUserInfo() async {
     // await _userService.getUserInfo(); // fetch 메소드 실행
-    userInfo.value = _userService.userInfo.value;
+    userInfo = _userService.userInfo.value;
   }
 
   // 큐레이팅 내역 스크린으로 라우팅
@@ -89,25 +102,19 @@ class MyPageViewModel extends BaseViewModel {
     Get.toNamed(AppRoutes.curationHistory);
   }
 
-
-
   // 유저 큐레이션 내역 요약 정보 호출
   Future<void> fetchUserCurationSummary() async {
-    final userId = _userService.userInfo.value!.id!;
-    final response = await _userRepository.loadUserCurationSummary(userId);
+    final userId = _userService.userInfo.value?.id;
+    final response = await _userRepository.loadUserCurationSummary(userId!);
     response.fold(
       onSuccess: (data) {
         curationSummary = data;
-        update();
       },
       onFailure: (e) {
         log('MyPageViewModel $e');
       },
     );
   }
-
-  /* Getters */
-  List<UserWatchHistoryItem>? get watchHistoryList => _watchHistoryList.value;
 
   Future<void> prepare() async {
     loadingState = TabLoadingState.loading;
@@ -118,12 +125,13 @@ class MyPageViewModel extends BaseViewModel {
 
     /// 시청 기록 & 유저 프로필 정보의 데이터 변화를
     /// listen 하고 ui를 업데이트 함.
-    _userService.userInfo.listen((_) {
-      userInfo.value = _userService.userInfo.value;
-    });
-    _userService.userWatchHistory.listen((_) {
-      _watchHistoryList.value = _userService.userWatchHistory.value;
-    });
+    ///
+    // _userService.userInfo.listen((_) {
+    //   userInfo.value = _userService.userInfo.value;
+    // });
+    // _userService.userWatchHistory.listen((_) {
+    //   _watchHistoryList.value = _userService.userWatchHistory.value;
+    // });
   }
 
   @override

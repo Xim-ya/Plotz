@@ -21,11 +21,13 @@ import 'package:soon_sak/utilities/index.dart';
 
 class LoadCachedTopPositionedContentsUseCase
     extends BaseNoParamUseCase<Result<List<TopPositionedCategory>>> {
-  LoadCachedTopPositionedContentsUseCase(
-    this._repository,
-    this._localStorageService,
-    this._contentService,
-  );
+  LoadCachedTopPositionedContentsUseCase({
+    required StaticContentRepository repository,
+    required LocalStorageService localStorageService,
+    required ContentService contentService,
+  })  : _repository = repository,
+        _localStorageService = localStorageService,
+        _contentService = contentService;
 
   final LocalStorageService _localStorageService;
   final StaticContentRepository _repository;

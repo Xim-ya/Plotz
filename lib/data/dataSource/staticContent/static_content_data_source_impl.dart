@@ -3,7 +3,11 @@ import 'package:soon_sak/data/api/staticContent/response/top_positioned_collecti
 import 'package:soon_sak/utilities/index.dart';
 
 class StaticContentDataSourceImpl implements StaticContentDataSource {
-  StaticContentDataSourceImpl(this._localStorage, this._api);
+  StaticContentDataSourceImpl(
+      {required LocalStorageService localStorage,
+      required StaticContentApi api})
+      : _localStorage = localStorage,
+        _api = api;
 
   final StaticContentApi _api;
   final LocalStorageService _localStorage;

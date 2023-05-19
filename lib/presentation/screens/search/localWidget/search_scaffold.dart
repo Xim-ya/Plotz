@@ -1,7 +1,7 @@
 import 'package:soon_sak/presentation/screens/search/localWidget/search_scaffold_controller.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchScaffold extends BaseView<SearchScaffoldController> {
+class SearchScaffold extends StatefulWidget {
   const SearchScaffold({
     Key? key,
     required this.tabs,
@@ -12,7 +12,29 @@ class SearchScaffold extends BaseView<SearchScaffoldController> {
   final List<Widget> tabViews;
 
   @override
-  Widget buildView(BuildContext context) {
+  _SearchScaffoldState createState() => _SearchScaffoldState();
+}
+
+class _SearchScaffoldState extends State<SearchScaffold>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late SearchScaffoldController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: widget.tabs.length, vsync: this);
+    _controller = locator<SearchScaffoldController>();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
@@ -30,17 +52,19 @@ class SearchScaffold extends BaseView<SearchScaffoldController> {
             indicatorColor: Colors.white,
             labelStyle: AppTextStyle.title3,
             unselectedLabelStyle: AppTextStyle.body2,
-            onTap: vm.onTabClicked,
-            controller: vm.tabController,
-            tabs: tabs,
+            onTap: (index) {
+              _controller.onTabClicked(index);
+            },
+            controller: _tabController,
+            tabs: widget.tabs,
           ),
         ),
         Expanded(
           child: Padding(
             padding: AppInset.horizontal16,
             child: TabBarView(
-              controller: vm.tabController,
-              children: tabViews,
+              controller: _tabController,
+              children: widget.tabViews,
             ),
           ),
         )

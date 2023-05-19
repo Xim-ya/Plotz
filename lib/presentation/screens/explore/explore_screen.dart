@@ -1,126 +1,25 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreScreen extends BaseScreen<ExploreViewModel> {
+class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
   const ExploreScreen({Key? key}) : super(key: key);
 
   @override
   Widget buildScreen(BuildContext context) {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
-      carouselBuilder: buildCarouselBuilder(),
-      actionButtons: buildActionButtons(),
+      carouselBuilder: _VerticalSwiper(),
+      actionButtons: const _TopActionBtn(),
     );
   }
 
-  Widget buildActionButtons() {
-    return Row(
-      children: [
-        IconInkWellButton.assetIcon(
-          iconPath: 'assets/icons/search.svg',
-          size: 40,
-          onIconTapped: vm.routeToSearch,
-        ),
-      ],
-    );
-  }
 
-  Widget buildCarouselBuilder() {
-    return GetBuilder<ExploreViewModel>(
-      builder: (_) {
-        return CarouselSlider.builder(
-          carouselController: vm.swiperController,
-          itemCount: vm.exploreContentList?.length ?? 1,
-          options: CarouselOptions(
-            onPageChanged: (index, _) {
-              vm.onSwiperChanged(index);
-            },
-            disableCenter: true,
-            height: double.infinity,
-            scrollDirection: Axis.vertical,
-            enableInfiniteScroll: false,
-            viewportFraction: 1,
-          ),
-          itemBuilder:
-              (BuildContext context, int parentIndex, int pageViewIndex) {
-            final contentItem = vm.exploreContentList?[pageViewIndex];
-            return GestureDetector(
-              onTap: () {
-                if (!vm.isContentLoaded) return;
-                vm.routeToContentDetail(
-                  ContentArgumentFormat(
-                    contentId:
-                        SplittedIdAndType.fromOriginId(contentItem!.originId)
-                            .id,
-                    contentType:
-                        SplittedIdAndType.fromOriginId(contentItem.originId)
-                            .type,
-                    posterImgUrl: contentItem.posterImgUrl,
-                    title: contentItem.title,
-                    originId: contentItem.originId,
-                    channelName: contentItem.channelName,
-                    channelLogoImgUrl: contentItem.channelLogoImgUrl,
-                    subscribersCount: contentItem.subscribersCount,
-                  ),
-                );
-              },
-              child: Stack(
-                children: [
-                  if (vm.isContentLoaded)
-                    CachedNetworkImage(
-                      imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
-                    )
-                  else
-                    const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColor.darkGrey,
-                      ),
-                    ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: buildBackdropImg(),
-                  ),
-                  Positioned.fill(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.black,
-                            Colors.transparent,
-                            AppColor.black
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          stops: <double>[0.06, 0.3, 0.92],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Padding(
-                      padding: AppInset.horizontal16,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          ...buildContentInfoView(contentItem),
-                          ...buildChannelInfoView(contentItem),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
+
 
   // 채널 정보
-  List<Widget> buildChannelInfoView(ExploreContent? item) => [
+  List<Widget> buildChannelInfoView(ExploreContent? item) =>
+      [
         ChannelInfoView(
           imgUrl: item?.channelLogoImgUrl,
           name: item?.channelName,
@@ -130,7 +29,8 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
       ];
 
   // 컨텐츠 정보
-  List<Widget> buildContentInfoView(ExploreContent? item) => [
+  List<Widget> buildContentInfoView(ExploreContent? item) =>
+      [
         // 제목 & 개봉년도
         Row(
           children: <Widget>[
@@ -179,4 +79,187 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
 
   @override
   bool get wrapWithSafeArea => false;
+
+  @override
+  ExploreViewModel createViewModel(BuildContext context) =>
+      locator<ExploreViewModel>();
+
 }
+
+class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
+  const _VerticalSwiper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<ExploreViewModel, List<ExploreContent>?>(
+      selector: (context, vm) => vm.exploreContentList,
+      builder: (context, contentList, __) {
+        return CarouselSlider.builder(
+          carouselController: vm(context).swiperController,
+          itemCount: contentList?.length ?? 1,
+          options: CarouselOptions(
+            onPageChanged: (index, _) {
+              vm(context).onSwiperChanged(index);
+            },
+            disableCenter: true,
+            height: double.infinity,
+            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+            viewportFraction: 1,
+          ),
+          itemBuilder:
+              (BuildContext context, int parentIndex, int pageViewIndex) {
+            final contentItem = contentList?[pageViewIndex];
+            return GestureDetector(
+              onTap: () {
+                if (contentList == null) return;
+                // vm(context).routeToContentDetail(
+                //   ContentArgumentFormat(
+                //     contentId:
+                //     SplittedIdAndType
+                //         .fromOriginId(contentItem!.originId)
+                //         .id,
+                //     contentType:
+                //     SplittedIdAndType
+                //         .fromOriginId(contentItem.originId)
+                //         .type,
+                //     posterImgUrl: contentItem.posterImgUrl,
+                //     title: contentItem.title,
+                //     originId: contentItem.originId,
+                //     channelName: contentItem.channelName,
+                //     channelLogoImgUrl: contentItem.channelLogoImgUrl,
+                //     subscribersCount: contentItem.subscribersCount,
+                //   ),
+                // );
+              },
+              child: Stack(
+                children: [
+                  if (contentList.hasData)
+                    CachedNetworkImage(
+                      imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  else
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColor.darkGrey,
+                      ),
+                    ),
+                  // Align(
+                  //   alignment: Alignment.topCenter,
+                  //   child: buildBackdropImg(),
+                  // ),
+                  Positioned.fill(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black,
+                            Colors.transparent,
+                            AppColor.black
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: <double>[0.06, 0.3, 0.92],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: Padding(
+                      padding: AppInset.horizontal16,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          ...buildContentInfoView(contentItem),
+                          ...buildChannelInfoView(contentItem),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },);
+  }
+
+  // 컨텐츠 정보
+  List<Widget> buildContentInfoView(ExploreContent? item) =>
+      [
+        // 제목 & 개봉년도
+        Row(
+          children: <Widget>[
+            if (item.hasData)
+              Text(item!.title, style: AppTextStyle.headline2)
+            else
+              Shimmer(
+                color: AppColor.lightGrey,
+                child: const SizedBox(
+                  height: 28,
+                  width: 40,
+                ),
+              ),
+            AppSpace.size6,
+            Text(
+              item?.releaseDate.hasData ?? false
+                  ? Formatter.dateToyyMMdd(item!.releaseDate)
+                  : '',
+              style: AppTextStyle.alert2,
+            ),
+          ],
+        ),
+        AppSpace.size6,
+        // 컨텐츠 설명
+        if (item?.videoTitle != null)
+          SizedBox(
+            width: SizeConfig.to.screenWidth - 32,
+            child: Text(
+              item!.videoTitle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyle.title1,
+            ),
+          )
+        else
+          SkeletonBox(
+            height: 22,
+            width: SizeConfig.to.screenWidth - 32,
+            borderRadius: 2,
+          ),
+        AppSpace.size24,
+      ];
+
+  // 채널 정보
+  List<Widget> buildChannelInfoView(ExploreContent? item) =>
+      [
+        ChannelInfoView(
+          imgUrl: item?.channelLogoImgUrl,
+          name: item?.channelName,
+          subscriberCount: item?.subscribersCount,
+        ),
+        AppSpace.size20,
+      ];
+}
+
+class _TopActionBtn extends NewBaseView<ExploreViewModel> {
+  const _TopActionBtn({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+     return Row(
+      children: [
+        IconInkWellButton.assetIcon(
+          iconPath: 'assets/icons/search.svg',
+          size: 40,
+          onIconTapped: vm(context).routeToSearch,
+        ),
+      ],
+    );
+  }
+}
+
+

@@ -1,12 +1,13 @@
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationViewModel extends BaseViewModel {
-  CurationViewModel(this._contentRepository);
+class CurationViewModel extends NewBaseViewModel {
+  CurationViewModel({required ContentRepository contentRepository})
+      : _contentRepository = contentRepository;
 
   /* Variables */
   late final RandomImg randomContentImg;
-  late final List<CurationContent> inProgressCurations = [];
+  List<CurationContent> inProgressCurations = [];
   bool isInProgressCurationEmpty = false;
   TabLoadingState loadingState = TabLoadingState.initState;
 
@@ -27,7 +28,8 @@ class CurationViewModel extends BaseViewModel {
           inProgressCurations.clear();
           inProgressCurations.addAll(data);
         }
-        update();
+        print("진행중인 큐레이션 데이터 정보 호출 성공");
+        notifyListeners();
       },
       onFailure: (e) {
         log('CurationViewModel : $e');
@@ -67,7 +69,7 @@ class CurationViewModel extends BaseViewModel {
   @override
   void onInit() {
     super.onInit();
-    loading(true);
+    loading = true;
     randomContentImg = RandomImg(
       tvImgPath: tvImgPathList.randomItem(),
       movieImgPath: movieImgPathList.randomItem(),

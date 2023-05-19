@@ -3,7 +3,7 @@ import 'package:soon_sak/data/api/staticContent/response/content_key_response.da
 
 /** Created By Ximya - 2023.02.22
  *  정적 컨텐츠 리스트를 호출하는 Api module
- *  몇몇 api response는 [dataSource]레이어에서
+ *  몇몇 api response는 [_dataSource]레이어에서
  *  캐싱 처리를 위해 body 데이터 타입으로 넘겨주어야함. [Response<dynamic>]
  *
  * */

@@ -6,15 +6,52 @@ import 'package:soon_sak/app/config/color_config.dart';
 import 'package:soon_sak/presentation/base/new_base_view_model.dart';
 
 @immutable
-abstract class NewBaseScreen<T extends NewBaseViewModel>
-    extends StatelessWidget {
-  const NewBaseScreen({Key? key}) : super(key: key);
+abstract class SmapleBaseScreen<T extends NewBaseViewModel>
+    extends StatefulWidget {
+  const SmapleBaseScreen({Key? key}) : super(key: key);
+
+  @override
+  _SmapleBaseScreenState<T> createState() => _SmapleBaseScreenState<T>();
+
+  Widget buildScreen(BuildContext context);
+
+  PreferredSizeWidget? buildAppBar(BuildContext context);
+
+  bool get wrapWithSafeArea => true;
+
+  bool get setLazyInit => false;
+
+  bool get setBottomSafeArea => true;
+
+  bool get setTopSafeArea => true;
+
+  T createViewModel(BuildContext context);
+}
+
+class _SmapleBaseScreenState<T extends NewBaseViewModel>
+    extends State<SmapleBaseScreen<T>> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>(
-      create: createViewModel,
-      lazy: setLazyInit,
+      create: widget.createViewModel,
+      lazy: widget.setLazyInit,
       builder: (BuildContext context, Widget? child) {
         return ConditionalWillPopScope(
           shouldAddCallback: preventSwipeBack,
@@ -23,11 +60,11 @@ abstract class NewBaseScreen<T extends NewBaseViewModel>
           },
           child: Container(
             color: unSafeAreaColor,
-            child: wrapWithSafeArea
+            child: widget.wrapWithSafeArea
                 ? SafeArea(
-                    bottom: setBottomSafeArea,
-                    child: _buildScaffold(context),
-                  )
+              bottom: widget.setBottomSafeArea,
+              child: _buildScaffold(context),
+            )
                 : _buildScaffold(context),
           ),
         );
@@ -39,8 +76,8 @@ abstract class NewBaseScreen<T extends NewBaseViewModel>
     return Scaffold(
       extendBody: extendBodyBehindAppBar,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      appBar: buildAppBar(context),
-      body: buildScreen(context),
+      appBar: widget.buildAppBar(context),
+      body: widget.buildScreen(context),
       backgroundColor: screenBackgroundColor,
       bottomNavigationBar: buildBottomNavigationBar(context),
       floatingActionButtonLocation: floatingActionButtonLocation,
@@ -73,15 +110,6 @@ abstract class NewBaseScreen<T extends NewBaseViewModel>
   Widget? buildBottomNavigationBar(BuildContext context) => null;
 
   @protected
-  Widget buildScreen(BuildContext context);
-
-  @protected
-  PreferredSizeWidget? buildAppBar(BuildContext context) => null;
-
-  @protected
-  bool get wrapWithSafeArea => true;
-
-  @protected
   bool get setLazyInit => false;
 
   @protected
@@ -90,20 +118,13 @@ abstract class NewBaseScreen<T extends NewBaseViewModel>
   @protected
   bool get setTopSafeArea => true;
 
-  @protected
   T vm(BuildContext context) => Provider.of<T>(context, listen: false);
 
-  @protected
   T vmR(BuildContext context) => context.read<T>();
 
-  @protected
   T vmW(BuildContext context) => context.watch<T>();
 
-  @protected
   S vmS<S>(BuildContext context, S Function(T) selector) {
     return context.select((T value) => selector(value));
   }
-
-  @protected
-  T createViewModel(BuildContext context);
 }

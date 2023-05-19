@@ -1,14 +1,14 @@
-import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
-import 'package:soon_sak/presentation/base/new_base_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ChannelDetailViewModel extends NewBaseViewModel {
-  ChannelDetailViewModel(this._loadChannelContentsUseCase, this._channelApi,
-      {required argument})
-      : channelInfo = argument;
+  ChannelDetailViewModel(
+      {required ChannelModel argument,
+      required LoadPagedChannelContentsUseCase loadChannelContentsUseCase})
+      : channelInfo = argument,
+        _loadChannelContentsUseCase = loadChannelContentsUseCase;
 
   // 이전 페이지에서 전달 받는 argument
   final ChannelModel channelInfo;
@@ -25,7 +25,6 @@ class ChannelDetailViewModel extends NewBaseViewModel {
 
   /* UseCase */
   final LoadPagedChannelContentsUseCase _loadChannelContentsUseCase;
-  final ChannelApi _channelApi;
 
   /* Intents */
 
@@ -69,4 +68,9 @@ class ChannelDetailViewModel extends NewBaseViewModel {
   }
 
   Future<void> setChannelField() async {}
+
+  @override
+  void onDispose() {
+    // ChannelDetailBinding().unRegisterDependencies();
+  }
 }

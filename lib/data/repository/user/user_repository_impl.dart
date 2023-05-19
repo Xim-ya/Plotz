@@ -3,16 +3,21 @@ import 'dart:io';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  UserRepositoryImpl(this._dataSource);
+  UserRepositoryImpl({required UserDataSource dataSource})
+      : _dataSource = dataSource;
 
   final UserDataSource _dataSource;
 
   @override
-  Future<Result<void>> addUserQurationInfo(
-      {required String qurationDocId, required String userId,}) async {
+  Future<Result<void>> addUserCurationInfo({
+    required String qurationDocId,
+    required String userId,
+  }) async {
     try {
       final response = _dataSource.addUserQurationInfo(
-          qurationDocId: qurationDocId, userId: userId,);
+        qurationDocId: qurationDocId,
+        userId: userId,
+      );
       return Result.success(response);
     } on Exception {
       return Result.failure(UserException.updateUserQurationInfoFailed());
@@ -21,7 +26,8 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<UserCurationSummary>> loadUserCurationSummary(
-      String userId,) async {
+    String userId,
+  ) async {
     try {
       final response = await _dataSource.loadUserCurationSummary(userId);
       return Result.success(UserCurationSummary.fromResponse(response));
@@ -32,11 +38,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<List<CurationContent>>> loadUserCurationContentList(
-      String userId,) async {
+    String userId,
+  ) async {
     try {
       final response = await _dataSource.loadUserCurationContentList(userId);
       return Result.success(
-          response.map(CurationContent.fromResponse).toList(),);
+        response.map(CurationContent.fromResponse).toList(),
+      );
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -44,7 +52,8 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<void>> addUserWatchHistory(
-      WatchingHistoryRequest requestInfo,) async {
+    WatchingHistoryRequest requestInfo,
+  ) async {
     try {
       final response = await _dataSource.addUserWatchHistory(requestInfo);
       return Result.success(response);
@@ -55,7 +64,8 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory(
-      String userId,) async {
+    String userId,
+  ) async {
     try {
       final response = await _dataSource.loadUserWatchHistory(userId);
       response.removeWhere((e) => e == null);
@@ -88,11 +98,15 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<String>> uploadUserProfileImgAndReturnUrl(
-      {required String userId, required File file,}) async {
+  Future<Result<String>> uploadUserProfileImgAndReturnUrl({
+    required String userId,
+    required File file,
+  }) async {
     try {
       final response = await _dataSource.uploadUserProfileImgAndReturnUrl(
-          userId: userId, file: file,);
+        userId: userId,
+        file: file,
+      );
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

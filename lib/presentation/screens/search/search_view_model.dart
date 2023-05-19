@@ -10,44 +10,59 @@ import 'package:soon_sak/utilities/index.dart';
 /// NOTE : Paging Controller를 두 개를 적용하면 setState Builder 오류 발생
 /// 자세한 원인 파악 필요.
 
-class SearchViewModel extends BaseViewModel {
-  SearchViewModel(
-      this._pagedSearchHandler, this._contentRepository, this._userService,);
+class SearchViewModel extends NewBaseViewModel {
+  SearchViewModel({
+    required NewSearchedPagedContentUseCase searchHandler,
+    required ContentRepository contentRepository,
+    required UserService userService,
+  })  : pagedSearchHandler = searchHandler,
+        _contentRepository = contentRepository,
+        _userService = userService;
 
   /* Data Modules */
   final ContentRepository _contentRepository;
   final UserService _userService;
 
   /* UseCases */
-  final NewSearchedPagedContentUseCase _pagedSearchHandler;
+  final NewSearchedPagedContentUseCase pagedSearchHandler;
 
   /* Variables (State) */
-  Rx<ContentType> get selectedTabType => _pagedSearchHandler.selectedTabType;
+  ContentType get selectedTabType => pagedSearchHandler.selectedTabType;
 
-  RxBool get isInitialState => _pagedSearchHandler.isInitialState;
+  bool get isInitialState => pagedSearchHandler.isInitialState;
 
-  RxBool get showRoundCloseBtn => _pagedSearchHandler.showRoundClosedBtn;
+  bool get showRoundCloseBtn => pagedSearchHandler.showRoundClosedBtn;
 
   /* Controllers */
   TextEditingController get textEditingController =>
-      _pagedSearchHandler.fieldController;
+      pagedSearchHandler.fieldController;
 
   PagingController<int, SearchedContent> get pagingController =>
-      _pagedSearchHandler.pagingController;
+      pagedSearchHandler.pagingController;
 
-  FocusNode get focusNode => _pagedSearchHandler.fieldNode;
+  FocusNode get focusNode => pagedSearchHandler.fieldNode;
 
-  VoidCallback get onTextChanged => _pagedSearchHandler.onSearchTermEntered;
+  VoidCallback get onTextChanged => pagedSearchHandler.onSearchTermEntered;
 
   /* Intents */
+
+  // TEST
+  Future<void> test() async{
+    print("아랑 첫 번째 key ${pagingController.nextPageKey}");
+    pagingController.refresh();
+    print("아랑 ${pagingController.nextPageKey}");
+  }
 
   // 컨텐츠 요청
   Future<void> requestContent(SearchedContent content) async {
     final ContentRequest request = ContentRequest(
-        contentId: Formatter.getOriginIdByTypeAndId(
-            type: selectedTabType.value, id: content.contentId,),
-        title: content.title ?? '제목 없음',
-        userId: _userService.userInfo.value!.id!,);
+      contentId: Formatter.getOriginIdByTypeAndId(
+        type: selectedTabType,
+        id: content.contentId,
+      ),
+      title: content.title ?? '제목 없음',
+      userId: _userService.userInfo.value!.id!,
+    );
     final response = await _contentRepository.requestContent(request);
     response.fold(
       onSuccess: (data) {
@@ -65,11 +80,13 @@ class SearchViewModel extends BaseViewModel {
 
   /// 검색된 컨텐츠 클릭 되었을 때
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
-  void onSearchedContentTapped(
-      {required SearchedContent content, required ContentType contentType,}) {
+  void onSearchedContentTapped({
+    required SearchedContent content,
+    required ContentType contentType,
+  }) {
     // 키보드 가리기
 
-    final registeredValue = content.isRegisteredContent.value;
+    final registeredValue = content.isRegisteredContent;
     // 1. isRegistered 데이터가 로그 안되었다면 toast 메세지를 띄움
     if (registeredValue == ContentRegisteredValue.isLoading) {
       AlertWidget.toast('잠시만 기다려주세요. 데이터를 로딩하고 있습니다');
@@ -85,7 +102,9 @@ class SearchViewModel extends BaseViewModel {
           contentType: contentType,
           posterImgUrl: content.posterImgUrl,
           originId: Formatter.getOriginIdByTypeAndId(
-              type: selectedTabType.value, id: content.contentId,),
+            type: selectedTabType,
+            id: content.contentId,
+          ),
         ),
       );
     } else {
@@ -106,12 +125,17 @@ class SearchViewModel extends BaseViewModel {
     }
   }
 
+  Future<void> delayedPagedRefresh() async {
+    await Future.delayed(Duration.zero);
+    pagingController.refresh();
+  }
+
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때
-  VoidCallback get onClosedBtnTapped => _pagedSearchHandler.onCloseBtnTapped;
+  VoidCallback get onClosedBtnTapped => pagedSearchHandler.onCloseBtnTapped;
 
   @override
   void onInit() {
-    _pagedSearchHandler.initUseCase();
-    super.onInit();
+    pagedSearchHandler.initUseCase();
+    // super.onInit();
   }
 }

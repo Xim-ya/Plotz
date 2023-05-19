@@ -12,7 +12,7 @@ class SearchedContent {
   final String? posterImgUrl; // 컨텐츠 포스트
   final String? title;
   final String? releaseDate;
-  final Rx<ContentRegisteredValue> isRegisteredContent;
+  final ContentRegisteredValue isRegisteredContent;
   late String? youtubeVideoId;
 
   SearchedContent({
@@ -49,17 +49,27 @@ class SearchedContent {
       }
     }
 
+
     return SearchedContent(
       contentId: response.id,
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.title,
       releaseDate: verifyReleaseDate(),
-      isRegisteredContent: ContentService.to.contentIdInfo!.movieContentIdList
-              .contains(response.id)
-          ? ContentRegisteredValue.registered.obs
-          : ContentRegisteredValue.unRegistered.obs,
+      isRegisteredContent: ContentRegisteredValue.isLoading,
       // isRegisteredContent:   ContentRegisteredValue.isLoading.obs,
     );
+
+    // return SearchedContent(
+    //   contentId: response.id,
+    //   posterImgUrl: response.poster_path ?? response.backdrop_path,
+    //   title: response.title,
+    //   releaseDate: verifyReleaseDate(),
+    //   isRegisteredContent: ContentService.to.contentIdInfo!.movieContentIdList
+    //           .contains(response.id)
+    //       ? ContentRegisteredValue.registered.obs
+    //       : ContentRegisteredValue.unRegistered.obs,
+    //   // isRegisteredContent:   ContentRegisteredValue.isLoading.obs,
+    // );
   }
 
   factory SearchedContent.fromTvResponse(TmdbTvDetailResponse response) {
@@ -83,11 +93,19 @@ class SearchedContent {
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.name,
       releaseDate: verifyReleaseDate(),
-      isRegisteredContent:
-          ContentService.to.contentIdInfo!.tvContentIdList.contains(response.id)
-              ? ContentRegisteredValue.registered.obs
-              : ContentRegisteredValue.unRegistered.obs,
+      isRegisteredContent: ContentRegisteredValue.isLoading,
     );
+
+    // return SearchedContent(
+    //   contentId: response.id,
+    //   posterImgUrl: response.poster_path ?? response.backdrop_path,
+    //   title: response.name,
+    //   releaseDate: verifyReleaseDate(),
+    //   isRegisteredContent:
+    //       ContentService.to.contentIdInfo!.tvContentIdList.contains(response.id)
+    //           ? ContentRegisteredValue.registered.obs
+    //           : ContentRegisteredValue.unRegistered.obs,
+    // );
   }
 }
 

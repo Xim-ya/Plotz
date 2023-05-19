@@ -2,8 +2,12 @@ import 'dart:developer';
 
 import 'package:soon_sak/utilities/index.dart';
 
-class UserService extends GetxService {
-  UserService(this._authRepository, this._userRepository);
+class UserService {
+  UserService(
+      {required AuthRepository authRepository,
+      required UserRepository userRepository})
+      : _authRepository = authRepository,
+        _userRepository = userRepository;
 
   final AuthRepository _authRepository;
   final UserRepository _userRepository;

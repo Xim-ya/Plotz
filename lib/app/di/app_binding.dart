@@ -8,4 +8,5 @@ class AppBinding extends Bindings {
     DomainModules.dependencies();
     PresentationModules.dependencies();
   }
+
 }

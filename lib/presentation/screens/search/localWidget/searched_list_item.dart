@@ -16,7 +16,7 @@ class SearchListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // 컨텐츠 등록 여부에 따른 인디케이터 case별 위젯 (이미지 overlay)
     Widget caseOverlayIndicatorOnImg() {
-      switch (item.isRegisteredContent.value) {
+      switch (item.isRegisteredContent) {
         case ContentRegisteredValue.isLoading:
           return const SizedBox();
         case ContentRegisteredValue.registered:
@@ -43,7 +43,7 @@ class SearchListItem extends StatelessWidget {
 
     // 컨텐츠 등록 여부 인디케이터 case별 위젯
     Widget caseIndicatorOnTrailing() {
-      switch (item.isRegisteredContent.value) {
+      switch (item.isRegisteredContent) {
         case ContentRegisteredValue.isLoading:
           return const SizedBox(
             height: 12,
@@ -110,7 +110,7 @@ class SearchListItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Obx(caseOverlayIndicatorOnImg)
+              caseOverlayIndicatorOnImg(),
             ],
           ),
           AppSpace.size8,
@@ -145,9 +145,7 @@ class SearchListItem extends StatelessWidget {
                   ),
                 AppSpace.size2,
                 // 등록 여부 Indicator
-                Obx(
-                  caseIndicatorOnTrailing,
-                )
+                caseIndicatorOnTrailing(),
               ],
             ),
           ),

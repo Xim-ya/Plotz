@@ -1,7 +1,8 @@
+import 'package:provider/provider.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:math' as math;
 
-class MyPageScreen extends BaseScreen<MyPageViewModel> {
+class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
   const MyPageScreen({Key? key}) : super(key: key);
 
   @override
@@ -18,35 +19,33 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
               child: IconInkWellButton.packageIcon(
                 icon: Icons.settings,
                 size: 24,
-                onIconTapped: vm.routeToSetting,
+                onIconTapped: vm(context).routeToSetting,
               ),
             ),
           ),
           AppSpace.size16,
 
           // 프로필
-          GestureDetector(
-            onTap: () {},
-            child: Padding(
-              padding: AppInset.horizontal16,
-              child: Row(
-                children: <Widget>[
-                  Obx(
-                    () => RoundProfileImg(
+          Padding(
+            padding: AppInset.horizontal16,
+            child: Selector<MyPageViewModel, UserModel?>(
+              selector: (context, vm) => vm.userInfo,
+              builder: (context, userInfo, _) {
+                return Row(
+                  children: <Widget>[
+                    RoundProfileImg(
                       size: 58,
-                      imgUrl: vm.userInfo.value?.photoUrl,
+                      imgUrl: userInfo?.photoUrl,
                     ),
-                  ),
-                  AppSpace.size10,
-                  Obx(
-                    () => Text(
-                      '${vm.userInfo.value?.displayName ?? '-'}님',
+                    AppSpace.size10,
+                    Text(
+                      '${userInfo?.displayName ?? '-'}님',
                       style: AppTextStyle.title1
                           .copyWith(color: AppColor.mixedWhite),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                );
+              },
             ),
           ),
           AppSpace.size34,
@@ -56,7 +55,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             padding: AppInset.horizontal16,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: vm.routeToCurationHistory,
+              onTap: vm(context).routeToCurationHistory,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -78,40 +77,47 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
           ),
           AppSpace.size14,
           GestureDetector(
-            onTap: vm.routeToCurationHistory,
+            onTap: vm(context).routeToCurationHistory,
             child: Container(
-                margin: AppInset.horizontal16,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: AppColor.strongGrey,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: GetBuilder<MyPageViewModel>(
-                  builder: (_) => Row(
+              margin: AppInset.horizontal16,
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColor.strongGrey,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Selector<MyPageViewModel, UserCurationSummary?>(
+                selector: (context, vm) => vm.curationSummary,
+                builder: (context, curationSummary, _) {
+                  return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       _curationProgressRowItem(
-                          title: '진행중',
-                          count: vm.curationSummary?.inProgressCount ?? 0,),
+                        title: '진행중',
+                        count: curationSummary?.inProgressCount ?? 0,
+                      ),
                       Container(
                         height: 24,
                         width: 1,
                         color: AppColor.lightGrey,
                       ),
                       _curationProgressRowItem(
-                          title: '등록 완료',
-                          count: vm.curationSummary?.completedCount ?? 0,),
+                        title: '등록 완료',
+                        count: curationSummary?.completedCount ?? 0,
+                      ),
                       Container(
                         height: 24,
                         width: 1,
                         color: AppColor.lightGrey,
                       ),
                       _curationProgressRowItem(
-                          title: '보류',
-                          count: vm.curationSummary?.onHoldCount ?? 0,),
+                        title: '보류',
+                        count: curationSummary?.onHoldCount ?? 0,
+                      ),
                     ],
-                  ),
-                ),),
+                  );
+                },
+              ),
+            ),
           ),
 
           AppSpace.size64,
@@ -125,32 +131,36 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             ),
           ),
           AppSpace.size14,
-          Obx(
-            () => vm.watchHistoryList != null && vm.watchHistoryList!.isEmpty
-                ? Padding(
-                    padding: AppInset.left16,
-                    child: Text(
-                      '시청 기록이 없어요',
-                      style: AppTextStyle.body1
-                          .copyWith(color: AppColor.lightGrey),
-                    ),
-                  )
-                : ContentPostSlider(
-                    height: 168,
-                    itemCount: vm.watchHistoryList?.length ?? 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      final item = vm.watchHistoryList?[index];
-                      return ImageViewWithPlayBtn(
-                        aspectRatio: 1280 / 1920,
-                        onPlayerBtnClicked: () {
-                          vm.launchYoutubeApp(item, index);
-                        },
-                        posterImgUrl: item?.posterImgUrl != null
-                            ? item!.posterImgUrl!.prefixTmdbImgPath
-                            : null,
-                      );
-                    },
-                  ),
+
+          Selector<MyPageViewModel, List<UserWatchHistoryItem>?>(
+            selector: (context, vm) => vm.watchHistoryList,
+            builder: (context, watchHistoryList, _) {
+              return watchHistoryList != null && watchHistoryList.isEmpty
+                  ? Padding(
+                      padding: AppInset.left16,
+                      child: Text(
+                        '시청 기록이 없어요',
+                        style: AppTextStyle.body1
+                            .copyWith(color: AppColor.lightGrey),
+                      ),
+                    )
+                  : ContentPostSlider(
+                      height: 168,
+                      itemCount: watchHistoryList?.length ?? 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = watchHistoryList?[index];
+                        return ImageViewWithPlayBtn(
+                          aspectRatio: 1280 / 1920,
+                          onPlayerBtnClicked: () {
+                            vm(context).launchYoutubeApp(item, index);
+                          },
+                          posterImgUrl: item?.posterImgUrl != null
+                              ? item!.posterImgUrl!.prefixTmdbImgPath
+                              : null,
+                        );
+                      },
+                    );
+            },
           ),
           AppSpace.size48,
         ],
@@ -173,4 +183,8 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
       ],
     );
   }
+
+  @override
+  MyPageViewModel createViewModel(BuildContext context) =>
+      locator<MyPageViewModel>();
 }

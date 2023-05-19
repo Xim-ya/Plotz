@@ -61,10 +61,10 @@ class SearchContentPageView extends BaseView<RegisterViewModel> {
   // 하단 고정 버튼
   Widget _buildBottomFixedStepBtn() => Obx(
         () => AnimatedOpacity(
-          opacity: vm.isContentSelected.value ? 1 : 0,
+          opacity: vm.isContentSelected ? 1 : 0,
           duration: const Duration(milliseconds: 500),
           child: Visibility(
-            visible: vm.isContentSelected.value ? true : false,
+            visible: vm.isContentSelected ? true : false,
             child: Stack(
               children: [
                 Positioned(

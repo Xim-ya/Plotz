@@ -15,7 +15,10 @@ import 'dart:io' show Platform, exit;
  * */
 
 class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
-  CheckVersionAndNetworkUseCase(this._repository, this._userService);
+  CheckVersionAndNetworkUseCase(
+      {required VersionRepository repository, required UserService userService})
+      : _repository = repository,
+        _userService = userService;
 
   final VersionRepository _repository;
   final UserService _userService;
@@ -34,8 +37,10 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         final serverVersionCode = Version.parse(version.versionCode);
         final appVersionCode = Version.parse(packageInfo.version);
 
+
         // 서비스 모듈 버전 정보 저장
         _userService.currentVersionNum = version.versionCode;
+
 
         // 심사를 진행중인 상태라면
         if (version.systemAvailable == 'R' &&
@@ -80,36 +85,42 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
   /* 모달 노출 메소드 */
 
   void showSystemIsNotAvailableModal() {
-    Get.dialog(AppDialog.singleBtn(
-      onBtnClicked: () async {
-        Get.back();
-        exit(9);
-      },
-      title: '시스템 점검 안내',
-      description: '시스템 점검으로 서비스 이용이 제한됩니다',
-    ),);
+    Get.dialog(
+      AppDialog.singleBtn(
+        onBtnClicked: () async {
+          Get.back();
+          exit(9);
+        },
+        title: '시스템 점검 안내',
+        description: '시스템 점검으로 서비스 이용이 제한됩니다',
+      ),
+    );
   }
 
   void somethingIsWrongModal() {
-    Get.dialog(AppDialog.singleBtn(
-      onBtnClicked: () async {
-        Get.back();
-        exit(0);
-      },
-      title: '오류',
-      description: '알 수 없는 오류가 발생했습니다',
-    ),);
+    Get.dialog(
+      AppDialog.singleBtn(
+        onBtnClicked: () async {
+          Get.back();
+          exit(0);
+        },
+        title: '오류',
+        description: '알 수 없는 오류가 발생했습니다',
+      ),
+    );
   }
 
   void showNetworkIsBadModal() {
-    Get.dialog(AppDialog.singleBtn(
-      onBtnClicked: () {
-        Get.back();
-        exit(0);
-      },
-      title: '네트워크 불안정',
-      description: 'Wi-Fi 또는 데이터를 활성화 해주세요.',
-    ),);
+    Get.dialog(
+      AppDialog.singleBtn(
+        onBtnClicked: () {
+          Get.back();
+          exit(0);
+        },
+        title: '네트워크 불안정',
+        description: 'Wi-Fi 또는 데이터를 활성화 해주세요.',
+      ),
+    );
   }
 
   void showNeedUpdateModal() {
@@ -120,14 +131,16 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
           if (Platform.isIOS) {
             await launchUrl(
               Uri.parse(
-                  'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',),
+                'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',
+              ),
               mode: LaunchMode.externalApplication,
             );
           } else if (Platform.isAndroid) {
             // TODO : 앱 코드 변경 필요[ANDROID]
             await launchUrl(
               Uri.parse(
-                  'https://play.google.com/store/apps/details?id=com.soon_sak',),
+                'https://play.google.com/store/apps/details?id=com.soon_sak',
+              ),
               mode: LaunchMode.externalApplication,
             );
           }

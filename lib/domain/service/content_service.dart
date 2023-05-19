@@ -11,7 +11,11 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class ContentService extends GetxService {
-  ContentService(this._contentRepository, this._staticContentRepository);
+  ContentService(
+      {required ContentRepository contentRepository,
+      required StaticContentRepository staticContentRepository})
+      : _contentRepository = contentRepository,
+        _staticContentRepository = staticContentRepository;
 
   /* Data Modules */
   final ContentRepository _contentRepository;
@@ -29,11 +33,14 @@ class ContentService extends GetxService {
   // 정적 컨텐츠 키 리스트 호출
   Future<void> fetchStaticContentKeys() async {
     final response = await _staticContentRepository.loadStaticContentKeys();
-    response.fold(onSuccess: (data) {
-      _staticContentKeys.value = data;
-    }, onFailure: (e) {
-      log('ContentService : $e');
-    },);
+    response.fold(
+      onSuccess: (data) {
+        _staticContentKeys.value = data;
+      },
+      onFailure: (e) {
+        log('ContentService : $e');
+      },
+    );
   }
 
   // 전체 컨텐츠 id 정보 호출
