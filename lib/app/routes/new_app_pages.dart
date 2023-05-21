@@ -26,11 +26,18 @@ abstract class NewAppPages {
           newBuilder: (context, state) => const TabsScreen(),
           routes: [
             GoRouteWithBinding(
+              path: 'contentDetail',
+              prevPath: AppRoutes.tabs,
+              binding: ContentDetailBinding(),
+              newBuilder: (context, state) => ContentDetailScreen(),
+            ),
+            GoRouteWithBinding(
               path: 'search',
               prevPath: AppRoutes.tabs,
               binding: SearchBinding(),
               newBuilder: (context, state) => SearchScreen(),
             ),
+
           ]),
       GoRouteWithBinding(
         path: AppRoutes.channelDetail,

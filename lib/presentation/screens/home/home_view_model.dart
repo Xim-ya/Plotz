@@ -85,6 +85,7 @@ class HomeViewModel extends NewBaseViewModel {
 
   // 컨텐츠 상세 화면으로 이동
   void routeToContentDetail(
+    BuildContext context,
     ContentArgumentFormat routingArgument, {
     required String sectionType,
   }) {
@@ -93,11 +94,12 @@ class HomeViewModel extends NewBaseViewModel {
       parameters: {sectionType: routingArgument.originId},
     );
 
-    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
+    context.push(AppRoutes.tabs + AppRoutes.contentDetail,
+        extra: routingArgument);
   }
 
   // 배너, 배너 상세 콘텐츠로 이동
-  void routeToBannerContentDetail() {
+  void routeToBannerContentDetail(BuildContext context) {
     final arg = ContentArgumentFormat(
       originId: selectedBannerContent!.originId,
       contentId: selectedBannerContent!.id,
@@ -108,7 +110,8 @@ class HomeViewModel extends NewBaseViewModel {
       name: 'goToContent',
       parameters: {'banner': arg.originId},
     );
-    Get.toNamed(AppRoutes.contentDetail, arguments: arg);
+
+    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
   }
 
   // 스크롤 동작 관련 이벤트

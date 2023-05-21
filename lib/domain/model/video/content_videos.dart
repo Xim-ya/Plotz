@@ -9,8 +9,8 @@ import 'package:soon_sak/utilities/index.dart';
 class ContentVideos {
   final List<ContentVideoItem> videos; // 비디오 객체 (시즌 정보, 유튜브 상세 정보 등등)
   final ContentVideoFormat contentVideoFormat; // 비디오 포맷 타입
-  RxBool isDetailInfoLoaded = false.obs;
-  RxBool isSeasonInfoLoaded = false.obs;
+  bool isDetailInfoLoaded = false;
+  bool isSeasonInfoLoaded = false;
 
   /* Getters */
   ContentVideoItem get singleTypeVideo => videos[0];
@@ -53,12 +53,13 @@ class ContentVideos {
   /* Intents */
   // 비디오 상세 정보 로딩 state 업데이트
   void updateVideoDetailsLoadingState() {
-    isDetailInfoLoaded(true);
+    isDetailInfoLoaded = true;
+
   }
 
   // 비디오 시즌 정보 로딩 state 업데이트
   void updateSeasonInfoLoadingState() {
-    isSeasonInfoLoaded(true);
+    isDetailInfoLoaded = true;
   }
 
   ContentVideos({required this.videos, required this.contentVideoFormat});

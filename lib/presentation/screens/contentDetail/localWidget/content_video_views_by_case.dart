@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.1.1
@@ -9,27 +10,27 @@ import 'package:soon_sak/utilities/index.dart';
  * - 여러 시즌으로 구성되어 있는 비디오 컨텐츠 (TV)
  * */
 
-class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
+class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
   const ContentVideoViewsByCase({Key? key}) : super(key: key);
 
   @override
-  Widget buildView(BuildContext context) {
-    switch (vm.contentVideoFormat) {
+  Widget build(BuildContext context) {
+    switch (vmS(context, (vm) => vm.contentVideoFormat)) {
       case ContentVideoFormat.singleMovie:
-        return _buildSingleMovieVideoView();
+        return _buildSingleMovieVideoView(context);
       case ContentVideoFormat.multipleMovie:
-        return _buildMultipleMoviesVideoView();
+        return _buildMultipleMoviesVideoView(context);
       case ContentVideoFormat.singleTv:
-        return _buildSingleTvVideoView();
+        return _buildSingleTvVideoView(context);
       case ContentVideoFormat.multipleTv:
-        return _buildMultipleTvVideoView();
+        return _buildMultipleTvVideoView(context);
       default:
         return const SizedBox();
     }
   }
 
   // 싱글 포맷 '영화' 비디오
-  Widget _buildSingleMovieVideoView() => Padding(
+  Widget _buildSingleMovieVideoView(BuildContext context) => Padding(
         padding: AppInset.horizontal16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,9 +38,9 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
             const SectionTitle(title: '콘텐츠'),
             ImageViewWithPlayBtn(
               onPlayerBtnClicked: () {
-                vm.launchYoutubeApp(vm.singleVideoId);
+                vm(context).launchYoutubeApp(vm(context).singleVideoId);
               },
-              posterImgUrl: vm.singleVideoThumbnailUrl,
+              posterImgUrl: vm(context).singleVideoThumbnailUrl,
             ),
             AppSpace.size4,
             SizedBox(
@@ -58,9 +59,9 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         ),
                       ),
                       AppSpace.size4,
-                      if (vm.singleLikesCount.hasData)
+                      if (vm(context).singleLikesCount.hasData)
                         Text(
-                          vm.singleLikesCount!,
+                          vm(context).singleLikesCount!,
                           style: AppTextStyle.body3,
                         )
                       else
@@ -76,10 +77,10 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         ),
                     ],
                   ),
-                  if (vm.singleVideoViewCount.hasData &&
-                      vm.singleUploadDate.hasData)
+                  if (vm(context).singleVideoViewCount.hasData &&
+                      vm(context).singleUploadDate.hasData)
                     Text(
-                      '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
+                      '조회수 ${vm(context).singleVideoViewCount} · ${vm(context).singleUploadDate}',
                       style: AppTextStyle.body3,
                     )
                   else
@@ -110,7 +111,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
       );
 
   // 멀티플 포맷 '영화' 비디오
-  Widget _buildMultipleMoviesVideoView() => Column(
+  Widget _buildMultipleMoviesVideoView(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const Padding(
@@ -119,7 +120,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           ),
           CarouselSlider.builder(
             itemCount:
-                vm.isVideoContentLoaded ? vm.multipleVideoInfo!.length : 0,
+                vm(context).isVideoContentLoaded ? vm(context).multipleVideoInfo!.length : 0,
             options: CarouselOptions(
               aspectRatio: 16 / 9.6,
               enableInfiniteScroll: false,
@@ -127,7 +128,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
             ),
             itemBuilder:
                 (BuildContext context, int itemIndex, int pageViewIndex) {
-              final videoInfoItem = vm.multipleVideoInfo![itemIndex];
+              final videoInfoItem = vm(context).multipleVideoInfo![itemIndex];
               return SizedBox(
                 width: SizeConfig.to.screenWidth - 32,
                 // margin: AppInset.right8,
@@ -136,7 +137,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                     // 썸네일 이미지
                     ImageViewWithPlayBtn(
                       onPlayerBtnClicked: () {
-                        vm.launchYoutubeApp(videoInfoItem.videoId);
+                        vm(context).launchYoutubeApp(videoInfoItem.videoId);
                       },
                       posterImgUrl:
                           videoInfoItem.detailInfo?.videoThumbnailUrl ?? '',
@@ -159,10 +160,11 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                                 ),
                               ),
                               AppSpace.size4,
-                              if (vm.multipleVideoInfo.hasData)
+                              if (vm(context).multipleVideoInfo.hasData)
                                 Text(
                                   videoInfoItem.detailInfo?.likeCount
-                                      .toString() ?? '',
+                                          .toString() ??
+                                      '',
                                   style: AppTextStyle.body3,
                                 )
                               else
@@ -178,7 +180,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                                 ),
                             ],
                           ),
-                          if (vm.multipleVideoInfo.hasData)
+                          if (vm(context).multipleVideoInfo.hasData)
                             Text(
                               '조회수 ${Formatter.formatNumberWithUnit(videoInfoItem.detailInfo?.viewCount, isViewCount: true)} · ${Formatter.getDateDifferenceFromNow(videoInfoItem.detailInfo!.uploadDate!)}',
                               style: AppTextStyle.body3,
@@ -215,7 +217,7 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
       );
 
   // 싱글 포맷 'TV' 비디오
-  Widget _buildSingleTvVideoView() => Padding(
+  Widget _buildSingleTvVideoView(BuildContext context) => Padding(
         padding: AppInset.horizontal16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,9 +225,9 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
             const SectionTitle(title: '콘텐츠'),
             ImageViewWithPlayBtn(
               onPlayerBtnClicked: () {
-                vm.launchYoutubeApp(vm.singleVideoId);
+                vm(context).launchYoutubeApp(vm(context).singleVideoId);
               },
-              posterImgUrl: vm.singleVideoThumbnailUrl,
+              posterImgUrl: vm(context).singleVideoThumbnailUrl,
             ),
             AppSpace.size4,
             SizedBox(
@@ -244,9 +246,9 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         ),
                       ),
                       AppSpace.size4,
-                      if (vm.singleLikesCount.hasData)
+                      if (vm(context).singleLikesCount.hasData)
                         Text(
-                          vm.singleLikesCount!,
+                          vm(context).singleLikesCount!,
                           style: AppTextStyle.body3,
                         )
                       else
@@ -262,10 +264,10 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         ),
                     ],
                   ),
-                  if (vm.singleVideoViewCount.hasData &&
-                      vm.singleUploadDate.hasData)
+                  if (vm(context).singleVideoViewCount.hasData &&
+                      vm(context).singleUploadDate.hasData)
                     Text(
-                      '조회수 ${vm.singleVideoViewCount} · ${vm.singleUploadDate}',
+                      '조회수 ${vm(context).singleVideoViewCount} · ${vm(context).singleUploadDate}',
                       style: AppTextStyle.body3,
                     )
                   else
@@ -296,19 +298,19 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
       );
 
   // 멀티플 포맷 'TV' 비디오
-  Widget _buildMultipleTvVideoView() => Padding(
+  Widget _buildMultipleTvVideoView(BuildContext context) => Padding(
         padding: AppInset.horizontal16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SectionTitle(title: '시즌 에피소드'),
             ListView.separated(
-              itemCount: vm.contentVideos.value?.multipleTypeVideos.length ?? 3,
+              itemCount: vm(context).contentVideos?.multipleTypeVideos.length ?? 3,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final episodeItem =
-                    vm.contentVideos.value!.multipleTypeVideos[index];
+                    vm(context).contentVideos!.multipleTypeVideos[index];
                 return Obx(
                   () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,11 +324,11 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(
-                            width: vm.seasonEpisodeImgWidth,
+                            width: vm(context).seasonEpisodeImgWidth,
                             child: ImageViewWithPlayBtn(
                               aspectRatio: 2 / 3,
                               onPlayerBtnClicked: () {
-                                vm.launchYoutubeApp(episodeItem.videoId);
+                                vm(context).launchYoutubeApp(episodeItem.videoId);
                               },
                               posterImgUrl: episodeItem.tvSeasonInfo
                                   ?.posterPathUrl?.prefixTmdbImgPath,
@@ -351,21 +353,21 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
                                 SkeletonBox(
                                   height: 16,
                                   width: SizeConfig.to.screenWidth -
-                                      vm.seasonEpisodeImgWidth -
+                                      vm(context).seasonEpisodeImgWidth -
                                       42,
                                 ),
                                 AppSpace.size2,
                                 SkeletonBox(
                                   height: 16,
                                   width: SizeConfig.to.screenWidth -
-                                      vm.seasonEpisodeImgWidth -
+                                      vm(context).seasonEpisodeImgWidth -
                                       42,
                                 ),
                                 AppSpace.size2,
                                 SkeletonBox(
                                   height: 16,
                                   width: SizeConfig.to.screenWidth -
-                                      vm.seasonEpisodeImgWidth -
+                                      vm(context).seasonEpisodeImgWidth -
                                       42,
                                 ),
                               ],

@@ -13,10 +13,10 @@ class ContentInfoTabViewScaffold extends StatelessWidget {
       required this.contentImgSection,})
       : super(key: key);
 
-  final List<Widget> creditSection;
+  final Widget creditSection;
   final Widget curatorView;
   final Widget elseInfoView;
-  final List<Widget> contentImgSection;
+  final Widget contentImgSection;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ContentInfoTabViewScaffold extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ...creditSection,
+          creditSection,
           // 큐레이터 정보
           const SectionTitle(title: '큐레이터', setLeftPadding: true),
           curatorView,
@@ -34,7 +34,7 @@ class ContentInfoTabViewScaffold extends StatelessWidget {
           AppSpace.size10,
           elseInfoView,
           AppSpace.size40,
-          ...contentImgSection,
+          contentImgSection,
         ],
       ),
     );

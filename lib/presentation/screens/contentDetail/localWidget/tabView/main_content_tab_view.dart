@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/expandable_text_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -6,31 +8,28 @@ import 'package:soon_sak/utilities/index.dart';
  *  단일 에피소드 여부에 따라 탭뷰 영역 자체를 다르게 반환.
  * */
 
-class MainContentTabView extends BaseView<ContentDetailViewModel> {
+class MainContentTabView extends NewBaseView<ContentDetailViewModel> {
   const MainContentTabView({Key? key}) : super(key: key);
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget build(BuildContext context) {
     return _MainContentTabViewScaffold(
-      youtubeContentSection: Obx(
-        () => vm.isVideoContentLoaded
-            ? const ContentVideoViewsByCase()
-            : buildContentVideoSectionSkeleton(),
-      ),
-      descriptionTitle: _buildDescriptionTitle(),
-      descriptionSection: buildDescriptionSection(),
-      channelSection: buildChannelSection(),
+      youtubeContentSection: vmS<bool>(context, (vm) => vm.isVideoContentLoaded)
+          ? const ContentVideoViewsByCase()
+          : const _VideCaseSkeletonView(),
+      descriptionSection: buildDescriptionSection(context),
+      channelSection: buildChannelSection(context),
     );
   }
 
   /// 컨텐츠 비디오 섹션 Skeleton View
   /// 컨텐츠 타입에 따라 각각 다른 스켈레톤 뷰를 보여줌
-  Widget buildContentVideoSectionSkeleton() {
-    if (vm.contentType.isMovie ||
-        vm.contentVideoFormat == ContentVideoFormat.singleTv) {
+  Widget buildContentVideoSectionSkeleton(BuildContext context) {
+    if (vm(context).contentType.isMovie ||
+        vm(context).contentVideoFormat == ContentVideoFormat.singleTv) {
       return const SingleVideoSkeletonView();
     } else {
-      if (vm.passedArgument.thumbnailUrl.hasData) {
+      if (vm(context).passedArgument.thumbnailUrl.hasData) {
         return const SingleVideoSkeletonView();
       }
       return const SizedBox(
@@ -44,85 +43,134 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
     }
   }
 
-  List<Widget> _buildDescriptionTitle() {
-    if (vm.contentOverView != '') {
-      return const [
-        AppSpace.size40,
-        Padding(
-          padding: AppInset.horizontal16,
-          child: SectionTitle(title: '설명'),
-        )
-      ];
+
+  // 컨텐츠 설명(TMDB)
+  Widget buildDescriptionSection(BuildContext context) {
+    if (vmW(context).contentOverView.hasData) {
+      if (vmW(context).contentOverView! != '') {
+        return ExpandableTextView(
+          text: vmW(context).contentOverView!,
+          maxLines: 4,
+        );
+      } else {
+        return const SizedBox();
+      }
     } else {
-      return const [SizedBox()];
+      return ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 3,
+        itemBuilder: (__, _) => Shimmer(
+          child: Container(
+            height: 18,
+          ),
+        ),
+        separatorBuilder: (BuildContext context, int index) => AppSpace.size4,
+      );
     }
   }
 
-  // 컨텐츠 설명(TMDB)
-  Widget buildDescriptionSection() =>
-      GetBuilder<ContentDetailViewModel>(builder: (_) {
-        if (vm.contentOverView.hasData) {
-          if (vm.contentOverView! != '') {
-            return ExpandableTextView(
-              text: vm.contentOverView!,
-              maxLines: 4,
-            );
-          } else {
-            return const SizedBox();
-          }
-        } else {
-          return ListView.separated(
-            shrinkWrap: true,
-            itemCount: 3,
-            itemBuilder: (__, _) => Shimmer(
-              child: Container(
+  // 채널 - 채널정보
+  Widget buildChannelSection(BuildContext context) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ChannelInfoView(
+              nameTextWidth: SizeConfig.to.screenWidth - 104,
+              imgSize: 62,
+              imgUrl: vmW(context).channelImgUrl,
+              name: vmW(context).channelName,
+              subscriberCount: vmW(context).subscriberCount,
+            ),
+            AppSpace.size8,
+            // 채널 설명
+            if (vmW(context).channelDescription.hasData)
+              Text(
+                vmW(context).channelDescription!,
+                style: AppTextStyle.body2,
+              )
+            else
+              const SkeletonBox(
+                width: double.infinity,
                 height: 18,
               ),
-            ),
-            separatorBuilder: (BuildContext context, int index) =>
-                AppSpace.size4,
-          );
-        }
-      },);
+          ],
+        ),
+      );
+}
 
-  // 채널 - 채널정보
-  Widget buildChannelSection() => Obx(
-        () => Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              GestureDetector(
-                onTap: (){},
+class _VideCaseSkeletonView extends NewBaseView<ContentDetailViewModel> {
+  const _VideCaseSkeletonView({Key? key}) : super(key: key);
 
-                child: ChannelInfoView(
-                  nameTextWidth: SizeConfig.to.screenWidth - 104,
-                  imgSize: 62,
-                  imgUrl: vm.channelImgUrl,
-                  name: vm.channelName,
-                  subscriberCount: vm.subscriberCount,
-                ),
-              ),
-              AppSpace.size8,
-              // 채널 설명
-              if (vm.channelDescription.hasData)
-                Text(
-                  vm.channelDescription!,
-                  style: AppTextStyle.body2,
-                )
-              else
-                const SkeletonBox(
-                  width: double.infinity,
-                  height: 18,
-                ),
-            ],
+  @override
+  Widget build(BuildContext context) {
+    if (vm(context).contentType.isMovie ||
+        vm(context).contentVideoFormat == ContentVideoFormat.singleTv) {
+      return const SingleVideoSkeletonView();
+    } else {
+      if (vm(context).passedArgument.thumbnailUrl.hasData) {
+        return const SingleVideoSkeletonView();
+      }
+      return const SizedBox(
+        height: 200,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: AppColor.darkGrey,
           ),
         ),
       );
+    }
+  }
+}
 
-  /// 댓글 - 유튜브 댓글
-  /// 이해할 수 없지만 애플 가이드라인에 위배된다고 함.
-  /// 일단 삭제
+/// 메인 컨텐츠 탭 레이아웃 Scaffold 모듈
+/// KeepAlive를 감싸서 불필요한 렌더링을 막음
+class _MainContentTabViewScaffold extends StatelessWidget {
+  const _MainContentTabViewScaffold({
+    Key? key,
+    required this.youtubeContentSection,
+    required this.descriptionSection,
+
+    required this.channelSection,
+  }) : super(key: key);
+
+  final Widget youtubeContentSection;
+  final Widget descriptionSection;
+
+  final Widget channelSection;
+
+  @override
+  Widget build(BuildContext context) {
+    return KeepAliveView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          youtubeContentSection,
+          if (context.select<ContentDetailViewModel, String?>(
+                (vm) => vm.contentOverView,
+              ) !=
+              '')
+            Padding(
+              padding: AppInset.horizontal16 + AppInset.top40,
+              child: const SectionTitle(title: '설명'),
+            ),
+          Padding(padding: AppInset.horizontal16, child: descriptionSection),
+          AppSpace.size40,
+          const Padding(
+            padding: AppInset.horizontal16,
+            child: SectionTitle(title: '채널'),
+          ),
+          channelSection,
+        ],
+      ),
+    );
+  }
+}
+
+/// 댓글 - 유튜브 댓글
+/// 이해할 수 없지만 애플 가이드라인에 위배된다고 함.
+/// 일단 삭제
 // Widget buildChannelSection() => Obx(
 //       () => ListView.separated(
 //         separatorBuilder: (__, _) => AppSpace.size12,
@@ -237,41 +285,3 @@ class MainContentTabView extends BaseView<ContentDetailViewModel> {
 //         },
 //       ),
 //     );
-}
-
-/// 메인 컨텐츠 탭 레이아웃 Scaffold 모듈
-/// KeepAlive를 감싸서 불필요한 렌더링을 막음
-class _MainContentTabViewScaffold extends StatelessWidget {
-  const _MainContentTabViewScaffold({
-    Key? key,
-    required this.youtubeContentSection,
-    required this.descriptionSection,
-    required this.descriptionTitle,
-    required this.channelSection,
-  }) : super(key: key);
-
-  final Widget youtubeContentSection;
-  final Widget descriptionSection;
-  final List<Widget> descriptionTitle;
-  final Widget channelSection;
-
-  @override
-  Widget build(BuildContext context) {
-    return KeepAliveView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          youtubeContentSection,
-          ...descriptionTitle,
-          Padding(padding: AppInset.horizontal16, child: descriptionSection),
-          AppSpace.size40,
-          const Padding(
-            padding: AppInset.horizontal16,
-            child: SectionTitle(title: '채널'),
-          ),
-          channelSection,
-        ],
-      ),
-    );
-  }
-}

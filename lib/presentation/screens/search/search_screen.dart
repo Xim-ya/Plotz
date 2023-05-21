@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -23,15 +24,17 @@ class SearchScreen extends NewBaseScreen<SearchViewModel> {
           firstPageErrorText: '드라마 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return SearchListItem(
-              contentType: ContentType.tv,
-              item: searchedItem,
-              onItemClicked: () {
-                vm(context).onSearchedContentTapped(
-                  content: searchedItem,
-                  contentType: ContentType.tv,
-                );
-              },
+            return KeepAliveView(
+              child: SearchListItem(
+                contentType: ContentType.tv,
+                item: searchedItem,
+                onItemClicked: () {
+                  vm(context).onSearchedContentTapped(
+                    content: searchedItem,
+                    contentType: ContentType.tv,
+                  );
+                },
+              ),
             );
           },
         ),
@@ -42,15 +45,17 @@ class SearchScreen extends NewBaseScreen<SearchViewModel> {
           firstPageErrorText: '영화 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return SearchListItem(
-              contentType: ContentType.movie,
-              item: searchedItem,
-              onItemClicked: () {
-                vm(context).onSearchedContentTapped(
-                  content: searchedItem,
-                  contentType: ContentType.movie,
-                );
-              },
+            return KeepAliveView(
+              child: SearchListItem(
+                contentType: ContentType.movie,
+                item: searchedItem,
+                onItemClicked: () {
+                  vm(context).onSearchedContentTapped(
+                    content: searchedItem,
+                    contentType: ContentType.movie,
+                  );
+                },
+              ),
             );
           },
         ),
@@ -72,16 +77,21 @@ class SearchScreen extends NewBaseScreen<SearchViewModel> {
         height: 40,
         child: Row(
           children: [
-            SearchBar(
-              focusNode: vm(context).focusNode,
-              textEditingController: vm(context).textEditingController,
-              onChanged: (_) {
-                vm(context).onTextChanged();
+            Selector<SearchViewModel, bool>(
+              selector: (context, vm) => vm.showRoundCloseBtn,
+              builder: (context, showRoundCloseBtn, _) {
+                return SearchBar(
+                  focusNode: vm(context).focusNode,
+                  textEditingController: vm(context).textEditingController,
+                  onChanged: (_) {
+                    vm(context).onTextChanged();
+                  },
+                  resetSearchValue: vm(context).onClosedBtnTapped,
+                  showRoundCloseBtn: showRoundCloseBtn,
+                  width: SizeConfig.to.screenWidth - 88,
+                  // width: SizeConfig.to.screenWidth - 84,
+                );
               },
-              resetSearchValue: vm(context).onClosedBtnTapped,
-              showRoundCloseBtn: vm(context).showRoundCloseBtn,
-              width: SizeConfig.to.screenWidth - 88,
-              // width: SizeConfig.to.screenWidth - 84,
             ),
             MaterialButton(
               minWidth: 40,
@@ -89,7 +99,7 @@ class SearchScreen extends NewBaseScreen<SearchViewModel> {
                 borderRadius: BorderRadius.circular(12),
               ),
               onPressed: () {
-                vm(context).test();
+                vm(context).routeBack(context);
               },
               child: Center(
                 child: Text(

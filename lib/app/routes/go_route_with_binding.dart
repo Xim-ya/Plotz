@@ -22,7 +22,7 @@ class GoRouteWithBinding extends GoRoute {
                 binding.argument = arg;
               }
             }
-            if (goRouter.value.location == path &&
+            if (goRouter.value.location!.contains(path) &&
                 binding.isDependenciesDeleted == false) {
               binding.unRegisterDependencies();
             }

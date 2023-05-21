@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -45,12 +46,9 @@ class SearchViewModel extends NewBaseViewModel {
   VoidCallback get onTextChanged => pagedSearchHandler.onSearchTermEntered;
 
   /* Intents */
-
-  // TEST
-  Future<void> test() async{
-    print("아랑 첫 번째 key ${pagingController.nextPageKey}");
-    pagingController.refresh();
-    print("아랑 ${pagingController.nextPageKey}");
+  // 뒤로가기
+  void routeBack(BuildContext context) {
+    context.pop();
   }
 
   // 컨텐츠 요청
@@ -125,17 +123,13 @@ class SearchViewModel extends NewBaseViewModel {
     }
   }
 
-  Future<void> delayedPagedRefresh() async {
-    await Future.delayed(Duration.zero);
-    pagingController.refresh();
-  }
-
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때
   VoidCallback get onClosedBtnTapped => pagedSearchHandler.onCloseBtnTapped;
 
   @override
   void onInit() {
     pagedSearchHandler.initUseCase();
+    textEditingController.addListener(notifyListeners);
     // super.onInit();
   }
 }

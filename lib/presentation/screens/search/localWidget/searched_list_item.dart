@@ -1,12 +1,12 @@
 import 'package:soon_sak/utilities/index.dart';
 
 class SearchListItem extends StatelessWidget {
-  const SearchListItem(
-      {Key? key,
-        required this.contentType,
-        required this.item,
-        required this.onItemClicked,})
-      : super(key: key);
+  const SearchListItem({
+    Key? key,
+    required this.contentType,
+    required this.item,
+    required this.onItemClicked,
+  }) : super(key: key);
 
   final ContentType contentType;
   final SearchedContent item;
@@ -87,27 +87,20 @@ class SearchListItem extends StatelessWidget {
                 child: SizedBox(
                   height: 100,
                   width: 100,
-                  child: CachedNetworkImage(
-                    imageUrl: item.posterImgUrl?.prefixTmdbImgPath ?? '',
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
+                  child: item.posterImgUrl != null
+                      ? FadeInImage(
+                          placeholder: const AssetImage(
+                            'assets/images/skeleton.png',
+                          ),
+                          image: NetworkImage(
+                            item.posterImgUrl!.prefixTmdbImgPath,
+                          ),
                           fit: BoxFit.cover,
+                        )
+                      : Container(
+                          color: AppColor.darkGrey,
+                          child: const Icon(Icons.error),
                         ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    placeholder: (context, url) => Shimmer(
-                      child: Container(
-                        color: AppColor.black,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      color: AppColor.darkGrey,
-                      child: const Icon(Icons.error),
-                    ),
-                  ),
                 ),
               ),
               caseOverlayIndicatorOnImg(),
@@ -138,10 +131,10 @@ class SearchListItem extends StatelessWidget {
                     item.releaseDate != null
                         ? Formatter.dateToyyMMdd(item.releaseDate!)
                         : contentType.isTv
-                        ? '방영일 확인 불가'
-                        : '개봉일 확인 불가',
+                            ? '방영일 확인 불가'
+                            : '개봉일 확인 불가',
                     style:
-                    AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
+                        AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
                   ),
                 AppSpace.size2,
                 // 등록 여부 Indicator

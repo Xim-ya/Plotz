@@ -1,30 +1,44 @@
 import 'package:soon_sak/app/di/custom_binding.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ContentDetailBinding extends Bindings {
+class ContentDetailBinding extends CustomBindings {
   @override
   void dependencies() {
-    Get.lazyPut( () =>
-      ContentDetailViewModel(
-        argument: Get.arguments,
-        Get.find(),
-        Get.find(),
-        Get.find(),
-        Get.find(),
-        Get.find(),
-        Get.find(),
-        Get.find(),
-      ),
+    super.dependencies();
+    locator.registerFactory(
+      () => ContentDetailViewModel(
+          contentRepository: locator<ContentRepository>(),
+          loadContentOfVideoList: locator<LoadContentOfVideoListUseCase>(),
+          loadContentImgList: locator<LoadContentImgListUseCase>(),
+          loadContentMainDescription: locator<LoadContentDetailInfoUseCase>(),
+          loadContentCreditInfo: locator<LoadContentCreditInfoUseCase>(),
+          userRepository: locator<UserRepository>(),
+          userService: locator<UserService>(),
+          argument: argument),
     );
 
-    // 컨텐츠 상세화면
-    Get.lazyPut(() => ContentDetailScaffoldController(Get.find()),
-        fenix: false);
+    locator.registerFactory(() =>
+        ContentDetailScaffoldController(locator<ContentDetailViewModel>()));
 
-    // fenix를 true로 설정하는것도 고려해볼 수 있음
-    Get.lazyPut(() => LoadContentDetailInfoUseCase(Get.find()), fenix: false);
-    Get.put(LoadContentCreditInfoUseCase(Get.find()));
-    Get.put(LoadContentImgListUseCase(Get.find()));
-    Get.put(LoadContentOfVideoListUseCase(Get.find()));
+    locator.registerFactory(
+        () => LoadContentDetailInfoUseCase(locator<TmdbRepository>()));
+    locator.registerFactory(
+        () => LoadContentCreditInfoUseCase(locator<TmdbRepository>()));
+    locator.registerFactory(
+        () => LoadContentImgListUseCase(locator<TmdbRepository>()));
+    locator.registerFactory(
+        () => LoadContentOfVideoListUseCase(locator<ContentRepository>()));
+  }
+
+  @override
+  void unRegisterDependencies() {
+    super.unRegisterDependencies();
+
+    locator.unregister<ContentDetailViewModel>();
+    locator.unregister<ContentDetailScaffoldController>();
+    locator.unregister<LoadContentDetailInfoUseCase>();
+    locator.unregister<LoadContentCreditInfoUseCase>();
+    locator.unregister<LoadContentImgListUseCase>();
+    locator.unregister<LoadContentOfVideoListUseCase>();
   }
 }

@@ -78,7 +78,7 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
                             title: item.title,
                           );
                           value.routeToContentDetail(
-                            argument,
+                            context, argument,
                             sectionType: 'topTen',
                           );
                         },
@@ -165,7 +165,7 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
                 return GestureDetector(
                   onTap: () {
                     if (bannerModel.hasData) {
-                      vm(context).routeToBannerContentDetail();
+                      vm(context).routeToBannerContentDetail(context);
                     }
                   },
                   child: CarouselSlider.builder(
@@ -314,7 +314,7 @@ class _PagedCategoryCollection extends NewBaseView<HomeViewModel> {
               posterImgUrl: item.contents[nestedIndex].posterImgUrl,
               originId: item.contents[nestedIndex].originId,
             );
-            vm(context).routeToContentDetail(argument, sectionType: 'category');
+            vm(context).routeToContentDetail(context, argument, sectionType: 'category');
           },
         );
       },
@@ -360,7 +360,7 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
                               originId: item.originId,
                             );
                             vm(context).routeToContentDetail(
-                              argument,
+                              context, argument,
                               sectionType: 'topTen',
                             );
                           },

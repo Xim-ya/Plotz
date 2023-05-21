@@ -19,7 +19,6 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
 
   /* Variables */
   ContentType selectedTabType = ContentType.tv; // 선택된 탭
-  final int _pageSize = 2; // 최대 호출 가능한 페이지 사이즈
   int currentPage = 1;
   final int maxContentLength = 10;
   bool isInitialState = true; // 검색 이벤트가 일어나기 초기 상태
@@ -35,7 +34,7 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
 
   FocusNode get focusNode => fieldNode;
   final PagingController<int, SearchedContent> pagingController =
-      PagingController(firstPageKey: 1);
+      PagingController<int, SearchedContent>(firstPageKey: 1);
 
   /* Intents */
   VoidCallback get resetFieldValue => onCloseBtnTapped;
@@ -111,14 +110,14 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
         /// TMDB Search API 기준
         /// Response 20개가 넘지 않으면 다음 page가 없다고 판단
         /// 이때 [appedLastPage]를 적용하여 마지막 page call 로직을 적용
-        final isLastPage = data.contents.length < 20;
+        final isLastPage = data.contents.length < 20 || data.page >= 2;
         if (isLastPage) {
           log('LAST PAGE CALLED');
           controller.appendLastPage(searchedContents);
         } else {
           log('FIRST PAGE CALLED');
-          currentPage = data.page + 1;
-          controller.appendPage(searchedContents, data.page);
+          print("다음 페이지 ${data.page}");
+          controller.appendPage(searchedContents, data.page + 1);
         }
       },
       onFailure: (e) {
@@ -129,9 +128,13 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
 
   /// UseCase init메소드
   /// pagingController event listen 설정
+  /// Delayed : 50필요함
   void initUseCase({ContentType? forcedContentType}) {
-    pagingController.addPageRequestListener((_) {
-      fetchPage(currentPage, forcedContentType: forcedContentType);
+    pagingController.addPageRequestListener((pageKey) {
+      if (_debounce?.isActive ?? false) _debounce!.cancel();
+      _debounce = Timer(const Duration(milliseconds: 50), () {
+        fetchPage(pageKey, forcedContentType: forcedContentType);
+      });
     });
   }
 

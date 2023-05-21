@@ -6,12 +6,28 @@ import 'package:soon_sak/utilities/index.dart';
 class SearchBinding extends CustomBindings {
   @override
   void dependencies() {
-    locator.registerFactory(() => SearchViewModel(
-        searchHandler: locator<NewSearchedPagedContentUseCase>(),
-        contentRepository: locator<ContentRepository>(),
-        userService: locator<UserService>()));
+    super.dependencies();
+
+    locator.registerFactory(
+      () => SearchViewModel(
+          searchHandler: locator<NewSearchedPagedContentUseCase>(),
+          contentRepository: locator<ContentRepository>(),
+          userService: locator<UserService>()),
+    );
 
     locator.registerFactory(() =>
         SearchScaffoldController(searchViewModel: locator<SearchViewModel>()));
+
+    locator.registerLazySingleton(() => NewSearchedPagedContentUseCase(
+        tmdbRepository: locator<TmdbRepository>()));
+  }
+
+  @override
+  void unRegisterDependencies() {
+    super.unRegisterDependencies();
+
+    locator.unregister<SearchViewModel>();
+    locator.unregister<SearchScaffoldController>();
+    locator.unregister<NewSearchedPagedContentUseCase>();
   }
 }
