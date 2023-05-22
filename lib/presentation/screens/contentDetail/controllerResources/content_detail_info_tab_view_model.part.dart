@@ -39,8 +39,7 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
       _passedArgument.channelLogoImgUrl ?? channelInfo?.logoImgUrl;
 
   // 채널 명
-  String? get channelName =>
-      _passedArgument.channelName ?? channelInfo?.name;
+  String? get channelName => _passedArgument.channelName ?? channelInfo?.name;
 
   /// 방영일
   /// 컨텐츠 타입이 영화일 경우 방영상태 대신 방영일을 보여줌
@@ -48,14 +47,6 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
 
   // 방영상태
   String? get contentAirStatus => _contentDescriptionInfo?.airStatus;
-
-  // 출연진 정보
-  List<ContentCreditInfo>? get contentCreditList => contentCreditList;
-
-  // 출연진 정보 존재 여부 (다큐멘터리의 경우 데이터가 존재 하지 않음)
-  bool? get isCreditNotEmpty {
-    return contentCreditList?.isNotEmpty ?? true ? true : false;
-  }
 
   // 출연진 정보 개수
   int? get creditCount => contentCreditList?.length;
@@ -74,6 +65,11 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
     } else {
       return (creditCount! / 3).floor() + 1;
     }
+  }
+
+  // 출연진 정보 존재 여부 (다큐멘터리의 경우 데이터가 존재 하지 않음)
+  bool? get isCreditNotEmpty {
+    return contentCreditList?.isNotEmpty ?? true ? true : false;
   }
 
   // 출연진 섹션 > CarouselSlider > [ListView] 개수

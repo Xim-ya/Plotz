@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
+import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
@@ -17,6 +19,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
     required UserRepository userRepository,
     required UserService userService,
     required ContentArgumentFormat argument,
+    // required ContentDetailScaffoldController contentDetailScaffoldController,
   })  : _passedArgument = argument,
         _contentRepository = contentRepository,
         _loadContentOfVideoList = loadContentOfVideoList,
@@ -68,6 +71,73 @@ class ContentDetailViewModel extends NewBaseViewModel {
   final UserRepository _userRepository;
   final UserService _userService;
 
+  /********************** [SCAFFOLD RESOURCES]  **********************/
+  late final TabController tabController;
+  final ScrollController scrollController = ScrollController();
+
+  /*** [State] Variables ***/
+  // 선택된 탭 인덱스
+  int selectedTabIndex = 0;
+
+  // Sliver Custom 스크롤 Offset
+  double scrollOffset = 0;
+
+  // 상단 '뒤로가기' 버튼 Visibility 여부
+  bool showBackBtnOnTop = true;
+
+  /* 메소드 */
+  // 탭 바 버튼이 클릭 되었을 때
+  void onTabClicked(int index) {
+    selectedTabIndex = index;
+  }
+
+  // [정보] 탭이 클릭 되었을 때 1회 필요한 api call 실행
+  void fetchResourcesIfNeeded() {
+    if (tabController.index == 1) {
+      fetchContentCreditInfo();
+      fetchCuratorInfo();
+      fetchContentImgList();
+      tabController.removeListener(fetchResourcesIfNeeded);
+    }
+  }
+
+  // 뒤로가기
+  void onRouteBack(BuildContext context) {
+    context.pop();
+  }
+
+  // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
+  void setBackBtnVisibility() {
+    if (scrollController.offset >= 412 && showBackBtnOnTop == true) {
+      showBackBtnOnTop = false;
+      notifyListeners();
+      return;
+    } else if (scrollController.offset >= 482) {
+      return;
+    } else {
+      if (showBackBtnOnTop == false) {
+        showBackBtnOnTop = true;
+        notifyListeners();
+      }
+    }
+  }
+
+  void onIntentInit(TabController passedTabC) {
+    scrollController.addListener(() {
+      setBackBtnVisibility();
+      scrollOffset = scrollController.offset;
+      if (scrollController.offset <= 412) {
+        notifyListeners();
+      }
+    });
+    tabController = passedTabC;
+    tabController.addListener(fetchResourcesIfNeeded);
+  }
+
+  double get headerBgOffset => -scrollOffset * 0.5;
+
+  /********************** [ENDS]  **********************/
+
   /* [Intent ] */
 
   /// 유저 시청 기록 추가
@@ -91,14 +161,6 @@ class ContentDetailViewModel extends NewBaseViewModel {
     );
   }
 
-  /// 이전 페이지로 이동
-  void onRouteBack() {
-    // Get.argument 로딩중이 아니라면 이라면
-    if (loading == true) {
-      Get.back();
-    }
-  }
-
   /// Networking Method
 
   // 큐레이터 정보 호출
@@ -108,6 +170,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
     response.fold(
       onSuccess: (data) {
         _curator = data;
+        notifyListeners();
       },
       onFailure: (e) {
         log('ContentDetailViewModel : $e');
@@ -126,17 +189,16 @@ class ContentDetailViewModel extends NewBaseViewModel {
             .mappingTvSeasonInfo(
           seasonInfoList: _contentDescriptionInfo!.seasonInfoList!,
         )
-            .then((value) {
+            .then((_) async {
           // 로딩 State 업데이트
-          contentVideos!.updateSeasonInfoLoadingState();
-          notifyListeners();
+          await contentVideos!.updateSeasonInfoLoadingState();
+          safeUpdate<ContentDetailViewModel>();
         });
       }
 
       /// 비디오 상세 정보 업데이트
       /// Youtube Api가 실행되는 부분
-
-      await e.updateVideoDetails().whenComplete(() => notifyListeners);
+      await e.updateVideoDetails();
     }
   }
 
@@ -151,10 +213,10 @@ class ContentDetailViewModel extends NewBaseViewModel {
       onSuccess: (data) {
         contentVideos = data;
         notifyListeners();
-
-        fetchAndMappedVideDetailFields().then((value) {
-          contentVideos!.updateVideoDetailsLoadingState();
-          notifyListeners(); // <-- 컨텐츠 로드 완료 필드 값 업데이트
+        fetchAndMappedVideDetailFields().then((value) async {
+          await contentVideos!.updateVideoDetailsLoadingState();
+          safeUpdate<ContentDetailViewModel>();
+          loadingState = ViewModelLoadingState.done;
         });
       },
       onFailure: (e) {
@@ -173,6 +235,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
     responseRes.fold(
       onSuccess: (data) {
         contentImgUrlList = data;
+        notifyListeners();
       },
       onFailure: (e) {
         AlertWidget.toast('콘텐츠 이미지 정보를 불러들이는 데 실패했습니다');
@@ -191,6 +254,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
     responseRes.fold(
       onSuccess: (data) {
         contentCreditList = data;
+        notifyListeners();
       },
       onFailure: (e) {
         AlertWidget.toast('출연진 정보를 불러들이는 데 실패했습니다');
@@ -216,20 +280,6 @@ class ContentDetailViewModel extends NewBaseViewModel {
       },
     );
   }
-
-  // 컨텐츠 댓글 리스트 호출
-  // Future<void> _fetchContentCommentList() async {
-  //   final responseResult =
-  //       await YoutubeRepository.to.loadContentCommentList(youtubeContentId!);
-  //   responseResult.fold(
-  //     onSuccess: (data) {
-  //       _contentCommentList = data;
-  //     },
-  //     onFailure: (e) {
-  //       log(e.toString());
-  //     },
-  //   );
-  // }
 
   // 유튜브 채널 정보 호출
   Future<void> _fetchYoutubeChannelInfo() async {
@@ -276,38 +326,22 @@ class ContentDetailViewModel extends NewBaseViewModel {
     await addUserWatchHistory(youtubeVideoId);
   }
 
-  Future<void> repeatComputeTest() async {
-    DateTime startTime = DateTime.now();
-
-    for (int i = 0; i < 30; i++) {
-      await _fetchContentMainInfo();
-    }
-
-    // 메소드 실행이 완료된 후의 시간을 종료 시간으로 기록
-    DateTime endTime = DateTime.now();
-
-    // 두 시간의 차이를 계산
-    Duration elapsedTime = endTime.difference(startTime);
-
-    // 실행 시간 출력
-    print('비동기 메소드 실행 시간: ${elapsedTime.inMilliseconds} 초');
-  }
-
   @override
   Future<void> onInit() async {
     super.onInit();
 
     /// NOTE 호출 순서 주의 [_fetchContentMainInfo]가
     /// 무조건 선행 되어야 함
-    // await _fetchContentMainInfo();
-    // await _fetchContentOfVideoList();
-    // await _fetchYoutubeChannelInfo();
-
+    await _fetchContentMainInfo();
     await Future.wait([
       _fetchContentOfVideoList(),
-      _fetchContentMainInfo(),
       _fetchYoutubeChannelInfo(),
     ]);
+  }
+
+  @override
+  void onDispose() {
+    super.onDispose();
   }
 
   /* [Getters] */

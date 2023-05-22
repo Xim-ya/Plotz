@@ -47,6 +47,7 @@ class TabsViewModel extends NewBaseViewModel {
         );
         if (_exploreViewModel.loadingState.isInitState) {
           await _exploreViewModel.prepare();
+          print("두 번째 스크린 호출");
         }
         break;
       case 2:

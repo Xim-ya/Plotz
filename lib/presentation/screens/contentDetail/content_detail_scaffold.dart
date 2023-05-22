@@ -39,13 +39,12 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
     // _controller.onInit(TabController(length: 2, vsync: this));
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ContentDetailScaffoldController>(
       create: (context) {
         final vm = locator<ContentDetailScaffoldController>();
-        vm.onInit(tabController);
+        vm.onIntentInit(tabController);
         return vm;
       },
       builder: (context, _) {

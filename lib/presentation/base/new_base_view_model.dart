@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:soon_sak/app/di/locator/locator.dart';
+import 'package:soon_sak/domain/enum/tab_loading_state_enum.dart';
 
 abstract class NewBaseViewModel extends ChangeNotifier {
   NewBaseViewModel() {
@@ -6,6 +8,14 @@ abstract class NewBaseViewModel extends ChangeNotifier {
   }
 
   bool loading = false;
+
+  ViewModelLoadingState loadingState = ViewModelLoadingState.initState;
+
+  void safeUpdate<T extends NewBaseViewModel>() {
+    if (locator.isRegistered<T>()) {
+      notifyListeners();
+    }
+  }
 
   @override
   void dispose() {

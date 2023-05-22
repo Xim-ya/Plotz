@@ -20,23 +20,21 @@ class ContentInfoTabViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return KeepAliveView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          creditSection,
-          // 큐레이터 정보
-          const SectionTitle(title: '큐레이터', setLeftPadding: true),
-          curatorView,
-          AppSpace.size40,
-          // 기타 정보
-          const SectionTitle(title: '기타정보', setLeftPadding: true),
-          AppSpace.size10,
-          elseInfoView,
-          AppSpace.size40,
-          contentImgSection,
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        creditSection,
+        // 큐레이터 정보
+        const SectionTitle(title: '큐레이터', setLeftPadding: true),
+        curatorView,
+        AppSpace.size40,
+        // 기타 정보
+        const SectionTitle(title: '기타정보', setLeftPadding: true),
+        AppSpace.size10,
+        elseInfoView,
+        AppSpace.size40,
+        contentImgSection,
+      ],
     );
   }
 }

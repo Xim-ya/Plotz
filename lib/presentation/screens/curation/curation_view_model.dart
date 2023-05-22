@@ -9,7 +9,6 @@ class CurationViewModel extends NewBaseViewModel {
   late final RandomImg randomContentImg;
   List<CurationContent> inProgressCurations = [];
   bool isInProgressCurationEmpty = false;
-  TabLoadingState loadingState = TabLoadingState.initState;
 
   /* Domain Modules */
   final ContentRepository _contentRepository;
@@ -61,9 +60,9 @@ class CurationViewModel extends NewBaseViewModel {
   }
 
   Future<void> prepare() async {
-    loadingState = TabLoadingState.loading;
+    loadingState = ViewModelLoadingState.loading;
     await fetchInProgressCurationList();
-    loadingState = TabLoadingState.done;
+    loadingState = ViewModelLoadingState.done;
   }
 
   @override

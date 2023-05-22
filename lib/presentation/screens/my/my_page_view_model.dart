@@ -18,7 +18,6 @@ class MyPageViewModel extends NewBaseViewModel {
   UserModel? userInfo;
 
   String? get displayName => userInfo?.displayName;
-  TabLoadingState loadingState = TabLoadingState.initState;
 
   /* Intents */
   // 설정 스크린으로 이동
@@ -117,11 +116,11 @@ class MyPageViewModel extends NewBaseViewModel {
   }
 
   Future<void> prepare() async {
-    loadingState = TabLoadingState.loading;
+    loadingState = ViewModelLoadingState.loading;
     await getUserInfo();
     await fetchUserCurationSummary();
     await _fetchUserWatchHistory();
-    loadingState = TabLoadingState.done;
+    loadingState = ViewModelLoadingState.done;
 
     /// 시청 기록 & 유저 프로필 정보의 데이터 변화를
     /// listen 하고 ui를 업데이트 함.

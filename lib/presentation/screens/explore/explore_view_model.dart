@@ -9,7 +9,7 @@ class ExploreViewModel extends NewBaseViewModel {
   int swiperIndex = 0;
   bool loopIsOnProgress = false;
   bool alreadyShowedToast = false;
-  TabLoadingState loadingState = TabLoadingState.initState;
+
 
   /* Controllers */
   late final CarouselController swiperController;
@@ -106,7 +106,7 @@ class ExploreViewModel extends NewBaseViewModel {
   bool get isContentLoaded => exploreContents.hasData && loadingState.isDone;
 
   Future<void> prepare() async {
-    loadingState = TabLoadingState.loading;
+    loadingState = ViewModelLoadingState.loading;
     DateTime startTime = DateTime.now();
     await loadRandomExploreContents();
     // 메소드 실행이 완료된 후의 시간을 종료 시간으로 기록
@@ -117,7 +117,7 @@ class ExploreViewModel extends NewBaseViewModel {
 
     // 실행 시간 출력
     print('Explore 비동기 메소드 실행 시간: ${elapsedTime.inMilliseconds} 초');
-    loadingState = TabLoadingState.done;
+    loadingState = ViewModelLoadingState.done;
   }
 
   @override

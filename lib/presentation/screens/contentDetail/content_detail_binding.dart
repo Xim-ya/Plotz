@@ -5,7 +5,11 @@ class ContentDetailBinding extends CustomBindings {
   @override
   void dependencies() {
     super.dependencies();
-    locator.registerFactory(
+
+    locator.registerFactory(() =>
+        ContentDetailScaffoldController(locator<ContentDetailViewModel>()));
+
+    locator.registerFactory(  
       () => ContentDetailViewModel(
           contentRepository: locator<ContentRepository>(),
           loadContentOfVideoList: locator<LoadContentOfVideoListUseCase>(),
@@ -17,8 +21,6 @@ class ContentDetailBinding extends CustomBindings {
           argument: argument),
     );
 
-    locator.registerFactory(() =>
-        ContentDetailScaffoldController(locator<ContentDetailViewModel>()));
 
     locator.registerFactory(
         () => LoadContentDetailInfoUseCase(locator<TmdbRepository>()));

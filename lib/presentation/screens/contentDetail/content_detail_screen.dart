@@ -1,19 +1,21 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/stateful_base_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ContentDetailScreen extends NewBaseScreen<ContentDetailViewModel> {
+class ContentDetailScreen extends NewBaseView<ContentDetailViewModel> {
   const ContentDetailScreen({Key? key}) : super(key: key);
 
   @override
-  Widget buildScreen(BuildContext context) {
-    return ContentDetailScaffold(
+  Widget build(BuildContext context) {
+    return NewContentDetailScaffold(
       header: const _Header(),
       rateAndGenreView: const _RateAndGenreView(),
       tabs: _buildTab(),
       tabViews: _buildTabBarViews(),
       headerBgImg: const _HeaderBgImg(),
     );
+
   }
 
   // 탭뷰
@@ -41,19 +43,7 @@ class ContentDetailScreen extends NewBaseScreen<ContentDetailViewModel> {
     );
   }
 
-  @override
-  bool get wrapWithSafeArea => false;
 
-  @override
-  bool get extendBodyBehindAppBar => false;
-
-  // // 데이터가 로딩 중이라면 swipback을 지원하지 않음.
-  // @override
-  // bool get preventSwipeBack => vm.loading.isTrue ? true : false;
-
-  @override
-  ContentDetailViewModel createViewModel(BuildContext context) =>
-      locator<ContentDetailViewModel>();
 }
 
 // 평점 & 장르 뷰

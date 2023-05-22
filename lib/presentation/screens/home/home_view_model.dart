@@ -200,7 +200,6 @@ class HomeViewModel extends NewBaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
-    print("유희경 : homeViewModel");
     unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
 
     /// NOTE : api call 호출 메소드 순서에 주의

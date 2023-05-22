@@ -142,28 +142,26 @@ class _MainContentTabViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return KeepAliveView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          youtubeContentSection,
-          if (context.select<ContentDetailViewModel, String?>(
-                (vm) => vm.contentOverView,
-              ) !=
-              '')
-            Padding(
-              padding: AppInset.horizontal16 + AppInset.top40,
-              child: const SectionTitle(title: '설명'),
-            ),
-          Padding(padding: AppInset.horizontal16, child: descriptionSection),
-          AppSpace.size40,
-          const Padding(
-            padding: AppInset.horizontal16,
-            child: SectionTitle(title: '채널'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        youtubeContentSection,
+        if (context.select<ContentDetailViewModel, String?>(
+              (vm) => vm.contentOverView,
+            ) !=
+            '')
+          Padding(
+            padding: AppInset.horizontal16 + AppInset.top40,
+            child: const SectionTitle(title: '설명'),
           ),
-          channelSection,
-        ],
-      ),
+        Padding(padding: AppInset.horizontal16, child: descriptionSection),
+        AppSpace.size40,
+        const Padding(
+          padding: AppInset.horizontal16,
+          child: SectionTitle(title: '채널'),
+        ),
+        channelSection,
+      ],
     );
   }
 }

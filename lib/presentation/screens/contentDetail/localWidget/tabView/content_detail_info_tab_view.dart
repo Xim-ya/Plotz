@@ -31,52 +31,37 @@ class _ContentImageSectionView extends NewBaseView<ContentDetailViewModel> {
       selector: (context, vm) => vm.contentImgList,
       builder: (context, contentImgList, _) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(
-              () => vm(context).contentImgExist ?? true
-                  ? const SectionTitle(title: '콘텐츠 이미지', setLeftPadding: true)
-                  : const SizedBox(),
-            ),
+            if (vm(context).contentImgExist ?? true)
+              const SectionTitle(title: '콘텐츠 이미지', setLeftPadding: true),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
               ),
               height: 186,
-              child: Obx(
-                () => ListView.separated(
-                  separatorBuilder: (__, _) => AppSpace.size10,
-                  padding: const EdgeInsets.only(left: 16),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: contentImgList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final imgItem = contentImgList![index];
-                    return KeepAliveView(
-                      child: CachedNetworkImage(
-                        fit: BoxFit.contain,
-                        imageUrl: imgItem.prefixTmdbImgPath,
-                        height: 100,
-                        width: SizeConfig.to.screenWidth - 32,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                        ),
-                        placeholder: (context, url) => Shimmer(
-                          child: Container(
-                            color: AppColor.black,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Center(child: Icon(Icons.error)),
+              child: ListView.separated(
+                separatorBuilder: (__, _) => AppSpace.size10,
+                padding: const EdgeInsets.only(left: 16),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: contentImgList?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final imgItem = contentImgList![index];
+                  return KeepAliveView(
+                    child: FadeInImage(
+                      height: 100,
+                      width: SizeConfig.to.screenWidth - 32,
+                      fit: BoxFit.fitWidth,
+                      placeholder: const AssetImage(
+                        'assets/images/skeleton.png',
                       ),
-                    );
-                  },
-                ),
+                      image: NetworkImage(
+                        imgItem.prefixTmdbImgPath,
+                      ),
+                    ),
+                  );
+                },
               ),
             )
           ],
@@ -219,16 +204,19 @@ class _CreditSectionView extends NewBaseView<ContentDetailViewModel> {
       selector: (context, vm) => vm.contentCreditList,
       builder: (context, creditList, _) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if (vm(context).isCreditNotEmpty ?? true)
-              const SectionTitle(title: '출연진', setLeftPadding: true)
+            if (creditList?.isNotEmpty ?? true)
+              GestureDetector(
+                  onTap: () {
+                    print(vm(context).contentCreditList?.length);
+                  },
+                  child: const SectionTitle(title: '출연진', setLeftPadding: true))
             else
               const SizedBox(),
             // 출연진 - PageView Slider
             CarouselSlider.builder(
-              itemCount: vm(context).contentCreditList.hasData
-                  ? vm(context).sliderCount
-                  : 2,
+              itemCount: creditList.hasData ? vm(context).sliderCount : 2,
               options: CarouselOptions(
                 height: vm(context).isCreditNotEmpty ?? true ? 224 : 0,
                 enableInfiniteScroll: false,
@@ -241,13 +229,13 @@ class _CreditSectionView extends NewBaseView<ContentDetailViewModel> {
                   separatorBuilder: (__, _) => AppSpace.size16,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: vm(context).contentCreditList.hasData
+                  itemCount: creditList.hasData
                       ? vm(context).creditLengthOnSlider(parentIndex)!
                       : 3,
                   itemBuilder: (context, childIndex) {
-                    if (vm(context).contentCreditList.hasData) {
-                      final ContentCreditInfo creditItem = vm(context)
-                          .contentCreditList![vm(context).creditIndex(
+                    if (creditList.hasData) {
+                      final ContentCreditInfo creditItem =
+                          creditList![vm(context).creditIndex(
                         parentIndex: parentIndex,
                         childIndex: childIndex,
                       )];
@@ -314,7 +302,8 @@ class _CreditSectionView extends NewBaseView<ContentDetailViewModel> {
                 );
               },
             ),
-            if (vm(context).isCreditNotEmpty ?? true)
+
+            if (creditList?.isNotEmpty ?? true)
               AppSpace.size40
             else
               const SizedBox(),

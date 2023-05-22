@@ -6,10 +6,11 @@ import 'package:soon_sak/utilities/index.dart';
  * [TabController] [ScrollController]을 기반으로 'StickyScrollTabView' 레이아웃을 구성
  * */
 
-class ContentDetailScaffoldController extends ChangeNotifier {
+class ContentDetailScaffoldController extends NewBaseViewModel {
   ContentDetailScaffoldController(this.contentDetailViewModel);
 
   final ContentDetailViewModel contentDetailViewModel;
+
 
   late final TabController tabController;
   final ScrollController scrollController = ScrollController();
@@ -61,8 +62,7 @@ class ContentDetailScaffoldController extends ChangeNotifier {
     }
   }
 
-  @override
-  void onInit(TabController passedTabC) {
+  void onIntentInit(TabController passedTabC) {
     scrollController.addListener(() {
       setBackBtnVisibility();
       scrollOffset = scrollController.offset;
