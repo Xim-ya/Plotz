@@ -1,9 +1,12 @@
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationHistoryViewModel extends BaseViewModel
-    with GetSingleTickerProviderStateMixin {
-  CurationHistoryViewModel(this._userRepository, this._userService);
+class CurationHistoryViewModel extends NewBaseViewModel {
+  CurationHistoryViewModel(
+      {required UserRepository userRepository,
+      required UserService userService})
+      : _userRepository = userRepository,
+        _userService = userService;
 
   /* Data Modules */
   final UserService _userService;
@@ -40,13 +43,13 @@ class CurationHistoryViewModel extends BaseViewModel
 
   /* Intent */
   Future<void> _fetchUserCurationContents() async {
-    final userId = _userService.userInfo.value!.id;
+    final userId = _userService.userInfo.value.id;
     final response = await _userRepository.loadUserCurationContentList(userId!);
     response.fold(
       onSuccess: (data) {
         userCurationList.addAll(data);
-        loading(false);
-        update();
+        loadingState = ViewModelLoadingState.done;
+        notifyListeners();
       },
       onFailure: (e) {
         log('CurationHistoryViewModel : $e');
@@ -54,13 +57,11 @@ class CurationHistoryViewModel extends BaseViewModel
     );
   }
 
+
+
   @override
   void onInit() {
     super.onInit();
-    loading(true);
-    tabController = TabController(length: 3, vsync: this);
-
     _fetchUserCurationContents();
   }
-
 }

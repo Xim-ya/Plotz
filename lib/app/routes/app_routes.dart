@@ -35,5 +35,5 @@ abstract class AppRoutes {
   static const setting = '/setting';
 
   // 프로필 설정
-  static const profileSetting = '/profile_setting';
+  static const profileSetting = '/profileSetting';
 }

@@ -52,7 +52,7 @@ class ExploreViewModel extends NewBaseViewModel {
 
     if (index == exploreContentsLength && alreadyShowedToast == false) {
       unawaited(
-        AlertWidget.animatedToast('마지막 콘텐츠 입니다', isUsedOnTabScreen: true),
+        AlertWidget.newToast(message:'마지막 콘텐츠 입니다', isUsedOnTabScreen: true, context),
       );
       alreadyShowedToast = true; // 더 이상 토스트 메세를 노출하지 않음.
     }
@@ -68,9 +68,10 @@ class ExploreViewModel extends NewBaseViewModel {
           notifyListeners();
         },
         onFailure: (e) {
-          AlertWidget.animatedToast(
-            '데이터를 불러오지 못했습니다',
+          AlertWidget.newToast(
+            message: '데이터를 불러오지 못했습니다',
             isUsedOnTabScreen: true,
+            context,
           );
           log('ExploreViewModel : $e');
         },
@@ -90,9 +91,11 @@ class ExploreViewModel extends NewBaseViewModel {
         print('========== ExploreContent 호출 성공 ${data.length}');
       },
       onFailure: (e) {
-        AlertWidget.animatedToast(
+        AlertWidget.newToast(
+          message:
           '데이터를 불러오지 못했습니다',
           isUsedOnTabScreen: true,
+          context,
         );
         log('ExploreViewModel : $e');
       },

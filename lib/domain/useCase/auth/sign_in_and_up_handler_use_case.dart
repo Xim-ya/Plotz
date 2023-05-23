@@ -16,7 +16,11 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
-  SignInAndUpHandlerUseCase(this._authRepository, this._userService);
+  SignInAndUpHandlerUseCase(
+      {required AuthRepository authRepository,
+      required UserService userService})
+      : _authRepository = authRepository,
+        _userService = userService;
 
   final AuthRepository _authRepository;
   final UserService _userService;
@@ -35,7 +39,8 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
           onFailure: (e) {
             final errorText = e.toString();
             if (errorText.contains(
-                '600 seconds before or after the current time, null',)) {
+              '600 seconds before or after the current time, null',
+            )) {
               Get.snackbar('로그인 오류', '디바이스의 시간 설정을 확인 해주세요');
             }
             return Result.failure(e);
@@ -83,8 +88,10 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
   }
 
   // Firebase Auth 등록
-  Future<void> signWithCredential(UserModel user,
-      {required Sns snsType,}) async {
+  Future<void> signWithCredential(
+    UserModel user, {
+    required Sns snsType,
+  }) async {
     late final OAuthCredential credential;
 
     if (snsType == Sns.google) {

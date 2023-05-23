@@ -32,6 +32,8 @@ class ContentDetailViewModel extends NewBaseViewModel {
   // 이전 페이지에서 전달 받는 argument
   final ContentArgumentFormat _passedArgument;
 
+
+
   /// Data Variables
   /// // 컨텐츠탭 정보
   ContentDetailInfo? _contentDescriptionInfo;
@@ -143,7 +145,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
   /// 유저 시청 기록 추가
   Future<void> addUserWatchHistory(String videoId) async {
     final requestData = WatchingHistoryRequest(
-      userId: _userService.userInfo.value!.id!,
+      userId: _userService.userInfo.value.id!,
       originId: passedArgument.originId,
       videoId: videoId,
     );
@@ -198,7 +200,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
 
       /// 비디오 상세 정보 업데이트
       /// Youtube Api가 실행되는 부분
-      await e.updateVideoDetails();
+      await e.updateVideoDetails(context);
     }
   }
 
@@ -220,7 +222,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
         });
       },
       onFailure: (e) {
-        AlertWidget.toast('유튜브 비디오 정보를 불러들이는데 실패했어요');
+        AlertWidget.newToast(message: '유튜브 비디오 정보를 불러들이는데 실패했어요',  context);
         log('ContentDetailViewModel ${e.toString()}');
       },
     );
@@ -238,7 +240,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
         notifyListeners();
       },
       onFailure: (e) {
-        AlertWidget.toast('콘텐츠 이미지 정보를 불러들이는 데 실패했습니다');
+        AlertWidget.newToast(message: '콘텐츠 이미지 정보를 불러들이는 데 실패했습니다',  context);
         log(e.toString());
       },
     );
@@ -257,7 +259,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
         notifyListeners();
       },
       onFailure: (e) {
-        AlertWidget.toast('출연진 정보를 불러들이는 데 실패했습니다');
+        AlertWidget.newToast(message: '출연진 정보를 불러들이는 데 실패했습니다', context);
         log(e.toString());
       },
     );
@@ -292,7 +294,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
         notifyListeners();
       },
       onFailure: (e) {
-        AlertWidget.animatedToast('채널 정보를 받아오지 못했습니다');
+        AlertWidget.newToast(message:'채널 정보를 받아오지 못했습니다', context);
         log('ChannelDetailViewModel : $e');
       },
     );
@@ -302,7 +304,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
   Future<void> launchYoutubeApp(String? youtubeVideoId) async {
     if (youtubeVideoId == null) {
-      return AlertWidget.animatedToast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
+      return AlertWidget.newToast(message: '잠시만 기다려주세요. 데이터를 불러오고 있습니다.', context);
     }
     try {
       await launchUrl(
@@ -318,7 +320,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
         ),
       );
     } catch (e) {
-      await AlertWidget.animatedToast('비디오 정보를 불러오지 못했습니디');
+      await AlertWidget.newToast(message: '비디오 정보를 불러오지 못했습니디', context);
       throw '유튜브 앱(웹) 런치 실패';
     }
 

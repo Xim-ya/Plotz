@@ -20,6 +20,7 @@ abstract class NewAppBinding {
         checkVersionAndNetworkUseCase: GetIt.I<CheckVersionAndNetworkUseCase>(),
       ),
     );
+
   }
 
   static void dependencies() {

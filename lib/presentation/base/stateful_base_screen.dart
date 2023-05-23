@@ -44,6 +44,7 @@ class _NewContentDetailScaffoldState extends State<NewContentDetailScaffold>
       create: (context) {
         final vm = locator<ContentDetailViewModel>();
         vm.onIntentInit(tabController);
+        vm.initContext(context);
         return vm;
       },
       builder: (context, _) {
@@ -85,9 +86,6 @@ class _NewContentDetailScaffoldState extends State<NewContentDetailScaffold>
                   ),
                 ),
               ),
-
-
-
 
               Selector<ContentDetailViewModel, double>(
                 selector: (context, vm) => vm.headerBgOffset,

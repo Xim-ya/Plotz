@@ -47,7 +47,6 @@ class LoadPagedChannelContentsUseCase {
       },
       onFailure: (e) {
         log('LoadPagedChannelCOntentsUseCase - $e');
-        AlertWidget.animatedToast('콘텐츠를 불러오는데 실패했습니다');
       },
     );
   }

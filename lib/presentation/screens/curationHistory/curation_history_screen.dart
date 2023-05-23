@@ -1,15 +1,14 @@
+import 'package:go_router/go_router.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationHistoryScreen extends BaseScreen<CurationHistoryViewModel> {
+class CurationHistoryScreen extends NewBaseView<CurationHistoryViewModel> {
   const CurationHistoryScreen({super.key});
 
-  @override
-  bool get wrapWithSafeArea => false;
 
   @override
-  Widget buildScreen(BuildContext context) {
+  Widget build(BuildContext context) {
     return CurationHistoryScaffold(
-      tabController: vm.tabController,
       tabs: _buildTabs(),
       tabViews: _buildTabViews(),
     );
@@ -27,23 +26,4 @@ class CurationHistoryScreen extends BaseScreen<CurationHistoryViewModel> {
         const PendingContentsTabView()
       ];
 
-  @override
-  PreferredSizeWidget? buildAppBar(BuildContext context) {
-    return AppBar(
-      toolbarHeight: 56,
-      elevation: 0,
-      leading: GestureDetector(
-        onTap: vm.routeBack,
-        child: const Icon(
-          Icons.arrow_back_ios,
-          color: AppColor.mixedWhite,
-        ),
-      ),
-      title: Text(
-        '큐레이션 내역',
-        style: AppTextStyle.title2,
-      ),
-      backgroundColor: AppColor.black,
-    );
-  }
 }

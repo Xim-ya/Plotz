@@ -68,6 +68,7 @@ class CurationViewModel extends NewBaseViewModel {
   @override
   void onInit() {
     super.onInit();
+    print("CURATION VIEW MODEL ONINITED");
     loading = true;
     randomContentImg = RandomImg(
       tvImgPath: tvImgPathList.randomItem(),

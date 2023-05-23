@@ -31,14 +31,14 @@ class SearchValidateUrlImpl
 
   // 붙여넣기 버튼이 클릭 되었을 시
   @override
-  Future<void> onPasteBtnTapped() async {
+  Future<void> onPasteBtnTapped(BuildContext context) async {
     fieldNode.unfocus(); // 키보드 가리기
 
     videoUrlValidState(ValidationState.isLoading);
     ClipboardData? pasteUrl = await Clipboard.getData('text/plain');
 
     if (pasteUrl?.text == null) {
-      unawaited(AlertWidget.newToast('복사된 링크가 없습니다'));
+      unawaited(AlertWidget.newToast(message: '복사된 링크가 없습니다', context));
       if (searchedKeyword != '') {
         videoUrlValidState(ValidationState.invalid);
         exposeRoundCloseBtn = true;

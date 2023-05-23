@@ -9,7 +9,7 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
     return RegisterVideoLinkPageViewScaffold(
       onBackgroundLayerTapped: vm.videoFormFocusNode.unfocus,
       leadingTitle: _buildLeadingTitle(),
-      searchBar: _buildSearchBar(),
+      searchBar: _buildSearchBar(context),
       pasteIntroductionView: _buildPateIntroductinoView(),
       bottomFixedStepBtn: _buildBottomFixedStepBtn(),
     );
@@ -31,7 +31,7 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
       );
 
   // 검색 창
-  Widget _buildSearchBar() => Column(
+  Widget _buildSearchBar(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
@@ -58,7 +58,9 @@ class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                onPressed: vm.validateVideoUrlUseCase.onPasteBtnTapped,
+                onPressed:(){
+                  vm.validateVideoUrlUseCase.onPasteBtnTapped(context);
+                },
                 child: Center(
                   child: Text(
                     '붙여넣기',

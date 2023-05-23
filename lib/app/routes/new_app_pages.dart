@@ -2,8 +2,12 @@ import 'package:go_router/go_router.dart';
 import 'package:soon_sak/app/routes/go_route_with_binding.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
+import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
+import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
 import 'package:soon_sak/presentation/screens/search/search_binding.dart';
 import 'package:soon_sak/presentation/screens/search/search_screen.dart';
+import 'package:soon_sak/presentation/screens/setting/setting_binding.dart';
+import 'package:soon_sak/presentation/screens/setting/setting_screen.dart';
 import 'package:soon_sak/presentation/screens/splash/splash_binding.dart';
 import 'package:soon_sak/presentation/screens/temp_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -15,30 +19,60 @@ abstract class NewAppPages {
     debugLogDiagnostics: true,
     initialLocation: '/',
     routes: [
-      GoRouteWithBinding(
-        path: '/',
-        binding: SplashBinding(),
-        newBuilder: (context, state) => const SplashScreen(),
+      GoRoute(path: '/',
+      builder: (_, __) => const SplashScreen(),
       ),
       GoReplaceRouteWithBinding(
-          path: AppRoutes.tabs,
-          binding: TabsBinding(),
-          newBuilder: (context, state) => const TabsScreen(),
-          routes: [
-            GoRouteWithBinding(
-              path: 'contentDetail',
-              prevPath: AppRoutes.tabs,
-              binding: ContentDetailBinding(),
-              newBuilder: (context, state) => ContentDetailScreen(),
-            ),
-            GoRouteWithBinding(
-              path: 'search',
-              prevPath: AppRoutes.tabs,
-              binding: SearchBinding(),
-              newBuilder: (context, state) => SearchScreen(),
-            ),
-
-          ]),
+        path: AppRoutes.login,
+        prevPath: '/',
+        binding: LoginBinding(),
+        newBuilder: (context, state) => const LoginScreen(),
+      ),
+      GoRouteWithBinding(
+        path: AppRoutes.login,
+        prevPath: AppRoutes.setting,
+        binding: LoginBinding(),
+        newBuilder: (context, state) => const LoginScreen(),
+      ),
+      GoReplaceRouteWithBinding(
+        path: AppRoutes.tabs,
+        binding: TabsBinding(),
+        newBuilder: (context, state) => const TabsScreen(),
+        routes: [
+          GoRouteWithBinding(
+            path: 'contentDetail',
+            prevPath: AppRoutes.tabs,
+            binding: ContentDetailBinding(),
+            newBuilder: (context, state) => ContentDetailScreen(),
+          ),
+          GoRouteWithBinding(
+            path: 'search',
+            prevPath: AppRoutes.tabs,
+            binding: SearchBinding(),
+            newBuilder: (context, state) => SearchScreen(),
+          ),
+          GoRouteWithBinding(
+            path: 'curationHistory',
+            prevPath: AppRoutes.tabs,
+            binding: CurationHistoryBinding(),
+            newBuilder: (context, state) => const CurationHistoryScreen(),
+          ),
+          GoRouteWithBinding(
+            path: 'setting',
+            prevPath: AppRoutes.tabs,
+            binding: SettingBinding(),
+            newBuilder: (context, state) => const SettingScreen(),
+            routes: [
+              GoRouteWithBinding(
+                path: 'profileSetting',
+                prevPath: AppRoutes.tabs + AppRoutes.setting,
+                binding: ProfileSettingBinding(),
+                newBuilder: (context, state) => const ProfileSettingScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
       GoRouteWithBinding(
         path: AppRoutes.channelDetail,
         prevPath: AppRoutes.tabs,

@@ -23,7 +23,7 @@ abstract class SearchValidateUrlUseCase {
   bool get showRoundCloseBtn;
 
   // 붙여넣기 버튼이 클릭 되었을 시
-  Future<void> onPasteBtnTapped();
+  Future<void> onPasteBtnTapped(BuildContext context);
 
   // 링크 입력 검색창에 키워드가 입력되었을 시
   Future<void> onSearchTermEntered();

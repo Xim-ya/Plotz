@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:go_router/go_router.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class MyPageViewModel extends NewBaseViewModel {
@@ -14,15 +16,15 @@ class MyPageViewModel extends NewBaseViewModel {
 
   /* Variables */
   UserCurationSummary? curationSummary; //  큐레이션 내역 요약 정보
-  List<UserWatchHistoryItem>? watchHistoryList; // 시청 기록
-  UserModel? userInfo;
+  BehaviorSubject<List<UserWatchHistoryItem>> get watchHistorySub =>
+      _userService.userWatchHistory;
 
-  String? get displayName => userInfo?.displayName;
+  BehaviorSubject<UserModel> get userInfoSub => _userService.userInfo;
 
   /* Intents */
   // 설정 스크린으로 이동
-  void routeToSetting() {
-    Get.toNamed(AppRoutes.setting);
+  void routeToSetting(BuildContext context) {
+    context.push(AppRoutes.tabs + AppRoutes.setting);
   }
 
   // youtubeApp 실행
@@ -31,7 +33,8 @@ class MyPageViewModel extends NewBaseViewModel {
     int index,
   ) async {
     if (selectedContent?.videoId == null) {
-      return AlertWidget.animatedToast('잠시만 기다려주세요. 데이터를 불러오고 있습니다.');
+      return AlertWidget.newToast(
+          message: '잠시만 기다려주세요. 데이터를 불러오고 있습니다.', context);
     }
     try {
       await launchUrl(
@@ -49,7 +52,7 @@ class MyPageViewModel extends NewBaseViewModel {
         ),
       );
     } catch (e) {
-      await AlertWidget.animatedToast('비디오 정보를 불러오지 못했습니디');
+      await AlertWidget.newToast(message: '비디오 정보를 불러오지 못했습니디', context);
       throw '유튜브 앱(웹) 런치 실패';
     }
 
@@ -64,7 +67,7 @@ class MyPageViewModel extends NewBaseViewModel {
     UserWatchHistoryItem selectedContent,
   ) async {
     final requestData = WatchingHistoryRequest(
-      userId: _userService.userInfo.value!.id!,
+      userId: _userService.userInfo.value.id!,
       originId: selectedContent.originId,
       videoId: selectedContent.videoId,
     );
@@ -86,24 +89,16 @@ class MyPageViewModel extends NewBaseViewModel {
   // 유저 시청 기록 호출
   Future<void> _fetchUserWatchHistory() async {
     await _userService.updateUserWatchHistory();
-    watchHistoryList = _userService.userWatchHistory.value;
-    notifyListeners();
-  }
-
-  // 유저 정보 호출
-  Future<void> getUserInfo() async {
-    // await _userService.getUserInfo(); // fetch 메소드 실행
-    userInfo = _userService.userInfo.value;
   }
 
   // 큐레이팅 내역 스크린으로 라우팅
-  void routeToCurationHistory() {
-    Get.toNamed(AppRoutes.curationHistory);
+  void routeToCurationHistory(BuildContext context) {
+    context.push(AppRoutes.tabs + AppRoutes.curationHistory);
   }
 
   // 유저 큐레이션 내역 요약 정보 호출
   Future<void> fetchUserCurationSummary() async {
-    final userId = _userService.userInfo.value?.id;
+    final userId = _userService.userInfo.value.id;
     final response = await _userRepository.loadUserCurationSummary(userId!);
     response.fold(
       onSuccess: (data) {
@@ -117,20 +112,9 @@ class MyPageViewModel extends NewBaseViewModel {
 
   Future<void> prepare() async {
     loadingState = ViewModelLoadingState.loading;
-    await getUserInfo();
     await fetchUserCurationSummary();
     await _fetchUserWatchHistory();
     loadingState = ViewModelLoadingState.done;
-
-    /// 시청 기록 & 유저 프로필 정보의 데이터 변화를
-    /// listen 하고 ui를 업데이트 함.
-    ///
-    // _userService.userInfo.listen((_) {
-    //   userInfo.value = _userService.userInfo.value;
-    // });
-    // _userService.userWatchHistory.listen((_) {
-    //   _watchHistoryList.value = _userService.userWatchHistory.value;
-    // });
   }
 
   @override

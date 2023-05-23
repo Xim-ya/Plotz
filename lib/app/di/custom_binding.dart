@@ -1,4 +1,3 @@
-import 'package:soon_sak/utilities/index.dart';
 
 abstract class CustomBindings {
   late dynamic argument;
@@ -13,3 +12,5 @@ abstract class CustomBindings {
     isDependenciesDeleted = true;
   }
 }
+
+

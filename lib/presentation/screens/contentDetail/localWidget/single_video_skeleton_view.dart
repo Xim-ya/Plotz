@@ -13,7 +13,7 @@ class SingleVideoSkeletonView extends StatelessWidget {
           const SectionTitle(title: '컨텐츠'),
           ImageViewWithPlayBtn(
             onPlayerBtnClicked: () {
-              AlertWidget.toast('잠시만 기다려 주세요. 데이터를 불러오고 있습니다.');
+              AlertWidget.newToast(message:'잠시만 기다려 주세요. 데이터를 불러오고 있습니다.', context);
             },
             posterImgUrl: null,
           ),

@@ -19,27 +19,30 @@ class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
               child: IconInkWellButton.packageIcon(
                 icon: Icons.settings,
                 size: 24,
-                onIconTapped: vm(context).routeToSetting,
+                onIconTapped: () {
+                  vm(context).routeToSetting(context);
+                },
               ),
             ),
           ),
           AppSpace.size16,
 
           // 프로필
+
           Padding(
             padding: AppInset.horizontal16,
-            child: Selector<MyPageViewModel, UserModel?>(
-              selector: (context, vm) => vm.userInfo,
-              builder: (context, userInfo, _) {
+            child: StreamBuilder<UserModel>(
+              stream: vm(context).userInfoSub.stream,
+              builder: (context, snapshot) {
                 return Row(
                   children: <Widget>[
                     RoundProfileImg(
                       size: 58,
-                      imgUrl: userInfo?.photoUrl,
+                      imgUrl: snapshot.data?.photoUrl,
                     ),
                     AppSpace.size10,
                     Text(
-                      '${userInfo?.displayName ?? '-'}님',
+                      '${snapshot.data?.displayName ?? '-'}님',
                       style: AppTextStyle.title1
                           .copyWith(color: AppColor.mixedWhite),
                     ),
@@ -55,7 +58,9 @@ class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
             padding: AppInset.horizontal16,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: vm(context).routeToCurationHistory,
+              onTap: () {
+                vm(context).routeToCurationHistory(context);
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -77,7 +82,9 @@ class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
           ),
           AppSpace.size14,
           GestureDetector(
-            onTap: vm(context).routeToCurationHistory,
+            onTap: () {
+              vm(context).routeToCurationHistory(context);
+            },
             child: Container(
               margin: AppInset.horizontal16,
               height: 80,
@@ -132,36 +139,67 @@ class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
           ),
           AppSpace.size14,
 
-          Selector<MyPageViewModel, List<UserWatchHistoryItem>?>(
-            selector: (context, vm) => vm.watchHistoryList,
-            builder: (context, watchHistoryList, _) {
-              return watchHistoryList != null && watchHistoryList.isEmpty
-                  ? Padding(
-                      padding: AppInset.left16,
-                      child: Text(
-                        '시청 기록이 없어요',
-                        style: AppTextStyle.body1
-                            .copyWith(color: AppColor.lightGrey),
-                      ),
-                    )
-                  : ContentPostSlider(
-                      height: 168,
-                      itemCount: watchHistoryList?.length ?? 5,
-                      itemBuilder: (BuildContext context, int index) {
-                        final item = watchHistoryList?[index];
-                        return ImageViewWithPlayBtn(
-                          aspectRatio: 1280 / 1920,
-                          onPlayerBtnClicked: () {
-                            vm(context).launchYoutubeApp(item, index);
-                          },
-                          posterImgUrl: item?.posterImgUrl != null
-                              ? item!.posterImgUrl!.prefixTmdbImgPath
-                              : null,
-                        );
-                      },
-                    );
-            },
-          ),
+          StreamBuilder<List<UserWatchHistoryItem>?>(
+              stream: vm(context).watchHistorySub.stream,
+              builder: (context, snapshot) {
+                final items = snapshot.data;
+                return items.hasData && items!.isEmpty
+                    ? Padding(
+                        padding: AppInset.left16,
+                        child: Text(
+                          '시청 기록이 없어요',
+                          style: AppTextStyle.body1
+                              .copyWith(color: AppColor.lightGrey),
+                        ),
+                      )
+                    : ContentPostSlider(
+                        height: 168,
+                        itemCount: items?.length ?? 5,
+                        itemBuilder: (BuildContext context, int index) {
+                          final item = items?[index];
+                          return ImageViewWithPlayBtn(
+                            aspectRatio: 1280 / 1920,
+                            onPlayerBtnClicked: () {
+                              vm(context).launchYoutubeApp(item, index);
+                            },
+                            posterImgUrl: item?.posterImgUrl != null
+                                ? item!.posterImgUrl!.prefixTmdbImgPath
+                                : null,
+                          );
+                        },
+                      );
+              }),
+
+          // Selector<MyPageViewModel, List<UserWatchHistoryItem>?>(
+          //   selector: (context, vm) => vm.watchHistoryList,
+          //   builder: (context, watchHistoryList, _) {
+          //     return watchHistoryList != null && watchHistoryList.isEmpty
+          //         ? Padding(
+          //             padding: AppInset.left16,
+          //             child: Text(
+          //               '시청 기록이 없어요',
+          //               style: AppTextStyle.body1
+          //                   .copyWith(color: AppColor.lightGrey),
+          //             ),
+          //           )
+          //         : ContentPostSlider(
+          //             height: 168,
+          //             itemCount: watchHistoryList?.length ?? 5,
+          //             itemBuilder: (BuildContext context, int index) {
+          //               final item = watchHistoryList?[index];
+          //               return ImageViewWithPlayBtn(
+          //                 aspectRatio: 1280 / 1920,
+          //                 onPlayerBtnClicked: () {
+          //                   vm(context).launchYoutubeApp(item, index);
+          //                 },
+          //                 posterImgUrl: item?.posterImgUrl != null
+          //                     ? item!.posterImgUrl!.prefixTmdbImgPath
+          //                     : null,
+          //               );
+          //             },
+          //           );
+          //   },
+          // ),
           AppSpace.size48,
         ],
       ),

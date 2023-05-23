@@ -160,8 +160,10 @@ class HomeViewModel extends NewBaseViewModel {
         topTenContents = data;
       },
       onFailure: (e) {
-        AlertWidget.animatedToast('인기 콘텐츠를 정보를 불러오는데 실패했습니다',
-            isUsedOnTabScreen: true);
+        AlertWidget.newToast(
+            message: '인기 콘텐츠를 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true,
+            context);
 
         log('HomeViewModel > $e');
       },
@@ -176,8 +178,10 @@ class HomeViewModel extends NewBaseViewModel {
         bannerContents = data;
       },
       onFailure: (e) {
-        AlertWidget.animatedToast('배너 콘텐츠 정보를 불러오는데 실패했습니다',
-            isUsedOnTabScreen: true);
+        AlertWidget.newToast(
+            message: '배너 콘텐츠 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true,
+            context);
         _loadBannerContentUseCase.deleteLocalData();
         log('HomeViewModel > $e');
       },
@@ -190,8 +194,8 @@ class HomeViewModel extends NewBaseViewModel {
     response.fold(onSuccess: (data) {
       topPositionedCategory = data;
     }, onFailure: (e) {
-      AlertWidget.animatedToast('일부 콘텐츠를 불러오는데 실패했습니다',
-          isUsedOnTabScreen: true);
+      AlertWidget.newToast(
+          message: '일부 콘텐츠를 불러오는데 실패했습니다', isUsedOnTabScreen: true, context);
       _loadCachedTopPositionedContentsUseCase.deleteLocalStorageField();
       log('HomeViewModel > $e');
     });
@@ -199,6 +203,7 @@ class HomeViewModel extends NewBaseViewModel {
 
   @override
   Future<void> onInit() async {
+    print("HOME VIEWMODEL INITIZLIZED");
     super.onInit();
     unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
 

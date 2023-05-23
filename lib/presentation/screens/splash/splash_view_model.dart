@@ -70,12 +70,12 @@ class SplashViewModel extends NewBaseViewModel {
     if (_userService.isUserSignIn) {
       await launchServiceModules().whenComplete(() {
         // 유저 접속일 최신화
-        _userService.updateUserLoginDate(_userService.userInfo.value!.id!);
-        context.replace(AppRoutes.tabs);
+        _userService.updateUserLoginDate(_userService.userInfo.value.id!);
+        context.go(AppRoutes.tabs);
       });
     } else {
       await launchServiceModules().whenComplete(() {
-        context.replace(AppRoutes.login);
+        context.go(AppRoutes.login);
       });
     }
   }

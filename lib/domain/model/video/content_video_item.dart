@@ -23,7 +23,7 @@ class ContentVideoItem {
   })  : _detailInfoSubject = BehaviorSubject<YoutubeVideoContentInfo?>(),
         _tvSeasonInfoSubject = BehaviorSubject<SeasonInfo?>();
 
-  Future<void> updateVideoDetails() async {
+  Future<void> updateVideoDetails(BuildContext context) async {
     String selectedVideoId = videoId;
     if (videoId.contains('&')) {
       selectedVideoId = videoId.substring(0, videoId.indexOf('&'));
@@ -36,7 +36,7 @@ class ContentVideoItem {
         _detailInfoSubject.close();
       },
       onFailure: (e) {
-        AlertWidget.toast('유튜브 영상을 호출하는데 실패했어요');
+        AlertWidget.newToast(message: '유튜브 영상을 호출하는데 실패했어요', context);
         log(e.toString());
       },
     );

@@ -1,14 +1,19 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:soon_sak/utilities/constants/regex.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ProfileSettingViewModel extends BaseViewModel {
-  ProfileSettingViewModel(this._userService, this._userRepository);
+class ProfileSettingViewModel extends NewBaseViewModel {
+  ProfileSettingViewModel(
+      {required UserService userService,
+      required UserRepository userRepository})
+      : _userRepository = userRepository,
+        _userService = userService;
 
   /* Variables */
-  final Rxn<File> pickedImgFile = Rxn();
+  File? pickedImgFile;
 
   /* Data Modules */
   final UserService _userService;
@@ -43,34 +48,33 @@ class ProfileSettingViewModel extends BaseViewModel {
   // 프로필 변경 정보 저장
   Future<void> saveProfileChanges() async {
     focusNode.unfocus();
-    if (loading.isTrue) {
+    if (loading == true) {
       return;
     }
 
-    loading(true);
+    loading = true;
     String? changedNickName;
     String? changedProfileImageUrl;
 
     // 입력된 닉네임이 유효하지 않다면
     if (!formKey.currentState!.validate()) {
-      await AlertWidget.newToast('유효한 닉네임이 아닙니다');
-      loading(false);
+      await AlertWidget.newToast(message: '유효한 닉네임이 아닙니다', context);
+      loading = false;
       return;
     }
 
     // 이미지나 닉네임이 변경되었다면
-    if (pickedImgFile.value.hasData || isNickNameChanged) {
+    if (pickedImgFile.hasData || isNickNameChanged) {
       await EasyLoading.show(status: '잠시만 기다려주세요');
-      if (pickedImgFile.value.hasData) {
-        changedProfileImageUrl =
-            await storeImgFileAndReturnUrl(pickedImgFile.value!);
+      if (pickedImgFile.hasData) {
+        changedProfileImageUrl = await storeImgFileAndReturnUrl(pickedImgFile!);
       }
       if (isNickNameChanged) {
         final isDuplicatedNickName =
             await checkDuplicateName(textEditingController.text);
         if (isDuplicatedNickName) {
-          await AlertWidget.newToast('중복된 닉네임 입니다');
-          loading(false);
+          await AlertWidget.newToast(message: '중복된 닉네임 입니다', context);
+          loading = false;
           return;
         }
         changedNickName = textEditingController.text;
@@ -79,25 +83,27 @@ class ProfileSettingViewModel extends BaseViewModel {
       final request = UserProfileRequest(
         photoImgUrl: changedProfileImageUrl,
         displayName: changedNickName,
-        userId: _userService.userInfo.value!.id!,
+        userId: _userService.userInfo.value.id!,
       );
       await updateUserProfile(request);
     } else {
-      await AlertWidget.newToast('변경된 정보가 없어요');
-      loading(false);
+      await AlertWidget.newToast(message: '변경된 정보가 없어요', context);
+      loading = false;
     }
   }
 
   @override
   void routeBack() {
-    if (loading.isTrue) return;
-    Get.back();
+    if (loading == true) return;
+    context.pop();
   }
 
   // 이미지 업로드 및 downloadImgUrl 값 리턴 (FireStore)
   Future<String?> storeImgFileAndReturnUrl(File file) async {
     final response = await _userRepository.uploadUserProfileImgAndReturnUrl(
-        userId: _userService.userInfo.value!.id!, file: file,);
+      userId: _userService.userInfo.value.id!,
+      file: file,
+    );
     return await response.fold(
       onSuccess: (imageUrl) async {
         return imageUrl;
@@ -112,8 +118,8 @@ class ProfileSettingViewModel extends BaseViewModel {
 
   Future<void> onProfileUpdateSuccess() async {
     unawaited(EasyLoading.showSuccess('프로필 정보를 업데이트 했습니다'));
-    loading(false);
-    Get.back();
+    loading = false;
+    context.pop();
   }
 
   // 이미지 선택
@@ -123,13 +129,15 @@ class ProfileSettingViewModel extends BaseViewModel {
       await EasyLoading.show();
       final imageSource = await _picker.pickImage(source: ImageSource.gallery);
       if (imageSource.hasData) {
-        pickedImgFile.value = File(imageSource!.path);
+        pickedImgFile = File(imageSource!.path);
+        notifyListeners();
       }
       unawaited(EasyLoading.dismiss());
     } catch (e) {
       unawaited(EasyLoading.dismiss());
       log(e.toString());
-      await AlertWidget.animatedToast('사진첩에서 정상적으로 이미지를 불러오지 못했어요. 다시 시도해주세요');
+      await AlertWidget.newToast(
+          message: '사진첩에서 정상적으로 이미지를 불러오지 못했어요. 다시 시도해주세요', context);
     }
   }
 
@@ -169,12 +177,12 @@ class ProfileSettingViewModel extends BaseViewModel {
   }
 
   /* Getters */
-  UserModel get userInfo => _userService.userInfo.value!;
+  UserModel get userInfo => _userService.userInfo.value;
 
-  String get photoUrl => _userService.userInfo.value!.photoUrl!;
+  String? get photoUrl => _userService.userInfo.value.photoUrl;
 
   bool get isNickNameChanged =>
-      textEditingController.text != _userService.userInfo.value!.displayName;
+      textEditingController.text != _userService.userInfo.value.displayName;
 
   @override
   void onInit() {

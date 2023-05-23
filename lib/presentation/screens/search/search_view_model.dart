@@ -59,18 +59,18 @@ class SearchViewModel extends NewBaseViewModel {
         id: content.contentId,
       ),
       title: content.title ?? '제목 없음',
-      userId: _userService.userInfo.value!.id!,
+      userId: _userService.userInfo.value.id!,
     );
     final response = await _contentRepository.requestContent(request);
     response.fold(
       onSuccess: (data) {
         Get.back();
-        AlertWidget.animatedToast('요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.');
+        AlertWidget.newToast(message:'요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.', context);
         log('콘텐츠 요청 성공');
       },
       onFailure: (e) {
         Get.back();
-        AlertWidget.animatedToast('콘텐츠 요청에 실패했습니다. 다시 시도해주세요');
+        AlertWidget.newToast(message: '콘텐츠 요청에 실패했습니다. 다시 시도해주세요', context);
         log('SearchViewModel : $e');
       },
     );
@@ -87,7 +87,7 @@ class SearchViewModel extends NewBaseViewModel {
     final registeredValue = content.isRegisteredContent;
     // 1. isRegistered 데이터가 로그 안되었다면 toast 메세지를 띄움
     if (registeredValue == ContentRegisteredValue.isLoading) {
-      AlertWidget.toast('잠시만 기다려주세요. 데이터를 로딩하고 있습니다');
+      AlertWidget.newToast(message:'잠시만 기다려주세요. 데이터를 로딩하고 있습니다',context);
       return;
     }
 

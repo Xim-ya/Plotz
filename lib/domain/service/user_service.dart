@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserService {
@@ -7,24 +8,27 @@ class UserService {
       {required AuthRepository authRepository,
       required UserRepository userRepository})
       : _authRepository = authRepository,
-        _userRepository = userRepository;
+        _userRepository = userRepository,
+        userWatchHistory = BehaviorSubject<List<UserWatchHistoryItem>>(),
+        userInfo = BehaviorSubject<UserModel>();
 
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
 
   late final String currentVersionNum;
   late final bool isUserSignIn; // 유저 로그인 여부
-  final Rxn<UserModel> userInfo = Rxn(); // 유저 정보
-  final Rxn<List<UserWatchHistoryItem>> userWatchHistory = Rxn(); // 유저 시청 기록
+  final BehaviorSubject<UserModel> userInfo; // 유저 정보
+  final BehaviorSubject<List<UserWatchHistoryItem>>
+      userWatchHistory; // 유저 시청 기록
 
   /* Intents */
   // 유저 시청 기록 호출
   Future<void> updateUserWatchHistory() async {
     final response =
-        await _userRepository.loadUserWatchHistory(userInfo.value!.id!);
+        await _userRepository.loadUserWatchHistory(userInfo.value.id!);
     response.fold(
       onSuccess: (data) {
-        userWatchHistory.value = data;
+        userWatchHistory.add(data);
       },
       onFailure: (e) {
         log('UserService : $e');
@@ -37,7 +41,7 @@ class UserService {
     final response = await _authRepository.loadUserInfo();
     response.fold(
       onSuccess: (data) {
-        userInfo.value = data;
+        userInfo.add(data);
       },
       onFailure: (e) {
         log('UserService : $e');
