@@ -28,7 +28,7 @@ import 'package:soon_sak/utilities/index.dart';
 *
 * */
 
-class LocalStorageService extends GetxService {
+class LocalStorageService  {
   late Directory dir;
   late StoreRef store;
   late String dbPath;

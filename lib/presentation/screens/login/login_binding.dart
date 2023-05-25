@@ -1,11 +1,7 @@
-import 'package:soon_sak/app/di/custom_binding.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class LoginBinding extends CustomBindings {
-  @override
-  void dependencies() {
-    super.dependencies();
-    print("LOGIN BINDINGsss");
+abstract class LoginBinding {
+  static void dependencies() {
     locator.registerFactory(() => LoginViewModel(
         userService: locator<UserService>(),
         signInHandlerUseCase: locator<SignInAndUpHandlerUseCase>()));
@@ -13,15 +9,10 @@ class LoginBinding extends CustomBindings {
     locator.registerFactory(() => SignInAndUpHandlerUseCase(
         authRepository: locator<AuthRepository>(),
         userService: locator<UserService>()));
-
-    print("LOGIN BINDING!!! DEPENDENCIES");
   }
 
-  @override
-  void unRegisterDependencies() {
-    super.unRegisterDependencies();
+  static void unRegisterDependencies() {
     locator.unregister<LoginViewModel>();
     locator.unregister<SignInAndUpHandlerUseCase>();
-    print("LOGIN BINDING!!! UNREGISTER");
   }
 }

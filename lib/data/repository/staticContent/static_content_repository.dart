@@ -18,5 +18,5 @@ abstract class StaticContentRepository {
   // 상단 노출 Collection 리스트
   Future<Result<TopPositionedCollection>> loadTopPositionedCollection();
 
-  static StaticContentRepository get to => Get.find();
+  // static StaticContentRepository get to => Get.find();
 }

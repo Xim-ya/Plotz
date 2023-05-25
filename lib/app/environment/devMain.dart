@@ -27,7 +27,7 @@ void main() async {
 
   // Environment(BuildType.development);
 
-  Get.put(AppAnalytics(), permanent: true);
+  locator.registerFactory(() => AppAnalytics());
   await AppAnalytics.instance.setAnalyticsCollectionEnabled(false);
 
   // Portrait 고정

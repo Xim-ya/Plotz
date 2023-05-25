@@ -15,7 +15,7 @@ class ConfirmCurationPageScaffold extends StatelessWidget {
   final double responsiveHInset;
   final Widget posterImg;
   final Widget channelInfoView;
-  final List<Widget> contentDetailInfoView;
+  final Widget contentDetailInfoView;
   final Widget bottomFixedBtn;
 
   @override
@@ -56,11 +56,7 @@ class ConfirmCurationPageScaffold extends StatelessWidget {
                 // 컨텐츠 상세 정보
                 SizedBox(
                   width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      ...contentDetailInfoView,
-                    ],
-                  ),
+                  child: contentDetailInfoView,
                 ),
               ],
             ),

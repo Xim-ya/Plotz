@@ -38,6 +38,7 @@ class LoadPagedChannelContentsUseCase {
         final bool isLastPage = data.contents.length < pageSize;
         if (isLastPage) {
           pagingController.appendLastPage(data.contents);
+          pagingController.dispose();
         } else {
           final nextPageKey = pagingController.value.itemList?.length ??
               0 + data.contents.length;

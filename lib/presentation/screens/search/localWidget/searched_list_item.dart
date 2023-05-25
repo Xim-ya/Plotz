@@ -16,10 +16,10 @@ class SearchListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // 컨텐츠 등록 여부에 따른 인디케이터 case별 위젯 (이미지 overlay)
     Widget caseOverlayIndicatorOnImg() {
-      switch (item.isRegisteredContent) {
-        case ContentRegisteredValue.isLoading:
+      switch (item.state.value) {
+        case RegistrationState.isLoading:
           return const SizedBox();
-        case ContentRegisteredValue.registered:
+        case RegistrationState.registered:
           return Positioned.fill(
             child: Align(
               child: IconInkWellButton(
@@ -29,7 +29,7 @@ class SearchListItem extends StatelessWidget {
               ),
             ),
           );
-        case ContentRegisteredValue.unRegistered:
+        case RegistrationState.unRegistered:
           return Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -43,8 +43,8 @@ class SearchListItem extends StatelessWidget {
 
     // 컨텐츠 등록 여부 인디케이터 case별 위젯
     Widget caseIndicatorOnTrailing() {
-      switch (item.isRegisteredContent) {
-        case ContentRegisteredValue.isLoading:
+      switch (item.state.value) {
+        case RegistrationState.isLoading:
           return const SizedBox(
             height: 12,
             width: 12,
@@ -53,9 +53,9 @@ class SearchListItem extends StatelessWidget {
               strokeWidth: 2,
             ),
           );
-        case ContentRegisteredValue.registered:
+        case RegistrationState.registered:
           return const SizedBox();
-        case ContentRegisteredValue.unRegistered:
+        case RegistrationState.unRegistered:
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

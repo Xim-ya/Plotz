@@ -118,10 +118,5 @@ class SearchScreen extends NewBaseScreen<SearchViewModel> {
   SearchViewModel createViewModel(BuildContext context) =>
       locator<SearchViewModel>();
 
-// // [TextField] OutLinedBorder 속성
-// OutlineInputBorder _fixedOutLinedBorder() {
-//   return const OutlineInputBorder(
-//       borderRadius: BorderRadius.all(Radius.circular(6)),
-//       borderSide: BorderSide(color: Colors.transparent));
-// }
+
 }

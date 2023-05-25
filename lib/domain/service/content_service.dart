@@ -10,7 +10,7 @@ import 'package:soon_sak/utilities/index.dart';
  *  2. 모든 컨텐츠 id 값 (TODO : firebase 인덱싱 개념을 적용하면 배제할 필요 있음)
  * */
 
-class ContentService extends GetxService {
+class ContentService {
   ContentService(
       {required ContentRepository contentRepository,
       required StaticContentRepository staticContentRepository})
@@ -27,7 +27,7 @@ class ContentService extends GetxService {
   late final ContentIdInfoModel _contentTotalIdInfo;
 
   // 정적 컨텐츠 키 리스트
-  final Rxn<StaticContentKeys> _staticContentKeys = Rxn();
+  StaticContentKeys? _staticContentKeys;
 
   /* Intents */
   // 정적 컨텐츠 키 리스트 호출
@@ -35,7 +35,7 @@ class ContentService extends GetxService {
     final response = await _staticContentRepository.loadStaticContentKeys();
     response.fold(
       onSuccess: (data) {
-        _staticContentKeys.value = data;
+        _staticContentKeys = data;
       },
       onFailure: (e) {
         log('ContentService : $e');
@@ -64,18 +64,18 @@ class ContentService extends GetxService {
 
   ContentIdInfoModel? get contentIdInfo => _contentTotalIdInfo;
 
-  StaticContentKeys? get staticContentKeys => _staticContentKeys.value;
+  StaticContentKeys? get staticContentKeys => _staticContentKeys;
 
-  String? get bannerKey => _staticContentKeys.value?.bannerKey;
+  String? get bannerKey => _staticContentKeys?.bannerKey;
 
-  String? get topTenContentKey => _staticContentKeys.value?.topTenContentKey;
+  String? get topTenContentKey => _staticContentKeys?.topTenContentKey;
 
   String? get topPositionedCollectionKey =>
-      _staticContentKeys.value?.topPositionedCollectionKey;
+      _staticContentKeys?.topPositionedCollectionKey;
 
   String? returnCategoryContentKey(int currentPage) => currentPage == 1
-      ? _staticContentKeys.value?.categoryContentKey1
-      : _staticContentKeys.value?.categoryContentKey2;
+      ? _staticContentKeys?.categoryContentKey1
+      : _staticContentKeys?.categoryContentKey2;
 
-  static ContentService get to => Get.find();
+  static ContentService get to => locator<ContentService>();
 }

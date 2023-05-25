@@ -9,17 +9,13 @@ class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
   Widget buildScreen(BuildContext context) {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
-      carouselBuilder: _VerticalSwiper(),
+      carouselBuilder: const _VerticalSwiper(),
       actionButtons: const _TopActionBtn(),
     );
   }
 
-
-
-
   // 채널 정보
-  List<Widget> buildChannelInfoView(ExploreContent? item) =>
-      [
+  List<Widget> buildChannelInfoView(ExploreContent? item) => [
         ChannelInfoView(
           imgUrl: item?.channelLogoImgUrl,
           name: item?.channelName,
@@ -29,8 +25,7 @@ class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
       ];
 
   // 컨텐츠 정보
-  List<Widget> buildContentInfoView(ExploreContent? item) =>
-      [
+  List<Widget> buildContentInfoView(ExploreContent? item) => [
         // 제목 & 개봉년도
         Row(
           children: <Widget>[
@@ -83,7 +78,6 @@ class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
   @override
   ExploreViewModel createViewModel(BuildContext context) =>
       locator<ExploreViewModel>();
-
 }
 
 class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
@@ -91,12 +85,12 @@ class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<ExploreViewModel, List<ExploreContent>?>(
-      selector: (context, vm) => vm.exploreContentList,
-      builder: (context, contentList, __) {
+    return StreamBuilder<List<ExploreContent>>(
+      stream: vm(context).exploreContents.stream,
+      builder: (context, snapshot) {
         return CarouselSlider.builder(
           carouselController: vm(context).swiperController,
-          itemCount: contentList?.length ?? 1,
+          itemCount: snapshot.data?.length ?? 1,
           options: CarouselOptions(
             onPageChanged: (index, _) {
               vm(context).onSwiperChanged(index);
@@ -109,32 +103,15 @@ class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
           ),
           itemBuilder:
               (BuildContext context, int parentIndex, int pageViewIndex) {
-            final contentItem = contentList?[pageViewIndex];
+            final contentItem = snapshot.data?[pageViewIndex];
             return GestureDetector(
               onTap: () {
-                if (contentList == null) return;
-                // vm(context).routeToContentDetail(
-                //   ContentArgumentFormat(
-                //     contentId:
-                //     SplittedIdAndType
-                //         .fromOriginId(contentItem!.originId)
-                //         .id,
-                //     contentType:
-                //     SplittedIdAndType
-                //         .fromOriginId(contentItem.originId)
-                //         .type,
-                //     posterImgUrl: contentItem.posterImgUrl,
-                //     title: contentItem.title,
-                //     originId: contentItem.originId,
-                //     channelName: contentItem.channelName,
-                //     channelLogoImgUrl: contentItem.channelLogoImgUrl,
-                //     subscribersCount: contentItem.subscribersCount,
-                //   ),
-                // );
+                if (snapshot.data == null) return;
+                vm(context).routeToContentDetail(pageViewIndex);
               },
               child: Stack(
                 children: [
-                  if (contentList.hasData)
+                  if (snapshot.data.hasData)
                     CachedNetworkImage(
                       imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
                       height: double.infinity,
@@ -184,12 +161,12 @@ class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
             );
           },
         );
-      },);
+      },
+    );
   }
 
   // 컨텐츠 정보
-  List<Widget> buildContentInfoView(ExploreContent? item) =>
-      [
+  List<Widget> buildContentInfoView(ExploreContent? item) => [
         // 제목 & 개봉년도
         Row(
           children: <Widget>[
@@ -234,8 +211,7 @@ class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
       ];
 
   // 채널 정보
-  List<Widget> buildChannelInfoView(ExploreContent? item) =>
-      [
+  List<Widget> buildChannelInfoView(ExploreContent? item) => [
         ChannelInfoView(
           imgUrl: item?.channelLogoImgUrl,
           name: item?.channelName,
@@ -250,7 +226,7 @@ class _TopActionBtn extends NewBaseView<ExploreViewModel> {
 
   @override
   Widget build(BuildContext context) {
-     return Row(
+    return Row(
       children: [
         IconInkWellButton.assetIcon(
           iconPath: 'assets/icons/search.svg',
@@ -261,5 +237,3 @@ class _TopActionBtn extends NewBaseView<ExploreViewModel> {
     );
   }
 }
-
-

@@ -19,14 +19,14 @@ class LoginViewModel extends NewBaseViewModel {
 
   // 로그인 & 회원가입
   Future<void> signInAndUp(Sns social) async {
-    final result = await _signInHandlerUseCase.call(social);
+    final result = await _signInHandlerUseCase.call(social, context);
     await result.fold(
       onSuccess: (data) async {
         await launchServiceModules().whenComplete(() {
           _userService.updateUserLoginDate(_userService.userInfo.value.id!);
           context.go(AppRoutes.tabs);
-          locator.unregister<LoginViewModel>();
-          locator.unregister<SignInAndUpHandlerUseCase>();
+          TabsBinding.dependencies();
+          LoginBinding.unRegisterDependencies();
         });
       },
       onFailure: (e) {

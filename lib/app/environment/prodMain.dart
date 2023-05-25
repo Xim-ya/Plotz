@@ -23,7 +23,7 @@ void main() async {
       );
 
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-      Get.put(AppAnalytics(), permanent: true);
+      locator.registerFactory(() => AppAnalytics());
       await AppAnalytics.instance.setAnalyticsCollectionEnabled(true);
       await AppAnalytics.instance.logAppOpen();
 

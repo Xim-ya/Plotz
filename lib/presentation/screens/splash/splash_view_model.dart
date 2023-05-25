@@ -31,7 +31,7 @@ class SplashViewModel extends NewBaseViewModel {
     if (isViewModelMounted == true) return;
     isViewModelMounted = true;
 
-    final response = await _checkVersionAndNetworkUseCase();
+    final response = await _checkVersionAndNetworkUseCase(context);
     response.fold(
       onSuccess: (data) {
         handleRoute(context);
@@ -42,40 +42,21 @@ class SplashViewModel extends NewBaseViewModel {
     );
   }
 
-  void check({required GetPageBuilder page}) {
-    assert(() {
-      bool isLambda = false;
-
-      try {
-        final closure = page as dynamic;
-        final closureType = closure.runtimeType;
-        isLambda = closureType.toString().contains('=>');
-      } catch (e) {
-        // do nothing
-      }
-
-      if (!isLambda) {
-        throw AssertionError(
-          'Please use the correct syntax for creating the page instance. Instead of "TabsScreen.new", use "() => TabsScreen()".',
-        );
-      }
-
-      return true;
-    }());
-  }
 
   // 라우팅 핸들러
   Future<void> handleRoute(BuildContext context) async {
-    await _userService.prepare();
+    await _userService.prepare(context);
     if (_userService.isUserSignIn) {
       await launchServiceModules().whenComplete(() {
         // 유저 접속일 최신화
         _userService.updateUserLoginDate(_userService.userInfo.value.id!);
         context.go(AppRoutes.tabs);
+        TabsBinding.dependencies();
       });
     } else {
       await launchServiceModules().whenComplete(() {
         context.go(AppRoutes.login);
+        LoginBinding.dependencies();
       });
     }
   }

@@ -49,6 +49,8 @@ abstract class NewDomainModules {
         localStorageService: locator<LocalStorageService>(),
         contentService: locator<ContentService>()));
 
+
+
     // /* Search */
     // locator.registerLazySingleton(() => NewSearchedPagedContentUseCase(
     //     tmdbRepository: locator<TmdbRepository>()));

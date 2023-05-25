@@ -239,30 +239,35 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
                 ),
                 AppSpace.size2,
                 Consumer<HomeViewModel>(builder: (context, vm, __) {
-                  return AnimatedOpacity(
-                    duration: const Duration(milliseconds: 100),
-                    opacity: vmS(context, (vm) => vm.bannerInfoOpacity),
-                    child: Column(
-                      children: [
-                        Text(
-                          vmS(
-                              context,
-                              (value) =>
+                  return StreamBuilder<double>(
+                    stream: vm.bannerInfoOpacity.stream,
+                    builder: (context, snapshot) {
+                      return AnimatedOpacity(
+                        duration: const Duration(milliseconds: 100),
+                        opacity: snapshot.data!,
+                        child: Column(
+                          children: [
+                            Text(
+                              vmS(
+                                  context,
+                                      (value) =>
                                   value.selectedBannerContent?.title ?? ''),
-                          style:
+                              style:
                               AppTextStyle.web3.copyWith(letterSpacing: -0.2),
-                        ),
-                        AppSpace.size4,
-                        Text(
-                          vmS(
-                              context,
-                              (value) =>
+                            ),
+                            AppSpace.size4,
+                            Text(
+                              vmS(
+                                  context,
+                                      (value) =>
                                   value.selectedBannerContent?.genre ?? ''),
-                          style: AppTextStyle.alert2.copyWith(
-                              color: AppColor.gray03, letterSpacing: -0.2),
+                              style: AppTextStyle.alert2.copyWith(
+                                  color: AppColor.gray03, letterSpacing: -0.2),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 }),
                 AppSpace.size12,

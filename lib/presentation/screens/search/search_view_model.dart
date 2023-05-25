@@ -64,12 +64,13 @@ class SearchViewModel extends NewBaseViewModel {
     final response = await _contentRepository.requestContent(request);
     response.fold(
       onSuccess: (data) {
-        Get.back();
-        AlertWidget.newToast(message:'요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.', context);
+        context.pop();
+        AlertWidget.newToast(
+            message: '요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.', context);
         log('콘텐츠 요청 성공');
       },
       onFailure: (e) {
-        Get.back();
+        context.pop();
         AlertWidget.newToast(message: '콘텐츠 요청에 실패했습니다. 다시 시도해주세요', context);
         log('SearchViewModel : $e');
       },
@@ -84,18 +85,18 @@ class SearchViewModel extends NewBaseViewModel {
   }) {
     // 키보드 가리기
 
-    final registeredValue = content.isRegisteredContent;
+    final registeredValue = content.state;
     // 1. isRegistered 데이터가 로그 안되었다면 toast 메세지를 띄움
-    if (registeredValue == ContentRegisteredValue.isLoading) {
-      AlertWidget.newToast(message:'잠시만 기다려주세요. 데이터를 로딩하고 있습니다',context);
+    if (registeredValue.value == RegistrationState.isLoading) {
+      AlertWidget.newToast(message: '잠시만 기다려주세요. 데이터를 로딩하고 있습니다', context);
       return;
     }
 
     // 2. 등록된 컨텐츠라면 상세 페이지로 이동
-    if (registeredValue == ContentRegisteredValue.registered) {
-      Get.toNamed(
-        AppRoutes.contentDetail,
-        arguments: ContentArgumentFormat(
+    if (registeredValue.value == RegistrationState.registered) {
+      context.push(
+        AppRoutes.tabs + AppRoutes.search + AppRoutes.contentDetail,
+        extra: ContentArgumentFormat(
           contentId: content.contentId,
           contentType: contentType,
           posterImgUrl: content.posterImgUrl,
@@ -107,8 +108,9 @@ class SearchViewModel extends NewBaseViewModel {
       );
     } else {
       // 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
-      Get.dialog(
-        AppDialog.dividedBtn(
+      showDialog(
+        context: context,
+        builder: (_) => AppDialog.dividedBtn(
           title: '미등록 콘텐츠\n[${content.title}]',
           description: '등록되어 있는 콘텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
           leftBtnContent: '나중에',
@@ -117,7 +119,7 @@ class SearchViewModel extends NewBaseViewModel {
           onRightBtnClicked: () {
             requestContent(content);
           },
-          onLeftBtnClicked: Get.back,
+          onLeftBtnClicked: context.pop,
         ),
       );
     }
@@ -129,6 +131,7 @@ class SearchViewModel extends NewBaseViewModel {
   @override
   void onInit() {
     pagedSearchHandler.initUseCase();
+    // TODO: 업데이트 listner 범위 최소화
     textEditingController.addListener(notifyListeners);
     // super.onInit();
   }

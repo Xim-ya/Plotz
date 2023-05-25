@@ -19,25 +19,26 @@ abstract class NewAppPages {
     debugLogDiagnostics: true,
     initialLocation: '/',
     routes: [
-      GoRoute(path: '/',
-      builder: (_, __) => const SplashScreen(),
+      GoRoute(
+        path: '/',
+        builder: (_, __) => const SplashScreen(),
       ),
-      GoReplaceRouteWithBinding(
-        path: AppRoutes.login,
-        prevPath: '/',
-        binding: LoginBinding(),
-        newBuilder: (context, state) => const LoginScreen(),
-      ),
-      GoRouteWithBinding(
-        path: AppRoutes.login,
-        prevPath: AppRoutes.setting,
-        binding: LoginBinding(),
-        newBuilder: (context, state) => const LoginScreen(),
-      ),
-      GoReplaceRouteWithBinding(
+      GoRoute(path: AppRoutes.login, builder: (_, __) => LoginScreen()),
+      // GoReplaceRouteWithBinding(
+      //   path: AppRoutes.login,
+      //   prevPath: '/',
+      //   binding: LoginBinding(),
+      //   newBuilder: (context, state) => const LoginScreen(),
+      // ),
+      // GoRouteWithBinding(
+      //   path: AppRoutes.login,
+      //   prevPath: AppRoutes.setting,
+      //   binding: LoginBinding(),
+      //   newBuilder: (context, state) => const LoginScreen(),
+      // ),
+      GoRoute(
         path: AppRoutes.tabs,
-        binding: TabsBinding(),
-        newBuilder: (context, state) => const TabsScreen(),
+        builder: (context, state) => const TabsScreen(),
         routes: [
           GoRouteWithBinding(
             path: 'contentDetail',
@@ -46,10 +47,24 @@ abstract class NewAppPages {
             newBuilder: (context, state) => ContentDetailScreen(),
           ),
           GoRouteWithBinding(
+            path: 'register',
+            prevPath: AppRoutes.tabs,
+            binding: RegisterBinding(),
+            newBuilder: (context, state) => RegisterScreen(),
+          ),
+          GoRouteWithBinding(
             path: 'search',
             prevPath: AppRoutes.tabs,
             binding: SearchBinding(),
             newBuilder: (context, state) => SearchScreen(),
+            routes: [
+              GoRouteWithBinding(
+                path: 'contentDetail',
+                prevPath: AppRoutes.tabs + AppRoutes.search,
+                binding: ContentDetailBinding(),
+                newBuilder: (context, state) => ContentDetailScreen(),
+              ),
+            ],
           ),
           GoRouteWithBinding(
             path: 'curationHistory',

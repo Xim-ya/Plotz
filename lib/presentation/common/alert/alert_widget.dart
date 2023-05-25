@@ -76,7 +76,7 @@ abstract class AlertWidget {
         margin: isUsedOnTabScreen != null && isUsedOnTabScreen == true
             ? AppInset.bottom46 + AppInset.horizontal8
             : AppInset.horizontal8,
-        padding: AppInset.left24,
+        padding: AppInset.left24 + AppInset.right16 ,
         child: Center(
           child: SizedBox(
             width: double.infinity,

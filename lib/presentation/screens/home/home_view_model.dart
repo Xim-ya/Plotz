@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:go_router/go_router.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
@@ -36,12 +37,14 @@ class HomeViewModel extends NewBaseViewModel {
 
   /// State
   int bannerContentsSliderIndex = 0; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
-  double bannerInfoOpacity = 1.0; // 상단 배너 정보 섹션 opacity
+  BehaviorSubject<double> bannerInfoOpacity =
+      BehaviorSubject<double>.seeded(1.0); // 상단 배너 정보 섹션 opacity
   // 상단 gradient box enable 여부
   bool isScrolledOnPosition = false;
 
   /* [Controllers] */
-  late ScrollController scrollController;
+
+  ScrollController scrollController = ScrollController();
   late CarouselController carouselController;
 
   PagingController<int, CategoryContentSection> get pagingController =>
@@ -61,7 +64,7 @@ class HomeViewModel extends NewBaseViewModel {
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
     bannerContentsSliderIndex = index;
-    notifyListeners();
+
   }
 
   /// Banner 슬라이더가 scroll 되었을 때
@@ -72,13 +75,12 @@ class HomeViewModel extends NewBaseViewModel {
       final remain = 1 - double.parse(integerRemoved);
 
       if (remain > 0.6) {
-        bannerInfoOpacity = remain;
+        bannerInfoOpacity.add(remain);
       } else if (remain > 0.48 && remain < 0.52) {
-        bannerInfoOpacity = 0;
+        bannerInfoOpacity.add(0);
       } else {
-        bannerInfoOpacity = double.parse(integerRemoved);
+        bannerInfoOpacity.add(double.parse(integerRemoved));
       }
-
       notifyListeners();
     }
   }
@@ -123,8 +125,10 @@ class HomeViewModel extends NewBaseViewModel {
 
     if (scrollController.offset >= 390) {
       isScrolledOnPosition = true;
+      notifyListeners();
     } else {
       isScrolledOnPosition = false;
+      notifyListeners();
     }
   }
 
@@ -214,7 +218,7 @@ class HomeViewModel extends NewBaseViewModel {
     /// TODO: 이후에 원인을 파학하고 수정
     loadPagedCategoryCollectionUseCase.initUseCase();
 
-    scrollController = ScrollController();
+    // scrollController = ScrollController();
     scrollController.addListener(() {
       _manageInteractionOnScroll();
     });

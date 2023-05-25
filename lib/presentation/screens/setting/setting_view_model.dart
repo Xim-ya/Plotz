@@ -1,8 +1,5 @@
 import 'dart:developer';
-
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soon_sak/presentation/screens/setting/setting_binding.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SettingViewModel extends NewBaseViewModel {
@@ -80,6 +77,8 @@ class SettingViewModel extends NewBaseViewModel {
     result.fold(
       onSuccess: (_) {
         context.go(AppRoutes.login);
+        TabsBinding.unRegisterDependencies();
+        LoginBinding.dependencies();
       },
       onFailure: (e) {
         AlertWidget.newToast(message: '로그아웃에 실패했습니다. 다시 시도 시도해주세요', context);

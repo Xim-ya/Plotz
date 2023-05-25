@@ -1,6 +1,8 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class RegisterScreen extends BaseScreen<RegisterViewModel> {
+class RegisterScreen extends NewBaseScreen<RegisterViewModel> {
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
@@ -9,7 +11,7 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
       color: AppColor.black,
       child: PageView(
         physics: const NeverScrollableScrollPhysics(),
-        controller: vm.pageViewController,
+        controller: vm(context).pageViewController,
         children: const <Widget>[
           SearchContentPageView(),
           RegisterVideoLinkPageView(),
@@ -32,24 +34,26 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
-              onTap: vm.onBackBtnTapped,
+              onTap: vm(context).onBackBtnTapped,
               child: const Icon(
                 Icons.arrow_back_ios,
                 color: AppColor.mixedWhite,
               ),
             ),
             // 진행 단계 Indicator
-            Obx(
-              () => ToggleButtons(
-                constraints: BoxConstraints.loose(Size.infinite),
-                renderBorder: false,
-                isSelected: vm.selectedSteps,
-                children: [
-                  _circleBtnIndicator('1', vm.selectedSteps[0]),
-                  _circleBtnIndicator('2', vm.selectedSteps[1]),
-                  _circleBtnIndicator('3', vm.selectedSteps[2]),
-                ],
-              ),
+
+            ToggleButtons(
+              constraints: BoxConstraints.loose(Size.infinite),
+              renderBorder: false,
+              isSelected: vmW(context).selectedSteps,
+              children: [
+                _circleBtnIndicator(
+                    '1', vm(context).selectedSteps[0], context),
+                _circleBtnIndicator(
+                    '2', vm(context).selectedSteps[1], context),
+                _circleBtnIndicator(
+                    '3', vm(context).selectedSteps[2], context),
+              ],
             ),
           ],
         ),
@@ -57,7 +61,8 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
     );
   }
 
-  Container _circleBtnIndicator(String step, bool isSelected) {
+  Container _circleBtnIndicator(
+      String step, bool isSelected, BuildContext context) {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.only(right: step == '2' ? 0 : 6),
@@ -81,4 +86,8 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
 
   @override
   bool get resizeToAvoidBottomInset => false;
+
+  @override
+  RegisterViewModel createViewModel(BuildContext context) =>
+      locator<RegisterViewModel>();
 }

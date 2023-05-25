@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
@@ -40,7 +41,7 @@ class ChannelDetailViewModel extends NewBaseViewModel {
       posterImgUrl: item.posterImgUrl,
       subscribersCount: channelInfo.subscribersCount,
     );
-    Get.toNamed(AppRoutes.contentDetail, arguments: argument);
+    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: argument);
   }
 
   // 스크롤 동작 관련 이벤트

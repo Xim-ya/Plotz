@@ -18,7 +18,6 @@ export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_easyloading/flutter_easyloading.dart';
 export 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
-export 'package:get/get.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:shimmer_animation/shimmer_animation.dart';
@@ -130,7 +129,7 @@ export 'package:soon_sak/data/dataSource/version/version_data_source.dart';
 export 'package:soon_sak/data/repository/version/version_repository.dart';
 export 'package:soon_sak/data/api/content/response/channel_response.dart';
 
-// Domain
+// Domain 
 export 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
 export 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 export 'package:soon_sak/domain/enum/tab_loading_state_enum.dart';

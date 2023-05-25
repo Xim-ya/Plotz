@@ -17,9 +17,9 @@ extension ContentDetailSingleContentTabViewModel on ContentDetailViewModel {
 
   /// 유튜브 컨텐츠 썸네일 이미지
   /// 이전 화면에서 전달받은 컨텐츠 썸네일 값이 있다면 해당 데이터 사용. 아니라면 networking한 데이터 사용.
-  RxString? get youtubeImgThumbnailUrl => passedArgument.thumbnailUrl.hasData
-      ? passedArgument.thumbnailUrl!.obs
-      : _youtubeVideoContentInfo?.videoThumbnailUrl.obs;
+  String? get youtubeImgThumbnailUrl => passedArgument.thumbnailUrl.hasData
+      ? passedArgument.thumbnailUrl!
+      : _youtubeVideoContentInfo?.videoThumbnailUrl;
 
   // 유튜브 컨텐츠 조회수
   String? get viewCount => Formatter.formatNumberWithUnit(

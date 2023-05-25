@@ -77,11 +77,17 @@ class UserService {
   /// 네트워크가 불안정할 시 snackBar message를 보여줌
   /// 맨 처음 로드시에는 무조건 [ConnectivityResult.none]을 반환하여
   /// [isReadyToActivate] boolean 값으로 snackbar message 노출 여부를 결정함
-  void listenNetworkConnection() {
+  void listenNetworkConnection(BuildContext context) {
     bool isReadyToActivate = false;
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       if (isReadyToActivate && result == ConnectivityResult.none) {
-        Get.snackbar('네트워크 불안정', 'Wi-Fi 또는 데이터를 활성화 해주세요.');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Wi-Fi 또는 데이터를 활성화 해주세요.'),
+          action: SnackBarAction(
+            label: '확인',
+            onPressed: () {},
+          ),
+        ));
       } else {
         isReadyToActivate = true;
       }
@@ -89,9 +95,9 @@ class UserService {
   }
 
   // 리소스 initialize 메소드
-  Future<void> prepare() async {
+  Future<void> prepare(BuildContext context) async {
     await getUserInfo();
     await checkUserSignInState();
-    listenNetworkConnection();
+    listenNetworkConnection(context);
   }
 }

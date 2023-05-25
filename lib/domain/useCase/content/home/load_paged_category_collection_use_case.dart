@@ -46,7 +46,7 @@ class LoadPagedCategoryCollectionUseCase {
   final ContentService _contentService; // static content key 리스트 호출
 
   /* Variables */
-  final Rxn<List<CategoryContentSection>> categoryContentCollection = Rxn();
+  List<CategoryContentSection>? categoryContentCollection;
   int currentPage = 1;
   bool isPagingAvailable = true;
   bool isInitialState = true;

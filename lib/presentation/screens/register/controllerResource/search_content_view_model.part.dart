@@ -8,11 +8,9 @@ extension FindContentViewModel on RegisterViewModel {
   //       checkContentRegistration: true);
   // }
 
-
   // 검색어가 입력되었을 때
-  VoidCallback get onSearchTermEntered  => pagedSearchHandler.onSearchTermEntered;
-
-
+  VoidCallback get onSearchTermEntered =>
+      pagedSearchHandler.onSearchTermEntered;
 
   // 검색된 컨텐츠 선택 되었을 때
   void onSearchedContentTapped(SearchedContent content) {
@@ -26,6 +24,7 @@ extension FindContentViewModel on RegisterViewModel {
       ),
     );
 
+    notifyListeners();
   }
 
   // 검색 바 'X' 버튼이 클릭 되었을 때
@@ -34,15 +33,19 @@ extension FindContentViewModel on RegisterViewModel {
   }
 
 
-  bool get showContentSbCloseBtn => pagedSearchHandler.showRoundClosedBtn;
   bool get isContentSelected => _selectedContent.hasData;
+
   TextEditingController get textEditingController =>
       pagedSearchHandler.textEditingController;
+
   PagingController<int, SearchedContent> get pagingController =>
       pagedSearchHandler.pagingController;
+
   FocusNode get contentFormFocusNode => pagedSearchHandler.focusNode;
-  int? get selectedContentId  => _selectedContent?.id;
+
+  int? get selectedContentId => _selectedContent?.id;
+
   bool get isInitialState => pagedSearchHandler.isInitialState;
 
-  // Content? get selectedContentDetail => _searchUseCase.selectedContent;
+// Content? get selectedContentDetail => _searchUseCase.selectedContent;
 }

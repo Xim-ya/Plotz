@@ -1,3 +1,4 @@
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.01
@@ -10,15 +11,13 @@ abstract class SearchValidateUrlUseCase {
 
   TextEditingController get textEditingController;
 
-  Rx<ValidationState> get videoUrlValidState;
-
   String? get selectedChannelId;
 
   String? get selectedVideoId;
 
   String get searchedKeyword;
 
-  ValidationState get isVideoValid;
+  BehaviorSubject<ValidationState> get isVideoValid;
 
   bool get showRoundCloseBtn;
 

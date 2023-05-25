@@ -9,7 +9,7 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
 
   /// 헤더 영역 이미지
   String? get headerBackdropImg =>
-      passedArgument.posterImgUrl.obs.value ??
+      passedArgument.posterImgUrl ??
       _contentDescriptionInfo?.posterImgUrl;
 
 

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CurationViewModel extends NewBaseViewModel {
@@ -27,7 +28,6 @@ class CurationViewModel extends NewBaseViewModel {
           inProgressCurations.clear();
           inProgressCurations.addAll(data);
         }
-        print("진행중인 큐레이션 데이터 정보 호출 성공");
         notifyListeners();
       },
       onFailure: (e) {
@@ -38,11 +38,13 @@ class CurationViewModel extends NewBaseViewModel {
 
   // 컨텐츠 등록 스크린으로 이동
   void routeToRegister({required ContentType contentType}) {
+    print("등록 여부 ${locator.isRegistered<CurationViewModel>()}");
+
     AppAnalytics.instance.logEvent(
       name: 'goToCurationProgress',
       parameters: {'type': contentType.name},
     );
-    Get.toNamed(AppRoutes.register, arguments: contentType);
+    context.push(AppRoutes.tabs + AppRoutes.register, extra: contentType);
   }
 
   String randomImgGenerator(ContentType contentType) {
@@ -68,7 +70,6 @@ class CurationViewModel extends NewBaseViewModel {
   @override
   void onInit() {
     super.onInit();
-    print("CURATION VIEW MODEL ONINITED");
     loading = true;
     randomContentImg = RandomImg(
       tvImgPath: tvImgPathList.randomItem(),

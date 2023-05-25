@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:io' show Platform, exit;
 
@@ -14,7 +15,8 @@ import 'dart:io' show Platform, exit;
  *  현재 앱 버전 정보는 [package_info_plus] 라이브러를 이용해서 불러들임
  * */
 
-class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
+class CheckVersionAndNetworkUseCase
+    extends BaseUseCase<BuildContext, Result<void>> {
   CheckVersionAndNetworkUseCase(
       {required VersionRepository repository, required UserService userService})
       : _repository = repository,
@@ -24,7 +26,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
   final UserService _userService;
 
   @override
-  Future<Result<void>> call() async {
+  Future<Result<void>> call(BuildContext context) async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -37,29 +39,27 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         final serverVersionCode = Version.parse(version.versionCode);
         final appVersionCode = Version.parse(packageInfo.version);
 
-
         // 서비스 모듈 버전 정보 저장
         _userService.currentVersionNum = version.versionCode;
-
 
         // 심사를 진행중인 상태라면
         if (version.systemAvailable == 'R' &&
             serverVersionCode != appVersionCode) {
-          showSystemIsNotAvailableModal();
+          showSystemIsNotAvailableModal(context);
           return Result.failure(Exception('배포 진행 중'));
         }
 
         /// 조건 : 시스템 점건 중이거나 작동을 할 수 있는 상태라면
         /// 시스템 점검 모달 노출
         if (version.systemAvailable == 'N') {
-          showSystemIsNotAvailableModal();
+          showSystemIsNotAvailableModal(context);
           return Result.failure(Exception('시스템 점검 중'));
         }
 
         /// 조건: 서버 버전이 현재 앱 버전보다 높다면
         /// 앱 업데이트 모달 노출
         if (serverVersionCode > appVersionCode) {
-          showNeedUpdateModal();
+          showNeedUpdateModal(context);
           return Result.failure(Exception('업데이트 필요'));
         }
 
@@ -70,12 +70,12 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         /// 네트워크 불안정 모달 노출
         if (!(connectivityResult == ConnectivityResult.mobile ||
             connectivityResult == ConnectivityResult.wifi)) {
-          showNetworkIsBadModal();
+          showNetworkIsBadModal(context);
           return Result.failure(Exception('네트워크 불안정'));
         }
 
         /// 알 수 없는 오류라면
-        somethingIsWrongModal();
+        somethingIsWrongModal(context);
         log('CheckVersionInfoUseCase : $e');
         return Result.failure(Exception('알 수 없는 오류'));
       },
@@ -84,11 +84,12 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
 
   /* 모달 노출 메소드 */
 
-  void showSystemIsNotAvailableModal() {
-    Get.dialog(
-      AppDialog.singleBtn(
+  void showSystemIsNotAvailableModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AppDialog.singleBtn(
         onBtnClicked: () async {
-          Get.back();
+          context.pop();
           exit(9);
         },
         title: '시스템 점검 안내',
@@ -97,11 +98,12 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
     );
   }
 
-  void somethingIsWrongModal() {
-    Get.dialog(
-      AppDialog.singleBtn(
+  void somethingIsWrongModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AppDialog.singleBtn(
         onBtnClicked: () async {
-          Get.back();
+          context.pop();
           exit(0);
         },
         title: '오류',
@@ -110,11 +112,12 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
     );
   }
 
-  void showNetworkIsBadModal() {
-    Get.dialog(
-      AppDialog.singleBtn(
+  void showNetworkIsBadModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AppDialog.singleBtn(
         onBtnClicked: () {
-          Get.back();
+          context.pop();
           exit(0);
         },
         title: '네트워크 불안정',
@@ -123,11 +126,12 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
     );
   }
 
-  void showNeedUpdateModal() {
-    Get.dialog(
-      AppDialog.singleBtn(
+  void showNeedUpdateModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) =>       AppDialog.singleBtn(
         onBtnClicked: () async {
-          Get.back();
+          context.pop();
           if (Platform.isIOS) {
             await launchUrl(
               Uri.parse(
@@ -149,5 +153,7 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
       ),
     );
+
+
   }
 }

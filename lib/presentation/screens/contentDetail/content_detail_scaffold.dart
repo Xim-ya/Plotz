@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -195,7 +196,7 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
                   right: 14,
                   duration: const Duration(milliseconds: 160),
                   child: FloatingActionButton(
-                    onPressed: Get.back,
+                    onPressed: context.pop,
                     backgroundColor: AppColor.darkGrey.withOpacity(0.46),
                     child: const Icon(Icons.arrow_back),
                   ),

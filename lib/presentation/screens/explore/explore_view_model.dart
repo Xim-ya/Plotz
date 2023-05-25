@@ -1,21 +1,24 @@
 import 'dart:developer';
 
+import 'package:go_router/go_router.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreViewModel extends NewBaseViewModel {
   /* Variables */
-  List<ExploreContent>? exploreContents;
+  final BehaviorSubject<List<ExploreContent>> exploreContents;
   int swiperIndex = 0;
   bool loopIsOnProgress = false;
   bool alreadyShowedToast = false;
 
-
   /* Controllers */
   late final CarouselController swiperController;
-  ExploreViewModel(
-      {required LoadRandomPagedExploreContentsUseCase exploreContentsUseCase})
-      : _exploreContentsUseCase = exploreContentsUseCase;
+
+  ExploreViewModel({
+    required LoadRandomPagedExploreContentsUseCase exploreContentsUseCase,
+  })  : _exploreContentsUseCase = exploreContentsUseCase,
+        exploreContents = BehaviorSubject<List<ExploreContent>>();
 
   /* UseCases */
   final LoadRandomPagedExploreContentsUseCase _exploreContentsUseCase;
@@ -26,16 +29,28 @@ class ExploreViewModel extends NewBaseViewModel {
 
   // 검색 스크린으로 이동
   void routeToSearch() {
-    Get.toNamed(AppRoutes.search);
+    context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 컨텐츠 상세페이지로 이동
-  void routeToContentDetail(ContentArgumentFormat routingArgument) {
+  void routeToContentDetail(int routingArgument) {
+    final contentItem = exploreContentList![routingArgument];
     AppAnalytics.instance.logEvent(
       name: 'goToContent',
-      parameters: {'explore': routingArgument.originId},
+      parameters: {'explore': contentItem.originId},
     );
-    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
+
+    final arg = ContentArgumentFormat(
+      contentId: SplittedIdAndType.fromOriginId(contentItem.originId).id,
+      contentType: SplittedIdAndType.fromOriginId(contentItem.originId).type,
+      posterImgUrl: contentItem.posterImgUrl,
+      title: contentItem.title,
+      originId: contentItem.originId,
+      channelName: contentItem.channelName,
+      channelLogoImgUrl: contentItem.channelLogoImgUrl,
+      subscribersCount: contentItem.subscribersCount,
+    );
+    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
   }
 
   /// swiper가 이동했을 때 관련 동작
@@ -45,14 +60,15 @@ class ExploreViewModel extends NewBaseViewModel {
   /// 유저에게 toast 메세지를 띄움 (마지막 컨텐츠에서)
   void onSwiperChanged(int index) {
     swiperIndex = index;
-    final exploreContentsLength = exploreContents!.length - 1;
+    final exploreContentsLength = exploreContents.value.length - 1;
     if (index + 4 == exploreContentsLength) {
       loadMoreContents(index);
     }
 
     if (index == exploreContentsLength && alreadyShowedToast == false) {
       unawaited(
-        AlertWidget.newToast(message:'마지막 콘텐츠 입니다', isUsedOnTabScreen: true, context),
+        AlertWidget.newToast(
+            message: '마지막 콘텐츠 입니다', isUsedOnTabScreen: true, context),
       );
       alreadyShowedToast = true; // 더 이상 토스트 메세를 노출하지 않음.
     }
@@ -60,12 +76,11 @@ class ExploreViewModel extends NewBaseViewModel {
 
   /// 컨텐츠 데이터 추가 호출
   Future<void> loadMoreContents(int swiperIndex) async {
-    if (_exploreContentsUseCase.moreCallIsAllowed.isTrue) {
+    if (_exploreContentsUseCase.moreCallIsAllowed == true) {
       final response = await _exploreContentsUseCase.loadMoreContents();
       await response.fold(
         onSuccess: (data) async {
-          exploreContents?.addAll(data);
-          notifyListeners();
+          exploreContents.add(data);
         },
         onFailure: (e) {
           AlertWidget.newToast(
@@ -86,14 +101,12 @@ class ExploreViewModel extends NewBaseViewModel {
     final response = await _exploreContentsUseCase.call();
     response.fold(
       onSuccess: (data) {
-        exploreContents = data;
-        notifyListeners();
+        exploreContents.add(data);
         print('========== ExploreContent 호출 성공 ${data.length}');
       },
       onFailure: (e) {
         AlertWidget.newToast(
-          message:
-          '데이터를 불러오지 못했습니다',
+          message: '데이터를 불러오지 못했습니다',
           isUsedOnTabScreen: true,
           context,
         );
@@ -104,7 +117,7 @@ class ExploreViewModel extends NewBaseViewModel {
 
   /* Getters */
 
-  List<ExploreContent>? get exploreContentList => exploreContents;
+  List<ExploreContent> get exploreContentList => exploreContents.value;
 
   bool get isContentLoaded => exploreContents.hasData && loadingState.isDone;
 

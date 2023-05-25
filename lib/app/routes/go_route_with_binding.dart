@@ -48,19 +48,20 @@ class GoReplaceRouteWithBinding extends GoRoute {
   }) : super(
           path: path,
           builder: (context, state) {
-            final goRouter = GoRouter.of(context).routeInformationProvider;
-            if (path == goRouter.value.location &&
+            final currentLocation = GoRouter.of(context).location;
+
+            print("====> CURRENTLOCATION : ${currentLocation} / PATH : ${path}");
+            print("binding.isDependenciesDeleted ==> ${binding.isDependenciesDeleted}");
+            if (currentLocation.contains(path) &&
                 binding.isDependenciesDeleted == true) {
+              print("발동동");
               binding.dependencies();
               final arg = state.extra;
               if (arg.hasData) {
                 binding.argument = arg;
               }
             }
-            if (path != goRouter.value.location &&
-                binding.isDependenciesDeleted == false) {
-              binding.unRegisterDependencies();
-            }
+
             return newBuilder(context, state);
           },
           routes: routes,
