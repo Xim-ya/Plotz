@@ -15,7 +15,6 @@ class ContentDetailScreen extends NewBaseView<ContentDetailViewModel> {
       tabViews: _buildTabBarViews(),
       headerBgImg: const _HeaderBgImg(),
     );
-
   }
 
   // 탭뷰
@@ -42,8 +41,6 @@ class ContentDetailScreen extends NewBaseView<ContentDetailViewModel> {
       ),
     );
   }
-
-
 }
 
 // 평점 & 장르 뷰
@@ -105,12 +102,9 @@ class _Header extends NewBaseView<ContentDetailViewModel> {
                 context,
                 (vm) => vm.headerTitle.hasData
                     ? Text(vm.headerTitle!, style: AppTextStyle.headline2)
-                    : Shimmer(
-                        color: AppColor.lightGrey,
-                        child: const SizedBox(
-                          height: 28,
-                          width: 40,
-                        ),
+                    : const ShimmerSkeletonBox(
+                        height: 28,
+                        width: 40,
                       ),
               ),
               AppSpace.size6,
@@ -134,14 +128,11 @@ class _Header extends NewBaseView<ContentDetailViewModel> {
                         .copyWith(color: AppColor.lightGrey),
                   )
                 : Column(
-                    children: [
-                      Shimmer(
-                        color: AppColor.lightGrey,
-                        child: const SizedBox(
-                          height: 22,
-                          width: double.infinity,
-                        ),
-                      ),
+                    children: const [
+                      ShimmerSkeletonBox(
+                        height: 22,
+                        width: double.infinity,
+                      )
                     ],
                   ),
           ),
@@ -163,6 +154,7 @@ class _HeaderBgImg extends NewBaseView<ContentDetailViewModel> {
       builder: (context, headerBackdropImg, _) {
         return headerBackdropImg.hasData
             ? CachedNetworkImage(
+                memCacheWidth: (SizeConfig.to.screenWidth * 3).toInt(),
                 width: SizeConfig.to.screenWidth,
                 fit: BoxFit.fitWidth,
                 imageUrl: vmS<String>(

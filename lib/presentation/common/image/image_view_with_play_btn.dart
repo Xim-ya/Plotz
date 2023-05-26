@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.12
@@ -6,15 +7,15 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class ImageViewWithPlayBtn extends StatelessWidget {
-  const ImageViewWithPlayBtn(
-      {Key? key,
-      required this.onPlayerBtnClicked,
-      required this.posterImgUrl,
-      this.checkValidation,
-      this.showPlayerBtn = true,
-      this.aspectRatio = 16 / 9,
-      required,})
-      : super(key: key);
+  const ImageViewWithPlayBtn({
+    Key? key,
+    required this.onPlayerBtnClicked,
+    required this.posterImgUrl,
+    this.checkValidation,
+    this.showPlayerBtn = true,
+    this.aspectRatio = 16 / 9,
+    required,
+  }) : super(key: key);
 
   final void Function()? checkValidation;
   final VoidCallback onPlayerBtnClicked;
@@ -28,36 +29,23 @@ class ImageViewWithPlayBtn extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: onPlayerBtnClicked,
-          child: AspectRatio(
-            aspectRatio: aspectRatio,
-            child: posterImgUrl != null
-                ? CachedNetworkImage(
-                    imageUrl: posterImgUrl!,
-                    imageBuilder: (context, imageProvider) => Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.cover,),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                    placeholder: (context, url) => Shimmer(
-                      child: Container(
-                        color: AppColor.black,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) {
-                      return const Icon(Icons.error);
-                    },
-                  )
-                : Shimmer(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: AppColor.strongGrey,
-                      ),
-                    ),
-                  ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: AspectRatio(
+              aspectRatio: aspectRatio,
+              child: posterImgUrl != null
+                  ? CachedNetworkImage(
+                      memCacheWidth:
+                          (SizeConfig.to.screenWidth * aspectRatio).toInt(),
+                      imageUrl: posterImgUrl!,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const SkeletonBox(),
+                      errorWidget: (context, url, error) {
+                        return const Icon(Icons.error);
+                      },
+                    )
+                  : const SkeletonBox(),
+            ),
           ),
         ),
         if (showPlayerBtn == true)

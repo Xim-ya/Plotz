@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/expandable_text_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -60,11 +61,11 @@ class MainContentTabView extends NewBaseView<ContentDetailViewModel> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: 3,
-        itemBuilder: (__, _) => Shimmer(
-          child: Container(
-            height: 18,
-          ),
+        itemBuilder: (__, _) => const SkeletonBox(
+          height: 18,
         ),
+
+
         separatorBuilder: (BuildContext context, int index) => AppSpace.size4,
       );
     }

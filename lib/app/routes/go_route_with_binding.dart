@@ -8,7 +8,7 @@ class GoRouteWithBinding extends GoRoute {
     required this.binding,
     required String path,
     List<RouteBase> routes = const <RouteBase>[],
-    required String prevPath,
+    required List<String> prevPath,
   }) : super(
           path: path,
           builder: (context, state) {
@@ -26,7 +26,7 @@ class GoRouteWithBinding extends GoRoute {
             }
 
             if (prevLocation!.contains(path) &&
-                currentLocation.contains(prevPath)) {
+                prevPath.any(currentLocation.contains)) {
               binding.unRegisterDependencies();
             }
             return newBuilder(context, state);
@@ -50,8 +50,10 @@ class GoReplaceRouteWithBinding extends GoRoute {
           builder: (context, state) {
             final currentLocation = GoRouter.of(context).location;
 
-            print("====> CURRENTLOCATION : ${currentLocation} / PATH : ${path}");
-            print("binding.isDependenciesDeleted ==> ${binding.isDependenciesDeleted}");
+            print(
+                "====> CURRENTLOCATION : ${currentLocation} / PATH : ${path}");
+            print(
+                "binding.isDependenciesDeleted ==> ${binding.isDependenciesDeleted}");
             if (currentLocation.contains(path) &&
                 binding.isDependenciesDeleted == true) {
               print("발동동");

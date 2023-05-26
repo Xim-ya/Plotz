@@ -34,7 +34,7 @@ class ExploreViewModel extends NewBaseViewModel {
 
   // 컨텐츠 상세페이지로 이동
   void routeToContentDetail(int routingArgument) {
-    final contentItem = exploreContentList![routingArgument];
+    final contentItem = exploreContentList[routingArgument];
     AppAnalytics.instance.logEvent(
       name: 'goToContent',
       parameters: {'explore': contentItem.originId},

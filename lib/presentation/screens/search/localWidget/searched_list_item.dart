@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SearchListItem extends StatelessWidget {
@@ -25,7 +26,7 @@ class SearchListItem extends StatelessWidget {
               child: IconInkWellButton(
                 iconPath: 'assets/icons/play.svg',
                 size: 40,
-                onIconTapped: () {},
+                onIconTapped: onItemClicked,
               ),
             ),
           );
@@ -85,23 +86,23 @@ class SearchListItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: item.posterImgUrl != null
-                      ? FadeInImage(
-                          placeholder: const AssetImage(
-                            'assets/images/skeleton.png',
-                          ),
-                          image: NetworkImage(
-                            item.posterImgUrl!.prefixTmdbImgPath,
-                          ),
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          color: AppColor.darkGrey,
-                          child: const Icon(Icons.error),
-                        ),
-                ),
+                    height: 100,
+                    width: 100,
+                    child: item.posterImgUrl != null
+                        ? CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            memCacheWidth: 270,
+                            imageUrl: item.posterImgUrl!.prefixTmdbImgPath,
+                            placeholder: (context, url) =>
+                                const SkeletonBox(),
+                            errorWidget: (context, url, error) => Container(
+                              color: Colors.grey.withOpacity(0.1),
+                              child: const Center(
+                                child: Icon(Icons.error),
+                              ),
+                            ),
+                          )
+                        : const SkeletonBox()),
               ),
               caseOverlayIndicatorOnImg(),
             ],

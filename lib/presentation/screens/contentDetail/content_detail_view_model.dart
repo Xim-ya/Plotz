@@ -200,7 +200,9 @@ class ContentDetailViewModel extends NewBaseViewModel {
 
       /// 비디오 상세 정보 업데이트
       /// Youtube Api가 실행되는 부분
-      await e.updateVideoDetails(context);
+
+        await e.updateVideoDetails(context);
+
     }
   }
 

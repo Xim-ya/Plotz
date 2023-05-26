@@ -24,7 +24,7 @@ class ContentsGridView extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ContentPostItem(
+                    RatioContentPostItem(
                       imgUrl: item.posterImgUrl,
                     ),
                     const SizedBox(height: 1),

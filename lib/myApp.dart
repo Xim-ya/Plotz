@@ -8,6 +8,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    debugInvertOversizedImages = true;
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Soon Sak',

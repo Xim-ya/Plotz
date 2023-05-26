@@ -28,15 +28,21 @@ class ContentVideoItem {
     if (videoId.contains('&')) {
       selectedVideoId = videoId.substring(0, videoId.indexOf('&'));
     }
+
     final responseRes = await locator<YoutubeRepository>()
         .loadYoutubeVideoContentInfo(selectedVideoId);
+
     responseRes.fold(
       onSuccess: (data) {
         _detailInfoSubject.add(data);
         _detailInfoSubject.close();
       },
       onFailure: (e) {
-        AlertWidget.newToast(message: '유튜브 영상을 호출하는데 실패했어요', context);
+        if (e is VideoUnavailableException) {
+          AlertWidget.newToast(message: '유튜버가 삭제한 영상으로 불러올 수 없습니다', context);
+        } else {
+          AlertWidget.newToast(message: '유튜브 영상을 호출하는데 실패했어요.', context);
+        }
         log(e.toString());
       },
     );

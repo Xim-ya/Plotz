@@ -14,10 +14,17 @@ class LoginScreen extends NewBaseScreen<LoginViewModel> {
       children: [
         // Backdrop 이미지
         Positioned.fill(
-          top: -120,
-          child: Image.asset(
-            'assets/images/login_back_drop.png',
-            fit: BoxFit.fitHeight,
+          top: -140,
+          child: Transform.translate(
+            offset: Offset(0, -240),
+            child: SizedBox(
+              width: 709.25,
+              height: 1008,
+              child: Image.asset(
+                'assets/images/login_back_drop1.png',
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
         Positioned.fill(
@@ -25,18 +32,18 @@ class LoginScreen extends NewBaseScreen<LoginViewModel> {
             color: AppColor.black.withOpacity(0.4),
           ),
         ),
-        Positioned.fill(
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.transparent, AppColor.black, AppColor.black],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: <double>[0.0, 0.7, 1.0],
-              ),
-            ),
-          ),
-        ),
+        // Positioned.fill(
+        //   child: Container(
+        //     decoration: const BoxDecoration(
+        //       gradient: LinearGradient(
+        //         colors: [Colors.transparent, AppColor.black, AppColor.black],
+        //         begin: Alignment.topCenter,
+        //         end: Alignment.bottomCenter,
+        //         stops: <double>[0.0, 0.7, 1.0],
+        //       ),
+        //     ),
+        //   ),
+        // ),
 
         // 서비스 문구
         Positioned.fill(

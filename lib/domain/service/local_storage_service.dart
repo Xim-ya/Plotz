@@ -63,7 +63,7 @@ class LocalStorageService  {
     try {
       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).put(db, data);
-      log('====== 로컬 데이터 저장 성공');
+      log('====== 로컬 데이터 저장 성공 $fieldName');
     } catch (e) {
       log('====== 로컬 데이터 저장 실패 / $e');
     }

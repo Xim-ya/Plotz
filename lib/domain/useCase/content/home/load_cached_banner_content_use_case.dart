@@ -37,6 +37,7 @@ class LoadCachedBannerContentUseCase
         await _localStorageService.getData(fieldName: 'banner');
     final String keyResponse = _contentService.bannerKey!;
 
+
     /// 조건 (AND)
     /// LocalStorage에 데이터가 존재한다면,
     /// 배너키 데이터가 존재한다면
@@ -46,7 +47,7 @@ class LoadCachedBannerContentUseCase
         _isUpdatedKey(jsonText: localData.toString(), givenKey: keyResponse)) {
       return _getBannerModelFromLocal(localData!);
     } else {
-      // 조건 : local data가 존재하지 않는다면
+      // 조건 : local data가 존재하지 않는다면 or 최신키가 아니라면
       // 실행 :  api 호출
       return _fetchBannerModel();
     }
@@ -75,8 +76,8 @@ class LoadCachedBannerContentUseCase
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
     Map<String, dynamic> data = json.decode(jsonText);
-    final response = BannerResponse.fromJson(data);
-    if (response.key == givenKey) {
+    // final response = BannerResponse.fromJson(data);
+    if (data['key'] == givenKey) {
       return true;
     } else {
       return false;

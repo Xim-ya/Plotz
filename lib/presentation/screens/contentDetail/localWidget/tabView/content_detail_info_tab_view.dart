@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/detail_info_tab_view_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -49,15 +50,21 @@ class _ContentImageSectionView extends NewBaseView<ContentDetailViewModel> {
                 itemBuilder: (context, index) {
                   final imgItem = contentImgList![index];
                   return KeepAliveView(
-                    child: FadeInImage(
-                      height: 100,
-                      width: SizeConfig.to.screenWidth - 32,
-                      fit: BoxFit.fitWidth,
-                      placeholder: const AssetImage(
-                        'assets/images/skeleton.png',
-                      ),
-                      image: NetworkImage(
-                        imgItem.prefixTmdbImgPath,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: CachedNetworkImage(
+                        imageUrl: imgItem.prefixTmdbImgPath,
+                        height: 100,
+                        width: SizeConfig.to.screenWidth - 32,
+                        memCacheWidth: (SizeConfig.to.screenWidth - 32).toInt(),
+                        fit: BoxFit.fitWidth,
+                        placeholder: (context, url) => const SkeletonBox(),
+                        errorWidget: (context, url, error) => Container(
+                          color: Colors.grey.withOpacity(0.1),
+                          child: const Center(
+                            child: Icon(Icons.error),
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -264,35 +271,25 @@ class _CreditSectionView extends NewBaseView<ContentDetailViewModel> {
                         children: <Widget>[
                           ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: Shimmer(
-                              color: AppColor.mixedWhite,
-                              child: Container(
-                                height: 62,
-                                width: 62,
-                                decoration:
-                                    const BoxDecoration(shape: BoxShape.circle),
-                              ),
+                            child: const SkeletonBox(
+                              borderRadius: 32,
+                              height: 62,
+                              width: 62,
                             ),
                           ),
                           AppSpace.size14,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Shimmer(
-                                color: AppColor.mixedWhite,
-                                child: const SizedBox(
-                                  width: 56,
-                                  height: 18,
-                                ),
+                            children: const [
+                              SkeletonBox(
+                                width: 56,
+                                height: 18,
                               ),
                               AppSpace.size8,
-                              Shimmer(
-                                color: AppColor.mixedWhite,
-                                child: const SizedBox(
-                                  height: 18,
-                                  width: 30,
-                                ),
-                              ),
+                              SkeletonBox(
+                                height: 18,
+                                width: 30,
+                              )
                             ],
                           ),
                         ],

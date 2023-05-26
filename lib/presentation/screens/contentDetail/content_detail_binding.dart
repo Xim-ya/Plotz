@@ -42,5 +42,6 @@ class ContentDetailBinding extends CustomBindings {
     locator.unregister<LoadContentCreditInfoUseCase>();
     locator.unregister<LoadContentImgListUseCase>();
     locator.unregister<LoadContentOfVideoListUseCase>();
+    
   }
 }

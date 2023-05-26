@@ -4,6 +4,7 @@ import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -52,9 +53,9 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
                           style: AppTextStyle.title2,
                         )
                       : const SkeletonBox(
-                          padding: AppInset.vertical4,
-                          width: 108,
-                          height: 16,
+                          padding: AppInset.vertical1,
+                          width: 92,
+                          height: 18,
                         ),
                 ),
                 AppSpace.size7,
@@ -78,7 +79,8 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
                             title: item.title,
                           );
                           value.routeToContentDetail(
-                            context, argument,
+                            context,
+                            argument,
                             sectionType: 'topTen',
                           );
                         },
@@ -157,48 +159,45 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        GestureDetector(
-            onTap: () {},
-            child: Selector<HomeViewModel, BannerModel?>(
-              selector: (context, vm) => vm.bannerContents,
-              builder: (context, BannerModel? bannerModel, child) {
-                return GestureDetector(
-                  onTap: () {
-                    if (bannerModel.hasData) {
-                      vm(context).routeToBannerContentDetail(context);
-                    }
-                  },
-                  child: CarouselSlider.builder(
-                    carouselController: vm(context).carouselController,
-                    itemCount: bannerModel?.contentList.length ?? 2,
-                    options: CarouselOptions(
-                      height: 500,
-                      autoPlay: true,
-                      autoPlayAnimationDuration:
-                          const Duration(milliseconds: 1800),
-                      onPageChanged: (index, _) {
-                        vm(context).onBannerSliderSwiped(index);
-                      },
-                      onScrolled: vm(context).onBannerSliderScrolled,
-                      viewportFraction: 1,
-                    ),
-                    itemBuilder: (BuildContext context, int itemIndex,
-                        int pageViewIndex) {
-                      if (bannerModel.hasData) {
-                        final BannerItem item =
-                            bannerModel!.contentList[itemIndex];
-                        return CachedNetworkImage(
-                          imageUrl: item.imgUrl,
-                          fit: BoxFit.fitHeight,
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  ),
-                );
+        Selector<HomeViewModel, BannerModel?>(
+          selector: (context, vm) => vm.bannerContents,
+          builder: (context, BannerModel? bannerModel, child) {
+            return GestureDetector(
+              onTap: () {
+                if (bannerModel.hasData) {
+                  vm(context).routeToBannerContentDetail(context);
+                }
               },
-            )),
+              child: CarouselSlider.builder(
+                carouselController: vm(context).carouselController,
+                itemCount: bannerModel?.contentList.length ?? 2,
+                options: CarouselOptions(
+                  height: 500,
+                  autoPlay: true,
+                  autoPlayAnimationDuration: const Duration(milliseconds: 1800),
+                  onPageChanged: (index, _) {
+                    vm(context).onBannerSliderSwiped(index);
+                  },
+                  onScrolled: vm(context).onBannerSliderScrolled,
+                  viewportFraction: 1,
+                ),
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) {
+                  if (bannerModel.hasData) {
+                    final BannerItem item = bannerModel!.contentList[itemIndex];
+                    return CachedNetworkImage(
+                      memCacheHeight: (SizeConfig.to.screenWidth * 2.6).toInt(),
+                      imageUrl: item.imgUrl,
+                      fit: BoxFit.fitHeight,
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
+            );
+          },
+        ),
 
         // 하단 그레디언트,  Bottom Gradient Container
         Positioned(
@@ -242,31 +241,38 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
                   return StreamBuilder<double>(
                     stream: vm.bannerInfoOpacity.stream,
                     builder: (context, snapshot) {
-                      return AnimatedOpacity(
-                        duration: const Duration(milliseconds: 100),
-                        opacity: snapshot.data!,
-                        child: Column(
-                          children: [
-                            Text(
-                              vmS(
-                                  context,
-                                      (value) =>
-                                  value.selectedBannerContent?.title ?? ''),
-                              style:
-                              AppTextStyle.web3.copyWith(letterSpacing: -0.2),
-                            ),
-                            AppSpace.size4,
-                            Text(
-                              vmS(
-                                  context,
-                                      (value) =>
-                                  value.selectedBannerContent?.genre ?? ''),
-                              style: AppTextStyle.alert2.copyWith(
-                                  color: AppColor.gray03, letterSpacing: -0.2),
-                            ),
-                          ],
-                        ),
-                      );
+                      if (snapshot.hasData) {
+                        return AnimatedOpacity(
+                          duration: const Duration(milliseconds: 100),
+                          opacity: snapshot.data!,
+                          child: Column(
+                            children: [
+                              Text(
+                                vmS(
+                                    context,
+                                    (value) =>
+                                        value.selectedBannerContent?.title ??
+                                        ''),
+                                style: AppTextStyle.web3
+                                    .copyWith(letterSpacing: -0.2),
+                              ),
+                              AppSpace.size4,
+                              Text(
+                                vmS(
+                                    context,
+                                    (value) =>
+                                        value.selectedBannerContent?.genre ??
+                                        ''),
+                                style: AppTextStyle.alert2.copyWith(
+                                    color: AppColor.gray03,
+                                    letterSpacing: -0.2),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
                     },
                   );
                 }),
@@ -319,7 +325,8 @@ class _PagedCategoryCollection extends NewBaseView<HomeViewModel> {
               posterImgUrl: item.contents[nestedIndex].posterImgUrl,
               originId: item.contents[nestedIndex].originId,
             );
-            vm(context).routeToContentDetail(context, argument, sectionType: 'category');
+            vm(context).routeToContentDetail(context, argument,
+                sectionType: 'category');
           },
         );
       },
@@ -365,37 +372,24 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
                               originId: item.originId,
                             );
                             vm(context).routeToContentDetail(
-                              context, argument,
+                              context,
+                              argument,
                               sectionType: 'topTen',
                             );
                           },
                           child: Stack(children: <Widget>[
-                            CachedNetworkImage(
-                              height: 140,
-                              width: 220,
-                              fit: BoxFit.cover,
-                              imageUrl: item.posterImgUrl.prefixTmdbImgPath,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(
-                                    width: 0.75,
-                                    color: AppColor.gray06,
-                                  ),
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: CachedNetworkImage(
+                                memCacheWidth: 220 * 3,
+                                height: 140,
+                                width: 220,
+                                fit: BoxFit.cover,
+                                imageUrl: item.posterImgUrl.prefixTmdbImgPath,
+                                placeholder: (context, url) => const SkeletonBox(),
+                                errorWidget: (context, url, error) =>
+                                    const Center(child: Icon(Icons.error)),
                               ),
-                              placeholder: (context, url) => Shimmer(
-                                child: Container(
-                                  color: AppColor.black,
-                                ),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const Center(child: Icon(Icons.error)),
                             ),
                             Positioned(
                               bottom: 0,
@@ -427,18 +421,9 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
                           ]),
                         );
                       } else {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0.75,
-                              color: AppColor.gray06,
-                            ),
-                          ),
-                          child: const SkeletonBox(
-                            borderRadius: 4,
-                            height: 140,
-                            width: 220,
-                          ),
+                        return const SkeletonBox(
+                          height: 140,
+                          width: 220,
                         );
                       }
                     }),
@@ -502,17 +487,9 @@ class _ChannelSlider extends NewBaseView<HomeViewModel> {
                         },
                         child: Column(
                           children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                    color: AppColor.gray06, width: 0.75),
-                              ),
-                              child: RoundProfileImg(
-                                size: 88,
-                                imgUrl:
-                                    vm(context).channelItem(index).logoImgUrl,
-                              ),
+                            RoundProfileImg(
+                              size: 88,
+                              imgUrl: vm(context).channelItem(index).logoImgUrl,
                             ),
                             const SizedBox(height: 5),
                             SizedBox(

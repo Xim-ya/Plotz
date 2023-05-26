@@ -60,8 +60,8 @@ class LoadPagedCategoryCollectionUseCase {
   // 'key' 값이 최신화 되어 있는지 확인
   bool _isRecentKey({required String jsonText, required String givenKey}) {
     Map<String, dynamic> data = json.decode(jsonText);
-    final response = CategoryContentCollectionResponse.fromJson(data);
-    if (response.key == givenKey) {
+    // final response = CategoryContentCollectionResponse.fromJson(data);
+    if (data['key'] == givenKey) {
       return true;
     } else {
       return false;

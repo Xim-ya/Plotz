@@ -64,7 +64,6 @@ class HomeViewModel extends NewBaseViewModel {
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
     bannerContentsSliderIndex = index;
-
   }
 
   /// Banner 슬라이더가 scroll 되었을 때
@@ -141,7 +140,7 @@ class HomeViewModel extends NewBaseViewModel {
   void routeToChannelDetail(BuildContext context,
       {required int selectedIndex}) {
     context.push(AppRoutes.channelDetail, extra: channelList![selectedIndex]);
-  }
+  } 
 
   // 채널 리스트 호출
   Future<void> _fetchChannelList() async {
@@ -149,6 +148,7 @@ class HomeViewModel extends NewBaseViewModel {
     response.fold(
       onSuccess: (data) {
         channelList = data;
+        notifyListeners();
       },
       onFailure: (e) {
         log('HomeViewModel : 채널 리스트 호출 실패');
@@ -162,6 +162,7 @@ class HomeViewModel extends NewBaseViewModel {
     response.fold(
       onSuccess: (data) {
         topTenContents = data;
+        notifyListeners();
       },
       onFailure: (e) {
         AlertWidget.newToast(
@@ -180,6 +181,7 @@ class HomeViewModel extends NewBaseViewModel {
     response.fold(
       onSuccess: (data) {
         bannerContents = data;
+        notifyListeners();
       },
       onFailure: (e) {
         AlertWidget.newToast(
@@ -197,6 +199,7 @@ class HomeViewModel extends NewBaseViewModel {
     final response = await _loadCachedTopPositionedContentsUseCase.call();
     response.fold(onSuccess: (data) {
       topPositionedCategory = data;
+      notifyListeners();
     }, onFailure: (e) {
       AlertWidget.newToast(
           message: '일부 콘텐츠를 불러오는데 실패했습니다', isUsedOnTabScreen: true, context);
@@ -219,9 +222,7 @@ class HomeViewModel extends NewBaseViewModel {
     loadPagedCategoryCollectionUseCase.initUseCase();
 
     // scrollController = ScrollController();
-    scrollController.addListener(() {
-      _manageInteractionOnScroll();
-    });
+    scrollController.addListener(_manageInteractionOnScroll);
 
     carouselController = CarouselController();
 
@@ -232,6 +233,6 @@ class HomeViewModel extends NewBaseViewModel {
       _fetchTopTenContents(),
       _fetchChannelList(),
     ]);
-    notifyListeners();
+
   }
 }

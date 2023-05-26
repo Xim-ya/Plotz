@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class YoutubeRepositoryImpl extends YoutubeRepository with IsolateHelper {
@@ -27,9 +28,14 @@ class YoutubeRepositoryImpl extends YoutubeRepository with IsolateHelper {
     String videoId,
   ) async {
     try {
-      final video =
-          await loadWithIsolate(() => YoutubeMetaData.yt.videos.get(videoId));
-      return Result.success(YoutubeVideoContentInfo.fromResponse(video));
+      return await loadWithIsolate(() async {
+        try {
+          final response = await YoutubeMetaData.yt.videos.get(videoId);
+          return Result.success(YoutubeVideoContentInfo.fromResponse(response));
+        } on Exception catch (e) {
+          return Result.failure(e);
+        }
+      });
     } on Exception catch (e) {
       return Result.failure(e);
     }

@@ -48,10 +48,13 @@ class LoadCachedTopTenContentsUseCase
           jsonText: localData.toString(),
           givenKey: keyResponse,
         )) {
+      print("1111");
       return _getTopTenModelFromLocal(localData!);
     } else {
       // 조건 : local data가 존재하지 않는다면
       // 실행 :  api 호출
+      print('222');
+
       return fetchTopTenContent();
     }
   }
@@ -80,9 +83,7 @@ class LoadCachedTopTenContentsUseCase
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
     Map<String, dynamic> data = json.decode(jsonText);
-    final response = TopTenContentResponse.fromJson(data);
-
-    if (response.key == givenKey) {
+    if (data['key'] == givenKey) {
       return true;
     } else {
       return false;

@@ -1,12 +1,12 @@
 import 'package:soon_sak/utilities/index.dart';
 
 class CurationGridItemView extends StatelessWidget {
-  const CurationGridItemView(
-      {Key? key,
-      required this.posterImgUrl,
-      required this.curatorProfileImgUrl,
-      required this.curatorName,})
-      : super(key: key);
+  const CurationGridItemView({
+    Key? key,
+    required this.posterImgUrl,
+    required this.curatorProfileImgUrl,
+    required this.curatorName,
+  }) : super(key: key);
 
   final String? posterImgUrl;
   final String? curatorProfileImgUrl;
@@ -19,6 +19,7 @@ class CurationGridItemView extends StatelessWidget {
         // 컨텐츠 포스터 이미지
         Positioned.fill(
           child: LinearLayeredPosterImg(
+            usedInCuration: true,
             linearColor: Colors.black.withOpacity(0.8),
             linearStep: const [0.1, 0.2, 1],
             imgUrl: posterImgUrl,
@@ -47,8 +48,7 @@ class CurationGridItemView extends StatelessWidget {
               SizedBox(
                 width: (SizeConfig.to.screenWidth - 32) / 2 - 56,
                 child: Text(
-                  curatorName.hasData ?
-                  '$curatorName님' : '익명유저',
+                  curatorName.hasData ? '$curatorName님' : '익명유저',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.title3,
@@ -58,6 +58,6 @@ class CurationGridItemView extends StatelessWidget {
           ),
         ),
       ],
-    );  
+    );
   }
 }

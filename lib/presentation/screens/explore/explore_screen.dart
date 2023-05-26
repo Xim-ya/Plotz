@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
@@ -32,12 +33,9 @@ class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
             if (item.hasData)
               Text(item!.title, style: AppTextStyle.headline2)
             else
-              Shimmer(
-                color: AppColor.lightGrey,
-                child: const SizedBox(
-                  height: 28,
-                  width: 40,
-                ),
+              const SkeletonBox(
+                height: 28,
+                width: 40,
               ),
             AppSpace.size6,
             Text(
@@ -114,6 +112,7 @@ class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
                   if (snapshot.data.hasData)
                     CachedNetworkImage(
                       imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
+                      memCacheWidth: (SizeConfig.to.screenWidth * 3).toInt(),
                       height: double.infinity,
                       fit: BoxFit.cover,
                     )
@@ -173,12 +172,9 @@ class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
             if (item.hasData)
               Text(item!.title, style: AppTextStyle.headline2)
             else
-              Shimmer(
-                color: AppColor.lightGrey,
-                child: const SizedBox(
-                  height: 28,
-                  width: 40,
-                ),
+              const SkeletonBox(
+                height: 28,
+                width: 40,
               ),
             AppSpace.size6,
             Text(

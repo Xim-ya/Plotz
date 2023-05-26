@@ -5,6 +5,7 @@ import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart
 import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/presentation/common/gridView/paged_grid_list_view.dart';
 import 'package:soon_sak/presentation/common/image/circle_img.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
 import 'package:soon_sak/presentation/screens/channel/localWidget/channel_detail_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -52,22 +53,16 @@ class _PagedPosterGridView extends NewBaseView<ChannelDetailViewModel> {
                 child: AspectRatio(
                   aspectRatio: 109 / 165,
                   child: CachedNetworkImage(
-                    fit: BoxFit.cover,
+                    memCacheWidth:
+                        (SizeConfig.to.screenWidth * (109 / 165)).toInt(),
                     imageUrl: item.posterImgUrl.prefixTmdbImgPath,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
+                    placeholder: (context, url) => const SkeletonBox(),
+                    errorWidget: (_, __, ___) => Container(
+                      color: Colors.grey.withOpacity(0.1),
+                      child: const Center(
+                        child: Icon(Icons.error),
                       ),
                     ),
-                    placeholder: (context, url) => Container(
-                      color: AppColor.gray07,
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Center(child: Icon(Icons.error)),
                   ),
                 ),
               ),

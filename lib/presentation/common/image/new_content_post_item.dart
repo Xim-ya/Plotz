@@ -1,3 +1,5 @@
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.05.08
@@ -20,70 +22,60 @@ class NewContentPostItem extends StatelessWidget {
   final String? imgUrl;
   final String? title;
   final double borderRadius;
+
   final double height;
   final double width;
 
   @override
   Widget build(BuildContext context) {
     if (imgUrl.hasData && title.hasData) {
-      return SizedBox(
-            width: 92,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CachedNetworkImage(
-                  height: 140,
-                  fit: BoxFit.cover,
-                  imageUrl: imgUrl!.prefixTmdbImgPath,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                      border: Border.all(width: 0.75, color: AppColor.gray06),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  placeholder: (context, url) => Shimmer(
-                    child: Container(
-                      color: AppColor.black,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) =>
-                      const Center(child: Icon(Icons.error)),
-                ),
-                AppSpace.size4,
-                Text(
-                  title ?? '',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: PretendardTextStyle.regular(
-                    height: 14,
-                    size: 10,
-                    letterSpacing: -0.2,
-                  ),
-                ),
-              ],
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: CachedNetworkImage(
+              fit: BoxFit.cover,
+              imageUrl: imgUrl!.prefixTmdbImgPath,
+              placeholder: (context, url) => const SkeletonBox(),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
+              width: width,
+              height: height,
+              memCacheHeight: (height * 3).toInt(),
             ),
-          );
+          ),
+          AppSpace.size4,
+          Text(
+            title ?? '',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: PretendardTextStyle.regular(
+              height: 14,
+              size: 10,
+              letterSpacing: -0.2,
+            ),
+          ),
+        ],
+      );
     } else {
       return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SkeletonBox(
-                height: 140,
-                width: 92,
-              ),
-              AppSpace.size6,
-              SizedBox(
-                height: 10,
-                width: 40,
-                child: SkeletonBox(),
-              )
-            ],
-          );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SkeletonBox(
+            borderRadius: borderRadius,
+            height: 140,
+            width: 92,
+          ),
+          AppSpace.size6,
+          const SkeletonBox(
+            borderRadius: 4,
+            height: 10,
+            width: 40,
+          )
+        ],
+      );
     }
   }
 }

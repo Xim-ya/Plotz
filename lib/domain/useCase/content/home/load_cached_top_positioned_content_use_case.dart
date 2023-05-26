@@ -87,9 +87,7 @@ class LoadCachedTopPositionedContentsUseCase
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
     Map<String, dynamic> data = json.decode(jsonText);
-    final response = TopPositionedCollectionResponse.fromJson(data);
-
-    if (response.key == givenKey) {
+    if (data['key'] == givenKey) {
       return true;
     } else {
       return false;

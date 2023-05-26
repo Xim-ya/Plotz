@@ -42,7 +42,7 @@ dependencies:
 
   #Network
   video_url_validator: ^1.0.2
-  youtube_explode_dart: ^1.12.3 # 유튜브 meta data
+  youtube_explode_dart: ^1.12.4 # 유튜브 meta data
   connectivity_plus: ^3.0.3 # 네트워크 연결 상태 관리
   retrofit: '>=3.0.0 <4.0.0'
   dio: ^4.0.6

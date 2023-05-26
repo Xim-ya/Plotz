@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.1.1
@@ -66,14 +67,11 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                           style: AppTextStyle.body3,
                         )
                       else
-                        Padding(
-                          padding: const EdgeInsets.only(left: 2),
-                          child: Shimmer(
-                            color: AppColor.lightGrey,
-                            child: const SizedBox(
-                              height: 16,
-                              width: 20,
-                            ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 2),
+                          child: SkeletonBox(
+                            height: 16,
+                            width: 24,
                           ),
                         ),
                     ],
@@ -86,21 +84,15 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                     )
                   else
                     Row(
-                      children: <Widget>[
-                        Shimmer(
-                          child: Container(
-                            color: AppColor.lightGrey.withOpacity(0.1),
-                            height: 16,
-                            width: 70,
-                          ),
+                      children: const <Widget>[
+                        SkeletonBox(
+                          height: 16,
+                          width: 70,
                         ),
                         AppSpace.size6,
-                        Shimmer(
-                          child: Container(
-                            color: AppColor.strongGrey,
-                            height: 16,
-                            width: 36,
-                          ),
+                        SkeletonBox(
+                          height: 16,
+                          width: 36,
                         ),
                       ],
                     ),
@@ -170,14 +162,11 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                                   style: AppTextStyle.body3,
                                 )
                               else
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 2),
-                                  child: Shimmer(
-                                    color: AppColor.lightGrey,
-                                    child: const SizedBox(
-                                      height: 16,
-                                      width: 20,
-                                    ),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 2),
+                                  child: SkeletonBox(
+                                    height: 16,
+                                    width: 20,
                                   ),
                                 ),
                             ],
@@ -189,21 +178,15 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                             )
                           else
                             Row(
-                              children: <Widget>[
-                                Shimmer(
-                                  child: Container(
-                                    color: AppColor.lightGrey.withOpacity(0.1),
-                                    height: 16,
-                                    width: 70,
-                                  ),
+                              children: const <Widget>[
+                                SkeletonBox(
+                                  height: 16,
+                                  width: 70,
                                 ),
                                 AppSpace.size6,
-                                Shimmer(
-                                  child: Container(
-                                    color: AppColor.strongGrey,
-                                    height: 16,
-                                    width: 36,
-                                  ),
+                                SkeletonBox(
+                                  height: 16,
+                                  width: 36,
                                 ),
                               ],
                             ),
@@ -254,14 +237,11 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                           style: AppTextStyle.body3,
                         )
                       else
-                        Padding(
-                          padding: const EdgeInsets.only(left: 2),
-                          child: Shimmer(
-                            color: AppColor.lightGrey,
-                            child: const SizedBox(
-                              height: 16,
-                              width: 20,
-                            ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 2),
+                          child: SkeletonBox(
+                            height: 16,
+                            width: 20,
                           ),
                         ),
                     ],
@@ -274,22 +254,16 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                     )
                   else
                     Row(
-                      children: <Widget>[
-                        Shimmer(
-                          child: Container(
-                            color: AppColor.lightGrey.withOpacity(0.1),
-                            height: 16,
-                            width: 70,
-                          ),
+                      children: const <Widget>[
+                        SkeletonBox(
+                          height: 16,
+                          width: 70,
                         ),
                         AppSpace.size6,
-                        Shimmer(
-                          child: Container(
-                            color: AppColor.strongGrey,
-                            height: 16,
-                            width: 36,
-                          ),
-                        ),
+                        SkeletonBox(
+                          height: 16,
+                          width: 36,
+                        )
                       ],
                     ),
                 ],
@@ -368,14 +342,14 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(
-                                  width: vm(context).seasonEpisodeImgWidth,
-                                  child: SkeletonBox(
-                                    height: vm(context).seasonEpisodeImgWidth *
-                                        3 /
-                                        2,
                                     width: vm(context).seasonEpisodeImgWidth,
-                                  ),
-                                ),
+                                    child: SkeletonBox(
+                                      height:
+                                          vm(context).seasonEpisodeImgWidth *
+                                              3 /
+                                              2,
+                                      width: vm(context).seasonEpisodeImgWidth,
+                                    )),
                                 AppSpace.size10,
                                 Expanded(
                                   child: Column(
@@ -386,7 +360,10 @@ class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
                                             vm(context).seasonEpisodeImgWidth -
                                             42,
                                       ),
+
                                       AppSpace.size2,
+
+
                                       SkeletonBox(
                                         height: 16,
                                         width: SizeConfig.to.screenWidth -

@@ -75,8 +75,10 @@ Future<void> _isolateEntry(_IsolateEntryPayload payload) async {
     );
   } on MissingPluginException catch (e) {
     print(e.toString());
+    print("문제가 있음");
     return Future.error(e.toString());
   }
+
 
   final result = await function();
   payload.sendPort.send(result);
@@ -94,3 +96,4 @@ class _IsolateEntryPayload {
   final SendPort sendPort;
   final RootIsolateToken rootIsolateToken;
 }
+

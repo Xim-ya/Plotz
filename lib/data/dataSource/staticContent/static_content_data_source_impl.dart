@@ -26,7 +26,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
   Future<TopTenContentResponse> loadTopTenContents() async {
     final response = await _api.loadTopTenContents();
     await _localStorage.saveData(
-        fieldName: 'topTenContent', data: jsonEncode(response.data));
+        fieldName: 'topTen', data: jsonEncode(response.data));
     final json = jsonDecode(response.toString());
 
     return TopTenContentResponse.fromJson(json);

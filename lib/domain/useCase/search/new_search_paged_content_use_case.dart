@@ -114,7 +114,6 @@ class NewSearchedPagedContentUseCase with SearchHandlerMixin {
         if (isLastPage) {
           log('LAST PAGE CALLED');
           controller.appendLastPage(searchedContents);
-          pagingController.dispose();
         } else {
           log('FIRST PAGE CALLED');
           print("다음 페이지 ${data.page}");

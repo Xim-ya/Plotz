@@ -42,25 +42,25 @@ abstract class NewAppPages {
         routes: [
           GoRouteWithBinding(
             path: 'contentDetail',
-            prevPath: AppRoutes.tabs,
+            prevPath: const [AppRoutes.tabs, AppRoutes.contentDetail],
             binding: ContentDetailBinding(),
             newBuilder: (context, state) => ContentDetailScreen(),
           ),
           GoRouteWithBinding(
             path: 'register',
-            prevPath: AppRoutes.tabs,
+            prevPath: const [AppRoutes.tabs],
             binding: RegisterBinding(),
             newBuilder: (context, state) => RegisterScreen(),
           ),
           GoRouteWithBinding(
             path: 'search',
-            prevPath: AppRoutes.tabs,
+            prevPath: const [AppRoutes.tabs],
             binding: SearchBinding(),
             newBuilder: (context, state) => SearchScreen(),
             routes: [
               GoRouteWithBinding(
                 path: 'contentDetail',
-                prevPath: AppRoutes.tabs + AppRoutes.search,
+                prevPath: const [AppRoutes.tabs + AppRoutes.search],
                 binding: ContentDetailBinding(),
                 newBuilder: (context, state) => ContentDetailScreen(),
               ),
@@ -68,19 +68,19 @@ abstract class NewAppPages {
           ),
           GoRouteWithBinding(
             path: 'curationHistory',
-            prevPath: AppRoutes.tabs,
+            prevPath: const [AppRoutes.tabs],
             binding: CurationHistoryBinding(),
             newBuilder: (context, state) => const CurationHistoryScreen(),
           ),
           GoRouteWithBinding(
             path: 'setting',
-            prevPath: AppRoutes.tabs,
+            prevPath: const [AppRoutes.tabs],
             binding: SettingBinding(),
             newBuilder: (context, state) => const SettingScreen(),
             routes: [
               GoRouteWithBinding(
                 path: 'profileSetting',
-                prevPath: AppRoutes.tabs + AppRoutes.setting,
+                prevPath: const [AppRoutes.tabs + AppRoutes.setting],
                 binding: ProfileSettingBinding(),
                 newBuilder: (context, state) => const ProfileSettingScreen(),
               ),
@@ -90,15 +90,9 @@ abstract class NewAppPages {
       ),
       GoRouteWithBinding(
         path: AppRoutes.channelDetail,
-        prevPath: AppRoutes.tabs,
+        prevPath: const [AppRoutes.tabs],
         binding: ChannelDetailBinding(),
         newBuilder: (context, state) => ChannelDetailScreen(),
-      ),
-      GoRouteWithBinding(
-        path: '/temp',
-        prevPath: AppRoutes.channelDetail,
-        binding: SplashBinding(),
-        newBuilder: (context, state) => TempScreen(),
       ),
     ],
   );
