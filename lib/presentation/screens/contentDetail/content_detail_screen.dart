@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/presentation/base/stateful_base_screen.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentDetailScreen extends NewBaseView<ContentDetailViewModel> {
@@ -88,59 +89,67 @@ class _Header extends NewBaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      height: 480,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          // 제목 & 날짜
-          Row(
-            children: <Widget>[
-              vmS(
-                context,
-                (vm) => vm.headerTitle.hasData
-                    ? Text(vm.headerTitle!, style: AppTextStyle.headline2)
-                    : const ShimmerSkeletonBox(
-                        height: 28,
-                        width: 40,
+    return Consumer<ContentDetailViewModel>(
+        builder: (context, vm, _) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              height: 480,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  // 제목 & 날짜
+                  Row(
+                    children: <Widget>[
+                      vmS(
+                        context,
+                        (vm) => vm.headerTitle.hasData
+                            ? Text(vm.headerTitle!,
+                                style: AppTextStyle.headline2)
+                            : const ShimmerSkeletonBox(
+                                height: 28,
+                                width: 40,
+                              ),
                       ),
-              ),
-              AppSpace.size6,
-              Text(
-                vmS(context,
-                    (vm) => vm.releaseDate.hasData ? vm.releaseDate! : '-'),
-                style: AppTextStyle.alert2,
-              ),
-            ],
-          ),
-          AppSpace.size8,
-          // 컨텐츠 설명 - (유튜브 영상 제목)
-          vmS(
-            context,
-            (vm) => vm.headerContentDesc.hasData
-                ? Text(
-                    vm.headerContentDesc!,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.headline3
-                        .copyWith(color: AppColor.lightGrey),
-                  )
-                : Column(
-                    children: const [
-                      ShimmerSkeletonBox(
-                        height: 22,
-                        width: double.infinity,
-                      )
+                      AppSpace.size6,
+                      vmS(
+                          context,
+                          (vm) => vm.releaseDate.hasData
+                              ? Text(
+                                  vm.releaseDate!,
+                                  style: AppTextStyle.alert2,
+                                )
+                              : const ShimmerSkeletonBox(
+                                  height: 10,
+                                  width: 44,
+                                )),
                     ],
                   ),
-          ),
+                  AppSpace.size8,
+                  // 컨텐츠 설명 - (유튜브 영상 제목)
+                  vmS(
+                    context,
+                    (vm) => vm.headerContentDesc.hasData
+                        ? Text(
+                            vm.headerContentDesc!,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyle.headline3
+                                .copyWith(color: AppColor.lightGrey),
+                          )
+                        : Column(
+                            children: const [
+                              ShimmerSkeletonBox(
+                                height: 22,
+                                width: double.infinity,
+                              )
+                            ],
+                          ),
+                  ),
 
-          AppSpace.size24,
-        ],
-      ),
-    );
+                  AppSpace.size24,
+                ],
+              ),
+            ));
   }
 }
 

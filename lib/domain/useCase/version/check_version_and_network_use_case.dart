@@ -83,7 +83,6 @@ class CheckVersionAndNetworkUseCase
   }
 
   /* 모달 노출 메소드 */
-
   void showSystemIsNotAvailableModal(BuildContext context) {
     showDialog(
       context: context,
@@ -140,7 +139,6 @@ class CheckVersionAndNetworkUseCase
               mode: LaunchMode.externalApplication,
             );
           } else if (Platform.isAndroid) {
-            // TODO : 앱 코드 변경 필요[ANDROID]
             await launchUrl(
               Uri.parse(
                 'https://play.google.com/store/apps/details?id=com.soon_sak',
@@ -150,10 +148,34 @@ class CheckVersionAndNetworkUseCase
           }
         },
         title: '업데이트 안내',
-        description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
+        subTitle: 'Plotz로 앱이 새롭게 리뉴얼 되었습니다.',
+        description: '최신 기능을 이용하기 위해 업데이트를 진행해주세요',
       ),
     );
-
-
+    // showDialog(
+    //   context: context,
+    //   builder: (_) =>       AppDialog.singleBtn(
+    //     onBtnClicked: () async {
+    //       context.pop();
+    //       if (Platform.isIOS) {
+    //         await launchUrl(
+    //           Uri.parse(
+    //             'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',
+    //           ),
+    //           mode: LaunchMode.externalApplication,
+    //         );
+    //       } else if (Platform.isAndroid) {
+    //         await launchUrl(
+    //           Uri.parse(
+    //             'https://play.google.com/store/apps/details?id=com.soon_sak',
+    //           ),
+    //           mode: LaunchMode.externalApplication,
+    //         );
+    //       }
+    //     },
+    //     title: '업데이트 안내',
+    //     description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
+    //   ),
+    // );
   }
 }

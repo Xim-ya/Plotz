@@ -15,7 +15,7 @@ abstract class NewAppBinding {
   NewAppBinding._();
 
   static void _initialBinding() {
-    GetIt.I.registerFactory<SplashViewModel>(
+    locator.registerFactory<SplashViewModel>(
           () =>
           SplashViewModel(
             userService: GetIt.I<UserService>(),

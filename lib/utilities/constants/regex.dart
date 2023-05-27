@@ -31,6 +31,6 @@ class Regex {
 
   // Operation 글자 포함 여부
   static bool hasContainOperationWord(String value) {
-    return RegExp('운영자|관리자').hasMatch(value.trim());
+    return RegExp('운영자|관리자|Plotz|plotz|플로츠').hasMatch(value.trim());
   }
 }

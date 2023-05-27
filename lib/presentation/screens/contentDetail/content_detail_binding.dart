@@ -9,7 +9,7 @@ class ContentDetailBinding extends CustomBindings {
     locator.registerFactory(() =>
         ContentDetailScaffoldController(locator<ContentDetailViewModel>()));
 
-    locator.registerFactory(  
+    locator.registerFactory(
       () => ContentDetailViewModel(
           contentRepository: locator<ContentRepository>(),
           loadContentOfVideoList: locator<LoadContentOfVideoListUseCase>(),
@@ -21,7 +21,6 @@ class ContentDetailBinding extends CustomBindings {
           argument: argument),
     );
 
-
     locator.registerFactory(
         () => LoadContentDetailInfoUseCase(locator<TmdbRepository>()));
     locator.registerFactory(
@@ -30,6 +29,8 @@ class ContentDetailBinding extends CustomBindings {
         () => LoadContentImgListUseCase(locator<TmdbRepository>()));
     locator.registerFactory(
         () => LoadContentOfVideoListUseCase(locator<ContentRepository>()));
+
+    print("@@@@@@@@ 아지랑이");
   }
 
   @override
@@ -42,6 +43,7 @@ class ContentDetailBinding extends CustomBindings {
     locator.unregister<LoadContentCreditInfoUseCase>();
     locator.unregister<LoadContentImgListUseCase>();
     locator.unregister<LoadContentOfVideoListUseCase>();
-    
+
+    print("@@@@@@@ 아지랑이 dispose");
   }
 }

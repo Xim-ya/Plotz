@@ -36,7 +36,7 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
   // 상단 노출 카테고리 리스트
   List<Widget> _buildTopPositionedContentSliderList(BuildContext context) {
     return List.generate(
-      vmS<int>(context, (vm) => vm.topPositionedCategory?.length ?? 3),
+      vmS<int>(context, (vm) => vm.topPositionedCategory?.length ?? 2),
       (categoryIndex) {
         return Consumer<HomeViewModel>(
           builder: (context, value, child) {
@@ -172,7 +172,7 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
                 carouselController: vm(context).carouselController,
                 itemCount: bannerModel?.contentList.length ?? 2,
                 options: CarouselOptions(
-                  height: 500,
+                  aspectRatio: 375 / 500,
                   autoPlay: true,
                   autoPlayAnimationDuration: const Duration(milliseconds: 1800),
                   onPageChanged: (index, _) {
@@ -386,7 +386,8 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
                                 width: 220,
                                 fit: BoxFit.cover,
                                 imageUrl: item.posterImgUrl.prefixTmdbImgPath,
-                                placeholder: (context, url) => const SkeletonBox(),
+                                placeholder: (context, url) =>
+                                    const SkeletonBox(),
                                 errorWidget: (context, url, error) =>
                                     const Center(child: Icon(Icons.error)),
                               ),

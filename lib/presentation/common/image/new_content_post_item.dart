@@ -66,7 +66,7 @@ class NewContentPostItem extends StatelessWidget {
           SkeletonBox(
             borderRadius: borderRadius,
             height: 140,
-            width: 92,
+            width: 92
           ),
           AppSpace.size6,
           const SkeletonBox(

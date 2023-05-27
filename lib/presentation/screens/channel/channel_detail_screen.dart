@@ -20,7 +20,6 @@ class ChannelDetailScreen extends NewBaseScreen<ChannelDetailViewModel> {
   Widget buildScreen(BuildContext context) {
     return ChannelDetailScaffold(
       appBar: const _AppBar(),
-      // channelInfoView:  Container(),
       channelInfoView: const _ChannelInfoView(),
       pagedPosterGridView: const _PagedPosterGridView(),
       scrollController: vm(context).scrollController,
@@ -50,20 +49,51 @@ class _PagedPosterGridView extends NewBaseView<ChannelDetailViewModel> {
           child: Column(
             children: <Widget>[
               KeepAliveView(
-                child: AspectRatio(
-                  aspectRatio: 109 / 165,
-                  child: CachedNetworkImage(
-                    memCacheWidth:
-                        (SizeConfig.to.screenWidth * (109 / 165)).toInt(),
-                    imageUrl: item.posterImgUrl.prefixTmdbImgPath,
-                    placeholder: (context, url) => const SkeletonBox(),
-                    errorWidget: (_, __, ___) => Container(
-                      color: Colors.grey.withOpacity(0.1),
-                      child: const Center(
-                        child: Icon(Icons.error),
+                child: Stack(
+                  children: [
+                    // 이미지
+                    AspectRatio(
+                      aspectRatio: 109 / 165,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: CachedNetworkImage(
+                          memCacheWidth:
+                              (SizeConfig.to.screenWidth * (109 / 165)).toInt(),
+                          imageUrl: item.posterImgUrl.prefixTmdbImgPath,
+                          placeholder: (context, url) => const SkeletonBox(),
+                          errorWidget: (_, __, ___) => Container(
+                            color: Colors.grey.withOpacity(0.1),
+                            child: const Center(
+                              child: Icon(Icons.error),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+
+                    // 콘텐츠 타입 인디케이터
+                    Positioned(
+                        left: 5,
+                        top: 6,
+                        child: FittedBox(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                            ),
+                            height: 16,
+                            decoration: BoxDecoration(
+                                color: const Color.fromRGBO(15, 15, 15, 0.8),
+                                borderRadius: BorderRadius.circular(4)),
+                            child: Center(
+                              child: Text(
+                                item.contentType.name,
+                                style: AppTextStyle.nav.copyWith(
+                                    color: AppColor.gray02, height: 1.193),
+                              ),
+                            ),
+                          ),
+                        )),
+                  ],
                 ),
               ),
               const Spacer(),
@@ -93,24 +123,16 @@ class _ChannelInfoView extends NewBaseView<ChannelDetailViewModel> {
           height: SizeConfig.to.statusBarHeight + 42,
         ),
         AppSpace.size4,
-        CircleImg(
-          imgUrl: vm(context).channelInfo.logoImgUrl,
-          size: 90,
-        ),
+        RoundProfileImg(size: 90, imgUrl: vm(context).channelInfo.logoImgUrl),
         AppSpace.size8,
-        GestureDetector(
-          onTap: () {
-            context.push('/temp');
-          },
-          child: SizedBox(
-            width: double.infinity - 32,
-            child: Text(
-              vm(context).channelInfo.name,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.headline1,
-            ),
+        SizedBox(
+          width: double.infinity - 32,
+          child: Text(
+            vm(context).channelInfo.name,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyle.headline1,
           ),
         ),
         AppSpace.size4,

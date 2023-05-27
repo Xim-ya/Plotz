@@ -119,7 +119,7 @@ class SearchListItem extends StatelessWidget {
                   width: SizeConfig.to.screenWidth - 140,
                   child: Text(
                     item.title ?? '제목 없음',
-                    style: AppTextStyle.title1,
+                    style: AppTextStyle.title3,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

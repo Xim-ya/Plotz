@@ -5,6 +5,7 @@ import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
+import 'package:soon_sak/domain/update_test.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -44,7 +45,7 @@ class HomeViewModel extends NewBaseViewModel {
 
   /* [Controllers] */
 
-  ScrollController scrollController = ScrollController();
+  late ScrollController scrollController;
   late CarouselController carouselController;
 
   PagingController<int, CategoryContentSection> get pagingController =>
@@ -59,6 +60,10 @@ class HomeViewModel extends NewBaseViewModel {
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
   final LoadCachedTopPositionedContentsUseCase
       _loadCachedTopPositionedContentsUseCase;
+
+  UpdateTest testIntent = UpdateTest();
+
+
 
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
@@ -132,15 +137,16 @@ class HomeViewModel extends NewBaseViewModel {
   }
 
   // 검색 스크린으로 이동
-  void routeToSearch(BuildContext context) {
-    context.push(AppRoutes.tabs + AppRoutes.search);
+  void routeToSearch(BuildContext context) async{
+    testIntent.updateTitles();
+    // context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 채널 상세 스크린으로 이동
   void routeToChannelDetail(BuildContext context,
       {required int selectedIndex}) {
     context.push(AppRoutes.channelDetail, extra: channelList![selectedIndex]);
-  } 
+  }
 
   // 채널 리스트 호출
   Future<void> _fetchChannelList() async {
@@ -209,10 +215,17 @@ class HomeViewModel extends NewBaseViewModel {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+
+  @override
   Future<void> onInit() async {
-    print("HOME VIEWMODEL INITIZLIZED");
     super.onInit();
     unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
+
+    scrollController = ScrollController();
 
     /// NOTE : api call 호출 메소드 순서에 주의
     /// 어떤 이유에서 pagingController [initUseCase] 메소드가

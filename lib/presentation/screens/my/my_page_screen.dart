@@ -28,7 +28,6 @@ class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
           AppSpace.size16,
 
           // 프로필
-
           Padding(
             padding: AppInset.horizontal16,
             child: StreamBuilder<UserModel>(
@@ -140,73 +139,48 @@ class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
           AppSpace.size14,
 
           StreamBuilder<List<UserWatchHistoryItem>?>(
-              stream: vm(context).watchHistorySub.stream,
-              builder: (context, snapshot) {
-                final items = snapshot.data;
-                return items.hasData && items!.isEmpty
-                    ? Padding(
-                        padding: AppInset.left16,
-                        child: Text(
-                          '시청 기록이 없어요',
-                          style: AppTextStyle.body1
-                              .copyWith(color: AppColor.lightGrey),
-                        ),
-                      )
-                    : ContentPostSlider(
-                        height: 168,
-                        itemCount: items?.length ?? 5,
-                        itemBuilder: (BuildContext context, int index) {
-                          final item = items?[index];
-                          return ImageViewWithPlayBtn(
-                            aspectRatio: 1280 / 1920,
-                            onPlayerBtnClicked: () {
-                              vm(context).launchYoutubeApp(item, index);
-                            },
-                            posterImgUrl: item?.posterImgUrl != null
-                                ? item!.posterImgUrl!.prefixTmdbImgPath
-                                : null,
-                          );
-                        },
-                      );
-              }),
+            stream: vm(context).watchHistorySub.stream,
+            builder: (context, snapshot) {
+              final items = snapshot.data;
+              return items.hasData && items!.isEmpty
+                  ? Padding(
+                      padding: AppInset.left16,
+                      child: Text(
+                        '시청 기록이 없어요',
+                        style: AppTextStyle.body1
+                            .copyWith(color: AppColor.lightGrey),
+                      ),
+                    )
+                  : ContentPostSlider(
+                      height: 168,
+                      itemCount: items?.length ?? 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = items?[index];
+                        return ImageViewWithPlayBtn(
+                          aspectRatio: 1280 / 1920,
+                          onPlayerBtnClicked: () {
+                            if (item == null) return;
+                            vm(context).launchYoutubeApp(item, index);
+                          },
+                          posterImgUrl: item?.posterImgUrl != null
+                              ? item!.posterImgUrl!.prefixTmdbImgPath
+                              : null,
+                        );
+                      },
+                    );
+            },
+          ),
 
-          // Selector<MyPageViewModel, List<UserWatchHistoryItem>?>(
-          //   selector: (context, vm) => vm.watchHistoryList,
-          //   builder: (context, watchHistoryList, _) {
-          //     return watchHistoryList != null && watchHistoryList.isEmpty
-          //         ? Padding(
-          //             padding: AppInset.left16,
-          //             child: Text(
-          //               '시청 기록이 없어요',
-          //               style: AppTextStyle.body1
-          //                   .copyWith(color: AppColor.lightGrey),
-          //             ),
-          //           )
-          //         : ContentPostSlider(
-          //             height: 168,
-          //             itemCount: watchHistoryList?.length ?? 5,
-          //             itemBuilder: (BuildContext context, int index) {
-          //               final item = watchHistoryList?[index];
-          //               return ImageViewWithPlayBtn(
-          //                 aspectRatio: 1280 / 1920,
-          //                 onPlayerBtnClicked: () {
-          //                   vm(context).launchYoutubeApp(item, index);
-          //                 },
-          //                 posterImgUrl: item?.posterImgUrl != null
-          //                     ? item!.posterImgUrl!.prefixTmdbImgPath
-          //                     : null,
-          //               );
-          //             },
-          //           );
-          //   },
-          // ),
           AppSpace.size48,
         ],
       ),
     );
   }
 
-  Widget _curationProgressRowItem({required String title, required int count}) {
+  Widget _curationProgressRowItem({
+    required String title,
+    required int count,
+  }) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

@@ -188,7 +188,8 @@ class RegisterViewModel extends NewBaseViewModel {
           context: context,
           builder: (BuildContext dialogContext) {
             return AppDialog.dividedBtn(
-              title: '[${_selectedContent!.detail!.title}]\n콘텐츠 요청이 완료되었어요',
+              title: '큐레이션 요청 완료',
+              subTitle: _selectedContent!.detail!.title,
               description: '검토 후 순삭 콘텐츠에 정식 등록됩니다',
               leftBtnContent: '큐레이션 내역',
               rightBtnContent: '확인',

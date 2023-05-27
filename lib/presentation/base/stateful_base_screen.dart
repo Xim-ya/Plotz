@@ -126,7 +126,7 @@ class _NewContentDetailScaffoldState extends State<NewContentDetailScaffold>
                               color: AppColor.black,
                             ),
                             child: TabBar(
-                              labelColor: Colors.white,
+                                labelColor: Colors.white,
                               unselectedLabelColor: const Color(0xFF505153),
                               indicatorColor: Colors.white,
                               labelStyle: AppTextStyle.title3,

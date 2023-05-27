@@ -103,6 +103,7 @@ class MyPageViewModel extends NewBaseViewModel {
     response.fold(
       onSuccess: (data) {
         curationSummary = data;
+        notifyListeners();
       },
       onFailure: (e) {
         log('MyPageViewModel $e');

@@ -46,28 +46,36 @@ class _ContentImageSectionView extends NewBaseView<ContentDetailViewModel> {
                 padding: const EdgeInsets.only(left: 16),
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: contentImgList?.length ?? 0,
+                itemCount: contentImgList?.length ?? 4,
                 itemBuilder: (context, index) {
-                  final imgItem = contentImgList![index];
-                  return KeepAliveView(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: CachedNetworkImage(
-                        imageUrl: imgItem.prefixTmdbImgPath,
-                        height: 100,
-                        width: SizeConfig.to.screenWidth - 32,
-                        memCacheWidth: (SizeConfig.to.screenWidth - 32).toInt(),
-                        fit: BoxFit.fitWidth,
-                        placeholder: (context, url) => const SkeletonBox(),
-                        errorWidget: (context, url, error) => Container(
-                          color: Colors.grey.withOpacity(0.1),
-                          child: const Center(
-                            child: Icon(Icons.error),
+                  if (contentImgList.hasData) {
+                    final imgItem = contentImgList![index];
+                    return KeepAliveView(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: CachedNetworkImage(
+                          imageUrl: imgItem.prefixTmdbImgPath,
+                          height: 100,
+                          width: SizeConfig.to.screenWidth - 32,
+                          memCacheWidth:
+                              ((SizeConfig.to.screenWidth - 32)* 2).toInt(),
+                          fit: BoxFit.fitWidth,
+                          placeholder: (context, url) => const SkeletonBox(),
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.grey.withOpacity(0.1),
+                            child: const Center(
+                              child: Icon(Icons.error),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    return SkeletonBox(
+                      height: 100,
+                      width: SizeConfig.to.screenWidth - 32,
+                    );
+                  }
                 },
               ),
             )

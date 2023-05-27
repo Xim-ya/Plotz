@@ -31,4 +31,5 @@ CategoryContentItemResponse _$CategoryContentItemResponseFromJson(
     CategoryContentItemResponse(
       id: json['id'] as String,
       posterImgUrl: json['posterImgUrl'] as String,
+      title: json['title'] as String,
     );

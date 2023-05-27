@@ -294,6 +294,7 @@ class ContentDetailViewModel extends NewBaseViewModel {
       onSuccess: (channel) {
         channelInfo = channel;
         notifyListeners();
+
       },
       onFailure: (e) {
         AlertWidget.newToast(message:'채널 정보를 받아오지 못했습니다', context);

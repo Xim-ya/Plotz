@@ -91,7 +91,7 @@ class CurationScreen extends NewBaseScreen<CurationViewModel> {
                           curatorName: item.curatorName,
                         );
                       } else {
-                        return const CurationGridItemSkeletonView();
+                        return CurationGridItemView.createSkeleton();
                       }
                     });
                   },
@@ -107,44 +107,6 @@ class CurationScreen extends NewBaseScreen<CurationViewModel> {
   @override
   CurationViewModel createViewModel(BuildContext context) =>
       locator<CurationViewModel>();
-}
-
-class _InProgressCurationList extends NewBaseView<CurationViewModel> {
-  const _InProgressCurationList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: AppInset.bottom46,
-      shrinkWrap: true,
-      itemCount: vmS<int>(context, (vm) => vm.curationListLength),
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverQuiltedGridDelegate(
-        crossAxisCount: 14,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        repeatPattern: QuiltedGridRepeatPattern.inverted,
-        pattern: [
-          const QuiltedGridTile(9, 7),
-          const QuiltedGridTile(8, 7),
-        ],
-      ),
-      itemBuilder: (BuildContext _, int index) {
-        final itemList =
-            vmS<List<CurationContent>>(context, (vm) => vm.inProgressCurations);
-        if (itemList.isNotEmpty) {
-          final item = itemList[index];
-          return CurationGridItemView(
-            posterImgUrl: item.posterImgUrl,
-            curatorProfileImgUrl: item.curatorProfileImgUrl,
-            curatorName: item.curatorName,
-          );
-        } else {
-          return const CurationGridItemSkeletonView();
-        }
-      },
-    );
-  }
 }
 
 class PolygonPainter extends CustomPainter {

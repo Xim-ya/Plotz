@@ -38,8 +38,6 @@ class CurationViewModel extends NewBaseViewModel {
 
   // 컨텐츠 등록 스크린으로 이동
   void routeToRegister({required ContentType contentType}) {
-    print("등록 여부 ${locator.isRegistered<CurationViewModel>()}");
-
     AppAnalytics.instance.logEvent(
       name: 'goToCurationProgress',
       parameters: {'type': contentType.name},

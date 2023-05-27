@@ -65,13 +65,5 @@ class ChannelDetailViewModel extends NewBaseViewModel {
     scrollController = ScrollController();
     _loadChannelContentsUseCase.initUseCase(channelId: channelInfo.channelId);
     scrollController.addListener(_manageInteractionOnScroll);
-    // _channelApi.removeZeroContainedChannel();
-  }
-
-  Future<void> setChannelField() async {}
-
-  @override
-  void onDispose() {
-    // ChannelDetailBinding().unRegisterDependencies();
   }
 }

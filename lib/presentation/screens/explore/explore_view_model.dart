@@ -139,6 +139,7 @@ class ExploreViewModel extends NewBaseViewModel {
   @override
   Future<void> onInit() async {
     super.onInit();
+
     swiperController = CarouselController();
   }
 }

@@ -11,13 +11,11 @@ class ImageViewWithPlayBtn extends StatelessWidget {
     Key? key,
     required this.onPlayerBtnClicked,
     required this.posterImgUrl,
-    this.checkValidation,
     this.showPlayerBtn = true,
     this.aspectRatio = 16 / 9,
     required,
   }) : super(key: key);
 
-  final void Function()? checkValidation;
   final VoidCallback onPlayerBtnClicked;
   final String? posterImgUrl;
   final bool showPlayerBtn;

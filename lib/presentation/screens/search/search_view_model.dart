@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
 import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
+import 'package:soon_sak/presentation/common/dialog/app_dialog.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /// TODO: PAGING 고도화 로직 필요
@@ -16,7 +17,8 @@ class SearchViewModel extends NewBaseViewModel {
     required NewSearchedPagedContentUseCase searchHandler,
     required ContentRepository contentRepository,
     required UserService userService,
-  })  : pagedSearchHandler = searchHandler,
+  })
+      : pagedSearchHandler = searchHandler,
         _contentRepository = contentRepository,
         _userService = userService;
 
@@ -110,17 +112,19 @@ class SearchViewModel extends NewBaseViewModel {
       // 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
       showDialog(
         context: context,
-        builder: (_) => AppDialog.dividedBtn(
-          title: '미등록 콘텐츠\n[${content.title}]',
-          description: '등록되어 있는 콘텐츠가 아닙니다\n큐레이션 요청을 해주시면\n 빠른 시일 내 등록을 완료할게요!',
-          leftBtnContent: '나중에',
-          rightBtnContent: '요청하기',
-          // TODO: 실제 요청 로직 추가 필요
-          onRightBtnClicked: () {
-            requestContent(content);
-          },
-          onLeftBtnClicked: context.pop,
-        ),
+        builder: (_) =>
+            AppDialog.dividedBtn(
+              title: '미등록 콘텐츠',
+              subTitle: content.title,
+              description: '미등록 콘텐츠입니다.\n콘텐츠 업로드 요청을 해주세요!',
+              leftBtnContent: '뒤로가기',
+              rightBtnContent: '요청하기',
+              // TODO: 실제 요청 로직 추가 필요
+              onRightBtnClicked: () {
+                requestContent(content);
+              },
+              onLeftBtnClicked: context.pop,
+            ),
       );
     }
   }

@@ -261,7 +261,6 @@ export 'package:soon_sak/presentation/screens/curationHistory/curation_history_b
 export 'package:soon_sak/presentation/screens/curationHistory/curation_history_screen.dart';
 export 'package:soon_sak/presentation/screens/splash/splash_screen.dart';
 export 'package:soon_sak/presentation/screens/splash/splash_view_model.dart';
-export 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_skeleton_view.dart';
 export 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_view.dart';
 export 'package:soon_sak/presentation/base/state_box.dart';
 
