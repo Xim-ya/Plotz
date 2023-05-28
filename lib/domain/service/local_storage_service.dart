@@ -43,7 +43,6 @@ class LocalStorageService  {
     await dir.create(recursive: true);
     dbPath = join('${dir.path}/storeData', 'content.db');
   }
-
   // 데이터 조회
   Future<Object?> getData({required String fieldName}) async {
     try {

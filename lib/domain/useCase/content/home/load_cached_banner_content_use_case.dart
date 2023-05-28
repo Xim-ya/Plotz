@@ -75,13 +75,18 @@ class LoadCachedBannerContentUseCase
 
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
-    Map<String, dynamic> data = json.decode(jsonText);
-    // final response = BannerResponse.fromJson(data);
-    if (data['key'] == givenKey) {
-      return true;
-    } else {
+    try {
+      Map<String, dynamic> data = json.decode(jsonText);
+      if (data['key'] == givenKey) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch(e) {
+      _localStorageService.deleteData(fieldName: 'banner');
       return false;
     }
+
   }
 
   // 로컬 데이터 삭제

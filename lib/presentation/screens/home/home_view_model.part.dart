@@ -11,10 +11,6 @@ extension HomeViewModelPart on HomeViewModel {
   // 상단 노출 컨텐츠 데이터 로드 여부
   bool get isBannerContentsLoaded => bannerContents.hasData;
 
-  // 선택된 배너 컨텐츠 포스터 이미지
-  String? get selectedBannerContentBackdropImgUrl => bannerContents
-      ?.contentList[bannerContentsSliderIndex].backdropImgUrl;
-
   // 선택된 배너 콘텐츠
   BannerItem? get selectedBannerContent =>
       bannerContents?.contentList[bannerContentsSliderIndex];

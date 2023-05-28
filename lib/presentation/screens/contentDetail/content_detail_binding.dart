@@ -29,8 +29,6 @@ class ContentDetailBinding extends CustomBindings {
         () => LoadContentImgListUseCase(locator<TmdbRepository>()));
     locator.registerFactory(
         () => LoadContentOfVideoListUseCase(locator<ContentRepository>()));
-
-    print("@@@@@@@@ 아지랑이");
   }
 
   @override
@@ -43,7 +41,5 @@ class ContentDetailBinding extends CustomBindings {
     locator.unregister<LoadContentCreditInfoUseCase>();
     locator.unregister<LoadContentImgListUseCase>();
     locator.unregister<LoadContentOfVideoListUseCase>();
-
-    print("@@@@@@@ 아지랑이 dispose");
   }
 }

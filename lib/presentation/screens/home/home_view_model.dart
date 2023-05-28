@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
@@ -61,10 +62,6 @@ class HomeViewModel extends NewBaseViewModel {
   final LoadCachedTopPositionedContentsUseCase
       _loadCachedTopPositionedContentsUseCase;
 
-  UpdateTest testIntent = UpdateTest();
-
-
-
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
@@ -85,7 +82,6 @@ class HomeViewModel extends NewBaseViewModel {
       } else {
         bannerInfoOpacity.add(double.parse(integerRemoved));
       }
-      notifyListeners();
     }
   }
 
@@ -137,9 +133,8 @@ class HomeViewModel extends NewBaseViewModel {
   }
 
   // 검색 스크린으로 이동
-  void routeToSearch(BuildContext context) async{
-    testIntent.updateTitles();
-    // context.push(AppRoutes.tabs + AppRoutes.search);
+  void routeToSearch(BuildContext context) async {
+    await context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 채널 상세 스크린으로 이동
@@ -246,6 +241,11 @@ class HomeViewModel extends NewBaseViewModel {
       _fetchTopTenContents(),
       _fetchChannelList(),
     ]);
+  }
 
+  @override
+  void onDispose() {
+    super.onDispose();
+    bannerInfoOpacity.close();
   }
 }

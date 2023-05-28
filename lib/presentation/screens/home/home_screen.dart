@@ -231,12 +231,6 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
             width: SizeConfig.to.screenWidth,
             child: Column(
               children: <Widget>[
-                Text(
-                  '나에게 딱 맞는 콘텐츠',
-                  style: AppTextStyle.title3
-                      .copyWith(color: AppColor.main, letterSpacing: -0.2),
-                ),
-                AppSpace.size2,
                 Consumer<HomeViewModel>(builder: (context, vm, __) {
                   return StreamBuilder<double>(
                     stream: vm.bannerInfoOpacity.stream,
@@ -247,6 +241,23 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
                           opacity: snapshot.data!,
                           child: Column(
                             children: [
+                              SizedBox(
+                                width: SizeConfig.to.screenWidth - 32,
+                                child: Center(
+                                  child: Text(
+                                    vmS(
+                                        context,
+                                        (value) =>
+                                            value.selectedBannerContent
+                                                ?.description ??
+                                            ''),
+                                    style: AppTextStyle.title3.copyWith(
+                                        color: AppColor.main,
+                                        letterSpacing: -0.2),
+                                  ),
+                                ),
+                              ),
+                              AppSpace.size2,
                               Text(
                                 vmS(
                                     context,
@@ -464,13 +475,13 @@ class _ChannelSlider extends NewBaseView<HomeViewModel> {
         Padding(
           padding: AppInset.left16,
           child: Text(
-            '놓치지 말아야 할 리뷰어',
+            '놓치지 말아야 할 리뷰 채널',
             style: AppTextStyle.title2,
           ),
         ),
         AppSpace.size7,
         SizedBox(
-            height: 112.75,
+            height: 113.75,
             child: Selector<HomeViewModel, List<ChannelModel>?>(
               selector: (context, vm) => vm.channelList,
               builder: (context, itemList, _) {
