@@ -24,25 +24,17 @@ abstract class NewAppPages {
         builder: (_, __) => const SplashScreen(),
       ),
       GoRoute(path: AppRoutes.login, builder: (_, __) => LoginScreen()),
-      // GoReplaceRouteWithBinding(
-      //   path: AppRoutes.login,
-      //   prevPath: '/',
-      //   binding: LoginBinding(),
-      //   newBuilder: (context, state) => const LoginScreen(),
-      // ),
-      // GoRouteWithBinding(
-      //   path: AppRoutes.login,
-      //   prevPath: AppRoutes.setting,
-      //   binding: LoginBinding(),
-      //   newBuilder: (context, state) => const LoginScreen(),
-      // ),
       GoRoute(
         path: AppRoutes.tabs,
         builder: (context, state) => const TabsScreen(),
         routes: [
           GoRouteWithBinding(
             path: 'contentDetail',
-            prevPath: const [AppRoutes.tabs, AppRoutes.contentDetail],
+            prevPath: const [
+              AppRoutes.tabs,
+              AppRoutes.contentDetail,
+              AppRoutes.channelDetail
+            ],
             binding: ContentDetailBinding(),
             newBuilder: (context, state) => ContentDetailScreen(),
           ),
