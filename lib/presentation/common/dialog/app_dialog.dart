@@ -5,6 +5,11 @@ import 'package:soon_sak/utilities/index.dart';
 *  IOS Cupertino 기본 다이로그와 유사한 레이아웃
 *  단일 버튼 레이아웃 & 2개의 버튼 레이아웃으로 구성되어 있음.
 *  [factory pattern]으로 각각 필요한 paramter을 전달받고 위젯을 반환함 (명시성을 높이기 위해).
+*
+*
+*  Edited By Ximya - 2023.05.27
+*  새로운 팝업 다이어로그 형태로 변경
+*
 * */
 
 class AppDialog extends Dialog {
@@ -14,6 +19,7 @@ class AppDialog extends Dialog {
     this.description,
     this.onLeftBtnClicked,
     this.leftBtnContent,
+    this.subTitle,
     required this.btnContent,
     required this.onBtnClicked,
     required this.title,
@@ -22,11 +28,13 @@ class AppDialog extends Dialog {
   factory AppDialog.singleBtn({
     required String title,
     required VoidCallback onBtnClicked,
+    String? subTitle,
     String? description,
     String? btnContent,
   }) =>
       AppDialog(
         title: title,
+        subTitle: subTitle,
         onBtnClicked: onBtnClicked,
         description: description,
         btnContent: btnContent,
@@ -35,6 +43,7 @@ class AppDialog extends Dialog {
   factory AppDialog.dividedBtn({
     required String title,
     String? description,
+    String? subTitle,
     required String leftBtnContent,
     required String rightBtnContent,
     required VoidCallback onRightBtnClicked,
@@ -43,6 +52,7 @@ class AppDialog extends Dialog {
       AppDialog(
         isDividedBtnFormat: true,
         title: title,
+        subTitle: subTitle,
         onBtnClicked: onRightBtnClicked,
         onLeftBtnClicked: onLeftBtnClicked,
         description: description,
@@ -57,6 +67,7 @@ class AppDialog extends Dialog {
   final VoidCallback? onLeftBtnClicked;
   final String? btnContent;
   final String? leftBtnContent;
+  final String? subTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +77,10 @@ class AppDialog extends Dialog {
       backgroundColor: Colors.transparent,
       child: Container(
         margin: AppInset.horizontal16,
-        constraints: const BoxConstraints(minHeight: 120, maxWidth: 290),
+        constraints: const BoxConstraints(minHeight: 120, maxWidth: 256),
+        // constraints: const BoxConstraints(minHeight: 120, maxWidth: 290),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
           color: AppColor.strongGrey,
         ),
         child: Column(
@@ -78,23 +90,32 @@ class AppDialog extends Dialog {
           children: [
             // 본분
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 34) +
+                  const EdgeInsets.only(top: 18, bottom: 19),
               child: Column(
                 children: [
                   Center(
                     child: Text(
                       title,
-                      style: AppTextStyle.headline3.copyWith(height: 1.4),
+                      style: AppTextStyle.title3.copyWith(color: AppColor.main),
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  AppSpace.size12,
+                  if (subTitle.hasData) ...[
+                    Text(
+                      subTitle!,
+                      style: AppTextStyle.alert1,
+                      textAlign: TextAlign.center,
+                    ),
+                    AppSpace.size2,
+                  ],
                   if (description.hasData) ...[
-                    AppSpace.size10,
                     Center(
                       child: Text(
                         description!,
                         textAlign: TextAlign.center,
-                        style: AppTextStyle.body3
+                        style: AppTextStyle.desc
                             .copyWith(color: AppColor.lightGrey, height: 1.3),
                       ),
                     )
@@ -107,11 +128,11 @@ class AppDialog extends Dialog {
             // 두개의 버튼으로 나누어진 형식이라면 아래 위젯을 러틴
             if (isDividedBtnFormat)
               Container(
-                height: 50,
-                decoration: BoxDecoration(
+                height: 44,
+                decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: AppColor.lightGrey.withOpacity(0.4),
+                      color: AppColor.gray06,
                       width: 0.5,
                     ),
                   ),
@@ -130,15 +151,15 @@ class AppDialog extends Dialog {
                         child: Center(
                           child: Text(
                             leftBtnContent!,
-                            style: AppTextStyle.title1
-                                .copyWith(color: AppColor.yellow),
+                            style: AppTextStyle.title3
+                                .copyWith(color: AppColor.white),
                           ),
                         ),
                       ),
                     ),
                     Container(
                       width: 0.5,
-                      color: AppColor.lightGrey.withOpacity(0.4),
+                      color: AppColor.gray06,
                     ),
                     Expanded(
                       child: MaterialButton(
@@ -152,8 +173,8 @@ class AppDialog extends Dialog {
                         child: Center(
                           child: Text(
                             btnContent ?? '확인',
-                            style: AppTextStyle.title1
-                                .copyWith(color: AppColor.yellow),
+                            style: AppTextStyle.title3
+                                .copyWith(color: AppColor.white),
                           ),
                         ),
                       ),
@@ -177,7 +198,7 @@ class AppDialog extends Dialog {
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        color: AppColor.lightGrey.withOpacity(0.4),
+                        color: AppColor.gray06,
                         width: 0.5,
                       ),
                     ),
@@ -187,7 +208,7 @@ class AppDialog extends Dialog {
                     child: Text(
                       btnContent ?? '확인',
                       style:
-                          AppTextStyle.title1.copyWith(color: AppColor.yellow),
+                          AppTextStyle.title3.copyWith(color: AppColor.white),
                     ),
                   ),
                 ),

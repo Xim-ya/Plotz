@@ -1,7 +1,8 @@
+import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
+class ProfileSettingScreen extends NewBaseScreen<ProfileSettingViewModel> {
   const ProfileSettingScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,27 +15,29 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
             AppSpace.size16,
             // 프로필 이미지
             GestureDetector(
-              onTap: vm.pickProfileImage,
+              onTap: vm(context).pickProfileImage,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Stack(
                   children: [
-                    Obx(() {
-                      if (vm.pickedImgFile.value.hasData) {
-                        return ClipRRect(
+                    Consumer<ProfileSettingViewModel>(
+                      builder: (context, vm, _) {
+                        if (vmS<bool>(
+                            context, (c) => c.pickedImgFile.hasData)) {
+                          return ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Image.file(
-                              vm.pickedImgFile.value!,
+                              vm.pickedImgFile!,
                               height: 84,
                               width: 84,
                               fit: BoxFit.cover,
-                            ),);
-                      } else {
-                        return Obx(
-                          () => RoundProfileImg(size: 84, imgUrl: vm.photoUrl),
-                        );
-                      }
-                    }),
+                            ),
+                          );
+                        } else {
+                          return RoundProfileImg(size: 84, imgUrl: vm.photoUrl);
+                        }
+                      },
+                    ),
                     Positioned(
                       bottom: 0,
                       child: Container(
@@ -60,20 +63,21 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
 
             // 닉네임 입력 Field
             Form(
-              key: vm.formKey,
+              key: vm(context).formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: TextFormField(
-                focusNode: vm.focusNode,
-                validator: vm.nickNameValidation,
+                focusNode: vm(context).focusNode,
+                validator: vm(context).nickNameValidation,
                 onFieldSubmitted: (_) {},
                 keyboardAppearance: Brightness.dark,
                 onChanged: (_) {},
-                controller: vm.textEditingController,
+                controller: vm(context).textEditingController,
                 cursorColor: AppColor.lightGrey,
                 style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontFamily: 'pretendard_regular',),
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontFamily: 'pretendard_regular',
+                ),
                 decoration: InputDecoration(
                   border: _outLinedBorder(),
                   filled: true,
@@ -118,8 +122,9 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
   // [TextField] OutLinedBorder 속성
   OutlineInputBorder _fixedOutLinedBorder() {
     return const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(6)),
-        borderSide: BorderSide(color: Colors.transparent),);
+      borderRadius: BorderRadius.all(Radius.circular(6)),
+      borderSide: BorderSide(color: Colors.transparent),
+    );
   }
 
   @override
@@ -128,7 +133,7 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
       toolbarHeight: 56,
       elevation: 0,
       leading: GestureDetector(
-        onTap: vm.routeBack,
+        onTap: vm(context).routeBack,
         child: const Icon(
           Icons.arrow_back_ios,
           color: AppColor.mixedWhite,
@@ -140,15 +145,19 @@ class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
       ),
       actions: [
         TextButton(
-          onPressed: vm.saveProfileChanges,
+          onPressed: vm(context).saveProfileChanges,
           child: Text(
             '저장',
             style:
-                AppTextStyle.title2.copyWith(fontFamily: 'pretendard_medium'),
+            AppTextStyle.title2.copyWith(fontFamily: 'pretendard_medium'),
           ),
         )
       ],
       backgroundColor: AppColor.black,
     );
   }
+
+  @override
+  ProfileSettingViewModel createViewModel(BuildContext context) =>
+      locator<ProfileSettingViewModel>();
 }

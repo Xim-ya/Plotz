@@ -5,7 +5,7 @@ import 'package:soon_sak/utilities/index.dart';
  *  Firebase Storage Instance를 싱글톤으로 관리
  * */
 
-class AppFireStorage {
+abstract class AppFireStorage {
   AppFireStorage._();
 
   static final FirebaseStorage _db = FirebaseStorage.instance;

@@ -13,8 +13,11 @@ abstract class AppRoutes {
   // 홈
   static const home = '/home';
 
+  // 채널 상세
+  static const channelDetail = '/channelDetail';
+
   // 컨텐츠 상세
-  static const contentDetail = '/content_detail';
+  static const contentDetail = '/contentDetail';
 
   // 검색
   static const search = '/search';
@@ -32,5 +35,5 @@ abstract class AppRoutes {
   static const setting = '/setting';
 
   // 프로필 설정
-  static const profileSetting = '/profile_setting';
+  static const profileSetting = '/profileSetting';
 }

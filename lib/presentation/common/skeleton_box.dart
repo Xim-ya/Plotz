@@ -1,30 +1,29 @@
 import 'package:soon_sak/utilities/index.dart';
 
-/** Created By Ximya - 2022.12.26
+/** Created By Ximya - 2023.05.26
  *  로딩 때 처리 보여지는 스켈레톤 박스
  * */
 
 class SkeletonBox extends StatelessWidget {
   const SkeletonBox(
-      {Key? key, this.margin, this.borderRadius, this.height, this.width, this.color,})
+      {Key? key, this.padding, this.borderRadius = 4, this.height, this.width})
       : super(key: key);
 
   final double? borderRadius;
-  final EdgeInsets? margin;
+  final EdgeInsets? padding;
   final double? height;
   final double? width;
-  final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius ?? 0),
-      child: Shimmer(
-        child: Container(
-          height: height,
-          width: width,
-          color: color,
-        ),
+    return Padding(
+      padding: padding ?? EdgeInsets.zero,
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColor.gray07,
+            borderRadius: BorderRadius.circular(borderRadius ?? 0)),
+        height: height,
+        width: width,
       ),
     );
   }

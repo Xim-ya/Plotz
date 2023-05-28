@@ -1,20 +1,24 @@
 import 'dart:developer';
 
+import 'package:go_router/go_router.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreViewModel extends BaseViewModel {
+class ExploreViewModel extends NewBaseViewModel {
   /* Variables */
-  final Rxn<List<ExploreContent>> _exploreContents = Rxn();
-  final RxInt swiperIndex = 0.obs;
-  final RxBool loopIsOnProgress = false.obs;
-  final RxBool alreadyShowedToast = false.obs;
-  TabLoadingState loadingState = TabLoadingState.initState;
+  final BehaviorSubject<List<ExploreContent>> exploreContents;
+  int swiperIndex = 0;
+  bool loopIsOnProgress = false;
+  bool alreadyShowedToast = false;
 
   /* Controllers */
   late final CarouselController swiperController;
 
-  ExploreViewModel(this._exploreContentsUseCase);
+  ExploreViewModel({
+    required LoadRandomPagedExploreContentsUseCase exploreContentsUseCase,
+  })  : _exploreContentsUseCase = exploreContentsUseCase,
+        exploreContents = BehaviorSubject<List<ExploreContent>>();
 
   /* UseCases */
   final LoadRandomPagedExploreContentsUseCase _exploreContentsUseCase;
@@ -25,14 +29,28 @@ class ExploreViewModel extends BaseViewModel {
 
   // 검색 스크린으로 이동
   void routeToSearch() {
-    Get.toNamed(AppRoutes.search);
+    context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 컨텐츠 상세페이지로 이동
-  void routeToContentDetail(ContentArgumentFormat routingArgument) {
+  void routeToContentDetail(int routingArgument) {
+    final contentItem = exploreContentList[routingArgument];
     AppAnalytics.instance.logEvent(
-        name: 'goToContent', parameters: {'explore': routingArgument.originId},);
-    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
+      name: 'goToContent',
+      parameters: {'explore': contentItem.originId},
+    );
+
+    final arg = ContentArgumentFormat(
+      contentId: SplittedIdAndType.fromOriginId(contentItem.originId).id,
+      contentType: SplittedIdAndType.fromOriginId(contentItem.originId).type,
+      posterImgUrl: contentItem.posterImgUrl,
+      title: contentItem.title,
+      originId: contentItem.originId,
+      channelName: contentItem.channelName,
+      channelLogoImgUrl: contentItem.channelLogoImgUrl,
+      subscribersCount: contentItem.subscribersCount,
+    );
+    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
   }
 
   /// swiper가 이동했을 때 관련 동작
@@ -41,32 +59,34 @@ class ExploreViewModel extends BaseViewModel {
   /// 더 이상 호출할 메세지가 없을 경우
   /// 유저에게 toast 메세지를 띄움 (마지막 컨텐츠에서)
   void onSwiperChanged(int index) {
-    swiperIndex(index);
-    final exploreContentsLength = _exploreContents.value!.length - 1;
+    swiperIndex = index;
+    final exploreContentsLength = exploreContents.value.length - 1;
     if (index + 4 == exploreContentsLength) {
       loadMoreContents(index);
     }
 
-    if (index == exploreContentsLength && alreadyShowedToast.isFalse) {
+    if (index == exploreContentsLength && alreadyShowedToast == false) {
       unawaited(
-          AlertWidget.animatedToast('마지막 콘텐츠 입니다', isUsedOnTabScreen: true),);
-      alreadyShowedToast(true); // 더 이상 토스트 메세를 노출하지 않음.
+        AlertWidget.newToast(
+            message: '마지막 콘텐츠 입니다', isUsedOnTabScreen: true, context),
+      );
+      alreadyShowedToast = true; // 더 이상 토스트 메세를 노출하지 않음.
     }
   }
 
   /// 컨텐츠 데이터 추가 호출
   Future<void> loadMoreContents(int swiperIndex) async {
-    if (_exploreContentsUseCase.moreCallIsAllowed.isTrue) {
+    if (_exploreContentsUseCase.moreCallIsAllowed == true) {
       final response = await _exploreContentsUseCase.loadMoreContents();
       await response.fold(
         onSuccess: (data) async {
-          _exploreContents.value?.addAll(data);
-          update();
+          exploreContents.add(data);
         },
         onFailure: (e) {
-          AlertWidget.animatedToast(
-            '데이터를 불러오지 못했습니다',
+          AlertWidget.newToast(
+            message: '데이터를 불러오지 못했습니다',
             isUsedOnTabScreen: true,
+            context,
           );
           log('ExploreViewModel : $e');
         },
@@ -79,28 +99,30 @@ class ExploreViewModel extends BaseViewModel {
   /// 해당 메소드는 한번만 실행됨
   Future<void> loadRandomExploreContents() async {
     final response = await _exploreContentsUseCase.call();
-    response.fold(onSuccess: (data) {
-      _exploreContents.value = data;
-      print('========== ExploreContent 호출 성공 ${data.length}');
-      update();
-    }, onFailure: (e) {
-      AlertWidget.animatedToast(
-        '데이터를 불러오지 못했습니다',
-        isUsedOnTabScreen: true,
-      );
-      log('ExploreViewModel : $e');
-    },);
+    response.fold(
+      onSuccess: (data) {
+        exploreContents.add(data);
+        print('========== ExploreContent 호출 성공 ${data.length}');
+      },
+      onFailure: (e) {
+        AlertWidget.newToast(
+          message: '데이터를 불러오지 못했습니다',
+          isUsedOnTabScreen: true,
+          context,
+        );
+        log('ExploreViewModel : $e');
+      },
+    );
   }
 
   /* Getters */
 
-  List<ExploreContent>? get exploreContentList => _exploreContents.value;
+  List<ExploreContent> get exploreContentList => exploreContents.value;
 
-  bool get isContentLoaded =>
-      _exploreContents.value.hasData && loadingState.isDone;
+  bool get isContentLoaded => exploreContents.hasData && loadingState.isDone;
 
   Future<void> prepare() async {
-    loadingState = TabLoadingState.loading;
+    loadingState = ViewModelLoadingState.loading;
     DateTime startTime = DateTime.now();
     await loadRandomExploreContents();
     // 메소드 실행이 완료된 후의 시간을 종료 시간으로 기록
@@ -111,14 +133,13 @@ class ExploreViewModel extends BaseViewModel {
 
     // 실행 시간 출력
     print('Explore 비동기 메소드 실행 시간: ${elapsedTime.inMilliseconds} 초');
-    loadingState = TabLoadingState.done;
+    loadingState = ViewModelLoadingState.done;
   }
 
   @override
   Future<void> onInit() async {
     super.onInit();
+
     swiperController = CarouselController();
   }
-
-
 }

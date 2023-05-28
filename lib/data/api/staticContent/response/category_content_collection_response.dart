@@ -39,7 +39,10 @@ class CategoryContentItemResponse {
   @JsonKey(name: 'posterImgUrl')
   final String posterImgUrl;
 
-  CategoryContentItemResponse({required this.id, required this.posterImgUrl});
+  @JsonKey(name: 'title')
+  final String title;
+
+  CategoryContentItemResponse({required this.id, required this.posterImgUrl, required this.title});
 
   factory CategoryContentItemResponse.fromJson(Map<String, dynamic> json) =>
       _$CategoryContentItemResponseFromJson(json);

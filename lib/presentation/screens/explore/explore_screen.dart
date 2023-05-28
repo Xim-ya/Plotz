@@ -1,38 +1,97 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreScreen extends BaseScreen<ExploreViewModel> {
+class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
   const ExploreScreen({Key? key}) : super(key: key);
 
   @override
   Widget buildScreen(BuildContext context) {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
-      carouselBuilder: buildCarouselBuilder(),
-      actionButtons: buildActionButtons(),
+      carouselBuilder: const _VerticalSwiper(),
+      actionButtons: const _TopActionBtn(),
     );
   }
 
-  Widget buildActionButtons() {
-    return Row(
-      children: [
-        IconInkWellButton.assetIcon(
-          iconPath: 'assets/icons/search.svg',
-          size: 40,
-          onIconTapped: vm.routeToSearch,
+  // 채널 정보
+  List<Widget> buildChannelInfoView(ExploreContent? item) => [
+        ChannelInfoView(
+          imgUrl: item?.channelLogoImgUrl,
+          name: item?.channelName,
+          subscriberCount: item?.subscribersCount,
         ),
-      ],
-    );
-  }
+        AppSpace.size20,
+      ];
 
-  Widget buildCarouselBuilder() {
-    return GetBuilder<ExploreViewModel>(
-      builder: (_) {
+  // 컨텐츠 정보
+  List<Widget> buildContentInfoView(ExploreContent? item) => [
+        // 제목 & 개봉년도
+        Row(
+          children: <Widget>[
+            if (item.hasData)
+              Text(item!.title, style: AppTextStyle.headline2)
+            else
+              const SkeletonBox(
+                height: 28,
+                width: 40,
+              ),
+            AppSpace.size6,
+            Text(
+              item?.releaseDate.hasData ?? false
+                  ? Formatter.dateToyyMMdd(item!.releaseDate)
+                  : '',
+              style: AppTextStyle.alert2,
+            ),
+          ],
+        ),
+        AppSpace.size6,
+        // 컨텐츠 설명
+        if (item?.videoTitle != null)
+          SizedBox(
+            width: SizeConfig.to.screenWidth - 32,
+            child: Text(
+              item!.videoTitle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyle.title1,
+            ),
+          )
+        else
+          SkeletonBox(
+            height: 22,
+            width: SizeConfig.to.screenWidth - 32,
+            borderRadius: 2,
+          ),
+        AppSpace.size24,
+      ];
+
+  // 컨텐츠 (포스터) 이미지
+  Widget buildBackdropImg() => Container();
+
+  @override
+  bool get wrapWithSafeArea => false;
+
+  @override
+  ExploreViewModel createViewModel(BuildContext context) =>
+      locator<ExploreViewModel>();
+}
+
+class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
+  const _VerticalSwiper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<ExploreContent>>(
+      stream: vm(context).exploreContents.stream,
+      builder: (context, snapshot) {
         return CarouselSlider.builder(
-          carouselController: vm.swiperController,
-          itemCount: vm.exploreContentList?.length ?? 1,
+          carouselController: vm(context).swiperController,
+          itemCount: snapshot.data?.length ?? 1,
           options: CarouselOptions(
             onPageChanged: (index, _) {
-              vm.onSwiperChanged(index);
+              vm(context).onSwiperChanged(index);
             },
             disableCenter: true,
             height: double.infinity,
@@ -42,32 +101,18 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
           ),
           itemBuilder:
               (BuildContext context, int parentIndex, int pageViewIndex) {
-            final contentItem = vm.exploreContentList?[pageViewIndex];
+            final contentItem = snapshot.data?[pageViewIndex];
             return GestureDetector(
               onTap: () {
-                if (!vm.isContentLoaded) return;
-                vm.routeToContentDetail(
-                  ContentArgumentFormat(
-                    contentId:
-                        SplittedIdAndType.fromOriginId(contentItem!.originId)
-                            .id,
-                    contentType:
-                        SplittedIdAndType.fromOriginId(contentItem.originId)
-                            .type,
-                    posterImgUrl: contentItem.posterImgUrl,
-                    title: contentItem.title,
-                    originId: contentItem.originId,
-                    channelName: contentItem.channelName,
-                    channelLogoImgUrl: contentItem.channelLogoImgUrl,
-                    subscribersCount: contentItem.subscribersCount,
-                  ),
-                );
+                if (snapshot.data == null) return;
+                vm(context).routeToContentDetail(pageViewIndex);
               },
               child: Stack(
                 children: [
-                  if (vm.isContentLoaded)
+                  if (snapshot.data.hasData)
                     CachedNetworkImage(
                       imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
+                      memCacheWidth: (SizeConfig.to.screenWidth * 3).toInt(),
                       height: double.infinity,
                       fit: BoxFit.cover,
                     )
@@ -77,10 +122,10 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
                         color: AppColor.darkGrey,
                       ),
                     ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: buildBackdropImg(),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topCenter,
+                  //   child: buildBackdropImg(),
+                  // ),
                   Positioned.fill(
                     child: Container(
                       decoration: const BoxDecoration(
@@ -119,16 +164,6 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
     );
   }
 
-  // 채널 정보
-  List<Widget> buildChannelInfoView(ExploreContent? item) => [
-        ChannelInfoView(
-          imgUrl: item?.channelLogoImgUrl,
-          name: item?.channelName,
-          subscriberCount: item?.subscribersCount,
-        ),
-        AppSpace.size20,
-      ];
-
   // 컨텐츠 정보
   List<Widget> buildContentInfoView(ExploreContent? item) => [
         // 제목 & 개봉년도
@@ -137,12 +172,9 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
             if (item.hasData)
               Text(item!.title, style: AppTextStyle.headline2)
             else
-              Shimmer(
-                color: AppColor.lightGrey,
-                child: const SizedBox(
-                  height: 28,
-                  width: 40,
-                ),
+              const SkeletonBox(
+                height: 28,
+                width: 40,
               ),
             AppSpace.size6,
             Text(
@@ -174,9 +206,30 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
         AppSpace.size24,
       ];
 
-  // 컨텐츠 (포스터) 이미지
-  Widget buildBackdropImg() => Container();
+  // 채널 정보
+  List<Widget> buildChannelInfoView(ExploreContent? item) => [
+        ChannelInfoView(
+          imgUrl: item?.channelLogoImgUrl,
+          name: item?.channelName,
+          subscriberCount: item?.subscribersCount,
+        ),
+        AppSpace.size20,
+      ];
+}
+
+class _TopActionBtn extends NewBaseView<ExploreViewModel> {
+  const _TopActionBtn({Key? key}) : super(key: key);
 
   @override
-  bool get wrapWithSafeArea => false;
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        IconInkWellButton.assetIcon(
+          iconPath: 'assets/icons/search.svg',
+          size: 40,
+          onIconTapped: vm(context).routeToSearch,
+        ),
+      ],
+    );
+  }
 }

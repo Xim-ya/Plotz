@@ -20,5 +20,6 @@ TopTenContentItemResponse _$TopTenContentItemResponseFromJson(
         Map<String, dynamic> json) =>
     TopTenContentItemResponse(
       id: json['id'] as String,
-      posterImgUrl: json['posterImgUrl'] as String,
+      imgUrl: json['imgUrl'] as String,
+      title: json['title'] as String,
     );

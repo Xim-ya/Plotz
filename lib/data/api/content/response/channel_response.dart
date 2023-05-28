@@ -8,10 +8,10 @@ class ChannelResponse {
   final String? description;
 
   ChannelResponse({
-     this.id,
-     this.name,
-     this.subscribersCount,
-     this.logoImgUrl,
+    this.id,
+    this.name,
+    this.subscribersCount,
+    this.logoImgUrl,
     this.description,
   });
 
@@ -22,6 +22,6 @@ class ChannelResponse {
         name: doc.get('name'),
         subscribersCount: doc.get('subscribersCount'),
         logoImgUrl: doc.get('logoImgUrl'),
-        description:  doc.get('description'),
+        description: doc.get('description'),
       );
 }

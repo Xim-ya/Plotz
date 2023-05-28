@@ -4,7 +4,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.4+5
+version: 1.0.4+7
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -32,20 +32,28 @@ dependencies:
   polygon: ^0.1.0 # 다각형 위젯
   flutter_staggered_grid_view: ^0.6.2 # 그리드뷰
   visibility_detector: ^0.4.0+2 #위젯 노출 여부 감지
+  dots_indicator: ^2.1.0 #dot 인디케이터
+#  adaptive_dialog: ^1.8.3+1 #다이어로그
 
   #State Controller
-  get: ^4.6.5
-
+#  get: ^4.6.5
+  rxdart: ^0.27.7
+  provider: ^6.0.5
 
   #Network
   video_url_validator: ^1.0.2
-  youtube_explode_dart: ^1.12.3 # 유튜브 meta data
+  youtube_explode_dart: ^1.12.4 # 유튜브 meta data
   connectivity_plus: ^3.0.3 # 네트워크 연결 상태 관리
   retrofit: '>=3.0.0 <4.0.0'
   dio: ^4.0.6
   json_annotation: ^4.7.0
   async: ^2.9.0
 
+  # DI
+  get_it: ^7.2.0
+
+  # Route
+  go_router: ^7.0.1
 
   #Firebase
   firebase_core: ^2.4.1
@@ -76,12 +84,12 @@ dependencies:
   #Utils
   flutter_cache_manager: ^3.3.0
   image_picker: ^0.8.6+3 # 이미지 피커
+  either_dart: ^0.3.0
   intl: ^0.17.0 # DATE
   flutter_launcher_icons: ^0.12.0 # 앱 로고
   flutter_isolate: ^2.0.4
   flutter_dotenv: ^5.0.2
 
-  
 
 
 

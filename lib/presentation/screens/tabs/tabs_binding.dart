@@ -1,24 +1,108 @@
+import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class TabsBinding extends Bindings {
-  @override
-  void dependencies() {
-    Get.put(TabsViewModel(Get.find(), Get.find(), Get.find()));
+// class TabsBinding extends CustomBindings {
+//   @override
+//   void dependencies() {
+//     super.dependencies();
+//     locator.registerLazySingleton(
+//       () => HomeViewModel(
+//         loadPagedCategoryCollectionsUseCase:
+//             locator<LoadPagedCategoryCollectionUseCase>(),
+//         loadCachedTopPositionedContentsUseCase:
+//             locator<LoadCachedTopPositionedContentsUseCase>(),
+//         loadCachedTopTenContentsUseCase:
+//             locator<LoadCachedTopTenContentsUseCase>(),
+//         loadBannerContentUseCase: locator<LoadCachedBannerContentUseCase>(),
+//         channelRepository: locator<ChannelRepository>(),
+//       ),
+//     );
+//
+//     locator.registerLazySingleton(() => ExploreViewModel(
+//         exploreContentsUseCase:
+//             locator<LoadRandomPagedExploreContentsUseCase>()));
+//
+//     locator.registerLazySingleton(() =>
+//         CurationViewModel(contentRepository: locator<ContentRepository>()));
+//     // locator.registerFactory(() =>
+//     //     CurationViewModel(contentRepository: locator<ContentRepository>()));
+//
+//     locator.registerLazySingleton(
+//       () => MyPageViewModel(
+//         userRepository: locator<UserRepository>(),
+//         userService: locator<UserService>(),
+//       ),
+//     );
+//
+//     locator.registerFactory(
+//       () => TabsViewModel(
+//         exploreViewModel: locator<ExploreViewModel>(),
+//         curationViewModel: locator<CurationViewModel>(),
+//         myPageViewModel: locator<MyPageViewModel>(),
+//       ),
+//     );
+//   }
+//
+//   void intentUnregister() {
+//     isDependenciesDeleted = true;
+//     locator.unregister<TabsViewModel>();
+//     locator.unregister<HomeViewModel>();
+//     locator.unregister<ExploreViewModel>();
+//     locator.unregister<CurationViewModel>();
+//     locator.unregister<MyPageViewModel>();
+//   }
+// }
 
-    // Home
-    Get.lazyPut(
-      () => LoadCachedBannerContentUseCase(Get.find(), Get.find(), Get.find()),
-      fenix: false,
+
+abstract class TabsBinding  {
+  TabsBinding._();
+
+  static void dependencies() {
+    locator.registerLazySingleton(
+          () => HomeViewModel(
+        loadPagedCategoryCollectionsUseCase:
+        locator<LoadPagedCategoryCollectionUseCase>(),
+        loadCachedTopPositionedContentsUseCase:
+        locator<LoadCachedTopPositionedContentsUseCase>(),
+        loadCachedTopTenContentsUseCase:
+        locator<LoadCachedTopTenContentsUseCase>(),
+        loadBannerContentUseCase: locator<LoadCachedBannerContentUseCase>(),
+        channelRepository: locator<ChannelRepository>(),
+      ),
     );
 
-    Get.lazyPut(
-      () => LoadPagedCategoryCollectionUseCase(
-          Get.find(), Get.find(), Get.find(),),
-      fenix: false,
+    locator.registerLazySingleton(() => ExploreViewModel(
+        exploreContentsUseCase:
+        locator<LoadRandomPagedExploreContentsUseCase>()));
+
+    locator.registerLazySingleton(() =>
+        CurationViewModel(contentRepository: locator<ContentRepository>()));
+    // locator.registerFactory(() =>
+    //     CurationViewModel(contentRepository: locator<ContentRepository>()));
+
+    locator.registerLazySingleton(
+          () => MyPageViewModel(
+        userRepository: locator<UserRepository>(),
+        userService: locator<UserService>(),
+      ),
     );
 
-    // 컨텐츠
-    Get.put(
-        LoadCachedTopTenContentsUseCase(Get.find(), Get.find(), Get.find()),);
+    locator.registerFactory(
+          () => TabsViewModel(
+        exploreViewModel: locator<ExploreViewModel>(),
+        curationViewModel: locator<CurationViewModel>(),
+        myPageViewModel: locator<MyPageViewModel>(),
+      ),
+    );
+  }
+
+  static void unRegisterDependencies() {
+    locator.unregister<TabsViewModel>();
+    locator.unregister<HomeViewModel>();
+    locator.unregister<ExploreViewModel>();
+    locator.unregister<CurationViewModel>();
+    locator.unregister<MyPageViewModel>();
   }
 }

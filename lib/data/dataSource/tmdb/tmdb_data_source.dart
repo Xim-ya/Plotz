@@ -21,5 +21,5 @@ abstract class TmdbDataSource {
       {required String query, required int page,});
 
 
-  static TmdbDataSource get to => Get.find();
+  // static TmdbDataSource get to => Get.find();
 }

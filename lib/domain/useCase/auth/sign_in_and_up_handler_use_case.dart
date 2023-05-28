@@ -15,14 +15,18 @@ import 'package:soon_sak/utilities/index.dart';
  *  4. 신규유저라면 서버의 유저 정보 저장
  * */
 
-class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
-  SignInAndUpHandlerUseCase(this._authRepository, this._userService);
+class SignInAndUpHandlerUseCase extends BaseTwoParamUseCase<Sns, BuildContext, Result<void>> {
+  SignInAndUpHandlerUseCase(
+      {required AuthRepository authRepository,
+      required UserService userService})
+      : _authRepository = authRepository,
+        _userService = userService;
 
   final AuthRepository _authRepository;
   final UserService _userService;
 
   @override
-  Future<Result<void>> call(Sns request) async {
+  Future<Result<void>> call(Sns request, BuildContext context) async {
     switch (request) {
       case Sns.google:
         final response = await _authRepository.getGoogleUserInfo();
@@ -35,8 +39,15 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
           onFailure: (e) {
             final errorText = e.toString();
             if (errorText.contains(
-                '600 seconds before or after the current time, null',)) {
-              Get.snackbar('로그인 오류', '디바이스의 시간 설정을 확인 해주세요');
+              '600 seconds before or after the current time, null',
+            )) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: const Text('디바이스의 시간 설정을 확인 해주세요'),
+                action: SnackBarAction(
+                  label: '확인',
+                  onPressed: () {},
+                ),
+              ));
             }
             return Result.failure(e);
           },
@@ -83,8 +94,10 @@ class SignInAndUpHandlerUseCase extends BaseUseCase<Sns, Result<void>> {
   }
 
   // Firebase Auth 등록
-  Future<void> signWithCredential(UserModel user,
-      {required Sns snsType,}) async {
+  Future<void> signWithCredential(
+    UserModel user, {
+    required Sns snsType,
+  }) async {
     late final OAuthCredential credential;
 
     if (snsType == Sns.google) {

@@ -1,3 +1,5 @@
+import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CategoryContentSectionSkeletonView extends StatelessWidget {
@@ -22,7 +24,7 @@ class CategoryContentSectionSkeletonView extends StatelessWidget {
           height: 180,
           itemCount: 4,
           itemBuilder: (context, index) {
-            return const ContentPostItem(imgUrl: null);
+            return NewContentPostItem.createSkeleton();
           },
         ),
       ],

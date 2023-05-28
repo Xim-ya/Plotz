@@ -18,10 +18,8 @@ export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_easyloading/flutter_easyloading.dart';
 export 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
-export 'package:get/get.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:cached_network_image/cached_network_image.dart';
-export 'package:shimmer_animation/shimmer_animation.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:json_annotation/json_annotation.dart';
@@ -34,8 +32,11 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:polygon/polygon.dart';
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+export 'package:get_it/get_it.dart';
 
 // BaseModule
+export 'package:soon_sak/presentation/base/new_base_view_model.dart';
+export 'package:soon_sak/presentation/base/new_base_screen.dart';
 export 'package:soon_sak/presentation/base/base_view_model.dart';
 export 'package:soon_sak/domain/base/base_use_case.dart';
 export 'package:soon_sak/domain/base/base_no_param_use_case.dart';
@@ -60,7 +61,7 @@ export 'package:soon_sak/app/modules/presentation_modules.dart';
 // Data
 export 'package:soon_sak/data/api/version/response/version_response.dart';
 export 'package:soon_sak/data/api/user/response/user_watch_history_item_response.dart';
-export 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
+// export 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 export 'package:soon_sak/data/mixin/firebase_isolate_helper_mixin.dart';
 export 'package:soon_sak/data/api/content/response/explore_content_response.dart';
 export 'package:soon_sak/data/api/user/response/user_response.dart';
@@ -127,8 +128,7 @@ export 'package:soon_sak/data/dataSource/version/version_data_source.dart';
 export 'package:soon_sak/data/repository/version/version_repository.dart';
 export 'package:soon_sak/data/api/content/response/channel_response.dart';
 
-
-// Domain
+// Domain 
 export 'package:soon_sak/domain/useCase/content/home/load_paged_category_collection_use_case.dart';
 export 'package:soon_sak/domain/model/content/contentDetail/channel_info.dart';
 export 'package:soon_sak/domain/enum/tab_loading_state_enum.dart';
@@ -224,7 +224,6 @@ export 'package:soon_sak/presentation/screens/register/pageView/search_content_p
 export 'package:soon_sak/presentation/common/dialog/app_dialog.dart';
 export 'package:soon_sak/presentation/common/textField/search_bar.dart';
 export 'package:soon_sak/presentation/common/animated_index_stack.dart';
-export 'package:soon_sak/presentation/screens/home/home_screen.dart';
 export 'package:soon_sak/presentation/common/sticky_delegate_container.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_scaffold_controller.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_scaffold.dart';
@@ -237,15 +236,14 @@ export 'package:soon_sak/presentation/base/base_view.dart';
 export 'package:soon_sak/presentation/screens/tabs/tabs_view_model.dart';
 export 'package:soon_sak/presentation/screens/tabs/tabs_binding.dart';
 export 'package:soon_sak/presentation/screens/tabs/tabs_screen.dart';
-export 'package:soon_sak/presentation/common/image/content_post_item.dart';
+export 'package:soon_sak/presentation/common/image/ration_content_post_item.dart';
 export 'package:soon_sak/presentation/common/slider/content_post_slider.dart';
 export 'package:soon_sak/presentation/common/button/icon_ink_well_button.dart';
-export 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 export 'package:soon_sak/presentation/screens/home/home_view_model.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_binding.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_screen.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/main_content_tab_view.dart';
-export 'package:soon_sak/presentation/common/skeleton_box.dart';
+export 'package:soon_sak/presentation/common/shimmer_skeleton_box.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/localWidget/content_video_views_by_case.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/localWidget/single_video_skeleton_view.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/localWidget/curation_history_scaffold.dart';
@@ -261,10 +259,8 @@ export 'package:soon_sak/presentation/screens/register/register_binding.dart';
 export 'package:soon_sak/presentation/screens/register/register_screen.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/curation_history_binding.dart';
 export 'package:soon_sak/presentation/screens/curationHistory/curation_history_screen.dart';
-export 'package:soon_sak/presentation/screens/splash/splash_binding.dart';
 export 'package:soon_sak/presentation/screens/splash/splash_screen.dart';
 export 'package:soon_sak/presentation/screens/splash/splash_view_model.dart';
-export 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_skeleton_view.dart';
 export 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_view.dart';
 export 'package:soon_sak/presentation/base/state_box.dart';
 
@@ -283,3 +279,4 @@ export 'package:soon_sak/utilities/extensions/check_null_state_extension.dart';
 export 'package:soon_sak/utilities/extensions/tmdb_img_path_extension.dart';
 export 'package:soon_sak/utilities/formatter.dart';
 export 'package:soon_sak/presentation/common/alert/alert_widget.dart';
+export 'package:soon_sak/app/di/locator/locator.dart';

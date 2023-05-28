@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:soon_sak/utilities/index.dart';
 
-class LoginScreen extends BaseScreen<LoginViewModel> {
+class LoginScreen extends NewBaseScreen<LoginViewModel> {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -65,7 +65,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 SnsLoginButton(
                   sns: Sns.google,
                   onBtnTapped: () {
-                    vm.signInAndUp(Sns.google);
+                    vm(context).signInAndUp(Sns.google);
                   },
                 ),
                 AppSpace.size20,
@@ -73,7 +73,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                   SnsLoginButton(
                     sns: Sns.apple,
                     onBtnTapped: () {
-                      vm.signInAndUp(Sns.apple);
+                      vm(context).signInAndUp(Sns.apple);
                     },
                   ),
               ],
@@ -83,4 +83,8 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
       ],
     );
   }
+
+  @override
+  LoginViewModel createViewModel(BuildContext context) =>
+      locator<LoginViewModel>();
 }

@@ -14,11 +14,14 @@ BannerResponse _$BannerResponseFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-BannerItemResponse _$BannerItemResponseFromJson(Map<String, dynamic> json) =>
-    BannerItemResponse(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      imgUrl: json['imgUrl'] as String,
-      backdropImgUrl: json['backdropImgUrl'] as String,
-    );
+BannerItemResponse _$BannerItemResponseFromJson(Map<String, dynamic> json) {
+  print("아랑 ${json['title']}");
+  return BannerItemResponse(
+    id: json['id'] as String,
+    title: json['title'] as String,
+    description: json['description'] as String,
+    imgUrl: json['imgUrl'] as String,
+    genres: (json['genres'] as List<dynamic>).map((e) => e as String).toList(),
+  );
+}
+  

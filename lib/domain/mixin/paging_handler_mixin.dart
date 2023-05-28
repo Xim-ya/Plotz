@@ -10,7 +10,7 @@ import 'package:soon_sak/utilities/index.dart';
  *  3) Paging 실행 관련 유효성 검사 로직 [getPagingAvailableState]
  * */
 
-mixin PagingHandlerMixin {
+mixin PagingSearchHandlerMixin {
   final PagingController<int, SearchedContent> pagingController =
       PagingController(firstPageKey: 1, invisibleItemsThreshold: 1);
 
@@ -21,23 +21,26 @@ mixin PagingHandlerMixin {
 
   bool get isPagingAllowed;
 
-  final RxBool isInitialPageState = true.obs;
+   bool isInitialPageState = true;
 
   /// 검색된 컨텐츠 리스트 호출
   /// paging 로직 적용
-  Future<void> loadSearchedContentList(ContentType contentType,
-      {required bool checkContentRegistration,}) async {
+  Future<void> loadSearchedContentList(
+    ContentType contentType, {
+    required bool checkContentRegistration,
+  }) async {
     Result<SearchContentModel> responseResult;
 
     /// pagingController가 Listen 되고
     /// 검색어가 없는 상태에서 Call하는 상태를 방지하기 위한 구문
-    if (isInitialPageState.isTrue) {
+    if (isInitialPageState == true) {
       pagingController.appendPage([], 0);
-      isInitialPageState(false);
+      isInitialPageState = false;
       return;
     }
 
-    responseResult =  await repository.loadSearchedMovieContentList(query: '', page: 1);
+    responseResult =
+        await repository.loadSearchedMovieContentList(query: '', page: 1);
 
     responseResult.fold(
       onSuccess: (data) {

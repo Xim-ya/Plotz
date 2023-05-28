@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.12.30
@@ -67,7 +68,7 @@ class ChannelInfoView extends StatelessWidget {
             ],
             if (subscriberCount.hasData)
               Text(
-                '구독자 ${Formatter.formatViewAndLikeCount(subscriberCount)}명',
+                '구독자 ${Formatter.formatNumberWithUnit(subscriberCount)}명',
                 style: AppTextStyle.body1.copyWith(
                   color: AppColor.lightGrey,
                   fontSize: subscriberFontSize,

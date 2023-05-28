@@ -1,10 +1,8 @@
-
-
 import 'package:soon_sak/utilities/index.dart';
 
 part 'banner_response.g.dart';
 
-@JsonSerializable(createToJson : false)
+@JsonSerializable(createToJson: false)
 class BannerResponse {
   @JsonKey(name: 'key')
   String key;
@@ -17,9 +15,7 @@ class BannerResponse {
   factory BannerResponse.fromJson(Map<String, dynamic> json) {
     return _$BannerResponseFromJson(json);
   }
-
 }
-
 
 @JsonSerializable(createToJson: false)
 class BannerItemResponse {
@@ -35,18 +31,17 @@ class BannerItemResponse {
   @JsonKey(name: 'imgUrl')
   String imgUrl;
 
-  @JsonKey(name: 'backdropImgUrl')
-  String backdropImgUrl;
+  @JsonKey(name: 'genres')
+  List<String> genres;
 
-  BannerItemResponse(
-      {required this.id,
-        required this.title,
-        required this.description,
-        required this.imgUrl,
-        required this.backdropImgUrl,});
+  BannerItemResponse({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.imgUrl,
+    required this.genres,
+  });
 
   factory BannerItemResponse.fromJson(Map<String, dynamic> json) =>
       _$BannerItemResponseFromJson(json);
-
-
 }

@@ -24,5 +24,5 @@ abstract class TmdbRepository {
   Future<Result<SearchContentModel>> loadSearchedMovieContentList(
       {required String query, required int page,});
 
-  static TmdbRepository get to => Get.find();
+  // static TmdbRepository get to => Get.find();
 }

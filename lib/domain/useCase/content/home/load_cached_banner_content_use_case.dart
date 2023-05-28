@@ -19,8 +19,13 @@ import 'package:soon_sak/utilities/index.dart';
 
 class LoadCachedBannerContentUseCase
     extends BaseNoParamUseCase<Result<BannerModel>> {
-  LoadCachedBannerContentUseCase(
-      this._repository, this._localStorageService, this._contentService,);
+  LoadCachedBannerContentUseCase({
+    required StaticContentRepository repository,
+    required LocalStorageService localStorageService,
+    required ContentService contentService,
+  })  : _repository = repository,
+        _localStorageService = localStorageService,
+        _contentService = contentService;
 
   final StaticContentRepository _repository;
   final LocalStorageService _localStorageService;
@@ -32,6 +37,7 @@ class LoadCachedBannerContentUseCase
         await _localStorageService.getData(fieldName: 'banner');
     final String keyResponse = _contentService.bannerKey!;
 
+
     /// 조건 (AND)
     /// LocalStorage에 데이터가 존재한다면,
     /// 배너키 데이터가 존재한다면
@@ -41,7 +47,7 @@ class LoadCachedBannerContentUseCase
         _isUpdatedKey(jsonText: localData.toString(), givenKey: keyResponse)) {
       return _getBannerModelFromLocal(localData!);
     } else {
-      // 조건 : local data가 존재하지 않는다면
+      // 조건 : local data가 존재하지 않는다면 or 최신키가 아니라면
       // 실행 :  api 호출
       return _fetchBannerModel();
     }
@@ -67,15 +73,24 @@ class LoadCachedBannerContentUseCase
     return Result.success(result);
   }
 
-
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
-    Map<String, dynamic> data = json.decode(jsonText);
-    final response = BannerResponse.fromJson(data);
-    if (response.key == givenKey) {
-      return true;
-    } else {
+    try {
+      Map<String, dynamic> data = json.decode(jsonText);
+      if (data['key'] == givenKey) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch(e) {
+      _localStorageService.deleteData(fieldName: 'banner');
       return false;
     }
+
+  }
+
+  // 로컬 데이터 삭제
+  Future<void> deleteLocalData() async {
+    await _localStorageService.deleteData(fieldName: 'banner');
   }
 }

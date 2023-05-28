@@ -9,5 +9,5 @@ class AppAnalytics {
   // AppAnalytics._();
   final FirebaseAnalytics _instance = FirebaseAnalytics.instance;
 
-  static FirebaseAnalytics get instance => Get.find<AppAnalytics>()._instance;
+  static FirebaseAnalytics get instance => locator<AppAnalytics>()._instance;
 }

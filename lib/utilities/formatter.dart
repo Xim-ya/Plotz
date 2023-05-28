@@ -6,6 +6,9 @@ class Formatter {
   static String? formatGenreListToSingleStr(List<String>? genreList) =>
       genreList == null ? '-' : genreList.join(' / ');
 
+  static String? formatGenreListToSingleStr2(List<String>? genreList) =>
+      genreList == null ? '-' : genreList.join(' · ');
+
   // Date Format
   static String dateToyyMMdd(String date) {
     return DateFormat('yy.MM.dd').format(DateTime.parse(date));
@@ -15,11 +18,11 @@ class Formatter {
     return DateFormat('yyyy.MM.dd').format(DateTime.parse(date));
   }
 
-  /// 좋아요 수 & 조회수를 유튜브 포맷에 맞게 변경
+  /// 좋아요 수 & 조회수 & 구독자 수를 유튜브 포맷에 맞게 변경
   /// 1000 미만 -> 숫자 ex) 956
   /// 1000 이상 -> 천 단위 ex) 1.4천
   /// 10000 이상 -> 만 단위 ex) 32만, 이때는 소숫점 없음 && 41000 -> 4.1만
-  static String? formatViewAndLikeCount(int? num, {bool? isViewCount}) {
+  static String? formatNumberWithUnit(int? num, {bool? isViewCount}) {
     if (num == null) {
       return null;
     }
@@ -28,10 +31,8 @@ class Formatter {
       return num.toString();
     } else if (num > 1000 && num < 10000) {
       final subString = strNum.substring(0, 2);
-      final result = RegExp('.{1}')
-          .allMatches(subString)
-          .map((e) => e.group(0))
-          .join('.');
+      final result =
+          RegExp('.{1}').allMatches(subString).map((e) => e.group(0)).join('.');
       return '$result${isViewCount ?? false ? '천회' : '천'}';
       // 5 ,
     } else if (num >= 10000) {
@@ -83,7 +84,8 @@ class Formatter {
   }
 
   // 컨텐츠 type & id  -> origin id
-  static String getOriginIdByTypeAndId({required ContentType type, required int id}) {
+  static String getOriginIdByTypeAndId(
+      {required ContentType type, required int id}) {
     return '${type.getTypeCharacter}-$id';
   }
 }
