@@ -1,3 +1,4 @@
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.12.31
@@ -12,7 +13,7 @@ class SearchedContent {
   final String? posterImgUrl; // 컨텐츠 포스트
   final String? title;
   final String? releaseDate;
-  final Rx<ContentRegisteredValue> isRegisteredContent;
+  final BehaviorSubject<RegistrationState> state;
   late String? youtubeVideoId;
 
   SearchedContent({
@@ -20,7 +21,7 @@ class SearchedContent {
     required this.posterImgUrl,
     required this.title,
     required this.releaseDate,
-    required this.isRegisteredContent,
+    required this.state,
     this.youtubeVideoId,
   });
 
@@ -32,6 +33,9 @@ class SearchedContent {
   /// 일단 주석 처리
   // Future<void> checkIsContentRegistered(
   //     {required ContentType contentType}) async {}
+  //
+  // TODO - 2023.05.24
+  // 코드가 복잡한데 리팩토링이 필요함 (State 판별 로직)
 
   factory SearchedContent.fromMovieResponse(TmdbMovieDetailResponse response) {
     /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
@@ -49,17 +53,23 @@ class SearchedContent {
       }
     }
 
-    return SearchedContent(
+    final obj = SearchedContent(
       contentId: response.id,
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.title,
       releaseDate: verifyReleaseDate(),
-      isRegisteredContent: ContentService.to.contentIdInfo!.movieContentIdList
-              .contains(response.id)
-          ? ContentRegisteredValue.registered.obs
-          : ContentRegisteredValue.unRegistered.obs,
-      // isRegisteredContent:   ContentRegisteredValue.isLoading.obs,
+      state: BehaviorSubject<RegistrationState>.seeded(
+          RegistrationState.isLoading),
     );
+
+    if (ContentService.to.contentIdInfo!.movieContentIdList
+        .contains(response.id)) {
+      obj.state.add(RegistrationState.registered);
+    } else {
+      obj.state.add(RegistrationState.unRegistered);
+    }
+
+    return obj;
   }
 
   factory SearchedContent.fromTvResponse(TmdbTvDetailResponse response) {
@@ -78,21 +88,28 @@ class SearchedContent {
       }
     }
 
-    return SearchedContent(
+    final obj = SearchedContent(
       contentId: response.id,
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.name,
       releaseDate: verifyReleaseDate(),
-      isRegisteredContent:
-          ContentService.to.contentIdInfo!.tvContentIdList.contains(response.id)
-              ? ContentRegisteredValue.registered.obs
-              : ContentRegisteredValue.unRegistered.obs,
+      state: BehaviorSubject<RegistrationState>.seeded(
+          RegistrationState.isLoading),
     );
+
+    if (ContentService.to.contentIdInfo!.tvContentIdList
+        .contains(response.id)) {
+      obj.state.add(RegistrationState.registered);
+    } else {
+      obj.state.add(RegistrationState.unRegistered);
+    }
+
+    return obj;
   }
 }
 
 // 등록 여부 필드 enum 값
-enum ContentRegisteredValue {
+enum RegistrationState {
   isLoading,
   registered,
   unRegistered,

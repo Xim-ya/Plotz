@@ -1,16 +1,17 @@
 import 'package:soon_sak/utilities/index.dart';
 
 class LinearLayeredPosterImg extends StatelessWidget {
-  const LinearLayeredPosterImg(
-      {Key? key,
-      required this.imgUrl,
-      this.aspectRatio = 2 / 3,
-      this.borderRadius = 12,
-      this.linearColor = AppColor.black,
-      this.linearStep = const [0.1, 0.5, 1.0],
-      this.linearBeginPosition = Alignment.topCenter,
-      this.linearEndPosition = Alignment.bottomCenter,})
-      : super(key: key);
+  const LinearLayeredPosterImg({
+    Key? key,
+    required this.imgUrl,
+    this.aspectRatio = 2 / 3,
+    this.borderRadius = 12,
+    this.usedInCuration = false,
+    this.linearColor = AppColor.black,
+    this.linearStep = const [0.1, 0.5, 1.0],
+    this.linearBeginPosition = Alignment.topCenter,
+    this.linearEndPosition = Alignment.bottomCenter,
+  }) : super(key: key);
 
   final double? borderRadius;
   final double? aspectRatio;
@@ -19,6 +20,7 @@ class LinearLayeredPosterImg extends StatelessWidget {
   final List<double>? linearStep;
   final Alignment? linearBeginPosition;
   final Alignment? linearEndPosition;
+  final bool? usedInCuration;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +31,11 @@ class LinearLayeredPosterImg extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             CachedNetworkImage(
+              memCacheWidth: SizeConfig.to.screenWidth.toInt() *
+                  (usedInCuration ?? false ? 1 : 2),
               imageUrl: imgUrl?.prefixTmdbImgPath ?? '',
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              width: double.infinity,
+              fit: BoxFit.cover,
               placeholder: (context, url) => const SizedBox(),
               errorWidget: (context, url, error) =>
                   const Center(child: Icon(Icons.error)),

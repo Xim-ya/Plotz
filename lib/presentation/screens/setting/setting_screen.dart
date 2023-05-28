@@ -1,7 +1,8 @@
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/presentation/screens/setting/setting_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SettingScreen extends BaseScreen<SettingViewModel> {
+class SettingScreen extends NewBaseScreen<SettingViewModel> {
   const SettingScreen({Key? key}) : super(key: key);
 
   @override
@@ -9,17 +10,17 @@ class SettingScreen extends BaseScreen<SettingViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _settingMenu(title: '프로필 설정', onTap: vm.routeToProfileSetting),
-        _settingMenu(title: '로그아웃', onTap: vm.signOut),
-        _settingMenu(title: '개인정보 및 약관', onTap: vm.routeToTerms),
-        _settingMenu(title: '피드백 및 문의사항', onTap: vm.goToKakaoOneonOne),
-        _settingMenu(title: '회원탈퇴', onTap: vm.showWithdrawnInoModal),
-        _versionMenu(),
+        _settingMenu(title: '프로필 설정', onTap: vm(context).routeToProfileSetting),
+        _settingMenu(title: '로그아웃', onTap: vm(context).signOut),
+        _settingMenu(title: '개인정보 및 약관', onTap: vm(context).routeToTerms),
+        _settingMenu(title: '피드백 및 문의사항', onTap: vm(context).goToKakaoOneonOne),
+        _settingMenu(title: '회원탈퇴', onTap: vm(context).showWithdrawnInoModal),
+        _versionMenu(context),
       ],
     );
   }
 
-  Container _versionMenu() {
+  Container _versionMenu(BuildContext context) {
     return Container(
       margin: AppInset.all16,
       child: RichText(
@@ -31,7 +32,7 @@ class SettingScreen extends BaseScreen<SettingViewModel> {
                   .copyWith(fontFamily: 'pretendard_regular'),
             ),
             TextSpan(
-              text: vm.currentVersionNum,
+              text: vm(context).currentVersionNum,
               style: AppTextStyle.title2.copyWith(
                 fontFamily: 'pretendard_regular',
               ),
@@ -63,7 +64,7 @@ class SettingScreen extends BaseScreen<SettingViewModel> {
       toolbarHeight: 56,
       elevation: 0,
       leading: GestureDetector(
-        onTap: vm.routeBack,
+        onTap: context.pop,
         child: const Icon(
           Icons.arrow_back_ios,
           color: AppColor.mixedWhite,
@@ -76,4 +77,8 @@ class SettingScreen extends BaseScreen<SettingViewModel> {
       backgroundColor: AppColor.black,
     );
   }
+
+  @override
+  SettingViewModel createViewModel(BuildContext context) =>
+      locator<SettingViewModel>();
 }

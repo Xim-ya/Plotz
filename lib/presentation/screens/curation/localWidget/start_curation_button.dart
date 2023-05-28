@@ -107,16 +107,16 @@ class StartCurationButton extends StatelessWidget {
 }
 
 const List<String> movieImgPathList = [
-  'movie_content_img_1.jpeg',
-  'movie_content_img_2.jpeg',
-  'movie_content_img_3.jpeg',
+  'movie_content_img_1.png',
+  'movie_content_img_2.png',
+  'movie_content_img_3.png',
 ];
 
 const List<String> tvImgPathList = [
-  'tv_content_img_1.jpeg',
-  'tv_content_img_2.jpeg',
-  'tv_content_img_3.jpg',
-  'tv_content_img_4.jpeg',
+  'tv_content_img_1.png',
+  'tv_content_img_2.png',
+  'tv_content_img_3.png',
+  'tv_content_img_4.png',
 ];
 
 const polygonOffset = Polygon([

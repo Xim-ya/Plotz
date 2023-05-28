@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CircleImg extends StatelessWidget {
@@ -12,21 +13,19 @@ class CircleImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => imgUrl.hasData
-      ? CachedNetworkImage(
-          height: size,
-          width: size,
-          imageUrl: imgUrl!,
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              shape: BoxShape.circle,
-              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-            ),
-          ),
-          errorWidget: (context, url, error) => Container(
-            color: Colors.grey.withOpacity(0.1),
-            child: const Center(
-              child: Icon(Icons.error),
+      ? ClipRRect(
+          borderRadius: BorderRadius.circular(size / 2),
+          child: CachedNetworkImage(
+            height: size,
+            width: size,
+            memCacheWidth: size.toInt(),
+            memCacheHeight: size.toInt(),
+            imageUrl: imgUrl!,
+            errorWidget: (context, url, error) => Container(
+              color: Colors.grey.withOpacity(0.1),
+              child: const Center(
+                child: Icon(Icons.error),
+              ),
             ),
           ),
         )

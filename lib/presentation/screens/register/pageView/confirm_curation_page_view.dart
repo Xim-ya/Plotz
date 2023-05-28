@@ -1,66 +1,94 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/presentation/screens/register/localWidget/confirm_curation_page_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ConfirmCurationPageView extends BaseView<RegisterViewModel> {
+class ConfirmCurationPageView extends NewBaseView<RegisterViewModel> {
   const ConfirmCurationPageView({Key? key}) : super(key: key);
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget build(BuildContext context) {
     return ConfirmCurationPageScaffold(
       leadingText: '입력된 컨텐츠\n정보가 맞는지 확인해주세요!',
-      responsiveHInset: vm.responsiveHInset,
-      posterImg: _buildPosterImg(),
-      channelInfoView: _buildChannelInfoView(),
-      contentDetailInfoView: _buildContentDetailInfoView(),
-      bottomFixedBtn: _buildBottomFixedBtn(),
+      responsiveHInset: vm(context).responsiveHInset,
+      posterImg: const _PosterImg(),
+      channelInfoView: const _ChannelInfoView(),
+      contentDetailInfoView: const _DetailInfoView(),
+      bottomFixedBtn: _buildBottomFixedBtn(context),
     );
   }
 
-  Widget _buildPosterImg() => Obx(
-        () => LinearLayeredPosterImg(
-          aspectRatio: 273 / 412,
-          imgUrl: vm.posterImgUrl,
-          linearColor: Colors.black,
-          linearStep: const [0.0, 0.36, 1.0],
-        ),
+  Widget _buildBottomFixedBtn(BuildContext context) =>
+      LinearBgBottomFloatingBtn(
+        text: '등록',
+        onTap: vm(context).requestRegistration,
       );
+}
 
-  Widget _buildChannelInfoView() => Obx(
-        () => Positioned(
+class _DetailInfoView extends NewBaseView<RegisterViewModel> {
+  const _DetailInfoView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<RegisterViewModel, Content?>(
+      selector: (context, vm) => vm.curationContent,
+      builder: (context, _, __) {
+        return Column(children: <Widget>[
+          Text(
+            vm(context).contentTitle ?? '',
+            style: AppTextStyle.title1,
+            textAlign: TextAlign.center,
+          ),
+          AppSpace.size2,
+          if (vm(context).releaseDate.hasData)
+            Text(
+              Formatter.dateToyyyyMMdd(vm(context).releaseDate!),
+              style: AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
+            )
+        ]);
+      },
+    );
+  }
+}
+
+class _ChannelInfoView extends NewBaseView<RegisterViewModel> {
+  const _ChannelInfoView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<RegisterViewModel, Content?>(
+      selector: (context, vm) => vm.curationContent,
+      builder: (context, _, __) {
+        return Positioned(
           left: 12,
           bottom: 14,
           child: ChannelInfoView(
             nameTextWidth: SizeConfig.to.screenWidth - 32 - 12 - 40 - 10,
             imgSize: 40,
-            imgUrl: vm.channelImgUrl,
-            name: vm.channelName,
+            imgUrl: vm(context).channelImgUrl,
+            name: vm(context).channelName,
             nameFontSize: 16,
-            subscriberCount: vm.subscriberCount,
+            subscriberCount: vm(context).subscriberCount,
           ),
-        ),
-      );
+        );
+      },
+    );
+  }
+}
 
-  List<Widget> _buildContentDetailInfoView() => [
-        Obx(
-          () => Text(
-            vm.contentTitle ?? '',
-            style: AppTextStyle.title1,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        AppSpace.size2,
-        Obx(() {
-          if (vm.releaseDate.hasData) {
-            return Text(Formatter.dateToyyyyMMdd(vm.releaseDate!),
-                style: AppTextStyle.body2.copyWith(color: AppColor.lightGrey),);
-          } else {
-            return const SizedBox();
-          }
-        }),
-      ];
+class _PosterImg extends NewBaseView<RegisterViewModel> {
+  const _PosterImg({Key? key}) : super(key: key);
 
-  Widget _buildBottomFixedBtn() => LinearBgBottomFloatingBtn(
-        text: '등록',
-        onTap: vm.requestRegistration,
-      );
+  @override
+  Widget build(BuildContext context) {
+    return Selector<RegisterViewModel, String?>(
+      selector: (context, vm) => vm.posterImgUrl,
+      builder: (context, imgUrl, _) => LinearLayeredPosterImg(
+        aspectRatio: 273 / 412,
+        imgUrl: imgUrl,
+        linearColor: Colors.black,
+        linearStep: const [0.0, 0.36, 1.0],
+      ),
+    );
+  }
 }

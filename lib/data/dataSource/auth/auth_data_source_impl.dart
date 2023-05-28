@@ -3,43 +3,43 @@ import 'package:soon_sak/utilities/index.dart';
 class AuthDataSourceImpl
     with FireStoreErrorHandlerMixin
     implements AuthDataSource {
-  AuthDataSourceImpl(this._api);
+  AuthDataSourceImpl({required this.api});
 
-  final AuthApi _api;
+  final AuthApi api;
 
   @override
   Future<bool> isUserAlreadyRegistered(String userId) =>
-      loadResponseOrThrow(() => _api.isUserAlreadyRegistered(userId));
+      loadResponseOrThrow(() => api.isUserAlreadyRegistered(userId));
 
   @override
   Future<bool> isUserSignedIn() =>
-      loadResponseOrThrow(_api.isUserSignedIn);
+      loadResponseOrThrow(api.isUserSignedIn);
 
   @override
   Future<UserModel> loadUserInfo() =>
-      loadResponseOrThrow(_api.loadUserInfo);
+      loadResponseOrThrow(api.loadUserInfo);
 
   @override
   Future<void> saveUserInfo(UserModel userInfo) =>
-      loadResponseOrThrow(() => _api.saveUserInfo(userInfo));
+      loadResponseOrThrow(() => api.saveUserInfo(userInfo));
 
   @override
   Future<AuthorizationCredentialAppleID> triggerAppleSignIn() =>
-      loadResponseOrThrow(_api.triggerAppleSignIn);
+      loadResponseOrThrow(api.triggerAppleSignIn);
 
   @override
   Future<GoogleSignInAccount?> triggerGoogleSignIn() =>
-      loadResponseOrThrow(_api.triggerGoogleSignIn);
+      loadResponseOrThrow(api.triggerGoogleSignIn);
 
   @override
   Future<void> triggerGoogleSignOut() =>
-      loadResponseOrThrow(_api.triggerGoogleSignOut);
+      loadResponseOrThrow(api.triggerGoogleSignOut);
 
   @override
   Future<void> triggerAppleSignOut() =>
-      loadResponseOrThrow(_api.triggerAppleSignOut);
+      loadResponseOrThrow(api.triggerAppleSignOut);
 
   @override
   Future<void> updateLoginDate(String userId) =>
-      loadResponseOrThrow(() => _api.updateLoginDate(userId));
+      loadResponseOrThrow(() => api.updateLoginDate(userId));
 }

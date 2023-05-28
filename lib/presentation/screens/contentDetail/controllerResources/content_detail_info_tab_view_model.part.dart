@@ -6,62 +6,53 @@ part of '../content_detail_view_model.dart';
 
 extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
   // 컨텐츠 이미지 리스트
-  List<String>? get contentImgList => contentImgUrlList.value;
+  List<String>? get contentImgList => contentImgUrlList;
 
   // 컨텐츠 이미지 존재 여부 (일부 컨텐츠에서 컨텐츠 이미지가 존재 하지 않음)
   bool? get contentImgExist {
-    return contentImgUrlList.value?.isNotEmpty ?? true ? true : false;
+    return contentImgUrlList?.isNotEmpty ?? true ? true : false;
   }
 
   // 총 조회수
   String? get totalViewCount => Formatter.formatNumberWithUnit(
-        contentVideos.value?.mainViewCount,
+        contentVideos?.mainViewCount,
         isViewCount: false,
       );
 
   // 좋아요 수
   String? get likesCount =>
-      Formatter.formatNumberWithUnit(contentVideos.value?.mainLikesCount);
+      Formatter.formatNumberWithUnit(contentVideos?.mainLikesCount);
 
   // 유튜브 컨텐츠 업로드 일자
   String? get youtubeUploadDate =>
-      Formatter.getDateDifferenceFromNow(contentVideos.value?.mainUploadDate);
+      Formatter.getDateDifferenceFromNow(contentVideos?.mainUploadDate);
 
   // 채널 설명
-  String? get channelDescription => channelInfo.value?.description;
+  String? get channelDescription => channelInfo?.description;
 
   // 채널 구독자 수
   int? get subscriberCount =>
-      _passedArgument.subscribersCount ?? channelInfo.value?.subscribersCount;
+      _passedArgument.subscribersCount ?? channelInfo?.subscribersCount;
 
   // 채널 이미지 url
   String? get channelImgUrl =>
-      _passedArgument.channelLogoImgUrl ?? channelInfo.value?.logoImgUrl;
+      _passedArgument.channelLogoImgUrl ?? channelInfo?.logoImgUrl;
 
   // 채널 명
-  String? get channelName =>
-      _passedArgument.channelName ?? channelInfo.value?.name;
+  String? get channelName => _passedArgument.channelName ?? channelInfo?.name;
 
   /// 방영일
   /// 컨텐츠 타입이 영화일 경우 방영상태 대신 방영일을 보여줌
-  String? get contentReleaseDate => _contentDescriptionInfo.value?.releaseDate;
+  String? get contentReleaseDate => _contentDescriptionInfo?.releaseDate;
 
   // 방영상태
-  String? get contentAirStatus => _contentDescriptionInfo.value?.airStatus;
-
-  // 출연진 정보
-  List<ContentCreditInfo>? get contentCreditList => _contentCreditList.value;
-
-  // 출연진 정보 존재 여부 (다큐멘터리의 경우 데이터가 존재 하지 않음)
-  bool? get isCreditNotEmpty {
-    return _contentCreditList.value?.isNotEmpty ?? true ? true : false;
-  }
+  String? get contentAirStatus => _contentDescriptionInfo?.airStatus;
 
   // 출연진 정보 개수
-  int? get creditCount => _contentCreditList.value?.length;
+  int? get creditCount => contentCreditList?.length;
 
   // 큐레이터 정보
-  UserModel? get curator => _curator.value;
+  UserModel? get curator => _curator;
 
   // 출연진 섹션 > [CarouselSlider] 개수
   int? get sliderCount {
@@ -74,6 +65,11 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
     } else {
       return (creditCount! / 3).floor() + 1;
     }
+  }
+
+  // 출연진 정보 존재 여부 (다큐멘터리의 경우 데이터가 존재 하지 않음)
+  bool? get isCreditNotEmpty {
+    return contentCreditList?.isNotEmpty ?? true ? true : false;
   }
 
   // 출연진 섹션 > CarouselSlider > [ListView] 개수

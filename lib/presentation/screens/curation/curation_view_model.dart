@@ -1,14 +1,15 @@
 import 'dart:developer';
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationViewModel extends BaseViewModel {
-  CurationViewModel(this._contentRepository);
+class CurationViewModel extends NewBaseViewModel {
+  CurationViewModel({required ContentRepository contentRepository})
+      : _contentRepository = contentRepository;
 
   /* Variables */
   late final RandomImg randomContentImg;
-  late final List<CurationContent> inProgressCurations = [];
+  List<CurationContent> inProgressCurations = [];
   bool isInProgressCurationEmpty = false;
-  TabLoadingState loadingState = TabLoadingState.initState;
 
   /* Domain Modules */
   final ContentRepository _contentRepository;
@@ -27,7 +28,7 @@ class CurationViewModel extends BaseViewModel {
           inProgressCurations.clear();
           inProgressCurations.addAll(data);
         }
-        update();
+        notifyListeners();
       },
       onFailure: (e) {
         log('CurationViewModel : $e');
@@ -41,7 +42,7 @@ class CurationViewModel extends BaseViewModel {
       name: 'goToCurationProgress',
       parameters: {'type': contentType.name},
     );
-    Get.toNamed(AppRoutes.register, arguments: contentType);
+    context.push(AppRoutes.tabs + AppRoutes.register, extra: contentType);
   }
 
   String randomImgGenerator(ContentType contentType) {
@@ -59,15 +60,15 @@ class CurationViewModel extends BaseViewModel {
   }
 
   Future<void> prepare() async {
-    loadingState = TabLoadingState.loading;
+    loadingState = ViewModelLoadingState.loading;
     await fetchInProgressCurationList();
-    loadingState = TabLoadingState.done;
+    loadingState = ViewModelLoadingState.done;
   }
 
   @override
   void onInit() {
     super.onInit();
-    loading(true);
+    loading = true;
     randomContentImg = RandomImg(
       tvImgPath: tvImgPathList.randomItem(),
       movieImgPath: movieImgPathList.randomItem(),

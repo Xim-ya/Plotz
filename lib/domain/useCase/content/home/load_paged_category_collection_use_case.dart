@@ -32,11 +32,13 @@ import 'package:soon_sak/utilities/index.dart';
  * */
 
 class LoadPagedCategoryCollectionUseCase {
-  LoadPagedCategoryCollectionUseCase(
-    this._staticContentRepository,
-    this._localStorageService,
-    this._contentService,
-  );
+  LoadPagedCategoryCollectionUseCase({
+    required StaticContentRepository staticContentRepository,
+    required LocalStorageService localStorageService,
+    required ContentService contentService,
+  })  : _staticContentRepository = staticContentRepository,
+        _localStorageService = localStorageService,
+        _contentService = contentService;
 
   /* Data Modules */
   final StaticContentRepository _staticContentRepository;
@@ -44,24 +46,32 @@ class LoadPagedCategoryCollectionUseCase {
   final ContentService _contentService; // static content key 리스트 호출
 
   /* Variables */
-  final Rxn<List<CategoryContentSection>> categoryContentCollection = Rxn();
+  List<CategoryContentSection>? categoryContentCollection;
   int currentPage = 1;
   bool isPagingAvailable = true;
   bool isInitialState = true;
   Timer? _debounce;
 
   /* Controller */
-  PagingController<int, CategoryContentSection> pagingController =
-      PagingController<int, CategoryContentSection>(firstPageKey: 1);
+  late PagingController<int, CategoryContentSection> pagingController;
 
   /* Intents */
   // 'key' 값이 최신화 되어 있는지 확인
-  bool _isRecentKey({required String jsonText, required String givenKey}) {
-    Map<String, dynamic> data = json.decode(jsonText);
-    final response = CategoryContentCollectionResponse.fromJson(data);
-    if (response.key == givenKey) {
-      return true;
-    } else {
+  bool _isRecentKey(
+      {required String jsonText,
+      required String givenKey,
+      required int currentPage}) {
+    try {
+      Map<String, dynamic> data = json.decode(jsonText);
+      if (data['key'] == givenKey) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      _localStorageService.deleteData(
+          fieldName: 'categoryCollection$currentPage');
+
       return false;
     }
   }
@@ -102,6 +112,8 @@ class LoadPagedCategoryCollectionUseCase {
   /// UseCase init메소드
   /// pagingController event listen 설정
   void initUseCase() {
+    pagingController =
+        PagingController<int, CategoryContentSection>(firstPageKey: 1);
     pagingController.addPageRequestListener((pageKey) {
       if (_debounce?.isActive ?? false) _debounce!.cancel();
       _debounce = Timer(const Duration(milliseconds: 50), _fetchPage);
@@ -129,6 +141,7 @@ class LoadPagedCategoryCollectionUseCase {
         _isRecentKey(
           jsonText: localData.toString(),
           givenKey: keyResponse ?? '',
+          currentPage: currentPage,
         )) {
       await _appendData();
     }

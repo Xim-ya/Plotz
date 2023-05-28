@@ -28,7 +28,7 @@ import 'package:soon_sak/utilities/index.dart';
 *
 * */
 
-class LocalStorageService extends GetxService {
+class LocalStorageService  {
   late Directory dir;
   late StoreRef store;
   late String dbPath;
@@ -43,7 +43,6 @@ class LocalStorageService extends GetxService {
     await dir.create(recursive: true);
     dbPath = join('${dir.path}/storeData', 'content.db');
   }
-
   // 데이터 조회
   Future<Object?> getData({required String fieldName}) async {
     try {
@@ -63,7 +62,7 @@ class LocalStorageService extends GetxService {
     try {
       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).put(db, data);
-      log('====== 로컬 데이터 저장 성공');
+      log('====== 로컬 데이터 저장 성공 $fieldName');
     } catch (e) {
       log('====== 로컬 데이터 저장 실패 / $e');
     }

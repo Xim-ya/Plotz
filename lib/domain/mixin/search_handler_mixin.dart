@@ -12,25 +12,25 @@ import 'package:soon_sak/utilities/index.dart';
 mixin SearchHandlerMixin {
   final FocusNode fieldNode = FocusNode();
   final TextEditingController fieldController = TextEditingController();
-  final RxBool exposeRoundCloseBtn = false.obs;
+  bool exposeRoundCloseBtn = false;
 
   String get term => fieldController.value.text;
 
   // 검색바 'X' 버튼 토글 로직
   void toggleCloseBtn() {
     final String term = fieldController.text;
-    if (exposeRoundCloseBtn.isFalse && term.isNotEmpty) {
-      exposeRoundCloseBtn(true);
+    if (exposeRoundCloseBtn == false && term.isNotEmpty) {
+      exposeRoundCloseBtn = true;
     }
-    if (exposeRoundCloseBtn.isTrue && term.isEmpty) {
-      exposeRoundCloseBtn(false);
+    if (exposeRoundCloseBtn == true && term.isEmpty) {
+      exposeRoundCloseBtn = false;
     }
   }
 
   // 검색바 'X' 버튼이 클릭 되었을 때
   void onCloseBtnTapped() {
     fieldController.text = '';
-    exposeRoundCloseBtn(false);
+    exposeRoundCloseBtn = false;
   }
 
   // 검색어가 입력되었을 때

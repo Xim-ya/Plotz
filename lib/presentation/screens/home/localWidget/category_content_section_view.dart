@@ -54,7 +54,7 @@ class CategoryContentSectionView extends StatelessWidget {
                 },
                 child: NewContentPostItem(
                   imgUrl: contentItem.posterImgUrl,
-                  title: '임시 제목',
+                  title: contentItem.title,
                 ),
               );
             },

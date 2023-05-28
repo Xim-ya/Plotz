@@ -23,7 +23,7 @@ class PagingSearchedResultListView extends StatelessWidget {
 
   final FocusNode focusNode;
   final PagingController pagingController;
-  final RxBool? isInitialState;
+  final bool? isInitialState;
   final ItemWidgetBuilder<SearchedContent> itemBuilder;
   final String firstPageErrorText;
   final String? noItemsFoundText;
@@ -53,23 +53,23 @@ class PagingSearchedResultListView extends StatelessWidget {
           ),
 
           /* 검색된 결과가 없을 때 & 초기 화면 문구 */
-          noItemsFoundIndicatorBuilder: (context) => Obx(
-            () => isInitialState!.isTrue
+          noItemsFoundIndicatorBuilder: (context) =>
+            isInitialState! == true
                 ? Center(
-                    child: Text(
-                      firstPageErrorText,
-                      style: AppTextStyle.headline3,
-                    ),
-                  )
+              child: Text(
+                firstPageErrorText,
+                style: AppTextStyle.headline3,
+              ),
+            )
                 : Center(
-                    child: SizedBox(
-                      child: Text(
-                        '검색된 결과가 없습니다',
-                        style: AppTextStyle.headline3,
-                      ),
-                    ),
-                  ),
-          ),
+              child: SizedBox(
+                child: Text(
+                  '검색된 결과가 없습니다',
+                  style: AppTextStyle.headline3,
+                ),
+              ),
+            ),
+
 
           /* 에러 문구 */
           firstPageErrorIndicatorBuilder: (context) {

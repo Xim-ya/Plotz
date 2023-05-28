@@ -38,6 +38,7 @@ class LoadPagedChannelContentsUseCase {
         final bool isLastPage = data.contents.length < pageSize;
         if (isLastPage) {
           pagingController.appendLastPage(data.contents);
+          pagingController.dispose();
         } else {
           final nextPageKey = pagingController.value.itemList?.length ??
               0 + data.contents.length;
@@ -47,7 +48,6 @@ class LoadPagedChannelContentsUseCase {
       },
       onFailure: (e) {
         log('LoadPagedChannelCOntentsUseCase - $e');
-        AlertWidget.animatedToast('콘텐츠를 불러오는데 실패했습니다');
       },
     );
   }

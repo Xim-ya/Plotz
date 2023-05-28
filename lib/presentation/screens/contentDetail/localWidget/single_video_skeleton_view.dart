@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SingleVideoSkeletonView extends StatelessWidget {
@@ -13,7 +14,8 @@ class SingleVideoSkeletonView extends StatelessWidget {
           const SectionTitle(title: '컨텐츠'),
           ImageViewWithPlayBtn(
             onPlayerBtnClicked: () {
-              AlertWidget.toast('잠시만 기다려 주세요. 데이터를 불러오고 있습니다.');
+              AlertWidget.newToast(
+                  message: '잠시만 기다려 주세요. 데이터를 불러오고 있습니다.', context);
             },
             posterImgUrl: null,
           ),
@@ -24,8 +26,8 @@ class SingleVideoSkeletonView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
-                  children: <Widget>[
-                    const Opacity(
+                  children: const <Widget>[
+                    Opacity(
                       opacity: 1,
                       child: Icon(
                         Icons.thumb_up,
@@ -35,34 +37,25 @@ class SingleVideoSkeletonView extends StatelessWidget {
                     ),
                     AppSpace.size4,
                     Padding(
-                      padding: const EdgeInsets.only(left: 2),
-                      child: Shimmer(
-                        color: AppColor.lightGrey,
-                        child: const SizedBox(
-                          height: 16,
-                          width: 20,
-                        ),
+                      padding: EdgeInsets.only(left: 2),
+                      child: SkeletonBox(
+                        height: 16,
+                        width: 20,
                       ),
                     ),
                   ],
                 ),
                 Row(
-                  children: <Widget>[
-                    Shimmer(
-                      child: Container(
-                        color: AppColor.lightGrey.withOpacity(0.1),
-                        height: 16,
-                        width: 70,
-                      ),
+                  children: const <Widget>[
+                    SkeletonBox(
+                      height: 16,
+                      width: 70,
                     ),
                     AppSpace.size6,
-                    Shimmer(
-                      child: Container(
-                        color: AppColor.strongGrey,
-                        height: 16,
-                        width: 36,
-                      ),
-                    ),
+                    SkeletonBox(
+                      height: 16,
+                      width: 36,
+                    )
                   ],
                 ),
               ],

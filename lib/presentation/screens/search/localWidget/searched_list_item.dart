@@ -1,12 +1,13 @@
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SearchListItem extends StatelessWidget {
-  const SearchListItem(
-      {Key? key,
-        required this.contentType,
-        required this.item,
-        required this.onItemClicked,})
-      : super(key: key);
+  const SearchListItem({
+    Key? key,
+    required this.contentType,
+    required this.item,
+    required this.onItemClicked,
+  }) : super(key: key);
 
   final ContentType contentType;
   final SearchedContent item;
@@ -16,20 +17,20 @@ class SearchListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // 컨텐츠 등록 여부에 따른 인디케이터 case별 위젯 (이미지 overlay)
     Widget caseOverlayIndicatorOnImg() {
-      switch (item.isRegisteredContent.value) {
-        case ContentRegisteredValue.isLoading:
+      switch (item.state.value) {
+        case RegistrationState.isLoading:
           return const SizedBox();
-        case ContentRegisteredValue.registered:
+        case RegistrationState.registered:
           return Positioned.fill(
             child: Align(
               child: IconInkWellButton(
                 iconPath: 'assets/icons/play.svg',
                 size: 40,
-                onIconTapped: () {},
+                onIconTapped: onItemClicked,
               ),
             ),
           );
-        case ContentRegisteredValue.unRegistered:
+        case RegistrationState.unRegistered:
           return Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -43,8 +44,8 @@ class SearchListItem extends StatelessWidget {
 
     // 컨텐츠 등록 여부 인디케이터 case별 위젯
     Widget caseIndicatorOnTrailing() {
-      switch (item.isRegisteredContent.value) {
-        case ContentRegisteredValue.isLoading:
+      switch (item.state.value) {
+        case RegistrationState.isLoading:
           return const SizedBox(
             height: 12,
             width: 12,
@@ -53,9 +54,9 @@ class SearchListItem extends StatelessWidget {
               strokeWidth: 2,
             ),
           );
-        case ContentRegisteredValue.registered:
+        case RegistrationState.registered:
           return const SizedBox();
-        case ContentRegisteredValue.unRegistered:
+        case RegistrationState.unRegistered:
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -85,32 +86,25 @@ class SearchListItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: CachedNetworkImage(
-                    imageUrl: item.posterImgUrl?.prefixTmdbImgPath ?? '',
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    placeholder: (context, url) => Shimmer(
-                      child: Container(
-                        color: AppColor.black,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      color: AppColor.darkGrey,
-                      child: const Icon(Icons.error),
-                    ),
-                  ),
-                ),
+                    height: 100,
+                    width: 100,
+                    child: item.posterImgUrl != null
+                        ? CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            memCacheWidth: 270,
+                            imageUrl: item.posterImgUrl!.prefixTmdbImgPath,
+                            placeholder: (context, url) =>
+                                const SkeletonBox(),
+                            errorWidget: (context, url, error) => Container(
+                              color: Colors.grey.withOpacity(0.1),
+                              child: const Center(
+                                child: Icon(Icons.error),
+                              ),
+                            ),
+                          )
+                        : const SkeletonBox()),
               ),
-              Obx(caseOverlayIndicatorOnImg)
+              caseOverlayIndicatorOnImg(),
             ],
           ),
           AppSpace.size8,
@@ -125,7 +119,7 @@ class SearchListItem extends StatelessWidget {
                   width: SizeConfig.to.screenWidth - 140,
                   child: Text(
                     item.title ?? '제목 없음',
-                    style: AppTextStyle.title1,
+                    style: AppTextStyle.title3,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -138,16 +132,14 @@ class SearchListItem extends StatelessWidget {
                     item.releaseDate != null
                         ? Formatter.dateToyyMMdd(item.releaseDate!)
                         : contentType.isTv
-                        ? '방영일 확인 불가'
-                        : '개봉일 확인 불가',
+                            ? '방영일 확인 불가'
+                            : '개봉일 확인 불가',
                     style:
-                    AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
+                        AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
                   ),
                 AppSpace.size2,
                 // 등록 여부 Indicator
-                Obx(
-                  caseIndicatorOnTrailing,
-                )
+                caseIndicatorOnTrailing(),
               ],
             ),
           ),

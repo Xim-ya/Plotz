@@ -23,7 +23,7 @@ class ExploreContentModel with FirestoreHelper {
       final channelRes =
           await YoutubeMetaData.yt.channels.getByVideo(e.videoId);
       final videoRes = await YoutubeMetaData.yt.videos.get(e.videoId);
-      e.youtubeInfo.value = ExploreContentYoutubeInfo.fromResponse(
+      e.youtubeInfo = ExploreContentYoutubeInfo.fromResponse(
         channelRes: channelRes,
         videoRes: videoRes,
       );
@@ -51,7 +51,7 @@ class ExploreContentItem {
   final String title;
   final String releaseDate;
   final String posterImgUrl;
-  late final Rxn<ExploreContentYoutubeInfo> youtubeInfo = Rxn(); // 컨텐츠 유튜브 정보
+  late  ExploreContentYoutubeInfo? youtubeInfo; // 컨텐츠 유튜브 정보
 
   ExploreContentItem(
       {required this.originId,

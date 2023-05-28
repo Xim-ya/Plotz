@@ -1,64 +1,61 @@
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
-
-/** Created By Ximya - 2022.12.31
- *  컨텐츠 회차와 유튜브 영상 id 값을 담고 있는 데이터 모델
- *  ex) 영화 - 파이트클럽 1부, 파이트클럽 2부
- *  ex) 드라마 - 브레이킹 베드 시즌1, 브레이킹 베드 시즌 2..
- * */
+import 'package:rxdart/rxdart.dart';
 
 class ContentVideoItem {
-  final int episodeNum; // 시즌, 회차
-  final String videoId; // 유튜브 비디오 아이디
-  final Rxn<YoutubeVideoContentInfo> _detailInfo = Rxn(); // 유튜브 상세 정보 (late)
-  final Rxn<SeasonInfo> _tvSeasonInfo = Rxn(); // Tv 컨텐츠일 경우, 시즌 정보 (late)
+  final int episodeNum;
+  final String videoId;
+  final BehaviorSubject<YoutubeVideoContentInfo?> _detailInfoSubject;
+  final BehaviorSubject<SeasonInfo?> _tvSeasonInfoSubject;
 
-  // Getters
-  YoutubeVideoContentInfo? get detailInfo => _detailInfo.value;
+  Stream<YoutubeVideoContentInfo?> get detailInfoStream =>
+      _detailInfoSubject.stream;
 
-  SeasonInfo? get tvSeasonInfo => _tvSeasonInfo.value;
+  Stream<SeasonInfo?> get tvSeasonInfoStream => _tvSeasonInfoSubject.stream;
+
+  YoutubeVideoContentInfo? get detailInfo => _detailInfoSubject.valueOrNull;
+
+  SeasonInfo? get tvSeasonInfo => _tvSeasonInfoSubject.valueOrNull;
 
   ContentVideoItem({
     required this.episodeNum,
     required this.videoId,
-  });
+  })  : _detailInfoSubject = BehaviorSubject<YoutubeVideoContentInfo?>(),
+        _tvSeasonInfoSubject = BehaviorSubject<SeasonInfo?>();
 
-  /// 유튜브 비디오 상세 정보를 호출
-  /// 호출한 데이터로 [detailInfo] Rx 필드값을 업데이트
-  Future<void> updateVideoDetails() async {
+  Future<void> updateVideoDetails(BuildContext context) async {
     String selectedVideoId = videoId;
     if (videoId.contains('&')) {
       selectedVideoId = videoId.substring(0, videoId.indexOf('&'));
-      // 타임라인이 포함되어 있는 youtubeVideoId라면 타임라인 pattern을 삭제
     }
-    final responseRes =
-        await YoutubeRepository.to.loadYoutubeVideoContentInfo(selectedVideoId);
+
+    final responseRes = await locator<YoutubeRepository>()
+        .loadYoutubeVideoContentInfo(selectedVideoId);
+
     responseRes.fold(
       onSuccess: (data) {
-        _detailInfo.value = data;
+        _detailInfoSubject.add(data);
+        _detailInfoSubject.close();
       },
       onFailure: (e) {
-        AlertWidget.toast('유튜브 영상을 호출하는데 실패했어요');
+        if (e is VideoUnavailableException) {
+          AlertWidget.newToast(message: '유튜버가 삭제한 영상으로 불러올 수 없습니다', context);
+        } else {
+          AlertWidget.newToast(message: '유튜브 영상을 호출하는데 실패했어요.', context);
+        }
         log(e.toString());
       },
     );
   }
 
-  // Tv 컨텐츠 시즌 리스트 정보를 호출
-  // 호출한 정보를 조건으로 [_tvSeasonInfo] 값에 매핑시켜 관리.
   Future<void> mappingTvSeasonInfo(
-      {required List<SeasonInfo> seasonInfoList,}) async {
+      {required List<SeasonInfo> seasonInfoList}) async {
     for (var ele in seasonInfoList) {
-      // 시즌 넘버가 일치한다면 값을 업데이트 함.
       if (ele.seasonNum == episodeNum) {
-        _tvSeasonInfo.value = ele;
+        _tvSeasonInfoSubject.add(ele);
+        unawaited(_tvSeasonInfoSubject.close());
       }
     }
-  }
-
-  factory ContentVideoItem.fromJson(Map<String, dynamic> json) {
-    return ContentVideoItem(
-        episodeNum: json['order'], videoId: json['videoId'],);
   }
 
   factory ContentVideoItem.fromResponse(VideoResponse response) {
@@ -66,5 +63,10 @@ class ContentVideoItem {
       episodeNum: response.order,
       videoId: response.videoId,
     );
+  }
+
+  void dispose() {
+    _detailInfoSubject.close();
+    _tvSeasonInfoSubject.close();
   }
 }

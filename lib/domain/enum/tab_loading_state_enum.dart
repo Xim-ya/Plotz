@@ -1,6 +1,5 @@
-enum TabLoadingState {
+enum ViewModelLoadingState {
   initState,
   loading,
   done,
-
 }

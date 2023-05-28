@@ -5,13 +5,15 @@ import 'package:soon_sak/utilities/index.dart';
 class UserDataSourceImpl
     with FireStoreErrorHandlerMixin, FirebaseIsolateHelper
     implements UserDataSource {
-  UserDataSourceImpl(this._api);
+  UserDataSourceImpl({required UserApi api}) : _api = api;
 
   final UserApi _api;
 
   @override
-  Future<void> addUserQurationInfo(
-          {required String qurationDocId, required String userId,}) =>
+  Future<void> addUserQurationInfo({
+    required String qurationDocId,
+    required String userId,
+  }) =>
       loadResponseOrThrow(
         () => _api.addUserCurationInfo(
           qurationDocId: qurationDocId,
@@ -25,7 +27,8 @@ class UserDataSourceImpl
 
   @override
   Future<List<CurationContentResponse>> loadUserCurationContentList(
-      String userId,) async {
+    String userId,
+  ) async {
     return loadResponseOrThrow(() => _api.loadUserCurationContentList(userId));
   }
 
@@ -38,7 +41,8 @@ class UserDataSourceImpl
 
   @override
   Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
-          String userId,) =>
+    String userId,
+  ) =>
       loadWithFirebaseIsolate(
         () => loadResponseOrThrow(
           () => _api.loadUserWatchHistory(userId),
@@ -56,10 +60,13 @@ class UserDataSourceImpl
   }
 
   @override
-  Future<String> uploadUserProfileImgAndReturnUrl(
-      {required String userId, required File file,}) {
-    return loadResponseOrThrow(() =>
-        _api.uploadUserProfileImgAndReturnUrl(userId: userId, file: file),);
+  Future<String> uploadUserProfileImgAndReturnUrl({
+    required String userId,
+    required File file,
+  }) {
+    return loadResponseOrThrow(
+      () => _api.uploadUserProfileImgAndReturnUrl(userId: userId, file: file),
+    );
   }
 
   @override

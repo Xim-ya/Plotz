@@ -9,8 +9,10 @@ import 'package:soon_sak/utilities/index.dart';
 class ContentVideos {
   final List<ContentVideoItem> videos; // 비디오 객체 (시즌 정보, 유튜브 상세 정보 등등)
   final ContentVideoFormat contentVideoFormat; // 비디오 포맷 타입
-  RxBool isDetailInfoLoaded = false.obs;
-  RxBool isSeasonInfoLoaded = false.obs;
+  bool isDetailInfoLoaded = false;
+  bool isSeasonInfoLoaded = false;
+
+  ContentVideos({required this.videos, required this.contentVideoFormat});
 
   /* Getters */
   ContentVideoItem get singleTypeVideo => videos[0];
@@ -50,39 +52,23 @@ class ContentVideos {
     return sum;
   }
 
+
+
   /* Intents */
   // 비디오 상세 정보 로딩 state 업데이트
-  void updateVideoDetailsLoadingState() {
-    isDetailInfoLoaded(true);
+  Future<void> updateVideoDetailsLoadingState() async{
+    isDetailInfoLoaded = true;
   }
 
   // 비디오 시즌 정보 로딩 state 업데이트
-  void updateSeasonInfoLoadingState() {
-    isSeasonInfoLoaded(true);
+  Future<void> updateSeasonInfoLoadingState() async{
+    isSeasonInfoLoaded = true;
   }
 
-  ContentVideos({required this.videos, required this.contentVideoFormat});
-
-  factory ContentVideos.fromDramaJson(List<Map<String, dynamic>> json) {
-    return ContentVideos(
-        videos: json.map(ContentVideoItem.fromJson).toList(),
-        // 비디오 response 개수에 따라 타입이 결정됨.
-        contentVideoFormat: json.length > 1
-            ? ContentVideoFormat.multipleTv
-            : ContentVideoFormat.singleTv,);
-  }
-
-  factory ContentVideos.fromMovieJson(List<Map<String, dynamic>> json) {
-    return ContentVideos(
-        videos: json.map(ContentVideoItem.fromJson).toList(),
-        // 비디오 response 개수에 따라 타입이 결정됨.
-        contentVideoFormat: json.length > 1
-            ? ContentVideoFormat.multipleMovie
-            : ContentVideoFormat.singleMovie,);
-  }
-
-  factory ContentVideos.fromResponse(List<VideoResponse> response,
-      {required String id,}) {
+  factory ContentVideos.fromResponse(
+    List<VideoResponse> response, {
+    required String id,
+  }) {
     final ContentType type = SplittedIdAndType.fromOriginId(id).type;
 
     ContentVideoFormat getFormatType() {
@@ -98,7 +84,28 @@ class ContentVideos {
     }
 
     return ContentVideos(
-        videos: response.map(ContentVideoItem.fromResponse).toList(),
-        contentVideoFormat: getFormatType(),);
+      videos: response.map((e) => ContentVideoItem.fromResponse(e)).toList(),
+      contentVideoFormat: getFormatType(),
+    );
   }
 }
+
+// factory ContentVideos.fromDramaJson(List<Map<String, dynamic>> json) {
+//   return ContentVideos(
+//     videos: json.map(ContentVideoItem.fromJson).toList(),
+//     // 비디오 response 개수에 따라 타입이 결정됨.
+//     contentVideoFormat: json.length > 1
+//         ? ContentVideoFormat.multipleTv
+//         : ContentVideoFormat.singleTv,
+//   );
+// }
+//
+// factory ContentVideos.fromMovieJson(List<Map<String, dynamic>> json) {
+//   return ContentVideos(
+//     videos: json.map(ContentVideoItem.fromJson).toList(),
+//     // 비디오 response 개수에 따라 타입이 결정됨.
+//     contentVideoFormat: json.length > 1
+//         ? ContentVideoFormat.multipleMovie
+//         : ContentVideoFormat.singleMovie,
+//   );
+// }

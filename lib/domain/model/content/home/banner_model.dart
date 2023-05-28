@@ -21,7 +21,6 @@ class BannerItem {
   final String title;
   final String description;
   final String imgUrl;
-  final String backdropImgUrl;
   final String genre;
 
   BannerItem({
@@ -32,7 +31,6 @@ class BannerItem {
     required this.title,
     required this.description,
     required this.imgUrl,
-    required this.backdropImgUrl,
   });
 
   factory BannerItem.fromResponse(BannerItemResponse response) => BannerItem(
@@ -43,7 +41,6 @@ class BannerItem {
         genre: Formatter.formatGenreListToSingleStr2(response.genres) ?? '장르 없음',
         description: response.description,
         imgUrl: response.imgUrl,
-        backdropImgUrl: response.backdropImgUrl,
       );
 }
 

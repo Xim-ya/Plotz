@@ -1,6 +1,8 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationScreen extends BaseScreen<CurationViewModel> {
+class CurationScreen extends NewBaseScreen<CurationViewModel> {
   const CurationScreen({Key? key}) : super(key: key);
 
   @override
@@ -19,24 +21,31 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
             ),
             AppSpace.size22,
             // 큐레이션 컨텐츠 등록 버튼 (드라마, 영화)
-            Row(
-              children: [
-                StartCurationButton(
-                  imgPath: vm.randomContentImg.tvImgPath,
-                  contentType: ContentType.tv,
-                  onBtnTapped: () {
-                    vm.routeToRegister(contentType: ContentType.tv);
-                  },
-                ),
-                AppSpace.size16,
-                StartCurationButton(
-                  imgPath: vm.randomContentImg.movieImgPath,
-                  contentType: ContentType.movie,
-                  onBtnTapped: () {
-                    vm.routeToRegister(contentType: ContentType.movie);
-                  },
-                ),
-              ],
+            Selector<CurationViewModel, RandomImg>(
+              selector: (context, vm) => vm.randomContentImg,
+              builder: (context, imgPath, _) {
+                return Row(
+                  children: [
+                    StartCurationButton(
+                      imgPath: imgPath.tvImgPath,
+                      contentType: ContentType.tv,
+                      onBtnTapped: () {
+                        vm(context)
+                            .routeToRegister(contentType: ContentType.tv);
+                      },
+                    ),
+                    AppSpace.size16,
+                    StartCurationButton(
+                      imgPath: imgPath.movieImgPath,
+                      contentType: ContentType.movie,
+                      onBtnTapped: () {
+                        vm(context)
+                            .routeToRegister(contentType: ContentType.movie);
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
             AppSpace.size72,
 
@@ -48,51 +57,56 @@ class CurationScreen extends BaseScreen<CurationViewModel> {
               ),
             ),
             AppSpace.size10,
-            GetBuilder<CurationViewModel>(
-              builder: (_) {
-                if (vm.isInProgressCurationEmpty) {
-                  return Text(
-                    '현재 진행중인 큐레이션이 없어요',
-                    style:
-                        AppTextStyle.body1.copyWith(color: AppColor.lightGrey),
-                  );
-                } else {
-                  return GridView.builder(
-                    padding: AppInset.bottom46,
-                    shrinkWrap: true,
-                    itemCount: vm.curationListLength,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverQuiltedGridDelegate(
-                      crossAxisCount: 14,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      repeatPattern: QuiltedGridRepeatPattern.inverted,
-                      pattern: [
-                        const QuiltedGridTile(9, 7),
-                        const QuiltedGridTile(8, 7),
-                      ],
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      if (vm.inProgressCurations.isNotEmpty) {
-                        final item = vm.inProgressCurations[index];
+            Consumer<CurationViewModel>(builder: (context, vm, _) {
+              if (vmS(context, (vm) => vm.isInProgressCurationEmpty)) {
+                return Text(
+                  '현재 진행중인 큐레이션이 없어요',
+                  style: AppTextStyle.body1.copyWith(color: AppColor.lightGrey),
+                );
+              } else {
+                return GridView.builder(
+                  padding: AppInset.bottom46,
+                  shrinkWrap: true,
+                  itemCount: vmS<int>(context, (vm) => vm.curationListLength),
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverQuiltedGridDelegate(
+                    crossAxisCount: 14,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    repeatPattern: QuiltedGridRepeatPattern.inverted,
+                    pattern: [
+                      const QuiltedGridTile(9, 7),
+                      const QuiltedGridTile(8, 7),
+                    ],
+                  ),
+                  itemBuilder: (BuildContext _, int index) {
+                    return Builder(builder: (context) {
+                      final itemList = vmS<List<CurationContent>>(
+                          context, (vm) => vm.inProgressCurations);
+                      if (itemList.isNotEmpty) {
+                        final item = itemList[index];
                         return CurationGridItemView(
                           posterImgUrl: item.posterImgUrl,
                           curatorProfileImgUrl: item.curatorProfileImgUrl,
                           curatorName: item.curatorName,
                         );
                       } else {
-                        return const CurationGridItemSkeletonView();
+                        return CurationGridItemView.createSkeleton();
                       }
-                    },
-                  );
-                }
-              },
-            ),
+                    });
+                  },
+                );
+              }
+            })
           ],
         ),
       ),
     );
   }
+
+  @override
+  CurationViewModel createViewModel(BuildContext context) =>
+      locator<CurationViewModel>();
 }
 
 class PolygonPainter extends CustomPainter {

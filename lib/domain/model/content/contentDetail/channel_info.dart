@@ -5,7 +5,7 @@ class ChannelInfo {
   final String? name;
   final int? subscribersCount;
   final String? logoImgUrl;
-  final String? description;
+  final String description;
 
   ChannelInfo({
     required this.id,
@@ -20,7 +20,6 @@ class ChannelInfo {
         name: response.name,
         subscribersCount: response.subscribersCount,
         logoImgUrl: response.logoImgUrl,
-    description: response.description,
-
+        description: response.description ?? '설명 없음',
       );
 }

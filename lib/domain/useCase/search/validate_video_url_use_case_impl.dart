@@ -1,10 +1,11 @@
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SearchValidateUrlImpl
     with SearchHandlerMixin
     implements SearchValidateUrlUseCase {
-  @override
-  final Rx<ValidationState> videoUrlValidState = ValidationState.initState.obs;
+
+  final BehaviorSubject<ValidationState> videoUrlValidState = BehaviorSubject<ValidationState>.seeded(ValidationState.initState);
   @override
   String? selectedChannelId;
   @override
@@ -15,62 +16,63 @@ class SearchValidateUrlImpl
   String get searchedKeyword => fieldController.value.text;
 
   @override
-  ValidationState get isVideoValid => videoUrlValidState.value;
+  BehaviorSubject<ValidationState>  get isVideoValid => videoUrlValidState;
+
 
   // 비디오 url 유효성 검사
   Future<void> checkVideoIdValidation(String? videoId) async {
     try {
       final response = await YoutubeMetaData.yt.videos.get(videoId);
-      videoUrlValidState(ValidationState.valid);
+      videoUrlValidState.add(ValidationState.valid);
       selectedChannelId = response.channelId.value;
       selectedVideoId = videoId;
     } catch (e) {
-      videoUrlValidState(ValidationState.invalid);
+      videoUrlValidState.add(ValidationState.invalid);
+
     }
   }
 
   // 붙여넣기 버튼이 클릭 되었을 시
   @override
-  Future<void> onPasteBtnTapped() async {
+  Future<void> onPasteBtnTapped(BuildContext context) async {
     fieldNode.unfocus(); // 키보드 가리기
 
-    videoUrlValidState(ValidationState.isLoading);
+    videoUrlValidState.add(ValidationState.isLoading);
     ClipboardData? pasteUrl = await Clipboard.getData('text/plain');
 
     if (pasteUrl?.text == null) {
-      unawaited(AlertWidget.newToast('복사된 링크가 없습니다'));
+      unawaited(AlertWidget.newToast(message: '복사된 링크가 없습니다', context));
       if (searchedKeyword != '') {
-        videoUrlValidState(ValidationState.invalid);
-        exposeRoundCloseBtn(true);
+        videoUrlValidState.add(ValidationState.invalid);
+        exposeRoundCloseBtn = true;
       } else {
-        videoUrlValidState(ValidationState.initState);
+        videoUrlValidState.add(ValidationState.initState);
       }
     } else {
       fieldController.text = pasteUrl?.text ?? '';
       final videoId = Formatter.getVideoIdFromYoutubeUrl(fieldController.text);
       await checkVideoIdValidation(videoId);
-      exposeRoundCloseBtn(true);
+      exposeRoundCloseBtn = true;
     }
   }
 
   // 링크 입력 검색창에 키워드가 입력되었을 시
   @override
   Future<void> onSearchTermEntered() async {
-    videoUrlValidState(ValidationState.isLoading);
-
+    videoUrlValidState.add(ValidationState.isLoading);
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(
       const Duration(milliseconds: 300),
       () async {
         if (searchedKeyword == '') {
-          videoUrlValidState(ValidationState.initState);
+          videoUrlValidState.add(ValidationState.initState);
           return;
         }
-        exposeRoundCloseBtn(true);
+        exposeRoundCloseBtn = true;
         final videoId = Formatter.getVideoIdFromYoutubeUrl(searchedKeyword);
 
         if (videoId == null) {
-          videoUrlValidState(ValidationState.invalid);
+          videoUrlValidState.add(ValidationState.invalid);
         } else {
           await checkVideoIdValidation(videoId);
         }
@@ -82,7 +84,7 @@ class SearchValidateUrlImpl
   @override
   void onCloseBtnTapped() {
     fieldController.text = '';
-    exposeRoundCloseBtn(false);
+    exposeRoundCloseBtn = false;
     videoUrlValidState.value = ValidationState.initState;
   }
 
@@ -93,5 +95,5 @@ class SearchValidateUrlImpl
   FocusNode get focusNode => fieldNode;
 
   @override
-  RxBool get showRoundCloseBtn => exposeRoundCloseBtn;
+  bool get showRoundCloseBtn => exposeRoundCloseBtn;
 }

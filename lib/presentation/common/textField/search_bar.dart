@@ -19,7 +19,7 @@ class SearchBar extends StatelessWidget {
   final Function(String) onChanged;
   final Function(String)? onFieldSubmitted;
   final VoidCallback resetSearchValue;
-  final RxBool showRoundCloseBtn;
+  final bool showRoundCloseBtn;
   final double width;
   final String? hintText;
   final bool? showPrefixIcon;
@@ -39,9 +39,10 @@ class SearchBar extends StatelessWidget {
             controller: textEditingController,
             cursorColor: AppColor.lightGrey,
             style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontFamily: 'pretendard_regular',),
+              fontSize: 16,
+              color: Colors.white,
+              fontFamily: 'pretendard_regular',
+            ),
             decoration: InputDecoration(
               filled: true,
               contentPadding:
@@ -74,31 +75,32 @@ class SearchBar extends StatelessWidget {
             ),
 
           // 'X' 버튼
-          Obx(() => showRoundCloseBtn.value
-              ? Positioned(
-                  right: 0,
-                  child: GestureDetector(
-                    onTap: resetSearchValue,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      height: 40,
-                      child: Container(
-                        width: 18,
-                        height: 18,
-                        decoration: const BoxDecoration(
-                          color: AppColor.lightGrey,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.close_rounded,
-                          size: 12,
-                          color: AppColor.strongGrey,
-                        ),
-                      ),
+          if (showRoundCloseBtn)
+            Positioned(
+              right: 0,
+              child: GestureDetector(
+                onTap: resetSearchValue,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 40,
+                  child: Container(
+                    width: 18,
+                    height: 18,
+                    decoration: const BoxDecoration(
+                      color: AppColor.lightGrey,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.close_rounded,
+                      size: 12,
+                      color: AppColor.strongGrey,
                     ),
                   ),
-                )
-              : const SizedBox(),),
+                ),
+              ),
+            )
+          else
+            const SizedBox(),
         ],
       ),
     );
@@ -107,7 +109,8 @@ class SearchBar extends StatelessWidget {
   // [TextField] OutLinedBorder 속성
   OutlineInputBorder _fixedOutLinedBorder() {
     return const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(6)),
-        borderSide: BorderSide(color: Colors.transparent),);
+      borderRadius: BorderRadius.all(Radius.circular(6)),
+      borderSide: BorderSide(color: Colors.transparent),
+    );
   }
 }

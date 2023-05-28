@@ -1,7 +1,8 @@
 import 'package:soon_sak/utilities/index.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this._dataSource);
+  AuthRepositoryImpl({required AuthDataSource dataSource})
+      : _dataSource = dataSource;
 
   final AuthDataSource _dataSource;
 
@@ -86,7 +87,6 @@ class AuthRepositoryImpl implements AuthRepository {
       return Result.failure(e);
     }
   }
-
 
   @override
   Future<Result<UserModel>> loadUserInfo() async {

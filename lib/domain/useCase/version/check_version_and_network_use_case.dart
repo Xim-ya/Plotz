@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:io' show Platform, exit;
 
@@ -14,14 +15,18 @@ import 'dart:io' show Platform, exit;
  *  현재 앱 버전 정보는 [package_info_plus] 라이브러를 이용해서 불러들임
  * */
 
-class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
-  CheckVersionAndNetworkUseCase(this._repository, this._userService);
+class CheckVersionAndNetworkUseCase
+    extends BaseUseCase<BuildContext, Result<void>> {
+  CheckVersionAndNetworkUseCase(
+      {required VersionRepository repository, required UserService userService})
+      : _repository = repository,
+        _userService = userService;
 
   final VersionRepository _repository;
   final UserService _userService;
 
   @override
-  Future<Result<void>> call() async {
+  Future<Result<void>> call(BuildContext context) async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -40,21 +45,21 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         // 심사를 진행중인 상태라면
         if (version.systemAvailable == 'R' &&
             serverVersionCode != appVersionCode) {
-          showSystemIsNotAvailableModal();
+          showSystemIsNotAvailableModal(context);
           return Result.failure(Exception('배포 진행 중'));
         }
 
         /// 조건 : 시스템 점건 중이거나 작동을 할 수 있는 상태라면
         /// 시스템 점검 모달 노출
         if (version.systemAvailable == 'N') {
-          showSystemIsNotAvailableModal();
+          showSystemIsNotAvailableModal(context);
           return Result.failure(Exception('시스템 점검 중'));
         }
 
         /// 조건: 서버 버전이 현재 앱 버전보다 높다면
         /// 앱 업데이트 모달 노출
         if (serverVersionCode > appVersionCode) {
-          showNeedUpdateModal();
+          showNeedUpdateModal(context);
           return Result.failure(Exception('업데이트 필요'));
         }
 
@@ -65,12 +70,12 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
         /// 네트워크 불안정 모달 노출
         if (!(connectivityResult == ConnectivityResult.mobile ||
             connectivityResult == ConnectivityResult.wifi)) {
-          showNetworkIsBadModal();
+          showNetworkIsBadModal(context);
           return Result.failure(Exception('네트워크 불안정'));
         }
 
         /// 알 수 없는 오류라면
-        somethingIsWrongModal();
+        somethingIsWrongModal(context);
         log('CheckVersionInfoUseCase : $e');
         return Result.failure(Exception('알 수 없는 오류'));
       },
@@ -78,63 +83,99 @@ class CheckVersionAndNetworkUseCase extends BaseNoParamUseCase<Result<void>> {
   }
 
   /* 모달 노출 메소드 */
-
-  void showSystemIsNotAvailableModal() {
-    Get.dialog(AppDialog.singleBtn(
-      onBtnClicked: () async {
-        Get.back();
-        exit(9);
-      },
-      title: '시스템 점검 안내',
-      description: '시스템 점검으로 서비스 이용이 제한됩니다',
-    ),);
-  }
-
-  void somethingIsWrongModal() {
-    Get.dialog(AppDialog.singleBtn(
-      onBtnClicked: () async {
-        Get.back();
-        exit(0);
-      },
-      title: '오류',
-      description: '알 수 없는 오류가 발생했습니다',
-    ),);
-  }
-
-  void showNetworkIsBadModal() {
-    Get.dialog(AppDialog.singleBtn(
-      onBtnClicked: () {
-        Get.back();
-        exit(0);
-      },
-      title: '네트워크 불안정',
-      description: 'Wi-Fi 또는 데이터를 활성화 해주세요.',
-    ),);
-  }
-
-  void showNeedUpdateModal() {
-    Get.dialog(
-      AppDialog.singleBtn(
+  void showSystemIsNotAvailableModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AppDialog.singleBtn(
         onBtnClicked: () async {
-          Get.back();
+          context.pop();
+          exit(9);
+        },
+        title: '시스템 점검 안내',
+        description: '시스템 점검으로 서비스 이용이 제한됩니다',
+      ),
+    );
+  }
+
+  void somethingIsWrongModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AppDialog.singleBtn(
+        onBtnClicked: () async {
+          context.pop();
+          exit(0);
+        },
+        title: '오류',
+        description: '알 수 없는 오류가 발생했습니다',
+      ),
+    );
+  }
+
+  void showNetworkIsBadModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AppDialog.singleBtn(
+        onBtnClicked: () {
+          context.pop();
+          exit(0);
+        },
+        title: '네트워크 불안정',
+        description: 'Wi-Fi 또는 데이터를 활성화 해주세요.',
+      ),
+    );
+  }
+
+  void showNeedUpdateModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) =>       AppDialog.singleBtn(
+        onBtnClicked: () async {
+          context.pop();
           if (Platform.isIOS) {
             await launchUrl(
               Uri.parse(
-                  'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',),
+                'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',
+              ),
               mode: LaunchMode.externalApplication,
             );
           } else if (Platform.isAndroid) {
-            // TODO : 앱 코드 변경 필요[ANDROID]
             await launchUrl(
               Uri.parse(
-                  'https://play.google.com/store/apps/details?id=com.soon_sak',),
+                'https://play.google.com/store/apps/details?id=com.soon_sak',
+              ),
               mode: LaunchMode.externalApplication,
             );
           }
         },
         title: '업데이트 안내',
-        description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
+        subTitle: 'Plotz로 앱이 새롭게 리뉴얼 되었습니다.',
+        description: '최신 기능을 이용하기 위해 업데이트를 진행해주세요',
       ),
     );
+    // showDialog(
+    //   context: context,
+    //   builder: (_) =>       AppDialog.singleBtn(
+    //     onBtnClicked: () async {
+    //       context.pop();
+    //       if (Platform.isIOS) {
+    //         await launchUrl(
+    //           Uri.parse(
+    //             'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',
+    //           ),
+    //           mode: LaunchMode.externalApplication,
+    //         );
+    //       } else if (Platform.isAndroid) {
+    //         await launchUrl(
+    //           Uri.parse(
+    //             'https://play.google.com/store/apps/details?id=com.soon_sak',
+    //           ),
+    //           mode: LaunchMode.externalApplication,
+    //         );
+    //       }
+    //     },
+    //     title: '업데이트 안내',
+    //     description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
+    //   ),
+    // );
   }
 }

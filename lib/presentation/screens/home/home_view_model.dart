@@ -1,38 +1,51 @@
 import 'dart:developer';
+import 'package:go_router/go_router.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
+import 'package:soon_sak/domain/update_test.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'home_view_model.part.dart';
 
-class HomeViewModel extends BaseViewModel {
-  HomeViewModel(
-    this.loadPagedCategoryCollectionUseCase,
-    this._loadCachedTopPositionedContentsUseCase,
-    this._loadCachedTopTenContentsUseCase,
-    this._loadBannerContentUseCase,
-    this._channelRepository,
-  );
+class HomeViewModel extends NewBaseViewModel {
+  HomeViewModel({
+    required LoadPagedCategoryCollectionUseCase
+        loadPagedCategoryCollectionsUseCase,
+    required LoadCachedTopPositionedContentsUseCase
+        loadCachedTopPositionedContentsUseCase,
+    required LoadCachedTopTenContentsUseCase loadCachedTopTenContentsUseCase,
+    required LoadCachedBannerContentUseCase loadBannerContentUseCase,
+    required ChannelRepository channelRepository,
+  })  : _loadBannerContentUseCase = loadBannerContentUseCase,
+        _loadCachedTopPositionedContentsUseCase =
+            loadCachedTopPositionedContentsUseCase,
+        _loadCachedTopTenContentsUseCase = loadCachedTopTenContentsUseCase,
+        loadPagedCategoryCollectionUseCase =
+            loadPagedCategoryCollectionsUseCase,
+        _channelRepository = channelRepository;
 
   /* [Variables] */
 
   /// Data
-  final Rxn<BannerModel> _bannerContents = Rxn(); // 배너 컨텐츠
-  final Rxn<List<TopPositionedCategory>> topPositionedCategory =
-      Rxn(); // 상단 노출 콜렉션(카테고리)
-  final Rxn<TopTenContentsModel> _topTenContents = Rxn(); // Top10 컨텐츠
-  final Rxn<List<ChannelModel>> _channelList = Rxn(); // 채널 리스트
+  BannerModel? bannerContents; // 배너 컨텐츠
+  List<TopPositionedCategory>? topPositionedCategory;
+  TopTenContentsModel? topTenContents; // Top10 컨텐츠
+  List<ChannelModel>? channelList; // 채널 리스트
 
   /// State
-  final RxInt bannerContentsSliderIndex = 0.obs; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
-  final RxDouble bannerInfoOpacity = 1.0.obs; // 상단 배너 정보 섹션 opacity
+  int bannerContentsSliderIndex = 0; // 상단 노출 컨텐츠 슬라이더의 현재 인덱스
+  BehaviorSubject<double> bannerInfoOpacity =
+      BehaviorSubject<double>.seeded(1.0); // 상단 배너 정보 섹션 opacity
   // 상단 gradient box enable 여부
-  final RxBool isScrolledOnPosition = false.obs;
+  bool isScrolledOnPosition = false;
 
   /* [Controllers] */
+
   late ScrollController scrollController;
   late CarouselController carouselController;
 
@@ -52,7 +65,7 @@ class HomeViewModel extends BaseViewModel {
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
-    bannerContentsSliderIndex.value = index;
+    bannerContentsSliderIndex = index;
   }
 
   /// Banner 슬라이더가 scroll 되었을 때
@@ -63,17 +76,18 @@ class HomeViewModel extends BaseViewModel {
       final remain = 1 - double.parse(integerRemoved);
 
       if (remain > 0.6) {
-        bannerInfoOpacity(remain);
+        bannerInfoOpacity.add(remain);
       } else if (remain > 0.48 && remain < 0.52) {
-        bannerInfoOpacity(0);
+        bannerInfoOpacity.add(0);
       } else {
-        bannerInfoOpacity(double.parse(integerRemoved));
+        bannerInfoOpacity.add(double.parse(integerRemoved));
       }
     }
   }
 
   // 컨텐츠 상세 화면으로 이동
   void routeToContentDetail(
+    BuildContext context,
     ContentArgumentFormat routingArgument, {
     required String sectionType,
   }) {
@@ -82,31 +96,51 @@ class HomeViewModel extends BaseViewModel {
       parameters: {sectionType: routingArgument.originId},
     );
 
-    Get.toNamed(AppRoutes.contentDetail, arguments: routingArgument);
+    context.push(AppRoutes.tabs + AppRoutes.contentDetail,
+        extra: routingArgument);
+  }
+
+  // 배너, 배너 상세 콘텐츠로 이동
+  void routeToBannerContentDetail(BuildContext context) {
+    final arg = ContentArgumentFormat(
+      originId: selectedBannerContent!.originId,
+      contentId: selectedBannerContent!.id,
+      contentType: selectedBannerContent!.type,
+      title: selectedBannerContent!.title,
+    );
+    AppAnalytics.instance.logEvent(
+      name: 'goToContent',
+      parameters: {'banner': arg.originId},
+    );
+
+    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
   }
 
   // 스크롤 동작 관련 이벤트
   void _manageInteractionOnScroll() {
     // 왜 이게 난 더 직관적이지..?
     // guard let문 느낌이 나서 더 좋음
-    if (scrollController.offset < 390 && isScrolledOnPosition.isFalse) return;
-    if (scrollController.offset >= 390 && isScrolledOnPosition.isTrue) return;
+    if (scrollController.offset < 390 && isScrolledOnPosition == false) return;
+    if (scrollController.offset >= 390 && isScrolledOnPosition == true) return;
 
     if (scrollController.offset >= 390) {
-      isScrolledOnPosition(true);
+      isScrolledOnPosition = true;
+      notifyListeners();
     } else {
-      isScrolledOnPosition(false);
+      isScrolledOnPosition = false;
+      notifyListeners();
     }
   }
 
   // 검색 스크린으로 이동
-  void routeToSearch() {
-    Get.toNamed(AppRoutes.search);
+  void routeToSearch(BuildContext context) async {
+    await context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 채널 상세 스크린으로 이동
-  void routeToChannelDetail(ChannelModel channel) {
-    Get.toNamed(AppRoutes.home + AppRoutes.channelDetail, arguments: channel);
+  void routeToChannelDetail(BuildContext context,
+      {required int selectedIndex}) {
+    context.push(AppRoutes.channelDetail, extra: channelList![selectedIndex]);
   }
 
   // 채널 리스트 호출
@@ -114,7 +148,8 @@ class HomeViewModel extends BaseViewModel {
     final response = await _channelRepository.loadChannelsBaseOnSubscribers();
     response.fold(
       onSuccess: (data) {
-        _channelList.value = data;
+        channelList = data;
+        notifyListeners();
       },
       onFailure: (e) {
         log('HomeViewModel : 채널 리스트 호출 실패');
@@ -127,11 +162,14 @@ class HomeViewModel extends BaseViewModel {
     final response = await _loadCachedTopTenContentsUseCase.call();
     response.fold(
       onSuccess: (data) {
-        _topTenContents.value = data;
+        topTenContents = data;
+        notifyListeners();
       },
       onFailure: (e) {
-        AlertWidget.animatedToast('인기 콘텐츠를 정보를 불러오는데 실패했습니다',
-            isUsedOnTabScreen: true);
+        AlertWidget.newToast(
+            message: '인기 콘텐츠를 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true,
+            context);
 
         log('HomeViewModel > $e');
       },
@@ -143,11 +181,14 @@ class HomeViewModel extends BaseViewModel {
     final response = await _loadBannerContentUseCase.call();
     response.fold(
       onSuccess: (data) {
-        _bannerContents.value = data;
+        bannerContents = data;
+        notifyListeners();
       },
       onFailure: (e) {
-        AlertWidget.animatedToast('배너 콘텐츠 정보를 불러오는데 실패했습니다',
-            isUsedOnTabScreen: true);
+        AlertWidget.newToast(
+            message: '배너 콘텐츠 정보를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true,
+            context);
         _loadBannerContentUseCase.deleteLocalData();
         log('HomeViewModel > $e');
       },
@@ -158,19 +199,28 @@ class HomeViewModel extends BaseViewModel {
   Future<void> _fetchTopPositionedCollection() async {
     final response = await _loadCachedTopPositionedContentsUseCase.call();
     response.fold(onSuccess: (data) {
-      topPositionedCategory.value = data;
+      topPositionedCategory = data;
+      notifyListeners();
     }, onFailure: (e) {
-      AlertWidget.animatedToast('일부 콘텐츠를 불러오는데 실패했습니다',
-          isUsedOnTabScreen: true);
+      AlertWidget.newToast(
+          message: '일부 콘텐츠를 불러오는데 실패했습니다', isUsedOnTabScreen: true, context);
       _loadCachedTopPositionedContentsUseCase.deleteLocalStorageField();
       log('HomeViewModel > $e');
     });
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+
+  @override
   Future<void> onInit() async {
     super.onInit();
     unawaited(AppAnalytics.instance.setCurrentScreen(screenName: '/home'));
+
+    scrollController = ScrollController();
 
     /// NOTE : api call 호출 메소드 순서에 주의
     /// 어떤 이유에서 pagingController [initUseCase] 메소드가
@@ -179,10 +229,8 @@ class HomeViewModel extends BaseViewModel {
     /// TODO: 이후에 원인을 파학하고 수정
     loadPagedCategoryCollectionUseCase.initUseCase();
 
-    scrollController = ScrollController();
-    scrollController.addListener(() {
-      _manageInteractionOnScroll();
-    });
+    // scrollController = ScrollController();
+    scrollController.addListener(_manageInteractionOnScroll);
 
     carouselController = CarouselController();
 
@@ -193,5 +241,11 @@ class HomeViewModel extends BaseViewModel {
       _fetchTopTenContents(),
       _fetchChannelList(),
     ]);
+  }
+
+  @override
+  void onDispose() {
+    super.onDispose();
+    bannerInfoOpacity.close();
   }
 }

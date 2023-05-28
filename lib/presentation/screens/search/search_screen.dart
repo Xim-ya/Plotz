@@ -1,6 +1,8 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchScreen extends BaseScreen<SearchViewModel> {
+class SearchScreen extends NewBaseScreen<SearchViewModel> {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
@@ -10,44 +12,50 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   Widget buildScreen(BuildContext context) {
     return SearchScaffold(
       tabs: buildTabs(),
-      tabViews: buildTabView(),
+      tabViews: buildTabView(context),
     );
   }
 
-  List<Widget> buildTabView() => [
+  List<Widget> buildTabView(BuildContext context) => [
         PagingSearchedResultListView(
-          focusNode: vm.focusNode,
-          isInitialState: vm.isInitialState,
-          pagingController: vm.pagingController,
+          focusNode: vm(context).focusNode,
+          isInitialState: vm(context).isInitialState,
+          pagingController: vm(context).pagingController,
           firstPageErrorText: '드라마 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return SearchListItem(
-              contentType: ContentType.tv,
-              item: searchedItem,
-              onItemClicked: () {
-                vm.onSearchedContentTapped(
-                    content: searchedItem, contentType: ContentType.tv,);
-              },
+            return KeepAliveView(
+              child: SearchListItem(
+                contentType: ContentType.tv,
+                item: searchedItem,
+                onItemClicked: () {
+                  vm(context).onSearchedContentTapped(
+                    content: searchedItem,
+                    contentType: ContentType.tv,
+                  );
+                },
+              ),
             );
           },
         ),
         PagingSearchedResultListView(
-          focusNode: vm.focusNode,
-          isInitialState: vm.isInitialState,
-          pagingController: vm.pagingController,
+          focusNode: vm(context).focusNode,
+          isInitialState: vm(context).isInitialState,
+          pagingController: vm(context).pagingController,
           firstPageErrorText: '영화 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
             final searchedItem = item as SearchedContent;
-            return SearchListItem(
-              contentType: ContentType.movie,
-              item: searchedItem,
-              onItemClicked: () {
-                vm.onSearchedContentTapped(
-                  content: searchedItem,
-                  contentType: ContentType.movie,
-                );
-              },
+            return KeepAliveView(
+              child: SearchListItem(
+                contentType: ContentType.movie,
+                item: searchedItem,
+                onItemClicked: () {
+                  vm(context).onSearchedContentTapped(
+                    content: searchedItem,
+                    contentType: ContentType.movie,
+                  );
+                },
+              ),
             );
           },
         ),
@@ -69,23 +77,30 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
         height: 40,
         child: Row(
           children: [
-            SearchBar(
-              focusNode: vm.focusNode,
-              textEditingController: vm.textEditingController,
-              onChanged: (_) {
-                vm.onTextChanged();
+            Selector<SearchViewModel, bool>(
+              selector: (context, vm) => vm.showRoundCloseBtn,
+              builder: (context, showRoundCloseBtn, _) {
+                return SearchBar(
+                  focusNode: vm(context).focusNode,
+                  textEditingController: vm(context).textEditingController,
+                  onChanged: (_) {
+                    vm(context).onTextChanged();
+                  },
+                  resetSearchValue: vm(context).onClosedBtnTapped,
+                  showRoundCloseBtn: showRoundCloseBtn,
+                  width: SizeConfig.to.screenWidth - 88,
+                  // width: SizeConfig.to.screenWidth - 84,
+                );
               },
-              resetSearchValue: vm.onClosedBtnTapped,
-              showRoundCloseBtn: vm.showRoundCloseBtn,
-              width: SizeConfig.to.screenWidth - 88,
-              // width: SizeConfig.to.screenWidth - 84,
             ),
             MaterialButton(
               minWidth: 40,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              onPressed: Get.back,
+              onPressed: () {
+                vm(context).routeBack(context);
+              },
               child: Center(
                 child: Text(
                   '취소',
@@ -99,10 +114,9 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
     );
   }
 
-// // [TextField] OutLinedBorder 속성
-// OutlineInputBorder _fixedOutLinedBorder() {
-//   return const OutlineInputBorder(
-//       borderRadius: BorderRadius.all(Radius.circular(6)),
-//       borderSide: BorderSide(color: Colors.transparent));
-// }
+  @override
+  SearchViewModel createViewModel(BuildContext context) =>
+      locator<SearchViewModel>();
+
+
 }

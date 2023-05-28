@@ -31,9 +31,6 @@ class BannerItemResponse {
   @JsonKey(name: 'imgUrl')
   String imgUrl;
 
-  @JsonKey(name: 'backdropImgUrl')
-  String backdropImgUrl;
-
   @JsonKey(name: 'genres')
   List<String> genres;
 
@@ -42,7 +39,6 @@ class BannerItemResponse {
     required this.title,
     required this.description,
     required this.imgUrl,
-    required this.backdropImgUrl,
     required this.genres,
   });
 

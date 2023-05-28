@@ -1,3 +1,4 @@
+import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SearchedContentItemBtn extends StatelessWidget {
@@ -42,21 +43,10 @@ class SearchedContentItemBtn extends StatelessWidget {
                     height: 100,
                     width: 100,
                     child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      memCacheWidth: 270,
                       imageUrl: posterImgUrl?.prefixTmdbImgPath ?? '',
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      placeholder: (context, url) => Shimmer(
-                        child: Container(
-                          color: AppColor.black,
-                        ),
-                      ),
+                      placeholder: (context, url) => const SkeletonBox(),
                       errorWidget: (context, url, error) => Container(
                         color: AppColor.darkGrey,
                         child: const Icon(Icons.error),

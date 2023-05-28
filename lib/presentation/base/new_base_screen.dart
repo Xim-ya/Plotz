@@ -13,7 +13,11 @@ abstract class NewBaseScreen<T extends NewBaseViewModel>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>(
-      create: (context) => createViewModel(),
+      create: (context) {
+        final vm = createViewModel(context);
+        vm.initContext(context);
+        return vm;
+      },
       lazy: setLazyInit,
       builder: (BuildContext context, Widget? child) {
         return ConditionalWillPopScope(
@@ -105,5 +109,5 @@ abstract class NewBaseScreen<T extends NewBaseViewModel>
   }
 
   @protected
-  T createViewModel();
+  T createViewModel(BuildContext context);
 }

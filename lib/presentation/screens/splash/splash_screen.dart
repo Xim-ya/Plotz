@@ -1,7 +1,6 @@
-import 'package:soon_sak/presentation/screens/splash/splash_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SplashScreen extends BaseScreen<SplashViewModel> {
+class SplashScreen extends NewBaseScreen<SplashViewModel> {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -9,6 +8,7 @@ class SplashScreen extends BaseScreen<SplashViewModel> {
 
   @override
   Widget buildScreen(BuildContext context) {
+    vm(context).checkVersionAndNetwork(context);
     return Container(
       color: AppColor.black,
       child: Center(
@@ -18,4 +18,8 @@ class SplashScreen extends BaseScreen<SplashViewModel> {
       )),
     );
   }
+
+  @override
+  SplashViewModel createViewModel(BuildContext context) =>
+      GetIt.I<SplashViewModel>();
 }

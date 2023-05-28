@@ -1,29 +1,43 @@
+import 'package:soon_sak/app/di/custom_binding.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
+import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class RegisterBinding extends Bindings {
+class RegisterBinding extends CustomBindings {
   @override
   void dependencies() {
-    Get.lazyPut(
-      () => RegisterViewModel(
-        contentType: Get.arguments,
-        Get.find(),
-        Get.find(),
-        Get.find(),
-        Get.find(),
-        Get.find(),
-        Get.find(),
-      ),
-      fenix: false,
-    );
+    super.dependencies();
 
-    Get.lazyPut(
-      () =>
-          RequestContentRegistrationUseCase(Get.find(), Get.find(), Get.find()),
-      fenix: false,
-    );
+    locator.registerFactory(() => RegisterViewModel(
+          userService: locator<UserService>(),
+          searchValidateUrlUseCase: locator<SearchValidateUrlUseCase>(),
+          requestContentRegistrationUseCase:
+              locator<RequestContentRegistrationUseCase>(),
+          curationViewModel: locator<CurationViewModel>(),
+          myPageViewModel: locator<MyPageViewModel>(),
+          newSearchedPagedContentUseCase:
+              locator<NewSearchedPagedContentUseCase>(),
+          contentType: argument,
+        ));
 
-    // Register
-    Get.put<SearchValidateUrlUseCase>(SearchValidateUrlImpl());
+    locator.registerFactory(() => RequestContentRegistrationUseCase(
+        contentRepository: locator<ContentRepository>(),
+        userRepository: locator<UserRepository>(),
+        userService: locator<UserService>()));
+
+    locator.registerFactory<SearchValidateUrlUseCase>(
+        () => SearchValidateUrlImpl());
+
+    locator.registerLazySingleton(() => NewSearchedPagedContentUseCase(
+        tmdbRepository: locator<TmdbRepository>()));
+  }
+
+  @override
+  void unRegisterDependencies() {
+    super.unRegisterDependencies();
+    locator.unregister<RegisterViewModel>();
+    locator.unregister<RequestContentRegistrationUseCase>();
+    locator.unregister<SearchValidateUrlUseCase>();
+    locator.unregister<NewSearchedPagedContentUseCase>();
   }
 }

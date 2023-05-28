@@ -17,11 +17,14 @@ import 'package:soon_sak/utilities/index.dart';
 
 class LoadRandomPagedExploreContentsUseCase
     extends BaseNoParamUseCase<Result<List<ExploreContent>>> {
-  LoadRandomPagedExploreContentsUseCase(this._repository, this._service);
+  LoadRandomPagedExploreContentsUseCase(
+      {required ContentRepository repository, required ContentService service})
+      : _repository = repository,
+        _service = service;
 
   final ContentRepository _repository;
   final ContentService _service;
-  RxBool moreCallIsAllowed = true.obs;
+  bool moreCallIsAllowed = true;
   final List<String> prevIds = [];
 
   @override
@@ -44,10 +47,9 @@ class LoadRandomPagedExploreContentsUseCase
         .where((element) => !prevIds.contains(element))
         .toList();
 
-
     // 다음 call에서 더 이상 호출 id가 없다면
     if (waitingCallIds.length < 20) {
-      moreCallIsAllowed(false);
+      moreCallIsAllowed = false;
     }
 
     // 무작위로 20개의 id 리스트 추출
@@ -55,15 +57,17 @@ class LoadRandomPagedExploreContentsUseCase
         getRandomIds(waitingCallIds, waitingCallIds.length);
     prevIds.addAll(randomIdList);
 
-  // 추출한 아이디에 해당하는 컨텐츠 데이터 호출
+    // 추출한 아이디에 해당하는 컨텐츠 데이터 호출
     return _repository.loadExploreContents(randomIdList);
   }
 
   /// 무작위로 20개 id 추출 (이전 호출한 id 리스트를 제외)
   /// 이전 호출한 ids 리스트 제외한 ids의 길이가 20 이하라면
   /// 남은 id 리스트 모두 호출
-  List<String> getRandomIdsExceptPrevIds(
-      {required List<String> prevIds, required List<String> ids,}) {
+  List<String> getRandomIdsExceptPrevIds({
+    required List<String> prevIds,
+    required List<String> ids,
+  }) {
     final filteredIds = ids.toSet().difference(prevIds.toSet()).toList();
     final random = Random();
     List<String> result = [];
@@ -99,4 +103,3 @@ class LoadRandomPagedExploreContentsUseCase
     return selectedElements;
   }
 }
-

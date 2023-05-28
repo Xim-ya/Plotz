@@ -3,7 +3,11 @@ import 'package:soon_sak/data/api/staticContent/response/top_positioned_collecti
 import 'package:soon_sak/utilities/index.dart';
 
 class StaticContentDataSourceImpl implements StaticContentDataSource {
-  StaticContentDataSourceImpl(this._localStorage, this._api);
+  StaticContentDataSourceImpl(
+      {required LocalStorageService localStorage,
+      required StaticContentApi api})
+      : _localStorage = localStorage,
+        _api = api;
 
   final StaticContentApi _api;
   final LocalStorageService _localStorage;
@@ -22,7 +26,7 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
   Future<TopTenContentResponse> loadTopTenContents() async {
     final response = await _api.loadTopTenContents();
     await _localStorage.saveData(
-        fieldName: 'topTenContent', data: jsonEncode(response.data));
+        fieldName: 'topTen', data: jsonEncode(response.data));
     final json = jsonDecode(response.toString());
 
     return TopTenContentResponse.fromJson(json);

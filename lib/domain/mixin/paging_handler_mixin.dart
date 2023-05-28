@@ -21,7 +21,7 @@ mixin PagingSearchHandlerMixin {
 
   bool get isPagingAllowed;
 
-  final RxBool isInitialPageState = true.obs;
+   bool isInitialPageState = true;
 
   /// 검색된 컨텐츠 리스트 호출
   /// paging 로직 적용
@@ -33,9 +33,9 @@ mixin PagingSearchHandlerMixin {
 
     /// pagingController가 Listen 되고
     /// 검색어가 없는 상태에서 Call하는 상태를 방지하기 위한 구문
-    if (isInitialPageState.isTrue) {
+    if (isInitialPageState == true) {
       pagingController.appendPage([], 0);
-      isInitialPageState(false);
+      isInitialPageState = false;
       return;
     }
 

@@ -17,14 +17,15 @@ import 'package:soon_sak/utilities/index.dart';
  *
  * */
 
-
 class LoadCachedTopTenContentsUseCase
     extends BaseNoParamUseCase<Result<TopTenContentsModel>> {
-  LoadCachedTopTenContentsUseCase(
-    this._repository,
-    this._localStorageService,
-    this._contentService,
-  );
+  LoadCachedTopTenContentsUseCase({
+    required StaticContentRepository repository,
+    required LocalStorageService localStorageService,
+    required ContentService contentService,
+  })  : _repository = repository,
+        _localStorageService = localStorageService,
+        _contentService = contentService;
 
   final LocalStorageService _localStorageService;
   final StaticContentRepository _repository;
@@ -51,6 +52,7 @@ class LoadCachedTopTenContentsUseCase
     } else {
       // 조건 : local data가 존재하지 않는다면
       // 실행 :  api 호출
+
       return fetchTopTenContent();
     }
   }
@@ -70,22 +72,23 @@ class LoadCachedTopTenContentsUseCase
   // LocalStorage로부터 데이터 반환
   Future<Result<TopTenContentsModel>> _getTopTenModelFromLocal(
       Object localData) async {
-
     final json = jsonDecode(localData.toString());
     final response = TopTenContentResponse.fromJson(json);
     final result = TopTenContentsModel.fromResponse(response);
     return Result.success(result);
   }
 
-
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
-    Map<String, dynamic> data = json.decode(jsonText);
-    final response = TopTenContentResponse.fromJson(data);
-
-    if (response.key == givenKey) {
-      return true;
-    } else {
+    try {
+      Map<String, dynamic> data = json.decode(jsonText);
+      if (data['key'] == givenKey) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      _localStorageService.deleteData(fieldName: 'topTen');
       return false;
     }
   }

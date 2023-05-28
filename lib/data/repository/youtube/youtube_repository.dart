@@ -11,5 +11,4 @@ abstract class YoutubeRepository {
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(
       String videoId,);
 
-  static YoutubeRepository get to => Get.find();
 }

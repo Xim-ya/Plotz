@@ -1,13 +1,16 @@
+import 'package:provider/provider.dart';
+import 'package:soon_sak/presentation/base/new_base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class InProgressContentTabView extends BaseView<CurationHistoryViewModel> {
+class InProgressContentTabView extends NewBaseView<CurationHistoryViewModel> {
   const InProgressContentTabView({Key? key}) : super(key: key);
 
   @override
-  Widget buildView(BuildContext context) {
-    return GetBuilder<CurationHistoryViewModel>(
-      builder: (context) {
-        if (vm.loading.isFalse) {
+  Widget build(BuildContext context) {
+    return Consumer<CurationHistoryViewModel>(
+      builder: (context, vm, _) {
+        if (vmS<ViewModelLoadingState>(context, (vm) => vm.loadingState) ==
+            ViewModelLoadingState.done) {
           return ContentsGridView(contents: vm.inProgressCuration);
         } else {
           return const Center(
