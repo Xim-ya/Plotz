@@ -1,3 +1,6 @@
+import 'dart:isolate';
+
+import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class AuthDataSourceImpl
@@ -43,3 +46,4 @@ class AuthDataSourceImpl
   Future<void> updateLoginDate(String userId) =>
       loadResponseOrThrow(() => api.updateLoginDate(userId));
 }
+

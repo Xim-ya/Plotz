@@ -66,6 +66,7 @@ class HomeViewModel extends NewBaseViewModel {
   // Banner 슬라이더 swipe 되었을 때
   void onBannerSliderSwiped(int index) {
     bannerContentsSliderIndex = index;
+    notifyListeners();
   }
 
   /// Banner 슬라이더가 scroll 되었을 때
@@ -245,7 +246,6 @@ class HomeViewModel extends NewBaseViewModel {
 
   @override
   void onDispose() {
-    super.onDispose();
     bannerInfoOpacity.close();
   }
 }

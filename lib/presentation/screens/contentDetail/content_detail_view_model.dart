@@ -215,8 +215,8 @@ class ContentDetailViewModel extends NewBaseViewModel {
         notifyListeners();
         fetchAndMappedVideDetailFields().then((value) async {
           await contentVideos!.updateVideoDetailsLoadingState();
-          safeUpdate<ContentDetailViewModel>();
           loadingState = ViewModelLoadingState.done;
+          safeUpdate<ContentDetailViewModel>();
         });
       },
       onFailure: (e) {

@@ -19,8 +19,8 @@ abstract class NewBaseViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
-    super.dispose();
     onDispose();
+    super.dispose();
   }
 
   @protected

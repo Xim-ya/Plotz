@@ -1,7 +1,7 @@
 import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class YoutubeRepositoryImpl extends YoutubeRepository with IsolateHelper {
+class YoutubeRepositoryImpl extends YoutubeRepository with IsolateHelperMixin {
   YoutubeRepositoryImpl(this._dataSource);
 
   final YoutubeDataSource _dataSource;
@@ -23,6 +23,15 @@ class YoutubeRepositoryImpl extends YoutubeRepository with IsolateHelper {
 
   /* 유튜브 비디오 컨텐츠 정보 (좋아요 수 / 조회수 / 업로드 일자...)*/
   // ISOLATE 적용
+
+  // @override
+  // Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(
+  //   String videoId,
+  // ) async {
+  //   final response = await YoutubeMetaData.yt.videos.get(videoId);
+  //   return Result.success(YoutubeVideoContentInfo.fromResponse(response));
+  // }
+
   @override
   Future<Result<YoutubeVideoContentInfo>> loadYoutubeVideoContentInfo(
     String videoId,
