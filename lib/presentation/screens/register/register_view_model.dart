@@ -10,7 +10,7 @@ part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검�
 part 'controllerResource/register_video_link_view_model.part.dart'; // 영상 링크 등록
 part 'controllerResource/confirm_curation_view_model.part.dart'; // 등록 컨텐츠 확인
 
-class RegisterViewModel extends NewBaseViewModel {
+class RegisterViewModel extends BaseViewModel {
   RegisterViewModel({
     required UserService userService,
     required SearchValidateUrlUseCase searchValidateUrlUseCase,

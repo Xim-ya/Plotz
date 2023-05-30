@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationHistoryScreen extends NewBaseView<CurationHistoryViewModel> {
+class CurationHistoryScreen extends BaseView<CurationHistoryViewModel> {
   const CurationHistoryScreen({super.key});
 
 

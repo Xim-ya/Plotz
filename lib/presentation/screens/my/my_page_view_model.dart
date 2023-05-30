@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class MyPageViewModel extends NewBaseViewModel {
+class MyPageViewModel extends BaseViewModel {
   MyPageViewModel(
       {required UserRepository userRepository,
       required UserService userService})

@@ -12,7 +12,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 part 'home_view_model.part.dart';
 
-class HomeViewModel extends NewBaseViewModel {
+class HomeViewModel extends BaseViewModel {
   HomeViewModel({
     required LoadPagedCategoryCollectionUseCase
         loadPagedCategoryCollectionsUseCase,

@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -12,7 +12,7 @@ import 'package:soon_sak/utilities/index.dart';
  * - 여러 시즌으로 구성되어 있는 비디오 컨텐츠 (TV)
  * */
 
-class ContentVideoViewsByCase extends NewBaseView<ContentDetailViewModel> {
+class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
   const ContentVideoViewsByCase({Key? key}) : super(key: key);
 
   @override

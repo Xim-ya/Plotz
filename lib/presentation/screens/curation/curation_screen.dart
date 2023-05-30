@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationScreen extends NewBaseScreen<CurationViewModel> {
+class CurationScreen extends BaseScreen<CurationViewModel> {
   const CurationScreen({Key? key}) : super(key: key);
 
   @override

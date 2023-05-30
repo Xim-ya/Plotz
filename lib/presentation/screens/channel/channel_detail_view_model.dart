@@ -4,7 +4,7 @@ import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart
 import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ChannelDetailViewModel extends NewBaseViewModel {
+class ChannelDetailViewModel extends BaseViewModel {
   ChannelDetailViewModel(
       {required ChannelModel argument,
       required LoadPagedChannelContentsUseCase loadChannelContentsUseCase})

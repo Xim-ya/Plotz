@@ -2,14 +2,14 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class HomeScreen extends NewBaseScreen<HomeViewModel> {
+class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -152,7 +152,7 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
 }
 
 /// 상단 배너 슬라이더
-class _BannerSlider extends NewBaseView<HomeViewModel> {
+class _BannerSlider extends BaseView<HomeViewModel> {
   const _BannerSlider({Key? key}) : super(key: key);
 
   @override
@@ -319,7 +319,7 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
 }
 
 // 페이징 로직이 적용되어 있는 카테고리 컬렉션 리스트
-class _PagedCategoryCollection extends NewBaseView<HomeViewModel> {
+class _PagedCategoryCollection extends BaseView<HomeViewModel> {
   const _PagedCategoryCollection({Key? key}) : super(key: key);
 
   @override
@@ -345,7 +345,7 @@ class _PagedCategoryCollection extends NewBaseView<HomeViewModel> {
   }
 }
 
-class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
+class _TopTenContentSlider extends BaseView<HomeViewModel> {
   const _TopTenContentSlider({Key? key}) : super(key: key);
 
   @override
@@ -464,7 +464,7 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
 ///
 ///  채널 슬라이드
 ///
-class _ChannelSlider extends NewBaseView<HomeViewModel> {
+class _ChannelSlider extends BaseView<HomeViewModel> {
   const _ChannelSlider({Key? key}) : super(key: key);
 
   @override

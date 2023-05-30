@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:soon_sak/presentation/screens/setting/setting_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SettingScreen extends NewBaseScreen<SettingViewModel> {
+class SettingScreen extends BaseScreen<SettingViewModel> {
   const SettingScreen({Key? key}) : super(key: key);
 
   @override

@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchContentPageView extends NewBaseView<RegisterViewModel> {
+class SearchContentPageView extends BaseView<RegisterViewModel> {
   const SearchContentPageView({Key? key}) : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class SearchContentPageView extends NewBaseView<RegisterViewModel> {
 }
 
 //검색창
-class _SearchBar extends NewBaseView<RegisterViewModel> {
+class _SearchBar extends BaseView<RegisterViewModel> {
   const _SearchBar({Key? key}) : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _SearchBar extends NewBaseView<RegisterViewModel> {
 }
 
 // 하단 고정 버튼
-class _BottomFixedBtn extends NewBaseView<RegisterViewModel> {
+class _BottomFixedBtn extends BaseView<RegisterViewModel> {
   const _BottomFixedBtn({Key? key}) : super(key: key);
 
   @override
@@ -89,7 +89,7 @@ class _BottomFixedBtn extends NewBaseView<RegisterViewModel> {
 }
 
 // 검색 결과 리스트
-class _SearchedList extends NewBaseView<RegisterViewModel> {
+class _SearchedList extends BaseView<RegisterViewModel> {
   const _SearchedList({Key? key}) : super(key: key);
 
   @override

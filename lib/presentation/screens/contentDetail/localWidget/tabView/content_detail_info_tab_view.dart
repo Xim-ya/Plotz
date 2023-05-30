@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/detail_info_tab_view_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -8,7 +8,7 @@ import 'package:soon_sak/utilities/index.dart';
  *  컨텐츠 상세 스크린 > 정보 탭뷰 위젯
  * */
 
-class ContentDetailInfoTabView extends NewBaseView<ContentDetailViewModel> {
+class ContentDetailInfoTabView extends BaseView<ContentDetailViewModel> {
   const ContentDetailInfoTabView({Key? key}) : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class ContentDetailInfoTabView extends NewBaseView<ContentDetailViewModel> {
 }
 
 // 콘텐츠 이미지
-class _ContentImageSectionView extends NewBaseView<ContentDetailViewModel> {
+class _ContentImageSectionView extends BaseView<ContentDetailViewModel> {
   const _ContentImageSectionView({Key? key}) : super(key: key);
 
   @override
@@ -87,7 +87,7 @@ class _ContentImageSectionView extends NewBaseView<ContentDetailViewModel> {
 }
 
 // 기타 정보
-class _ElseInfoSectionView extends NewBaseView<ContentDetailViewModel> {
+class _ElseInfoSectionView extends BaseView<ContentDetailViewModel> {
   const _ElseInfoSectionView({Key? key}) : super(key: key);
 
   @override
@@ -167,7 +167,7 @@ class _ElseInfoSectionView extends NewBaseView<ContentDetailViewModel> {
 }
 
 /// 큐레이터
-class _CurationSectionView extends NewBaseView<ContentDetailViewModel> {
+class _CurationSectionView extends BaseView<ContentDetailViewModel> {
   const _CurationSectionView({Key? key}) : super(key: key);
 
   @override
@@ -210,7 +210,7 @@ class _CurationSectionView extends NewBaseView<ContentDetailViewModel> {
 }
 
 /// 출연진
-class _CreditSectionView extends NewBaseView<ContentDetailViewModel> {
+class _CreditSectionView extends BaseView<ContentDetailViewModel> {
   const _CreditSectionView({Key? key}) : super(key: key);
 
   @override

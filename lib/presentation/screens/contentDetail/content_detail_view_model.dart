@@ -9,7 +9,7 @@ part 'controllerResources/content_detail_single_content_tab_view_model.part.dart
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
 part 'controllerResources/content_detail_video_view_model.part.dart'; // 컨텐츠 비디오 섹션 뷰
 
-class ContentDetailViewModel extends NewBaseViewModel {
+class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel({
     required ContentRepository contentRepository,
     required LoadContentOfVideoListUseCase loadContentOfVideoList,

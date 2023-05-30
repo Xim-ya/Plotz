@@ -35,9 +35,9 @@ export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 export 'package:get_it/get_it.dart';
 
 // BaseModule
-export 'package:soon_sak/presentation/base/new_base_view_model.dart';
-export 'package:soon_sak/presentation/base/new_base_screen.dart';
 export 'package:soon_sak/presentation/base/base_view_model.dart';
+export 'package:soon_sak/presentation/base/base_screen.dart';
+export 'package:soon_sak/presentation/base/old_base_view_model.dart';
 export 'package:soon_sak/domain/base/base_use_case.dart';
 export 'package:soon_sak/domain/base/base_no_param_use_case.dart';
 export 'package:soon_sak/domain/base/base_two_param_use_case.dart';
@@ -231,8 +231,8 @@ export 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/
 export 'package:soon_sak/presentation/screens/contentDetail/content_detail_view_model.dart';
 export 'package:soon_sak/presentation/common/image/round_profile_img.dart';
 export 'package:soon_sak/presentation/screens/contentDetail/localWidget/section_title.dart';
-export 'package:soon_sak/presentation/base/base_screen.dart';
-export 'package:soon_sak/presentation/base/base_view.dart';
+export 'package:soon_sak/presentation/base/old_base_screen.dart';
+export 'package:soon_sak/presentation/base/old_base_view.dart';
 export 'package:soon_sak/presentation/screens/tabs/tabs_view_model.dart';
 export 'package:soon_sak/presentation/screens/tabs/tabs_binding.dart';
 export 'package:soon_sak/presentation/screens/tabs/tabs_screen.dart';

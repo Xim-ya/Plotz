@@ -1,10 +1,10 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/base/stateful_base_screen.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ContentDetailScreen extends NewBaseView<ContentDetailViewModel> {
+class ContentDetailScreen extends BaseView<ContentDetailViewModel> {
   const ContentDetailScreen({Key? key}) : super(key: key);
 
   @override
@@ -45,7 +45,7 @@ class ContentDetailScreen extends NewBaseView<ContentDetailViewModel> {
 }
 
 // 평점 & 장르 뷰
-class _RateAndGenreView extends NewBaseView<ContentDetailViewModel> {
+class _RateAndGenreView extends BaseView<ContentDetailViewModel> {
   const _RateAndGenreView({Key? key}) : super(key: key);
 
   @override
@@ -84,7 +84,7 @@ class _RateAndGenreView extends NewBaseView<ContentDetailViewModel> {
 }
 
 /// 헤더뷰
-class _Header extends NewBaseView<ContentDetailViewModel> {
+class _Header extends BaseView<ContentDetailViewModel> {
   const _Header({Key? key}) : super(key: key);
 
   @override
@@ -153,7 +153,7 @@ class _Header extends NewBaseView<ContentDetailViewModel> {
   }
 }
 
-class _HeaderBgImg extends NewBaseView<ContentDetailViewModel> {
+class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
   const _HeaderBgImg({Key? key}) : super(key: key);
 
   @override

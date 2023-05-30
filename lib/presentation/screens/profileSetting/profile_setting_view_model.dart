@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:soon_sak/utilities/constants/regex.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ProfileSettingViewModel extends NewBaseViewModel {
+class ProfileSettingViewModel extends BaseViewModel {
   ProfileSettingViewModel(
       {required UserService userService,
       required UserRepository userRepository})

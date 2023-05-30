@@ -5,7 +5,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreViewModel extends NewBaseViewModel {
+class ExploreViewModel extends BaseViewModel {
   /* Variables */
   final BehaviorSubject<List<ExploreContent>> exploreContents;
   int swiperIndex = 0;

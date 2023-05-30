@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/gridView/paged_grid_list_view.dart';
 import 'package:soon_sak/presentation/common/image/circle_img.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
@@ -10,7 +10,7 @@ import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.
 import 'package:soon_sak/presentation/screens/channel/localWidget/channel_detail_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ChannelDetailScreen extends NewBaseScreen<ChannelDetailViewModel> {
+class ChannelDetailScreen extends BaseScreen<ChannelDetailViewModel> {
   const ChannelDetailScreen({Key? key}) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class ChannelDetailScreen extends NewBaseScreen<ChannelDetailViewModel> {
 }
 
 /// 페이징이 적용되어 있는 포스터 그리드 뷰
-class _PagedPosterGridView extends NewBaseView<ChannelDetailViewModel> {
+class _PagedPosterGridView extends BaseView<ChannelDetailViewModel> {
   const _PagedPosterGridView({Key? key}) : super(key: key);
 
   @override
@@ -112,7 +112,7 @@ class _PagedPosterGridView extends NewBaseView<ChannelDetailViewModel> {
 }
 
 /// 상댄 채널 뷰
-class _ChannelInfoView extends NewBaseView<ChannelDetailViewModel> {
+class _ChannelInfoView extends BaseView<ChannelDetailViewModel> {
   const _ChannelInfoView({Key? key}) : super(key: key);
 
   @override

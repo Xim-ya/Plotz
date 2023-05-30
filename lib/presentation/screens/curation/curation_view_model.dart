@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationViewModel extends NewBaseViewModel {
+class CurationViewModel extends BaseViewModel {
   CurationViewModel({required ContentRepository contentRepository})
       : _contentRepository = contentRepository;
 

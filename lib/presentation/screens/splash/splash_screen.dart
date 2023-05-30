@@ -1,6 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class SplashScreen extends NewBaseScreen<SplashViewModel> {
+class SplashScreen extends BaseScreen<SplashViewModel> {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override

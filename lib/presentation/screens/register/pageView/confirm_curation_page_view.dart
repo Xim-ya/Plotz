@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/screens/register/localWidget/confirm_curation_page_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ConfirmCurationPageView extends NewBaseView<RegisterViewModel> {
+class ConfirmCurationPageView extends BaseView<RegisterViewModel> {
   const ConfirmCurationPageView({Key? key}) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class ConfirmCurationPageView extends NewBaseView<RegisterViewModel> {
       );
 }
 
-class _DetailInfoView extends NewBaseView<RegisterViewModel> {
+class _DetailInfoView extends BaseView<RegisterViewModel> {
   const _DetailInfoView({Key? key}) : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class _DetailInfoView extends NewBaseView<RegisterViewModel> {
   }
 }
 
-class _ChannelInfoView extends NewBaseView<RegisterViewModel> {
+class _ChannelInfoView extends BaseView<RegisterViewModel> {
   const _ChannelInfoView({Key? key}) : super(key: key);
 
   @override
@@ -76,7 +76,7 @@ class _ChannelInfoView extends NewBaseView<RegisterViewModel> {
   }
 }
 
-class _PosterImg extends NewBaseView<RegisterViewModel> {
+class _PosterImg extends BaseView<RegisterViewModel> {
   const _PosterImg({Key? key}) : super(key: key);
 
   @override

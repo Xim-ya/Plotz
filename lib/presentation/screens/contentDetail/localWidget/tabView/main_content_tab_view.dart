@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/expandable_text_view.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -9,7 +9,7 @@ import 'package:soon_sak/utilities/index.dart';
  *  단일 에피소드 여부에 따라 탭뷰 영역 자체를 다르게 반환.
  * */
 
-class MainContentTabView extends NewBaseView<ContentDetailViewModel> {
+class MainContentTabView extends BaseView<ContentDetailViewModel> {
   const MainContentTabView({Key? key}) : super(key: key);
 
   @override
@@ -101,7 +101,7 @@ class MainContentTabView extends NewBaseView<ContentDetailViewModel> {
       );
 }
 
-class _VideCaseSkeletonView extends NewBaseView<ContentDetailViewModel> {
+class _VideCaseSkeletonView extends BaseView<ContentDetailViewModel> {
   const _VideCaseSkeletonView({Key? key}) : super(key: key);
 
   @override

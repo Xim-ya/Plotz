@@ -12,7 +12,7 @@ import 'package:soon_sak/utilities/index.dart';
 /// NOTE : Paging Controller를 두 개를 적용하면 setState Builder 오류 발생
 /// 자세한 원인 파악 필요.
 
-class SearchViewModel extends NewBaseViewModel {
+class SearchViewModel extends BaseViewModel {
   SearchViewModel({
     required NewSearchedPagedContentUseCase searchHandler,
     required ContentRepository contentRepository,
