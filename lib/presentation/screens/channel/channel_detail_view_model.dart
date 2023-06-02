@@ -42,6 +42,7 @@ class ChannelDetailViewModel extends BaseViewModel {
       subscribersCount: channelInfo.subscribersCount,
     );
     context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: argument);
+    // context.push('/temp', extra: argument);
   }
 
   // 스크롤 동작 관련 이벤트

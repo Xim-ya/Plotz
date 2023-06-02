@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
     // Oversized 이미지 확인 설정
     // debugInvertOversizedImages = true;
 
+    // flutter build appbundle --target=lib/app/environment/devMain.dart --flavor dev
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Plotz',

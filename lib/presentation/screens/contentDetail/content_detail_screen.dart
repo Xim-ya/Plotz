@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/base/stateful_base_screen.dart';
+import 'package:soon_sak/presentation/screens/contentDetail/content_detail_scaffold.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -9,7 +9,7 @@ class ContentDetailScreen extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return NewContentDetailScaffold(
+    return ContentDetailScaffold(
       header: const _Header(),
       rateAndGenreView: const _RateAndGenreView(),
       tabs: _buildTab(),
@@ -59,12 +59,12 @@ class _RateAndGenreView extends BaseView<ContentDetailViewModel> {
             color: const Color(0xFFE6E6E6).withOpacity(0.66),
           ),
         ),
-        Text(
-          vmS<String>(context, (vm) => vm.rate ?? '-'),
-          style: AppTextStyle.alert2.copyWith(
-            color: const Color(0xFFA8A8A8).withOpacity(0.40),
-          ),
-        ),
+        // Text(
+        //   vmS<String>(context, (vm) => vm.rate ?? '-'),
+        //   style: AppTextStyle.alert2.copyWith(
+        //     color: const Color(0xFFA8A8A8).withOpacity(0.40),
+        //   ),
+        // ),
         AppSpace.size4,
         Text(
           'GENRE',
@@ -128,9 +128,9 @@ class _Header extends BaseView<ContentDetailViewModel> {
                   // 컨텐츠 설명 - (유튜브 영상 제목)
                   vmS(
                     context,
-                    (vm) => vm.headerContentDesc.hasData
+                    (vm) => vm.contentVideoTitle.hasData
                         ? Text(
-                            vm.headerContentDesc!,
+                            vm.contentVideoTitle!,
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.headline3

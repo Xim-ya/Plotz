@@ -20,6 +20,6 @@ class ChannelDataSourceImpl
   @override
   Future<List<ChannelContentItemResponse>> loadChannelContents(
       ChannelContentsRequest request) {
-    return loadResponseOrThrow(() => _api.loadChannelContents(request));
+    return loadResponseOrThrow(() => _api.loadPagedChannelContents(request));
   }
 }

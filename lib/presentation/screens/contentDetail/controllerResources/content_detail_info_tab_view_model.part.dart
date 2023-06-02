@@ -79,7 +79,11 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
     }
     // 첫 번째 슬라이더가 아닐 때
     if (index != 0) {
-      return creditCount! - (3 * index);
+      if (creditCount! - (3 * index) <= 3) {
+        return creditCount! - (3 * index);
+      } else {
+        return 3;
+      }
     }
     // 첫 번째 슬라이더 일 때
     else {

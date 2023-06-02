@@ -143,7 +143,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                 decoration: BoxDecoration(
                     gradient: isScrolledOnPosition
                         ? AppGradient.topToBottom
-                        : AppGradient.homeBottomToTop),
+                        : AppGradient.singleTopToBottom),
               )));
 
   @override

@@ -50,22 +50,20 @@ class _ContentImageSectionView extends BaseView<ContentDetailViewModel> {
                 itemBuilder: (context, index) {
                   if (contentImgList.hasData) {
                     final imgItem = contentImgList![index];
-                    return KeepAliveView(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: CachedNetworkImage(
-                          imageUrl: imgItem.prefixTmdbImgPath,
-                          height: 100,
-                          width: SizeConfig.to.screenWidth - 32,
-                          memCacheWidth:
-                              ((SizeConfig.to.screenWidth - 32)* 2).toInt(),
-                          fit: BoxFit.fitWidth,
-                          placeholder: (context, url) => const SkeletonBox(),
-                          errorWidget: (context, url, error) => Container(
-                            color: Colors.grey.withOpacity(0.1),
-                            child: const Center(
-                              child: Icon(Icons.error),
-                            ),
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: CachedNetworkImage(
+                        imageUrl: imgItem.prefixTmdbImgPath,
+                        height: 100,
+                        width: SizeConfig.to.screenWidth - 32,
+                        memCacheWidth:
+                            ((SizeConfig.to.screenWidth - 32) * 2).toInt(),
+                        fit: BoxFit.fitWidth,
+                        placeholder: (context, url) => const SkeletonBox(),
+                        errorWidget: (context, url, error) => Container(
+                          color: Colors.grey.withOpacity(0.1),
+                          child: const Center(
+                            child: Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -307,7 +305,6 @@ class _CreditSectionView extends BaseView<ContentDetailViewModel> {
                 );
               },
             ),
-
             if (creditList?.isNotEmpty ?? true)
               AppSpace.size40
             else

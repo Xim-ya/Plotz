@@ -23,7 +23,7 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
   }
 
   @override
-  Future<List<ChannelContentItemResponse>> loadChannelContents(
+  Future<List<ChannelContentItemResponse>> loadPagedChannelContents(
       ChannelContentsRequest request) async {
     final docs = await getDocumentsByFieldValue(
       'content',

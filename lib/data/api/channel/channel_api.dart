@@ -7,7 +7,7 @@ abstract class ChannelApi {
   Future<List<ChannelBasicResponse>> loadChannelsBaseOnSubscribers();
 
   // 특정 채널의 콘텐츠 리스트 호출
-  Future<List<ChannelContentItemResponse>> loadChannelContents(
+  Future<List<ChannelContentItemResponse>> loadPagedChannelContents(
       ChannelContentsRequest request);
 
   /* 임시 api method */

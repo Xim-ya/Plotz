@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:soon_sak/app/routes/go_route_with_binding.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
+import 'package:soon_sak/presentation/screens/contentDetail/new_content_detail_screen.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
 import 'package:soon_sak/presentation/screens/search/search_binding.dart';
@@ -23,7 +24,7 @@ abstract class NewAppPages {
         path: '/',
         builder: (_, __) => const SplashScreen(),
       ),
-      GoRoute(path: AppRoutes.login, builder: (_, __) => LoginScreen()),
+      GoRoute(path: AppRoutes.login, builder: (_, __) => const LoginScreen()),
       GoRoute(
         path: AppRoutes.tabs,
         builder: (context, state) => const TabsScreen(),
@@ -36,25 +37,25 @@ abstract class NewAppPages {
               AppRoutes.channelDetail
             ],
             binding: ContentDetailBinding(),
-            newBuilder: (context, state) => ContentDetailScreen(),
+            newBuilder: (context, state) => const NewContentDetailScreen(),
           ),
           GoRouteWithBinding(
             path: 'register',
             prevPath: const [AppRoutes.tabs],
             binding: RegisterBinding(),
-            newBuilder: (context, state) => RegisterScreen(),
+            newBuilder: (context, state) => const RegisterScreen(),
           ),
           GoRouteWithBinding(
             path: 'search',
             prevPath: const [AppRoutes.tabs],
             binding: SearchBinding(),
-            newBuilder: (context, state) => SearchScreen(),
+            newBuilder: (context, state) => const SearchScreen(),
             routes: [
               GoRouteWithBinding(
                 path: 'contentDetail',
                 prevPath: const [AppRoutes.tabs + AppRoutes.search],
                 binding: ContentDetailBinding(),
-                newBuilder: (context, state) => ContentDetailScreen(),
+                newBuilder: (context, state) => const NewContentDetailScreen(),
               ),
             ],
           ),
@@ -80,11 +81,14 @@ abstract class NewAppPages {
           ),
         ],
       ),
+      // GoRoute(path: '/temp',
+      //   builder: (_,__) => TempScreen(),
+      // ),
       GoRouteWithBinding(
         path: AppRoutes.channelDetail,
         prevPath: const [AppRoutes.tabs],
         binding: ChannelDetailBinding(),
-        newBuilder: (context, state) => ChannelDetailScreen(),
+        newBuilder: (context, state) => const ChannelDetailScreen(),
       ),
     ],
   );

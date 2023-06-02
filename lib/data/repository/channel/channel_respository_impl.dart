@@ -23,7 +23,7 @@ class ChannelRepositoryImpl implements ChannelRepository {
   }
 
   @override
-  Future<Result<ChannelContentList>> loadChannelContents(
+  Future<Result<ChannelContentList>> loadPagedChannelContents(
       ChannelContentsRequest request) async {
     try {
       final response = await _dataSource.loadChannelContents(request);
@@ -35,6 +35,26 @@ class ChannelRepositoryImpl implements ChannelRepository {
               .map((e) => NewContentPosterShell.fromChannelContents(e))
               .toList(),
           lastDocument: response.last.originDoc));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<NewContentPosterShell>>> loadChannelContentsWithLimit(
+      {required String channelId, required String currentContentId}) async {
+    try {
+      final response = await _dataSource.loadChannelContents(
+          ChannelContentsRequest(channelId: channelId, lastDocument: null));
+      if (response.isEmpty) {
+        return Result.failure(Exception('콘텐츠 데이터를 불러오는데 실패했습니다'));
+      }
+      final result = response
+          .map((e) => NewContentPosterShell.fromRelatedContents(e))
+          .toList();
+      result.removeWhere((element) => element.originId == currentContentId);
+
+      return Result.success(result);
     } on Exception catch (e) {
       return Result.failure(e);
     }

@@ -27,7 +27,7 @@ class LoadPagedChannelContentsUseCase {
   }
 
   Future<void> _fetchPage(String channelId) async {
-    final response = await _channelRepository.loadChannelContents(
+    final response = await _channelRepository.loadPagedChannelContents(
       ChannelContentsRequest(
         channelId: channelId,
         lastDocument: lastPagedDocument,

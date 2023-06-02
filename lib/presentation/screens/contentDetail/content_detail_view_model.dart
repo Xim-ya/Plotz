@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'package:go_router/go_router.dart';
+import 'package:rxdart/subjects.dart';
+import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
+import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -19,6 +22,7 @@ class ContentDetailViewModel extends BaseViewModel {
     required UserRepository userRepository,
     required UserService userService,
     required ContentArgumentFormat argument,
+    required ChannelRepository channelRepository,
     // required ContentDetailScaffoldController contentDetailScaffoldController,
   })  : _passedArgument = argument,
         _contentRepository = contentRepository,
@@ -27,7 +31,8 @@ class ContentDetailViewModel extends BaseViewModel {
         _loadContentMainDescription = loadContentMainDescription,
         _loadContentCreditInfo = loadContentCreditInfo,
         _userRepository = userRepository,
-        _userService = userService;
+        _userService = userService,
+        _channelRepository = channelRepository;
 
   // 이전 페이지에서 전달 받는 argument
   final ContentArgumentFormat _passedArgument;
@@ -51,6 +56,9 @@ class ContentDetailViewModel extends BaseViewModel {
   // 컨텐츠 에피소드 정보 리스트
   List<ContentEpisodeInfoItem>? _contentEpisodeList;
 
+  // 채널의 다른 콘텐츠
+  List<NewContentPosterShell>? channelRelatedContents;
+
   // 유튜브 채널
   ChannelInfo? channelInfo;
 
@@ -70,12 +78,16 @@ class ContentDetailViewModel extends BaseViewModel {
   final ContentRepository _contentRepository;
   final UserRepository _userRepository;
   final UserService _userService;
+  final ChannelRepository _channelRepository;
 
   /********************** [SCAFFOLD RESOURCES]  **********************/
   late final TabController tabController;
   final ScrollController scrollController = ScrollController();
 
   /*** [State] Variables ***/
+
+  late BehaviorSubject<double> headerImgOffsets;
+
   // 선택된 탭 인덱스
   int selectedTabIndex = 0;
 
@@ -108,14 +120,19 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
   void setBackBtnVisibility() {
-    if (scrollController.offset >= 412 && showBackBtnOnTop == true) {
+    if (scrollController.offset >= 430 &&
+        showBackBtnOnTop == true &&
+        scrollController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
       showBackBtnOnTop = false;
       notifyListeners();
       return;
-    } else if (scrollController.offset >= 482) {
+    } else if (scrollController.offset >= 486) {
       return;
     } else {
-      if (showBackBtnOnTop == false) {
+      if (showBackBtnOnTop == false &&
+          scrollController.position.userScrollDirection ==
+              ScrollDirection.forward) {
         showBackBtnOnTop = true;
         notifyListeners();
       }
@@ -123,11 +140,13 @@ class ContentDetailViewModel extends BaseViewModel {
   }
 
   void onIntentInit(TabController passedTabC) {
+    headerImgOffsets = BehaviorSubject<double>.seeded(0.0);
+
     scrollController.addListener(() {
       setBackBtnVisibility();
       scrollOffset = scrollController.offset;
       if (scrollController.offset <= 412) {
-        notifyListeners();
+        headerImgOffsets.add(-scrollController.offset * 0.5);
       }
     });
     tabController = passedTabC;
@@ -244,6 +263,22 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
+  // 채널의 다른 콘텐츠 리스트 호출 (10개)
+  Future<void> fetchChannelContents() async {
+    final response = await _channelRepository.loadChannelContentsWithLimit(
+        channelId: channelInfo!.id!, currentContentId: passedArgument.originId);
+    response.fold(
+      onSuccess: (data) {
+        channelRelatedContents = data;
+        notifyListeners();
+      },
+      onFailure: (e) {
+        AlertWidget.newToast(message: '채널의 다른 콘텐츠 정보를 불러들이는 데 실패했습니다', context);
+        log(e.toString());
+      },
+    );
+  }
+
   // 컨텐츠 credit 정보 호출
   Future<void> fetchContentCreditInfo() async {
     final responseRes = await _loadContentCreditInfo.call(
@@ -336,7 +371,7 @@ class ContentDetailViewModel extends BaseViewModel {
     await _fetchContentMainInfo();
     await Future.wait([
       _fetchContentOfVideoList(),
-      _fetchYoutubeChannelInfo(),
+      _fetchYoutubeChannelInfo().whenComplete(fetchChannelContents),
     ]);
   }
 

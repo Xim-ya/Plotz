@@ -1,4 +1,5 @@
 import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentDetailBinding extends CustomBindings {
@@ -6,11 +7,9 @@ class ContentDetailBinding extends CustomBindings {
   void dependencies() {
     super.dependencies();
 
-    locator.registerFactory(() =>
-        ContentDetailScaffoldController(locator<ContentDetailViewModel>()));
-
     locator.registerFactory(
       () => ContentDetailViewModel(
+          channelRepository: locator<ChannelRepository>(),
           contentRepository: locator<ContentRepository>(),
           loadContentOfVideoList: locator<LoadContentOfVideoListUseCase>(),
           loadContentImgList: locator<LoadContentImgListUseCase>(),
@@ -36,7 +35,6 @@ class ContentDetailBinding extends CustomBindings {
     super.unRegisterDependencies();
 
     locator.unregister<ContentDetailViewModel>();
-    locator.unregister<ContentDetailScaffoldController>();
     locator.unregister<LoadContentDetailInfoUseCase>();
     locator.unregister<LoadContentCreditInfoUseCase>();
     locator.unregister<LoadContentImgListUseCase>();

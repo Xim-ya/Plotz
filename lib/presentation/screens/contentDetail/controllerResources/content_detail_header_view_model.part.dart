@@ -9,13 +9,13 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
 
   /// 헤더 영역 이미지
   String? get headerBackdropImg =>
-      passedArgument.posterImgUrl ??
-      _contentDescriptionInfo?.posterImgUrl;
+      passedArgument.posterImgUrl ?? _contentDescriptionInfo?.posterImgUrl;
 
+  String get contentTypeToString => _passedArgument.contentType.asText;
 
   /// 컨텐츠 설명 부분 (유튜브 컨텐츠 제목)
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
-  String? get headerContentDesc => passedArgument.videoTitle.hasData
+  String? get contentVideoTitle => passedArgument.videoTitle.hasData
       ? passedArgument.videoTitle!
       : contentVideos?.singleTypeVideo.detailInfo?.videoTitle;
 
@@ -30,14 +30,22 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
       : _contentDescriptionInfo?.title;
 
   // 컨텐츠 TMDB 평점
-  String? get rate => _contentDescriptionInfo?.rate.toStringAsFixed(2);
+  double? get rate => _contentDescriptionInfo.hasData
+      ? _contentDescriptionInfo!.rate / 2
+      : null;
 
   // 컨텐츠 장르 리스트
-  String? get genre => Formatter.formatGenreListToSingleStr(
-      _contentDescriptionInfo?.genreList,);
+  String? get genre => Formatter.splitGenresByDots(
+        _contentDescriptionInfo?.genreList,
+      );
 
   // 컨텐츠 개봉일
   String? get releaseDate => _contentDescriptionInfo?.releaseDate != null
       ? Formatter.dateToyyMMdd(_contentDescriptionInfo!.releaseDate!)
+      : null;
+
+  //
+  String? get releaseYear => _contentDescriptionInfo?.releaseDate != null
+      ? Formatter.dateToYear(_contentDescriptionInfo!.releaseDate!)
       : null;
 }

@@ -86,8 +86,7 @@ abstract class AppGradient {
     end: Alignment.bottomCenter,
   );
 
-  // Home
-  static const homeBottomToTop = LinearGradient(
+  static const singleTopToBottom = LinearGradient(
     colors: [
       Color.fromRGBO(15, 15, 15, 0),
       Color.fromRGBO(15, 15, 15, 0.01),
@@ -126,5 +125,46 @@ abstract class AppGradient {
     ],
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,
+  );
+
+  static const singleBottomToTop = LinearGradient(
+    colors: [
+      Color.fromRGBO(15, 15, 15, 0),
+      Color.fromRGBO(15, 15, 15, 0.01),
+      Color.fromRGBO(15, 15, 15, 0.04),
+      Color.fromRGBO(15, 15, 15, 0.08),
+      Color.fromRGBO(15, 15, 15, 0.15),
+      Color.fromRGBO(15, 15, 15, 0.23),
+      Color.fromRGBO(15, 15, 15, 0.33),
+      Color.fromRGBO(15, 15, 15, 0.44),
+      Color.fromRGBO(15, 15, 15, 0.56),
+      Color.fromRGBO(15, 15, 15, 0.67),
+      Color.fromRGBO(15, 15, 15, 0.77),
+      Color.fromRGBO(15, 15, 15, 0.85),
+      Color.fromRGBO(15, 15, 15, 0.92),
+      Color.fromRGBO(15, 15, 15, 0.96),
+      Color.fromRGBO(15, 15, 15, 0.99),
+      Color.fromRGBO(15, 15, 15, 1),
+    ],
+    stops: [
+      0,
+      0.01,
+      0.04,
+      0.08,
+      0.15,
+      0.23,
+      0.33,
+      0.44,
+      0.55,
+      0.67,
+      0.77,
+      0.85,
+      0.92,
+      0.96,
+      0.99,
+      1
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
   );
 }

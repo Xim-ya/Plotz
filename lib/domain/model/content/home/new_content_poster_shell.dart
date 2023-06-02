@@ -42,4 +42,16 @@ class NewContentPosterShell {
         videoTitle: response.videoTitle,
         title: null,
       );
+
+  // Conttent Detail > Related Contents
+  factory NewContentPosterShell.fromRelatedContents(
+          ChannelContentItemResponse response) =>
+      NewContentPosterShell(
+        originId: response.id,
+        contentId: SplittedIdAndType.fromOriginId(response.id).id,
+        contentType: SplittedIdAndType.fromOriginId(response.id).type,
+        posterImgUrl: response.posterImgUrl,
+        videoTitle: response.videoTitle,
+        title: response.title,
+      );
 }
