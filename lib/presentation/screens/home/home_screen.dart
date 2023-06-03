@@ -231,62 +231,64 @@ class _BannerSlider extends BaseView<HomeViewModel> {
             width: SizeConfig.to.screenWidth,
             child: Column(
               children: <Widget>[
-                Consumer<HomeViewModel>(builder: (context, vm, __) {
-                  return StreamBuilder<double>(
-                    stream: vm.bannerInfoOpacity.stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return AnimatedOpacity(
-                          duration: const Duration(milliseconds: 100),
-                          opacity: snapshot.data!,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                width: SizeConfig.to.screenWidth - 32,
-                                child: Center(
-                                  child: Text(
-                                    vmS(
-                                        context,
-                                        (value) =>
-                                            value.selectedBannerContent
-                                                ?.description ??
-                                            ''),
-                                    style: AppTextStyle.title3.copyWith(
-                                        color: AppColor.main,
-                                        letterSpacing: -0.2),
+                IgnorePointer(
+                  child: Consumer<HomeViewModel>(builder: (context, vm, __) {
+                    return StreamBuilder<double>(
+                      stream: vm.bannerInfoOpacity.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return AnimatedOpacity(
+                            duration: const Duration(milliseconds: 100),
+                            opacity: snapshot.data!,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: SizeConfig.to.screenWidth - 32,
+                                  child: Center(
+                                    child: Text(
+                                      vmS(
+                                          context,
+                                          (value) =>
+                                              value.selectedBannerContent
+                                                  ?.description ??
+                                              ''),
+                                      style: AppTextStyle.title3.copyWith(
+                                          color: AppColor.main,
+                                          letterSpacing: -0.2),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              AppSpace.size2,
-                              Text(
-                                vmS(
-                                    context,
-                                    (value) =>
-                                        value.selectedBannerContent?.title ??
-                                        ''),
-                                style: AppTextStyle.web3
-                                    .copyWith(letterSpacing: -0.2),
-                              ),
-                              AppSpace.size4,
-                              Text(
-                                vmS(
-                                    context,
-                                    (value) =>
-                                        value.selectedBannerContent?.genre ??
-                                        ''),
-                                style: AppTextStyle.alert2.copyWith(
-                                    color: AppColor.gray03,
-                                    letterSpacing: -0.2),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  );
-                }),
+                                AppSpace.size2,
+                                Text(
+                                  vmS(
+                                      context,
+                                      (value) =>
+                                          value.selectedBannerContent?.title ??
+                                          ''),
+                                  style: AppTextStyle.web3
+                                      .copyWith(letterSpacing: -0.2),
+                                ),
+                                AppSpace.size4,
+                                Text(
+                                  vmS(
+                                      context,
+                                      (value) =>
+                                          value.selectedBannerContent?.genre ??
+                                          ''),
+                                  style: AppTextStyle.alert2.copyWith(
+                                      color: AppColor.gray03,
+                                      letterSpacing: -0.2),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    );
+                  }),
+                ),
                 AppSpace.size12,
                 Align(
                     alignment: Alignment.bottomCenter,

@@ -1,6 +1,7 @@
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
 import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/domain/useCase/version/check_version_and_network_use_case.dart';
+import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class NewDomainModules {
@@ -49,7 +50,8 @@ abstract class NewDomainModules {
         localStorageService: locator<LocalStorageService>(),
         contentService: locator<ContentService>()));
 
-
+    locator.registerLazySingleton(
+        () => LoadContentVideoInfoUseCase(locator<ContentDataSource>()));
 
     // /* Search */
     // locator.registerLazySingleton(() => NewSearchedPagedContentUseCase(

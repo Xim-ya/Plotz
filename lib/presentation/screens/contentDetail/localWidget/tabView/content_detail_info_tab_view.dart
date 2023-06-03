@@ -95,33 +95,33 @@ class _ElseInfoSectionView extends BaseView<ContentDetailViewModel> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              if (vmS(context,
-                  (vm) => vm.passedArgument.contentType == ContentType.movie))
-                elseInfoItem(
-                    title: '방영일', content: vm(context).releaseDate ?? '-')
-              else
-                elseInfoItem(
-                  title: '방영상태',
-                  content: vm(context).contentAirStatus ?? '-',
-                ),
-              elseInfoItem(
-                  title: '총 좋아요 수', content: vmW(context).likesCount ?? '-'),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              elseInfoItem(
-                title: '총 조회수',
-                content: vm(context).totalViewCount ?? '',
-              ),
-              elseInfoItem(
-                title: '영상 업로드일',
-                content: vmW(context).youtubeUploadDate ?? '',
-              ),
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     if (vmS(context,
+          //         (vm) => vm.passedArgument.contentType == ContentType.movie))
+          //       elseInfoItem(
+          //           title: '방영일', content: vm(context).releaseDate ?? '-')
+          //     else
+          //       elseInfoItem(
+          //         title: '방영상태',
+          //         content: vm(context).contentAirStatus ?? '-',
+          //       ),
+          //     elseInfoItem(
+          //         title: '총 좋아요 수', content: vmW(context).likesCount ?? '-'),
+          //   ],
+          // ),
+          // Row(
+          //   children: <Widget>[
+          //     elseInfoItem(
+          //       title: '총 조회수',
+          //       content: vm(context).totalViewCount ?? '',
+          //     ),
+          //     elseInfoItem(
+          //       title: '영상 업로드일',
+          //       content: vmW(context).youtubeUploadDate ?? '',
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

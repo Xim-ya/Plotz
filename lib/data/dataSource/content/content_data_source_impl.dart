@@ -12,15 +12,25 @@ class ContentDataSourceImpl
       loadWithFirebaseIsolate(_api.loadTotalContentIdList);
 
   @override
-  Future<List<VideoResponse>> loadVideoInfo(String id) =>
+  Future<List<OldVideoResponse>> oldLoadVideoInfo(String id) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadVideoInfo(id)),);
+        () => loadResponseOrThrow(() => _api.oldLoadVideoInfo(id)),
+      );
+
+  @override
+  Future<List<VideoResponse>> loadVideoInfo(
+      {required String contentId, required ContentType contentType}) async {
+    return loadResponseOrThrow(() =>
+        _api.loadVideoInfo(contentId: contentId, contentType: contentType));
+  }
 
   @override
   Future<String> requestContentRegistration(
-          ContentRegistrationRequest requestData,) =>
+    ContentRegistrationRequest requestData,
+  ) =>
       loadWithFirebaseIsolate(
-          () => _api.requestContentRegistration(requestData),);
+        () => _api.requestContentRegistration(requestData),
+      );
 
   @override
   Future<List<CurationContentResponse>> loadInProgressQurationList() =>
@@ -29,12 +39,14 @@ class ContentDataSourceImpl
   @override
   Future<UserResponse> loadCuratorInfo(String contentId) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadCuratorInfo(contentId)),);
+        () => loadResponseOrThrow(() => _api.loadCuratorInfo(contentId)),
+      );
 
   @override
   Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadExploreContents(ids)),);
+        () => loadResponseOrThrow(() => _api.loadExploreContents(ids)),
+      );
 
   @override
   Future<void> requestContent(ContentRequest requestInfo) =>
@@ -43,5 +55,6 @@ class ContentDataSourceImpl
   @override
   Future<ChannelResponse> loadChannelInfo(String contentId) =>
       loadWithFirebaseIsolate(
-          () => loadResponseOrThrow(() => _api.loadChannelInfo(contentId)),);
+        () => loadResponseOrThrow(() => _api.loadChannelInfo(contentId)),
+      );
 }

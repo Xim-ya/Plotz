@@ -1,9 +1,13 @@
 import 'dart:developer';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/video/content_video.dart';
+import 'package:soon_sak/domain/model/video/content_video_model.dart';
+import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -23,6 +27,7 @@ class ContentDetailViewModel extends BaseViewModel {
     required UserService userService,
     required ContentArgumentFormat argument,
     required ChannelRepository channelRepository,
+    required LoadContentVideoInfoUseCase loadContentVideoInfoUseCase,
     // required ContentDetailScaffoldController contentDetailScaffoldController,
   })  : _passedArgument = argument,
         _contentRepository = contentRepository,
@@ -32,7 +37,8 @@ class ContentDetailViewModel extends BaseViewModel {
         _loadContentCreditInfo = loadContentCreditInfo,
         _userRepository = userRepository,
         _userService = userService,
-        _channelRepository = channelRepository;
+        _channelRepository = channelRepository,
+        loadContentVideoInfo = loadContentVideoInfoUseCase;
 
   // 이전 페이지에서 전달 받는 argument
   final ContentArgumentFormat _passedArgument;
@@ -63,7 +69,10 @@ class ContentDetailViewModel extends BaseViewModel {
   ChannelInfo? channelInfo;
 
   // 컨텐츠 비디오(유튜브)
-  ContentVideos? contentVideos;
+  OldContentVideos? oldContentVideos;
+
+  // 컨텐츠 비디오(유튜브)
+  ContentVideoModel? videoInfo;
 
   // 큐레이터 정보
   UserModel? _curator;
@@ -73,6 +82,7 @@ class ContentDetailViewModel extends BaseViewModel {
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
   final LoadContentImgListUseCase _loadContentImgList;
   final LoadContentOfVideoListUseCase _loadContentOfVideoList;
+  final LoadContentVideoInfoUseCase loadContentVideoInfo;
 
   /* Data Modules */
   final ContentRepository _contentRepository;
@@ -87,6 +97,9 @@ class ContentDetailViewModel extends BaseViewModel {
   /*** [State] Variables ***/
 
   late BehaviorSubject<double> headerImgOffsets;
+
+  // 선택된 시즌 또는 부
+  int selectedEpisode = 1;
 
   // 선택된 탭 인덱스
   int selectedTabIndex = 0;
@@ -159,6 +172,113 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /* [Intent ] */
 
+  // 하단 에피소드 선택 바탐 Sheet
+  void showEpisodeSelectSheet() {
+    showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Padding(
+          padding: AppInset.horizontal16,
+          child: Wrap(
+            children: [
+              Container(
+                height: 48,
+                decoration: const BoxDecoration(
+                  color: AppColor.gray07,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                  ),
+                ),
+                width: double.infinity,
+                child: Center(
+                  child: Text(
+                    '영상 선택',
+                    style: AppTextStyle.alert2.copyWith(color: AppColor.gray03),
+                  ),
+                ),
+              ),
+              Container(
+                height: 0.5,
+                width: double.infinity,
+                color: AppColor.gray06,
+              ),
+              ListView.separated(
+                separatorBuilder: (_, __) => Container(
+                  height: 0.5,
+                  width: double.infinity,
+                  color: AppColor.gray06,
+                ),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: videoInfo!.videos.length,
+                itemBuilder: (context, index) {
+                  final bool isLastItem = videoInfo!.videos.length == index + 1;
+                  return MaterialButton(
+                    color: AppColor.gray07,
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: isLastItem
+                          ? const BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              bottomRight: Radius.circular(12),
+                            )
+                          : BorderRadius.zero,
+                    ),
+                    onPressed: () {
+                      selectedEpisode = index + 1;
+                      notifyListeners();
+                      context.pop();
+                    },
+                    child: SizedBox(
+                      height: 56,
+                      child: Center(
+                        child: Text(
+                          passedArgument.contentType.isMovie
+                              ? '${index + 1}부'
+                              : '시즌 ${index + 1}',
+                          style: AppTextStyle.title2
+                              .copyWith(color: AppColor.main),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              AppSpace.size8,
+              // 하단 버튼
+              MaterialButton(
+                color: AppColor.gray07,
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                onPressed: () {},
+                child: const SizedBox(
+                  height: 56,
+                  child: Center(
+                    child: Text(
+                      '닫기',
+                      style: TextStyle(
+                        color: AppColor.white,
+                        fontFamily: 'pretendard_regular',
+                        fontSize: 14,
+                        letterSpacing: -0.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   /// 유저 시청 기록 추가
   Future<void> addUserWatchHistory(String videoId) async {
     final requestData = WatchingHistoryRequest(
@@ -200,7 +320,7 @@ class ContentDetailViewModel extends BaseViewModel {
   /// 컨텐츠 비디오 상세 정보 호출 & 데이터 매핑 로직
   /// 비동기에 유의
   Future<void> fetchAndMappedVideDetailFields() async {
-    for (var e in contentVideos!.videos) {
+    for (var e in oldContentVideos!.videos) {
       // Tv 컨텐츠 일 경우 시즌 정보 업데이트
       if (_contentDescriptionInfo?.seasonInfoList != null &&
           passedArgument.contentType == ContentType.tv) {
@@ -210,7 +330,7 @@ class ContentDetailViewModel extends BaseViewModel {
         )
             .then((_) async {
           // 로딩 State 업데이트
-          await contentVideos!.updateSeasonInfoLoadingState();
+          await oldContentVideos!.updateSeasonInfoLoadingState();
           safeUpdate<ContentDetailViewModel>();
         });
       }
@@ -221,8 +341,22 @@ class ContentDetailViewModel extends BaseViewModel {
     }
   }
 
+
+
+  // 대표 조회 수
+  String? mainViewCount (List<YoutubeVideoContentInfo> videos) {
+    if (videos.isEmpty) {
+      return null;
+    }
+    int sum = 0;
+    for (YoutubeVideoContentInfo video in videos) {
+      sum += video.viewCount;
+    }
+    return sum.toString();
+  }
+
   // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
-  Future<void> _fetchContentOfVideoList() async {
+  Future<void> _oldFetchContentOfVideoList() async {
     final responseRes = await _loadContentOfVideoList.call(
       passedArgument.contentType,
       passedArgument.originId,
@@ -230,10 +364,10 @@ class ContentDetailViewModel extends BaseViewModel {
 
     responseRes.fold(
       onSuccess: (data) {
-        contentVideos = data;
+        oldContentVideos = data;
         notifyListeners();
         fetchAndMappedVideDetailFields().then((value) async {
-          await contentVideos!.updateVideoDetailsLoadingState();
+          await oldContentVideos!.updateVideoDetailsLoadingState();
           loadingState = ViewModelLoadingState.done;
           safeUpdate<ContentDetailViewModel>();
         });
@@ -243,6 +377,25 @@ class ContentDetailViewModel extends BaseViewModel {
         log('ContentDetailViewModel ${e.toString()}');
       },
     );
+  }
+
+  Future<void> _fetchVideoInfo() async {
+    final responseResult = await loadContentVideoInfo.call(
+        contentId: passedArgument.originId,
+        contentType: contentType,
+        context: context);
+    responseResult.fold(onSuccess: (data) {
+      print("끝223");
+      videoInfo = data;
+      if (data.videos.length > 1) {
+        selectedEpisode = data.videos[0].episodeNum;
+      }
+      print("끝2");
+      notifyListeners();
+    }, onFailure: (e) {
+      AlertWidget.newToast(message: '유튜브 비디오 정보를 불러들이는데 실패했어요', context);
+      log('ContentDetailViewModel ${e.toString()}');
+    });
   }
 
   // 컨텐츠 이미지 리스트 호출
@@ -333,6 +486,10 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
+  void showYoutubeFetchFailedErr() {
+    AlertWidget.newToast(context, message: '유튜브 정보를 불러오는데 실패했어요');
+  }
+
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
   Future<void> launchYoutubeApp(String? youtubeVideoId) async {
@@ -370,7 +527,7 @@ class ContentDetailViewModel extends BaseViewModel {
     /// 무조건 선행 되어야 함
     await _fetchContentMainInfo();
     await Future.wait([
-      _fetchContentOfVideoList(),
+      _fetchVideoInfo(),
       _fetchYoutubeChannelInfo().whenComplete(fetchChannelContents),
     ]);
   }
@@ -383,7 +540,7 @@ class ContentDetailViewModel extends BaseViewModel {
   /* [Getters] */
   // 유튜브 컨텐츠 id
   String? get youtubeContentId =>
-      passedArgument.videoId ?? contentVideos?.mainVideoId;
+      passedArgument.videoId ?? oldContentVideos?.mainVideoId;
 
   // 컨텐츠트 타입 (영화 or tv)
   ContentType get contentType => passedArgument.contentType;

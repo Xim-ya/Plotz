@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
+import 'package:soon_sak/domain/model/video/content_video_model.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/content_info_tab_view.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/origin_content_info_tab_view.dart';
@@ -64,10 +66,16 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
       color: AppColor.black,
       child: Column(
         children: <Widget>[
-          Selector<ContentDetailViewModel,
-              Tuple5<String, String?, String?, String?, String?>>(
-            selector: (_, vm) => Tuple5(vm.contentTypeToString, vm.headerTitle,
-                vm.releaseYear, vm.genre, vm.contentVideoTitle),
+          Selector<
+              ContentDetailViewModel,
+              Tuple5<String, String?, String?, String?,
+                  ValueStream<YoutubeVideoContentInfo?>?>>(
+            selector: (_, vm) => Tuple5(
+                vm.contentTypeToString,
+                vm.headerTitle,
+                vm.releaseYear,
+                vm.genre,
+                vm.videoInfo?.videos[0].youtubeInfo.stream),
             builder: (context, value, _) {
               return Column(
                 children: <Widget>[
@@ -119,16 +127,22 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                     ]),
                   ),
                   AppSpace.size16,
+
+                  // 영상제목
                   SizedBox(
-                    width: SizeConfig.to.screenWidth - 96,
-                    child: Text(
-                      value.item5 ?? '',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyle.body3,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ),
+                      width: SizeConfig.to.screenWidth - 96,
+                      child: StreamBuilder<YoutubeVideoContentInfo?>(
+                        stream: value.item5,
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.hasData ? snapshot.data!.videoTitle : '',
+                            textAlign: TextAlign.center,
+                            style: AppTextStyle.body3,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          );
+                        },
+                      )),
                 ],
               );
             },
@@ -149,9 +163,11 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<ContentDetailViewModel, bool>(
-      selector: (context, vm) => vm.showBackBtnOnTop,
-      builder: (context, show, _) {
+    return Selector<ContentDetailViewModel,
+        Tuple3<bool, ContentVideoModel?, int>>(
+      selector: (context, vm) =>
+          Tuple3(vm.showBackBtnOnTop, vm.videoInfo, vm.selectedEpisode),
+      builder: (context, value, _) {
         return Stack(
           children: [
             // 헤더 포스터 상단 Gradient
@@ -166,7 +182,7 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
               duration: const Duration(milliseconds: 120),
               padding: EdgeInsets.only(top: SizeConfig.to.statusBarHeight),
               height: 48 + SizeConfig.to.statusBarHeight,
-              color: show ? Colors.transparent : AppColor.black,
+              color: value.item1 ? Colors.transparent : AppColor.black,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -179,31 +195,80 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
                       width: 24,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: MaterialButton(
-                      minWidth: 0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '1부',
-                              style: AppTextStyle.title2,
-                            ),
-                            AppSpace.size4,
-                            SvgPicture.asset(
-                              'assets/icons/drop_down.svg',
-                              height: 24,
-                              width: 24,
-                            ),
-                          ],
-                        ),
-                      ),
+                  if (value.item2.hasData)
+                    Builder(
+                      builder: (context) {
+                        final videoInfo = value.item2;
+                        switch (videoInfo?.videoFormat) {
+                          case null:
+                            return const SizedBox();
+
+                          case ContentVideoFormat.singleMovie:
+                            return const SizedBox();
+
+                          case ContentVideoFormat.multipleMovie:
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: MaterialButton(
+                                minWidth: 0,
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  vm(context).showEpisodeSelectSheet();
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 6),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        '${value.item3}부',
+                                        style: AppTextStyle.title2,
+                                      ),
+                                      AppSpace.size4,
+                                      SvgPicture.asset(
+                                        'assets/icons/drop_down.svg',
+                                        height: 24,
+                                        width: 24,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          case ContentVideoFormat.singleTv:
+                            return const SizedBox();
+                          case ContentVideoFormat.multipleTv:
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: MaterialButton(
+                                minWidth: 0,
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  vm(context).showEpisodeSelectSheet();
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 6),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        '시즌 ${value.item3}',
+                                        style: AppTextStyle.title2,
+                                      ),
+                                      AppSpace.size4,
+                                      SvgPicture.asset(
+                                        'assets/icons/drop_down.svg',
+                                        height: 24,
+                                        width: 24,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                        }
+                      },
                     ),
-                  ),
                 ],
               ),
             ),
@@ -211,77 +276,6 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
         );
       },
     );
-  }
-}
-
-/// 헤더뷰
-class _Header extends BaseView<ContentDetailViewModel> {
-  const _Header({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ContentDetailViewModel>(
-        builder: (context, vm, _) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: 480,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  // 제목 & 날짜
-                  Row(
-                    children: <Widget>[
-                      vmS(
-                        context,
-                        (vm) => vm.headerTitle.hasData
-                            ? Text(vm.headerTitle!,
-                                style: AppTextStyle.headline2)
-                            : const ShimmerSkeletonBox(
-                                height: 28,
-                                width: 40,
-                              ),
-                      ),
-                      AppSpace.size6,
-                      vmS(
-                        context,
-                        (vm) => vm.releaseDate.hasData
-                            ? Text(
-                                vm.releaseDate!,
-                                style: AppTextStyle.alert2,
-                              )
-                            : const ShimmerSkeletonBox(
-                                height: 10,
-                                width: 44,
-                              ),
-                      ),
-                    ],
-                  ),
-                  AppSpace.size8,
-                  // 컨텐츠 설명 - (유튜브 영상 제목)
-                  vmS(
-                    context,
-                    (vm) => vm.contentVideoTitle.hasData
-                        ? Text(
-                            vm.contentVideoTitle!,
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.headline3
-                                .copyWith(color: AppColor.lightGrey),
-                          )
-                        : Column(
-                            children: const [
-                              ShimmerSkeletonBox(
-                                height: 22,
-                                width: double.infinity,
-                              )
-                            ],
-                          ),
-                  ),
-
-                  AppSpace.size24,
-                ],
-              ),
-            ));
   }
 }
 

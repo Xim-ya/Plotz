@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
+import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
@@ -28,6 +29,8 @@ class HomeViewModel extends BaseViewModel {
         loadPagedCategoryCollectionUseCase =
             loadPagedCategoryCollectionsUseCase,
         _channelRepository = channelRepository;
+
+  final ChannelApi _channelApi = locator<ChannelApi>();
 
   /* [Variables] */
 
@@ -136,6 +139,7 @@ class HomeViewModel extends BaseViewModel {
   // 검색 스크린으로 이동
   void routeToSearch(BuildContext context) async {
     await context.push(AppRoutes.tabs + AppRoutes.search);
+    // _channelApi.updateSeasonContentField();
   }
 
   // 채널 상세 스크린으로 이동

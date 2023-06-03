@@ -1,5 +1,6 @@
 import 'package:soon_sak/app/di/custom_binding.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentDetailBinding extends CustomBindings {
@@ -17,7 +18,8 @@ class ContentDetailBinding extends CustomBindings {
           loadContentCreditInfo: locator<LoadContentCreditInfoUseCase>(),
           userRepository: locator<UserRepository>(),
           userService: locator<UserService>(),
-          argument: argument),
+          argument: argument,
+          loadContentVideoInfoUseCase: locator<LoadContentVideoInfoUseCase>()),
     );
 
     locator.registerFactory(

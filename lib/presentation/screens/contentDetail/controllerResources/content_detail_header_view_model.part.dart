@@ -8,8 +8,15 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   /* [Getters */
 
   /// 헤더 영역 이미지
-  String? get headerBackdropImg =>
-      passedArgument.posterImgUrl ?? _contentDescriptionInfo?.posterImgUrl;
+  String? get headerBackdropImg {
+    if (videoInfo.hasData) {
+      if (videoInfo!.videoFormat == ContentVideoFormat.multipleMovie ||
+          videoInfo!.videoFormat == ContentVideoFormat.multipleTv) {
+        return videoInfo!.videos[selectedEpisode - 1].posterImageUrl;
+      }
+    }
+    return passedArgument.posterImgUrl ?? _contentDescriptionInfo?.posterImgUrl;
+  }
 
   String get contentTypeToString => _passedArgument.contentType.asText;
 
@@ -17,7 +24,9 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
   String? get contentVideoTitle => passedArgument.videoTitle.hasData
       ? passedArgument.videoTitle!
-      : contentVideos?.singleTypeVideo.detailInfo?.videoTitle;
+      : videoInfo?.videos[0].youtubeInfo.valueOrNull?.videoTitle;
+
+  // oldContentVideos?.singleTypeVideo.detailInfo?.videoTitle;
 
   // TODO: 블로그 포스팅용 예시 이후에 삭제 필요
   // RxString? get headerContentDesc => passedArgument.videoTitle.hasData

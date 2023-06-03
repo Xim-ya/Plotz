@@ -13,6 +13,17 @@ import 'package:soon_sak/app/config/font_config.dart';
 
 abstract class AlertWidget {
   AlertWidget._();
+
+  static BuildContext? _globalContext;
+
+  static void setGlobalContext(BuildContext context) {
+    _globalContext = context;
+  }
+
+  static BuildContext? getGlobalContext() {
+    return _globalContext;
+  }
+
   static Future<void> toast(BuildContext context,
       {required String message}) async {
     showToastWidget(
@@ -34,30 +45,41 @@ abstract class AlertWidget {
     );
   }
 
-  // static Future<void> animatedToast(String message,
-  //     {bool? isUsedOnTabScreen,}) async {
-  //   Get.showSnackbar(
-  //     GetSnackBar(
-  //       backgroundColor: Colors.black,
-  //       borderRadius: 8,
-  //       margin: isUsedOnTabScreen.hasData && isUsedOnTabScreen == true
-  //           ? AppInset.bottom46 + AppInset.horizontal8
-  //           : AppInset.horizontal8,
-  //       padding: AppInset.horizontal24 + AppInset.vertical16,
-  //       messageText: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           Text(
-  //             message,
-  //             style: AppTextStyle.body1.copyWith(color: Colors.white),
-  //           )
-  //         ],
-  //       ),
-  //       dismissDirection: DismissDirection.endToStart,
-  //       duration: const Duration(milliseconds: 1200),
-  //     ),
-  //   );
-  // }
+  static Future<void> showGlobalContextToast(
+      {
+        bool? isUsedOnTabScreen,
+        required String message,
+      }) async {
+    showToastWidget(
+      Container(
+        key: const Key('toast'),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.black,
+        ),
+        height: 52,
+        width: double.infinity,
+        margin: isUsedOnTabScreen != null && isUsedOnTabScreen == true
+            ? AppInset.bottom46 + AppInset.horizontal8
+            : AppInset.horizontal8,
+        padding: AppInset.left24 + AppInset.right16 ,
+        child: Center(
+          child: SizedBox(
+            width: double.infinity,
+            child: Text(
+              message,
+              style: AppTextStyle.body2.copyWith(color: AppColor.mixedWhite),
+              textAlign: TextAlign.left,
+            ),
+          ),
+        ),
+      ),
+      context: _globalContext,
+      animDuration: Duration.zero,
+    );
+  }
+
+
 
   static Future<void> newToast(
     BuildContext context, {

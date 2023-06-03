@@ -13,19 +13,20 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
     return contentImgUrlList?.isNotEmpty ?? true ? true : false;
   }
 
-  // 총 조회수
-  String? get totalViewCount => Formatter.formatNumberWithUnit(
-        contentVideos?.mainViewCount,
-        isViewCount: false,
-      );
-
-  // 좋아요 수
-  String? get likesCount =>
-      Formatter.formatNumberWithUnit(contentVideos?.mainLikesCount);
+  // // 총 조회수
+  // String? get totalViewCount => Formatter.formatNumberWithUnit(
+  //       videoInfo?.mainViewCount,
+  //       isViewCount: false,
+  //     );
+  //
+  // // 좋아요 수
+  // String? get likesCount {
+  //   return Formatter.formatNumberWithUnit(videoInfo?.mainLikesCount);
+  // }
 
   // 유튜브 컨텐츠 업로드 일자
   String? get youtubeUploadDate =>
-      Formatter.getDateDifferenceFromNow(contentVideos?.mainUploadDate);
+      Formatter.getDateDifferenceFromNow(videoInfo?.mainUploadDate.valueOrNull);
 
   // 채널 설명
   String? get channelDescription => channelInfo?.description;
@@ -85,6 +86,7 @@ extension ContentDetailInfoTabViewModel on ContentDetailViewModel {
         return 3;
       }
     }
+
     // 첫 번째 슬라이더 일 때
     else {
       // 총 개수가 3개 이해 일 때

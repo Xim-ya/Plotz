@@ -280,8 +280,8 @@ class ContentVideoViewsByCase extends BaseView<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SectionTitle(title: '시즌 에피소드'),
-            Selector<ContentDetailViewModel, ContentVideos?>(
-              selector: (context, vm) => vm.contentVideos,
+            Selector<ContentDetailViewModel, OldContentVideos?>(
+              selector: (context, vm) => vm.oldContentVideos,
               builder: (context, videos, _) {
                 if (videos?.multipleTypeVideos.isEmpty ?? true) {
                   // 데이터가 없는 경우에 대한 처리

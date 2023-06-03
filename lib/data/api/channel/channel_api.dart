@@ -13,4 +13,5 @@ abstract class ChannelApi {
   /* 임시 api method */
   Future<void> setChannelField();
   Future<void> removeZeroContainedChannel();
+  Future<void> updateSeasonContentField();
 }

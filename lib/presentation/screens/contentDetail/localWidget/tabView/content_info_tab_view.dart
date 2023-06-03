@@ -1,9 +1,12 @@
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/video/content_video_model.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
+import 'package:tuple/tuple.dart';
 
 class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
   const ContentInfoTabView({Key? key}) : super(key: key);
@@ -26,9 +29,7 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
         // 채널의 다른 콘텐츠
         _ChannelRelatedContentView(),
 
-
         // 유튜버의 다른 콘텐츠
-
       ],
     );
   }
@@ -97,7 +98,7 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
       builder: (context, channel, skeleton) {
         return GestureDetector(
           onTap: () {
-            if (channel.hasData) return;
+            if (!channel.hasData) return;
           },
           child: Container(
             width: double.infinity,
@@ -180,18 +181,66 @@ class _VideoInfoView extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        _columnItem(title: '조회수', iconName: 'small_eye', data: '5.2만'),
-        _columnItem(title: '좋아요', iconName: 'small_like', data: '1.2천'),
-        _columnItem(title: '업로드일', iconName: 'small_date', data: '1년전'),
-      ],
+    return Selector<
+        ContentDetailViewModel,
+        Tuple3<BehaviorSubject<int?>?, BehaviorSubject<int?>?,
+            BehaviorSubject<String?>?>>(
+      selector: (_, vm) => Tuple3(vm.videoInfo?.mainViewCount,
+          vm.videoInfo?.mainLikesCount, vm.videoInfo?.mainUploadDate),
+      builder: (context, value, _) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            StreamBuilder<int?>(
+              stream: value.item1?.stream,
+              builder: (context, snapshot) {
+                return _columnItem(
+                    title: '조회수',
+                    iconName: 'small_eye',
+                    data: Formatter.formatNumberWithUnit(snapshot.data));
+              },
+            ),
+            StreamBuilder<int?>(
+              stream: value.item2?.stream,
+              builder: (context, snapshot) {
+                return _columnItem(
+                    title: '좋아요',
+                    iconName: 'small_like',
+                    data: Formatter.formatNumberWithUnit(snapshot.data));
+              },
+            ),
+            StreamBuilder<String?>(
+              stream: value.item3?.stream,
+              builder: (context, snapshot) {
+                return _columnItem(
+                    title: '업로드일',
+                    iconName: 'small_date',
+                    data: Formatter.getDateDifferenceFromNow(snapshot.data));
+              },
+            ),
+          ],
+        );
+      },
     );
+    // return Row(
+    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //   children: <Widget>[
+    //     _columnItem(title: '조회수', iconName: 'small_eye', data: value.item1),
+    //     _columnItem(title: '좋아요', iconName: 'small_like', data: value.item2),
+    //     StreamBuilder<String?>(
+    //         stream: value.item3,
+    //         builder: (context, snapshot) {
+    //           return _columnItem(
+    //               title: '업로드일', iconName: 'small_date', data: snapshot.data);
+    //         })
+    //   ],
+    // );
   }
 
   SizedBox _columnItem(
-      {required String title, required String iconName, required String data}) {
+      {required String title,
+      required String iconName,
+      required String? data}) {
     return SizedBox(
       height: 54,
       child: Stack(
@@ -216,7 +265,7 @@ class _VideoInfoView extends BaseView<ContentDetailViewModel> {
             bottom: 0,
             child: Center(
               child: Text(
-                data,
+                data ?? '',
                 textAlign: TextAlign.center,
                 style: AppTextStyle.title3,
               ),

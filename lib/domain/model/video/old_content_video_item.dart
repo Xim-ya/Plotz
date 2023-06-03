@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ContentVideoItem {
+class OldContentVideoItem {
   final int episodeNum;
   final String videoId;
   final BehaviorSubject<YoutubeVideoContentInfo?> _detailInfoSubject;
@@ -17,7 +17,7 @@ class ContentVideoItem {
 
   SeasonInfo? get tvSeasonInfo => _tvSeasonInfoSubject.valueOrNull;
 
-  ContentVideoItem({
+  OldContentVideoItem({
     required this.episodeNum,
     required this.videoId,
   })  : _detailInfoSubject = BehaviorSubject<YoutubeVideoContentInfo?>(),
@@ -58,8 +58,8 @@ class ContentVideoItem {
     }
   }
 
-  factory ContentVideoItem.fromResponse(VideoResponse response) {
-    return ContentVideoItem(
+  factory OldContentVideoItem.fromResponse(OldVideoResponse response) {
+    return OldContentVideoItem(
       episodeNum: response.order,
       videoId: response.videoId,
     );
