@@ -172,4 +172,33 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
     //   ).whenComplete(() => print("${e.id} 저장 완료"));
     // });
   }
+
+  @override
+  Future<void> getTwoFace() async{
+    // 채널 snapshot
+    QuerySnapshot channelSnapshot = await _db.collection('channel').get();
+
+    // 채널 Documents
+    List<DocumentSnapshot> channelDocs = channelSnapshot.docs;
+
+    // 채널 Documents loop
+    await Future.forEach(channelDocs, (DocumentSnapshot e) async {
+      // 콘텐츠 snapshot
+      final contentSnapshot = await _db
+          .collection('content')
+          .where('channelRef',
+          isEqualTo: AppFireStore.getInstance.doc('/channel/${e.id}'))
+          .get();
+
+      // 콘텐츠 개수
+      final contentsLength = contentSnapshot.docs.length;
+      print('/channel/${e.id}');
+      await updateDocumentFieldsTest(
+        'channel',
+        docId: e.id,
+        firstFieldName: 'totalContent',
+        firstFieldData: contentsLength,
+      ).whenComplete(() => print("${e.id} 저장 완료"));
+    });
+  }
 }

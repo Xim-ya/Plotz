@@ -341,10 +341,8 @@ class ContentDetailViewModel extends BaseViewModel {
     }
   }
 
-
-
   // 대표 조회 수
-  String? mainViewCount (List<YoutubeVideoContentInfo> videos) {
+  String? mainViewCount(List<YoutubeVideoContentInfo> videos) {
     if (videos.isEmpty) {
       return null;
     }
@@ -385,12 +383,11 @@ class ContentDetailViewModel extends BaseViewModel {
         contentType: contentType,
         context: context);
     responseResult.fold(onSuccess: (data) {
-      print("끝223");
       videoInfo = data;
       if (data.videos.length > 1) {
         selectedEpisode = data.videos[0].episodeNum;
       }
-      print("끝2");
+
       notifyListeners();
     }, onFailure: (e) {
       AlertWidget.newToast(message: '유튜브 비디오 정보를 불러들이는데 실패했어요', context);
@@ -492,11 +489,13 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
-  Future<void> launchYoutubeApp(String? youtubeVideoId) async {
-    if (youtubeVideoId == null) {
+  Future<void> goToContent() async {
+    if (videoInfo == null) {
       return AlertWidget.newToast(
           message: '잠시만 기다려주세요. 데이터를 불러오고 있습니다.', context);
     }
+    final youtubeVideoId = videoInfo!.videos[selectedEpisode-1].videoId;
+
     try {
       await launchUrl(
         Uri.parse('https://www.youtube.com/watch?v=$youtubeVideoId'),

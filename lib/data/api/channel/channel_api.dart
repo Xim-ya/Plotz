@@ -14,4 +14,5 @@ abstract class ChannelApi {
   Future<void> setChannelField();
   Future<void> removeZeroContainedChannel();
   Future<void> updateSeasonContentField();
+  Future<void> getTwoFace();
 }

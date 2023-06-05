@@ -197,7 +197,9 @@ class _VideoInfoView extends BaseView<ContentDetailViewModel> {
                 return _columnItem(
                     title: '조회수',
                     iconName: 'small_eye',
-                    data: Formatter.formatNumberWithUnit(snapshot.data));
+                    data: snapshot.hasData
+                        ? Formatter.formatNumberWithUnit(snapshot.data)
+                        : '-');
               },
             ),
             StreamBuilder<int?>(
@@ -206,7 +208,9 @@ class _VideoInfoView extends BaseView<ContentDetailViewModel> {
                 return _columnItem(
                     title: '좋아요',
                     iconName: 'small_like',
-                    data: Formatter.formatNumberWithUnit(snapshot.data));
+                    data: snapshot.hasData
+                        ? Formatter.formatNumberWithUnit(snapshot.data)
+                        : '-');
               },
             ),
             StreamBuilder<String?>(
@@ -222,19 +226,6 @@ class _VideoInfoView extends BaseView<ContentDetailViewModel> {
         );
       },
     );
-    // return Row(
-    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //   children: <Widget>[
-    //     _columnItem(title: '조회수', iconName: 'small_eye', data: value.item1),
-    //     _columnItem(title: '좋아요', iconName: 'small_like', data: value.item2),
-    //     StreamBuilder<String?>(
-    //         stream: value.item3,
-    //         builder: (context, snapshot) {
-    //           return _columnItem(
-    //               title: '업로드일', iconName: 'small_date', data: snapshot.data);
-    //         })
-    //   ],
-    // );
   }
 
   SizedBox _columnItem(
@@ -265,7 +256,7 @@ class _VideoInfoView extends BaseView<ContentDetailViewModel> {
             bottom: 0,
             child: Center(
               child: Text(
-                data ?? '',
+                data ?? '-',
                 textAlign: TextAlign.center,
                 style: AppTextStyle.title3,
               ),

@@ -60,6 +60,8 @@ class Formatter {
     }
   }
 
+
+
   // 현재 일을 기준으로 인자로 받은 '날짜'를 계산하여 일정 포맷으로 리턴함
   static String getDateDifferenceFromNow(String? date) {
     if (date == null) {

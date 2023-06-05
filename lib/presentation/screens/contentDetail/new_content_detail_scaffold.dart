@@ -16,6 +16,7 @@ class NewContentDetailScaffold extends StatefulWidget {
     required this.header,
     required this.headerDescription,
     required this.rateAndGenreView,
+    required this.playBtn,
     Key? key,
   }) : super(key: key);
 
@@ -25,6 +26,7 @@ class NewContentDetailScaffold extends StatefulWidget {
   final List<Tab> tabs;
   final List<Widget> tabViews;
   final Widget rateAndGenreView;
+  final Widget playBtn;
 
   @override
   _NewContentDetailScaffoldState createState() =>
@@ -94,10 +96,7 @@ class _NewContentDetailScaffoldState extends State<NewContentDetailScaffold>
                             SizedBox(
                               height: SizeConfig.to.screenHeight * (375 / 500) -
                                   (48 + SizeConfig.to.statusBarHeight),
-                              child: Center(
-                                child:
-                                    SvgPicture.asset('assets/icons/play.svg'),
-                              ),
+                              child: Center(child: widget.playBtn),
                             ),
                             // 헤더 포스터 '하단' Gradient
                             Positioned(

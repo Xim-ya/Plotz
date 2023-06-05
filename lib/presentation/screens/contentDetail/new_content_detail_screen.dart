@@ -22,6 +22,7 @@ class NewContentDetailScreen extends BaseView<ContentDetailViewModel> {
       tabs: _buildTab(),
       tabViews: _buildTabBarViews(),
       headerDescription: const _HeaderDescription(),
+      playBtn: const _PlayBtn(),
     );
   }
 
@@ -54,6 +55,36 @@ class NewContentDetailScreen extends BaseView<ContentDetailViewModel> {
   }
 }
 
+class _PlayBtn extends BaseView<ContentDetailViewModel> {
+  const _PlayBtn({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<ContentDetailViewModel, ContentVideoModel?>(
+        selector: (_, vm) => vm.videoInfo,
+        child: const SizedBox(
+          height: 40,
+          width: 40,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.6,
+            color: AppColor.gray06,
+          ),
+        ),
+        builder: (context, videoInfo, loadingView) {
+          return videoInfo.hasData
+              ? MaterialButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  minWidth: 0,
+                  padding: EdgeInsets.zero,
+                  onPressed: vm(context).goToContent,
+                  child: SvgPicture.asset('assets/icons/play.svg'),
+                )
+              : loadingView!;
+        });
+  }
+}
+
 // 헤더 콘텐츠 설명
 class _HeaderDescription extends BaseView<ContentDetailViewModel> {
   const _HeaderDescription({Key? key}) : super(key: key);
@@ -68,14 +99,16 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
         children: <Widget>[
           Selector<
               ContentDetailViewModel,
-              Tuple5<String, String?, String?, String?,
-                  ValueStream<YoutubeVideoContentInfo?>?>>(
-            selector: (_, vm) => Tuple5(
-                vm.contentTypeToString,
-                vm.headerTitle,
-                vm.releaseYear,
-                vm.genre,
-                vm.videoInfo?.videos[0].youtubeInfo.stream),
+              Tuple6<String, String?, String?, String?, ContentVideoModel?,
+                  String?>>(
+            selector: (_, vm) => Tuple6(
+              vm.contentTypeToString,
+              vm.headerTitle,
+              vm.releaseYear,
+              vm.genre,
+              vm.videoInfo,
+              vm.contentVideoTitle,
+            ),
             builder: (context, value, _) {
               return Column(
                 children: <Widget>[
@@ -130,19 +163,30 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
 
                   // 영상제목
                   SizedBox(
-                      width: SizeConfig.to.screenWidth - 96,
-                      child: StreamBuilder<YoutubeVideoContentInfo?>(
-                        stream: value.item5,
-                        builder: (context, snapshot) {
-                          return Text(
-                            snapshot.hasData ? snapshot.data!.videoTitle : '',
+                    width: SizeConfig.to.screenWidth - 96,
+                    child: value.item5?.youtubeInoLoaded ?? false
+                        ? Text(
+                            value.item6 ?? '제목 없음',
                             textAlign: TextAlign.center,
                             style: AppTextStyle.body3,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                          );
-                        },
-                      )),
+                          )
+                        : StreamBuilder<YoutubeVideoContentInfo?>(
+                            stream: value.item5?.videos[0].youtubeInfo,
+                            builder: (context, snapshot) {
+                              return Text(
+                                snapshot.hasData
+                                    ? snapshot.data!.videoTitle
+                                    : '',
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.body3,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              );
+                            },
+                          ),
+                  ),
                 ],
               );
             },
@@ -290,13 +334,12 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
       builder: (context, headerBackdropImg, _) {
         return headerBackdropImg.hasData
             ? CachedNetworkImage(
+                fadeInDuration: const Duration(milliseconds: 400),
                 memCacheWidth: (SizeConfig.to.screenWidth * 3).toInt(),
                 fit: BoxFit.fitHeight,
                 height: SizeConfig.to.screenHeight * (375 / 500),
-                imageUrl: vmS<String>(
-                  context,
-                  (vm) => headerBackdropImg!.prefixTmdbImgPath,
-                ),
+                imageUrl: headerBackdropImg!.prefixTmdbImgPath,
+                placeholder: (_, __) => const SizedBox(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               )
             : const SizedBox();

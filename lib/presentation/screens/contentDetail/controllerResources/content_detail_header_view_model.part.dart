@@ -9,22 +9,33 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
 
   /// 헤더 영역 이미지
   String? get headerBackdropImg {
-    if (videoInfo.hasData) {
-      if (videoInfo!.videoFormat == ContentVideoFormat.multipleMovie ||
-          videoInfo!.videoFormat == ContentVideoFormat.multipleTv) {
-        return videoInfo!.videos[selectedEpisode - 1].posterImageUrl;
-      }
+    if (videoInfo == null) return null;
+
+    if (videoInfo!.videoFormat == ContentVideoFormat.multipleMovie ||
+        videoInfo!.videoFormat == ContentVideoFormat.multipleTv) {
+      return videoInfo!.videos[selectedEpisode - 1].posterImageUrl;
+    } else {
+      return _contentDescriptionInfo?.posterImgUrl;
     }
-    return passedArgument.posterImgUrl ?? _contentDescriptionInfo?.posterImgUrl;
   }
 
   String get contentTypeToString => _passedArgument.contentType.asText;
 
   /// 컨텐츠 설명 부분 (유튜브 컨텐츠 제목)
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
-  String? get contentVideoTitle => passedArgument.videoTitle.hasData
-      ? passedArgument.videoTitle!
-      : videoInfo?.videos[0].youtubeInfo.valueOrNull?.videoTitle;
+  String? get contentVideoTitle {
+    if (videoInfo == null) return null;
+
+    if (videoInfo!.videoFormat == ContentVideoFormat.multipleMovie ||
+        videoInfo!.videoFormat == ContentVideoFormat.multipleTv) {
+      return videoInfo!
+          .videos[selectedEpisode - 1].youtubeInfo.valueOrNull?.videoTitle;
+    } else {
+      return passedArgument.videoTitle.hasData
+          ? passedArgument.videoTitle!
+          : videoInfo?.videos[0].youtubeInfo.valueOrNull?.videoTitle;
+    }
+  }
 
   // oldContentVideos?.singleTypeVideo.detailInfo?.videoTitle;
 
