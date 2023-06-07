@@ -174,7 +174,7 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
   }
 
   @override
-  Future<void> getTwoFace() async{
+  Future<void> getTwoFace() async {
     // 채널 snapshot
     QuerySnapshot channelSnapshot = await _db.collection('channel').get();
 
@@ -187,7 +187,7 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
       final contentSnapshot = await _db
           .collection('content')
           .where('channelRef',
-          isEqualTo: AppFireStore.getInstance.doc('/channel/${e.id}'))
+              isEqualTo: AppFireStore.getInstance.doc('/channel/${e.id}'))
           .get();
 
       // 콘텐츠 개수
@@ -200,5 +200,44 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
         firstFieldData: contentsLength,
       ).whenComplete(() => print("${e.id} 저장 완료"));
     });
+  }
+
+  Future<void> checkUsercount() async {
+    // 채널 snapshot
+    QuerySnapshot channelSnapshot = await _db.collection('user').get();
+
+    // 채널 Documents
+    List<DocumentSnapshot> channelDocs = channelSnapshot.docs;
+
+    print("유저 총 개수${channelDocs.length}");
+  }
+
+  @override
+  Future<void> checkYC() async {
+    final CollectionReference parentCollection =
+        FirebaseFirestore.instance.collection('content');
+    final QuerySnapshot parentSnapshot = await parentCollection.get();
+
+    int matchingDocumentsCount = 0;
+
+    for (final DocumentSnapshot parentDoc in parentSnapshot.docs) {
+      final CollectionReference subcollection =
+          parentDoc.reference.collection('channel');
+      final QuerySnapshot subcollectionSnapshot = await subcollection.get();
+
+      if (subcollectionSnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot firstSubDoc = subcollectionSnapshot.docs[0];
+        final dynamic desiredFieldValue =
+            AppFireStore.getInstance.doc('/channel/UCRT4hxfWfXEP7Iiv3ovI-0A');
+
+        if (firstSubDoc.get('channelRef') == desiredFieldValue) {
+          matchingDocumentsCount++;
+          print(
+              "제목 : ${parentDoc.get('title')} <--> id : ${parentDoc.get('id')}");
+        }
+      }
+    }
+
+    print("영읽남 개수 ${matchingDocumentsCount}");
   }
 }
