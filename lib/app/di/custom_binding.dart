@@ -1,6 +1,7 @@
 
 abstract class CustomBindings {
-  late dynamic argument;
+  late dynamic arg1;
+  late dynamic arg2;
 
   bool isDependenciesDeleted = true;
 
