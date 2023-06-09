@@ -24,6 +24,7 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   /// 컨텐츠 설명 부분 (유튜브 컨텐츠 제목)
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
   String? get contentVideoTitle {
+
     if (videoInfo == null) return null;
 
     if (videoInfo!.videoFormat == ContentVideoFormat.multipleMovie ||
@@ -37,12 +38,7 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
     }
   }
 
-  // oldContentVideos?.singleTypeVideo.detailInfo?.videoTitle;
 
-  // TODO: 블로그 포스팅용 예시 이후에 삭제 필요
-  // RxString? get headerContentDesc => passedArgument.videoTitle.hasData
-  //     ? passedArgument.videoTitle!.obs
-  //     : contentVideos.value?.singleTypeVideo.detailInfo?.videoTitle.obs;
 
   // 컨텐츠 제목
   String? get headerTitle => passedArgument.title.hasData
@@ -59,12 +55,8 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
         _contentDescriptionInfo?.genreList,
       );
 
-  // 컨텐츠 개봉일
-  String? get releaseDate => _contentDescriptionInfo?.releaseDate != null
-      ? Formatter.dateToyyMMdd(_contentDescriptionInfo!.releaseDate!)
-      : null;
 
-  //
+  // 개봉년도 && 방영년도
   String? get releaseYear => _contentDescriptionInfo?.releaseDate != null
       ? Formatter.dateToYear(_contentDescriptionInfo!.releaseDate!)
       : null;

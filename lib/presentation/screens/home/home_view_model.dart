@@ -5,7 +5,7 @@ import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
 import 'package:soon_sak/domain/update_test.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
@@ -30,10 +30,7 @@ class HomeViewModel extends BaseViewModel {
             loadPagedCategoryCollectionsUseCase,
         _channelRepository = channelRepository;
 
-  final ChannelApi _channelApi = locator<ChannelApi>();
-
   /* [Variables] */
-
   /// Data
   BannerModel? bannerContents; // 배너 컨텐츠
   List<TopPositionedCategory>? topPositionedCategory;
@@ -100,8 +97,8 @@ class HomeViewModel extends BaseViewModel {
       parameters: {sectionType: routingArgument.originId},
     );
 
-    context.push(AppRoutes.tabs + AppRoutes.contentDetail,
-        extra: routingArgument);
+    context.push(AppRoutes.contentDetail,
+        extra: {'arg1': routingArgument, 'arg2': true});
   }
 
   // 배너, 배너 상세 콘텐츠로 이동
@@ -117,7 +114,9 @@ class HomeViewModel extends BaseViewModel {
       parameters: {'banner': arg.originId},
     );
 
-    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
+    context.push(AppRoutes.contentDetail, extra: {'arg1': arg, 'arg2': true});
+    // context
+    //     .push(AppRoutes.tabs + AppRoutes.contentDetail, extra: {'arg1': arg});
   }
 
   // 스크롤 동작 관련 이벤트
@@ -145,7 +144,10 @@ class HomeViewModel extends BaseViewModel {
   // 채널 상세 스크린으로 이동
   void routeToChannelDetail(BuildContext context,
       {required int selectedIndex}) {
-    context.push(AppRoutes.channelDetail, extra: channelList![selectedIndex]);
+    context.push(AppRoutes.channelDetail,
+        extra: {'arg1': channelList![selectedIndex], 'arg2': false});
+    // context.push(AppRoutes.channelDetail,
+    //     extra: {'arg1': channelList![selectedIndex], 'arg2': true});
   }
 
   // 채널 리스트 호출

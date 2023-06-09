@@ -1,8 +1,8 @@
 import 'package:soon_sak/data/api/channel/response/channel_content_item_response.dart';
-import 'package:soon_sak/data/api/staticContent/response/new_category_content_item_response.dart';
+import 'package:soon_sak/data/api/staticContent/response/category_content_item_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class NewContentPosterShell {
+class ContentPosterShell {
   final String originId;
   late final String? title;
   final int contentId;
@@ -10,7 +10,7 @@ class NewContentPosterShell {
   final String posterImgUrl;
   late final String? videoTitle;
 
-  NewContentPosterShell({
+  ContentPosterShell({
     required this.title,
     required this.videoTitle,
     required this.originId,
@@ -20,9 +20,9 @@ class NewContentPosterShell {
   });
 
   // TopPositioned Category
-  factory NewContentPosterShell.fromTopPositionedCategory(
-          NewCategoryContentItemResponse response) =>
-      NewContentPosterShell(
+  factory ContentPosterShell.fromTopPositionedCategory(
+          CategoryContentItemResponse response) =>
+      ContentPosterShell(
         originId: response.id,
         title: response.title,
         contentId: SplittedIdAndType.fromOriginId(response.id).id,
@@ -31,10 +31,21 @@ class NewContentPosterShell {
         videoTitle: null,
       );
 
+// TopTen
+  factory ContentPosterShell.fromResponse(TopTenContentItemResponse response) =>
+      ContentPosterShell(
+        originId: response.id,
+        title: response.title,
+        contentId: SplittedIdAndType.fromOriginId(response.id).id,
+        contentType: SplittedIdAndType.fromOriginId(response.id).type,
+        posterImgUrl: response.imgUrl,
+        videoTitle: null,
+      );
+
   // Channel Content
-  factory NewContentPosterShell.fromChannelContents(
+  factory ContentPosterShell.fromChannelContents(
           ChannelContentItemResponse response) =>
-      NewContentPosterShell(
+      ContentPosterShell(
         originId: response.id,
         contentId: SplittedIdAndType.fromOriginId(response.id).id,
         contentType: SplittedIdAndType.fromOriginId(response.id).type,
@@ -44,9 +55,9 @@ class NewContentPosterShell {
       );
 
   // Conttent Detail > Related Contents
-  factory NewContentPosterShell.fromRelatedContents(
+  factory ContentPosterShell.fromRelatedContents(
           ChannelContentItemResponse response) =>
-      NewContentPosterShell(
+      ContentPosterShell(
         originId: response.id,
         contentId: SplittedIdAndType.fromOriginId(response.id).id,
         contentType: SplittedIdAndType.fromOriginId(response.id).type,

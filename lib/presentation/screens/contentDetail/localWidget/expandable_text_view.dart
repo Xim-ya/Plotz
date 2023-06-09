@@ -78,7 +78,7 @@ class _ExpandableTextViewState extends State<ExpandableTextView> {
                 style: const TextStyle(
                   fontFamily: 'pretender_regular',
                   fontSize: 12,
-                  height: 2.1,
+                  height: 1.8,
                   letterSpacing: -0.2,
                   color: Colors.white,
                 ),
@@ -97,17 +97,16 @@ class _ExpandableTextViewState extends State<ExpandableTextView> {
                     padding:
                         AppInset.vertical1 + const EdgeInsets.only(left: 30),
                     decoration: const BoxDecoration(
-                        color: Colors.red,
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromRGBO(15, 15, 15, 0),
-                            Color.fromRGBO(15, 15, 15, 1),
-                            Color.fromRGBO(15, 15, 15, 1),
-                          ],
-                          stops: [0, 0.36, 1],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        )),
+                      color: Colors.red,
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(15, 15, 15, 0),
+                          Color.fromRGBO(15, 15, 15, 1),
+                          Color.fromRGBO(15, 15, 15, 1),
+                        ],
+                        stops: [0, 0.36, 1],
+                      ),
+                    ),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: MaterialButton(
@@ -126,24 +125,7 @@ class _ExpandableTextViewState extends State<ExpandableTextView> {
                         ),
                       ),
                     ),
-                  )
-
-                  // MaterialButton(
-                  //   color: Colors.red,
-                  //   minWidth: 0,
-                  //   padding: EdgeInsets.zero,
-                  //   onPressed: () {
-                  //     setState(() {
-                  //       isExpanded = !isExpanded;
-                  //     });
-                  //   },
-                  //   child: Text(
-                  //     isExpanded ? '접기' : '더보기',
-                  //     style:
-                  //         AppTextStyle.body3.copyWith(color: AppColor.lightGrey),
-                  //   ),
-                  // ),
-                  ),
+                  )),
           ],
         );
       },

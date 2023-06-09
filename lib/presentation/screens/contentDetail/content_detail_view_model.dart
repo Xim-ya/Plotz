@@ -1,26 +1,23 @@
 import 'dart:developer';
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
-import 'package:soon_sak/domain/model/video/content_video.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/video/content_video_model.dart';
+import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
 import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
+import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
+import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
+import 'package:soon_sak/presentation/screens/contentDetail/localWidget/episode_bottom_sheet.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
-part 'controllerResources/content_detail_single_content_tab_view_model.part.dart'; // 컨텐츠 탭뷰 영역
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
-part 'controllerResources/content_detail_video_view_model.part.dart'; // 컨텐츠 비디오 섹션 뷰
 
 class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel({
-    required ContentRepository contentRepository,
-    required LoadContentOfVideoListUseCase loadContentOfVideoList,
-    required LoadContentImgListUseCase loadContentImgList,
     required LoadContentDetailInfoUseCase loadContentMainDescription,
     required LoadContentCreditInfoUseCase loadContentCreditInfo,
     required UserRepository userRepository,
@@ -28,12 +25,8 @@ class ContentDetailViewModel extends BaseViewModel {
     required ContentArgumentFormat argument,
     required ChannelRepository channelRepository,
     required LoadContentVideoInfoUseCase loadContentVideoInfoUseCase,
-    // required ContentDetailScaffoldController contentDetailScaffoldController,
   })  : _passedArgument = argument,
-        _contentRepository = contentRepository,
-        _loadContentOfVideoList = loadContentOfVideoList,
-        _loadContentImgList = loadContentImgList,
-        _loadContentMainDescription = loadContentMainDescription,
+        _loadContentDetailInfoUseCase = loadContentMainDescription,
         _loadContentCreditInfo = loadContentCreditInfo,
         _userRepository = userRepository,
         _userService = userService,
@@ -47,48 +40,31 @@ class ContentDetailViewModel extends BaseViewModel {
   /// // 컨텐츠탭 정보
   ContentDetailInfo? _contentDescriptionInfo;
 
-  // 컨턴츠 댓글 리스트
-  List<YoutubeContentComment>? _contentCommentList;
-
-  // 유튜브 비디오 컨텐츠 정보
-  YoutubeVideoContentInfo? _youtubeVideoContentInfo;
-
   // 컨텐츠 Credit 정보 리스트
   List<ContentCreditInfo>? contentCreditList;
 
-  // 컨텐츠 이미지 리스트
-  List<String>? contentImgUrlList;
-
-  // 컨텐츠 에피소드 정보 리스트
-  List<ContentEpisodeInfoItem>? _contentEpisodeList;
-
   // 채널의 다른 콘텐츠
-  List<NewContentPosterShell>? channelRelatedContents;
+  List<ContentPosterShell>? channelRelatedContents;
 
   // 유튜브 채널
-  ChannelInfo? channelInfo;
-
-  // 컨텐츠 비디오(유튜브)
-  OldContentVideos? oldContentVideos;
+  ChannelModel? channelInfo;
 
   // 컨텐츠 비디오(유튜브)
   ContentVideoModel? videoInfo;
 
-  // 큐레이터 정보
-  UserModel? _curator;
-
   /* [UseCase] */
-  final LoadContentDetailInfoUseCase _loadContentMainDescription;
+  final LoadContentDetailInfoUseCase _loadContentDetailInfoUseCase;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
-  final LoadContentImgListUseCase _loadContentImgList;
-  final LoadContentOfVideoListUseCase _loadContentOfVideoList;
   final LoadContentVideoInfoUseCase loadContentVideoInfo;
 
   /* Data Modules */
-  final ContentRepository _contentRepository;
+  final ChannelRepository _channelRepository;
   final UserRepository _userRepository;
   final UserService _userService;
-  final ChannelRepository _channelRepository;
+
+  /* Bindings [For Nested Route] */
+  final contentDetailBinding = ContentDetailBinding();
+  final channelDetailBinding = ChannelDetailBinding();
 
   /********************** [SCAFFOLD RESOURCES]  **********************/
   late final TabController tabController;
@@ -120,8 +96,6 @@ class ContentDetailViewModel extends BaseViewModel {
   void fetchResourcesIfNeeded() {
     if (tabController.index == 1) {
       fetchContentCreditInfo();
-      fetchCuratorInfo();
-      fetchContentImgList();
       tabController.removeListener(fetchResourcesIfNeeded);
     }
   }
@@ -129,6 +103,70 @@ class ContentDetailViewModel extends BaseViewModel {
   // 뒤로가기
   void onRouteBack(BuildContext context) {
     context.pop();
+  }
+
+  // 콘텐츠 상세 페이지로 이동
+  void routeToContentDetail(ContentPosterShell content) {
+    final arg = ContentArgumentFormat(
+      originId: content.originId,
+      contentId: content.contentId,
+      contentType: content.contentType,
+      videoTitle: content.videoTitle,
+      title: content.title,
+      posterImgUrl: content.posterImgUrl,
+    );
+
+    contentDetailBinding.isDependenciesDeleted = true;
+
+    unregisterIfRegistered<ContentDetailViewModel>();
+    unregisterIfRegistered<LoadContentDetailInfoUseCase>();
+    unregisterIfRegistered<LoadContentCreditInfoUseCase>();
+    unregisterIfRegistered<LoadContentVideoInfoUseCase>();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        final prevLocation =
+            GoRouter.of(context).routeInformationProvider.value.location;
+        final currentLocation = GoRouter.of(context).location;
+
+        if (currentLocation == prevLocation &&
+            contentDetailBinding.isDependenciesDeleted == true) {
+          contentDetailBinding.arg1 = arg;
+          contentDetailBinding.arg2 = false;
+          contentDetailBinding.dependencies();
+        }
+
+        return const ContentDetailScreen();
+      }),
+    );
+  }
+
+  // 채널 상세 페이지로 이동
+  void routeToChannelDetail() {
+    unregisterIfRegistered<ChannelDetailViewModel>();
+
+    unregisterIfRegistered<LoadPagedChannelContentsUseCase>();
+
+    channelDetailBinding.isDependenciesDeleted = true;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        final prevLocation =
+            GoRouter.of(context).routeInformationProvider.value.location;
+        final currentLocation = GoRouter.of(context).location;
+
+        if (currentLocation == prevLocation &&
+            channelDetailBinding.isDependenciesDeleted == true) {
+          channelDetailBinding.arg1 = channelInfo;
+          channelDetailBinding.arg2 = true;
+          channelDetailBinding.dependencies();
+        }
+
+        return const ChannelDetailScreen();
+      }),
+    );
   }
 
   // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
@@ -152,6 +190,7 @@ class ContentDetailViewModel extends BaseViewModel {
     }
   }
 
+  // Scaffold ChangNotifier 초기화 구문
   void onIntentInit(TabController passedTabC) {
     headerImgOffsets = BehaviorSubject<double>.seeded(0.0);
 
@@ -179,104 +218,19 @@ class ContentDetailViewModel extends BaseViewModel {
       useSafeArea: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return Padding(
-          padding: AppInset.horizontal16,
-          child: Wrap(
-            children: [
-              Container(
-                height: 48,
-                decoration: const BoxDecoration(
-                  color: AppColor.gray07,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                  ),
-                ),
-                width: double.infinity,
-                child: Center(
-                  child: Text(
-                    '영상 선택',
-                    style: AppTextStyle.alert2.copyWith(color: AppColor.gray03),
-                  ),
-                ),
-              ),
-              Container(
-                height: 0.5,
-                width: double.infinity,
-                color: AppColor.gray06,
-              ),
-              ListView.separated(
-                separatorBuilder: (_, __) => Container(
-                  height: 0.5,
-                  width: double.infinity,
-                  color: AppColor.gray06,
-                ),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: videoInfo!.videos.length,
-                itemBuilder: (context, index) {
-                  final bool isLastItem = videoInfo!.videos.length == index + 1;
-                  return MaterialButton(
-                    color: AppColor.gray07,
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: isLastItem
-                          ? const BorderRadius.only(
-                              bottomLeft: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
-                            )
-                          : BorderRadius.zero,
-                    ),
-                    onPressed: () {
-                      selectedEpisode = index + 1;
-                      notifyListeners();
-                      context.pop();
-                    },
-                    child: SizedBox(
-                      height: 56,
-                      child: Center(
-                        child: Text(
-                          passedArgument.contentType.isMovie
-                              ? '${index + 1}부'
-                              : '시즌 ${index + 1}',
-                          style: AppTextStyle.title2
-                              .copyWith(color: AppColor.main),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-
-              AppSpace.size8,
-              // 하단 버튼
-              MaterialButton(
-                color: AppColor.gray07,
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                onPressed: () {},
-                child: const SizedBox(
-                  height: 56,
-                  child: Center(
-                    child: Text(
-                      '닫기',
-                      style: TextStyle(
-                        color: AppColor.white,
-                        fontFamily: 'pretendard_regular',
-                        fontSize: 14,
-                        letterSpacing: -0.2,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
+        return EpisodeBottomSheet(
+            videos: videoInfo!.videos,
+            onOptionTapped: onBottomSheetOptionTapped,
+            contentType: contentType);
       },
     );
+  }
+
+  // 하단 에피소드 선택 옵션이 선택 되었을 때
+  void onBottomSheetOptionTapped(int index) {
+    selectedEpisode = index + 1;
+    notifyListeners();
+    context.pop();
   }
 
   /// 유저 시청 기록 추가
@@ -300,83 +254,9 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
-  /// Networking Method
 
-  // 큐레이터 정보 호출
-  Future<void> fetchCuratorInfo() async {
-    final response =
-        await _contentRepository.loadCuratorInfo(passedArgument.originId);
-    response.fold(
-      onSuccess: (data) {
-        _curator = data;
-        notifyListeners();
-      },
-      onFailure: (e) {
-        log('ContentDetailViewModel : $e');
-      },
-    );
-  }
 
-  /// 컨텐츠 비디오 상세 정보 호출 & 데이터 매핑 로직
-  /// 비동기에 유의
-  Future<void> fetchAndMappedVideDetailFields() async {
-    for (var e in oldContentVideos!.videos) {
-      // Tv 컨텐츠 일 경우 시즌 정보 업데이트
-      if (_contentDescriptionInfo?.seasonInfoList != null &&
-          passedArgument.contentType == ContentType.tv) {
-        await e
-            .mappingTvSeasonInfo(
-          seasonInfoList: _contentDescriptionInfo!.seasonInfoList!,
-        )
-            .then((_) async {
-          // 로딩 State 업데이트
-          await oldContentVideos!.updateSeasonInfoLoadingState();
-          safeUpdate<ContentDetailViewModel>();
-        });
-      }
-
-      /// 비디오 상세 정보 업데이트
-      /// Youtube Api가 실행되는 부분
-      await e.updateVideoDetails(context);
-    }
-  }
-
-  // 대표 조회 수
-  String? mainViewCount(List<YoutubeVideoContentInfo> videos) {
-    if (videos.isEmpty) {
-      return null;
-    }
-    int sum = 0;
-    for (YoutubeVideoContentInfo video in videos) {
-      sum += video.viewCount;
-    }
-    return sum.toString();
-  }
-
-  // 컨텐츠에 등록된 비디오(유튜브) 리스트 호출
-  Future<void> _oldFetchContentOfVideoList() async {
-    final responseRes = await _loadContentOfVideoList.call(
-      passedArgument.contentType,
-      passedArgument.originId,
-    );
-
-    responseRes.fold(
-      onSuccess: (data) {
-        oldContentVideos = data;
-        notifyListeners();
-        fetchAndMappedVideDetailFields().then((value) async {
-          await oldContentVideos!.updateVideoDetailsLoadingState();
-          loadingState = ViewModelLoadingState.done;
-          safeUpdate<ContentDetailViewModel>();
-        });
-      },
-      onFailure: (e) {
-        AlertWidget.newToast(message: '유튜브 비디오 정보를 불러들이는데 실패했어요', context);
-        log('ContentDetailViewModel ${e.toString()}');
-      },
-    );
-  }
-
+  // 콘텐츠 비디오 정보 호출
   Future<void> _fetchVideoInfo() async {
     final responseResult = await loadContentVideoInfo.call(
         contentId: passedArgument.originId,
@@ -395,28 +275,11 @@ class ContentDetailViewModel extends BaseViewModel {
     });
   }
 
-  // 컨텐츠 이미지 리스트 호출
-  Future<void> fetchContentImgList() async {
-    final responseRes = await _loadContentImgList.call(
-      passedArgument.contentType,
-      passedArgument.contentId,
-    );
-    responseRes.fold(
-      onSuccess: (data) {
-        contentImgUrlList = data;
-        notifyListeners();
-      },
-      onFailure: (e) {
-        AlertWidget.newToast(message: '콘텐츠 이미지 정보를 불러들이는 데 실패했습니다', context);
-        log(e.toString());
-      },
-    );
-  }
-
   // 채널의 다른 콘텐츠 리스트 호출 (10개)
   Future<void> fetchChannelContents() async {
     final response = await _channelRepository.loadChannelContentsWithLimit(
-        channelId: channelInfo!.id!, currentContentId: passedArgument.originId);
+        channelId: channelInfo!.channelId,
+        currentContentId: passedArgument.originId);
     response.fold(
       onSuccess: (data) {
         channelRelatedContents = data;
@@ -450,7 +313,7 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 컨텐츠 상세 정보(TMDB) 호출
   Future<void> _fetchContentMainInfo() async {
-    final responseResult = await _loadContentMainDescription.call(
+    final responseResult = await _loadContentDetailInfoUseCase.call(
       passedArgument.contentType,
       passedArgument.contentId,
     );
@@ -467,9 +330,9 @@ class ContentDetailViewModel extends BaseViewModel {
   }
 
   // 유튜브 채널 정보 호출
-  Future<void> _fetchYoutubeChannelInfo() async {
+  Future<void> _fetchChannelInfo() async {
     final response =
-        await _contentRepository.loadChannelInfo(passedArgument.originId);
+        await _channelRepository.loadChannelById(passedArgument.originId);
 
     response.fold(
       onSuccess: (channel) {
@@ -483,9 +346,6 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
-  void showYoutubeFetchFailedErr() {
-    AlertWidget.newToast(context, message: '유튜브 정보를 불러오는데 실패했어요');
-  }
 
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
@@ -494,7 +354,7 @@ class ContentDetailViewModel extends BaseViewModel {
       return AlertWidget.newToast(
           message: '잠시만 기다려주세요. 데이터를 불러오고 있습니다.', context);
     }
-    final youtubeVideoId = videoInfo!.videos[selectedEpisode-1].videoId;
+    final youtubeVideoId = videoInfo!.videos[selectedEpisode - 1].videoId;
 
     try {
       await launchUrl(
@@ -524,30 +384,29 @@ class ContentDetailViewModel extends BaseViewModel {
 
     /// NOTE 호출 순서 주의 [_fetchContentMainInfo]가
     /// 무조건 선행 되어야 함
+    ///
     await _fetchContentMainInfo();
     await Future.wait([
       _fetchVideoInfo(),
-      _fetchYoutubeChannelInfo().whenComplete(fetchChannelContents),
+      _fetchChannelInfo().whenComplete(fetchChannelContents),
     ]);
   }
 
   @override
   void onDispose() {
     super.onDispose();
+
+    contentDetailBinding.unRegisterDependencies();
+    channelDetailBinding.unRegisterDependencies();
   }
 
   /* [Getters] */
-  // 유튜브 컨텐츠 id
-  String? get youtubeContentId =>
-      passedArgument.videoId ?? oldContentVideos?.mainVideoId;
-
   // 컨텐츠트 타입 (영화 or tv)
   ContentType get contentType => passedArgument.contentType;
 
-  // [ContentSeasonType]의 single 여부
-  bool get isSeasonEpisodeContent =>
-      _contentDescriptionInfo?.contentEpicType == ContentSeasonType.series;
-
   // Argument (이전 스크린에서 전달 받은 인자)
   ContentArgumentFormat get passedArgument => _passedArgument;
+
+  // 컨텐츠 설명
+  String? get contentOverView => _contentDescriptionInfo?.overView;
 }

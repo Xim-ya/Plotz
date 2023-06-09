@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* 2022.07.14 Created By Ximya
@@ -9,27 +10,30 @@ import 'package:soon_sak/utilities/index.dart';
 
 class ContentDetailScaffold extends StatefulWidget {
   const ContentDetailScaffold({
+    required this.appBar,
     required this.tabViews,
     required this.tabs,
     required this.header,
+    required this.headerDescription,
     required this.rateAndGenreView,
-    required this.headerBgImg,
+    required this.playBtn,
     Key? key,
   }) : super(key: key);
 
+  final Widget appBar;
   final Widget header;
+  final Widget headerDescription;
   final List<Tab> tabs;
   final List<Widget> tabViews;
   final Widget rateAndGenreView;
-  final Widget headerBgImg;
+  final Widget playBtn;
 
   @override
-  _ContentDetailScaffoldState createState() =>
-      _ContentDetailScaffoldState();
+  _ContentDetailScaffoldState createState() => _ContentDetailScaffoldState();
 }
 
 class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -49,56 +53,23 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
       },
       builder: (context, _) {
         return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.zero,
-            child: AppBar(
-              backgroundColor: Colors.black,
-            ),
-          ),
           backgroundColor: AppColor.black,
           body: Stack(
             children: <Widget>[
-              Selector<ContentDetailViewModel, double>(
-                selector: (context, vm) => vm.headerBgOffset,
-                builder: (context, headerBgOffset, __) {
-                  return AnimatedPositioned(
-                    top: headerBgOffset,
-                    duration: const Duration(milliseconds: 40),
-                    child: widget.headerBgImg,
-                  );
-                },
-              ),
-
-              // Gradient 레이어
-              Positioned.fill(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.black,
-                        Colors.transparent,
-                        AppColor.black
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: <double>[0.0, 0.3, 0.8],
-                    ),
-                  ),
+              // Header 포스터 이미지
+              StreamBuilder(
+                stream: context
+                    .read<ContentDetailViewModel>()
+                    .headerImgOffsets
+                    .stream,
+                builder: (context, snapshot) => AnimatedPositioned(
+                  top: snapshot.data ?? 0,
+                  right: 0,
+                  left: 0,
+                  duration: const Duration(milliseconds: 40),
+                  child: widget.header,
                 ),
               ),
-
-              Selector<ContentDetailViewModel, double>(
-                selector: (context, vm) => vm.headerBgOffset,
-                builder: (context, headerBgOffset, __) {
-                  return AnimatedPositioned(
-                    top: 180 - headerBgOffset,
-                    right: 16,
-                    duration: const Duration(milliseconds: 200),
-                    child: widget.rateAndGenreView,
-                  );
-                },
-              ),
-
               DefaultTabController(
                 length: 2,
                 child: NestedScrollView(
@@ -107,38 +78,106 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxIsScrolled) {
                     return [
-                      SliverList(
-                        delegate: SliverChildListDelegate([
-                          widget.header,
-                        ]),
+                      /// Persistent 앱바
+                      /// SliverAppBar 너무 무겁기 때문에 [SliverPersistentHeader]로 대체
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: StickyDelegateContainer(
+                          minHeight: 48 + SizeConfig.to.statusBarHeight,
+                          maxHeight: 1,
+                          child: widget.appBar,
+                        ),
+                      ),
+                      // Header 영역을 잡아주는 컨테이너. 공간만 차지해주는 역할을 함. + 하단 Gradient
+                      SliverToBoxAdapter(
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 375 /
+                                  (500 - (48 + SizeConfig.to.statusBarHeight)),
+                              child: Center(child: widget.playBtn),
+                            ),
+
+                            // Gradient line을 삭제하기 위한 컨테이너
+                            Positioned(
+                              bottom: -1,
+                              child: Container(
+                                width: SizeConfig.to.screenWidth,
+                                height: 2,
+                                color: AppColor.black,
+                              ),
+                            ),
+                            // 헤더 포스터 '하단' Gradient
+                            Positioned(
+                              bottom: 0,
+                              child: Container(
+                                  width: SizeConfig.to.screenWidth,
+                                height: 88,
+                                decoration: const BoxDecoration(
+                                    gradient: AppGradient.singleBottomToTop),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // 콘텐츠 설명 섹션
+                      SliverToBoxAdapter(
+                        child: widget.headerDescription,
                       ),
                       SliverPersistentHeader(
                         pinned: true,
                         delegate: StickyDelegateContainer(
-                          minHeight: 44,
+                          minHeight: 48,
                           maxHeight: 1,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(color: Color(0xFF1B1C1E)),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      width: 0.75,
+                                      color: AppColor.gray06,
+                                    ),
+                                  ),
+                                  color: AppColor.black,
+                                ),
+                                child: TabBar(
+                                  indicator: UnderlineTabIndicator(
+                                    borderSide: const BorderSide(
+                                        width: 2, color: AppColor.main),
+                                    insets: EdgeInsets.symmetric(
+                                      horizontal:
+                                          SizeConfig.to.screenWidth / 3.33,
+                                    ),
+                                  ),
+                                  labelColor: AppColor.white,
+                                  unselectedLabelColor: AppColor.gray04,
+                                  indicatorColor: AppColor.main,
+                                  labelStyle: AppTextStyle.body3,
+                                  unselectedLabelStyle: AppTextStyle.body3,
+                                  onTap: (int index) {
+                                    context
+                                        .read<ContentDetailViewModel>()
+                                        .onTabClicked(index);
+                                  },
+                                  controller: tabController,
+                                  tabs: widget.tabs,
+                                ),
                               ),
-                              color: AppColor.black,
-                            ),
-                            child: TabBar(
-                                labelColor: Colors.white,
-                              unselectedLabelColor: const Color(0xFF505153),
-                              indicatorColor: Colors.white,
-                              labelStyle: AppTextStyle.title3,
-                              unselectedLabelStyle: AppTextStyle.body2,
-                              onTap: (int index) {
-                                context
-                                    .read<ContentDetailViewModel>()
-                                    .onTabClicked(index);
-                              },
-                              controller: tabController,
-                              tabs: widget.tabs,
-                            ),
+                              // Gradient line을 삭제하기 위한 컨테이너
+                              Positioned(
+                                top: -2,
+                                child: Container(
+                                  height: 4,
+                                  width: SizeConfig.to.screenWidth,
+                                  color: AppColor.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       )
@@ -146,68 +185,21 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
                   },
                   body: Container(
                     color: AppColor.black,
-                    padding: const EdgeInsets.only(top: 20),
                     child: TabBarView(
                       controller: tabController,
                       children: [
                         SingleChildScrollView(
                           physics: const ClampingScrollPhysics(),
-                          padding: const EdgeInsets.only(bottom: 80),
                           child: widget.tabViews[0],
                         ),
                         SingleChildScrollView(
                           physics: const ClampingScrollPhysics(),
-                          padding: const EdgeInsets.only(bottom: 80),
                           child: widget.tabViews[1],
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-
-              // 상단 '뒤로가기'   버튼
-              // 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
-              Selector<ContentDetailViewModel, bool>(
-                selector: (context, vm) => vm.showBackBtnOnTop,
-                builder: (context, showBackBtnOnTop, __) {
-                  return AnimatedPositioned(
-                    top: showBackBtnOnTop ? 0 : -100,
-                    left: 12,
-                    duration: const Duration(milliseconds: 100),
-                    child: IconButton(
-                      onPressed: () {
-                        context
-                            .read<ContentDetailViewModel>()
-                            .onRouteBack(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                },
-              ),
-
-              // 하단 '뒤로가기' 버튼
-              // 특정 [ScrollOffset]에 화면 밖으로 이동하는 인터렉션이 있음
-              Selector<ContentDetailViewModel, bool>(
-                selector: (context, vm) => vm.showBackBtnOnTop,
-                builder: (context, showBackBtnOnTop, __) {
-                  return AnimatedPositioned(
-                    bottom: showBackBtnOnTop
-                        ? -100
-                        : SizeConfig.to.responsiveBottomInset,
-                    right: 14,
-                    duration: const Duration(milliseconds: 160),
-                    child: FloatingActionButton(
-                      onPressed: context.pop,
-                      backgroundColor: AppColor.darkGrey.withOpacity(0.46),
-                      child: const Icon(Icons.arrow_back),
-                    ),
-                  );
-                },
               ),
             ],
           ),

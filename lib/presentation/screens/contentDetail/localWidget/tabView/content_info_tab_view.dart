@@ -1,9 +1,10 @@
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/channel/channel_model.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/video/content_video_model.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
+import 'package:soon_sak/presentation/common/image/content_poster_item_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:tuple/tuple.dart';
@@ -13,6 +14,7 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const <Widget>[
@@ -52,7 +54,7 @@ class _ChannelRelatedContentView extends BaseView<ContentDetailViewModel> {
           ),
         ),
         AppSpace.size8,
-        Selector<ContentDetailViewModel, List<NewContentPosterShell>?>(
+        Selector<ContentDetailViewModel, List<ContentPosterShell>?>(
             selector: (_, vm) => vm.channelRelatedContents,
             builder: (context, contents, _) {
               if (contents?.length == 0) {
@@ -65,17 +67,23 @@ class _ChannelRelatedContentView extends BaseView<ContentDetailViewModel> {
                 );
               } else {
                 return ContentPostSlider(
-                  height: 158,
+                  height: 162,
                   itemCount: contents?.length ?? 6,
                   itemBuilder: (context, index) {
                     if (contents.hasData) {
                       final item = contents![index];
-                      return NewContentPostItem(
-                        imgUrl: item.posterImgUrl,
-                        title: item.title,
+                      return GestureDetector(
+                        onTap: () {
+                          vm(context).routeToContentDetail(item);
+                          // vm(context).routeToChannelDetail();
+                        },
+                        child: ContentPosterItemView(
+                          imgUrl: item.posterImgUrl,
+                          title: item.title,
+                        ),
                       );
                     } else {
-                      return NewContentPostItem.createSkeleton();
+                      return ContentPosterItemView.createSkeleton();
                     }
                   },
                 );
@@ -92,28 +100,28 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<ContentDetailViewModel, ChannelInfo?>(
+    return Selector<ContentDetailViewModel, ChannelModel?>(
       selector: (_, vm) => vm.channelInfo,
       child: _skeleton(),
       builder: (context, channel, skeleton) {
-        return GestureDetector(
-          onTap: () {
-            if (!channel.hasData) return;
-          },
-          child: Container(
-            width: double.infinity,
-            padding: AppInset.horizontal16,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 채널
-                Text(
-                  '채널',
-                  style: AppTextStyle.title2,
-                ),
-                AppSpace.size8,
-                if (vm(context).channelImgUrl.hasData)
-                  Row(
+        return Container(
+          width: double.infinity,
+          padding: AppInset.horizontal16,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 채널
+              Text(
+                '채널',
+                style: AppTextStyle.title2,
+              ),
+              AppSpace.size8,
+              if (vm(context).channelImgUrl.hasData)
+                MaterialButton(
+                  minWidth: 0,
+                  padding: EdgeInsets.zero,
+                  onPressed: vm(context).routeToChannelDetail,
+                  child: Row(
                     children: [
                       RoundProfileImg(
                         size: 64,
@@ -123,7 +131,7 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('영읽남', style: AppTextStyle.body1),
+                          Text(channel?.name ?? '', style: AppTextStyle.body1),
                           AppSpace.size2,
                           Text(
                             '구독자 ${Formatter.formatNumberWithUnit(vm(context).subscriberCount)}명',
@@ -136,11 +144,11 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
                       const Spacer(),
                       SvgPicture.asset('assets/icons/see_more.svg')
                     ],
-                  )
-                else
-                  skeleton!
-              ],
-            ),
+                  ),
+                )
+              else
+                skeleton!
+            ],
           ),
         );
       },
@@ -150,7 +158,7 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
   Row _skeleton() {
     return Row(
       children: [
-        RoundProfileImg.createSkeleton(size: 62),
+        RoundProfileImg.createSkeleton(size: 64),
         AppSpace.size12,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

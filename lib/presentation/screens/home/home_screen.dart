@@ -2,8 +2,9 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
+import 'package:soon_sak/presentation/common/image/content_poster_item_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
@@ -60,7 +61,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                 ),
                 AppSpace.size7,
                 ContentPostSlider(
-                  height: 160,
+                  height: 161,
                   itemCount: value
                           .topPositionedCategory?[categoryIndex].items.length ??
                       5,
@@ -84,13 +85,13 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
                             sectionType: 'topTen',
                           );
                         },
-                        child: NewContentPostItem(
+                        child: ContentPosterItemView(
                           imgUrl: item.posterImgUrl.prefixTmdbImgPath,
                           title: item.title,
                         ),
                       );
                     } else {
-                      return NewContentPostItem.createSkeleton();
+                      return ContentPosterItemView.createSkeleton();
                     }
                   },
                 ),
@@ -148,7 +149,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   @override
   HomeViewModel createViewModel(BuildContext context) =>
-      GetIt.I<HomeViewModel>();
+      locator<HomeViewModel>();
 }
 
 /// 상단 배너 슬라이더
@@ -368,7 +369,7 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
           selector: (context, vm) => vm.topTenContents?.contentList,
           builder: (context, itemList, __) {
             return ContentPostSlider(
-              height: 168,
+              height: 168 ,
               itemCount: itemList?.length ?? 5,
               itemBuilder: (context, index) {
                 return Stack(
@@ -428,7 +429,7 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
                               right: 8,
                               bottom: 6,
                               child: Text(
-                                item.title,
+                                item.title! ,
                                 style: AppTextStyle.title3,
                               ),
                             )

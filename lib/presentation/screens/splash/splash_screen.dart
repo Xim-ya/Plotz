@@ -21,5 +21,5 @@ class SplashScreen extends BaseScreen<SplashViewModel> {
 
   @override
   SplashViewModel createViewModel(BuildContext context) =>
-      GetIt.I<SplashViewModel>();
+      locator<SplashViewModel>();
 }
