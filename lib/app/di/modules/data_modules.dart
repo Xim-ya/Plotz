@@ -13,79 +13,78 @@ import 'package:soon_sak/data/repository/version/version_repository_impl.dart';
 import 'package:soon_sak/data/resources/app_dio.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-abstract class NewDataModules {
-  NewDataModules._();
+abstract class DataModules {
+  DataModules._();
 
   static void dependencies() {
     /* Auth */
-    GetIt.instance.registerLazySingleton<AuthApi>(() => AuthApiImpl());
+    locator.registerLazySingleton<AuthApi>(() => AuthApiImpl());
 
-    GetIt.instance.registerLazySingleton<AuthDataSource>(
-        () => AuthDataSourceImpl(api: GetIt.I<AuthApi>()));
+    locator.registerLazySingleton<AuthDataSource>(
+        () => AuthDataSourceImpl(api: locator<AuthApi>()));
 
-    GetIt.instance.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImpl(dataSource: GetIt.I<AuthDataSource>()));
+    locator.registerLazySingleton<AuthRepository>(
+        () => AuthRepositoryImpl(dataSource: locator<AuthDataSource>()));
 
     /* User*/
-    GetIt.instance.registerLazySingleton<UserApi>(() => UserApiImpl());
+    locator.registerLazySingleton<UserApi>(() => UserApiImpl());
 
-    GetIt.instance.registerLazySingleton<UserDataSource>(
-        () => UserDataSourceImpl(api: GetIt.I<UserApi>()));
+    locator.registerLazySingleton<UserDataSource>(
+        () => UserDataSourceImpl(api: locator<UserApi>()));
 
-    GetIt.instance.registerLazySingleton<UserRepository>(
-        () => UserRepositoryImpl(dataSource: GetIt.I<UserDataSource>()));
+    locator.registerLazySingleton<UserRepository>(
+        () => UserRepositoryImpl(dataSource: locator<UserDataSource>()));
 
     /* Version */
-    GetIt.instance
-        .registerLazySingleton(() => VersionApi(AppDio.getInstance()));
-    GetIt.instance.registerLazySingleton<VersionDataSource>(
-        () => VersionDataSourceImpl(GetIt.I<VersionApi>()));
-    GetIt.instance.registerLazySingleton<VersionRepository>(
-        () => VersionRepositoryImpl(GetIt.I<VersionDataSource>()));
+    locator.registerLazySingleton(() => VersionApi(AppDio.getInstance()));
+    locator.registerLazySingleton<VersionDataSource>(
+        () => VersionDataSourceImpl(locator<VersionApi>()));
+    locator.registerLazySingleton<VersionRepository>(
+        () => VersionRepositoryImpl(locator<VersionDataSource>()));
 
     /* Static Content */
-    GetIt.instance.registerLazySingleton<StaticContentApi>(
+    locator.registerLazySingleton<StaticContentApi>(
         () => StaticContentApiImpl(AppDio.getInstance()));
-    GetIt.instance.registerLazySingleton<StaticContentDataSource>(() =>
+    locator.registerLazySingleton<StaticContentDataSource>(() =>
         StaticContentDataSourceImpl(
-            api: GetIt.I<StaticContentApi>(),
-            localStorage: GetIt.I<LocalStorageService>()));
-    GetIt.instance.registerLazySingleton<StaticContentRepository>(
-        () => StaticContentRepositoryImpl(GetIt.I<StaticContentDataSource>()));
+            api: locator<StaticContentApi>(),
+            localStorage: locator<LocalStorageService>()));
+    locator.registerLazySingleton<StaticContentRepository>(
+        () => StaticContentRepositoryImpl(locator<StaticContentDataSource>()));
 
     /* Youtube */
-    GetIt.I.registerLazySingleton<YoutubeApi>(() => YoutubeApiImpl());
-    GetIt.I.registerLazySingleton<YoutubeDataSource>(
-        () => YoutubeDataSourceImpl(GetIt.I<YoutubeApi>()));
-    GetIt.I.registerLazySingleton<YoutubeRepository>(
-        () => YoutubeRepositoryImpl(GetIt.I<YoutubeDataSource>()));
+    locator.registerLazySingleton<YoutubeApi>(() => YoutubeApiImpl());
+    locator.registerLazySingleton<YoutubeDataSource>(
+        () => YoutubeDataSourceImpl(locator<YoutubeApi>()));
+    locator.registerLazySingleton<YoutubeRepository>(
+        () => YoutubeRepositoryImpl(locator<YoutubeDataSource>()));
 
     /* Channel */
-    GetIt.I.registerLazySingleton<ChannelApi>(() => ChannelApiImpl());
-    GetIt.I.registerLazySingleton<ChannelDataSource>(
-        () => ChannelDataSourceImpl(GetIt.I<ChannelApi>()));
-    GetIt.I.registerLazySingleton<ChannelRepository>(
-        () => ChannelRepositoryImpl(GetIt.I<ChannelDataSource>()));
+    locator.registerLazySingleton<ChannelApi>(() => ChannelApiImpl());
+    locator.registerLazySingleton<ChannelDataSource>(
+        () => ChannelDataSourceImpl(locator<ChannelApi>()));
+    locator.registerLazySingleton<ChannelRepository>(
+        () => ChannelRepositoryImpl(locator<ChannelDataSource>()));
 
     /* Dio */
-    GetIt.I.registerLazySingleton(() => Dio());
+    locator.registerLazySingleton(() => Dio());
 
     /* Firebase */
-    GetIt.I.registerSingleton(() => AppFireStore.getInstance);
-    GetIt.I.registerSingleton(() => AppFireStorage.getInstance);
+    locator.registerSingleton(() => AppFireStore.getInstance);
+    locator.registerSingleton(() => AppFireStorage.getInstance);
 
     /* Content */
-    GetIt.I.registerLazySingleton<ContentApi>(() => ContentApiImpl());
-    GetIt.I.registerLazySingleton<ContentDataSource>(
-        () => ContentDataSourceImpl(GetIt.I<ContentApi>()));
-    GetIt.I.registerLazySingleton<ContentRepository>(
-        () => ContentRepositoryImpl(GetIt.I<ContentDataSource>()));
+    locator.registerLazySingleton<ContentApi>(() => ContentApiImpl());
+    locator.registerLazySingleton<ContentDataSource>(
+        () => ContentDataSourceImpl(locator<ContentApi>()));
+    locator.registerLazySingleton<ContentRepository>(
+        () => ContentRepositoryImpl(locator<ContentDataSource>()));
 
     /* Tmdb */
-    GetIt.I.registerLazySingleton(() => TmdbApi(AppDio.getInstance()));
-    GetIt.I.registerLazySingleton<TmdbDataSource>(
-        () => TmdbDataSourceImpl(GetIt.I<TmdbApi>()));
-    GetIt.I.registerLazySingleton<TmdbRepository>(
-        () => TmdbRepositoryImpl(GetIt.I<TmdbDataSource>()));
+    locator.registerLazySingleton(() => TmdbApi(AppDio.getInstance()));
+    locator.registerLazySingleton<TmdbDataSource>(
+        () => TmdbDataSourceImpl(locator<TmdbApi>()));
+    locator.registerLazySingleton<TmdbRepository>(
+        () => TmdbRepositoryImpl(locator<TmdbDataSource>()));
   }
 }

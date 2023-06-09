@@ -4,8 +4,8 @@ import 'package:soon_sak/domain/useCase/version/check_version_and_network_use_ca
 import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-abstract class NewDomainModules {
-  NewDomainModules._();
+abstract class DomainModules {
+  DomainModules._();
 
   static void dependencies() {
     /* Service */
@@ -50,8 +50,7 @@ abstract class NewDomainModules {
         localStorageService: locator<LocalStorageService>(),
         contentService: locator<ContentService>()));
 
-    locator.registerLazySingleton(
-        () => LoadContentVideoInfoUseCase(locator<ContentDataSource>()));
+
 
     // /* Search */
     // locator.registerLazySingleton(() => NewSearchedPagedContentUseCase(
