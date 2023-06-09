@@ -41,19 +41,15 @@ class _CastView extends BaseView<ContentDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             if (creditList?.isNotEmpty ?? true)
-              GestureDetector(
-                  onTap: () {
-                    print(vm(context).contentCreditList?.length);
-                  },
-                  child: Padding(
-                    padding: AppInset.left16 + AppInset.bottom12,
-                    child: Text(
-                      '출연진',
-                      style: AppTextStyle.title2,
-                    ),
-                  ))
+              Padding(
+                padding: AppInset.left16 + AppInset.bottom12,
+                child: Text(
+                  '출연진',
+                  style: AppTextStyle.title2,
+                ),
+              )
             else
-              const SizedBox(),
+              const SizedBox.shrink(),
 
             // 출연진 - PageView Slider
             CarouselSlider.builder(
@@ -84,10 +80,10 @@ class _CastView extends BaseView<ContentDetailViewModel> {
                       return Row(
                         children: <Widget>[
                           RoundProfileImg(
-                            size: 62,
+                            size: 56,
                             imgUrl: creditItem.profilePath?.prefixTmdbImgPath,
                           ),
-                          AppSpace.size14,
+                          AppSpace.size12,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -98,7 +94,7 @@ class _CastView extends BaseView<ContentDetailViewModel> {
                               ),
                               Text(
                                 creditItem.role,
-                                style: AppTextStyle.desc.copyWith(
+                                style: AppTextStyle.alert2.copyWith(
                                   color: AppColor.gray02,
                                 ),
                               ),
@@ -113,8 +109,8 @@ class _CastView extends BaseView<ContentDetailViewModel> {
                             borderRadius: BorderRadius.circular(100),
                             child: const SkeletonBox(
                               borderRadius: 32,
-                              height: 62,
-                              width: 62,
+                              height: 56,
+                              width: 56,
                             ),
                           ),
                           AppSpace.size14,

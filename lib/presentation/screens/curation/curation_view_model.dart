@@ -42,7 +42,8 @@ class CurationViewModel extends BaseViewModel {
       name: 'goToCurationProgress',
       parameters: {'type': contentType.name},
     );
-    context.push(AppRoutes.tabs + AppRoutes.register, extra: contentType);
+    context.push(AppRoutes.tabs + AppRoutes.register,
+        extra: {'arg1': contentType});
   }
 
   String randomImgGenerator(ContentType contentType) {

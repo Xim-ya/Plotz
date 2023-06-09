@@ -39,7 +39,27 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
   }
 
   @override
+  Future<ChannelBasicResponse> loadChannelById(String contentId) async {
+    final doc = await getSubCollectionDoc(
+      'content',
+      docId: contentId,
+      subCollectionName: 'channel',
+      subCollectionDocId: 'main',
+    );
+
+    final DocumentReference<Map<String, dynamic>> docRef =
+    doc.get('channelRef');
+    final docData = await docRef.get();
+    return ChannelBasicResponse.fromDocument(docData);
+
+
+  }
+
+  @override
   Future<void> setChannelField() async {
+
+
+
     // 채널 snapshot
     QuerySnapshot channelSnapshot = await _db.collection('channel').get();
 

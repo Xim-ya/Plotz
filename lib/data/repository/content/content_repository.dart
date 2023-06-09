@@ -34,8 +34,7 @@ abstract class ContentRepository {
   // 큐레이터 정보 호출
   Future<Result<UserModel>> loadCuratorInfo(String contentId);
 
-  // 채널 정보 호출
-  Future<Result<ChannelInfo>> loadChannelInfo(String contentId);
+
 
   // 컨텐츠 등록 요청 (단순 요청)
   Future<Result<void>> requestContent(ContentRequest requestInfo);

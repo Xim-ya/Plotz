@@ -22,4 +22,9 @@ class ChannelDataSourceImpl
       ChannelContentsRequest request) {
     return loadResponseOrThrow(() => _api.loadPagedChannelContents(request));
   }
+
+  @override
+  Future<ChannelBasicResponse> loadChannelById(String channelId) {
+    return loadResponseOrThrow(() => _api.loadChannelById(channelId));
+  }
 }

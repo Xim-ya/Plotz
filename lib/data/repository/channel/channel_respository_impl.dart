@@ -3,7 +3,7 @@ import 'package:soon_sak/data/dataSource/channel/channel_data_source.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_content_list.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/utilities/result.dart';
 
 class ChannelRepositoryImpl implements ChannelRepository {
@@ -32,7 +32,7 @@ class ChannelRepositoryImpl implements ChannelRepository {
       }
       return Result.success(ChannelContentList(
           contents: response
-              .map((e) => NewContentPosterShell.fromChannelContents(e))
+              .map((e) => ContentPosterShell.fromChannelContents(e))
               .toList(),
           lastDocument: response.last.originDoc));
     } on Exception catch (e) {
@@ -41,7 +41,7 @@ class ChannelRepositoryImpl implements ChannelRepository {
   }
 
   @override
-  Future<Result<List<NewContentPosterShell>>> loadChannelContentsWithLimit(
+  Future<Result<List<ContentPosterShell>>> loadChannelContentsWithLimit(
       {required String channelId, required String currentContentId}) async {
     try {
       final response = await _dataSource.loadChannelContents(
@@ -50,11 +50,22 @@ class ChannelRepositoryImpl implements ChannelRepository {
         return Result.failure(Exception('콘텐츠 데이터를 불러오는데 실패했습니다'));
       }
       final result = response
-          .map((e) => NewContentPosterShell.fromRelatedContents(e))
+          .map((e) => ContentPosterShell.fromRelatedContents(e))
           .toList();
       result.removeWhere((element) => element.originId == currentContentId);
 
       return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ChannelModel>> loadChannelById(String contentId) async {
+    try {
+      final response = await _dataSource.loadChannelById(contentId);
+      final data = ChannelModel.fromResponse(response);
+      return Result.success(data);
     } on Exception catch (e) {
       return Result.failure(e);
     }

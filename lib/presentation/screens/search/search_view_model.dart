@@ -17,8 +17,7 @@ class SearchViewModel extends BaseViewModel {
     required NewSearchedPagedContentUseCase searchHandler,
     required ContentRepository contentRepository,
     required UserService userService,
-  })
-      : pagedSearchHandler = searchHandler,
+  })  : pagedSearchHandler = searchHandler,
         _contentRepository = contentRepository,
         _userService = userService;
 
@@ -97,34 +96,36 @@ class SearchViewModel extends BaseViewModel {
     // 2. 등록된 컨텐츠라면 상세 페이지로 이동
     if (registeredValue.value == RegistrationState.registered) {
       context.push(
-        AppRoutes.tabs + AppRoutes.search + AppRoutes.contentDetail,
-        extra: ContentArgumentFormat(
-          contentId: content.contentId,
-          contentType: contentType,
-          posterImgUrl: content.posterImgUrl,
-          originId: Formatter.getOriginIdByTypeAndId(
-            type: selectedTabType,
-            id: content.contentId,
+        AppRoutes.contentDetail,
+        extra: {
+          'arg1': ContentArgumentFormat(
+            contentId: content.contentId,
+            contentType: contentType,
+            posterImgUrl: content.posterImgUrl,
+            originId: Formatter.getOriginIdByTypeAndId(
+              type: selectedTabType,
+              id: content.contentId,
+            ),
           ),
-        ),
+          'arg2': true,
+        },
       );
     } else {
       // 3. 등록된 컨텐츠가 아니라면 유저에게 '요청해주세요' 다이어로그를 띄움.
       showDialog(
         context: context,
-        builder: (_) =>
-            AppDialog.dividedBtn(
-              title: '미등록 콘텐츠',
-              subTitle: content.title,
-              description: '미등록 콘텐츠입니다.\n콘텐츠 업로드 요청을 해주세요!',
-              leftBtnContent: '뒤로가기',
-              rightBtnContent: '요청하기',
-              // TODO: 실제 요청 로직 추가 필요
-              onRightBtnClicked: () {
-                requestContent(content);
-              },
-              onLeftBtnClicked: context.pop,
-            ),
+        builder: (_) => AppDialog.dividedBtn(
+          title: '미등록 콘텐츠',
+          subTitle: content.title,
+          description: '미등록 콘텐츠입니다.\n콘텐츠 업로드 요청을 해주세요!',
+          leftBtnContent: '뒤로가기',
+          rightBtnContent: '요청하기',
+          // TODO: 실제 요청 로직 추가 필요
+          onRightBtnClicked: () {
+            requestContent(content);
+          },
+          onLeftBtnClicked: context.pop,
+        ),
       );
     }
   }

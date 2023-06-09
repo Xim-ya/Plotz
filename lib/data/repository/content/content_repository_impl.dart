@@ -29,24 +29,7 @@ class ContentRepositoryImpl implements ContentRepository {
     }
   }
 
-  // @override
-  // Future<Result<ContentVideoModel>> loadContentVideoInfo(
-  //     {required String contentId, required ContentType contentType}) async {
-  //   try {
-  //     final response = await _contentDataSource.loadVideoInfo(
-  //         contentId: contentId, contentType: contentType);
-  //     ContentVideoModel result;
-  //     if (contentType.isMovie) {
-  //       result = ContentVideoModel.fromMovieResponse(response);
-  //     } else {
-  //       result = ContentVideoModel.fromTvResponse(response);
-  //     }
-  //
-  //     return Result.success(result);
-  //   } on Exception catch (e) {
-  //     return Result.failure(e);
-  //   }
-  // }
+
 
   @override
   Future<Result<String>> requestContentRegistration(
@@ -107,14 +90,5 @@ class ContentRepositoryImpl implements ContentRepository {
     }
   }
 
-  @override
-  Future<Result<ChannelInfo>> loadChannelInfo(String contentId) async {
-    try {
-      final response = await _contentDataSource.loadChannelInfo(contentId);
 
-      return Result.success(ChannelInfo.fromResponse(response));
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
 }

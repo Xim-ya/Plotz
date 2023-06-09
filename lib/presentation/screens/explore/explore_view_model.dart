@@ -50,7 +50,7 @@ class ExploreViewModel extends BaseViewModel {
       channelLogoImgUrl: contentItem.channelLogoImgUrl,
       subscribersCount: contentItem.subscribersCount,
     );
-    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
+    context.push(AppRoutes.contentDetail, extra: {'arg1': arg, 'arg2': true});
   }
 
   /// swiper가 이동했을 때 관련 동작

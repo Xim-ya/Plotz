@@ -1,18 +1,23 @@
 import 'package:go_router/go_router.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
+import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
+import 'package:soon_sak/presentation/screens/contentDetail/content_detail_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ChannelDetailViewModel extends BaseViewModel {
   ChannelDetailViewModel(
-      {required ChannelModel argument,
-      required LoadPagedChannelContentsUseCase loadChannelContentsUseCase})
-      : channelInfo = argument,
+      {required ChannelModel channelArg,
+      required LoadPagedChannelContentsUseCase loadChannelContentsUseCase,
+      required bool isNestedRouteArg})
+      : channelInfo = channelArg,
+        _isNestedRoute = isNestedRouteArg,
         _loadChannelContentsUseCase = loadChannelContentsUseCase;
 
   // 이전 페이지에서 전달 받는 argument
   final ChannelModel channelInfo;
+  final bool _isNestedRoute;
 
   /* State Variables */
   // 상단 gradient box enable 여부
@@ -20,9 +25,11 @@ class ChannelDetailViewModel extends BaseViewModel {
   final double standardOffset = 26;
 
   /* Controllers */
-  PagingController<int, NewContentPosterShell> get pagingController =>
+  PagingController<int, ContentPosterShell> get pagingController =>
       _loadChannelContentsUseCase.pagingController;
   late final ScrollController scrollController;
+
+  final binding = ContentDetailBinding();
 
   /* UseCase */
   final LoadPagedChannelContentsUseCase _loadChannelContentsUseCase;
@@ -30,8 +37,8 @@ class ChannelDetailViewModel extends BaseViewModel {
   /* Intents */
 
   // 콘텐츠 상세 페이지로 이동
-  void routeToContentDetail(NewContentPosterShell item) {
-    final ContentArgumentFormat argument = ContentArgumentFormat(
+  void routeToContentDetail(ContentPosterShell item) {
+    final arg = ContentArgumentFormat(
       originId: item.originId,
       contentId: item.contentId,
       contentType: item.contentType,
@@ -41,7 +48,31 @@ class ChannelDetailViewModel extends BaseViewModel {
       posterImgUrl: item.posterImgUrl,
       subscribersCount: channelInfo.subscribersCount,
     );
-    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: argument);
+
+    unregisterIfRegistered<ContentDetailViewModel>();
+    unregisterIfRegistered<LoadContentDetailInfoUseCase>();
+    unregisterIfRegistered<LoadContentCreditInfoUseCase>();
+    unregisterIfRegistered<LoadContentVideoInfoUseCase>();
+
+    final prevLocation =
+        GoRouter.of(context).routeInformationProvider.value.location;
+    final currentLocation = GoRouter.of(context).location;
+    binding.isDependenciesDeleted = true;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        if (currentLocation == prevLocation &&
+            binding.isDependenciesDeleted == true) {
+          binding.arg1 = arg;
+          binding.arg2 = false;
+          binding.dependencies();
+        }
+
+        return const ContentDetailScreen();
+      }),
+    );
+
     // context.push('/temp', extra: argument);
   }
 
@@ -66,5 +97,15 @@ class ChannelDetailViewModel extends BaseViewModel {
     scrollController = ScrollController();
     _loadChannelContentsUseCase.initUseCase(channelId: channelInfo.channelId);
     scrollController.addListener(_manageInteractionOnScroll);
+  }
+
+  @override
+  void onDispose() {
+    super.onDispose();
+    unregisterIfRegistered<ContentDetailViewModel>();
+    unregisterIfRegistered<LoadContentOfVideoListUseCase>();
+    unregisterIfRegistered<LoadContentDetailInfoUseCase>();
+    unregisterIfRegistered<LoadContentCreditInfoUseCase>();
+    unregisterIfRegistered<LoadContentImgListUseCase>();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class GoRouteWithBinding extends GoRoute {
@@ -37,11 +37,9 @@ class GoRouteWithBinding extends GoRoute {
           routes: routes,
         );
 
-  final CustomBindings binding;
+  final Bindings binding;
   final GoRouterWidgetBuilder newBuilder;
 }
-
-
 
 // class GoReplaceRouteWithBinding extends GoRoute {
 //   GoReplaceRouteWithBinding({
