@@ -26,15 +26,7 @@ class _KeepAliveViewState extends State<KeepAliveView>
   }
 }
 
-
-
-
 /** Created By Ximya - 2023.02.19
  *  [AutomaticKeepAliveClientMixin] mixin 모듈로
  *  child로 받는 View의 state이 유지될 수 있도록 돕는 모듈
  * */
-
-
-
-
-

@@ -1,7 +1,7 @@
-import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SplashBinding extends CustomBindings {
+class SplashBinding extends Bindings {
   @override
   void dependencies() {
     // Get.put(UserService(Get.find(), Get.find()));

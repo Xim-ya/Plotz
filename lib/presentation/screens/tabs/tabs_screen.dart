@@ -1,8 +1,8 @@
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/screens/home/home_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class TabsScreen extends NewBaseScreen<TabsViewModel> {
+class TabsScreen extends BaseScreen<TabsViewModel> {
   const TabsScreen({Key? key}) : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class TabsScreen extends NewBaseScreen<TabsViewModel> {
       GetIt.I<TabsViewModel>();
 }
 
-class _BottomNavigationBar extends NewBaseView<TabsViewModel> {
+class _BottomNavigationBar extends BaseView<TabsViewModel> {
   const _BottomNavigationBar({Key? key}) : super(key: key);
 
   @override

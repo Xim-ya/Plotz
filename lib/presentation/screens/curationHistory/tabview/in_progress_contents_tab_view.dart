@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class InProgressContentTabView extends NewBaseView<CurationHistoryViewModel> {
+class InProgressContentTabView extends BaseView<CurationHistoryViewModel> {
   const InProgressContentTabView({Key? key}) : super(key: key);
 
   @override

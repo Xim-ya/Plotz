@@ -11,7 +11,7 @@ mixin FirestoreHelper {
   final _db = AppFireStore.getInstance;
 
   // 특정 id의 document 데이터를 불러오는 메소드
-  Future<DocumentSnapshot> getDocFromId(
+  Future<DocumentSnapshot> getDocById(
     String collectionName, {
     required String docId,
   }) async {

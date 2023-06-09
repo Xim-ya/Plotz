@@ -1,4 +1,4 @@
-import 'package:soon_sak/app/di/new_app_binding.dart';
+import 'package:soon_sak/app/di/app_binding.dart';
 import 'package:soon_sak/app/environment/environment.dart';
 import 'package:soon_sak/firebase_options.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -19,7 +19,7 @@ void main() async {
   await runZonedGuarded<Future<void>>(
     () async {
       // get_it dependecies setup`
-      NewAppBinding.dependencies();
+      AppBinding.dependencies();
 
       await Firebase.initializeApp(
         name: dotenv.env['FIREBASE_KEY'],

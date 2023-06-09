@@ -2,9 +2,10 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
+import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
 import 'package:soon_sak/domain/update_test.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
@@ -12,7 +13,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 part 'home_view_model.part.dart';
 
-class HomeViewModel extends NewBaseViewModel {
+class HomeViewModel extends BaseViewModel {
   HomeViewModel({
     required LoadPagedCategoryCollectionUseCase
         loadPagedCategoryCollectionsUseCase,
@@ -30,7 +31,6 @@ class HomeViewModel extends NewBaseViewModel {
         _channelRepository = channelRepository;
 
   /* [Variables] */
-
   /// Data
   BannerModel? bannerContents; // 배너 컨텐츠
   List<TopPositionedCategory>? topPositionedCategory;
@@ -97,8 +97,8 @@ class HomeViewModel extends NewBaseViewModel {
       parameters: {sectionType: routingArgument.originId},
     );
 
-    context.push(AppRoutes.tabs + AppRoutes.contentDetail,
-        extra: routingArgument);
+    context.push(AppRoutes.contentDetail,
+        extra: {'arg1': routingArgument, 'arg2': true});
   }
 
   // 배너, 배너 상세 콘텐츠로 이동
@@ -114,7 +114,9 @@ class HomeViewModel extends NewBaseViewModel {
       parameters: {'banner': arg.originId},
     );
 
-    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
+    context.push(AppRoutes.contentDetail, extra: {'arg1': arg, 'arg2': true});
+    // context
+    //     .push(AppRoutes.tabs + AppRoutes.contentDetail, extra: {'arg1': arg});
   }
 
   // 스크롤 동작 관련 이벤트
@@ -136,12 +138,16 @@ class HomeViewModel extends NewBaseViewModel {
   // 검색 스크린으로 이동
   void routeToSearch(BuildContext context) async {
     await context.push(AppRoutes.tabs + AppRoutes.search);
+    // _channelApi.updateSeasonContentField();
   }
 
   // 채널 상세 스크린으로 이동
   void routeToChannelDetail(BuildContext context,
       {required int selectedIndex}) {
-    context.push(AppRoutes.channelDetail, extra: channelList![selectedIndex]);
+    context.push(AppRoutes.channelDetail,
+        extra: {'arg1': channelList![selectedIndex], 'arg2': false});
+    // context.push(AppRoutes.channelDetail,
+    //     extra: {'arg1': channelList![selectedIndex], 'arg2': true});
   }
 
   // 채널 리스트 호출

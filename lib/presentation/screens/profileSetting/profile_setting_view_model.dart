@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:soon_sak/utilities/constants/regex.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ProfileSettingViewModel extends NewBaseViewModel {
+class ProfileSettingViewModel extends BaseViewModel {
   ProfileSettingViewModel(
       {required UserService userService,
       required UserRepository userRepository})
@@ -38,7 +38,7 @@ class ProfileSettingViewModel extends NewBaseViewModel {
       return '닉네임에는 한글, 알파벳, 숫자, 언더스코어(_), 하이픈(-)만 사용할 수 있습니다';
     } else if (Regex.hasContainFWord(value)) {
       return '비속어, 욕설 단어는 사용할 수 없습니다';
-    } else if (Regex.hasContainOperationWord(value) || value == '순삭') {
+    } else if (Regex.hasContainOperationWord(value)) {
       return '사용할 수 없는 닉네임 입니다';
     } else {
       return null;

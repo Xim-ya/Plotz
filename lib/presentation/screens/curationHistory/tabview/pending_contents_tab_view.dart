@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class PendingContentsTabView extends NewBaseView<CurationHistoryViewModel> {
+class PendingContentsTabView extends BaseView<CurationHistoryViewModel> {
   const PendingContentsTabView({Key? key}) : super(key: key);
 
   @override

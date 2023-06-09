@@ -2,14 +2,15 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
-import 'package:soon_sak/presentation/common/image/new_content_post_item.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
+import 'package:soon_sak/presentation/common/image/content_poster_item_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class HomeScreen extends NewBaseScreen<HomeViewModel> {
+class HomeScreen extends BaseScreen<HomeViewModel> {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -60,7 +61,7 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
                 ),
                 AppSpace.size7,
                 ContentPostSlider(
-                  height: 160,
+                  height: 161,
                   itemCount: value
                           .topPositionedCategory?[categoryIndex].items.length ??
                       5,
@@ -84,13 +85,13 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
                             sectionType: 'topTen',
                           );
                         },
-                        child: NewContentPostItem(
+                        child: ContentPosterItemView(
                           imgUrl: item.posterImgUrl.prefixTmdbImgPath,
                           title: item.title,
                         ),
                       );
                     } else {
-                      return NewContentPostItem.createSkeleton();
+                      return ContentPosterItemView.createSkeleton();
                     }
                   },
                 ),
@@ -143,16 +144,16 @@ class HomeScreen extends NewBaseScreen<HomeViewModel> {
                 decoration: BoxDecoration(
                     gradient: isScrolledOnPosition
                         ? AppGradient.topToBottom
-                        : AppGradient.homeBottomToTop),
+                        : AppGradient.singleTopToBottom),
               )));
 
   @override
   HomeViewModel createViewModel(BuildContext context) =>
-      GetIt.I<HomeViewModel>();
+      locator<HomeViewModel>();
 }
 
 /// 상단 배너 슬라이더
-class _BannerSlider extends NewBaseView<HomeViewModel> {
+class _BannerSlider extends BaseView<HomeViewModel> {
   const _BannerSlider({Key? key}) : super(key: key);
 
   @override
@@ -231,62 +232,64 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
             width: SizeConfig.to.screenWidth,
             child: Column(
               children: <Widget>[
-                Consumer<HomeViewModel>(builder: (context, vm, __) {
-                  return StreamBuilder<double>(
-                    stream: vm.bannerInfoOpacity.stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return AnimatedOpacity(
-                          duration: const Duration(milliseconds: 100),
-                          opacity: snapshot.data!,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                width: SizeConfig.to.screenWidth - 32,
-                                child: Center(
-                                  child: Text(
-                                    vmS(
-                                        context,
-                                        (value) =>
-                                            value.selectedBannerContent
-                                                ?.description ??
-                                            ''),
-                                    style: AppTextStyle.title3.copyWith(
-                                        color: AppColor.main,
-                                        letterSpacing: -0.2),
+                IgnorePointer(
+                  child: Consumer<HomeViewModel>(builder: (context, vm, __) {
+                    return StreamBuilder<double>(
+                      stream: vm.bannerInfoOpacity.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return AnimatedOpacity(
+                            duration: const Duration(milliseconds: 100),
+                            opacity: snapshot.data!,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: SizeConfig.to.screenWidth - 32,
+                                  child: Center(
+                                    child: Text(
+                                      vmS(
+                                          context,
+                                          (value) =>
+                                              value.selectedBannerContent
+                                                  ?.description ??
+                                              ''),
+                                      style: AppTextStyle.title3.copyWith(
+                                          color: AppColor.main,
+                                          letterSpacing: -0.2),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              AppSpace.size2,
-                              Text(
-                                vmS(
-                                    context,
-                                    (value) =>
-                                        value.selectedBannerContent?.title ??
-                                        ''),
-                                style: AppTextStyle.web3
-                                    .copyWith(letterSpacing: -0.2),
-                              ),
-                              AppSpace.size4,
-                              Text(
-                                vmS(
-                                    context,
-                                    (value) =>
-                                        value.selectedBannerContent?.genre ??
-                                        ''),
-                                style: AppTextStyle.alert2.copyWith(
-                                    color: AppColor.gray03,
-                                    letterSpacing: -0.2),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  );
-                }),
+                                AppSpace.size2,
+                                Text(
+                                  vmS(
+                                      context,
+                                      (value) =>
+                                          value.selectedBannerContent?.title ??
+                                          ''),
+                                  style: AppTextStyle.web3
+                                      .copyWith(letterSpacing: -0.2),
+                                ),
+                                AppSpace.size4,
+                                Text(
+                                  vmS(
+                                      context,
+                                      (value) =>
+                                          value.selectedBannerContent?.genre ??
+                                          ''),
+                                  style: AppTextStyle.alert2.copyWith(
+                                      color: AppColor.gray03,
+                                      letterSpacing: -0.2),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    );
+                  }),
+                ),
                 AppSpace.size12,
                 Align(
                     alignment: Alignment.bottomCenter,
@@ -319,7 +322,7 @@ class _BannerSlider extends NewBaseView<HomeViewModel> {
 }
 
 // 페이징 로직이 적용되어 있는 카테고리 컬렉션 리스트
-class _PagedCategoryCollection extends NewBaseView<HomeViewModel> {
+class _PagedCategoryCollection extends BaseView<HomeViewModel> {
   const _PagedCategoryCollection({Key? key}) : super(key: key);
 
   @override
@@ -345,7 +348,7 @@ class _PagedCategoryCollection extends NewBaseView<HomeViewModel> {
   }
 }
 
-class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
+class _TopTenContentSlider extends BaseView<HomeViewModel> {
   const _TopTenContentSlider({Key? key}) : super(key: key);
 
   @override
@@ -366,7 +369,7 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
           selector: (context, vm) => vm.topTenContents?.contentList,
           builder: (context, itemList, __) {
             return ContentPostSlider(
-              height: 168,
+              height: 168 ,
               itemCount: itemList?.length ?? 5,
               itemBuilder: (context, index) {
                 return Stack(
@@ -426,7 +429,7 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
                               right: 8,
                               bottom: 6,
                               child: Text(
-                                item.title,
+                                item.title! ,
                                 style: AppTextStyle.title3,
                               ),
                             )
@@ -464,7 +467,7 @@ class _TopTenContentSlider extends NewBaseView<HomeViewModel> {
 ///
 ///  채널 슬라이드
 ///
-class _ChannelSlider extends NewBaseView<HomeViewModel> {
+class _ChannelSlider extends BaseView<HomeViewModel> {
   const _ChannelSlider({Key? key}) : super(key: key);
 
   @override

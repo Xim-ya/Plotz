@@ -6,29 +6,30 @@ import 'package:soon_sak/utilities/index.dart';
 *  새로운 디자인의 포스터 이미지 아이템 위젯
 * */
 
-class NewContentPostItem extends StatelessWidget {
-  const NewContentPostItem({
+class ContentPosterItemView extends StatelessWidget {
+  const ContentPosterItemView({
     Key? key,
     required this.imgUrl,
     required this.title,
     this.borderRadius = 4,
     this.height = 140,
     this.width = 92,
+    this.isSkeleton = false,
   }) : super(key: key);
 
-  factory NewContentPostItem.createSkeleton() =>
-      const NewContentPostItem(imgUrl: null, title: null);
+  factory ContentPosterItemView.createSkeleton() =>
+      const ContentPosterItemView(imgUrl: null, title: null, isSkeleton: true,);
 
   final String? imgUrl;
   final String? title;
   final double borderRadius;
-
   final double height;
   final double width;
+  final bool isSkeleton;
 
   @override
   Widget build(BuildContext context) {
-    if (imgUrl.hasData && title.hasData) {
+    if (isSkeleton == false) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,15 +47,19 @@ class NewContentPostItem extends StatelessWidget {
               memCacheHeight: (height * 3).toInt(),
             ),
           ),
-          AppSpace.size4,
-          Text(
-            title ?? '',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: PretendardTextStyle.regular(
-              height: 14,
-              size: 10,
-              letterSpacing: -0.2,
+          AppSpace.size6,
+          SizedBox(
+            width: width,
+            child: Text(
+              title ?? '',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: PretendardTextStyle.regular(
+                height: 14,
+                size: 11,
+                letterSpacing: -0.2,
+                color: AppColor.gray02,
+              ),
             ),
           ),
         ],
@@ -63,15 +68,11 @@ class NewContentPostItem extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SkeletonBox(
-            borderRadius: borderRadius,
-            height: 140,
-            width: 92
-          ),
+          SkeletonBox(borderRadius: borderRadius, height: 140, width: 92),
           AppSpace.size6,
           const SkeletonBox(
             borderRadius: 4,
-            height: 10,
+            height: 14,
             width: 40,
           )
         ],

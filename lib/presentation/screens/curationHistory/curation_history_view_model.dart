@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationHistoryViewModel extends NewBaseViewModel {
+class CurationHistoryViewModel extends BaseViewModel {
   CurationHistoryViewModel(
       {required UserRepository userRepository,
       required UserService userService})

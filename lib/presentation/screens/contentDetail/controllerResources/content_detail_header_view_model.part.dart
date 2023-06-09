@@ -8,21 +8,37 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
   /* [Getters */
 
   /// 헤더 영역 이미지
-  String? get headerBackdropImg =>
-      passedArgument.posterImgUrl ??
-      _contentDescriptionInfo?.posterImgUrl;
+  String? get headerBackdropImg {
+    if (videoInfo == null) return null;
 
+    if (videoInfo!.videoFormat == ContentVideoFormat.multipleMovie ||
+        videoInfo!.videoFormat == ContentVideoFormat.multipleTv) {
+      return videoInfo!.videos[selectedEpisode - 1].posterImageUrl;
+    } else {
+      return _contentDescriptionInfo?.posterImgUrl;
+    }
+  }
+
+  String get contentTypeToString => _passedArgument.contentType.asText;
 
   /// 컨텐츠 설명 부분 (유튜브 컨텐츠 제목)
   /// 전달 받은 Argument가 있으면 argument 데이터를 사용
-  String? get headerContentDesc => passedArgument.videoTitle.hasData
-      ? passedArgument.videoTitle!
-      : contentVideos?.singleTypeVideo.detailInfo?.videoTitle;
+  String? get contentVideoTitle {
 
-  // TODO: 블로그 포스팅용 예시 이후에 삭제 필요
-  // RxString? get headerContentDesc => passedArgument.videoTitle.hasData
-  //     ? passedArgument.videoTitle!.obs
-  //     : contentVideos.value?.singleTypeVideo.detailInfo?.videoTitle.obs;
+    if (videoInfo == null) return null;
+
+    if (videoInfo!.videoFormat == ContentVideoFormat.multipleMovie ||
+        videoInfo!.videoFormat == ContentVideoFormat.multipleTv) {
+      return videoInfo!
+          .videos[selectedEpisode - 1].youtubeInfo.valueOrNull?.videoTitle;
+    } else {
+      return passedArgument.videoTitle.hasData
+          ? passedArgument.videoTitle!
+          : videoInfo?.videos[0].youtubeInfo.valueOrNull?.videoTitle;
+    }
+  }
+
+
 
   // 컨텐츠 제목
   String? get headerTitle => passedArgument.title.hasData
@@ -30,14 +46,18 @@ extension ContentDetailHeaderViewModel on ContentDetailViewModel {
       : _contentDescriptionInfo?.title;
 
   // 컨텐츠 TMDB 평점
-  String? get rate => _contentDescriptionInfo?.rate.toStringAsFixed(2);
+  double? get rate => _contentDescriptionInfo.hasData
+      ? _contentDescriptionInfo!.rate / 2
+      : null;
 
   // 컨텐츠 장르 리스트
-  String? get genre => Formatter.formatGenreListToSingleStr(
-      _contentDescriptionInfo?.genreList,);
+  String? get genre => Formatter.splitGenresByDots(
+        _contentDescriptionInfo?.genreList,
+      );
 
-  // 컨텐츠 개봉일
-  String? get releaseDate => _contentDescriptionInfo?.releaseDate != null
-      ? Formatter.dateToyyMMdd(_contentDescriptionInfo!.releaseDate!)
+
+  // 개봉년도 && 방영년도
+  String? get releaseYear => _contentDescriptionInfo?.releaseDate != null
+      ? Formatter.dateToYear(_contentDescriptionInfo!.releaseDate!)
       : null;
 }

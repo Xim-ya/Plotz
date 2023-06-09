@@ -1,6 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
-import '../../../common/image/new_content_post_item.dart';
+import '../../../common/image/content_poster_item_view.dart';
 
 /** Edited By Ximya - 2023.03.21
  *  [HomeScreen]의 카테고리 섹션 영역 부분 섹션뷰 -> 각 개별 카테고리 '제목' + '컨텐츠 리스트'
@@ -44,7 +44,7 @@ class CategoryContentSectionView extends StatelessWidget {
           ),
           AppSpace.size7,
           ContentPostSlider(
-            height: 160,
+            height: 161,
             itemCount: contentSectionData.contents.length,
             itemBuilder: (context, index) {
               final contentItem = contentSectionData.contents[index];
@@ -52,7 +52,7 @@ class CategoryContentSectionView extends StatelessWidget {
                 onTap: () {
                   onContentTapped(index);
                 },
-                child: NewContentPostItem(
+                child: ContentPosterItemView(
                   imgUrl: contentItem.posterImgUrl,
                   title: contentItem.title,
                 ),

@@ -5,7 +5,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreViewModel extends NewBaseViewModel {
+class ExploreViewModel extends BaseViewModel {
   /* Variables */
   final BehaviorSubject<List<ExploreContent>> exploreContents;
   int swiperIndex = 0;
@@ -50,7 +50,7 @@ class ExploreViewModel extends NewBaseViewModel {
       channelLogoImgUrl: contentItem.channelLogoImgUrl,
       subscribersCount: contentItem.subscribersCount,
     );
-    context.push(AppRoutes.tabs + AppRoutes.contentDetail, extra: arg);
+    context.push(AppRoutes.contentDetail, extra: {'arg1': arg, 'arg2': true});
   }
 
   /// swiper가 이동했을 때 관련 동작

@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class TabsViewModel extends NewBaseViewModel {
+class TabsViewModel extends BaseViewModel {
   TabsViewModel({
     required ExploreViewModel exploreViewModel,
     required CurationViewModel curationViewModel,

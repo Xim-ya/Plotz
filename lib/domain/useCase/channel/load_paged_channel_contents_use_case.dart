@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_content_list.dart';
-import 'package:soon_sak/domain/model/content/home/new_content_poster_shell.dart';
+import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class LoadPagedChannelContentsUseCase {
@@ -14,8 +14,8 @@ class LoadPagedChannelContentsUseCase {
   static const int pageSize = 10;
 
   /* Controllers */
-  late final PagingController<int, NewContentPosterShell> pagingController =
-      PagingController<int, NewContentPosterShell>(firstPageKey: 0);
+  late final PagingController<int, ContentPosterShell> pagingController =
+      PagingController<int, ContentPosterShell>(firstPageKey: 0);
 
   /* Repository */
   final ChannelRepository _channelRepository;
@@ -27,7 +27,7 @@ class LoadPagedChannelContentsUseCase {
   }
 
   Future<void> _fetchPage(String channelId) async {
-    final response = await _channelRepository.loadChannelContents(
+    final response = await _channelRepository.loadPagedChannelContents(
       ChannelContentsRequest(
         channelId: channelId,
         lastDocument: lastPagedDocument,

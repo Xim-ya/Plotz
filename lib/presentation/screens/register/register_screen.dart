@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class RegisterScreen extends NewBaseScreen<RegisterViewModel> {
+class RegisterScreen extends BaseScreen<RegisterViewModel> {
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override

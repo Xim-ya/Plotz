@@ -23,8 +23,8 @@ class PagedGridListView<T> extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 24,
-        crossAxisSpacing: 8,
-        childAspectRatio: 109 / 199,
+        crossAxisSpacing: 9,
+        childAspectRatio: 109 / 200,
       ),
       builderDelegate: PagedChildBuilderDelegate<T>(
         // animateTransitions: true,

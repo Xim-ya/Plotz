@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class LoginViewModel extends NewBaseViewModel {
+class LoginViewModel extends BaseViewModel {
   LoginViewModel(
       {required UserService userService,
       required SignInAndUpHandlerUseCase signInHandlerUseCase})

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:soon_sak/data/api/staticContent/response/new_category_content_item_response.dart';
+import 'package:soon_sak/data/api/staticContent/response/category_content_item_response.dart';
 
 part 'top_positioned_collection_response.g.dart';
 
@@ -24,7 +24,7 @@ class TopPositionedCategoryResponse {
   final String title;
 
   @JsonKey(name: 'items')
-  final List<NewCategoryContentItemResponse> items;
+  final List<CategoryContentItemResponse> items;
 
   TopPositionedCategoryResponse({required this.title, required this.items});
 
