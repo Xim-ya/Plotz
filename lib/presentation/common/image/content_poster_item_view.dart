@@ -6,8 +6,8 @@ import 'package:soon_sak/utilities/index.dart';
 *  새로운 디자인의 포스터 이미지 아이템 위젯
 * */
 
-class NewContentPostItem extends StatelessWidget {
-  const NewContentPostItem({
+class ContentPosterItemView extends StatelessWidget {
+  const ContentPosterItemView({
     Key? key,
     required this.imgUrl,
     required this.title,
@@ -17,8 +17,8 @@ class NewContentPostItem extends StatelessWidget {
     this.isSkeleton = false,
   }) : super(key: key);
 
-  factory NewContentPostItem.createSkeleton() =>
-      const NewContentPostItem(imgUrl: null, title: null, isSkeleton: true,);
+  factory ContentPosterItemView.createSkeleton() =>
+      const ContentPosterItemView(imgUrl: null, title: null, isSkeleton: true,);
 
   final String? imgUrl;
   final String? title;
@@ -47,7 +47,7 @@ class NewContentPostItem extends StatelessWidget {
               memCacheHeight: (height * 3).toInt(),
             ),
           ),
-          AppSpace.size4,
+          AppSpace.size6,
           SizedBox(
             width: width,
             child: Text(
@@ -56,8 +56,9 @@ class NewContentPostItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: PretendardTextStyle.regular(
                 height: 14,
-                size: 10,
+                size: 11,
                 letterSpacing: -0.2,
+                color: AppColor.gray02,
               ),
             ),
           ),
@@ -71,7 +72,7 @@ class NewContentPostItem extends StatelessWidget {
           AppSpace.size6,
           const SkeletonBox(
             borderRadius: 4,
-            height: 10,
+            height: 14,
             width: 40,
           )
         ],
