@@ -60,7 +60,7 @@ abstract class AppTextStyle {
 
   static TextStyle title2 = PretendardTextStyle.semiBold(
     size: 16,
-    height: 20,
+    height: 22,
     letterSpacing: -0.2,
   );
 
@@ -72,7 +72,7 @@ abstract class AppTextStyle {
 
   static TextStyle body3 = PretendardTextStyle.medium(
     size: 13,
-    height: 16,
+    height: 18,
     letterSpacing: -0.2,
   );
 

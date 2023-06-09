@@ -8,30 +8,44 @@ class RoundProfileImg extends StatelessWidget {
   final double size;
   final String? imgUrl;
 
+  factory RoundProfileImg.createSkeleton({required double size}) =>
+      RoundProfileImg(size: size, imgUrl: 'skeleton');
+
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(100),
-      child: imgUrl.hasData
-          ? CachedNetworkImage(
-              height: size,
-              width: size,
-              memCacheHeight:  (size * 3).toInt(),
-              imageUrl: imgUrl!,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => const SkeletonBox(),
-              errorWidget: (context, url, error) => Container(
-                color: Colors.grey.withOpacity(0.1),
-                child: const Center(
-                  child: Icon(Icons.error),
+    if (imgUrl == 'skeleton') {
+      return SkeletonBox(
+        height: size,
+        width: size,
+        borderRadius: size / 2,
+      );
+    } else {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: imgUrl.hasData
+            ? CachedNetworkImage(
+                height: size,
+                width: size,
+                memCacheHeight: (size * 3).toInt(),
+                imageUrl: imgUrl!,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => const SkeletonBox(),
+                errorWidget: (context, url, error) => Container(
+                  color: Colors.grey.withOpacity(0.1),
+                  child: const Center(
+                    child: Icon(Icons.error),
+                  ),
+                ),
+              )
+            : Container(
+                color: Colors.red,
+                child: Image.asset(
+                  'assets/images/blanck_profile.png',
+                  height: size,
+                  width: size,
                 ),
               ),
-            )
-          : Image.asset(
-              'assets/images/blanck_profile.png',
-              height: size,
-              width: size,
-            ),
-    );
+      );
+    }
   }
 }

@@ -6,18 +6,18 @@ import 'package:soon_sak/utilities/index.dart';
  * 클래스 안에서 데이터를 호출하고 매핑하는 메소드가 존재
  * */
 
-class ContentVideos {
-  final List<ContentVideoItem> videos; // 비디오 객체 (시즌 정보, 유튜브 상세 정보 등등)
+class OldContentVideos {
+  final List<OldContentVideoItem> videos; // 비디오 객체 (시즌 정보, 유튜브 상세 정보 등등)
   final ContentVideoFormat contentVideoFormat; // 비디오 포맷 타입
   bool isDetailInfoLoaded = false;
   bool isSeasonInfoLoaded = false;
 
-  ContentVideos({required this.videos, required this.contentVideoFormat});
+  OldContentVideos({required this.videos, required this.contentVideoFormat});
 
   /* Getters */
-  ContentVideoItem get singleTypeVideo => videos[0];
+  OldContentVideoItem get singleTypeVideo => videos[0];
 
-  List<ContentVideoItem> get multipleTypeVideos => videos;
+  List<OldContentVideoItem> get multipleTypeVideos => videos;
 
   // 대표 비디오 url
   String get mainVideoId => videos[0].videoId;
@@ -34,7 +34,7 @@ class ContentVideos {
       return null;
     }
     int sum = 0;
-    for (ContentVideoItem video in videos) {
+    for (OldContentVideoItem video in videos) {
       sum += video.detailInfo?.viewCount ?? 0;
     }
     return sum;
@@ -46,27 +46,25 @@ class ContentVideos {
       return null;
     }
     int sum = 0;
-    for (ContentVideoItem video in videos) {
+    for (OldContentVideoItem video in videos) {
       sum += video.detailInfo?.likeCount ?? 0;
     }
     return sum;
   }
 
-
-
   /* Intents */
   // 비디오 상세 정보 로딩 state 업데이트
-  Future<void> updateVideoDetailsLoadingState() async{
+  Future<void> updateVideoDetailsLoadingState() async {
     isDetailInfoLoaded = true;
   }
 
   // 비디오 시즌 정보 로딩 state 업데이트
-  Future<void> updateSeasonInfoLoadingState() async{
+  Future<void> updateSeasonInfoLoadingState() async {
     isSeasonInfoLoaded = true;
   }
 
-  factory ContentVideos.fromResponse(
-    List<VideoResponse> response, {
+  factory OldContentVideos.fromResponse(
+    List<OldVideoResponse> response, {
     required String id,
   }) {
     final ContentType type = SplittedIdAndType.fromOriginId(id).type;
@@ -83,8 +81,8 @@ class ContentVideos {
       }
     }
 
-    return ContentVideos(
-      videos: response.map((e) => ContentVideoItem.fromResponse(e)).toList(),
+    return OldContentVideos(
+      videos: response.map((e) => OldContentVideoItem.fromResponse(e)).toList(),
       contentVideoFormat: getFormatType(),
     );
   }

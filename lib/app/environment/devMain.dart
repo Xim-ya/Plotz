@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:soon_sak/app/di/get_module.dart';
-import 'package:soon_sak/app/di/new_app_binding.dart';
+import 'package:soon_sak/app/di/app_binding.dart';
 import 'package:soon_sak/app/environment/environment.dart';
 import 'package:soon_sak/firebase_options_dev.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -17,7 +17,7 @@ void main() async {
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
 
   // get_it dependecies setup`
-  NewAppBinding.dependencies();
+  AppBinding.dependencies();
 
   /// FireBase 초기화
   await Firebase.initializeApp(

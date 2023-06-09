@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
+class ExploreScreen extends BaseScreen<ExploreViewModel> {
   const ExploreScreen({Key? key}) : super(key: key);
 
   @override
@@ -78,7 +78,7 @@ class ExploreScreen extends NewBaseScreen<ExploreViewModel> {
       locator<ExploreViewModel>();
 }
 
-class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
+class _VerticalSwiper extends BaseView<ExploreViewModel> {
   const _VerticalSwiper({Key? key}) : super(key: key);
 
   @override
@@ -217,7 +217,7 @@ class _VerticalSwiper extends NewBaseView<ExploreViewModel> {
       ];
 }
 
-class _TopActionBtn extends NewBaseView<ExploreViewModel> {
+class _TopActionBtn extends BaseView<ExploreViewModel> {
   const _TopActionBtn({Key? key}) : super(key: key);
 
   @override

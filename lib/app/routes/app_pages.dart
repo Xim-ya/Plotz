@@ -1,98 +1,196 @@
+import 'package:go_router/go_router.dart';
+import 'package:soon_sak/app/routes/go_route_with_binding.dart';
+import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
+import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
+import 'package:soon_sak/presentation/screens/contentDetail/content_detail_screen.dart';
+import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
+import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
+import 'package:soon_sak/presentation/screens/search/search_binding.dart';
+import 'package:soon_sak/presentation/screens/search/search_screen.dart';
+import 'package:soon_sak/presentation/screens/setting/setting_binding.dart';
+import 'package:soon_sak/presentation/screens/setting/setting_screen.dart';
+import 'package:soon_sak/presentation/screens/splash/splash_binding.dart';
+import 'package:soon_sak/presentation/screens/temp_screen.dart';
+import 'package:soon_sak/utilities/index.dart';
+
+abstract class AppPages {
+  AppPages._();
+
+  static final router = GoRouter(
+    debugLogDiagnostics: true,
+    initialLocation: '/',
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (_, __) => const SplashScreen(),
+      ),
+      GoRoute(path: AppRoutes.login, builder: (_, __) => const LoginScreen()),
+      GoRouteWithBinding(
+        path: '/contentDetail',
+        prevPath: const [
+          AppRoutes.tabs,
+          AppRoutes.channelDetail,
+          AppRoutes.contentDetail,
+        ],
+        binding: ContentDetailBinding(),
+        newBuilder: (context, state) => const ContentDetailScreen(),
+      ),
+      GoRouteWithBinding(
+        path: '/channelDetail',
+        prevPath: const [
+          AppRoutes.tabs,
+          AppRoutes.contentDetail,
+        ],
+        binding: ChannelDetailBinding(),
+        newBuilder: (context, state) => const ChannelDetailScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.tabs,
+        builder: (context, state) => const TabsScreen(),
+        routes: [
+          GoRouteWithBinding(
+            path: 'register',
+            prevPath: const [AppRoutes.tabs],
+            binding: RegisterBinding(),
+            newBuilder: (context, state) => const RegisterScreen(),
+          ),
+          GoRouteWithBinding(
+            path: 'search',
+            prevPath: const [AppRoutes.tabs],
+            binding: SearchBinding(),
+            newBuilder: (context, state) => const SearchScreen(),
+          ),
+          GoRouteWithBinding(
+            path: 'curationHistory',
+            prevPath: const [AppRoutes.tabs],
+            binding: CurationHistoryBinding(),
+            newBuilder: (context, state) => const CurationHistoryScreen(),
+          ),
+          GoRouteWithBinding(
+            path: 'setting',
+            prevPath: const [AppRoutes.tabs],
+            binding: SettingBinding(),
+            newBuilder: (context, state) => const SettingScreen(),
+            routes: [
+              GoRouteWithBinding(
+                path: 'profileSetting',
+                prevPath: const [AppRoutes.tabs + AppRoutes.setting],
+                binding: ProfileSettingBinding(),
+                newBuilder: (context, state) => const ProfileSettingScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+      // GoRoute(path: '/temp',
+      //   builder: (_,__) => TempScreen(),
+      // ),
+    ],
+  );
+}
+
 // import 'package:go_router/go_router.dart';
+// import 'package:soon_sak/app/routes/go_route_with_binding.dart';
 // import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
 // import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
-// import 'package:soon_sak/presentation/screens/home/home_screen.dart';
+// import 'package:soon_sak/presentation/screens/contentDetail/content_detail_screen.dart';
 // import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
 // import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
 // import 'package:soon_sak/presentation/screens/search/search_binding.dart';
 // import 'package:soon_sak/presentation/screens/search/search_screen.dart';
 // import 'package:soon_sak/presentation/screens/setting/setting_binding.dart';
 // import 'package:soon_sak/presentation/screens/setting/setting_screen.dart';
+// import 'package:soon_sak/presentation/screens/splash/splash_binding.dart';
+// import 'package:soon_sak/presentation/screens/temp_screen.dart';
 // import 'package:soon_sak/utilities/index.dart';
 //
-// /** Created By Ximya - 2022.11.04
-//  *  - [GetPage]기반 라우팅 속성들을 해당 모듈에서 관리.
-//  *  - GetPage속성에 [Bindings] 값을 걸어 Inject 할 수 있도록 함.
-//  *  - [routes]에서 라우팅 페이지 이름 값들을 관리.
-//  * */
+// abstract class NewAppPages {
+//   NewAppPages._();
 //
-// class SplashBindingOld extends Bindings {
-//   @override
-//   void dependencies() {
-//     // TODO: implement dependencies
-//   }
-// }
-//
-// abstract class AppPages {
-//   AppPages._();
-//
-//   static final routes = [
-//     // 스플래쉬
-//     GetPage(
-//         name: AppRoutes.splash,
-//         page: () => SplashScreen(),
-//         binding: SplashBindingOld()),
-//
-//     // 로그인
-//     // GetPage(
-//     //     name: AppRoutes.login,
-//     //     page: () => LoginScreen(),
-//     //     binding: LoginBinding()),
-//     //
-//     // // 탭
-//     // // GetPage(name: AppRoutes.tabs, page: TabsScreen.new, binding: TabsBinding()),
-//     //
-//     // // 홈
-//     // // GetPage(
-//     // //     name: AppRoutes.home,
-//     // //     page: () => HomeScreen(),
-//     // //     binding: TabsBinding(),
-//     // //     children: [
-//     // //       GetPage(
-//     // //         name: AppRoutes.channelDetail,
-//     // //         page: () => ChannelDetailScreen(),
-//     // //         binding: ChannelDetailBinding(),
-//     // //       )
-//     // //     ]),
-//     //
-//     // // 컨텐츠 상세
-//     // GetPage(
-//     //   name: AppRoutes.contentDetail,
-//     //   page: () => ContentDetailScreen(),
-//     //   binding: ContentDetailBinding(),
-//     // ),
-//     //
-//     // // 검색
-//     // GetPage(
-//     //   name: AppRoutes.search,
-//     //   page: () => SearchScreen(),
-//     //   binding: SearchBinding(),
-//     // ),
-//     //
-//     // // 등록
-//     // GetPage(
-//     //   name: AppRoutes.register,
-//     //   page: () => RegisterScreen(),
-//     //   binding: RegisterBinding(),
-//     // ),
-//     //
-//     // // 큐레이션 내력
-//     // GetPage(
-//     //   name: AppRoutes.curationHistory,
-//     //   page: () => CurationHistoryScreen(),
-//     //   binding: CurationHistoryBinding(),
-//     // ),
-//     //
-//     // GetPage(
-//     //   name: AppRoutes.setting,
-//     //   page: () => SettingScreen(),
-//     //   binding: SettingBinding(),
-//     // ),
-//     //
-//     // GetPage(
-//     //   name: AppRoutes.profileSetting,
-//     //   page: () => ProfileSettingScreen(),
-//     //   binding: ProfileSettingBinding(),
-//     // )
-//   ];
+//   static final router = GoRouter(
+//     debugLogDiagnostics: true,
+//     initialLocation: '/',
+//     routes: [
+//       GoRoute(
+//         path: '/',
+//         builder: (_, __) => const SplashScreen(),
+//       ),
+//       GoRoute(path: AppRoutes.login, builder: (_, __) => const LoginScreen()),
+//       GoRoute(
+//         path: AppRoutes.tabs,
+//         builder: (context, state) => const TabsScreen(),
+//         routes: [
+//           GoRouteWithBinding(
+//             path: 'channelDetail',
+//             prevPath: const [AppRoutes.tabs],
+//             binding: ChannelDetailBinding(),
+//             newBuilder: (context, state) => const ChannelDetailScreen(),
+//           ),
+//           GoRouteWithBinding(
+//               path: 'contentDetail',
+//               prevPath: const [
+//                 AppRoutes.tabs,
+//                 AppRoutes.contentDetail,
+//               ],
+//               binding: ContentDetailBinding(),
+//               newBuilder: (context, state) => const NewContentDetailScreen(),
+//               routes: [
+//                 GoRouteWithBinding(
+//                   path: 'channelDetail',
+//                   prevPath: const [
+//                     AppRoutes.channelDetail,
+//                     AppRoutes.contentDetail
+//                   ],
+//                   binding: ChannelDetailBinding(),
+//                   newBuilder: (context, state) => const ChannelDetailScreen(),
+//                 ),
+//               ]),
+//           GoRouteWithBinding(
+//             path: 'register',
+//             prevPath: const [AppRoutes.tabs],
+//             binding: RegisterBinding(),
+//             newBuilder: (context, state) => const RegisterScreen(),
+//           ),
+//           GoRouteWithBinding(
+//             path: 'search',
+//             prevPath: const [AppRoutes.tabs],
+//             binding: SearchBinding(),
+//             newBuilder: (context, state) => const SearchScreen(),
+//             routes: [
+//               GoRouteWithBinding(
+//                 path: 'contentDetail',
+//                 prevPath: const [AppRoutes.tabs + AppRoutes.search],
+//                 binding: ContentDetailBinding(),
+//                 newBuilder: (context, state) => const NewContentDetailScreen(),
+//               ),
+//             ],
+//           ),
+//           GoRouteWithBinding(
+//             path: 'curationHistory',
+//             prevPath: const [AppRoutes.tabs],
+//             binding: CurationHistoryBinding(),
+//             newBuilder: (context, state) => const CurationHistoryScreen(),
+//           ),
+//           GoRouteWithBinding(
+//             path: 'setting',
+//             prevPath: const [AppRoutes.tabs],
+//             binding: SettingBinding(),
+//             newBuilder: (context, state) => const SettingScreen(),
+//             routes: [
+//               GoRouteWithBinding(
+//                 path: 'profileSetting',
+//                 prevPath: const [AppRoutes.tabs + AppRoutes.setting],
+//                 binding: ProfileSettingBinding(),
+//                 newBuilder: (context, state) => const ProfileSettingScreen(),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//       // GoRoute(path: '/temp',
+//       //   builder: (_,__) => TempScreen(),
+//       // ),
+//     ],
+//   );
 // }

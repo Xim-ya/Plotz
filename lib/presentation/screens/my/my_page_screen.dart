@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'dart:math' as math;
 
-class MyPageScreen extends NewBaseScreen<MyPageViewModel> {
+class MyPageScreen extends BaseScreen<MyPageViewModel> {
   const MyPageScreen({Key? key}) : super(key: key);
 
   @override

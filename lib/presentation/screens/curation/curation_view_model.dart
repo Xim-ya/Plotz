@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationViewModel extends NewBaseViewModel {
+class CurationViewModel extends BaseViewModel {
   CurationViewModel({required ContentRepository contentRepository})
       : _contentRepository = contentRepository;
 
@@ -42,7 +42,8 @@ class CurationViewModel extends NewBaseViewModel {
       name: 'goToCurationProgress',
       parameters: {'type': contentType.name},
     );
-    context.push(AppRoutes.tabs + AppRoutes.register, extra: contentType);
+    context.push(AppRoutes.tabs + AppRoutes.register,
+        extra: {'arg1': contentType});
   }
 
   String randomImgGenerator(ContentType contentType) {

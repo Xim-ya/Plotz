@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 
-class RegisterVideoLinkPageView extends NewBaseView<RegisterViewModel> {
+class RegisterVideoLinkPageView extends BaseView<RegisterViewModel> {
   const RegisterVideoLinkPageView({Key? key}) : super(key: key);
 
   @override
@@ -104,7 +104,7 @@ class RegisterVideoLinkPageView extends NewBaseView<RegisterViewModel> {
 }
 
 // 입력창
-class _InputField extends NewBaseView<RegisterViewModel> {
+class _InputField extends BaseView<RegisterViewModel> {
   const _InputField({Key? key}) : super(key: key);
 
   @override

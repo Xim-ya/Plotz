@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_view_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class ProfileSettingScreen extends NewBaseScreen<ProfileSettingViewModel> {
+class ProfileSettingScreen extends BaseScreen<ProfileSettingViewModel> {
   const ProfileSettingScreen({Key? key}) : super(key: key);
 
   @override

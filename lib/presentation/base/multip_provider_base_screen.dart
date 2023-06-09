@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/color_config.dart';
-import 'package:soon_sak/presentation/base/new_base_view_model.dart';
+import 'package:soon_sak/presentation/base/base_view_model.dart';
 
 @immutable
-abstract class MultiProviderBaseScreen<T extends NewBaseViewModel,
-    A extends NewBaseViewModel> extends StatelessWidget {
+abstract class MultiProviderBaseScreen<T extends BaseViewModel,
+    A extends BaseViewModel> extends StatelessWidget {
   const MultiProviderBaseScreen({Key? key}) : super(key: key);
 
   @override

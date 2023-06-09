@@ -15,12 +15,13 @@ class ChannelBasicResponse {
     required this.totalContentCount,
   });
 
-  factory ChannelBasicResponse.fromDocument(DocumentSnapshot snapshot) =>
-      ChannelBasicResponse(
-        name: snapshot.get('name'),
-        subscribersCount: snapshot.get('subscribersCount'),
-        logoImgUrl: snapshot.get('logoImgUrl'),
-        totalContentCount: snapshot.get('totalContent'),
-        channelId: snapshot.id,
-      );
+  factory ChannelBasicResponse.fromDocument(DocumentSnapshot snapshot) {
+    return ChannelBasicResponse(
+      name: snapshot.get('name'),
+      subscribersCount: snapshot.get('subscribersCount'),
+      logoImgUrl: snapshot.get('logoImgUrl'),
+      totalContentCount: snapshot.get('totalContent'),
+      channelId: snapshot.id,
+    );
+  }
 }

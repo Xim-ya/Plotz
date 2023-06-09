@@ -148,7 +148,7 @@ class CheckVersionAndNetworkUseCase
           }
         },
         title: '업데이트 안내',
-        subTitle: 'Plotz로 앱이 새롭게 리뉴얼 되었습니다.',
+        subTitle: 'Plotz가 업데이트 되었습니다!',
         description: '최신 기능을 이용하기 위해 업데이트를 진행해주세요',
       ),
     );

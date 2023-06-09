@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SettingViewModel extends NewBaseViewModel {
+class SettingViewModel extends BaseViewModel {
   SettingViewModel({
     required SignOutUseCase signOutHandlerUseCase,
     required UserService userService,

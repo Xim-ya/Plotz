@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/staticContent/response/category_content_item_response.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class CategoryContentCollection {

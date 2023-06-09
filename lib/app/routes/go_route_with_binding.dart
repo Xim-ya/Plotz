@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class GoRouteWithBinding extends GoRoute {
@@ -18,10 +18,13 @@ class GoRouteWithBinding extends GoRoute {
             if (currentLocation.contains(path) &&
                 binding.isDependenciesDeleted == true) {
               binding.dependencies();
-              final arg = state.extra;
-              if (arg.hasData) {
-                binding.argument = arg;
+              if (state.extra.hasData) {
+                final Map<String, dynamic> arg =
+                    state.extra as Map<String, dynamic>;
+                binding.arg1 = arg['arg1'];
+                binding.arg2 = arg['arg2'];
               }
+
               return newBuilder(context, state);
             }
 
@@ -34,44 +37,44 @@ class GoRouteWithBinding extends GoRoute {
           routes: routes,
         );
 
-  final CustomBindings binding;
+  final Bindings binding;
   final GoRouterWidgetBuilder newBuilder;
 }
 
-class GoReplaceRouteWithBinding extends GoRoute {
-  GoReplaceRouteWithBinding({
-    required this.newBuilder,
-    required this.binding,
-    required String path,
-    List<RouteBase> routes = const <RouteBase>[],
-    String? prevPath,
-  }) : super(
-          path: path,
-          builder: (context, state) {
-            final currentLocation = GoRouter.of(context).location;
-
-            print(
-                "====> CURRENTLOCATION : ${currentLocation} / PATH : ${path}");
-            print(
-                "binding.isDependenciesDeleted ==> ${binding.isDependenciesDeleted}");
-            if (currentLocation.contains(path) &&
-                binding.isDependenciesDeleted == true) {
-              print("발동동");
-              binding.dependencies();
-              final arg = state.extra;
-              if (arg.hasData) {
-                binding.argument = arg;
-              }
-            }
-
-            return newBuilder(context, state);
-          },
-          routes: routes,
-        );
-
-  final CustomBindings binding;
-  final GoRouterWidgetBuilder newBuilder;
-}
+// class GoReplaceRouteWithBinding extends GoRoute {
+//   GoReplaceRouteWithBinding({
+//     required this.newBuilder,
+//     required this.binding,
+//     required String path,
+//     List<RouteBase> routes = const <RouteBase>[],
+//     String? prevPath,
+//   }) : super(
+//           path: path,
+//           builder: (context, state) {
+//             final currentLocation = GoRouter.of(context).location;
+//
+//             print(
+//                 "====> CURRENTLOCATION : ${currentLocation} / PATH : ${path}");
+//             print(
+//                 "binding.isDependenciesDeleted ==> ${binding.isDependenciesDeleted}");
+//             if (currentLocation.contains(path) &&
+//                 binding.isDependenciesDeleted == true) {
+//               print("발동동");
+//               binding.dependencies();
+//               final arg = state.extra;
+//               if (arg.hasData) {
+//                 binding.arg1 = arg;
+//               }
+//             }
+//
+//             return newBuilder(context, state);
+//           },
+//           routes: routes,
+//         );
+//
+//   final CustomBindings binding;
+//   final GoRouterWidgetBuilder newBuilder;
+// }
 
 // class GoGenerateRoute extends GoRoute {
 //   GoGenerateRoute({

@@ -1,6 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchScaffoldController extends NewBaseViewModel {
+class SearchScaffoldController extends BaseViewModel {
   SearchScaffoldController({required SearchViewModel searchViewModel})
       : _searchViewModel = searchViewModel;
 

@@ -1,9 +1,9 @@
-import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
 import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class RegisterBinding extends CustomBindings {
+class RegisterBinding extends Bindings {
   @override
   void dependencies() {
     super.dependencies();
@@ -17,7 +17,7 @@ class RegisterBinding extends CustomBindings {
           myPageViewModel: locator<MyPageViewModel>(),
           newSearchedPagedContentUseCase:
               locator<NewSearchedPagedContentUseCase>(),
-          contentType: argument,
+          contentType: arg1,
         ));
 
     locator.registerFactory(() => RequestContentRegistrationUseCase(

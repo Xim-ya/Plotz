@@ -6,12 +6,20 @@ class Formatter {
   static String? formatGenreListToSingleStr(List<String>? genreList) =>
       genreList == null ? '-' : genreList.join(' / ');
 
+  static String? splitGenresByDots(List<String>? genreList) =>
+      genreList == null ? '' : genreList.join(' · ');
+
   static String? formatGenreListToSingleStr2(List<String>? genreList) =>
       genreList == null ? '-' : genreList.join(' · ');
 
   // Date Format
   static String dateToyyMMdd(String date) {
     return DateFormat('yy.MM.dd').format(DateTime.parse(date));
+  }
+
+  // Date Format
+  static String dateToYear(String date) {
+    return DateFormat('yyyy').format(DateTime.parse(date));
   }
 
   static String dateToyyyyMMdd(String date) {
@@ -51,6 +59,8 @@ class Formatter {
       return '-';
     }
   }
+
+
 
   // 현재 일을 기준으로 인자로 받은 '날짜'를 계산하여 일정 포맷으로 리턴함
   static String getDateDifferenceFromNow(String? date) {

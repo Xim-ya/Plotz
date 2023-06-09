@@ -9,7 +9,10 @@ abstract class ContentApi {
   Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids);
 
   // 컨텐츠 비디오 정보 호출
-  Future<List<VideoResponse>> loadVideoInfo(String id);
+  Future<List<OldVideoResponse>> oldLoadVideoInfo(String id);
+
+  // 컨텐츠 비디오 정보 호출
+  Future<List<VideoResponse>> loadVideoInfo({required String contentId, required ContentType contentType});
 
   // 컨텐츠 등록 요청 (큐레이션)
   Future<String> requestContentRegistration(

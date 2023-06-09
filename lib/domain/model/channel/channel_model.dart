@@ -23,4 +23,6 @@ class ChannelModel {
         totalContentCount: response.totalContentCount,
         subscribersCount: response.subscribersCount,
       );
+
+
 }

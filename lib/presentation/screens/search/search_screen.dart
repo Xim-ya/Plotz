@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/new_base_view.dart';
+import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchScreen extends NewBaseScreen<SearchViewModel> {
+class SearchScreen extends BaseScreen<SearchViewModel> {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override

@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/model/video/content_video_model.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -16,12 +17,16 @@ abstract class ContentRepository {
   /// 주어진 ids에 속한 컨텐츠 리스트 호출
   Future<Result<List<ExploreContent>>> loadExploreContents(List<String> ids);
 
-  // 컨텐츠 비디어 정보 호출
-  Future<Result<ContentVideos>> loadContentVideoInfo(String id);
+  // 컨텐츠 비디오 정보 호출
+  Future<Result<OldContentVideos>> oldLoadContentVideoInfo(String id);
+
+  // Future<Result<ContentVideoModel>> loadContentVideoInfo(
+  //     {required String contentId, required ContentType contentType});
 
   // 컨텐츠 등록 요청
   Future<Result<String>> requestContentRegistration(
-      ContentRegistrationRequest requestData,);
+    ContentRegistrationRequest requestData,
+  );
 
   // 진행중인 큐레이션 리스트 호출
   Future<Result<List<CurationContent>>> loadInProgressQurationList();
@@ -29,8 +34,7 @@ abstract class ContentRepository {
   // 큐레이터 정보 호출
   Future<Result<UserModel>> loadCuratorInfo(String contentId);
 
-  // 채널 정보 호출
-  Future<Result<ChannelInfo>> loadChannelInfo(String contentId);
+
 
   // 컨텐츠 등록 요청 (단순 요청)
   Future<Result<void>> requestContent(ContentRequest requestInfo);

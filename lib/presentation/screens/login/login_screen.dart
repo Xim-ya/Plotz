@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:soon_sak/utilities/index.dart';
 
-class LoginScreen extends NewBaseScreen<LoginViewModel> {
+class LoginScreen extends BaseScreen<LoginViewModel> {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override

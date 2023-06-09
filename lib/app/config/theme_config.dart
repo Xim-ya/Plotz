@@ -10,6 +10,8 @@ class ThemeConfig {
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
+    // bottomSheetTheme: BottomSheetThemeData(
+    //     backgroundColor: Colors.black.withOpacity(0)),
 
     // 플랫폼별 라우팅 애니메이션 속성
     pageTransitionsTheme: const PageTransitionsTheme(

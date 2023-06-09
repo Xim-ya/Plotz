@@ -21,15 +21,7 @@ CategoryContentsResponse _$CategoryContentsResponseFromJson(
     CategoryContentsResponse(
       title: json['title'] as String,
       contents: (json['contents'] as List<dynamic>)
-          .map((e) =>
-              CategoryContentItemResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) => CategoryContentItemResponse.fromJson(
+              e as Map<String, dynamic>))
           .toList(),
-    );
-
-CategoryContentItemResponse _$CategoryContentItemResponseFromJson(
-        Map<String, dynamic> json) =>
-    CategoryContentItemResponse(
-      id: json['id'] as String,
-      posterImgUrl: json['posterImgUrl'] as String,
-      title: json['title'] as String,
     );

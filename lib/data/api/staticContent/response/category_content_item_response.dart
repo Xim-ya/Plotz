@@ -1,9 +1,9 @@
 import 'package:soon_sak/utilities/index.dart';
 
-part 'new_category_content_item_response.g.dart';
+part 'category_content_item_response.g.dart';
 
 @JsonSerializable(createToJson: false)
-class NewCategoryContentItemResponse {
+class CategoryContentItemResponse {
   @JsonKey(name: 'id')
   final String id;
 
@@ -13,9 +13,9 @@ class NewCategoryContentItemResponse {
   @JsonKey(name: 'title')
   final String title;
 
-  NewCategoryContentItemResponse(
+  CategoryContentItemResponse(
       {required this.id, required this.posterImgUrl, required this.title});
 
-  factory NewCategoryContentItemResponse.fromJson(Map<String, dynamic> json) =>
+  factory CategoryContentItemResponse.fromJson(Map<String, dynamic> json) =>
       _$NewCategoryContentItemResponseFromJson(json);
 }

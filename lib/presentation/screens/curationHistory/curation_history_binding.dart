@@ -1,7 +1,7 @@
-import 'package:soon_sak/app/di/custom_binding.dart';
+import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class CurationHistoryBinding extends CustomBindings {
+class CurationHistoryBinding extends Bindings {
   @override
   void dependencies() {
     super.dependencies();

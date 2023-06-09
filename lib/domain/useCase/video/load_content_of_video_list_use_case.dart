@@ -7,13 +7,13 @@ import 'package:soon_sak/utilities/index.dart';
 * */
 
 class LoadContentOfVideoListUseCase
-    extends BaseTwoParamUseCase<ContentType, String, Result<ContentVideos>> {
+    extends BaseTwoParamUseCase<ContentType, String, Result<OldContentVideos>> {
   LoadContentOfVideoListUseCase(this._repository);
 
   final ContentRepository _repository;
 
   @override
-  Future<Result<ContentVideos>> call(ContentType firstReq, String secondReq) {
-    return _repository.loadContentVideoInfo(secondReq);
+  Future<Result<OldContentVideos>> call(ContentType firstReq, String secondReq) {
+    return _repository.oldLoadContentVideoInfo(secondReq);
   }
 }
