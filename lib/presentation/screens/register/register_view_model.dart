@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
-import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
+import 'package:soon_sak/domain/useCase/search/search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'controllerResource/search_content_view_model.part.dart'; // 컨텐츠 검색
@@ -18,7 +18,7 @@ class RegisterViewModel extends BaseViewModel {
         requestContentRegistrationUseCase,
     required CurationViewModel curationViewModel,
     required MyPageViewModel myPageViewModel,
-    required NewSearchedPagedContentUseCase newSearchedPagedContentUseCase,
+    required SearchedPagedContentUseCase newSearchedPagedContentUseCase,
     required ContentType contentType,
   })  : selectedContentType = contentType,
         _userService = userService,
@@ -62,7 +62,7 @@ class RegisterViewModel extends BaseViewModel {
 
   /* UseCases */
   // final SearchPagedContentUseCase _searchUseCase;
-  final NewSearchedPagedContentUseCase pagedSearchHandler;
+  final SearchedPagedContentUseCase pagedSearchHandler;
   final SearchValidateUrlUseCase validateVideoUrlUseCase;
   final RequestContentRegistrationUseCase _requestContentRegistrationUseCase;
 

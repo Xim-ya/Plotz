@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
-import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
+import 'package:soon_sak/domain/useCase/search/search_paged_content_use_case.dart';
 import 'package:soon_sak/presentation/common/dialog/app_dialog.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -14,7 +14,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class SearchViewModel extends BaseViewModel {
   SearchViewModel({
-    required NewSearchedPagedContentUseCase searchHandler,
+    required SearchedPagedContentUseCase searchHandler,
     required ContentRepository contentRepository,
     required UserService userService,
   })  : pagedSearchHandler = searchHandler,
@@ -26,7 +26,7 @@ class SearchViewModel extends BaseViewModel {
   final UserService _userService;
 
   /* UseCases */
-  final NewSearchedPagedContentUseCase pagedSearchHandler;
+  final SearchedPagedContentUseCase pagedSearchHandler;
 
   /* Variables (State) */
   ContentType get selectedTabType => pagedSearchHandler.selectedTabType;

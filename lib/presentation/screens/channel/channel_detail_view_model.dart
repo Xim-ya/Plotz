@@ -103,7 +103,6 @@ class ChannelDetailViewModel extends BaseViewModel {
   void onDispose() {
     super.onDispose();
     unregisterIfRegistered<ContentDetailViewModel>();
-    unregisterIfRegistered<LoadContentOfVideoListUseCase>();
     unregisterIfRegistered<LoadContentDetailInfoUseCase>();
     unregisterIfRegistered<LoadContentCreditInfoUseCase>();
     unregisterIfRegistered<LoadContentImgListUseCase>();
