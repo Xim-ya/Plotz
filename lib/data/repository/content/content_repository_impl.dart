@@ -18,16 +18,6 @@ class ContentRepositoryImpl implements ContentRepository {
     }
   }
 
-  @override
-  Future<Result<OldContentVideos>> oldLoadContentVideoInfo(String id) async {
-    try {
-      final response = await _contentDataSource.oldLoadVideoInfo(id);
-      final result = OldContentVideos.fromResponse(response, id: id);
-      return Result.success(result);
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
 
 
 
