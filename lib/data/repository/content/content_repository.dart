@@ -17,12 +17,6 @@ abstract class ContentRepository {
   /// 주어진 ids에 속한 컨텐츠 리스트 호출
   Future<Result<List<ExploreContent>>> loadExploreContents(List<String> ids);
 
-  // 컨텐츠 비디오 정보 호출
-  Future<Result<OldContentVideos>> oldLoadContentVideoInfo(String id);
-
-  // Future<Result<ContentVideoModel>> loadContentVideoInfo(
-  //     {required String contentId, required ContentType contentType});
-
   // 컨텐츠 등록 요청
   Future<Result<String>> requestContentRegistration(
     ContentRegistrationRequest requestData,
@@ -34,10 +28,7 @@ abstract class ContentRepository {
   // 큐레이터 정보 호출
   Future<Result<UserModel>> loadCuratorInfo(String contentId);
 
-
-
   // 컨텐츠 등록 요청 (단순 요청)
   Future<Result<void>> requestContent(ContentRequest requestInfo);
 
-// static ContentRepository get to => Get.find();
 }

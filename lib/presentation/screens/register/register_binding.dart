@@ -1,6 +1,6 @@
 import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/domain/useCase/register/request_content_registration_use_case.dart';
-import 'package:soon_sak/domain/useCase/search/new_search_paged_content_use_case.dart';
+import 'package:soon_sak/domain/useCase/search/search_paged_content_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class RegisterBinding extends Bindings {
@@ -16,7 +16,7 @@ class RegisterBinding extends Bindings {
           curationViewModel: locator<CurationViewModel>(),
           myPageViewModel: locator<MyPageViewModel>(),
           newSearchedPagedContentUseCase:
-              locator<NewSearchedPagedContentUseCase>(),
+              locator<SearchedPagedContentUseCase>(),
           contentType: arg1,
         ));
 
@@ -28,7 +28,7 @@ class RegisterBinding extends Bindings {
     locator.registerFactory<SearchValidateUrlUseCase>(
         () => SearchValidateUrlImpl());
 
-    locator.registerLazySingleton(() => NewSearchedPagedContentUseCase(
+    locator.registerLazySingleton(() => SearchedPagedContentUseCase(
         tmdbRepository: locator<TmdbRepository>()));
   }
 
@@ -38,6 +38,6 @@ class RegisterBinding extends Bindings {
     locator.unregister<RegisterViewModel>();
     locator.unregister<RequestContentRegistrationUseCase>();
     locator.unregister<SearchValidateUrlUseCase>();
-    locator.unregister<NewSearchedPagedContentUseCase>();
+    locator.unregister<SearchedPagedContentUseCase>();
   }
 }

@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
-import 'package:soon_sak/domain/model/video/content_video_model.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/image/content_poster_item_view.dart';
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
