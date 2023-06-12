@@ -725,14 +725,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  hive:
-    dependency: "direct main"
-    description:
-      name: hive
-      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.3"
   html:
     dependency: transitive
     description:
@@ -1169,10 +1161,10 @@ packages:
     dependency: "direct main"
     description:
       name: sembast
-      sha256: c55198f16f4dcafeaf361ed9c62d9aaf946dff503fd6d6c0ca52efae5f358b66
+      sha256: "3875487075df740e3ed0817571c950f015e5f730ff84fa0351849bf002fb4e1b"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.2"
+    version: "3.4.6+1"
   shelf:
     dependency: transitive
     description:
