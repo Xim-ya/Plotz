@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:soon_sak/app/config/color_config.dart';
 
 enum Sns {
   google(
-      name: '구글', 
+      name: 'Google',
       originString: 'google',
       logoPath: 'google_logo.svg',
-      textColor: Colors.black,
+      textColor: AppColor.black,
       bgColor: Colors.white,),
   apple(
       name: 'Apple',
