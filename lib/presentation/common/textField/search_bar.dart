@@ -1,7 +1,7 @@
 import 'package:soon_sak/utilities/index.dart';
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({
+class AppSearchBar extends StatelessWidget {
+  const AppSearchBar({
     Key? key,
     required this.focusNode,
     required this.textEditingController,

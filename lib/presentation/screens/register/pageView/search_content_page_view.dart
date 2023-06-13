@@ -36,7 +36,7 @@ class _SearchBar extends BaseView<RegisterViewModel> {
   Widget build(BuildContext context) {
     return Selector<RegisterViewModel, bool>(
         selector: (context, vm) => vm.showContentFormCloseBtn,
-        builder: (context, showRoundCloseBtn, _) => SearchBar(
+        builder: (context, showRoundCloseBtn, _) => AppSearchBar(
             focusNode: vm(context).contentFormFocusNode,
             textEditingController: vm(context).textEditingController,
             onChanged: (_) {
