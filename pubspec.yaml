@@ -68,8 +68,8 @@ dependencies:
   sembast: ^3.4.0+6
   path: ^1.8.0
   path_provider: ^2.0.11
-  flutter_secure_storage: ^8.0.0
-  hive: ^2.2.3
+
+
 
 
   #Auth
