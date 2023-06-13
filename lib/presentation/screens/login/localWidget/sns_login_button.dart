@@ -14,22 +14,15 @@ class SnsLoginButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
-      height: 48,
+      height: 44,
       padding: EdgeInsets.zero,
       color: sns.bgColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
-            height: 32,
-            width: 32,
-            child: SvgPicture.asset('assets/icons/${sns.logoPath}'),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
+          SvgPicture.asset('assets/icons/${sns.logoPath}'),
           Text(
-            '${sns.name}로 아이디로 로그인하기',
+            '${sns.name}로 로그인',
             style: AppTextStyle.body2.copyWith(color: sns.textColor),
           )
         ],

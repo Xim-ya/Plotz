@@ -13,7 +13,13 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
   bool get setBottomSafeArea => true;
 
   @override
+  Color? get screenBackgroundColor => const Color(0xFF0F0F0F);
+
+  @override
   Widget buildScreen(BuildContext context) {
+
+
+
     return Stack(
       children: [
         Container(),
@@ -56,48 +62,81 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
             ),
           ],
         ),
-        Positioned.fill(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                height: SizeConfig.to.screenHeight * 0.060,
-              ),
-              Center(
-                  child: SvgPicture.asset('assets/icons/login_intro_text.svg')),
-              SizedBox(
-                height: SizeConfig.to.screenHeight * 0.062,
-              ),
-              Padding(
-                padding: AppInset.horizontal16 +
-                    EdgeInsets.only(
-                      bottom: SizeConfig.to.bottomInset == 0
-                          ? SizeConfig.to.screenHeight * 0.052
-                          : SizeConfig.to.screenHeight * 0.011,
-                    ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SnsLoginButton(
-                      sns: Sns.google,
-                      onBtnTapped: () {
-                        vm(context).signInAndUp(Sns.google);
-                      },
-                    ),
-                    AppSpace.size10,
-                    if (Platform.isIOS)
+        /// 정확한 디자인 규칙이 정해져 있지 않아 고정값을 비율설정하여 적용
+        /// 플랫폼에 따라 보여지는 레이아웃과 버튼의 종류가 다름 (Andorid의 경우 애플 로그인 버튼을 노출 X)
+        if (Platform.isIOS)
+          Positioned.fill(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Center(
+                    child:
+                        SvgPicture.asset('assets/icons/login_intro_text.svg')),
+                SizedBox(
+                  height: SizeConfig.to.screenHeight * 0.062,
+                ),
+                Padding(
+                  padding: AppInset.horizontal16 +
+                      EdgeInsets.only(
+                        bottom: SizeConfig.to.bottomInset == 0
+                            ? SizeConfig.to.screenHeight * 0.056
+                            : SizeConfig.to.screenHeight * 0.014,
+                      ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SnsLoginButton(
+                        sns: Sns.google,
+                        onBtnTapped: () {
+                          vm(context).signInAndUp(Sns.google);
+                        },
+                      ),
+                      AppSpace.size10,
                       SnsLoginButton(
                         sns: Sns.apple,
                         onBtnTapped: () {
                           vm(context).signInAndUp(Sns.apple);
                         },
                       ),
-                  ],
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        else
+          Positioned.fill(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Center(
+                    child:
+                        SvgPicture.asset('assets/icons/login_intro_text.svg')),
+                SizedBox(
+                  height: SizeConfig.to.screenHeight * 0.099,
                 ),
-              )
-            ],
+                Padding(
+                  padding: AppInset.horizontal16 +
+                      EdgeInsets.only(
+                        bottom: SizeConfig.to.bottomInset == 0
+                            ? SizeConfig.to.screenHeight * 0.05
+                            : SizeConfig.to.screenHeight * 0.008,
+                      ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SnsLoginButton(
+                        sns: Sns.google,
+                        onBtnTapped: () {
+                          vm(context).signInAndUp(Sns.google);
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

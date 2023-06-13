@@ -3,17 +3,19 @@ import 'package:soon_sak/app/config/color_config.dart';
 
 enum Sns {
   google(
-      name: 'Google',
-      originString: 'google',
-      logoPath: 'google_logo.svg',
-      textColor: AppColor.black,
-      bgColor: Colors.white,),
+    name: 'Google',
+    originString: 'google',
+    logoPath: 'google_logo.svg',
+    textColor: AppColor.black,
+    bgColor: Colors.white,
+  ),
   apple(
-      name: 'Apple',
-      originString: 'apple',
-      logoPath: 'apple_logo.svg',
-      textColor: Colors.white,
-      bgColor: Colors.black,);
+    name: 'Apple',
+    originString: 'apple',
+    logoPath: 'apple_logo.svg',
+    textColor: AppColor.black,
+    bgColor: Colors.white,
+  );
 
   final String name;
   final String originString;
@@ -21,12 +23,13 @@ enum Sns {
   final Color bgColor;
   final Color textColor;
 
-  const Sns(
-      {required this.name,
-      required this.logoPath,
-      required this.textColor,
-      required this.bgColor,
-      required this.originString,});
+  const Sns({
+    required this.name,
+    required this.logoPath,
+    required this.textColor,
+    required this.bgColor,
+    required this.originString,
+  });
 
   factory Sns.fromOriginString(String originId) {
     switch (originId) {
