@@ -7,12 +7,16 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  bool get wrapWithSafeArea => false;
+  bool get wrapWithSafeArea => true;
+
+  @override
+  bool get setBottomSafeArea => true;
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
+        Container(),
         Stack(
           children: [
             // Backdrop 이미지
@@ -21,13 +25,9 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               width: SizeConfig.to.screenWidth,
               fit: BoxFit.fitHeight,
             ),
-            Positioned.fill(
+            Positioned(
               child: Container(
-                color: AppColor.black.withOpacity(0.4),
-              ),
-            ),
-            Positioned.fill(
-              child: Container(
+                width: SizeConfig.to.screenWidth,
                 height: 88,
                 decoration: const BoxDecoration(
                   gradient: AppGradient.singleTopToBottom,
@@ -35,7 +35,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: -2,
               child: Container(
                 height: 300,
                 width: SizeConfig.to.screenWidth,
@@ -56,30 +56,45 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
             ),
           ],
         ),
-        const Spacer(),
-        SvgPicture.asset('assets/icons/login_intro_text.svg'),
-        SizedBox(width: SizeConfig.to.screenHeight * 0.0025),
-        const Spacer(),
-        Padding(
-          padding: AppInset.horizontal16 +
-              EdgeInsets.only(bottom: SizeConfig.to.bottomInset + 24),
+        Positioned.fill(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SnsLoginButton(
-                sns: Sns.google,
-                onBtnTapped: () {
-                  vm(context).signInAndUp(Sns.google);
-                },
+              SizedBox(
+                height: SizeConfig.to.screenHeight * 0.060,
               ),
-              AppSpace.size10,
-              if (Platform.isIOS)
-                SnsLoginButton(
-                  sns: Sns.apple,
-                  onBtnTapped: () {
-                    vm(context).signInAndUp(Sns.apple);
-                  },
+              Center(
+                  child: SvgPicture.asset('assets/icons/login_intro_text.svg')),
+              SizedBox(
+                height: SizeConfig.to.screenHeight * 0.062,
+              ),
+              Padding(
+                padding: AppInset.horizontal16 +
+                    EdgeInsets.only(
+                      bottom: SizeConfig.to.bottomInset == 0
+                          ? SizeConfig.to.screenHeight * 0.052
+                          : SizeConfig.to.screenHeight * 0.011,
+                    ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SnsLoginButton(
+                      sns: Sns.google,
+                      onBtnTapped: () {
+                        vm(context).signInAndUp(Sns.google);
+                      },
+                    ),
+                    AppSpace.size10,
+                    if (Platform.isIOS)
+                      SnsLoginButton(
+                        sns: Sns.apple,
+                        onBtnTapped: () {
+                          vm(context).signInAndUp(Sns.apple);
+                        },
+                      ),
+                  ],
                 ),
+              )
             ],
           ),
         ),
@@ -91,6 +106,102 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
   LoginViewModel createViewModel(BuildContext context) =>
       locator<LoginViewModel>();
 }
+
+// class LoginScreen extends BaseScreen<LoginViewModel> {
+//   const LoginScreen({Key? key}) : super(key: key);
+//
+//   @override
+//   bool get wrapWithSafeArea => true;
+//
+//   @override
+//   bool get setBottomSafeArea => true;
+//
+//   @override
+//   Widget buildScreen(BuildContext context) {
+//
+//     return Column(
+//       children: [
+//         Stack(
+//           children: [
+//             // Backdrop 이미지
+//             Image.asset(
+//               'assets/images/login.png',
+//               width: SizeConfig.to.screenWidth,
+//               fit: BoxFit.fitHeight,
+//             ),
+//             Positioned(
+//               child: Container(
+//                 width: SizeConfig.to.screenWidth,
+//                 height: 88,
+//                 decoration: const BoxDecoration(
+//                   gradient: AppGradient.singleTopToBottom,
+//                 ),
+//               ),
+//             ),
+//             Positioned(
+//               bottom: -2,
+//               child: Container(
+//                 height: 300,
+//                 width: SizeConfig.to.screenWidth,
+//                 decoration: const BoxDecoration(
+//                   gradient: AppGradient.singleBottomToTop,
+//                 ),
+//               ),
+//             ),
+//             Positioned(
+//               bottom: 0,
+//               child: Container(
+//                 height: 300,
+//                 width: SizeConfig.to.screenWidth,
+//                 decoration: const BoxDecoration(
+//                   gradient: AppGradient.singleBottomToTop,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//         Stack(
+//           alignment: Alignment.bottomCenter,
+//           children: [
+//
+//             Center(child: SvgPicture.asset('assets/icons/login_intro_text.svg')),
+//             SizedBox(height: 100,),
+//             Padding(
+//               padding: AppInset.horizontal16 +
+//                   EdgeInsets.only(bottom: SizeConfig.to.bottomInset + 24),
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   SnsLoginButton(
+//                     sns: Sns.google,
+//                     onBtnTapped: () {
+//                       vm(context).signInAndUp(Sns.google);
+//                     },
+//                   ),
+//                   AppSpace.size10,
+//                   if (Platform.isIOS)
+//                     SnsLoginButton(
+//                       sns: Sns.apple,
+//                       onBtnTapped: () {
+//                         vm(context).signInAndUp(Sns.apple);
+//                       },
+//                     ),
+//                 ],
+//               ),
+//             )
+//
+//           ],
+//         ),
+//
+//
+//       ],
+//     );
+//   }
+//
+//   @override
+//   LoginViewModel createViewModel(BuildContext context) =>
+//       locator<LoginViewModel>();
+// }
 
 // import 'dart:io';
 //
