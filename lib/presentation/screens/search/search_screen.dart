@@ -80,7 +80,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
             Selector<SearchViewModel, bool>(
               selector: (context, vm) => vm.showRoundCloseBtn,
               builder: (context, showRoundCloseBtn, _) {
-                return SearchBar(
+                return AppSearchBar(
                   focusNode: vm(context).focusNode,
                   textEditingController: vm(context).textEditingController,
                   onChanged: (_) {
