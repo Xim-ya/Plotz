@@ -55,6 +55,8 @@ dependencies:
   # Route
   go_router: ^7.0.1
 
+  # Ioslate
+  easy_isolate_helper: ^1.0.0
 
   #Firebase
   firebase_core: ^2.4.1

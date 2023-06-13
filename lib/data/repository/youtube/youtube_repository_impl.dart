@@ -1,4 +1,4 @@
-import 'package:soon_sak/data/mixin/isolate_helper_mixin.dart';
+import 'package:easy_isolate_helper/easy_isolate_helper.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class YoutubeRepositoryImpl extends YoutubeRepository with IsolateHelperMixin {
