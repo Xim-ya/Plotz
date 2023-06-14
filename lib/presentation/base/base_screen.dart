@@ -29,6 +29,7 @@ abstract class BaseScreen<T extends BaseViewModel>
             color: unSafeAreaColor,
             child: wrapWithSafeArea
                 ? SafeArea(
+                    top: setTopSafeArea,
                     bottom: setBottomSafeArea,
                     child: _buildScaffold(context),
                   )
