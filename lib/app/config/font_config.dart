@@ -106,7 +106,7 @@ abstract class AppTextStyle {
     letterSpacing: -0.2,
   );
 
-  static TextStyle nav = PretendardTextStyle.regular(
+  static TextStyle nav = PretendardTextStyle.medium(
     size: 10,
     letterSpacing: -0.2,
   );
