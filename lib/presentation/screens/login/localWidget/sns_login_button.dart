@@ -16,11 +16,12 @@ class SnsLoginButton extends StatelessWidget {
       ),
       height: 44,
       padding: EdgeInsets.zero,
-      color: sns.bgColor,
+      color: sns.bgColor, 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SvgPicture.asset('assets/icons/${sns.logoPath}'),
+          const SizedBox(width: 5),
           Text(
             '${sns.name}로 로그인',
             style: AppTextStyle.body2.copyWith(color: sns.textColor),
