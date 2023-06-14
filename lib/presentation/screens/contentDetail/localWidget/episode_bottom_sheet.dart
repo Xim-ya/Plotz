@@ -89,7 +89,7 @@ class EpisodeBottomSheet extends StatelessWidget {
               },
             ),
 
-            AppSpace.size8,
+            AppSpace.size8, 
             // 하단 버튼
             MaterialButton(
               color: AppColor.gray07,
