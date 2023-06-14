@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:go_router/go_router.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Edited By Ximya - 2023.03.20
@@ -37,41 +40,63 @@ class HomeScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CustomScrollView(
-          shrinkWrap: true,
-          controller: scrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      topBannerSlider,
-                      AppSpace.size32,
-                      topPositionedContentSliderList[0],
-                      topTenSlider,
-                      AppSpace.size14,
-                      topPositionedContentSliderList[1],
-                      AppSpace.size32,
-                      channelSlider,
-                      AppSpace.size32,
-                    ],
-                  ),
-                ],
+    return ConditionalWillPopScope(
+      shouldAddCallback: Platform.isIOS ? false : true,
+      onWillPop: () async {
+        await showDialog(
+          context: context,
+          builder: (_) => AppDialog.dividedBtn(
+            title: '알림',
+            description: 'Plotz를 종료하시겠습니까?',
+            leftBtnContent: '확인',
+            rightBtnContent: '취소',
+            onRightBtnClicked: () {
+              context.pop();
+            },
+            onLeftBtnClicked: () {
+              context.pop();
+              exit(0);
+            },
+          ),
+        );
+        return false;
+      },
+      child: Stack(
+        children: [
+          CustomScrollView(
+            shrinkWrap: true,
+            controller: scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        topBannerSlider,
+                        AppSpace.size32,
+                        topPositionedContentSliderList[0],
+                        topTenSlider,
+                        AppSpace.size14,
+                        topPositionedContentSliderList[1],
+                        AppSpace.size32,
+                        channelSlider,
+                        AppSpace.size32,
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            categoryContentCollectionList,
-            const SliverToBoxAdapter(
-              child: AppSpace.size52,
-            ),
-          ],
-        ),
-        stackedTopGradient,
-        stackedAppBar,
-      ],
+              categoryContentCollectionList,
+              const SliverToBoxAdapter(
+                child: AppSpace.size52,
+              ),
+            ],
+          ),
+          stackedTopGradient,
+          stackedAppBar,
+        ],
+      ),
     );
   }
 }
