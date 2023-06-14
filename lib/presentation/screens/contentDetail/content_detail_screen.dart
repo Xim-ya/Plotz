@@ -41,16 +41,6 @@ class ContentDetailScreen extends BaseView<ContentDetailViewModel> {
     ];
   }
 
-  // Sliver레이아웃에서 Tab이 고정되기 위해서 [Sizse.zero]인 Appbar가 필요
-  @override
-  PreferredSizeWidget? buildAppBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.zero,
-      child: AppBar(
-        backgroundColor: Colors.black,
-      ),
-    );
-  }
 }
 
 class _PlayBtn extends BaseView<ContentDetailViewModel> {
@@ -165,7 +155,7 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                   RichText(
                     text: TextSpan(children: <TextSpan>[
                       TextSpan(
-                        text: value.item3.hasData ? '${value.item3}·' : '',
+                        text: value.item3.hasData ? '${value.item3} · ' : '',
                         style: AppTextStyle.alert2
                             .copyWith(color: AppColor.gray03),
                       ),
@@ -369,28 +359,3 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
     );
   }
 }
-
-// // 해더 백그라운드 이미지
-// class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
-//   const _HeaderBgImg({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Selector<ContentDetailViewModel, String?>(
-//       selector: (context, vm) => vm.headerBackdropImg,
-//       builder: (context, headerBackdropImg, _) {
-//         return headerBackdropImg.hasData
-//             ? CachedNetworkImage(
-//           fadeInDuration: const Duration(milliseconds: 400),
-//           memCacheWidth: (SizeConfig.to.screenWidth * 3).toInt(),
-//           fit: BoxFit.fitHeight,
-//           height: SizeConfig.to.screenHeight * (375 / 500),
-//           imageUrl: headerBackdropImg!.prefixTmdbImgPath,
-//           placeholder: (_, __) => const SizedBox(),
-//           errorWidget: (context, url, error) => const Icon(Icons.error),
-//         )
-//             : const SizedBox();
-//       },
-//     );
-//   }
-// }
