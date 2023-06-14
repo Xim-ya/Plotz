@@ -217,6 +217,7 @@ class ContentDetailViewModel extends BaseViewModel {
       context: context,
       useSafeArea: true,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) {
         return EpisodeBottomSheet(
             videos: videoInfo!.videos,

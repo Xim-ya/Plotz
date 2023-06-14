@@ -22,7 +22,8 @@ class EpisodeBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: AppInset.horizontal16,
+        padding: AppInset.horizontal16 +
+            EdgeInsets.only(bottom: SizeConfig.to.bottomInset == 0 ? 12 : 0),
         child: Wrap(
           children: [
             Container(
@@ -118,3 +119,4 @@ class EpisodeBottomSheet extends StatelessWidget {
     );
   }
 }
+
