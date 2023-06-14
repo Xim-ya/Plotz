@@ -16,7 +16,7 @@ class SnsLoginButton extends StatelessWidget {
       ),
       height: 44,
       padding: EdgeInsets.zero,
-      color: sns.bgColor, 
+      color: sns.bgColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
