@@ -92,7 +92,9 @@ dependencies:
   intl: ^0.18.0 # DATE
   flutter_launcher_icons: ^0.12.0 # 앱 로고
   flutter_isolate: ^2.0.4
-  flutter_dotenv: ^5.0.2
+  flutter_dotenv: ^5.0.2 # Private Secure Storage
+
+
 
 
 
