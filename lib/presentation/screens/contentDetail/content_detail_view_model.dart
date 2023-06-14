@@ -118,10 +118,10 @@ class ContentDetailViewModel extends BaseViewModel {
 
     contentDetailBinding.isDependenciesDeleted = true;
 
-    unregisterIfRegistered<ContentDetailViewModel>();
-    unregisterIfRegistered<LoadContentDetailInfoUseCase>();
-    unregisterIfRegistered<LoadContentCreditInfoUseCase>();
-    unregisterIfRegistered<LoadContentVideoInfoUseCase>();
+    safeUnregister<ContentDetailViewModel>();
+    safeUnregister<LoadContentDetailInfoUseCase>();
+    safeUnregister<LoadContentCreditInfoUseCase>();
+    safeUnregister<LoadContentVideoInfoUseCase>();
 
     Navigator.push(
       context,
@@ -144,9 +144,9 @@ class ContentDetailViewModel extends BaseViewModel {
 
   // 채널 상세 페이지로 이동
   void routeToChannelDetail() {
-    unregisterIfRegistered<ChannelDetailViewModel>();
+    safeUnregister<ChannelDetailViewModel>();
 
-    unregisterIfRegistered<LoadPagedChannelContentsUseCase>();
+    safeUnregister<LoadPagedChannelContentsUseCase>();
 
     channelDetailBinding.isDependenciesDeleted = true;
 
@@ -217,6 +217,7 @@ class ContentDetailViewModel extends BaseViewModel {
       context: context,
       useSafeArea: true,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) {
         return EpisodeBottomSheet(
             videos: videoInfo!.videos,
@@ -253,8 +254,6 @@ class ContentDetailViewModel extends BaseViewModel {
       },
     );
   }
-
-
 
   // 콘텐츠 비디오 정보 호출
   Future<void> _fetchVideoInfo() async {
@@ -346,7 +345,6 @@ class ContentDetailViewModel extends BaseViewModel {
     );
   }
 
-
   /// Routing Method
   // 전달 받은 컨텐츠 유튜브 id 값으로 youtubeApp 실행
   Future<void> goToContent() async {
@@ -384,7 +382,6 @@ class ContentDetailViewModel extends BaseViewModel {
 
     /// NOTE 호출 순서 주의 [_fetchContentMainInfo]가
     /// 무조건 선행 되어야 함
-    ///
     await _fetchContentMainInfo();
     await Future.wait([
       _fetchVideoInfo(),

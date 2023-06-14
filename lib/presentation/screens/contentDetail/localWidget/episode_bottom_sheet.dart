@@ -20,96 +20,103 @@ class EpisodeBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppInset.horizontal16,
-      child: Wrap(
-        children: [
-          Container(
-            height: 48,
-            decoration: const BoxDecoration(
-              color: AppColor.gray07,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+    return SafeArea(
+      child: Padding(
+        padding: AppInset.horizontal16 +
+            EdgeInsets.only(bottom: SizeConfig.to.bottomInset == 0 ? 12 : 0),
+        child: Wrap(
+          children: [
+            Container(
+              height: 48,
+              decoration: const BoxDecoration(
+                color: AppColor.gray07,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+              ),
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  '영상 선택',
+                  style: AppTextStyle.alert2.copyWith(color: AppColor.gray03),
+                ),
               ),
             ),
-            width: double.infinity,
-            child: Center(
-              child: Text(
-                '영상 선택',
-                style: AppTextStyle.alert2.copyWith(color: AppColor.gray03),
-              ),
-            ),
-          ),
-          Container(
-            height: 0.5,
-            width: double.infinity,
-            color: AppColor.gray06,
-          ),
-          ListView.separated(
-            separatorBuilder: (_, __) => Container(
+            Container(
               height: 0.5,
               width: double.infinity,
               color: AppColor.gray06,
             ),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: videos.length,
-            itemBuilder: (context, index) {
-              final bool isLastItem = videos.length == index + 1;
-              return MaterialButton(
-                color: AppColor.gray07,
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                  borderRadius: isLastItem
-                      ? const BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12),
-                        )
-                      : BorderRadius.zero,
-                ),
-                onPressed: () {
-                  onOptionTapped(index);
-                },
-                child: SizedBox(
-                  height: 56,
-                  child: Center(
-                    child: Text(
-                      contentType.isMovie ? '${index + 1}부' : '시즌 ${index + 1}',
-                      style: AppTextStyle.title2.copyWith(color: AppColor.main),
+            ListView.separated(
+              separatorBuilder: (_, __) => Container(
+                height: 0.5,
+                width: double.infinity,
+                color: AppColor.gray06,
+              ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: videos.length,
+              itemBuilder: (context, index) {
+                final bool isLastItem = videos.length == index + 1;
+                return MaterialButton(
+                  color: AppColor.gray07,
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: isLastItem
+                        ? const BorderRadius.only(
+                            bottomLeft: Radius.circular(12),
+                            bottomRight: Radius.circular(12),
+                          )
+                        : BorderRadius.zero,
+                  ),
+                  onPressed: () {
+                    onOptionTapped(index);
+                  },
+                  child: SizedBox(
+                    height: 56,
+                    child: Center(
+                      child: Text(
+                        contentType.isMovie
+                            ? '${index + 1}부'
+                            : '시즌 ${index + 1}',
+                        style:
+                            AppTextStyle.title2.copyWith(color: AppColor.main),
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          ),
-
-          AppSpace.size8,
-          // 하단 버튼
-          MaterialButton(
-            color: AppColor.gray07,
-            padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+                );
+              },
             ),
-            onPressed: () {},
-            child: const SizedBox(
-              height: 56,
-              child: Center(
-                child: Text(
-                  '닫기',
-                  style: TextStyle(
-                    color: AppColor.white,
-                    fontFamily: 'pretendard_regular',
-                    fontSize: 14,
-                    letterSpacing: -0.2,
+
+            AppSpace.size8,
+            // 하단 버튼
+            MaterialButton(
+              color: AppColor.gray07,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              onPressed: () {},
+              child: const SizedBox(
+                height: 56,
+                child: Center(
+                  child: Text(
+                    '닫기',
+                    style: TextStyle(
+                      color: AppColor.white,
+                      fontFamily: 'pretendard_regular',
+                      fontSize: 14,
+                      letterSpacing: -0.2,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+

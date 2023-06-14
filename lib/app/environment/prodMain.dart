@@ -11,8 +11,8 @@ void main() async {
   await dotenv.load();
 
   // Isolate 토큰 생성 및 초기화
-  final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
-  BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
+  // final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
+  // BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
 
   /// FireBase 초기화
   // Firebase Crashlytics 설정

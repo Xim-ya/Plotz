@@ -8,7 +8,7 @@ class ContentDetailBinding extends Bindings {
   void dependencies() {
     super.dependencies();
 
-    locator.registerFactory(() => ContentDetailViewModel(
+    safeRegisterFactory<ContentDetailViewModel>(() => ContentDetailViewModel(
           channelRepository: locator<ChannelRepository>(),
           loadContentMainDescription: locator<LoadContentDetailInfoUseCase>(),
           loadContentCreditInfo: locator<LoadContentCreditInfoUseCase>(),
@@ -18,20 +18,22 @@ class ContentDetailBinding extends Bindings {
           loadContentVideoInfoUseCase: locator<LoadContentVideoInfoUseCase>(),
         ));
 
-    locator.registerFactory(
+    safeRegisterFactory<LoadContentDetailInfoUseCase>(
         () => LoadContentDetailInfoUseCase(locator<TmdbRepository>()));
-    locator.registerFactory(
+
+    safeRegisterFactory<LoadContentCreditInfoUseCase>(
         () => LoadContentCreditInfoUseCase(locator<TmdbRepository>()));
-    locator.registerFactory(
+
+    safeRegisterFactory<LoadContentVideoInfoUseCase>(
         () => LoadContentVideoInfoUseCase(locator<ContentDataSource>()));
   }
 
   @override
   void unRegisterDependencies() {
     super.unRegisterDependencies();
-    unregisterIfRegistered<ContentDetailViewModel>();
-    unregisterIfRegistered<LoadContentDetailInfoUseCase>();
-    unregisterIfRegistered<LoadContentCreditInfoUseCase>();
-    unregisterIfRegistered<LoadContentVideoInfoUseCase>();
+    safeUnregister<ContentDetailViewModel>();
+    safeUnregister<LoadContentDetailInfoUseCase>();
+    safeUnregister<LoadContentCreditInfoUseCase>();
+    safeUnregister<LoadContentVideoInfoUseCase>();
   }
 }

@@ -13,10 +13,9 @@ class ContentInfoTabView extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const <Widget>[
+      children: <Widget>[
         AppSpace.size36,
 
         // 비디오 정보 (조회수, 좋아요, 업로드일 )

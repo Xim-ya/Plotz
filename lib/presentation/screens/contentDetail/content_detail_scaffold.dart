@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -112,7 +111,7 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
                             Positioned(
                               bottom: 0,
                               child: Container(
-                                  width: SizeConfig.to.screenWidth,
+                                width: SizeConfig.to.screenWidth,
                                 height: 88,
                                 decoration: const BoxDecoration(
                                     gradient: AppGradient.singleBottomToTop),
@@ -207,7 +206,4 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
       },
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

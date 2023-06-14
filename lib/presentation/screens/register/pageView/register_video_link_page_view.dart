@@ -118,7 +118,7 @@ class _InputField extends BaseView<RegisterViewModel> {
               selector: (context, vm) => vm.showVideoFormCloseBtn,
               builder: (context, showCloseBtn, _) {
                 return Expanded(
-                  child: SearchBar(
+                  child: AppSearchBar(
                     hintText: 'ex)https://www.youtube.com/watch?v=HgyUW1dWkgo',
                     focusNode: vm(context).videoFormFocusNode,
                     showPrefixIcon: false,
