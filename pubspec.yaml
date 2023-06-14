@@ -4,7 +4,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.5+10
+version: 1.0.6+11
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -92,7 +92,9 @@ dependencies:
   intl: ^0.18.0 # DATE
   flutter_launcher_icons: ^0.12.0 # 앱 로고
   flutter_isolate: ^2.0.4
-  flutter_dotenv: ^5.0.2
+  flutter_dotenv: ^5.0.2 # Private Secure Storage
+
+
 
 
 

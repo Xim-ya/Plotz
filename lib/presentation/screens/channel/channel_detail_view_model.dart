@@ -49,10 +49,10 @@ class ChannelDetailViewModel extends BaseViewModel {
       subscribersCount: channelInfo.subscribersCount,
     );
 
-    unregisterIfRegistered<ContentDetailViewModel>();
-    unregisterIfRegistered<LoadContentDetailInfoUseCase>();
-    unregisterIfRegistered<LoadContentCreditInfoUseCase>();
-    unregisterIfRegistered<LoadContentVideoInfoUseCase>();
+    safeUnregister<ContentDetailViewModel>();
+    safeUnregister<LoadContentDetailInfoUseCase>();
+    safeUnregister<LoadContentCreditInfoUseCase>();
+    safeUnregister<LoadContentVideoInfoUseCase>();
 
     final prevLocation =
         GoRouter.of(context).routeInformationProvider.value.location;
@@ -102,9 +102,9 @@ class ChannelDetailViewModel extends BaseViewModel {
   @override
   void onDispose() {
     super.onDispose();
-    unregisterIfRegistered<ContentDetailViewModel>();
-    unregisterIfRegistered<LoadContentDetailInfoUseCase>();
-    unregisterIfRegistered<LoadContentCreditInfoUseCase>();
-    unregisterIfRegistered<LoadContentImgListUseCase>();
+    safeUnregister<ContentDetailViewModel>();
+    safeUnregister<LoadContentDetailInfoUseCase>();
+    safeUnregister<LoadContentCreditInfoUseCase>();
+    safeUnregister<LoadContentImgListUseCase>();
   }
 }

@@ -40,7 +40,6 @@ class ContentDetailScreen extends BaseView<ContentDetailViewModel> {
       const Tab(text: '원작 정보', height: 48),
     ];
   }
-
 }
 
 class _PlayBtn extends BaseView<ContentDetailViewModel> {
