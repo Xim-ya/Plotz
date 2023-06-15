@@ -11,11 +11,13 @@ class EpisodeBottomSheet extends StatelessWidget {
       {Key? key,
       required this.videos,
       required this.onOptionTapped,
+      required this.onCloseBtnTapped,
       required this.contentType})
       : super(key: key);
 
   final List<ContentVideo> videos;
   final void Function(int) onOptionTapped;
+  final VoidCallback onCloseBtnTapped;
   final ContentType contentType;
 
   @override
@@ -97,7 +99,7 @@ class EpisodeBottomSheet extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              onPressed: () {},
+              onPressed: onCloseBtnTapped,
               child: const SizedBox(
                 height: 56,
                 child: Center(
@@ -119,4 +121,3 @@ class EpisodeBottomSheet extends StatelessWidget {
     );
   }
 }
-
