@@ -220,6 +220,7 @@ class ContentDetailViewModel extends BaseViewModel {
       isScrollControlled: true,
       builder: (context) {
         return EpisodeBottomSheet(
+            onCloseBtnTapped: context.pop,
             videos: videoInfo!.videos,
             onOptionTapped: onBottomSheetOptionTapped,
             contentType: contentType);
