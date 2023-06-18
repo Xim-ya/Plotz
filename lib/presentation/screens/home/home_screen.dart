@@ -21,6 +21,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
 
   @override
   Widget buildScreen(BuildContext context) {
+
     return HomeScaffold(
       stackedTopGradient: _buildStackedTopGradient(context),
       stackedAppBar: _buildStackedAppBar(context),

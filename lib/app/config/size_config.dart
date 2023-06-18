@@ -14,7 +14,7 @@ class SizeConfig {
   late double screenWidth; // 디바이스 넓이
   late double screenHeight; // 디바이스 높이
   late double responsiveBottomInset; // 반응형 하단 Safe Area 하단 Inset
-
+  
   // 초기화 구문
   void init(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);

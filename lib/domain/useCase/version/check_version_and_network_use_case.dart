@@ -97,6 +97,7 @@ class CheckVersionAndNetworkUseCase
     );
   }
 
+
   void somethingIsWrongModal(BuildContext context) {
     showDialog(
       context: context,
