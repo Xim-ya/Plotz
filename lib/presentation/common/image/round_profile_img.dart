@@ -21,7 +21,7 @@ class RoundProfileImg extends StatelessWidget {
       );
     } else {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(size / 2),
         child: imgUrl.hasData
             ? CachedNetworkImage(
                 height: size,

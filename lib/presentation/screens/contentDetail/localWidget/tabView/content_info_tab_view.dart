@@ -158,9 +158,9 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
       children: [
         RoundProfileImg.createSkeleton(size: 64),
         AppSpace.size12,
-        Column(
+        const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             SkeletonBox(
               padding: AppInset.vertical2,
               height: 18,
