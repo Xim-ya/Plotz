@@ -17,10 +17,10 @@ class AppDialog extends Dialog {
     Key? key,
     this.isDividedBtnFormat = false,
     this.description,
-    this.onLeftBtnClicked,
-    this.leftBtnContent,
     this.subTitle,
-    required this.btnContent,
+    this.onLeftBtnClicked,
+    this.leftBtnText,
+    required this.btnText,
     required this.onBtnClicked,
     required this.title,
   }) : super(key: key);
@@ -37,7 +37,7 @@ class AppDialog extends Dialog {
         subTitle: subTitle,
         onBtnClicked: onBtnClicked,
         description: description,
-        btnContent: btnContent,
+        btnText: btnContent,
       );
 
   factory AppDialog.dividedBtn({
@@ -56,17 +56,18 @@ class AppDialog extends Dialog {
         onBtnClicked: onRightBtnClicked,
         onLeftBtnClicked: onLeftBtnClicked,
         description: description,
-        leftBtnContent: leftBtnContent,
-        btnContent: rightBtnContent,
+        leftBtnText: leftBtnContent,
+        btnText: rightBtnContent,
       );
+
 
   final bool isDividedBtnFormat;
   final String title;
   final String? description;
   final VoidCallback onBtnClicked;
   final VoidCallback? onLeftBtnClicked;
-  final String? btnContent;
-  final String? leftBtnContent;
+  final String? btnText;
+  final String? leftBtnText;
   final String? subTitle;
 
   @override
@@ -78,7 +79,6 @@ class AppDialog extends Dialog {
       child: Container(
         margin: AppInset.horizontal16,
         constraints: const BoxConstraints(minHeight: 120, maxWidth: 256),
-        // constraints: const BoxConstraints(minHeight: 120, maxWidth: 290),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: AppColor.strongGrey,
@@ -150,7 +150,7 @@ class AppDialog extends Dialog {
                         onPressed: onLeftBtnClicked,
                         child: Center(
                           child: Text(
-                            leftBtnContent!,
+                            leftBtnText!,
                             style: AppTextStyle.title3
                                 .copyWith(color: AppColor.white),
                           ),
@@ -172,7 +172,7 @@ class AppDialog extends Dialog {
                         onPressed: onBtnClicked,
                         child: Center(
                           child: Text(
-                            btnContent ?? '확인',
+                            btnText ?? '확인',
                             style: AppTextStyle.title3
                                 .copyWith(color: AppColor.white),
                           ),
@@ -184,7 +184,7 @@ class AppDialog extends Dialog {
               ),
 
             // 하나의 버튼으로 구성되어 있는 다이어로그 라면 아래 위젯을 리턴
-            if (isDividedBtnFormat == false)
+            if (!isDividedBtnFormat)
               MaterialButton(
                 padding: EdgeInsets.zero,
                 shape: const RoundedRectangleBorder(
@@ -195,7 +195,7 @@ class AppDialog extends Dialog {
                 ),
                 onPressed: onBtnClicked,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     border: Border(
                       top: BorderSide(
                         color: AppColor.gray06,
@@ -206,7 +206,7 @@ class AppDialog extends Dialog {
                   height: 50,
                   child: Center(
                     child: Text(
-                      btnContent ?? '확인',
+                      btnText ?? '확인',
                       style:
                           AppTextStyle.title3.copyWith(color: AppColor.white),
                     ),
