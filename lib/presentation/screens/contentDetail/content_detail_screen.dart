@@ -217,7 +217,7 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
     return Selector<ContentDetailViewModel,
         Tuple3<bool, ContentVideoModel?, int>>(
       selector: (context, vm) =>
-          Tuple3(vm.showBackBtnOnTop, vm.videoInfo, vm.selectedEpisode),
+          Tuple3(vm.hideAppBarColor, vm.videoInfo, vm.selectedEpisode),
       builder: (context, value, _) {
         return Stack(
           children: [
@@ -230,7 +230,7 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
             ),
 
             AnimatedContainer(
-              duration: const Duration(milliseconds: 120),
+              duration: const Duration(microseconds: 50),
               padding: EdgeInsets.only(top: SizeConfig.to.statusBarHeight),
               height: 48 + SizeConfig.to.statusBarHeight,
               color: value.item1 ? Colors.transparent : AppColor.black,

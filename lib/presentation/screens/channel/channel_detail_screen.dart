@@ -39,6 +39,10 @@ class _PagedPosterGridView extends BaseView<ChannelDetailViewModel> {
   @override
   Widget build(BuildContext context) {
     return PagedGridListView<ContentPosterShell>(
+      crossAxisCount: 3,
+      mainAxisSpacing: 24,
+      crossAxisSpacing: 9,
+      childAspectRatio: 109 / 200,
       pagingController: vm(context).pagingController,
       itemBuilder: (BuildContext context, ContentPosterShell item, int index) {
         return GestureDetector(

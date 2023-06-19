@@ -83,8 +83,8 @@ class ContentDetailViewModel extends BaseViewModel {
   // Sliver Custom 스크롤 Offset
   double scrollOffset = 0;
 
-  // 상단 '뒤로가기' 버튼 Visibility 여부
-  bool showBackBtnOnTop = true;
+  // 앱바 배경색 노출 여부
+  bool hideAppBarColor = true;
 
   /* 메소드 */
   // 탭 바 버튼이 클릭 되었을 때
@@ -172,19 +172,19 @@ class ContentDetailViewModel extends BaseViewModel {
   // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
   void setBackBtnVisibility() {
     if (scrollController.offset >= 430 &&
-        showBackBtnOnTop == true &&
+        hideAppBarColor == true &&
         scrollController.position.userScrollDirection ==
             ScrollDirection.reverse) {
-      showBackBtnOnTop = false;
+      hideAppBarColor = false;
       notifyListeners();
       return;
     } else if (scrollController.offset >= 486) {
       return;
     } else {
-      if (showBackBtnOnTop == false &&
+      if (hideAppBarColor == false &&
           scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
-        showBackBtnOnTop = true;
+        hideAppBarColor = true;
         notifyListeners();
       }
     }
