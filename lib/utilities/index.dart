@@ -253,6 +253,7 @@ export 'package:soon_sak/presentation/screens/splash/splash_screen.dart';
 export 'package:soon_sak/presentation/screens/splash/splash_view_model.dart';
 export 'package:soon_sak/presentation/screens/curation/localWidget/curation_grid_item_view.dart';
 export 'package:soon_sak/presentation/base/state_box.dart';
+export 'package:soon_sak/presentation/common/skeleton_box.dart';
 
 // Utilities
 export 'package:soon_sak/utilities/extensions/random_list_item_extension.dart';

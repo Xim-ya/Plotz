@@ -97,7 +97,6 @@ class CheckVersionAndNetworkUseCase
     );
   }
 
-
   void somethingIsWrongModal(BuildContext context) {
     showDialog(
       context: context,
@@ -129,7 +128,7 @@ class CheckVersionAndNetworkUseCase
   void showNeedUpdateModal(BuildContext context) {
     showDialog(
       context: context,
-      builder: (_) =>       AppDialog.singleBtn(
+      builder: (_) => AppDialog.singleBtn(
         onBtnClicked: () async {
           context.pop();
           if (Platform.isIOS) {
@@ -153,30 +152,5 @@ class CheckVersionAndNetworkUseCase
         description: '최신 기능을 이용하기 위해 업데이트를 진행해주세요',
       ),
     );
-    // showDialog(
-    //   context: context,
-    //   builder: (_) =>       AppDialog.singleBtn(
-    //     onBtnClicked: () async {
-    //       context.pop();
-    //       if (Platform.isIOS) {
-    //         await launchUrl(
-    //           Uri.parse(
-    //             'https://apps.apple.com/kr/app/%EC%88%9C%EC%82%AD/id1671820197',
-    //           ),
-    //           mode: LaunchMode.externalApplication,
-    //         );
-    //       } else if (Platform.isAndroid) {
-    //         await launchUrl(
-    //           Uri.parse(
-    //             'https://play.google.com/store/apps/details?id=com.soon_sak',
-    //           ),
-    //           mode: LaunchMode.externalApplication,
-    //         );
-    //       }
-    //     },
-    //     title: '업데이트 안내',
-    //     description: '앱의 최신 버전이 출시되었습니다.\n최신 기능을 이용하기 위해 업데이트를 진행해주세요',
-    //   ),
-    // );
   }
 }

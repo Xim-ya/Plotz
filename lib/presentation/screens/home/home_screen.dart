@@ -522,8 +522,8 @@ class _ChannelSlider extends BaseView<HomeViewModel> {
                         ),
                       );
                     } else {
-                      return Column(
-                        children: const <Widget>[
+                      return const Column(
+                        children: <Widget>[
                           SkeletonBox(
                             borderRadius: 44,
                             height: 88,

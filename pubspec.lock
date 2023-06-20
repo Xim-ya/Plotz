@@ -321,14 +321,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  easy_isolate_helper:
+  easy_isolate_mixin:
     dependency: "direct main"
     description:
-      name: easy_isolate_helper
-      sha256: "6e1bf05ab450463f9981ba4288c5f983d9b5e77846d20a944a4b679124fc9011"
+      name: easy_isolate_mixin
+      sha256: d87d73597d8196bff6abf5b55ce1340b708fb3143c664c1384af30cb847e6879
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   either_dart:
     dependency: "direct main"
     description:

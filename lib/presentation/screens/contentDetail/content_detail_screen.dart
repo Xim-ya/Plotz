@@ -152,18 +152,20 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
 
                   // 개봉년도 & 장르
                   RichText(
-                    text: TextSpan(children: <TextSpan>[
-                      TextSpan(
-                        text: value.item3.hasData ? '${value.item3} · ' : '',
-                        style: AppTextStyle.alert2
-                            .copyWith(color: AppColor.gray03),
-                      ),
-                      TextSpan(
-                        text: value.item4,
-                        style: AppTextStyle.alert2
-                            .copyWith(color: AppColor.gray03),
-                      ),
-                    ]),
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: value.item3.hasData ? '${value.item3} · ' : '',
+                          style: AppTextStyle.alert2
+                              .copyWith(color: AppColor.gray03),
+                        ),
+                        TextSpan(
+                          text: value.item4,
+                          style: AppTextStyle.alert2
+                              .copyWith(color: AppColor.gray03),
+                        ),
+                      ],
+                    ),
                   ),
                   AppSpace.size16,
 

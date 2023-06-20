@@ -20,11 +20,6 @@ class LoadPagedChannelContentsUseCase {
   /* Repository */
   final ChannelRepository _channelRepository;
 
-  @override
-  Future<ChannelContentList> call(ChannelContentsRequest request) {
-    // TODO: implement call
-    throw UnimplementedError();
-  }
 
   Future<void> _fetchPage(String channelId) async {
     final response = await _channelRepository.loadPagedChannelContents(

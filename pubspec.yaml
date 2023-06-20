@@ -56,7 +56,7 @@ dependencies:
   go_router: ^7.0.1
 
   # Ioslate
-  easy_isolate_helper: ^1.0.0
+  easy_isolate_mixin: ^1.0.1
 
   #Firebase
   firebase_core: ^2.4.1
@@ -70,8 +70,6 @@ dependencies:
   sembast: ^3.4.0+6
   path: ^1.8.0
   path_provider: ^2.0.11
-
-
 
 
   #Auth
@@ -93,10 +91,6 @@ dependencies:
   flutter_launcher_icons: ^0.12.0 # 앱 로고
   flutter_isolate: ^2.0.4
   flutter_dotenv: ^5.0.2 # Private Secure Storage
-
-
-
-
 
 
 dev_dependencies:
