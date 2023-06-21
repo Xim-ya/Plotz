@@ -100,9 +100,9 @@ class _ExpandableTextViewState extends State<ExpandableTextView> {
                       color: Colors.red,
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromRGBO(15, 15, 15, 0),
-                          Color.fromRGBO(15, 15, 15, 1),
-                          Color.fromRGBO(15, 15, 15, 1),
+                          Color.fromRGBO(0, 0, 0, 0),
+                          Color.fromRGBO(0, 0, 0, 1),
+                          Color.fromRGBO(0, 0, 0, 1),
                         ],
                         stops: [0, 0.36, 1],
                       ),

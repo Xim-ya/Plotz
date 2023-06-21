@@ -6,8 +6,7 @@ import 'package:soon_sak/app/config/color_config.dart';
 import 'package:soon_sak/presentation/base/base_view_model.dart';
 
 @immutable
-abstract class BaseScreen<T extends BaseViewModel>
-    extends StatelessWidget {
+abstract class BaseScreen<T extends BaseViewModel> extends StatelessWidget {
   const BaseScreen({Key? key}) : super(key: key);
 
   @override

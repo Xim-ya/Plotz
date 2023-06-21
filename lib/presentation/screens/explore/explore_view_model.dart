@@ -76,7 +76,7 @@ class ExploreViewModel extends BaseViewModel {
 
   /// 컨텐츠 데이터 추가 호출
   Future<void> loadMoreContents(int swiperIndex) async {
-    if (_exploreContentsUseCase.moreCallIsAllowed == true) {
+    if (_exploreContentsUseCase.extraPagedCallAllowed == true) {
       final response = await _exploreContentsUseCase.loadMoreContents();
       await response.fold(
         onSuccess: (data) async {

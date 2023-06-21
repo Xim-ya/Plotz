@@ -35,7 +35,8 @@ mixin FirestoreHelper {
   // 특정 필드 값
 
   // 특정 필드 값을 가지고 있는 documents를 가져오는 메소드
-  Future<List<DocumentSnapshot>> getDocumentsByFieldValue(String collectionName,
+  Future<List<DocumentSnapshot>> getPagedDocumentsByFieldValue(
+      String collectionName,
       {required String fieldName,
       required dynamic fieldValue,
       required int pageSize,
@@ -100,6 +101,23 @@ mixin FirestoreHelper {
         .get();
 
     return snapshot.docs.first;
+  }
+
+  /// paged 방식으로 collection의 documents 데이터를 가져오는 메소드
+  Future<List<DocumentSnapshot>> getPagedDocuments(String collectionName,
+      {required int pageSize, required DocumentSnapshot? lastDocument}) async {
+    if (lastDocument.hasData) {
+      QuerySnapshot snapshot = await _db
+          .collection(collectionName)
+          .limit(pageSize)
+          .startAfterDocument(lastDocument!)
+          .get();
+      return snapshot.docs;
+    } else {
+      QuerySnapshot snapshot =
+          await _db.collection(collectionName).limit(pageSize).get();
+      return snapshot.docs;
+    }
   }
 
   /// subCollection document 데이터 리스트를 불러오는 메소드
