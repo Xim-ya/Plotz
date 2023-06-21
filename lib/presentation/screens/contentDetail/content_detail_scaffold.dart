@@ -114,7 +114,8 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
                                 width: SizeConfig.to.screenWidth,
                                 height: 88,
                                 decoration: const BoxDecoration(
-                                    gradient: AppGradient.singleBottomToTop),
+                                  gradient: AppGradient.bottomToTop,
+                                ),
                               ),
                             ),
                           ],

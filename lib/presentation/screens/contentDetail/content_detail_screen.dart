@@ -227,7 +227,7 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
             Positioned(
               child: Container(
                 decoration: const BoxDecoration(
-                    gradient: AppGradient.singleTopToBottom),
+                    gradient: AppGradient.topToBottom),
               ),
             ),
 

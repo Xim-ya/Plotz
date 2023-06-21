@@ -30,7 +30,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 width: SizeConfig.to.screenWidth,
                 height: 88,
                 decoration: const BoxDecoration(
-                  gradient: AppGradient.singleTopToBottom,
+                  gradient: AppGradient.topToBottom,
                 ),
               ),
             ),
@@ -40,7 +40,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 height: 300,
                 width: SizeConfig.to.screenWidth,
                 decoration: const BoxDecoration(
-                  gradient: AppGradient.singleBottomToTop,
+                  gradient: AppGradient.bottomToTop,
                 ),
               ),
             ),
@@ -50,7 +50,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 height: 300,
                 width: SizeConfig.to.screenWidth,
                 decoration: const BoxDecoration(
-                  gradient: AppGradient.singleBottomToTop,
+                  gradient: AppGradient.bottomToTop,
                 ),
               ),
             ),

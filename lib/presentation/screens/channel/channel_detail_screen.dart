@@ -86,7 +86,7 @@ class _PagedPosterGridView extends BaseView<ChannelDetailViewModel> {
                             ),
                             height: 16,
                             decoration: BoxDecoration(
-                                color: const Color.fromRGBO(15, 15, 15, 0.8),
+                                color: const Color.fromRGBO(0, 0, 0, 0.8),
                                 borderRadius: BorderRadius.circular(4)),
                             child: Center(
                               child: Text(
@@ -100,7 +100,7 @@ class _PagedPosterGridView extends BaseView<ChannelDetailViewModel> {
                     Positioned(
                       bottom: -33,
                       child: SizedBox(
-                        width: (SizeConfig.to.screenWidth -32 - 48) /3,
+                        width: (SizeConfig.to.screenWidth - 32 - 48) / 3,
                         height: 28,
                         child: Text(
                           item.videoTitle ?? '내용 없음',
@@ -118,21 +118,7 @@ class _PagedPosterGridView extends BaseView<ChannelDetailViewModel> {
                   ],
                 ),
               ),
-
-              // Text(
-              //   item.videoTitle ?? '내용 없음',
-              //   maxLines: 2,
-              //   textAlign: TextAlign.left,
-              //   overflow: TextOverflow.ellipsis,
-              //   style: PretendardTextStyle.regular(
-              //     color: AppColor.gray02,
-              //     size: 11,
-              //     height: 14,
-              //   ),
-              // ),
               const Spacer(),
-
-              // style: AppTextStyle.desc.copyWith(color: AppColor.gray02),
             ],
           ),
         );
