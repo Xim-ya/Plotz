@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
+import 'package:soon_sak/data/api/channel/response/channel_paged_response.dart';
 import 'package:soon_sak/data/dataSource/channel/channel_data_source.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_content_list.dart';
@@ -17,6 +19,17 @@ class ChannelRepositoryImpl implements ChannelRepository {
       final response = await _dataSource.loadChannelsBaseOnSubscribers();
       return Result.success(
           response.map((e) => ChannelModel.fromResponse(e)).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ChannelPagedResponse>> loadPagedChannels(
+      DocumentSnapshot? lastDocument) async {
+    try {
+      final response = await _dataSource.loadPagedChannels(lastDocument);
+      return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
     }
