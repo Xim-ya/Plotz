@@ -1,6 +1,7 @@
 import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
 import 'package:soon_sak/data/api/channel/response/channel_content_item_response.dart';
+import 'package:soon_sak/data/api/channel/response/channel_paged_response.dart';
 import 'package:soon_sak/data/api/channel/response/channel_response.dart';
 
 import 'package:soon_sak/data/mixin/fire_store_helper_mixin.dart';
@@ -10,11 +11,20 @@ import 'package:soon_sak/utilities/index.dart';
 
 class ChannelApiImpl with FirestoreHelper implements ChannelApi {
   final _db = AppFireStore.getInstance;
-
   final TmdbRepository _tmdbRepository = locator<TmdbRepository>();
 
+
   @override
-  Future<List<ChannelBasicResponse>> loadChannelsBaseOnSubscribers() async {
+  Future<ChannelPagedResponse> loadPagedChannels(
+      DocumentSnapshot? lastDocument) async {
+    final docs = await getPagedDocuments('channel',
+        pageSize: 10, lastDocument: lastDocument);
+
+    return ChannelPagedResponse.fromDocument(docs);
+  }
+
+  @override
+  Future<List<ChannelBasicResponse>> loadChannelSortedByContentCount() async {
     final docs = await getDocsByOrderWithLimit(
       'channel',
       orderFieldName: 'totalContent',
@@ -27,7 +37,7 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
   @override
   Future<List<ChannelContentItemResponse>> loadPagedChannelContents(
       ChannelContentsRequest request) async {
-    final docs = await getDocumentsByFieldValue(
+    final docs = await getPagedDocumentsByFieldValue(
       'content',
       fieldName: 'channelRef',
       fieldValue: AppFireStore.getInstance.doc('/channel/${request.channelId}'),
@@ -48,18 +58,13 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
     );
 
     final DocumentReference<Map<String, dynamic>> docRef =
-    doc.get('channelRef');
+        doc.get('channelRef');
     final docData = await docRef.get();
     return ChannelBasicResponse.fromDocument(docData);
-
-
   }
 
   @override
   Future<void> setChannelField() async {
-
-
-
     // 채널 snapshot
     QuerySnapshot channelSnapshot = await _db.collection('channel').get();
 
@@ -257,7 +262,5 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
         }
       }
     }
-
-    print("영읽남 개수 ${matchingDocumentsCount}");
   }
 }
