@@ -42,4 +42,7 @@ abstract class AppRoutes {
 
   // 유저 채널 취향 정보 수집(온보딩 2)
   static const onboarding2 = '/onboarding2';
+
+  /// 수집 종료 이후 Plotz 인트로 스크린
+  static const onboarding3 = '/onboarding3';
 }

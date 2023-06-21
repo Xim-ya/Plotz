@@ -7,6 +7,7 @@ import 'package:soon_sak/presentation/screens/onboarding/channel/channel_prefere
 import 'package:soon_sak/presentation/screens/onboarding/channel/channel_preferences_screen.dart';
 import 'package:soon_sak/presentation/screens/onboarding/content/content_preferences_binding.dart';
 import 'package:soon_sak/presentation/screens/onboarding/content/content_preferences_screen.dart';
+import 'package:soon_sak/presentation/screens/onboarding/intro/intro_screen.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
 import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
 import 'package:soon_sak/presentation/screens/search/search_binding.dart';
@@ -35,6 +36,10 @@ abstract class AppPages {
         binding: ChannelPreferencesBinding(),
         newBuilder: (_, __) => const ChannelPreferencesScreen(),
         prevPath: const [AppRoutes.onboarding1],
+      ),
+      GoRoute(
+        path: AppRoutes.onboarding3,
+        builder: (_, __) => const IntroScreen(),
       ),
       GoRoute(
         path: '/',
