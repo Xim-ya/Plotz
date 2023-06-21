@@ -34,14 +34,14 @@ class ContentPreferenceViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void onContinueBtnTapped() {
+  void onNextBtnTapped() {
     if (isSufficient) {
       context.push(AppRoutes.onboarding2);
     } else {}
   }
 
-  // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
-  void setAppBarVisibility() {
+  // 하단 상단 Gradient Box Visibility 여부를 조절하는 메소드.
+  void setGradientBoxVisibility() {
     if (scrollController.offset >= 11 &&
         hideGradient == true &&
         scrollController.position.userScrollDirection ==
@@ -66,6 +66,6 @@ class ContentPreferenceViewModel extends BaseViewModel {
     super.onInit();
     _loadPagedPreferenceContentList.initUseCase();
     scrollController = ScrollController();
-    scrollController.addListener(setAppBarVisibility);
+    scrollController.addListener(setGradientBoxVisibility);
   }
 }

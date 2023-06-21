@@ -12,6 +12,14 @@ class ContentPreferencesScreen extends BaseScreen<ContentPreferenceViewModel> {
   bool get setBottomSafeArea => false;
 
   @override
+  PreferredSizeWidget? buildAppBar(BuildContext context) {
+    return const PreferredSize(
+      preferredSize: Size(0, 48),
+      child: SizedBox.expand(),
+    );
+  }
+
+  @override
   Widget buildScreen(BuildContext context) {
     return Stack(
       children: [
@@ -24,7 +32,7 @@ class ContentPreferencesScreen extends BaseScreen<ContentPreferenceViewModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppSpace.size56,
+                    AppSpace.size8,
                     Text(
                       '당신의 취향을\n알려주세요.',
                       style: AppTextStyle.headline1.copyWith(
@@ -102,29 +110,23 @@ class ContentPreferencesScreen extends BaseScreen<ContentPreferenceViewModel> {
             ],
           ),
         ),
-        // 상단 고정 앱바
-        Positioned(
-          top: 0,
-          child: Container(
-            color: AppColor.black,
-            width: SizeConfig.to.screenWidth,
-            height: 48,
-          ),
-        ),
+
+
         // Graident Box
         Selector<ContentPreferenceViewModel, bool>(
           selector: (_, vm) => vm.hideGradient,
           builder: (_, hideGradient, __) {
             return Positioned(
-              top: 48,
+              top: 0,
               child: IgnorePointer(
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   width: SizeConfig.to.screenWidth,
                   height: 88,
                   decoration: BoxDecoration(
+
                     gradient:
-                        hideGradient ? null : AppGradient.singleTopToBottom,
+                        hideGradient ? null : AppGradient.topToBottom,
                   ),
                 ),
               ),
@@ -138,7 +140,7 @@ class ContentPreferencesScreen extends BaseScreen<ContentPreferenceViewModel> {
               height: SizeConfig.to.screenHeight * 0.37,
               width: SizeConfig.to.screenWidth,
               decoration:
-                  const BoxDecoration(gradient: AppGradient.singleBottomToTop),
+                  const BoxDecoration(gradient: AppGradient.bottomToTop),
             ),
           ),
         ),
@@ -149,7 +151,7 @@ class ContentPreferencesScreen extends BaseScreen<ContentPreferenceViewModel> {
             clipBehavior: Clip.none,
             children: [
               MaterialButton(
-                onPressed: vm(context).onContinueBtnTapped,
+                onPressed: vm(context).onNextBtnTapped,
                 color: AppColor.gray07,
                 padding: EdgeInsets.only(bottom: SizeConfig.to.bottomInset),
                 minWidth: SizeConfig.to.screenWidth,
@@ -175,12 +177,34 @@ class ContentPreferencesScreen extends BaseScreen<ContentPreferenceViewModel> {
                 child: Align(
                   child: Selector<ContentPreferenceViewModel, int>(
                     selector: (_, vm) => vm.countOfSelectedContent,
-                    builder: (_, count, __) => Text(
-                      '$count/3',
-                      style: AppTextStyle.body2.copyWith(
-                        color: AppColor.main,
+                    builder: (_, count, __) => RichText(
+                      text: TextSpan(
+                        style: AppTextStyle.body2,
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '$count',
+                            style: TextStyle(
+                              color:
+                                  count > 0 ? AppColor.main : AppColor.gray02,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '/3',
+                            style: TextStyle(
+                              color:
+                                  count >= 3 ? AppColor.main : AppColor.gray02,
+                            ),
+                          )
+                        ],
                       ),
                     ),
+
+                    // Text(
+                    //   '$count/3',
+                    //   style: AppTextStyle.body2.copyWith(
+                    //     color: AppColor.main,
+                    //   ),
+                    // ),
                   ),
                 ),
               ),
