@@ -15,7 +15,7 @@ class IntroScreen extends StatelessWidget {
           Column(
             children: <Widget>[
               // 이미지
-              Stack(
+              Stack(  
                 children: [
                   Image.asset(
                     'assets/images/intro.png',
