@@ -1,4 +1,4 @@
-import 'package:soon_sak/app/di/app_binding.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:soon_sak/app/environment/environment.dart';
 import 'package:soon_sak/firebase_options.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -21,11 +21,12 @@ void main() async {
       // get_it dependecies setup`
       AppBinding.dependencies();
 
+      await Hive.initFlutter();
+
       await Firebase.initializeApp(
         name: dotenv.env['FIREBASE_KEY'],
         options: ProdFirebaseOptions.currentPlatform,
       );
-
 
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
