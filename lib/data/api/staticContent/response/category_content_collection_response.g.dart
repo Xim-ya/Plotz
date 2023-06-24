@@ -21,7 +21,7 @@ CategoryContentsResponse _$CategoryContentsResponseFromJson(
     CategoryContentsResponse(
       title: json['title'] as String,
       contents: (json['contents'] as List<dynamic>)
-          .map((e) => CategoryContentItemResponse.fromJson(
-              e as Map<String, dynamic>))
+          .map((e) =>
+              CategoryContentItemResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
