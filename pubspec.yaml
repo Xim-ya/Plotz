@@ -7,7 +7,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.8+13
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=3.0.0 <=3.0.3'
 
 dependencies:
   flutter:
@@ -67,9 +67,9 @@ dependencies:
   firebase_analytics: ^10.4.2
 
   #Local Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
   sembast: ^3.4.0+6
-  path: ^1.8.0
-  path_provider: ^2.0.11
 
 
   #Auth
@@ -100,6 +100,7 @@ dev_dependencies:
   # Generators
   build_runner: ^2.1.11
   json_serializable: ^6.5.4
+  hive_generator: ^2.0.0
   retrofit_generator:
 
 flutter:

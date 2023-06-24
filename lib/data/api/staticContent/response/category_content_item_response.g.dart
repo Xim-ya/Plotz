@@ -6,7 +6,7 @@ part of 'category_content_item_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CategoryContentItemResponse _$NewCategoryContentItemResponseFromJson(
+CategoryContentItemResponse _$CategoryContentItemResponseFromJson(
         Map<String, dynamic> json) =>
     CategoryContentItemResponse(
       id: json['id'] as String,

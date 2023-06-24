@@ -21,7 +21,7 @@ TopPositionedCategoryResponse _$TopPositionedCategoryResponseFromJson(
     TopPositionedCategoryResponse(
       title: json['title'] as String,
       items: (json['items'] as List<dynamic>)
-          .map((e) => CategoryContentItemResponse.fromJson(
-              e as Map<String, dynamic>))
+          .map((e) =>
+              CategoryContentItemResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

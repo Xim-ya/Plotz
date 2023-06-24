@@ -1,22 +1,28 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/local/box/user/user_box.dart';
+import 'package:soon_sak/data/local/dao/user/user_dao.dart';
+
 import 'package:soon_sak/utilities/index.dart';
 
 class UserDataSourceImpl
     with FireStoreErrorHandlerMixin, FirebaseIsolateHelper
     implements UserDataSource {
-  UserDataSourceImpl({required UserApi api}) : _api = api;
+  UserDataSourceImpl({required UserApi api, required UserDao local})
+      : _api = api,
+        _local = local;
 
   final UserApi _api;
+  final UserDao _local;
 
   @override
-  Future<void> addUserQurationInfo({
-    required String qurationDocId,
+  Future<void> addUserCurationInfo({
+    required String curationDocId,
     required String userId,
   }) =>
       loadResponseOrThrow(
         () => _api.addUserCurationInfo(
-          qurationDocId: qurationDocId,
+          qurationDocId: curationDocId,
           userId: userId,
         ),
       );
@@ -72,4 +78,15 @@ class UserDataSourceImpl
   @override
   Future<void> withdrawUser(String userId) async =>
       loadResponseOrThrow(() => _api.withdrawUser(userId));
+
+  @override
+  bool checkOnboardingProgressState() {
+    final isDone = _local.value?.isOnboardingProgressDone ?? false;
+    if (isDone) {
+      return true;
+    } else {
+      // 실제 끝난지 확인하는 작업
+      return true;
+    }
+  }
 }
