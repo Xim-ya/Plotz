@@ -14,8 +14,8 @@ class UserRepositoryImpl implements UserRepository {
     required String userId,
   }) async {
     try {
-      final response = _dataSource.addUserQurationInfo(
-        qurationDocId: qurationDocId,
+      final response = _dataSource.addUserCurationInfo(
+        curationDocId: qurationDocId,
         userId: userId,
       );
       return Result.success(response);
