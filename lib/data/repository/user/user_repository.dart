@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserRepository {
@@ -34,4 +35,7 @@ abstract class UserRepository {
   // 프로필 사진 정보 저장 (Storage)
   Future<Result<String>> uploadUserProfileImgAndReturnUrl(
       {required String userId, required File file,});
+
+  // 유저 선호 콘텐츠 & 채널 필드 업데이트 (온보딩)
+  Future<Result<void>> updateUserPreferences(UserOnboardingPreferredRequest req);
 }

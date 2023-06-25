@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/data/local/dao/user/user_dao.dart';
 
@@ -88,5 +89,10 @@ class UserDataSourceImpl
       // 실제 끝난지 확인하는 작업
       return true;
     }
+  }
+
+  @override
+  Future<void> updateUserPreferences(UserOnboardingPreferredRequest req) {
+    return loadResponseOrThrow(() => _api.updateUserPreferences(req));
   }
 }

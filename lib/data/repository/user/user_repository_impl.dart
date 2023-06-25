@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -117,6 +118,17 @@ class UserRepositoryImpl implements UserRepository {
   Future<Result<void>> withdrawUser(String userId) async {
     try {
       final response = await _dataSource.withdrawUser(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserPreferences(
+      UserOnboardingPreferredRequest req) async {
+    try {
+      final response = await _dataSource.updateUserPreferences(req);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

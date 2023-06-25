@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserDataSource {
@@ -41,5 +42,8 @@ abstract class UserDataSource {
     required File file,
   });
 
-  bool checkOnboardingProgressState();
+  // // 유저 선호 콘텐츠 & 채널 필드 업데이트 (온보딩)
+  Future<void> updateUserPreferences(UserOnboardingPreferredRequest req);
+
+
 }
