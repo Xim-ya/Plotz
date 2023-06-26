@@ -7,7 +7,6 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(SizeConfig.to.screenHeight * 0.11);
     return Scaffold(
       backgroundColor: AppColor.black,
       body: Stack(
@@ -62,7 +61,8 @@ class IntroScreen extends StatelessWidget {
             bottom: 0,
             child: MaterialButton(
               onPressed: () {
-                context.go(AppRoutes.splash);
+                context.go(AppRoutes.tabs);
+                TabsBinding.dependencies();
               },
               color: AppColor.gray07,
               padding: EdgeInsets.only(bottom: SizeConfig.to.bottomInset),

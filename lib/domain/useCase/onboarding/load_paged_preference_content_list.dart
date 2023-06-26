@@ -10,11 +10,11 @@ import 'package:soon_sak/utilities/index.dart';
 class LoadPagedPreferenceContentListUseCase {
   /* Variables */
   int pageSize = 10;
-  final List<PreferenceContent> _items = PreferenceContent.getList;
+  final List<PreferredContent> _items = PreferredContent.getList;
 
   /* Controllers */
-  late final PagingController<int, PreferenceContent> pagingController =
-      PagingController<int, PreferenceContent>(firstPageKey: 0);
+  late final PagingController<int, PreferredContent> pagingController =
+      PagingController<int, PreferredContent>(firstPageKey: 0);
 
   /* Intents */
   // 데이터 추가 메소드
@@ -30,11 +30,11 @@ class LoadPagedPreferenceContentListUseCase {
 
   /// 무작위로 콘텐츠 아이템 추출 메소드
   /// 호출된 데이터는 전역변수로 관리되고 있는 [_items] 배열에서 제거됨
-  List<PreferenceContent> getRandomItems(
-      List<PreferenceContent> someArray, int count) {
-    var arrayCopy = List<PreferenceContent>.from(someArray);
+  List<PreferredContent> getRandomItems(
+      List<PreferredContent> someArray, int count) {
+    var arrayCopy = List<PreferredContent>.from(someArray);
     count = min(count, arrayCopy.length);
-    var selectedElements = <PreferenceContent>[];
+    var selectedElements = <PreferredContent>[];
 
     var random = Random();
     for (var i = 0; i < count; i++) {

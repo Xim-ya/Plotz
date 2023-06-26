@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
+import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -117,6 +119,77 @@ class UserRepositoryImpl implements UserRepository {
   Future<Result<void>> withdrawUser(String userId) async {
     try {
       final response = await _dataSource.withdrawUser(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserPreferences(
+      UserOnboardingPreferredRequest req) async {
+    try {
+      final response = await _dataSource.updateUserPreferences(req);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<bool> isOnboardingProgressDone() {
+    try {
+      final response = _dataSource.isOnboardingProgressDone();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<void> saveUserLocalData(String userId) {
+    try {
+      final response = _dataSource.saveUserLocalData(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<UserBox?> getUserLocalData() {
+    try {
+      final response = _dataSource.getUserLocalData();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<bool>> checkIfUserHasPreferencesData(String userId) async {
+    try {
+      final response = await _dataSource.checkIfUserHasPreferencesData(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<void> changeUserOnboardingState(String userId) {
+    try {
+      final response = _dataSource.changeUserOnboardingState(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<void> clearUserLocalData() {
+    try {
+      final response = _dataSource.clearUserLocalData();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

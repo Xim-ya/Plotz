@@ -22,15 +22,26 @@ class HomeViewModel extends BaseViewModel {
     required LoadCachedTopTenContentsUseCase loadCachedTopTenContentsUseCase,
     required LoadCachedBannerContentUseCase loadBannerContentUseCase,
     required ChannelRepository channelRepository,
+    required UserDataSource userDataSource,
   })  : _loadBannerContentUseCase = loadBannerContentUseCase,
         _loadCachedTopPositionedContentsUseCase =
             loadCachedTopPositionedContentsUseCase,
         _loadCachedTopTenContentsUseCase = loadCachedTopTenContentsUseCase,
         loadPagedCategoryCollectionUseCase =
             loadPagedCategoryCollectionsUseCase,
-        _channelRepository = channelRepository;
+        _channelRepository = channelRepository,
+        _userDataSource = userDataSource;
+
+  // 임시
+  final UserDataSource _userDataSource;
+
+  void testLocalStorageLogic() {
+    final aim = _userDataSource.getUserLocalData();
+    print(aim?.userId);
+  }
 
   /* [Variables] */
+
   /// Data
   BannerModel? bannerContents; // 배너 컨텐츠
   List<TopPositionedCategory>? topPositionedCategory;
@@ -137,8 +148,8 @@ class HomeViewModel extends BaseViewModel {
 
   // 검색 스크린으로 이동
   void routeToSearch(BuildContext context) async {
-    await context.push(AppRoutes.tabs + AppRoutes.search);
-    // _channelApi.updateSeasonContentField();
+    testLocalStorageLogic();
+    // await context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 채널 상세 스크린으로 이동

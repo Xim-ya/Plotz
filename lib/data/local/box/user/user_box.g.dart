@@ -17,15 +17,18 @@ class UserBoxAdapter extends TypeAdapter<UserBox> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserBox(
-      isOnboardingProgressDone: fields[0] == null ? false : fields[0] as bool,
+      userId: fields[0] as String,
+      isOnboardingProgressDone: fields[1] == null ? false : fields[1] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserBox obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
+      ..write(obj.userId)
+      ..writeByte(1)
       ..write(obj.isOnboardingProgressDone);
   }
 

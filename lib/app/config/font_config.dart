@@ -101,7 +101,7 @@ abstract class AppTextStyle {
   );
 
   static TextStyle desc = PretendardTextStyle.regular(
-    size: 10,
+    size: 11,
     height: 14,
     letterSpacing: -0.2,
   );

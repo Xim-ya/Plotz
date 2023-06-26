@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:soon_sak/app/environment/environment.dart';
+import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/firebase_options.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -10,9 +11,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
 
-  // Isolate 토큰 생성 및 초기화
-  // final RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
-  // BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
 
   /// FireBase 초기화
   // Firebase Crashlytics 설정
@@ -20,6 +18,9 @@ void main() async {
     () async {
       // get_it dependecies setup`
       AppBinding.dependencies();
+
+      await Hive.initFlutter();
+      Hive.registerAdapter(UserBoxAdapter());
 
       await Hive.initFlutter();
 

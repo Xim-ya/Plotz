@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:soon_sak/app/di/locator/locator.dart';
 import 'package:soon_sak/app/di/modules/data_modules.dart';
 import 'package:soon_sak/app/di/modules/domain_modules.dart';
+import 'package:soon_sak/data/local/dao/user/user_dao.dart';
 
 import 'package:soon_sak/domain/service/content_service.dart';
 import 'package:soon_sak/domain/service/local_storage_service.dart';
@@ -14,17 +15,15 @@ abstract class AppBinding {
 
   static void _initialBinding() {
     locator.registerFactory<SplashViewModel>(
-          () =>
-          SplashViewModel(
-            userService: GetIt.I<UserService>(),
-            contentService: GetIt.I<ContentService>(),
-            localStorageService: GetIt.I<LocalStorageService>(),
-            checkVersionAndNetworkUseCase: GetIt.I<
-                CheckVersionAndNetworkUseCase>(),
-          ),
+      () => SplashViewModel(
+        userService: GetIt.I<UserService>(),
+        contentService: GetIt.I<ContentService>(),
+        localStorageService: GetIt.I<LocalStorageService>(),
+        checkVersionAndNetworkUseCase: GetIt.I<CheckVersionAndNetworkUseCase>(),
+      ),
     );
-
   }
+
 
   static void dependencies() {
     _initialBinding();

@@ -30,6 +30,7 @@ abstract class DataModules {
 
     /* User*/
     locator.registerLazySingleton<UserApi>(() => UserApiImpl());
+    locator.registerLazySingleton<UserDao>(()=> UserDao());
 
     locator.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(

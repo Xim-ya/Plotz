@@ -3,77 +3,77 @@
  *  유저 취향 옵션 콘텐츠 모델
  * */
 
-class PreferenceContent {
+class PreferredContent {
   final String posterImgUrl;
   final String contentId;
   final List<String> genres;
 
-  PreferenceContent({
+  PreferredContent({
     required this.posterImgUrl,
     required this.contentId,
     required this.genres,
   });
 
-  static List<PreferenceContent> get getList => [
-        PreferenceContent(
+  static List<PreferredContent> get getList => [
+        PreferredContent(
           posterImgUrl: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
           contentId: 't-1396',
-          genres: ['드라마', '범죄'],
+          genres: ['t-드라마', 't-범죄'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/b4mJz9qvh4i328aIO0Ciqqy2DGA.jpg',
           contentId: 'm-300669',
-          genres: ['스릴러', '공포'],
+          genres: ['m-스릴러', 'm-공포'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/5geQcMRFveBXizum8bHkSGu1a31.jpg',
           contentId: 't-60059',
-          genres: ['범죄', '드라마'],
+          genres: ['t-범죄', 't-드라마'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/mpOQpOKdo2XJnTqRzo1lTmDNsc1.jpg',
           contentId: 't-66732',
-          genres: ['드라마', 'Sci-Fi & Fantasy', '미스터리'],
+          genres: ['t-드라마', 't-Sci-Fi&Fantasy', 't-미스터리'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/9wOTABT35GsYNHtmFnxbRYN9d24.jpg',
           contentId: 't-82856',
-          genres: ['Sci-Fi & Fantasy', 'Action & Adventure', '드라마'],
+          genres: ['t-Sci-Fi&Fantasy', 't-Action&Adventure', 't-드라마'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/jZy73aPYrwwhuc37ALgnJUCaTnK.jpg',
           contentId: 'm-882569',
-          genres: ['전쟁', '액션', '스릴러'],
+          genres: ['m-전쟁', 'm-액션', 'm-스릴러'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/b7epV2cQZVIR4u5VZraDwD0AgiE.jpg',
           contentId: 'm-447365',
-          genres: ['SF', '모험', '액션'],
+          genres: ['m-SF', 'm-모험', 'm-액션'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/kVS51ssZF1y0IXF342h54cIJ0EK.jpg',
           contentId: 'm-916224',
-          genres: ['애니메이션', '드라마', '모험', '판타지'],
+          genres: ['m-애니메이션', 'm-드라마', 'm-모험', 'm-판타지'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/jjHccoFjbqlfr4VGLVLT7yek0Xn.jpg',
           contentId: 'm-496243',
-          genres: ['코미디', '스릴러', '드라마'],
+          genres: ['m-코미디', 'm-스릴러', 'm-드라마'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/1F2rDT1oNdvMyXF7gxbGxaXCzrz.jpg',
           contentId: 'm-466272',
-          genres: ['코미디', '드라마', '스릴러'],
+          genres: ['m-코미디', 'm-드라마', 'm-스릴러'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/wrCwH6WOvXQvVuqcKNUrLDCDxdw.jpg',
           contentId: 'm-475557',
-          genres: ['범죄', '드라마', '스릴러'],
+          genres: ['m-범죄', 'm-드라마', 'm-스릴러'],
         ),
-        PreferenceContent(
+        PreferredContent(
           posterImgUrl: '/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg',
           contentId: 'm-559969',
-          genres: ['범죄', '드라마', '스릴러', '액션'],
+          genres: ['m-범죄', 'm-드라마', 'm-스릴러', 'm-액션'],
         ),
       ];
 }
