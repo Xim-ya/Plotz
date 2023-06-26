@@ -62,6 +62,7 @@ abstract class TabsBinding  {
   static void dependencies() {
     locator.registerLazySingleton(
           () => HomeViewModel(
+            userDataSource: locator<UserDataSource>(),
         loadPagedCategoryCollectionsUseCase:
         locator<LoadPagedCategoryCollectionUseCase>(),
         loadCachedTopPositionedContentsUseCase:

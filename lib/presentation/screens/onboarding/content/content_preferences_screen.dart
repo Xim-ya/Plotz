@@ -91,35 +91,6 @@ class _BottomFixedBtn extends BaseView<ContentPreferenceViewModel> {
             ),
           ),
         ),
-        Positioned(
-          top: -28,
-          right: 0,
-          left: 0,
-          child: Align(
-            child: Selector<ContentPreferenceViewModel, int>(
-              selector: (_, vm) => vm.countOfSelectedContent,
-              builder: (_, count, __) => RichText(
-                text: TextSpan(
-                  style: AppTextStyle.body2,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: '$count',
-                      style: TextStyle(
-                        color: count > 0 ? AppColor.main : AppColor.gray02,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '/3',
-                      style: TextStyle(
-                        color: count >= 3 ? AppColor.main : AppColor.gray02,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -131,16 +102,16 @@ class _PosterGridView extends BaseView<ContentPreferenceViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return PagedGridListView<PreferenceContent>(
+    return PagedGridListView<PreferredContent>(
       crossAxisCount: 3,
       mainAxisSpacing: 16,
       crossAxisSpacing: 8,
       childAspectRatio: 109 / 165,
       pagingController: vm(context).pagingController,
-      itemBuilder: (BuildContext context, PreferenceContent item, int index) {
+      itemBuilder: (BuildContext context, PreferredContent item, int index) {
         return GestureDetector(
           onTap: () {
-            vm(context).onContentTapped(item.contentId);
+            vm(context).onContentTapped(item);
           },
           child: Stack(
             children: [
@@ -168,9 +139,7 @@ class _PosterGridView extends BaseView<ContentPreferenceViewModel> {
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(
                       width: 2,
-                      color: vmW(context)
-                              .selectedContentIds
-                              .contains(item.contentId)
+                      color: vmW(context).selectedContent.contains(item)
                           ? AppColor.main
                           : Colors.transparent,
                     ),
@@ -203,7 +172,7 @@ class _IntroTextView extends StatelessWidget {
         ),
         AppSpace.size8,
         Text(
-          '좋아하는 영화나 드라마 3개를 선택해주세요.',
+          '좋아하는 영화나 드라마를 3개 이상 선택해주세요.',
           style: AppTextStyle.body3.copyWith(
             color: AppColor.gray02,
           ),

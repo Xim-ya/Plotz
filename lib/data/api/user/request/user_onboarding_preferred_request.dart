@@ -4,11 +4,9 @@ import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
 class UserOnboardingPreferredRequest {
   final List<PreferredRequestContent> contents;
   final List<ChannelBasicResponse> channels;
-  final String userId;
 
   UserOnboardingPreferredRequest({
     required this.contents,
-    required this.channels,
-    required this.userId,
+    required this.channels
   });
 }

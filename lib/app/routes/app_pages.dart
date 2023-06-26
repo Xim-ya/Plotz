@@ -23,8 +23,12 @@ abstract class AppPages {
 
   static final router = GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/onboarding1',
+    initialLocation: '/',
     routes: [
+      GoRoute(
+        path: '/',
+        builder: (_, __) => const SplashScreen(),
+      ),
       GoRouteWithBinding(
         path: AppRoutes.onboarding1,
         binding: ContentPreferencesBinding(),
@@ -41,10 +45,7 @@ abstract class AppPages {
         path: AppRoutes.onboarding3,
         builder: (_, __) => const IntroScreen(),
       ),
-      GoRoute(
-        path: '/',
-        builder: (_, __) => const SplashScreen(),
-      ),
+
       GoRoute(path: AppRoutes.login, builder: (_, __) => const LoginScreen()),
       GoRouteWithBinding(
         path: '/contentDetail',
