@@ -7,11 +7,11 @@ import 'package:soon_sak/utilities/index.dart';
 class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   @override
   Future<void> addUserCurationInfo({
-    required String qurationDocId,
+    required String curationDocId,
     required String userId,
   }) async {
     final Map<String, dynamic> curationList = {
-      'curationRef': db.collection('curation').doc(qurationDocId)
+      'curationRef': db.collection('curation').doc(curationDocId)
     };
 
     // 초기 값
@@ -27,7 +27,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
       data: curationList,
       firstSubCollectionName: 'curationList',
       firstSubCollectionData: curationList,
-      firstSubCollectionDocId: qurationDocId,
+      firstSubCollectionDocId: curationDocId,
       secondSubCollectionName: 'curationSummary',
       secondSubCollectionData: curationSummary,
       secondSubCollectionFieldName: 'inProgressCount',
@@ -170,17 +170,20 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   }
 
   @override
-  Future<void> updateUserPreferences(UserOnboardingPreferredRequest req) async {
+  Future<void> updateUserPreferences(
+      UserOnboardingPreferredRequest req, String userId) async {
     //  콘텐츠 장르 취향 정보 저장
     for (var content in req.contents) {
+      final List<String> splitedStrings = content.genreId.split('-');
       final Map<String, dynamic> newData = {
         'count': content.count,
-        'id': content.genreId,
+        'type': splitedStrings[0] == 'm' ? 'movie' : 'tv',
+        'name': splitedStrings[1]
       };
 
       await cudSubCollectionDocumentAndIncreaseIntFields(
         'user',
-        docId: req.userId,
+        docId: userId,
         subCollectionName: 'favoriteGenres',
         subCollectionDocId: content.genreId,
         fieldValue: content.count,
@@ -197,7 +200,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
 
       await cudSubCollectionDocumentAndIncreaseIntFields(
         'user',
-        docId: req.userId,
+        docId: userId,
         subCollectionName: 'favoriteChannels',
         subCollectionDocId: channel.channelId,
         fieldValue: 4,
@@ -205,5 +208,20 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
         data: newData,
       );
     }
+  }
+
+  @override
+  Future<bool> checkIfUserHasPreferencesData(String userId) async {
+
+    final result = checkSubCollectionExist(
+      'user',
+      docId: userId,
+      subCollectionName: 'favoriteGenres',
+    );
+    final asyncResult = await result;
+    print('아지랑이이이 ${asyncResult}');
+    print("${userId}");
+
+    return result;
   }
 }

@@ -457,16 +457,31 @@ mixin FirestoreHelper {
 
       // 존재한다면 특정 필드값 업데이트
       if (snapshot.exists) {
-        print("존재 업데이트 ${docId}");
         transaction.update(subCollectionDocRef, {
           fieldName: snapshot.get('count') + fieldValue,
         });
       } else {
         // 존재 하지 않는다면 새로운 Document 추가
         transaction.set(subCollectionDocRef, data);
-        print("존재 X");
       }
     });
+  }
+
+  // 특정 collection에 subCollection 자체가 존재하는지 확인
+  Future<bool> checkSubCollectionExist(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+  }) async {
+    final CollectionReference collectionRef = _db.collection(collectionName);
+    final DocumentReference documentRef = collectionRef.doc(docId);
+    final CollectionReference subCollectionRef =
+        documentRef.collection(subCollectionName);
+
+    final QuerySnapshot subCollectionSnapshot =
+        await subCollectionRef.limit(1).get();
+
+    return subCollectionSnapshot.docs.isNotEmpty;
   }
 
   // 특정 field 값을 가지고 있는 document 리스트를 불러오는 메소드

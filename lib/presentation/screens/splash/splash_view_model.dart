@@ -42,14 +42,13 @@ class SplashViewModel extends BaseViewModel {
     );
   }
 
-
   // 라우팅 핸들러
   Future<void> handleRoute(BuildContext context) async {
     await _userService.prepare(context);
     if (_userService.isUserSignIn) {
-      await launchServiceModules().whenComplete(() {
+      await onSignedInState().whenComplete(() {
         // 유저 접속일 최신화
-        _userService.updateUserLoginDate(_userService.userInfo.value.id!);
+        _userService.updateUserLoginDate();
         context.go(AppRoutes.tabs);
         TabsBinding.dependencies();
       });
@@ -66,5 +65,12 @@ class SplashViewModel extends BaseViewModel {
   Future<void> launchServiceModules() async {
     await _contentService.prepare();
     await _localStorageService.prepare();
+  }
+
+  /// 로그인된 상태에서 실행하는 이벤트
+  /// 기본 서비스 모듈 초기화
+  Future<void> onSignedInState()async{
+    await launchServiceModules();
+    await _userService.getUserInfo();
   }
 }

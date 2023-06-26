@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
+import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserDataSource {
@@ -42,8 +43,24 @@ abstract class UserDataSource {
     required File file,
   });
 
-  // // 유저 선호 콘텐츠 & 채널 필드 업데이트 (온보딩)
+  // 유저 선호 콘텐츠 & 채널 필드 업데이트 (온보딩)
   Future<void> updateUserPreferences(UserOnboardingPreferredRequest req);
 
+  // 유저 정보 로컬 저장
+  void saveUserLocalData(String userId);
 
+  // 유저 로컬 데이터 호출
+  UserBox? getUserLocalData();
+
+  // 유저 온보딩 state 변경
+  void changeUserOnboardingState(String userId);
+
+  // 유저 온보딩 진행 여부 (로컬)
+  bool isOnboardingProgressDone();
+
+  // 유저 온보딩 진행 여부값을 판별하는데 사용 (서버에서 데이터를 가져옴)
+  Future<bool> checkIfUserHasPreferencesData(String userId);
+
+  // 유저 로컬 데이터 삭제
+  void clearUserLocalData();
 }

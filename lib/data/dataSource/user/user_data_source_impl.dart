@@ -1,13 +1,11 @@
 import 'dart:io';
-
 import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/data/local/dao/user/user_dao.dart';
-
 import 'package:soon_sak/utilities/index.dart';
 
 class UserDataSourceImpl
-    with FireStoreErrorHandlerMixin, FirebaseIsolateHelper
+    with FireStoreErrorHandlerMixin
     implements UserDataSource {
   UserDataSourceImpl({required UserApi api, required UserDao local})
       : _api = api,
@@ -23,7 +21,7 @@ class UserDataSourceImpl
   }) =>
       loadResponseOrThrow(
         () => _api.addUserCurationInfo(
-          qurationDocId: curationDocId,
+          curationDocId: curationDocId,
           userId: userId,
         ),
       );
@@ -50,10 +48,8 @@ class UserDataSourceImpl
   Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
     String userId,
   ) =>
-      loadWithFirebaseIsolate(
-        () => loadResponseOrThrow(
-          () => _api.loadUserWatchHistory(userId),
-        ),
+      loadResponseOrThrow(
+            () => _api.loadUserWatchHistory(userId),
       );
 
   @override
@@ -81,18 +77,40 @@ class UserDataSourceImpl
       loadResponseOrThrow(() => _api.withdrawUser(userId));
 
   @override
-  bool checkOnboardingProgressState() {
-    final isDone = _local.value?.isOnboardingProgressDone ?? false;
-    if (isDone) {
-      return true;
-    } else {
-      // 실제 끝난지 확인하는 작업
-      return true;
-    }
+  bool isOnboardingProgressDone() {
+    final result = _local.value?.isOnboardingProgressDone ?? false;
+    return result;
   }
 
   @override
   Future<void> updateUserPreferences(UserOnboardingPreferredRequest req) {
-    return loadResponseOrThrow(() => _api.updateUserPreferences(req));
+    return loadResponseOrThrow(
+        () => _api.updateUserPreferences(req, _local.userId!));
+  }
+
+  @override
+  void saveUserLocalData(String userId) {
+    _local.updateUserId(userId);
+  }
+
+  @override
+  UserBox? getUserLocalData() => _local.value;
+
+  @override
+  Future<bool> checkIfUserHasPreferencesData(String userId) async {
+    // final userId = _local.userId;
+    // if (userId == null) return Future.value(false);
+    final result = _api.checkIfUserHasPreferencesData(userId);
+    return result;
+  }
+
+  @override
+  void changeUserOnboardingState(String userId) {
+    _local.updateOnboardingState(userId);
+  }
+
+  @override
+  void clearUserLocalData() {
+    _local.clearUserLocalData();
   }
 }

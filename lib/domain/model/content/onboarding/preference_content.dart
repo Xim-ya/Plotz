@@ -33,12 +33,12 @@ class PreferredContent {
         PreferredContent(
           posterImgUrl: '/mpOQpOKdo2XJnTqRzo1lTmDNsc1.jpg',
           contentId: 't-66732',
-          genres: ['t-드라마', 't-Sci-Fi & Fantasy', 't-미스터리'],
+          genres: ['t-드라마', 't-Sci-Fi&Fantasy', 't-미스터리'],
         ),
         PreferredContent(
           posterImgUrl: '/9wOTABT35GsYNHtmFnxbRYN9d24.jpg',
           contentId: 't-82856',
-          genres: ['t-Sci-Fi & Fantasy', 't-Action & Adventure', 't-드라마'],
+          genres: ['t-Sci-Fi&Fantasy', 't-Action&Adventure', 't-드라마'],
         ),
         PreferredContent(
           posterImgUrl: '/jZy73aPYrwwhuc37ALgnJUCaTnK.jpg',
