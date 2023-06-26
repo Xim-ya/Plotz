@@ -10,14 +10,36 @@ class UserDao {
 
   UserBox? get value => box.values.firstOrNull;
 
+  String? get userId => value?.userId;
+
+  // DAO 초기화
   Future<void> init() async {
     box = await Hive.openBox<UserBox>('user');
   }
 
-  Future<void> updateOnboardingState() async {
+  /// 유저 온보딩 여부값 업데이트 (boolean)
+  Future<void> updateOnboardingState(String userId) async {
     await box.put(
-      0,
-      UserBox(isOnboardingProgressDone: false),
+      'user',
+      UserBox(
+        isOnboardingProgressDone: true,
+        userId: userId,
+      ),
     );
+  }
+
+  // 유저 아이디 값 업데이트
+  Future<void> updateUserId(String userId) async {
+    await box.put(
+      'user',
+      UserBox(
+          userId: userId,
+          isOnboardingProgressDone: value?.isOnboardingProgressDone ?? false),
+    );
+  }
+
+  // 유저 로컬 데이터 삭제
+  void clearUserLocalData() {
+    box.clear();
   }
 }
