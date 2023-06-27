@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
 import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -63,4 +64,10 @@ abstract class UserDataSource {
 
   // 유저 로컬 데이터 삭제
   void clearUserLocalData();
+
+  // 유저 선호 채널 값 업데이트
+  Future<void> updateUserChannelPreference(String channelId);
+
+  // 유저 선호 장르 값 업데이트
+  Future<void> updateUserGenrePreference(List<PreferredRequestContent> genres);
 }
