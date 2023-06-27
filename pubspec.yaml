@@ -109,6 +109,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/mocks/
     - .env
 
 
