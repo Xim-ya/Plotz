@@ -49,8 +49,12 @@ class SplashViewModel extends BaseViewModel {
       await onSignedInState().whenComplete(() {
         // 유저 접속일 최신화
         _userService.updateUserLoginDate();
-        context.go(AppRoutes.tabs);
-        TabsBinding.dependencies();
+        if (_userService.isOnboardingProgressDone) {
+          context.go(AppRoutes.tabs);
+          TabsBinding.dependencies();
+        } else {
+          context.go(AppRoutes.onboarding1);
+        }
       });
     } else {
       await launchServiceModules().whenComplete(() {
@@ -69,8 +73,12 @@ class SplashViewModel extends BaseViewModel {
 
   /// 로그인된 상태에서 실행하는 이벤트
   /// 기본 서비스 모듈 초기화
-  Future<void> onSignedInState()async{
+  Future<void> onSignedInState() async {
     await launchServiceModules();
     await _userService.getUserInfo();
+    await Future.wait([
+      _userService.saveUserLocalDataIfNeeded(),
+      _userService.checkOnBoardingProgressState()
+    ]);
   }
 }
