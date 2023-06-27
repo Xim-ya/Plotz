@@ -13,7 +13,7 @@ void main() async {
 
   // get_it dependecies setup`
   AppBinding.dependencies();
-
+  
   await Hive.initFlutter();
   Hive.registerAdapter(UserBoxAdapter());
 

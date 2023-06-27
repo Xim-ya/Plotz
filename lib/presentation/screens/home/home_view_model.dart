@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
+import 'package:soon_sak/data/api/channel/channel_api_impl.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
@@ -35,10 +36,7 @@ class HomeViewModel extends BaseViewModel {
   // 임시
   final UserDataSource _userDataSource;
 
-  void testLocalStorageLogic() {
-    final aim = _userDataSource.getUserLocalData();
-    print(aim?.userId);
-  }
+  void testLocalStorageLogic() {}
 
   /* [Variables] */
 

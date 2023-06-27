@@ -23,7 +23,9 @@ class LoadPagedPreferenceChannelListUseCase {
   /* Variables */
   final List<String> topExposedIds = [
     'UCuK80YHBZyyKrr2B1oHrgrw',
-    'UCRT4hxfWfXEP7Iiv3ovI'
+    'UCRT4hxfWfXEP7Iiv3ovI-0A',
+    'UCaS8JH5U5nMaOfrSVYnbOTQ',
+    'UCahZQYrxOsOU02RSHDY9Qgg'
   ];
 
   // 기본 상단 노출 채널 데이터
@@ -43,6 +45,22 @@ class LoadPagedPreferenceChannelListUseCase {
           'https://yt3.googleusercontent.com/rbdoz4WVvAsqv-OWVanKm6dit-1U1u-EDVa-7w07rqho6TRR8EUtboqC_rE4JmEnhQIl6SO49oI=s900-c-k-c0x00ffffff-no-rj',
       subscribersCount: 259000,
       totalContentCount: 20,
+    ),
+    ChannelBasicResponse(
+      name: '어쩌다영화한편',
+      channelId: 'UCaS8JH5U5nMaOfrSVYnbOTQ',
+      logoImgUrl:
+          'https://yt3.googleusercontent.com/RRsDEcCSSkFTzpKO3aQcxBQTDOzGPedsZ2L3SRP9wm-kAdD694uBkYtwxsvgCbLBrexis77a0Q=s900-c-k-c0x00ffffff-no-rj',
+      subscribersCount: 66900,
+      totalContentCount: 9,
+    ),
+    ChannelBasicResponse(
+      name: '줌인센타',
+      channelId: 'UCahZQYrxOsOU02RSHDY9Qgg',
+      logoImgUrl:
+          'https://yt3.googleusercontent.com/hsRwKpyGjTbVCyyEaKzl-k_mjUyTGSRlVp_j4R4Yz1-gprPu_I0ZFjoneGzlrEDijr_NIDTx5Q=s900-c-k-c0x00ffffff-no-rj',
+      subscribersCount: 388000,
+      totalContentCount: 6,
     ),
   ];
 
