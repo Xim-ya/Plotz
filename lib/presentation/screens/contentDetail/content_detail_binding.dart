@@ -1,5 +1,6 @@
 import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/domain/useCase/content/contentDetail/update_user_preferences_use_case.dart';
 import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -16,6 +17,8 @@ class ContentDetailBinding extends Bindings {
           userService: locator<UserService>(),
           argument: arg1,
           loadContentVideoInfoUseCase: locator<LoadContentVideoInfoUseCase>(),
+          updateUserPreferencesUserCase:
+              locator<UpdateUserPreferencesUserCase>(),
         ));
 
     safeRegisterFactory<LoadContentDetailInfoUseCase>(
@@ -26,6 +29,10 @@ class ContentDetailBinding extends Bindings {
 
     safeRegisterFactory<LoadContentVideoInfoUseCase>(
         () => LoadContentVideoInfoUseCase(locator<ContentDataSource>()));
+
+    safeRegisterFactory<UpdateUserPreferencesUserCase>(() =>
+        UpdateUserPreferencesUserCase(
+            userRepository: locator<UserRepository>()));
   }
 
   @override
@@ -35,5 +42,6 @@ class ContentDetailBinding extends Bindings {
     safeUnregister<LoadContentDetailInfoUseCase>();
     safeUnregister<LoadContentCreditInfoUseCase>();
     safeUnregister<LoadContentVideoInfoUseCase>();
+    safeUnregister<UpdateUserPreferencesUserCase>();
   }
 }

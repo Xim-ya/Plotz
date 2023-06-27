@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
 import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/data/mixin/fire_storage_helper_mixin.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -174,18 +175,17 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
       UserOnboardingPreferredRequest req, String userId) async {
     //  콘텐츠 장르 취향 정보 저장
     for (var content in req.contents) {
-      final List<String> splitedStrings = content.genreId.split('-');
       final Map<String, dynamic> newData = {
         'count': content.count,
-        'type': splitedStrings[0] == 'm' ? 'movie' : 'tv',
-        'name': splitedStrings[1]
+        'name': content.genreName,
+        'id': content.genreId,
       };
 
       await cudSubCollectionDocumentAndIncreaseIntFields(
         'user',
         docId: userId,
         subCollectionName: 'favoriteGenres',
-        subCollectionDocId: content.genreId,
+        subCollectionDocId: content.genreId.toString(),
         fieldValue: content.count,
         fieldName: 'count',
         data: newData,
@@ -212,16 +212,53 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
 
   @override
   Future<bool> checkIfUserHasPreferencesData(String userId) async {
-
     final result = checkSubCollectionExist(
       'user',
       docId: userId,
       subCollectionName: 'favoriteGenres',
     );
-    final asyncResult = await result;
-    print('아지랑이이이 ${asyncResult}');
-    print("${userId}");
 
     return result;
+  }
+
+  @override
+  Future<void> updateUserChannelPreference(
+      {required String userId, required String channelId}) async {
+    final Map<String, dynamic> newData = {
+      'count': 1,
+    };
+
+    await cudSubCollectionDocumentAndIncreaseIntFields(
+      'user',
+      docId: userId,
+      subCollectionName: 'favoriteChannels',
+      subCollectionDocId: channelId,
+      fieldValue: 4,
+      fieldName: 'count',
+      data: newData,
+    );
+  }
+
+  @override
+  Future<void> updateUserGenrePreference(
+      {required String userId,
+      required List<PreferredRequestContent> genres}) async {
+    for (var genre in genres) {
+      final Map<String, dynamic> newData = {
+        'count': 1,
+        'name': genre.genreName,
+        'id': genre.genreId,
+      };
+
+      await cudSubCollectionDocumentAndIncreaseIntFields(
+        'user',
+        docId: userId,
+        subCollectionName: 'favoriteGenres',
+        subCollectionDocId: genre.genreId.toString(),
+        fieldValue: genre.count,
+        fieldName: 'count',
+        data: newData,
+      );
+    }
   }
 }

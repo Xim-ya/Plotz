@@ -18,18 +18,15 @@ import 'package:soon_sak/utilities/index.dart';
  *
  * */
 
-class UpdateUserPreferencesUseCase {
-  UpdateUserPreferencesUseCase(
+class UpdateOnboardingPreferencesUseCase {
+  UpdateOnboardingPreferencesUseCase(
       {required List<PreferredContent> selectedContents,
-      required UserRepository userRepository,
-      required UserService userService})
+      required UserRepository userRepository})
       : _selectedContents = selectedContents,
-        _userRepository = userRepository,
-        _userService = userService;
+        _userRepository = userRepository;
 
   late final List<PreferredContent> _selectedContents;
   final UserRepository _userRepository;
-  final UserService _userService;
   final List<PreferredRequestContent> _contentReq = [];
 
   /// 콘텐츠 request 데이터 생성
@@ -40,7 +37,7 @@ class UpdateUserPreferencesUseCase {
     for (var content in _selectedContents) {
       var isUpdated = false;
       for (var i = 0; i < _contentReq.length; i++) {
-        if (content.genres.contains(_contentReq[i].genreId)) {
+        if (content.genres.contains(_contentReq[i].genreName)) {
           _contentReq[i].count++;
           _contentReq[i].count++;
           isUpdated = true;
@@ -50,9 +47,7 @@ class UpdateUserPreferencesUseCase {
       if (!isUpdated) {
         _contentReq.add(
           PreferredRequestContent.fromRes(
-            response: content,
-            genre: content.genres[0],
-          ),
+              response: content, genre: content.genres[0]),
         );
       }
     }
