@@ -13,7 +13,6 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
   final _db = AppFireStore.getInstance;
   final TmdbRepository _tmdbRepository = locator<TmdbRepository>();
 
-
   @override
   Future<ChannelPagedResponse> loadPagedChannels(
       DocumentSnapshot? lastDocument) async {
@@ -257,9 +256,39 @@ class ChannelApiImpl with FirestoreHelper implements ChannelApi {
 
         if (firstSubDoc.get('channelRef') == desiredFieldValue) {
           matchingDocumentsCount++;
-          print(
-              "제목 : ${parentDoc.get('title')} <--> id : ${parentDoc.get('id')}");
         }
+      }
+    }
+  }
+
+  // valid하지 채널을 가지고 있는 콘텐츠 모두 삭제
+  // UCn2yI8SFCCfRTHT7EFpUnmw
+  // UCrCV-T59Lrxf4yR3k_poiWw
+  Future<void> deleteDocumentsWithChannel( ) async {
+    final dynamic desiredFieldValue =
+    AppFireStore.getInstance.doc('/channel/UCrCV-T59Lrxf4yR3k_poiWw');
+
+    // 'content' 컬렉션에 대한 레퍼런스 가져오기
+    CollectionReference contentCollection = FirebaseFirestore.instance.collection('content');
+
+    // 'content' 컬렉션의 모든 문서 가져오기
+    QuerySnapshot snapshot = await contentCollection.get();
+
+    // 각 문서에 대해 작업 수행
+    for (QueryDocumentSnapshot document in snapshot.docs) {
+      // 현재 문서의 'channel' 컬렉션 레퍼런스 가져오기
+      DocumentReference channelRef = document.reference.collection('channel').doc('main');
+      print("진행중");
+
+      // 'channel' 컬렉션의 레퍼런스 값 가져오기
+      DocumentSnapshot channelSnapshot = await channelRef.get();
+      final channelValue = channelSnapshot.get('channelRef');
+
+      // 레퍼런스 값이 주어진 채널과 일치하는 경우 문서 제거
+      if (channelValue == desiredFieldValue) {
+        print("요건 잘못됨 ${document.get('title')}");
+        print("요건 잘못됨 ${document.get('id')}");
+        await document.reference.delete();
       }
     }
   }

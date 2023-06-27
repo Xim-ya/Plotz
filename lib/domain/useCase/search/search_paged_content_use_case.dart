@@ -53,9 +53,7 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(
       const Duration(milliseconds: 450),
-      () => {
-        pagingController.refresh(),
-      },
+      pagingController.refresh,
     );
   }
 

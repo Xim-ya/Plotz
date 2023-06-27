@@ -5,7 +5,7 @@ import 'package:soon_sak/data/repository/tmdb/tmdb_repository.dart';
 import 'package:soon_sak/data/repository/user/user_repository.dart';
 import 'package:soon_sak/domain/service/user_service.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_preferences_channel_list_use_case.dart';
-import 'package:soon_sak/domain/useCase/onboarding/update_user_preferences_use_case.dart';
+import 'package:soon_sak/domain/useCase/onboarding/update_onboarding_preferences_use_case.dart';
 import 'package:soon_sak/presentation/screens/onboarding/channel/channel_preferences_view_model.dart';
 
 class ChannelPreferencesBinding extends Bindings {
@@ -16,16 +16,15 @@ class ChannelPreferencesBinding extends Bindings {
     locator.registerFactory(
       () => ChannelPreferencesViewModel(
         loadChannelsUseCase: locator<LoadPagedPreferenceChannelListUseCase>(),
-        updateUserPreferencesUseCase: locator<UpdateUserPreferencesUseCase>(),
+        updateUserPreferencesUseCase: locator<UpdateOnboardingPreferencesUseCase>(),
       ),
     );
     locator.registerFactory(() => LoadPagedPreferenceChannelListUseCase(
         channelRepository: locator<ChannelRepository>()));
 
     locator.registerFactory(
-      () => UpdateUserPreferencesUseCase(
+      () => UpdateOnboardingPreferencesUseCase(
         selectedContents: arg1,
-        userService: locator<UserService>(),
         userRepository: locator<UserRepository>(),
       ),
     );
@@ -37,6 +36,6 @@ class ChannelPreferencesBinding extends Bindings {
 
     locator.unregister<ChannelPreferencesViewModel>();
     locator.unregister<LoadPagedPreferenceChannelListUseCase>();
-    locator.unregister<UpdateUserPreferencesUseCase>();
+    locator.unregister<UpdateOnboardingPreferencesUseCase>();
   }
 }

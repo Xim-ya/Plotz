@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
 import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/data/local/dao/user/user_dao.dart';
@@ -49,7 +50,7 @@ class UserDataSourceImpl
     String userId,
   ) =>
       loadResponseOrThrow(
-            () => _api.loadUserWatchHistory(userId),
+        () => _api.loadUserWatchHistory(userId),
       );
 
   @override
@@ -98,8 +99,6 @@ class UserDataSourceImpl
 
   @override
   Future<bool> checkIfUserHasPreferencesData(String userId) async {
-    // final userId = _local.userId;
-    // if (userId == null) return Future.value(false);
     final result = _api.checkIfUserHasPreferencesData(userId);
     return result;
   }
@@ -112,5 +111,19 @@ class UserDataSourceImpl
   @override
   void clearUserLocalData() {
     _local.clearUserLocalData();
+  }
+
+  @override
+  Future<void> updateUserChannelPreference(String channelId) {
+    return _api.updateUserChannelPreference(
+        userId: _local.userId!, channelId: channelId);
+  }
+
+  @override
+  Future<void> updateUserGenrePreference(List<PreferredRequestContent> genres) {
+    return _api.updateUserGenrePreference(
+      userId: _local.userId!,
+      genres: genres,
+    );
   }
 }

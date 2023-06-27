@@ -89,7 +89,7 @@ class AppDialog extends Dialog {
           children: [
             // 본분
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 34),
+              padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(
                 children: [
                   Center(

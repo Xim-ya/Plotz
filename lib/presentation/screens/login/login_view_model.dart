@@ -51,6 +51,6 @@ class LoginViewModel extends BaseViewModel {
   Future<void> launchServiceModules() async {
     await _userService.getUserInfo();
     await _userService.checkOnBoardingProgressState();
-    _userService.saveUserLocalDataIfNeeded();
+    await _userService.saveUserLocalDataIfNeeded();
   }
 }

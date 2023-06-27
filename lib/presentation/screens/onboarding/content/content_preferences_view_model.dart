@@ -34,6 +34,7 @@ class ContentPreferenceViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  // 하단 '다음' 버튼이 클릭 되었을 떄
   void onNextBtnTapped() {
     if (isSufficient) {
       context.push(AppRoutes.onboarding2, extra: {'arg1': selectedContent});

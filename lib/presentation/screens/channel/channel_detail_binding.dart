@@ -25,7 +25,7 @@ class ChannelDetailBinding extends Bindings {
 
   @override
   void unRegisterDependencies() {
-    super.unRegisterDependencies();
+    super.unRegisterDependencies(); 
 
     safeUnregister<ChannelDetailViewModel>();
     safeUnregister<LoadPagedChannelContentsUseCase>();
