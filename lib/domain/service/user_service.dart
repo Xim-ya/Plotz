@@ -26,7 +26,6 @@ class UserService {
   /* Intents */
   // 유저 시청 기록 호출
   Future<void> updateUserWatchHistory() async {
-    print("아투 아지랑이 ${userInfo.value.id}");
     final response =
         await _userRepository.loadUserWatchHistory(userInfo.value.id!);
     response.fold(
@@ -41,16 +40,12 @@ class UserService {
 
   // 유저 정보 호출
   Future<void> getUserInfo() async {
-    print("아지랑이--");
     final response = await _authRepository.loadUserInfo();
     response.fold(
       onSuccess: (data) {
         userInfo.add(data);
-
-        print("아지랑이 ${data.id}");
       },
       onFailure: (e) {
-        print("아지랑이 실패");
         log('UserService : $e');
       },
     );
@@ -69,8 +64,7 @@ class UserService {
 
   /// 유저 로컬 정보 저장
   /// 업데이트가 필요할 때만 저장 로직 실행
-  void saveUserLocalDataIfNeeded() {
-    print('로컬 저장 시작');
+  Future<void> saveUserLocalDataIfNeeded() async {
     final userLocalData = _userRepository.getUserLocalData().getOrThrow();
     if (userLocalData?.userId != userInfo.value.id) {
       final response = _userRepository.saveUserLocalData(userInfo.value.id!);
@@ -92,24 +86,19 @@ class UserService {
     bool localResult = response.getOrThrow();
     if (localResult == true) {
       isOnboardingProgressDone = true;
-      print("==========1[PLOTZ BP]===========");
       return;
     } else {
       // 서버 정보 확인
-      print("aim-- ${userInfo.value.id}");
       final response = await _userRepository
           .checkIfUserHasPreferencesData(userInfo.value.id!);
       response.fold(
         onSuccess: (data) {
-          print("==========2[PLOTZ BP]===========${data}");
           isOnboardingProgressDone = data;
           if (data == true) {
-            print("==========2-2[PLOTZ BP]===========");
             _userRepository.changeUserOnboardingState(userInfo.value.id!);
           }
         },
         onFailure: (e) {
-          print("==========3[PLOTZ BP]===========");
           isOnboardingProgressDone = true;
           log('UserService - 유저 취향 데이터 존재 여부 확인 실패 == $e');
         },

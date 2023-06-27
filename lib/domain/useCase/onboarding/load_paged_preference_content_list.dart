@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:soon_sak/domain/enum/movie_genre_enum.dart';
 import 'package:soon_sak/domain/model/content/onboarding/preference_content.dart';
 import 'dart:math';
 import 'package:soon_sak/utilities/index.dart';
@@ -10,15 +12,18 @@ import 'package:soon_sak/utilities/index.dart';
 class LoadPagedPreferenceContentListUseCase {
   /* Variables */
   int pageSize = 10;
-  final List<PreferredContent> _items = PreferredContent.getList;
+  late final List<PreferredContent> _items;
 
   /* Controllers */
   late final PagingController<int, PreferredContent> pagingController =
       PagingController<int, PreferredContent>(firstPageKey: 0);
 
+  /* Controllers */
+  Timer? _debounce;
+
   /* Intents */
   // 데이터 추가 메소드
-  Future<void> _fetchPage() async {
+  void _fetchPage() {
     if (_items.length > pageSize) {
       final randomItem = getRandomItems(_items, pageSize);
       pagingController.appendPage(randomItem, 0);
@@ -47,11 +52,29 @@ class LoadPagedPreferenceContentListUseCase {
     return selectedElements;
   }
 
+  // JSON 데이터를 파싱하여 _items 리스트에 할당
+  Future<void> getJsonContents() async {
+    final jsonStr =
+        await rootBundle.loadString('assets/mocks/onboarding_contents.json');
+    final parsed = json.decode(jsonStr).cast<Map<String, dynamic>>();
+    _items = parsed
+        .map<PreferredContent>((json) => PreferredContent(
+              posterImgUrl: json['posterImgUrl'],
+              contentId: json['contentId'],
+              genres: List<ContentGenre>.from(json['genres']
+                  .map((e) => ContentGenre.getContentFromJson(e as String))),
+            ))
+        .toList();
+  }
+
   // UseCase 초기화 구문
   // Controller 초기화 구문
-  void initUseCase() {
-    pagingController.addPageRequestListener((_) {
-      _fetchPage();
+  Future<void> initUseCase() async {
+    unawaited(getJsonContents());
+
+    pagingController.addPageRequestListener((pageKey) {
+      if (_debounce?.isActive ?? false) _debounce!.cancel();
+      _debounce = Timer(Duration.zero, _fetchPage);
     });
   }
 }

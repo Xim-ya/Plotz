@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
 import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -190,6 +191,27 @@ class UserRepositoryImpl implements UserRepository {
   Result<void> clearUserLocalData() {
     try {
       final response = _dataSource.clearUserLocalData();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserChannelPreference(String channelId) async {
+    try {
+      final response = await _dataSource.updateUserChannelPreference(channelId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserGenrePreference(
+      List<PreferredRequestContent> genres) async {
+    try {
+      final response = await _dataSource.updateUserGenrePreference(genres);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
