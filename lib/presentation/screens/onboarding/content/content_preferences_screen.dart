@@ -113,40 +113,37 @@ class _PosterGridView extends BaseView<ContentPreferenceViewModel> {
           onTap: () {
             vm(context).onContentTapped(item);
           },
-          child: Stack(
-            children: [
-              KeepAliveView(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: CachedNetworkImage(
-                    memCacheWidth:
-                        (SizeConfig.to.screenWidth * (109 / 165)).toInt(),
-                    imageUrl: item.posterImgUrl.prefixTmdbImgPath,
-                    placeholder: (context, url) => const SkeletonBox(),
-                    errorWidget: (_, __, ___) => Container(
-                      color: Colors.grey.withOpacity(0.1),
-                      child: const Center(
-                        child: Icon(Icons.error),
-                      ),
+          child: KeepAliveView(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 140),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3.2),
+                border: Border.all(
+                  width: 2,
+                  color: vmW(context).selectedContent.contains(item)
+                      ? AppColor.main
+                      : Colors.transparent,
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  vmW(context).selectedContent.contains(item) ? 0 : 4,
+                ),
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  memCacheWidth:
+                      (SizeConfig.to.screenWidth * (109 / 165)).toInt(),
+                  imageUrl: item.posterImgUrl.prefixTmdbImgPath,
+                  placeholder: (context, url) => const SkeletonBox(),
+                  errorWidget: (_, __, ___) => Container(
+                    color: Colors.grey.withOpacity(0.1),
+                    child: const Center(
+                      child: Icon(Icons.error),
                     ),
                   ),
                 ),
               ),
-              Positioned(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 160),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(
-                      width: 2,
-                      color: vmW(context).selectedContent.contains(item)
-                          ? AppColor.main
-                          : Colors.transparent,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         );
       },
@@ -182,3 +179,63 @@ class _IntroTextView extends StatelessWidget {
     );
   }
 }
+
+// 콘텐츠 포스터 그리드 뷰 (페이징)
+// class _PosterGridView extends BaseView<ContentPreferenceViewModel> {
+//   const _PosterGridView({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return PagedGridListView<PreferredContent>(
+//       crossAxisCount: 3,
+//       mainAxisSpacing: 16,
+//       crossAxisSpacing: 8,
+//       childAspectRatio: 109 / 165,
+//       pagingController: vm(context).pagingController,
+//       itemBuilder: (BuildContext context, PreferredContent item, int index) {
+//         return GestureDetector(
+//           onTap: () {
+//             vm(context).onContentTapped(item);
+//           },
+//           child: Stack(
+//             alignment: Alignment.center,
+//             children: [
+//               KeepAliveView(
+//                 child: ClipRRect(
+//                   borderRadius: BorderRadius.circular(4),
+//                   child: CachedNetworkImage(
+//                     fit: BoxFit.cover,
+//                     memCacheWidth:
+//                     (SizeConfig.to.screenWidth * (109 / 165)).toInt(),
+//                     imageUrl: item.posterImgUrl.prefixTmdbImgPath,
+//                     placeholder: (context, url) => const SkeletonBox(),
+//                     errorWidget: (_, __, ___) => Container(
+//                       color: Colors.grey.withOpacity(0.1),
+//                       child: const Center(
+//                         child: Icon(Icons.error),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               Positioned.fill(
+//                 child: AnimatedContainer(
+//                   duration: const Duration(milliseconds: 160),
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(4),
+//                     border: Border.all(
+//                       width: 2,
+//                       color: vmW(context).selectedContent.contains(item)
+//                           ? AppColor.main
+//                           : Colors.transparent,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
