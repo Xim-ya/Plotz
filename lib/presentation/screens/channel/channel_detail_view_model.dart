@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
+import 'package:soon_sak/domain/useCase/content/contentDetail/update_user_preferences_use_case.dart';
 import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/presentation/screens/contentDetail/content_detail_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -9,15 +10,12 @@ import 'package:soon_sak/utilities/index.dart';
 class ChannelDetailViewModel extends BaseViewModel {
   ChannelDetailViewModel(
       {required ChannelModel channelArg,
-      required LoadPagedChannelContentsUseCase loadChannelContentsUseCase,
-      required bool isNestedRouteArg})
+      required LoadPagedChannelContentsUseCase loadChannelContentsUseCase})
       : channelInfo = channelArg,
-        _isNestedRoute = isNestedRouteArg,
         _loadChannelContentsUseCase = loadChannelContentsUseCase;
 
   // 이전 페이지에서 전달 받는 argument
   final ChannelModel channelInfo;
-  final bool _isNestedRoute;
 
   /* State Variables */
   // 상단 gradient box enable 여부

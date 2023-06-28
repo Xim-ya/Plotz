@@ -1,16 +1,9 @@
 import 'dart:io';
-
 import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class LoginScreen extends BaseScreen<LoginViewModel> {
   const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  bool get wrapWithSafeArea => true;
-
-  @override
-  bool get setTopSafeArea => false;
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -30,7 +23,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 width: SizeConfig.to.screenWidth,
                 height: 88,
                 decoration: const BoxDecoration(
-                  gradient: AppGradient.singleTopToBottom,
+                  gradient: AppGradient.topToBottom,
                 ),
               ),
             ),
@@ -40,7 +33,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 height: 300,
                 width: SizeConfig.to.screenWidth,
                 decoration: const BoxDecoration(
-                  gradient: AppGradient.singleBottomToTop,
+                  gradient: AppGradient.bottomToTop,
                 ),
               ),
             ),
@@ -50,7 +43,7 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
                 height: 300,
                 width: SizeConfig.to.screenWidth,
                 decoration: const BoxDecoration(
-                  gradient: AppGradient.singleBottomToTop,
+                  gradient: AppGradient.bottomToTop,
                 ),
               ),
             ),
@@ -135,6 +128,12 @@ class LoginScreen extends BaseScreen<LoginViewModel> {
       ],
     );
   }
+
+  @override
+  bool get wrapWithSafeArea => true;
+
+  @override
+  bool get setTopSafeArea => false;
 
   @override
   LoginViewModel createViewModel(BuildContext context) =>

@@ -1,11 +1,12 @@
 import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/video/content_video_model.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
+import 'package:soon_sak/domain/useCase/content/contentDetail/update_user_preferences_use_case.dart';
 import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
@@ -20,6 +21,7 @@ class ContentDetailViewModel extends BaseViewModel {
   ContentDetailViewModel({
     required LoadContentDetailInfoUseCase loadContentMainDescription,
     required LoadContentCreditInfoUseCase loadContentCreditInfo,
+    required UpdateUserPreferencesUserCase updateUserPreferencesUserCase,
     required UserRepository userRepository,
     required UserService userService,
     required ContentArgumentFormat argument,
@@ -31,7 +33,8 @@ class ContentDetailViewModel extends BaseViewModel {
         _userRepository = userRepository,
         _userService = userService,
         _channelRepository = channelRepository,
-        loadContentVideoInfo = loadContentVideoInfoUseCase;
+        loadContentVideoInfo = loadContentVideoInfoUseCase,
+        _updateUserPreferences = updateUserPreferencesUserCase;
 
   // 이전 페이지에서 전달 받는 argument
   final ContentArgumentFormat _passedArgument;
@@ -56,6 +59,7 @@ class ContentDetailViewModel extends BaseViewModel {
   final LoadContentDetailInfoUseCase _loadContentDetailInfoUseCase;
   final LoadContentCreditInfoUseCase _loadContentCreditInfo;
   final LoadContentVideoInfoUseCase loadContentVideoInfo;
+  final UpdateUserPreferencesUserCase _updateUserPreferences;
 
   /* Data Modules */
   final ChannelRepository _channelRepository;
@@ -83,8 +87,8 @@ class ContentDetailViewModel extends BaseViewModel {
   // Sliver Custom 스크롤 Offset
   double scrollOffset = 0;
 
-  // 상단 '뒤로가기' 버튼 Visibility 여부
-  bool showBackBtnOnTop = true;
+  // 앱바 배경색 노출 여부
+  bool hideAppBarColor = true;
 
   /* 메소드 */
   // 탭 바 버튼이 클릭 되었을 때
@@ -122,6 +126,7 @@ class ContentDetailViewModel extends BaseViewModel {
     safeUnregister<LoadContentDetailInfoUseCase>();
     safeUnregister<LoadContentCreditInfoUseCase>();
     safeUnregister<LoadContentVideoInfoUseCase>();
+    safeUnregister<UpdateUserPreferencesUserCase>();
 
     Navigator.push(
       context,
@@ -145,8 +150,8 @@ class ContentDetailViewModel extends BaseViewModel {
   // 채널 상세 페이지로 이동
   void routeToChannelDetail() {
     safeUnregister<ChannelDetailViewModel>();
-
     safeUnregister<LoadPagedChannelContentsUseCase>();
+    safeUnregister<UpdateUserPreferencesUserCase>();
 
     channelDetailBinding.isDependenciesDeleted = true;
 
@@ -172,19 +177,19 @@ class ContentDetailViewModel extends BaseViewModel {
   // 하단 상단 앱바 Visibility 여부를 조절하는 메소드.
   void setBackBtnVisibility() {
     if (scrollController.offset >= 430 &&
-        showBackBtnOnTop == true &&
+        hideAppBarColor == true &&
         scrollController.position.userScrollDirection ==
             ScrollDirection.reverse) {
-      showBackBtnOnTop = false;
+      hideAppBarColor = false;
       notifyListeners();
       return;
     } else if (scrollController.offset >= 486) {
       return;
     } else {
-      if (showBackBtnOnTop == false &&
+      if (hideAppBarColor == false &&
           scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
-        showBackBtnOnTop = true;
+        hideAppBarColor = true;
         notifyListeners();
       }
     }
@@ -375,6 +380,10 @@ class ContentDetailViewModel extends BaseViewModel {
 
     // 시청기록 추가
     await addUserWatchHistory(youtubeVideoId);
+    _updateUserPreferences.call(
+      genresName: _contentDescriptionInfo?.genreList ?? [],
+      channelId: channelInfo!.channelId,
+    );
   }
 
   @override

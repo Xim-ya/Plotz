@@ -60,7 +60,6 @@ class AppDialog extends Dialog {
         btnText: rightBtnContent,
       );
 
-
   final bool isDividedBtnFormat;
   final String title;
   final String? description;
@@ -90,33 +89,38 @@ class AppDialog extends Dialog {
           children: [
             // 본분
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 34) +
-                  const EdgeInsets.only(top: 18, bottom: 19),
+              padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(
                 children: [
                   Center(
-                    child: Text(
-                      title,
-                      style: AppTextStyle.title3.copyWith(color: AppColor.main),
-                      textAlign: TextAlign.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 14, bottom: 10),
+                      child: Text(
+                        title,
+                        style:
+                            AppTextStyle.title3.copyWith(color: AppColor.main),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                  AppSpace.size12,
                   if (subTitle.hasData) ...[
                     Text(
                       subTitle!,
                       style: AppTextStyle.alert1,
                       textAlign: TextAlign.center,
                     ),
-                    AppSpace.size2,
+                    AppSpace.size14,
                   ],
                   if (description.hasData) ...[
                     Center(
-                      child: Text(
-                        description!,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyle.desc
-                            .copyWith(color: AppColor.lightGrey, height: 1.3),
+                      child: Padding(
+                        padding: AppInset.bottom16,
+                        child: Text(
+                          description!,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyle.desc
+                              .copyWith(color: AppColor.lightGrey, height: 1.3),
+                        ),
                       ),
                     )
                   ]

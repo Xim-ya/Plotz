@@ -22,11 +22,11 @@ class SettingViewModel extends BaseViewModel {
 
   // 회원탈퇴
   Future<void> withDrawUser() async {
-    final response =
-        await _userRepository.withdrawUser(_userService.userInfo.value.id!);
+    final response = await _userRepository.withdrawUser();
     response.fold(
       onSuccess: (data) {
         signOut().whenComplete(() {
+          clearUserLocalData();
           AlertWidget.newToast(message: '회원탈퇴 처리 되었습니다', context);
         });
       },
@@ -77,12 +77,24 @@ class SettingViewModel extends BaseViewModel {
     result.fold(
       onSuccess: (_) {
         context.go(AppRoutes.login);
+        clearUserLocalData();
         TabsBinding.unRegisterDependencies();
         LoginBinding.dependencies();
       },
       onFailure: (e) {
         AlertWidget.newToast(message: '로그아웃에 실패했습니다. 다시 시도 시도해주세요', context);
         log(e.toString());
+      },
+    );
+  }
+
+  // 유저 로컬 데이터 삭제
+  void clearUserLocalData() {
+    final response = _userRepository.clearUserLocalData();
+    response.fold(
+      onSuccess: (_) {},
+      onFailure: (e) {
+        log('SettingViewModel : $e');
       },
     );
   }

@@ -41,7 +41,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: AppColor.newBlack, // Bg 컬러
+        canvasColor: AppColor.black, // Bg 컬러
       ),
       child: Container(
         decoration: BoxDecoration(

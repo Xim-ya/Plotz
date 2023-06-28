@@ -14,7 +14,7 @@ class LoginViewModel extends BaseViewModel {
   /* Data Modules */
   final UserService _userService;
 
-  /* UseCases*/
+  /* UseCases */
   final SignInAndUpHandlerUseCase _signInHandlerUseCase;
 
   // 로그인 & 회원가입
@@ -23,10 +23,14 @@ class LoginViewModel extends BaseViewModel {
     await result.fold(
       onSuccess: (data) async {
         await launchServiceModules().whenComplete(() {
-          _userService.updateUserLoginDate(_userService.userInfo.value.id!);
-          context.go(AppRoutes.tabs);
-          TabsBinding.dependencies();
-          LoginBinding.unRegisterDependencies();
+          _userService.updateUserLoginDate();
+          if (_userService.isOnboardingProgressDone) {
+            context.go(AppRoutes.tabs);
+            TabsBinding.dependencies();
+            LoginBinding.unRegisterDependencies();
+          } else {
+            context.go(AppRoutes.onboarding1);
+          }
         });
       },
       onFailure: (e) {
@@ -46,5 +50,8 @@ class LoginViewModel extends BaseViewModel {
   /// load가 필요한 모듈들을 실행
   Future<void> launchServiceModules() async {
     await _userService.getUserInfo();
+    await _userService.saveUserLocalDataIfNeeded();
+    await _userService.checkOnBoardingProgressState();
+
   }
 }

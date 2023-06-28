@@ -5,7 +5,6 @@ import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/image/content_poster_item_view.dart';
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
 import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -16,8 +15,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   bool get wrapWithSafeArea => false;
 
-  @override
-  Color? get screenBackgroundColor => AppColor.newBlack;
+
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -142,10 +140,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           builder: (_, isScrolledOnPosition, __) => AnimatedContainer(
                 duration: const Duration(milliseconds: 100),
                 height: isScrolledOnPosition ? 172 : 88,
-                decoration: BoxDecoration(
-                    gradient: isScrolledOnPosition
-                        ? AppGradient.topToBottom
-                        : AppGradient.singleTopToBottom),
+                decoration: const BoxDecoration(
+                    gradient: AppGradient.topToBottom),
               )));
 
   @override
@@ -211,10 +207,10 @@ class _BannerSlider extends BaseView<HomeViewModel> {
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color.fromRGBO(15, 15, 15, 0),
-                    Color.fromRGBO(15, 15, 15, 0.6),
-                    Color.fromRGBO(15, 15, 15, 0.8),
-                    Color.fromRGBO(15, 15, 15, 1),
+                    Color.fromRGBO(0, 0, 0, 0),
+                    Color.fromRGBO(0, 0, 0, 0.6),
+                    Color.fromRGBO(0, 0, 0, 0.8),
+                    Color.fromRGBO(0, 0, 0, 1),
                   ],
                   stops: [0.0, 0.3539, 0.5168, 1.0],
                   // stops: [0.0, 0.1823, 0.375, 1.0],
@@ -416,8 +412,8 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
                                   borderRadius: BorderRadius.circular(4),
                                   gradient: const LinearGradient(
                                     colors: [
-                                      Color.fromRGBO(15, 15, 15, 0.0),
-                                      Color.fromRGBO(15, 15, 15, 0.8),
+                                      Color.fromRGBO(0, 0, 0, 0.0),
+                                      Color.fromRGBO(0, 0, 0, 0.8),
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: Alignment.topCenter,
@@ -522,8 +518,8 @@ class _ChannelSlider extends BaseView<HomeViewModel> {
                         ),
                       );
                     } else {
-                      return Column(
-                        children: const <Widget>[
+                      return const Column(
+                        children: <Widget>[
                           SkeletonBox(
                             borderRadius: 44,
                             height: 88,

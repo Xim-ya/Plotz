@@ -17,5 +17,5 @@ class CategoryContentItemResponse {
       {required this.id, required this.posterImgUrl, required this.title});
 
   factory CategoryContentItemResponse.fromJson(Map<String, dynamic> json) =>
-      _$NewCategoryContentItemResponseFromJson(json);
+      _$CategoryContentItemResponseFromJson(json);
 }

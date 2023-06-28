@@ -5,8 +5,10 @@ import 'package:soon_sak/utilities/index.dart';
 mixin FirebaseIsolateHelper {
   // 동시에 실행할 수 있는 Isolate의 최대 개수
   static const int _maxIsolates = 5;
+
   // 현재 실행 중인 Isolate의 수
   int _currentIsolates = 0;
+
   // 작업 큐
   final Queue<Function> _taskQueue = Queue();
 
@@ -40,7 +42,7 @@ mixin FirebaseIsolateHelper {
     );
 
     return receivePort.first.then(
-          (dynamic data) {
+      (dynamic data) {
         _currentIsolates--;
         _runNextTask();
         if (data is T) {
@@ -69,7 +71,8 @@ Future<void> _isolateEntry(_IsolateEntryPayload payload) async {
 
   try {
     BackgroundIsolateBinaryMessenger.ensureInitialized(
-        payload.rootIsolateToken,);
+      payload.rootIsolateToken,
+    );
   } on MissingPluginException catch (e) {
     print(e.toString());
     return Future.error(e.toString());

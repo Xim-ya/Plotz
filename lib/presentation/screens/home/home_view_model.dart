@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/api/channel/channel_api_impl.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
@@ -30,7 +31,11 @@ class HomeViewModel extends BaseViewModel {
             loadPagedCategoryCollectionsUseCase,
         _channelRepository = channelRepository;
 
+
+  void testLocalStorageLogic() {}
+
   /* [Variables] */
+
   /// Data
   BannerModel? bannerContents; // 배너 컨텐츠
   List<TopPositionedCategory>? topPositionedCategory;
@@ -45,7 +50,6 @@ class HomeViewModel extends BaseViewModel {
   bool isScrolledOnPosition = false;
 
   /* [Controllers] */
-
   late ScrollController scrollController;
   late CarouselController carouselController;
 
@@ -137,8 +141,8 @@ class HomeViewModel extends BaseViewModel {
 
   // 검색 스크린으로 이동
   void routeToSearch(BuildContext context) async {
-    await context.push(AppRoutes.tabs + AppRoutes.search);
-    // _channelApi.updateSeasonContentField();
+    testLocalStorageLogic();
+    // await context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 채널 상세 스크린으로 이동

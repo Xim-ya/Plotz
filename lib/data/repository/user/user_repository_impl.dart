@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
+import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
+import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -10,13 +13,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<void>> addUserCurationInfo({
-    required String qurationDocId,
-    required String userId,
+    required String curationDocId,
+
   }) async {
     try {
-      final response = _dataSource.addUserQurationInfo(
-        qurationDocId: qurationDocId,
-        userId: userId,
+      final response = _dataSource.addUserCurationInfo(
+        curationDocId: curationDocId,
+
       );
       return Result.success(response);
     } on Exception {
@@ -25,11 +28,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<UserCurationSummary>> loadUserCurationSummary(
-    String userId,
-  ) async {
+  Future<Result<UserCurationSummary>> loadUserCurationSummary() async {
     try {
-      final response = await _dataSource.loadUserCurationSummary(userId);
+      final response = await _dataSource.loadUserCurationSummary();
       return Result.success(UserCurationSummary.fromResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
@@ -63,11 +64,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory(
-    String userId,
-  ) async {
+  Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory() async {
     try {
-      final response = await _dataSource.loadUserWatchHistory(userId);
+      final response = await _dataSource.loadUserWatchHistory();
       response.removeWhere((e) => e == null);
       return Result.success(
         response.map((e) => UserWatchHistoryItem.fromResponse(e!)).toList(),
@@ -99,12 +98,10 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<String>> uploadUserProfileImgAndReturnUrl({
-    required String userId,
     required File file,
   }) async {
     try {
       final response = await _dataSource.uploadUserProfileImgAndReturnUrl(
-        userId: userId,
         file: file,
       );
       return Result.success(response);
@@ -114,9 +111,101 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<void>> withdrawUser(String userId) async {
+  Future<Result<void>> withdrawUser() async {
     try {
-      final response = await _dataSource.withdrawUser(userId);
+      final response = await _dataSource.withdrawUser();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserPreferences(
+      UserOnboardingPreferredRequest req) async {
+    try {
+      final response = await _dataSource.updateUserPreferences(req);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<bool> isOnboardingProgressDone() {
+    try {
+      final response = _dataSource.isOnboardingProgressDone();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<void> saveUserLocalData(String userId) {
+    try {
+      final response = _dataSource.saveUserLocalData(userId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<UserBox?> getUserLocalData() {
+    try {
+      final response = _dataSource.getUserLocalData();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<bool>> checkIfUserHasPreferencesData( ) async {
+    try {
+      final response = await _dataSource.checkIfUserHasPreferencesData();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<void> changeUserOnboardingState() {
+    try {
+      final response = _dataSource.changeUserOnboardingState();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Result<void> clearUserLocalData() {
+    try {
+      final response = _dataSource.clearUserLocalData();
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserChannelPreference(String channelId) async {
+    try {
+      final response = await _dataSource.updateUserChannelPreference(channelId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateUserGenrePreference(
+      List<PreferredRequestContent> genres) async {
+    try {
+      final response = await _dataSource.updateUserGenrePreference(genres);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

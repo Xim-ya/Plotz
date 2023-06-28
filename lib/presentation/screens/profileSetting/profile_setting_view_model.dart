@@ -92,7 +92,6 @@ class ProfileSettingViewModel extends BaseViewModel {
     }
   }
 
-  @override
   void routeBack() {
     if (loading == true) return;
     context.pop();
@@ -101,7 +100,6 @@ class ProfileSettingViewModel extends BaseViewModel {
   // 이미지 업로드 및 downloadImgUrl 값 리턴 (FireStore)
   Future<String?> storeImgFileAndReturnUrl(File file) async {
     final response = await _userRepository.uploadUserProfileImgAndReturnUrl(
-      userId: _userService.userInfo.value.id!,
       file: file,
     );
     return await response.fold(

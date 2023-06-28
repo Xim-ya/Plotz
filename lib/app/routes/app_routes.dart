@@ -36,4 +36,13 @@ abstract class AppRoutes {
 
   // 프로필 설정
   static const profileSetting = '/profileSetting';
+
+  // 유저 콘텐츠 취향 정보 수집(온보딩 1)
+  static const onboarding1 = '/onboarding1';
+
+  // 유저 채널 취향 정보 수집(온보딩 2)
+  static const onboarding2 = '/onboarding2';
+
+  /// 수집 종료 이후 Plotz 인트로 스크린
+  static const onboarding3 = '/onboarding3';
 }

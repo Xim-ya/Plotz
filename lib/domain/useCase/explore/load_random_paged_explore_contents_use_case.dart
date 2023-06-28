@@ -24,7 +24,7 @@ class LoadRandomPagedExploreContentsUseCase
 
   final ContentRepository _repository;
   final ContentService _service;
-  bool moreCallIsAllowed = true;
+  bool extraPagedCallAllowed = true;
   final List<String> prevIds = [];
 
   @override
@@ -49,7 +49,7 @@ class LoadRandomPagedExploreContentsUseCase
 
     // 다음 call에서 더 이상 호출 id가 없다면
     if (waitingCallIds.length < 20) {
-      moreCallIsAllowed = false;
+      extraPagedCallAllowed = false;
     }
 
     // 무작위로 20개의 id 리스트 추출

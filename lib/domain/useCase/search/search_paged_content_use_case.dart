@@ -53,9 +53,7 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(
       const Duration(milliseconds: 450),
-      () => {
-        pagingController.refresh(),
-      },
+      pagingController.refresh,
     );
   }
 
@@ -116,7 +114,6 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
           controller.appendLastPage(searchedContents);
         } else {
           log('FIRST PAGE CALLED');
-          print("다음 페이지 ${data.page}");
           controller.appendPage(searchedContents, data.page + 1);
         }
       },

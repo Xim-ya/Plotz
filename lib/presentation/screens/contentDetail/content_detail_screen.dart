@@ -152,18 +152,20 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
 
                   // 개봉년도 & 장르
                   RichText(
-                    text: TextSpan(children: <TextSpan>[
-                      TextSpan(
-                        text: value.item3.hasData ? '${value.item3} · ' : '',
-                        style: AppTextStyle.alert2
-                            .copyWith(color: AppColor.gray03),
-                      ),
-                      TextSpan(
-                        text: value.item4,
-                        style: AppTextStyle.alert2
-                            .copyWith(color: AppColor.gray03),
-                      ),
-                    ]),
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: value.item3.hasData ? '${value.item3} · ' : '',
+                          style: AppTextStyle.alert2
+                              .copyWith(color: AppColor.gray03),
+                        ),
+                        TextSpan(
+                          text: value.item4,
+                          style: AppTextStyle.alert2
+                              .copyWith(color: AppColor.gray03),
+                        ),
+                      ],
+                    ),
                   ),
                   AppSpace.size16,
 
@@ -217,7 +219,7 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
     return Selector<ContentDetailViewModel,
         Tuple3<bool, ContentVideoModel?, int>>(
       selector: (context, vm) =>
-          Tuple3(vm.showBackBtnOnTop, vm.videoInfo, vm.selectedEpisode),
+          Tuple3(vm.hideAppBarColor, vm.videoInfo, vm.selectedEpisode),
       builder: (context, value, _) {
         return Stack(
           children: [
@@ -225,12 +227,12 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
             Positioned(
               child: Container(
                 decoration: const BoxDecoration(
-                    gradient: AppGradient.singleTopToBottom),
+                    gradient: AppGradient.topToBottom),
               ),
             ),
 
             AnimatedContainer(
-              duration: const Duration(milliseconds: 120),
+              duration: const Duration(microseconds: 50),
               padding: EdgeInsets.only(top: SizeConfig.to.statusBarHeight),
               height: 48 + SizeConfig.to.statusBarHeight,
               color: value.item1 ? Colors.transparent : AppColor.black,

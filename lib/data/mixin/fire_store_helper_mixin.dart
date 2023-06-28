@@ -35,7 +35,8 @@ mixin FirestoreHelper {
   // 특정 필드 값
 
   // 특정 필드 값을 가지고 있는 documents를 가져오는 메소드
-  Future<List<DocumentSnapshot>> getDocumentsByFieldValue(String collectionName,
+  Future<List<DocumentSnapshot>> getPagedDocumentsByFieldValue(
+      String collectionName,
       {required String fieldName,
       required dynamic fieldValue,
       required int pageSize,
@@ -100,6 +101,23 @@ mixin FirestoreHelper {
         .get();
 
     return snapshot.docs.first;
+  }
+
+  /// paged 방식으로 collection의 documents 데이터를 가져오는 메소드
+  Future<List<DocumentSnapshot>> getPagedDocuments(String collectionName,
+      {required int pageSize, required DocumentSnapshot? lastDocument}) async {
+    if (lastDocument.hasData) {
+      QuerySnapshot snapshot = await _db
+          .collection(collectionName)
+          .limit(pageSize)
+          .startAfterDocument(lastDocument!)
+          .get();
+      return snapshot.docs;
+    } else {
+      QuerySnapshot snapshot =
+          await _db.collection(collectionName).limit(pageSize).get();
+      return snapshot.docs;
+    }
   }
 
   /// subCollection document 데이터 리스트를 불러오는 메소드
@@ -364,7 +382,7 @@ mixin FirestoreHelper {
   // 특정 필드값의 필드를 업데이트 or 새로운 document 생성 (CREATE or UPDATE)
   // 해당 subCollection doucment 개수가 20개가 넘는다면
   // 특정 필드값의 데이터를 기준으로 정렬하여 마지막 document를 삭제 (DELETE)
-  Future<void> cudSubCollectionDocument(
+  Future<void> cudSubCollectionDocumentWithLimit(
     String collectionName, {
     required String docId,
     required String subCollectionName,
@@ -411,6 +429,59 @@ mixin FirestoreHelper {
         await oldestDocument.reference.delete();
       }
     }
+  }
+
+  // [UNIQUE ONE] 유저 콘텐츠 선호
+  // SubCollection Document의 존재 여부를 확인하고
+  // 특정 필드값의 필드를 업데이트 or 새로운 document 생성 (CREATE or UPDATE)
+  // 업데이트 해야되는 상황이라면 필드값만 업데이트
+  Future<void> cudSubCollectionDocumentAndIncreaseIntFields(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+    required String subCollectionDocId,
+    required int fieldValue,
+    required String fieldName,
+    required Map<String, dynamic> data,
+  }) async {
+    final CollectionReference collectionRef = _db.collection(collectionName);
+    final DocumentReference documentRef = collectionRef.doc(docId);
+    final CollectionReference subCollectionRef =
+        documentRef.collection(subCollectionName);
+    final DocumentReference subCollectionDocRef =
+        subCollectionRef.doc(subCollectionDocId);
+
+    await _db.runTransaction((transaction) async {
+      final DocumentSnapshot snapshot =
+          await transaction.get(subCollectionDocRef);
+
+      // 존재한다면 특정 필드값 업데이트
+      if (snapshot.exists) {
+        transaction.update(subCollectionDocRef, {
+          fieldName: snapshot.get('count') + fieldValue,
+        });
+      } else {
+        // 존재 하지 않는다면 새로운 Document 추가
+        transaction.set(subCollectionDocRef, data);
+      }
+    });
+  }
+
+  // 특정 collection에 subCollection 자체가 존재하는지 확인
+  Future<bool> checkSubCollectionExist(
+    String collectionName, {
+    required String docId,
+    required String subCollectionName,
+  }) async {
+    final CollectionReference collectionRef = _db.collection(collectionName);
+    final DocumentReference documentRef = collectionRef.doc(docId);
+    final CollectionReference subCollectionRef =
+        documentRef.collection(subCollectionName);
+
+    final QuerySnapshot subCollectionSnapshot =
+        await subCollectionRef.limit(1).get();
+
+    return subCollectionSnapshot.docs.isNotEmpty;
   }
 
   // 특정 field 값을 가지고 있는 document 리스트를 불러오는 메소드

@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/api/channel/request/channel_contents_request.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/model/channel/channel_content_list.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -20,11 +20,6 @@ class LoadPagedChannelContentsUseCase {
   /* Repository */
   final ChannelRepository _channelRepository;
 
-  @override
-  Future<ChannelContentList> call(ChannelContentsRequest request) {
-    // TODO: implement call
-    throw UnimplementedError();
-  }
 
   Future<void> _fetchPage(String channelId) async {
     final response = await _channelRepository.loadPagedChannelContents(

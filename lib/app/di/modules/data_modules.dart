@@ -7,7 +7,9 @@ import 'package:soon_sak/data/dataSource/channel/channel_data_source.dart';
 import 'package:soon_sak/data/dataSource/channel/channel_data_source_impl.dart';
 import 'package:soon_sak/data/dataSource/version/version_data_sourcel_impl.dart';
 import 'package:soon_sak/data/firebase/app_fire_storage.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/local/box/user/user_box.dart';
+import 'package:soon_sak/data/local/dao/user/user_dao.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/data/repository/channel/channel_respository_impl.dart';
 import 'package:soon_sak/data/repository/version/version_repository_impl.dart';
 import 'package:soon_sak/data/resources/app_dio.dart';
@@ -28,9 +30,14 @@ abstract class DataModules {
 
     /* User*/
     locator.registerLazySingleton<UserApi>(() => UserApiImpl());
+    locator.registerLazySingleton<UserDao>(()=> UserDao());
 
     locator.registerLazySingleton<UserDataSource>(
-        () => UserDataSourceImpl(api: locator<UserApi>()));
+      () => UserDataSourceImpl(
+        api: locator<UserApi>(),
+        local: locator<UserDao>(),
+      ),
+    );
 
     locator.registerLazySingleton<UserRepository>(
         () => UserRepositoryImpl(dataSource: locator<UserDataSource>()));

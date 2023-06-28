@@ -11,20 +11,28 @@ class PagedGridListView<T> extends StatelessWidget {
     Key? key,
     required this.pagingController,
     required this.itemBuilder,
+    required this.crossAxisCount,
+    required this.mainAxisSpacing,
+    required this.crossAxisSpacing,
+    required this.childAspectRatio,
   }) : super(key: key);
 
   final PagingController<int, T> pagingController;
   final ItemWidgetBuilder<T> itemBuilder;
+  final int crossAxisCount;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+  final double childAspectRatio;
 
   @override
   Widget build(BuildContext context) {
     return PagedSliverGrid<int, T>(
       pagingController: pagingController,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 24,
-        crossAxisSpacing: 9,
-        childAspectRatio: 109 / 200,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        mainAxisSpacing: mainAxisSpacing,
+        crossAxisSpacing: crossAxisSpacing,
+        childAspectRatio: childAspectRatio,
       ),
       builderDelegate: PagedChildBuilderDelegate<T>(
         // animateTransitions: true,

@@ -1,29 +1,35 @@
 import 'dart:io';
-
+import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
+import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
+import 'package:soon_sak/data/local/box/user/user_box.dart';
+import 'package:soon_sak/data/local/dao/user/user_dao.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserDataSourceImpl
-    with FireStoreErrorHandlerMixin, FirebaseIsolateHelper
+    with FireStoreErrorHandlerMixin
     implements UserDataSource {
-  UserDataSourceImpl({required UserApi api}) : _api = api;
+  UserDataSourceImpl({required UserApi api, required UserDao local})
+      : _api = api,
+        _local = local;
 
   final UserApi _api;
+  final UserDao _local;
 
   @override
-  Future<void> addUserQurationInfo({
-    required String qurationDocId,
-    required String userId,
+  Future<void> addUserCurationInfo({
+    required String curationDocId,
   }) =>
       loadResponseOrThrow(
         () => _api.addUserCurationInfo(
-          qurationDocId: qurationDocId,
-          userId: userId,
+          curationDocId: curationDocId,
+          userId: _local.value!.userId,
         ),
       );
 
   @override
-  Future<UserCurationSummaryResponse> loadUserCurationSummary(String userId) =>
-      loadResponseOrThrow(() => _api.loadUserCurationSummary(userId));
+  Future<UserCurationSummaryResponse> loadUserCurationSummary() =>
+      loadResponseOrThrow(
+          () => _api.loadUserCurationSummary(_local.value!.userId));
 
   @override
   Future<List<CurationContentResponse>> loadUserCurationContentList(
@@ -40,13 +46,9 @@ class UserDataSourceImpl
   }
 
   @override
-  Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
-    String userId,
-  ) =>
-      loadWithFirebaseIsolate(
-        () => loadResponseOrThrow(
-          () => _api.loadUserWatchHistory(userId),
-        ),
+  Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory() =>
+      loadResponseOrThrow(
+        () => _api.loadUserWatchHistory(_local.value!.userId),
       );
 
   @override
@@ -60,16 +62,64 @@ class UserDataSourceImpl
   }
 
   @override
-  Future<String> uploadUserProfileImgAndReturnUrl({
-    required String userId,
-    required File file,
-  }) {
+  Future<String> uploadUserProfileImgAndReturnUrl({required File file}) {
     return loadResponseOrThrow(
-      () => _api.uploadUserProfileImgAndReturnUrl(userId: userId, file: file),
+      () => _api.uploadUserProfileImgAndReturnUrl(
+          userId: _local.value!.userId, file: file),
     );
   }
 
   @override
-  Future<void> withdrawUser(String userId) async =>
-      loadResponseOrThrow(() => _api.withdrawUser(userId));
+  Future<void> withdrawUser() async =>
+      loadResponseOrThrow(() => _api.withdrawUser(_local.value!.userId));
+
+  @override
+  bool isOnboardingProgressDone() {
+    final result = _local.value?.isOnboardingProgressDone ?? false;
+    return result;
+  }
+
+  @override
+  Future<void> updateUserPreferences(UserOnboardingPreferredRequest req) {
+    return loadResponseOrThrow(
+        () => _api.updateUserPreferences(req, _local.userId!));
+  }
+
+  @override
+  void saveUserLocalData(String userId) {
+    _local.updateUserId(userId);
+  }
+
+  @override
+  UserBox? getUserLocalData() => _local.value;
+
+  @override
+  Future<bool> checkIfUserHasPreferencesData() async {
+    final result = _api.checkIfUserHasPreferencesData(_local.value!.userId);
+    return result;
+  }
+
+  @override
+  void changeUserOnboardingState() {
+    _local.updateOnboardingState(_local.value!.userId);
+  }
+
+  @override
+  void clearUserLocalData() {
+    _local.clearUserLocalData();
+  }
+
+  @override
+  Future<void> updateUserChannelPreference(String channelId) {
+    return _api.updateUserChannelPreference(
+        userId: _local.userId!, channelId: channelId);
+  }
+
+  @override
+  Future<void> updateUserGenrePreference(List<PreferredRequestContent> genres) {
+    return _api.updateUserGenrePreference(
+      userId: _local.userId!,
+      genres: genres,
+    );
+  }
 }
