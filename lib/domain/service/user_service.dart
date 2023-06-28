@@ -5,10 +5,10 @@ import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserService {
-  UserService(
-      {required AuthRepository authRepository,
-      required UserRepository userRepository})
-      : _authRepository = authRepository,
+  UserService({
+    required AuthRepository authRepository,
+    required UserRepository userRepository,
+  })  : _authRepository = authRepository,
         _userRepository = userRepository,
         userWatchHistory = BehaviorSubject<List<UserWatchHistoryItem>>(),
         userInfo = BehaviorSubject<UserModel>();
@@ -24,10 +24,10 @@ class UserService {
       userWatchHistory; // 유저 시청 기록
 
   /* Intents */
-  // 유저 시청 기록 호출
+  // 유저 시청 기록 업데이트
   Future<void> updateUserWatchHistory() async {
     final response =
-        await _userRepository.loadUserWatchHistory(userInfo.value.id!);
+        await _userRepository.loadUserWatchHistory();
     response.fold(
       onSuccess: (data) {
         userWatchHistory.add(data);
@@ -69,9 +69,7 @@ class UserService {
     if (userLocalData?.userId != userInfo.value.id) {
       final response = _userRepository.saveUserLocalData(userInfo.value.id!);
       response.fold(
-        onSuccess: (_) {
-          print('로컬 저장 시작--');
-        },
+        onSuccess: (_) {},
         onFailure: (e) {
           log('UserService - 유저 로컬 데이터 저장 실패');
         },
@@ -90,12 +88,12 @@ class UserService {
     } else {
       // 서버 정보 확인
       final response = await _userRepository
-          .checkIfUserHasPreferencesData(userInfo.value.id!);
+          .checkIfUserHasPreferencesData();
       response.fold(
         onSuccess: (data) {
           isOnboardingProgressDone = data;
           if (data == true) {
-            _userRepository.changeUserOnboardingState(userInfo.value.id!);
+            _userRepository.changeUserOnboardingState();
           }
         },
         onFailure: (e) {
@@ -146,13 +144,6 @@ class UserService {
   /// [SplashViewModel]에서 사용됨
   Future<void> prepare(BuildContext context) async {
     await checkUserSignInState();
-    listenNetworkConnection(context);
+    listenNetworkConnection(context); // TODO 새로운 서비스 모듈로 분리 필요
   }
-
-// 로그인 프로세스가 끝났을 떄
-// 유저 접속일 최신화 + 유저 로컬 정보 저장(필요시)
-// Future<void> updateAndSaveUserInfo() async {
-//   await updateUserLoginDate();
-//   saveUserLocalDataIfNeeded();
-// }
 }

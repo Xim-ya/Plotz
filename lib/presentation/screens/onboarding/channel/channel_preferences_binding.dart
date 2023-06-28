@@ -1,6 +1,6 @@
 import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/app/di/locator/locator.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/data/repository/tmdb/tmdb_repository.dart';
 import 'package:soon_sak/data/repository/user/user_repository.dart';
 import 'package:soon_sak/domain/service/user_service.dart';

@@ -13,13 +13,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<void>> addUserCurationInfo({
-    required String qurationDocId,
-    required String userId,
+    required String curationDocId,
+
   }) async {
     try {
       final response = _dataSource.addUserCurationInfo(
-        curationDocId: qurationDocId,
-        userId: userId,
+        curationDocId: curationDocId,
+
       );
       return Result.success(response);
     } on Exception {
@@ -28,11 +28,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<UserCurationSummary>> loadUserCurationSummary(
-    String userId,
-  ) async {
+  Future<Result<UserCurationSummary>> loadUserCurationSummary() async {
     try {
-      final response = await _dataSource.loadUserCurationSummary(userId);
+      final response = await _dataSource.loadUserCurationSummary();
       return Result.success(UserCurationSummary.fromResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
@@ -66,11 +64,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory(
-    String userId,
-  ) async {
+  Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory() async {
     try {
-      final response = await _dataSource.loadUserWatchHistory(userId);
+      final response = await _dataSource.loadUserWatchHistory();
       response.removeWhere((e) => e == null);
       return Result.success(
         response.map((e) => UserWatchHistoryItem.fromResponse(e!)).toList(),
@@ -102,12 +98,10 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<String>> uploadUserProfileImgAndReturnUrl({
-    required String userId,
     required File file,
   }) async {
     try {
       final response = await _dataSource.uploadUserProfileImgAndReturnUrl(
-        userId: userId,
         file: file,
       );
       return Result.success(response);
@@ -117,9 +111,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<void>> withdrawUser(String userId) async {
+  Future<Result<void>> withdrawUser() async {
     try {
-      final response = await _dataSource.withdrawUser(userId);
+      final response = await _dataSource.withdrawUser();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -168,9 +162,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<bool>> checkIfUserHasPreferencesData(String userId) async {
+  Future<Result<bool>> checkIfUserHasPreferencesData( ) async {
     try {
-      final response = await _dataSource.checkIfUserHasPreferencesData(userId);
+      final response = await _dataSource.checkIfUserHasPreferencesData();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -178,9 +172,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Result<void> changeUserOnboardingState(String userId) {
+  Result<void> changeUserOnboardingState() {
     try {
-      final response = _dataSource.changeUserOnboardingState(userId);
+      final response = _dataSource.changeUserOnboardingState();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

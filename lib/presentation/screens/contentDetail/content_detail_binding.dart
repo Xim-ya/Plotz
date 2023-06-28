@@ -1,5 +1,5 @@
 import 'package:soon_sak/app/di/binding.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/useCase/content/contentDetail/update_user_preferences_use_case.dart';
 import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
 import 'package:soon_sak/utilities/index.dart';

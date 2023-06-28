@@ -50,7 +50,8 @@ class LoginViewModel extends BaseViewModel {
   /// load가 필요한 모듈들을 실행
   Future<void> launchServiceModules() async {
     await _userService.getUserInfo();
-    await _userService.checkOnBoardingProgressState();
     await _userService.saveUserLocalDataIfNeeded();
+    await _userService.checkOnBoardingProgressState();
+
   }
 }

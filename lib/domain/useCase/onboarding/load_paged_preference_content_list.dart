@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:soon_sak/domain/enum/movie_genre_enum.dart';
+import 'package:soon_sak/domain/enum/content_genre_enum.dart';
 import 'package:soon_sak/domain/model/content/onboarding/preference_content.dart';
 import 'dart:math';
 import 'package:soon_sak/utilities/index.dart';
@@ -7,6 +7,15 @@ import 'package:soon_sak/utilities/index.dart';
 /** Created By Ximya - 2023.06.19
  *  온보딩 콘텐츠 정보 섹션에서 사용되는 UseCase [UserContentPreferencesViewModel]
  *  앱 내부에 저장되어 있는 콘텐츠 객체를 불러오고 paged 호출 방식으로 데이터를 호출 함
+ *
+ *  mock json데이터로 온보딩 섹션에서 제공되는 콘텐츠 리스트가 저장되어 있고
+ *  해당 usecase에서 json 파싱하는 로직이 존재함 [getJsonContents]
+ *
+ *  [NOTE]
+ *  - 랜덤으로 호출
+ *  - 페이징 로직 적용
+ *  - 10개씩 호출
+ *
  * */
 
 class LoadPagedPreferenceContentListUseCase {
@@ -67,8 +76,7 @@ class LoadPagedPreferenceContentListUseCase {
         .toList();
   }
 
-  // UseCase 초기화 구문
-  // Controller 초기화 구문
+  /// UseCase 초기화 구문
   Future<void> initUseCase() async {
     unawaited(getJsonContents());
 

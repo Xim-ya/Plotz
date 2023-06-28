@@ -7,28 +7,32 @@ class RegisterBinding extends Bindings {
   void dependencies() {
     super.dependencies();
 
-    locator.registerFactory(() => RegisterViewModel(
-          userService: locator<UserService>(),
-          searchValidateUrlUseCase: locator<SearchValidateUrlUseCase>(),
-          requestContentRegistrationUseCase:
-              locator<RequestContentRegistrationUseCase>(),
-          curationViewModel: locator<CurationViewModel>(),
-          myPageViewModel: locator<MyPageViewModel>(),
-          newSearchedPagedContentUseCase:
-              locator<SearchedPagedContentUseCase>(),
-          contentType: arg1,
-        ));
+    locator.registerFactory(
+      () => RegisterViewModel(
+        userService: locator<UserService>(),
+        searchValidateUrlUseCase: locator<SearchValidateUrlUseCase>(),
+        requestContentRegistrationUseCase:
+            locator<RequestContentRegistrationUseCase>(),
+        curationViewModel: locator<CurationViewModel>(),
+        myPageViewModel: locator<MyPageViewModel>(),
+        newSearchedPagedContentUseCase: locator<SearchedPagedContentUseCase>(),
+        contentType: arg1,
+      ),
+    );
 
-    locator.registerFactory(() => RequestContentRegistrationUseCase(
+    locator.registerFactory(
+      () => RequestContentRegistrationUseCase(
         contentRepository: locator<ContentRepository>(),
         userRepository: locator<UserRepository>(),
-        userService: locator<UserService>()));
+      ),
+    );
 
     locator.registerFactory<SearchValidateUrlUseCase>(
-        () => SearchValidateUrlImpl());
+      () => SearchValidateUrlImpl(),
+    );
 
-    locator.registerLazySingleton(() => SearchedPagedContentUseCase(
-        tmdbRepository: locator<TmdbRepository>()));
+    locator.registerLazySingleton(() =>
+        SearchedPagedContentUseCase(tmdbRepository: locator<TmdbRepository>()));
   }
 
   @override

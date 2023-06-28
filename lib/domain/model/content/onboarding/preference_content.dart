@@ -1,4 +1,4 @@
-import 'package:soon_sak/domain/enum/movie_genre_enum.dart';
+import 'package:soon_sak/domain/enum/content_genre_enum.dart';
 
 /** Created By Ximya - 2023.06.18
  *  온보딩 섹션에서 사용되는

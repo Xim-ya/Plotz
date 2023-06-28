@@ -9,25 +9,23 @@ class RequestContentRegistrationUseCase
     extends BaseUseCase<ContentRegistrationRequest, Result<void>> {
   RequestContentRegistrationUseCase(
       {required ContentRepository contentRepository,
-      required UserRepository userRepository,
-      required UserService userService})
+        required UserRepository userRepository,
+      })
       : _contentRepository = contentRepository,
-        _userRepository = userRepository,
-        _userService = userService;
+        _userRepository = userRepository;
+
 
   final ContentRepository _contentRepository;
   final UserRepository _userRepository;
-  final UserService _userService;
 
   @override
   Future<Result<void>> call(ContentRegistrationRequest request) async {
     final response =
-        await _contentRepository.requestContentRegistration(request);
+    await _contentRepository.requestContentRegistration(request);
     return response.fold(
       onSuccess: (data) async {
         final response = await _userRepository.addUserCurationInfo(
-          qurationDocId: data,
-          userId: _userService.userInfo.value.id!,
+          curationDocId: data,
         );
         return response.fold(
           onSuccess: (_) {

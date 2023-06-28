@@ -1,10 +1,9 @@
-import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
+import 'package:soon_sak/data/api/channel/request/channel_contents_request.dart';
 import 'package:soon_sak/data/api/channel/response/channel_paged_response.dart';
 import 'package:soon_sak/domain/model/channel/channel_content_list.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:soon_sak/utilities/result.dart';
 
 abstract class ChannelRepository {
   // 구독자수가 많은 순으로 채널 리스트 호출

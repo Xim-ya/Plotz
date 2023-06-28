@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/video/content_video_model.dart';

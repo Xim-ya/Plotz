@@ -10,16 +10,12 @@ import 'package:soon_sak/utilities/index.dart';
 class ChannelDetailViewModel extends BaseViewModel {
   ChannelDetailViewModel(
       {required ChannelModel channelArg,
-      required LoadPagedChannelContentsUseCase loadChannelContentsUseCase,
-      required bool isNestedRouteArg})
+      required LoadPagedChannelContentsUseCase loadChannelContentsUseCase})
       : channelInfo = channelArg,
-        _isNestedRoute = isNestedRouteArg,
         _loadChannelContentsUseCase = loadChannelContentsUseCase;
-
 
   // 이전 페이지에서 전달 받는 argument
   final ChannelModel channelInfo;
-  final bool _isNestedRoute;
 
   /* State Variables */
   // 상단 gradient box enable 여부

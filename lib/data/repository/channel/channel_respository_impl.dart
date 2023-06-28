@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
+import 'package:soon_sak/data/api/channel/request/channel_contents_request.dart';
 import 'package:soon_sak/data/api/channel/response/channel_paged_response.dart';
 import 'package:soon_sak/data/dataSource/channel/channel_data_source.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/model/channel/channel_content_list.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';

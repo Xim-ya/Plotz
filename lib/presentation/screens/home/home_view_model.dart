@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/api/channel/channel_api.dart';
 import 'package:soon_sak/data/api/channel/channel_api_impl.dart';
-import 'package:soon_sak/data/repository/channel/channel_respoitory.dart';
+import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/model/channel/channel_model.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
@@ -23,18 +23,14 @@ class HomeViewModel extends BaseViewModel {
     required LoadCachedTopTenContentsUseCase loadCachedTopTenContentsUseCase,
     required LoadCachedBannerContentUseCase loadBannerContentUseCase,
     required ChannelRepository channelRepository,
-    required UserDataSource userDataSource,
   })  : _loadBannerContentUseCase = loadBannerContentUseCase,
         _loadCachedTopPositionedContentsUseCase =
             loadCachedTopPositionedContentsUseCase,
         _loadCachedTopTenContentsUseCase = loadCachedTopTenContentsUseCase,
         loadPagedCategoryCollectionUseCase =
             loadPagedCategoryCollectionsUseCase,
-        _channelRepository = channelRepository,
-        _userDataSource = userDataSource;
+        _channelRepository = channelRepository;
 
-  // 임시
-  final UserDataSource _userDataSource;
 
   void testLocalStorageLogic() {}
 
@@ -54,7 +50,6 @@ class HomeViewModel extends BaseViewModel {
   bool isScrolledOnPosition = false;
 
   /* [Controllers] */
-
   late ScrollController scrollController;
   late CarouselController carouselController;
 
