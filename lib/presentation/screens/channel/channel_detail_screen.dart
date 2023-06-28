@@ -4,17 +4,12 @@ import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/common/gridView/paged_grid_list_view.dart';
-import 'package:soon_sak/presentation/common/image/circle_img.dart';
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
 import 'package:soon_sak/presentation/screens/channel/localWidget/channel_detail_scaffold.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ChannelDetailScreen extends BaseScreen<ChannelDetailViewModel> {
   const ChannelDetailScreen({Key? key}) : super(key: key);
-
-  @override
-  bool get wrapWithSafeArea => false;
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -26,6 +21,9 @@ class ChannelDetailScreen extends BaseScreen<ChannelDetailViewModel> {
       stackedTopGradientBox: const _StackedTopGradientBox(),
     );
   }
+
+  @override
+  bool get wrapWithSafeArea => false;
 
   @override
   ChannelDetailViewModel createViewModel(BuildContext context) =>

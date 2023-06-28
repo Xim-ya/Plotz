@@ -1,5 +1,3 @@
-import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class RegisterScreen extends BaseScreen<RegisterViewModel> {
@@ -47,12 +45,9 @@ class RegisterScreen extends BaseScreen<RegisterViewModel> {
               renderBorder: false,
               isSelected: vmW(context).selectedSteps,
               children: [
-                _circleBtnIndicator(
-                    '1', vm(context).selectedSteps[0], context),
-                _circleBtnIndicator(
-                    '2', vm(context).selectedSteps[1], context),
-                _circleBtnIndicator(
-                    '3', vm(context).selectedSteps[2], context),
+                _circleBtnIndicator('1', vm(context).selectedSteps[0], context),
+                _circleBtnIndicator('2', vm(context).selectedSteps[1], context),
+                _circleBtnIndicator('3', vm(context).selectedSteps[2], context),
               ],
             ),
           ],

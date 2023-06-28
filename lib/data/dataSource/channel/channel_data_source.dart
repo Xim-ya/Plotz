@@ -1,4 +1,4 @@
-import 'package:soon_sak/data/api/channel/request/channe_contents_request.dart';
+import 'package:soon_sak/data/api/channel/request/channel_contents_request.dart';
 import 'package:soon_sak/data/api/channel/response/channel_content_item_response.dart';
 import 'package:soon_sak/data/api/channel/response/channel_paged_response.dart';
 import 'package:soon_sak/data/api/channel/response/channel_response.dart';

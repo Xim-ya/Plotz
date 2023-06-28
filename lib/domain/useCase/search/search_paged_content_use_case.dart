@@ -114,7 +114,6 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
           controller.appendLastPage(searchedContents);
         } else {
           log('FIRST PAGE CALLED');
-          print("다음 페이지 ${data.page}");
           controller.appendPage(searchedContents, data.page + 1);
         }
       },

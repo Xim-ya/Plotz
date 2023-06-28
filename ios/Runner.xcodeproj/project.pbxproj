@@ -263,7 +263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${FLUTTER_TARGET}\" = \"prod\" ]\nthen\ncp \"${PROJECT_DIR}/config/prod/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nelse\ncp \"${PROJECT_DIR}/config/prod/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nfi\n";
+			shellScript = "if [ \"${FLUTTER_TARGET}\" = \"prod\" ]\nthen    \ncp \"${PROJECT_DIR}/config/dev/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nelse\ncp \"${PROJECT_DIR}/config/prod/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nfi\n";
 		};
 		2AC1FD5929AF240500EA587F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

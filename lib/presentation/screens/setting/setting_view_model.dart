@@ -22,8 +22,7 @@ class SettingViewModel extends BaseViewModel {
 
   // 회원탈퇴
   Future<void> withDrawUser() async {
-    final response =
-        await _userRepository.withdrawUser(_userService.userInfo.value.id!);
+    final response = await _userRepository.withdrawUser();
     response.fold(
       onSuccess: (data) {
         signOut().whenComplete(() {

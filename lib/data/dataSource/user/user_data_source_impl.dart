@@ -18,18 +18,18 @@ class UserDataSourceImpl
   @override
   Future<void> addUserCurationInfo({
     required String curationDocId,
-    required String userId,
   }) =>
       loadResponseOrThrow(
         () => _api.addUserCurationInfo(
           curationDocId: curationDocId,
-          userId: userId,
+          userId: _local.value!.userId,
         ),
       );
 
   @override
-  Future<UserCurationSummaryResponse> loadUserCurationSummary(String userId) =>
-      loadResponseOrThrow(() => _api.loadUserCurationSummary(userId));
+  Future<UserCurationSummaryResponse> loadUserCurationSummary() =>
+      loadResponseOrThrow(
+          () => _api.loadUserCurationSummary(_local.value!.userId));
 
   @override
   Future<List<CurationContentResponse>> loadUserCurationContentList(
@@ -46,11 +46,9 @@ class UserDataSourceImpl
   }
 
   @override
-  Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
-    String userId,
-  ) =>
+  Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory() =>
       loadResponseOrThrow(
-        () => _api.loadUserWatchHistory(userId),
+        () => _api.loadUserWatchHistory(_local.value!.userId),
       );
 
   @override
@@ -64,18 +62,16 @@ class UserDataSourceImpl
   }
 
   @override
-  Future<String> uploadUserProfileImgAndReturnUrl({
-    required String userId,
-    required File file,
-  }) {
+  Future<String> uploadUserProfileImgAndReturnUrl({required File file}) {
     return loadResponseOrThrow(
-      () => _api.uploadUserProfileImgAndReturnUrl(userId: userId, file: file),
+      () => _api.uploadUserProfileImgAndReturnUrl(
+          userId: _local.value!.userId, file: file),
     );
   }
 
   @override
-  Future<void> withdrawUser(String userId) async =>
-      loadResponseOrThrow(() => _api.withdrawUser(userId));
+  Future<void> withdrawUser() async =>
+      loadResponseOrThrow(() => _api.withdrawUser(_local.value!.userId));
 
   @override
   bool isOnboardingProgressDone() {
@@ -98,14 +94,14 @@ class UserDataSourceImpl
   UserBox? getUserLocalData() => _local.value;
 
   @override
-  Future<bool> checkIfUserHasPreferencesData(String userId) async {
-    final result = _api.checkIfUserHasPreferencesData(userId);
+  Future<bool> checkIfUserHasPreferencesData() async {
+    final result = _api.checkIfUserHasPreferencesData(_local.value!.userId);
     return result;
   }
 
   @override
-  void changeUserOnboardingState(String userId) {
-    _local.updateOnboardingState(userId);
+  void changeUserOnboardingState() {
+    _local.updateOnboardingState(_local.value!.userId);
   }
 
   @override

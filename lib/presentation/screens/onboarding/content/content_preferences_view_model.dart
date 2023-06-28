@@ -74,10 +74,10 @@ class ContentPreferenceViewModel extends BaseViewModel {
   }
 
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
-    _loadPagedPreferenceContentList.initUseCase();
     scrollController = ScrollController();
     scrollController.addListener(setGradientBoxVisibility);
+    await _loadPagedPreferenceContentList.initUseCase();
   }
 }

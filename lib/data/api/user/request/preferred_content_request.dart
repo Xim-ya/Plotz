@@ -1,4 +1,4 @@
-import 'package:soon_sak/domain/enum/movie_genre_enum.dart';
+import 'package:soon_sak/domain/enum/content_genre_enum.dart';
 import 'package:soon_sak/domain/model/content/onboarding/preference_content.dart';
 
 class PreferredRequestContent {
@@ -20,10 +20,13 @@ class PreferredRequestContent {
         genreId: genre.id,
       );
 
-  factory PreferredRequestContent.fromGenresName({required String name}) =>
-      PreferredRequestContent(
-        count: 1,
-        genreName: ContentGenre.getContentGenre(name).name,
-        genreId: ContentGenre.getContentGenre(name).id,
-      );
+  factory PreferredRequestContent.fromGenresName({required String name}) {
+    print("아지랑이 ${name}");
+  return  PreferredRequestContent(
+      count: 1,
+      genreName: ContentGenre.getContentGenre(name).name,
+      genreId: ContentGenre.getContentGenre(name).id,
+    );
+  }
+
 }

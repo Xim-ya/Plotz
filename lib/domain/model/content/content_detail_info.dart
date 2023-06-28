@@ -38,18 +38,13 @@ class ContentDetailInfo {
 
   // ContentType == movie인 response
   factory ContentDetailInfo.fromMovieDetailResponse(
-      TmdbMovieDetailResponse response,) {
+    TmdbMovieDetailResponse response,
+  ) {
     List<String> formattedGenre = [];
 
     if (response.genres.hasData) {
       for (var ele in response.genres!) {
-        // "Action & Adventure" 장르 데이터가 이런 형태도 넘어온다면 Split 함.
-        if (ele.name.contains('&')) {
-          final List<String> splitGenre = ele.name.split('&');
-          formattedGenre.addAll(splitGenre);
-        } else {
-          formattedGenre.add(ele.name);
-        }
+        formattedGenre.add(ele.name);
       }
     }
 
@@ -68,18 +63,13 @@ class ContentDetailInfo {
 
   // ContentType == tv인 response
   factory ContentDetailInfo.fromTvDetailResponse(
-      TmdbTvDetailResponse response,) {
+    TmdbTvDetailResponse response,
+  ) {
     List<String> formattedGenre = [];
 
     if (response.genres.hasData) {
       for (var ele in response.genres!) {
-        // "Action & Adventure" 장르 데이터가 이런 형태도 넘어온다면 Split 함.
-        if (ele.name.contains('&')) {
-          final List<String> splitGenre = ele.name.split('&');
-          formattedGenre.addAll(splitGenre);
-        } else {
-          formattedGenre.add(ele.name);
-        }
+        formattedGenre.add(ele.name);
       }
     }
 
@@ -96,8 +86,7 @@ class ContentDetailInfo {
       overView: response.overview,
       airStatus: _translateTvContentStatus(response.status!),
       backDropImgUrl: response.backdrop_path,
-      seasonInfoList:
-          response.seasons?.map(SeasonInfo.fromResponse).toList(),
+      seasonInfoList: response.seasons?.map(SeasonInfo.fromResponse).toList(),
     );
   }
 }
