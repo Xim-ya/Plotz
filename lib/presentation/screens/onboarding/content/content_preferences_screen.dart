@@ -168,10 +168,25 @@ class _IntroTextView extends StatelessWidget {
           ),
         ),
         AppSpace.size8,
-        Text(
-          '좋아하는 영화나 드라마를 3개 이상 선택해주세요.',
+        Text.rich(
           style: AppTextStyle.body3.copyWith(
             color: AppColor.gray02,
+          ),
+          TextSpan(
+            children: <TextSpan>[
+              const TextSpan(
+                text: '좋아하는 영화나 드라마 ',
+              ),  
+              TextSpan(
+                text: '3개 이상',
+                style: AppTextStyle.body3.copyWith(
+                  color: AppColor.main,
+                ),
+              ),
+              const TextSpan(
+                text: ' 선택해주세요',
+              )
+            ],
           ),
         ),
         AppSpace.size36,
