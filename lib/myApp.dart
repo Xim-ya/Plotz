@@ -13,9 +13,8 @@ class MyApp extends StatelessWidget {
     // 아래 명령어 사용
     // flutter build appbundle --target=lib/app/environment/devMain.dart --flavor dev
     // flutter build appbundle --target=lib/app/environment/prodMain.dart --flavor prod
-    // flutter build appbundle --target=lib/app/environment/prodMain.dart --flavor prod
     // flutter run ios --target=lib/app/environment/prodMain.dart --flavor prod
-
+  
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Plotz',

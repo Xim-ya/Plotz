@@ -15,11 +15,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   @override
   bool get wrapWithSafeArea => false;
 
-
-
   @override
   Widget buildScreen(BuildContext context) {
-
     return HomeScaffold(
       stackedTopGradient: _buildStackedTopGradient(context),
       stackedAppBar: _buildStackedAppBar(context),
@@ -140,8 +137,8 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
           builder: (_, isScrolledOnPosition, __) => AnimatedContainer(
                 duration: const Duration(milliseconds: 100),
                 height: isScrolledOnPosition ? 172 : 88,
-                decoration: const BoxDecoration(
-                    gradient: AppGradient.topToBottom),
+                decoration:
+                    const BoxDecoration(gradient: AppGradient.topToBottom),
               )));
 
   @override
@@ -366,7 +363,7 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
           selector: (context, vm) => vm.topTenContents?.contentList,
           builder: (context, itemList, __) {
             return ContentPostSlider(
-              height: 168 ,
+              height: 168,
               itemCount: itemList?.length ?? 5,
               itemBuilder: (context, index) {
                 return Stack(
@@ -426,7 +423,7 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
                               right: 8,
                               bottom: 6,
                               child: Text(
-                                item.title! ,
+                                item.title!,
                                 style: AppTextStyle.title3,
                               ),
                             )

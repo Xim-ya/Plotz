@@ -52,6 +52,5 @@ class LoginViewModel extends BaseViewModel {
     await _userService.getUserInfo();
     await _userService.saveUserLocalDataIfNeeded();
     await _userService.checkOnBoardingProgressState();
-
   }
 }
