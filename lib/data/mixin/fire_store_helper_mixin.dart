@@ -388,7 +388,6 @@ mixin FirestoreHelper {
     required String subCollectionName,
     required String subCollectionDocId,
     required String firstMutableFieldName,
-    required String secondMutableFieldName,
     required Map<String, dynamic> data,
   }) async {
     final CollectionReference collectionRef = _db.collection(collectionName);
@@ -408,7 +407,6 @@ mixin FirestoreHelper {
       if (snapshot.exists) {
         transaction.update(subCollectionDocRef, {
           firstMutableFieldName: Timestamp.now(),
-          secondMutableFieldName: data['videoId']
         });
       } else {
         // 존재 하지 않는다면 새로운 Document 추가

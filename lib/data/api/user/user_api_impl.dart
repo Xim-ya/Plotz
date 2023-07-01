@@ -92,7 +92,6 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
       subCollectionName: 'watchHistory',
       subCollectionDocId: requestInfo.originId,
       firstMutableFieldName: 'watchedDate',
-      secondMutableFieldName: 'videoId',
       data: data,
     );
   }

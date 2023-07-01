@@ -160,7 +160,6 @@ class OldMyPageScreen extends BaseScreen<MyPageViewModel> {
                           aspectRatio: 1280 / 1920,
                           onPlayerBtnClicked: () {
                             if (item == null) return;
-                            vm(context).launchYoutubeApp(item, index);
                           },
                           posterImgUrl: item?.posterImgUrl != null
                               ? item!.posterImgUrl!.prefixTmdbImgPath
