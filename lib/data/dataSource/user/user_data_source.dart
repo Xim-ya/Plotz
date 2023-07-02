@@ -5,18 +5,6 @@ import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserDataSource {
-  // 유저 큐레이션 정보 추가
-  Future<void> addUserCurationInfo({
-    required String curationDocId,
-  });
-
-  // 유저 큐레이션 요약 정보 호출
-  Future<UserCurationSummaryResponse> loadUserCurationSummary();
-
-  // 유저의 큐레이션 리스트 호출
-  Future<List<CurationContentResponse>> loadUserCurationContentList(
-      final String userId);
-
   // 유저 회원탈퇴
   Future<void> withdrawUser();
 

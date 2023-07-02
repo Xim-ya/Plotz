@@ -18,44 +18,6 @@ class ContentRepositoryImpl implements ContentRepository {
     }
   }
 
-
-
-
-  @override
-  Future<Result<String>> requestContentRegistration(
-    ContentRegistrationRequest requestData,
-  ) async {
-    try {
-      final response =
-          await _contentDataSource.requestContentRegistration(requestData);
-      return Result.success(response);
-    } on Exception {
-      return Result.failure(ContentException.qurationRequestFailed());
-    }
-  }
-
-  @override
-  Future<Result<List<CurationContent>>> loadInProgressQurationList() async {
-    try {
-      final response = await _contentDataSource.loadInProgressQurationList();
-      return Result.success(
-        response.map(CurationContent.fromResponse).toList(),
-      );
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
-
-  @override
-  Future<Result<UserModel>> loadCuratorInfo(String contentId) async {
-    try {
-      final response = await _contentDataSource.loadCuratorInfo(contentId);
-      return Result.success(UserModel.fromCurationRes(response));
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
-
   @override
   Future<Result<List<ExploreContent>>> loadExploreContents(
     List<String> ids,
@@ -79,6 +41,4 @@ class ContentRepositoryImpl implements ContentRepository {
       return Result.failure(e);
     }
   }
-
-
 }

@@ -45,42 +45,6 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   }
 
   @override
-  Future<String> requestContentRegistration(
-    ContentRegistrationRequest requestData,
-  ) {
-    final Map<String, dynamic> data = requestData.toMap(
-      curatorRef: db.collection('user').doc(requestData.curatorId),
-    );
-    return storeDocumentAndReturnId('curation', docId: null, data: data);
-  }
-
-  @override
-  Future<List<CurationContentResponse>> loadInProgressQurationList() async {
-    final docs = await getDocsWithContainingField(
-      'curation',
-      fieldName: 'status',
-      neededFieldName: 'inProgress',
-    );
-
-    final resultList = docs.map((e) async {
-      /// curator 필드는 참조 타입.
-      /// 가리키고 있는 document의 데이터를 가져오는 기능을 수행해야함 (curator 필드)
-      final DocumentReference<Map<String, dynamic>> curatorRef =
-          e.get('curator');
-      final curatorDoc = await curatorRef.get();
-      final String? curatorName = curatorDoc.data()?['displayName'];
-      final String? curatorImg = curatorDoc.data()?['photoUrl'];
-      return CurationContentResponse.fromDocument(
-        e,
-        curatorName: curatorName,
-        curatorImg: curatorImg,
-      );
-    }).toList();
-
-    return Future.wait(resultList);
-  }
-
-  @override
   Future<List<ExploreContentResponse>> loadExploreContents(
     List<String> ids,
   ) async {
@@ -128,24 +92,6 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       return ChannelResponse.fromDocumentRes(docData);
     } else {
       return ChannelResponse();
-    }
-  }
-
-  @override
-  Future<UserResponse> loadCuratorInfo(String contentId) async {
-    final doc = await getSubCollectionDoc(
-      'content',
-      docId: contentId,
-      subCollectionName: 'curator',
-      subCollectionDocId: 'main',
-    );
-
-    final DocumentReference<Map<String, dynamic>> docRef = doc.get('userRef');
-    final docData = await docRef.get();
-    if (docData.exists) {
-      return UserResponse.fromDocumentRes(docData);
-    } else {
-      return UserResponse();
     }
   }
 }

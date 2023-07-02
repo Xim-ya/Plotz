@@ -28,9 +28,6 @@ abstract class AppRoutes {
   // 탐색
   static const explore = '/explore';
 
-  // 큐레이션 내역
-  static const curationHistory = '/curationHistory';
-
   // 설정
   static const setting = '/setting';
 

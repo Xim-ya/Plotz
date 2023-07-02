@@ -17,18 +17,12 @@ class MyPageViewModel extends BaseViewModel {
 
   /* Data Modules */
   final UserService _userService;
-  final UserRepository _userRepository; 
+  final UserRepository _userRepository;
 
   /* Variables */
-  List<SettingMenu> settingOptions = [
-    SettingMenu.feedbackAndCs,
-    SettingMenu.termsAndPolicy,
-    SettingMenu.logOut,
-    SettingMenu.withdrawal,
-  ];
+  List<SettingMenu> settingOptions = SettingMenu.values;
 
   bool hideGradient = true; // 앱바 배경색 노출 여부
-  UserCurationSummary? curationSummary; //  큐레이션 내역 요약 정보
   BehaviorSubject<List<UserWatchHistoryItem>> get watchHistorySub =>
       _userService.userWatchHistory;
 
@@ -105,8 +99,6 @@ class MyPageViewModel extends BaseViewModel {
   Future<void> _fetchUserWatchHistory() async {
     await _userService.updateUserWatchHistory();
   }
-
-
 
   // 유저 로컬 데이터 삭제
   void clearUserLocalData() {

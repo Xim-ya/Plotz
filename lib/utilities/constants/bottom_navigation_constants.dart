@@ -9,17 +9,11 @@ enum BottomNavigationConstants {
     label: '탐색',
     iconPath: 'tab_explore.svg',
   ),
-  curation(
-    indexedKey: 2,
-    label: '큐레이션',
-    iconPath: 'tab_curation.svg',
-  ),
   school(
-    indexedKey: 3  ,
+    indexedKey: 2,
     label: '마이페이지',
     iconPath: 'tab_my_page.svg',
   );
-
 
   final int indexedKey;
   final String label;

@@ -16,29 +16,6 @@ class UserDataSourceImpl
   final UserDao _local;
 
   @override
-  Future<void> addUserCurationInfo({
-    required String curationDocId,
-  }) =>
-      loadResponseOrThrow(
-        () => _api.addUserCurationInfo(
-          curationDocId: curationDocId,
-          userId: _local.value!.userId,
-        ),
-      );
-
-  @override
-  Future<UserCurationSummaryResponse> loadUserCurationSummary() =>
-      loadResponseOrThrow(
-          () => _api.loadUserCurationSummary(_local.value!.userId));
-
-  @override
-  Future<List<CurationContentResponse>> loadUserCurationContentList(
-    String userId,
-  ) async {
-    return loadResponseOrThrow(() => _api.loadUserCurationContentList(userId));
-  }
-
-  @override
   Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo) {
     return loadResponseOrThrow(
       () => _api.addUserWatchHistory(requestInfo),

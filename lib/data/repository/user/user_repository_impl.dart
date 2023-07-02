@@ -12,46 +12,6 @@ class UserRepositoryImpl implements UserRepository {
   final UserDataSource _dataSource;
 
   @override
-  Future<Result<void>> addUserCurationInfo({
-    required String curationDocId,
-
-  }) async {
-    try {
-      final response = _dataSource.addUserCurationInfo(
-        curationDocId: curationDocId,
-
-      );
-      return Result.success(response);
-    } on Exception {
-      return Result.failure(UserException.updateUserQurationInfoFailed());
-    }
-  }
-
-  @override
-  Future<Result<UserCurationSummary>> loadUserCurationSummary() async {
-    try {
-      final response = await _dataSource.loadUserCurationSummary();
-      return Result.success(UserCurationSummary.fromResponse(response));
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
-
-  @override
-  Future<Result<List<CurationContent>>> loadUserCurationContentList(
-    String userId,
-  ) async {
-    try {
-      final response = await _dataSource.loadUserCurationContentList(userId);
-      return Result.success(
-        response.map(CurationContent.fromResponse).toList(),
-      );
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
-  }
-
-  @override
   Future<Result<void>> addUserWatchHistory(
     WatchingHistoryRequest requestInfo,
   ) async {
@@ -162,7 +122,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<bool>> checkIfUserHasPreferencesData( ) async {
+  Future<Result<bool>> checkIfUserHasPreferencesData() async {
     try {
       final response = await _dataSource.checkIfUserHasPreferencesData();
       return Result.success(response);

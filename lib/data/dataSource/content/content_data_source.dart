@@ -17,15 +17,6 @@ abstract class ContentDataSource {
   Future<List<VideoResponse>> loadVideoInfo(
       {required String contentId, required ContentType contentType});
 
-  // 컨텐츠 등록 요청
-  Future<String> requestContentRegistration(
-      ContentRegistrationRequest requestData);
-
-  // 진행중인 큐레이션 리스트 호출
-  Future<List<CurationContentResponse>> loadInProgressQurationList();
-
-  // 큐레이터 정보 호출
-  Future<UserResponse> loadCuratorInfo(String contentId);
 
   // 채널 정보 호출
   Future<ChannelResponse> loadChannelInfo(String contentId);
