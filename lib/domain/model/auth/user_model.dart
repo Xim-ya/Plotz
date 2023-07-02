@@ -32,9 +32,10 @@ class UserModel {
       );
 
   // 구글 로그인 시
-  factory UserModel.fromGoogleSignInRes(
-      {required GoogleSignInAccount account,
-      required GoogleSignInAuthentication authentication,}) {
+  factory UserModel.fromGoogleSignInRes({
+    required GoogleSignInAccount account,
+    required GoogleSignInAuthentication authentication,
+  }) {
     return UserModel(
       name: account.displayName,
       displayName: account.displayName,
@@ -42,24 +43,26 @@ class UserModel {
       provider: Sns.google,
       photoUrl: account.photoUrl,
       token: UserToken(
-          idToken: authentication.idToken,
-          accessToken: authentication.accessToken,),
+        idToken: authentication.idToken,
+        accessToken: authentication.accessToken,
+      ),
     );
   }
 
   // 애플 로그인 시
-  factory UserModel.fromAppleSignInRes(
-          {required AuthorizationCredentialAppleID response,}) =>
+  factory UserModel.fromAppleSignInRes({
+    required AuthorizationCredentialAppleID response,
+  }) =>
       UserModel(
         name: '${response.familyName}${response.givenName}',
         displayName: '${response.familyName}${response.givenName}',
         email: response.email,
         provider: Sns.apple,
         token: UserToken(
-            idToken: response.identityToken,
-            accessToken: response.authorizationCode,),
+          idToken: response.identityToken,
+          accessToken: response.authorizationCode,
+        ),
       );
-
 
   // Instance -> Map (FireStore 저장 용도)
   Map<String, dynamic> toMap() {

@@ -185,7 +185,6 @@ export 'package:soon_sak/presentation/screens/search/search_view_model.dart';
 export 'package:soon_sak/presentation/screens/explore/explore_screen.dart';
 export 'package:soon_sak/presentation/common/listView/paging_searched_result_list_view.dart';
 export 'package:soon_sak/presentation/common/button/linear_background_bottom_floating_btn.dart';
-export 'package:soon_sak/presentation/common/image/linear_layered_poster_img.dart';
 export 'package:soon_sak/presentation/common/keep_alive_view.dart';
 export 'package:soon_sak/presentation/screens/login/localWidget/sns_login_button.dart';
 export 'package:soon_sak/presentation/screens/login/login_view_model.dart';
