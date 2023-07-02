@@ -3,8 +3,8 @@ import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/presentation/common/image/content_poster_item_view.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-class NewMyPageScreen extends BaseScreen<MyPageViewModel> {
-  const NewMyPageScreen({Key? key}) : super(key: key);
+class MyPageScreen extends BaseScreen<MyPageViewModel> {
+  const MyPageScreen({Key? key}) : super(key: key);
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -90,12 +90,14 @@ class NewMyPageScreen extends BaseScreen<MyPageViewModel> {
                 builder: (context, snapshot) {
                   final items = snapshot.data;
                   return items.hasData && items!.isEmpty
-                      ? Padding(
-                          padding: AppInset.left16,
+                      ? Container(
+                          alignment: Alignment.center,
+                          height: 160,
                           child: Text(
-                            '시청 기록이 없어요',
-                            style: AppTextStyle.body1
-                                .copyWith(color: AppColor.lightGrey),
+                            '앗! 아직 시청기록이 없으시네요.\n플로츠에서 다양한 콘텐츠를 즐겨보세요!',
+                            style: AppTextStyle.body3
+                                .copyWith(color: AppColor.gray04),
+                            textAlign: TextAlign.center,
                           ),
                         )
                       : ContentPostSlider(
