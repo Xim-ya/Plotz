@@ -23,7 +23,6 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
       children: const <Widget>[
         HomeScreen(),
         ExploreScreen(),
-        CurationScreen(),
         // OldMyPageScreen(),
         NewMyPageScreen(),
       ],

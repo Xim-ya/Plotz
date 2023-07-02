@@ -1,26 +1,22 @@
-import 'package:soon_sak/presentation/screens/my/old_my_page_view_model.dart';
 import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsViewModel extends BaseViewModel {
   TabsViewModel({
     required ExploreViewModel exploreViewModel,
-    required CurationViewModel curationViewModel,
     required MyPageViewModel myPageViewModel,
   })  : _exploreViewModel = exploreViewModel,
-        _curationViewModel = curationViewModel,
         _myPageViewModel = myPageViewModel;
 
   /* ViewModels */
   final ExploreViewModel _exploreViewModel;
-  final CurationViewModel _curationViewModel;
   final MyPageViewModel _myPageViewModel;
 
   /* Variables */
 
   /// State Variables
   // 네비게이션 바 인덱스
-  int selectedTabIndex = 0;
+  int selectedTabIndex = 0; 
 
   /* Intents */
 
@@ -48,21 +44,9 @@ class TabsViewModel extends BaseViewModel {
         );
         if (_exploreViewModel.loadingState.isInitState) {
           await _exploreViewModel.prepare();
-          print("두 번째 스크린 호출");
         }
         break;
       case 2:
-        unawaited(
-          AppAnalytics.instance.logScreenView(
-            screenClass: 'CurationScreen',
-            screenName: 'CurationTab',
-          ),
-        );
-        if (_curationViewModel.loadingState.isInitState) {
-          await _curationViewModel.prepare();
-        }
-        break;
-      case 3:
         unawaited(
           AppAnalytics.instance.logScreenView(
             screenClass: 'MyPageScreen',

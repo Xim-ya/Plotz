@@ -17,16 +17,6 @@ abstract class ContentRepository {
   /// 주어진 ids에 속한 컨텐츠 리스트 호출
   Future<Result<List<ExploreContent>>> loadExploreContents(List<String> ids);
 
-  // 컨텐츠 등록 요청
-  Future<Result<String>> requestContentRegistration(
-    ContentRegistrationRequest requestData,
-  );
-
-  // 진행중인 큐레이션 리스트 호출
-  Future<Result<List<CurationContent>>> loadInProgressQurationList();
-
-  // 큐레이터 정보 호출
-  Future<Result<UserModel>> loadCuratorInfo(String contentId);
 
   // 컨텐츠 등록 요청 (단순 요청)
   Future<Result<void>> requestContent(ContentRequest requestInfo);

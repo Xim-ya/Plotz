@@ -60,13 +60,6 @@ class UserModel {
             accessToken: response.authorizationCode,),
       );
 
-  // 큐레이터 Response
-  factory UserModel.fromCurationRes(UserResponse response) => UserModel(
-        id: response.id,
-        photoUrl: response.photoUrl,
-        name: response.name,
-        displayName: response.displayName,
-      );
 
   // Instance -> Map (FireStore 저장 용도)
   Map<String, dynamic> toMap() {

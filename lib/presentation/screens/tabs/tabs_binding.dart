@@ -23,9 +23,6 @@ abstract class TabsBinding {
         exploreContentsUseCase:
             locator<LoadRandomPagedExploreContentsUseCase>()));
 
-    locator.registerLazySingleton(() =>
-        CurationViewModel(contentRepository: locator<ContentRepository>()));
-
     locator.registerLazySingleton(
       () => MyPageViewModel(
         userRepository: locator<UserRepository>(),
@@ -37,7 +34,6 @@ abstract class TabsBinding {
     locator.registerFactory(
       () => TabsViewModel(
         exploreViewModel: locator<ExploreViewModel>(),
-        curationViewModel: locator<CurationViewModel>(),
         myPageViewModel: locator<MyPageViewModel>(),
       ),
     );
@@ -47,7 +43,6 @@ abstract class TabsBinding {
     locator.unregister<TabsViewModel>();
     locator.unregister<HomeViewModel>();
     locator.unregister<ExploreViewModel>();
-    locator.unregister<CurationViewModel>();
     locator.unregister<MyPageViewModel>();
   }
 }
