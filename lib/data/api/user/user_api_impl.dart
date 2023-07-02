@@ -92,7 +92,6 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
       subCollectionName: 'watchHistory',
       subCollectionDocId: requestInfo.originId,
       firstMutableFieldName: 'watchedDate',
-      secondMutableFieldName: 'videoId',
       data: data,
     );
   }
@@ -167,7 +166,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   /// ex) WITHDRAW-userId
   @override
   Future<void> withdrawUser(String userId) async {
-    await changeDocId('user', docId: userId);
+    await withdrawalUser('user', docId: userId);
   }
 
   @override

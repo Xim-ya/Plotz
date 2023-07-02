@@ -3,21 +3,22 @@ import 'package:soon_sak/utilities/index.dart';
 class UserWatchHistoryItemResponse {
   final String originId;
   final String posterImgUrl;
-  final String videoId;
+  final String title;
 
   UserWatchHistoryItemResponse({
     required this.originId,
     required this.posterImgUrl,
-    required this.videoId,
+    required this.title,
   });
 
-  factory UserWatchHistoryItemResponse.fromResponseDoc(
-      {required DocumentSnapshot contentDoc,
-      required DocumentSnapshot doc,}) {
+  factory UserWatchHistoryItemResponse.fromResponseDoc({
+    required DocumentSnapshot contentDoc,
+    required DocumentSnapshot doc,
+  }) {
     return UserWatchHistoryItemResponse(
       originId: contentDoc.get('id'),
       posterImgUrl: contentDoc.get('posterImgUrl'),
-      videoId: doc.get('videoId'),
+      title:  contentDoc.get('title'),
     );
   }
 }

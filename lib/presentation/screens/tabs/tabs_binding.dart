@@ -30,6 +30,7 @@ abstract class TabsBinding {
       () => MyPageViewModel(
         userRepository: locator<UserRepository>(),
         userService: locator<UserService>(),
+        signOutHandlerUseCase: locator<SignOutUseCase>(),
       ),
     );
 

@@ -169,8 +169,8 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
-  /// dcoumentID 변경
-  Future<void> changeDocId(
+  /// 유저 회원탈퇴
+  Future<void> withdrawalUser(
     String collectionName, {
     required String docId,
   }) async {
@@ -180,7 +180,27 @@ mixin FirestoreHelper {
     final prevData = oldDocumentSnapshot.data()!;
     prevData['withdrawnDate'] = FieldValue.serverTimestamp();
     await _db.collection(collectionName).doc('WITHDRAWN-$docId').set(prevData);
+    await deleteSubcollection(collectionName, docId, 'watchHistory');
+    await deleteSubcollection(collectionName, docId, 'favoriteChannels');
+    await deleteSubcollection(collectionName, docId, 'favoriteGenres');
     await _db.collection(collectionName).doc(docId).delete();
+  }
+
+  Future<void> deleteSubcollection(
+    String collectionName,
+    String docId,
+    String subcollectionName,
+  ) async {
+    CollectionReference<Map<String, dynamic>> subcollectionRef =
+        _db.collection(collectionName).doc(docId).collection(subcollectionName);
+
+    QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot =
+        await subcollectionRef.get();
+
+    for (DocumentSnapshot<Map<String, dynamic>> docSnapshot
+        in subcollectionSnapshot.docs) {
+      await docSnapshot.reference.delete();
+    }
   }
 
   /// subCollection의 단일 document 데이터를 불러오는 메소드
@@ -388,7 +408,6 @@ mixin FirestoreHelper {
     required String subCollectionName,
     required String subCollectionDocId,
     required String firstMutableFieldName,
-    required String secondMutableFieldName,
     required Map<String, dynamic> data,
   }) async {
     final CollectionReference collectionRef = _db.collection(collectionName);
@@ -408,7 +427,6 @@ mixin FirestoreHelper {
       if (snapshot.exists) {
         transaction.update(subCollectionDocRef, {
           firstMutableFieldName: Timestamp.now(),
-          secondMutableFieldName: data['videoId']
         });
       } else {
         // 존재 하지 않는다면 새로운 Document 추가

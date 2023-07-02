@@ -2,20 +2,21 @@ import 'package:soon_sak/data/api/user/response/user_watch_history_item_response
 
 class UserWatchHistoryItem {
   final String originId;
-  final String videoId;
+  final String title;
   final String? posterImgUrl;
 
   UserWatchHistoryItem({
     required this.originId,
-    required this.videoId,
+    required this.title,
     required this.posterImgUrl,
   });
 
   factory UserWatchHistoryItem.fromResponse(
-          UserWatchHistoryItemResponse response,) =>
+    UserWatchHistoryItemResponse response,
+  ) =>
       UserWatchHistoryItem(
         originId: response.originId,
-        videoId: response.videoId,
+        title: response.title,
         posterImgUrl: response.posterImgUrl,
       );
 }

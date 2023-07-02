@@ -245,7 +245,6 @@ class ContentDetailViewModel extends BaseViewModel {
     final requestData = WatchingHistoryRequest(
       userId: _userService.userInfo.value.id!,
       originId: passedArgument.originId,
-      videoId: videoId,
     );
 
     final response = await _userRepository.addUserWatchHistory(requestData);

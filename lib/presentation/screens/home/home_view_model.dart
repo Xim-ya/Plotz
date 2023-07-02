@@ -31,7 +31,6 @@ class HomeViewModel extends BaseViewModel {
             loadPagedCategoryCollectionsUseCase,
         _channelRepository = channelRepository;
 
-
   void testLocalStorageLogic() {}
 
   /* [Variables] */
@@ -140,9 +139,8 @@ class HomeViewModel extends BaseViewModel {
   }
 
   // 검색 스크린으로 이동
-  void routeToSearch(BuildContext context) async {
-    testLocalStorageLogic();
-    // await context.push(AppRoutes.tabs + AppRoutes.search);
+  void routeToSearch(BuildContext context) {
+    context.push(AppRoutes.tabs + AppRoutes.search);
   }
 
   // 채널 상세 스크린으로 이동

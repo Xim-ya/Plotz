@@ -192,7 +192,6 @@ export 'package:soon_sak/presentation/screens/curation/curation_view_model.dart'
 export 'package:soon_sak/presentation/screens/curation/curation_screen.dart';
 export 'package:soon_sak/presentation/screens/register/register_view_model.dart';
 export 'package:soon_sak/presentation/screens/explore/explore_screen.dart';
-export 'package:soon_sak/presentation/screens/my/my_page_screen.dart';
 export 'package:soon_sak/presentation/screens/curation/localWidget/start_curation_button.dart';
 export 'package:soon_sak/presentation/screens/register/pageView/confirm_curation_page_view.dart';
 export 'package:soon_sak/presentation/common/listView/paging_searched_result_list_view.dart';

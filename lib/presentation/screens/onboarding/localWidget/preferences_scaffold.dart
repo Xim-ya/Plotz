@@ -42,18 +42,6 @@ class PreferenceScaffold extends StatelessWidget {
 
         Positioned(
           bottom: 0,
-          child: IgnorePointer(
-            child: Container(
-              height: SizeConfig.to.screenHeight * 0.37,
-              width: SizeConfig.to.screenWidth,
-              decoration:
-                  const BoxDecoration(gradient: AppGradient.bottomToTop),
-            ),
-          ),
-        ),
-
-        Positioned(
-          bottom: 0,
           child: Stack(
             clipBehavior: Clip.none,
             children: [

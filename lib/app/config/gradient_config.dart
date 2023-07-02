@@ -83,6 +83,7 @@ abstract class AppGradient {
     end: Alignment.topCenter,
   );
 
+
   // // General
   // static const topToBottom = LinearGradient(
   //   colors: [
