@@ -24,8 +24,8 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
         HomeScreen(),
         ExploreScreen(),
         CurationScreen(),
-        OldMyPageScreen(),
-        // NewMyPageScreen(),
+        // OldMyPageScreen(),
+        NewMyPageScreen(),
       ],
     );
   }

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     // flutter build appbundle --target=lib/app/environment/devMain.dart --flavor dev
     // flutter build appbundle --target=lib/app/environment/prodMain.dart --flavor prod
     // flutter run ios --target=lib/app/environment/prodMain.dart --flavor prod
-  
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Plotz',
