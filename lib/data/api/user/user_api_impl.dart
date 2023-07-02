@@ -7,78 +7,6 @@ import 'package:soon_sak/utilities/index.dart';
 
 class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   @override
-  Future<void> addUserCurationInfo({
-    required String curationDocId,
-    required String userId,
-  }) async {
-    final Map<String, dynamic> curationList = {
-      'curationRef': db.collection('curation').doc(curationDocId)
-    };
-
-    // 초기 값
-    final Map<String, dynamic> curationSummary = {
-      'completedCount': 0,
-      'inProgressCount': 1,
-      'onHoldCount': 0,
-    };
-
-    return storeAndUpdateDocumentAndSubCollection(
-      'user',
-      docId: userId,
-      data: curationList,
-      firstSubCollectionName: 'curationList',
-      firstSubCollectionData: curationList,
-      firstSubCollectionDocId: curationDocId,
-      secondSubCollectionName: 'curationSummary',
-      secondSubCollectionData: curationSummary,
-      secondSubCollectionFieldName: 'inProgressCount',
-    );
-  }
-
-  @override
-  Future<UserCurationSummaryResponse> loadUserCurationSummary(
-    String userId,
-  ) async {
-    final snapshot = await getSingleSubCollectionDoc(
-      'user',
-      docId: userId,
-      subCollectionName: 'curationSummary',
-    );
-
-    final doc = snapshot.docs;
-
-    if (doc.isNotEmpty) {
-      return UserCurationSummaryResponse.fromDoc(doc.single);
-    } else {
-      /// curation 내역이 없으면 초기값 전달
-      return UserCurationSummaryResponse(
-        completedCount: 0,
-        inProgressCount: 0,
-        onHoldCount: 0,
-      );
-    }
-  }
-
-  @override
-  Future<List<CurationContentResponse>> loadUserCurationContentList(
-    String userId,
-  ) async {
-    final docs = await getSubCollectionDocs(
-      'user',
-      docId: userId,
-      subCollectionName: 'curationList',
-    );
-
-    final resultList = docs.map((e) async {
-      final DocumentReference<Map<String, dynamic>> ref = e.get('curationRef');
-      final doc = await ref.get();
-      return CurationContentResponse.fromUserResponseDoc(doc);
-    }).toList();
-
-    return Future.wait(resultList);
-  }
-
-  @override
   Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo) async {
     final contentRef = db.collection('content').doc(requestInfo.originId);
 
@@ -92,7 +20,6 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
       subCollectionName: 'watchHistory',
       subCollectionDocId: requestInfo.originId,
       firstMutableFieldName: 'watchedDate',
-      secondMutableFieldName: 'videoId',
       data: data,
     );
   }
@@ -167,7 +94,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   /// ex) WITHDRAW-userId
   @override
   Future<void> withdrawUser(String userId) async {
-    await changeDocId('user', docId: userId);
+    await withdrawalUser('user', docId: userId);
   }
 
   @override

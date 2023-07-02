@@ -50,7 +50,7 @@ abstract class DomainModules {
         localStorageService: locator<LocalStorageService>(),
         contentService: locator<ContentService>()));
 
-
+    locator.registerLazySingleton(() => SignOutUseCase(locator<AuthRepository>()));
 
     // /* Search */
     // locator.registerLazySingleton(() => NewSearchedPagedContentUseCase(

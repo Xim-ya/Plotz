@@ -1,5 +1,6 @@
 import 'package:soon_sak/presentation/base/base_view.dart';
 import 'package:soon_sak/presentation/screens/home/home_screen.dart';
+import 'package:soon_sak/presentation/screens/my/my_page_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsScreen extends BaseScreen<TabsViewModel> {
@@ -22,9 +23,8 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
       children: const <Widget>[
         HomeScreen(),
         ExploreScreen(),
-        CurationScreen(),
+        // OldMyPageScreen(),
         MyPageScreen(),
-        // Placeholder(),
       ],
     );
   }

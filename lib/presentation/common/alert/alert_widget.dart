@@ -91,7 +91,7 @@ abstract class AlertWidget {
         key: const Key('toast'),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black,
+          color: AppColor.gray05,
         ),
         height: 52,
         width: double.infinity,

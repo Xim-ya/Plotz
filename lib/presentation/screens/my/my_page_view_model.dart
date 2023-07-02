@@ -1,65 +1,77 @@
 import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:soon_sak/domain/enum/setting_menu_enum.dart';
 import 'package:soon_sak/utilities/index.dart';
 
+part 'controllerResources/my_page_view_model_menu_event.part.dart'; // 메뉴 선택 이벤트
+
 class MyPageViewModel extends BaseViewModel {
-  MyPageViewModel(
-      {required UserRepository userRepository,
-      required UserService userService})
-      : _userService = userService,
-        _userRepository = userRepository;
+  MyPageViewModel({
+    required UserRepository userRepository,
+    required UserService userService,
+    required SignOutUseCase signOutHandlerUseCase,
+  })  : _userService = userService,
+        _userRepository = userRepository,
+        _signOutHandlerUseCase = signOutHandlerUseCase;
 
   /* Data Modules */
   final UserService _userService;
   final UserRepository _userRepository;
 
   /* Variables */
-  UserCurationSummary? curationSummary; //  큐레이션 내역 요약 정보
+  List<SettingMenu> settingOptions = SettingMenu.values;
+
+  bool hideGradient = true; // 앱바 배경색 노출 여부
   BehaviorSubject<List<UserWatchHistoryItem>> get watchHistorySub =>
       _userService.userWatchHistory;
 
-  BehaviorSubject<UserModel> get userInfoSub => _userService.userInfo;
+  /* UseCase*/
+  final SignOutUseCase _signOutHandlerUseCase;
+
+  /* Controllers */
+  late final ScrollController scrollController;
 
   /* Intents */
-  // 설정 스크린으로 이동
-  void routeToSetting(BuildContext context) {
-    context.push(AppRoutes.tabs + AppRoutes.setting);
+
+  // 설정 메뉴가 클릭 되었을 때
+  void onSettingMenuTapped(SettingMenu selectedMenu) {
+    switch (selectedMenu) {
+      case SettingMenu.logOut:
+        _remindLogOutEvent();
+        break;
+      case SettingMenu.termsAndPolicy:
+        _goToTermAndPolicyPage();
+        break;
+      case SettingMenu.feedbackAndCs:
+        _goToFeedbackPage();
+        break;
+      case SettingMenu.withdrawal:
+        _remindWithdrawalEvent();
+        break;
+    }
   }
 
-  // youtubeApp 실행
-  Future<void> launchYoutubeApp(
-    UserWatchHistoryItem? selectedContent,
-    int index,
-  ) async {
-    if (selectedContent?.videoId == null) {
-      return AlertWidget.newToast(
-          message: '잠시만 기다려주세요. 데이터를 불러오고 있습니다.', context);
+  /// 하단 상단 Gradient Box Visibility 여부를 조절하는 메소드.
+  /// 렌더링을 최소화
+  void setGradientBoxVisibility() {
+    if (scrollController.offset >= 11 &&
+        hideGradient == true &&
+        scrollController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
+      hideGradient = false;
+      notifyListeners();
+      return;
+    } else if (scrollController.offset >= 20) {
+      return;
+    } else {
+      if (hideGradient == false &&
+          scrollController.position.userScrollDirection ==
+              ScrollDirection.forward) {
+        hideGradient = true;
+        notifyListeners();
+      }
     }
-    try {
-      await launchUrl(
-        Uri.parse(
-          'https://www.youtube.com/watch?v=${selectedContent!.videoId}',
-        ),
-        mode: LaunchMode.externalApplication,
-      );
-      unawaited(
-        AppAnalytics.instance.logEvent(
-          name: 'playContent',
-          parameters: {
-            'myPage': selectedContent.originId,
-          },
-        ),
-      );
-    } catch (e) {
-      await AlertWidget.newToast(message: '비디오 정보를 불러오지 못했습니디', context);
-      throw '유튜브 앱(웹) 런치 실패';
-    }
-
-    /// 시청기록 업데이트
-    /// 가장 최신 시청 기록의 컨텐츠를 선택했을 경우 업데이트 할 필요가 없음. (메소드 종료)
-    if (index == 0) return;
-    await updateUserWatchHistory(selectedContent);
   }
 
   /// 유저 시청 기록 추가
@@ -69,14 +81,11 @@ class MyPageViewModel extends BaseViewModel {
     final requestData = WatchingHistoryRequest(
       userId: _userService.userInfo.value.id!,
       originId: selectedContent.originId,
-      videoId: selectedContent.videoId,
     );
 
     final response = await _userRepository.addUserWatchHistory(requestData);
     response.fold(
       onSuccess: (_) {
-        log('유저 시청기록 추가 성공');
-        // 유저 시청 기록 업데이트
         _userService.updateUserWatchHistory();
         notifyListeners();
       },
@@ -91,34 +100,40 @@ class MyPageViewModel extends BaseViewModel {
     await _userService.updateUserWatchHistory();
   }
 
-  // 큐레이팅 내역 스크린으로 라우팅
-  void routeToCurationHistory(BuildContext context) {
-    context.push(AppRoutes.tabs + AppRoutes.curationHistory);
-  }
-
-  // 유저 큐레이션 내역 요약 정보 호출
-  Future<void> fetchUserCurationSummary() async {
-    final response = await _userRepository.loadUserCurationSummary();
+  // 유저 로컬 데이터 삭제
+  void clearUserLocalData() {
+    final response = _userRepository.clearUserLocalData();
     response.fold(
-      onSuccess: (data) {
-        curationSummary = data;
-        notifyListeners();
-      },
+      onSuccess: (_) {},
       onFailure: (e) {
-        log('MyPageViewModel $e');
+        log('SettingViewModel : $e');
       },
     );
   }
 
+  // 프로필 설정 이동
+  void routeToProfileSetting() {
+    context.push(AppRoutes.tabs + AppRoutes.setting + AppRoutes.profileSetting);
+  }
+
+  // 탭이 선택되었을 때
   Future<void> prepare() async {
     loadingState = ViewModelLoadingState.loading;
-    await fetchUserCurationSummary();
     await _fetchUserWatchHistory();
     loadingState = ViewModelLoadingState.done;
   }
 
+  /* Getters */
+  // 현재 버전 정보
+  String get currentVersionNum => _userService.currentVersionNum;
+
+  // 유저 간략 정보
+  BehaviorSubject<UserModel> get userInfoSub => _userService.userInfo;
+
   @override
   Future<void> onInit() async {
     super.onInit();
+    scrollController = ScrollController();
+    scrollController.addListener(setGradientBoxVisibility);
   }
 }

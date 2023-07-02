@@ -263,7 +263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${FLUTTER_TARGET}\" = \"prod\" ]\nthen    \ncp \"${PROJECT_DIR}/config/dev/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nelse\ncp \"${PROJECT_DIR}/config/prod/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nfi\n";
+			shellScript = "if [ \"${FLUTTER_TARGET}\" = \"prod\" ]\nthen    \ncp \"${PROJECT_DIR}/config/prod/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nelse\ncp \"${PROJECT_DIR}/config/prod/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\nfi\n";
 		};
 		2AC1FD5929AF240500EA587F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -454,7 +454,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -538,7 +538,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -620,7 +620,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -699,7 +699,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -783,7 +783,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -865,7 +865,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -944,7 +944,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1080,7 +1080,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1110,7 +1110,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soonSak;
 				PRODUCT_NAME = "$(TARGET_NAME)";

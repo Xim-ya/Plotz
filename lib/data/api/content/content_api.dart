@@ -12,17 +12,8 @@ abstract class ContentApi {
   Future<List<OldVideoResponse>> oldLoadVideoInfo(String id);
 
   // 컨텐츠 비디오 정보 호출
-  Future<List<VideoResponse>> loadVideoInfo({required String contentId, required ContentType contentType});
-
-  // 컨텐츠 등록 요청 (큐레이션)
-  Future<String> requestContentRegistration(
-      ContentRegistrationRequest requestData,);
-
-  // 진행중인 큐레이션 리스트 호출
-  Future<List<CurationContentResponse>> loadInProgressQurationList();
-
-  // 큐레이터 정보 호출
-  Future<UserResponse> loadCuratorInfo(String contentId);
+  Future<List<VideoResponse>> loadVideoInfo(
+      {required String contentId, required ContentType contentType});
 
   // 채널 정보 호출
   Future<ChannelResponse> loadChannelInfo(String contentId);

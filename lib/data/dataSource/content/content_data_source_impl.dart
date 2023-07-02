@@ -25,24 +25,6 @@ class ContentDataSourceImpl
   }
 
   @override
-  Future<String> requestContentRegistration(
-    ContentRegistrationRequest requestData,
-  ) =>
-      loadWithFirebaseIsolate(
-        () => _api.requestContentRegistration(requestData),
-      );
-
-  @override
-  Future<List<CurationContentResponse>> loadInProgressQurationList() =>
-      loadWithFirebaseIsolate(_api.loadInProgressQurationList);
-
-  @override
-  Future<UserResponse> loadCuratorInfo(String contentId) =>
-      loadWithFirebaseIsolate(
-        () => loadResponseOrThrow(() => _api.loadCuratorInfo(contentId)),
-      );
-
-  @override
   Future<List<ExploreContentResponse>> loadExploreContents(List<String> ids) =>
       loadWithFirebaseIsolate(
         () => loadResponseOrThrow(() => _api.loadExploreContents(ids)),
