@@ -1,18 +1,12 @@
 import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:soon_sak/data/repository/channel/channel_repository.dart';
-import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
-import 'package:soon_sak/domain/model/video/content_video_model.dart';
-import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
-import 'package:soon_sak/domain/useCase/content/contentDetail/update_user_preferences_use_case.dart';
-import 'package:soon_sak/domain/useCase/video/load_content_video_info_use_case.dart';
-import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
-import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
-import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
-import 'package:soon_sak/presentation/screens/contentDetail/localWidget/episode_bottom_sheet.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
+
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역

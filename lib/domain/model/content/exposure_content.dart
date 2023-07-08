@@ -1,3 +1,4 @@
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.11.19
@@ -44,11 +45,7 @@ class PosterExposureContent {
         contentType: ContentType.fromString(json['type']),
       );
 
-
-
   factory PosterExposureContent.topExposedContent(Map<String, dynamic> json) {
-
-
     return PosterExposureContent(
       posterImgUrl: json['posterImgUrl'],
       contentSeasonType:

@@ -34,7 +34,8 @@ dependencies:
   visibility_detector: ^0.4.0+2 #위젯 노출 여부 감지
   dots_indicator: ^2.1.0 #dot 인디케이터
 
-
+  # Single Import Generator
+  single_import_generator: ^1.0.0
 
   # State Controller
   rxdart: ^0.27.7

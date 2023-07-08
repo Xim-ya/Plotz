@@ -1,3 +1,5 @@
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.02.01
@@ -14,12 +16,13 @@ class Content {
   late ContentDetail? detail;
   late YoutubeVideo? youtubeVideo;
 
-  Content(
-      {required this.id,
-      this.videoId,
-      this.type,
-      this.detail,
-      this.youtubeVideo,});
+  Content({
+    required this.id,
+    this.videoId,
+    this.type,
+    this.detail,
+    this.youtubeVideo,
+  });
 }
 
 class YoutubeVideo {
@@ -28,12 +31,12 @@ class YoutubeVideo {
   late String? channelImg; // 채널 이미지
   late int? subscriberCount; // 구독자 수
 
-  YoutubeVideo(
-      {this.title,
-      this.channelName,
-      this.channelImg,
-      this.subscriberCount,}); // 채널 이미지
-
+  YoutubeVideo({
+    this.title,
+    this.channelName,
+    this.channelImg,
+    this.subscriberCount,
+  }); // 채널 이미지
 }
 
 class ContentDetail {
@@ -63,7 +66,8 @@ class ContentDetail {
 
   // ContentType == movie인 response
   factory ContentDetail.fromMovieDetailResponse(
-      TmdbMovieDetailResponse response,) {
+    TmdbMovieDetailResponse response,
+  ) {
     List<String> formattedGenre = [];
 
     if (response.genres.hasData) {
@@ -116,8 +120,7 @@ class ContentDetail {
       overView: response.overview,
       airStatus: _translateTvContentStatus(response.status!),
       backDropImgUrl: response.backdrop_path,
-      seasonInfoList:
-          response.seasons?.map(SeasonInfo.fromResponse).toList(),
+      seasonInfoList: response.seasons?.map(SeasonInfo.fromResponse).toList(),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:soon_sak/domain/model/video/content_video_model.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.11.22
@@ -7,9 +7,6 @@ import 'package:soon_sak/utilities/index.dart';
 * */
 
 abstract class ContentRepository {
-  // Future<Result<List<ContentEpisodeInfoItem>>> loadContentEpisodeItemList();
-  // Future<Result<List<CategoryBaseContentList>>> loadContentListWithCategory();
-
   // 모든 컨텐츠 id 정보 리스트 호출
   Future<Result<List<ContentIdInfoItem>>> loadContentIdInfoList();
 

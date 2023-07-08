@@ -1,10 +1,6 @@
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:soon_sak/app/config/gradient_config.dart';
-import 'package:soon_sak/domain/model/video/content_video_model.dart';
-import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/content_info_tab_view.dart';
-import 'package:soon_sak/presentation/screens/contentDetail/localWidget/tabView/origin_content_info_tab_view.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 import 'package:tuple/tuple.dart';
 
@@ -226,8 +222,8 @@ class _AppBar extends BaseView<ContentDetailViewModel> {
             // 헤더 포스터 상단 Gradient
             Positioned(
               child: Container(
-                decoration: const BoxDecoration(
-                    gradient: AppGradient.topToBottom),
+                decoration:
+                    const BoxDecoration(gradient: AppGradient.topToBottom),
               ),
             ),
 

@@ -1,6 +1,7 @@
-import 'package:soon_sak/data/repository/channel/channel_repository.dart';
-import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 
 abstract class TabsBinding {
   TabsBinding._();

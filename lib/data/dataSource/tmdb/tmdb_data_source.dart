@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class TmdbDataSource {
@@ -10,16 +11,18 @@ abstract class TmdbDataSource {
   Future<TmdbMovieDetailResponse> loadTmdbMovieDetailResponse(int movieId);
 
   Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfoResponse(
-      int movieId,);
+    int movieId,
+  );
 
   Future<TmdbImagesResponse> loadTmdbMovieIContentImages(int movieId);
 
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
-      {required String query, required int page,});
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList({
+    required String query,
+    required int page,
+  });
 
-  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
-      {required String query, required int page,});
-
-
-  // static TmdbDataSource get to => Get.find();
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList({
+    required String query,
+    required int page,
+  });
 }

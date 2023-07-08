@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/domain/index.dart';
 
 class Formatter {
   // ['드라마' , '액션' , '멜로'] --> '드라마 / 액션 / 멜로'

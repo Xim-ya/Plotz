@@ -1,6 +1,8 @@
 import 'dart:developer';
-import 'package:soon_sak/domain/model/content/search/search_content_model.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
+
 
 /** Created By Ximya - 202.02.02
  *  검색 페이징 담고 있는 mixin 모듈

@@ -1,3 +1,5 @@
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ExploreContentModel with FirestoreHelper {
@@ -6,13 +8,13 @@ class ExploreContentModel with FirestoreHelper {
   ExploreContentModel({required this.contents});
 
   factory ExploreContentModel.fromResponse(
-      List<BasicContentInfoResponse> response,) {
+    List<BasicContentInfoResponse> response,
+  ) {
     final List<BasicContentInfoResponse> shuffledList = response;
     shuffledList.shuffle();
 
     return ExploreContentModel(
-      contents:
-          shuffledList.map(ExploreContentItem.fromResponse).toList(),
+      contents: shuffledList.map(ExploreContentItem.fromResponse).toList(),
     );
   }
 
@@ -32,13 +34,13 @@ class ExploreContentModel with FirestoreHelper {
 
       Map<String, dynamic> data = {
         'channelRef': db.collection('channel').doc(channelId)
-
       };
 
       await storeDocumentAndReturnId('content', docId: e.originId, data: data);
 
       print(
-          'contentId : ${e.originId} / channelName : ${channelRes.title} / channelProfileImage :${channelRes.logoUrl}   / channelId ${channelRes.id} / videoTitle ${videoRes.title} / subscribersCount ${channelRes.subscribersCount}',);
+        'contentId : ${e.originId} / channelName : ${channelRes.title} / channelProfileImage :${channelRes.logoUrl}   / channelId ${channelRes.id} / videoTitle ${videoRes.title} / subscribersCount ${channelRes.subscribersCount}',
+      );
     }
   }
 }
@@ -51,16 +53,17 @@ class ExploreContentItem {
   final String title;
   final String releaseDate;
   final String posterImgUrl;
-  late  ExploreContentYoutubeInfo? youtubeInfo; // 컨텐츠 유튜브 정보
+  late ExploreContentYoutubeInfo? youtubeInfo; // 컨텐츠 유튜브 정보
 
-  ExploreContentItem(
-      {required this.originId,
-      required this.id,
-      required this.type,
-      required this.videoId,
-      required this.title,
-      required this.posterImgUrl,
-      required this.releaseDate,});
+  ExploreContentItem({
+    required this.originId,
+    required this.id,
+    required this.type,
+    required this.videoId,
+    required this.title,
+    required this.posterImgUrl,
+    required this.releaseDate,
+  });
 
   factory ExploreContentItem.fromResponse(BasicContentInfoResponse response) =>
       ExploreContentItem(

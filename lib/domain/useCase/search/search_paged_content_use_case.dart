@@ -1,6 +1,7 @@
 import 'dart:developer';
-
-import 'package:soon_sak/domain/model/content/search/search_content_model.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya -2023.02.23

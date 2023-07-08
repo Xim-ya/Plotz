@@ -1,4 +1,6 @@
 import 'package:soon_sak/presentation/common/skeleton_box.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class RatioContentPostItem extends StatelessWidget {

@@ -2,8 +2,7 @@ import 'package:soon_sak/data/api/channel/request/channel_contents_request.dart'
 import 'package:soon_sak/data/api/channel/response/channel_content_item_response.dart';
 import 'package:soon_sak/data/api/channel/response/channel_paged_response.dart';
 import 'package:soon_sak/data/api/channel/response/channel_response.dart';
-
-import '../../../utilities/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 abstract class ChannelDataSource {
   // 채널 리스트 호출, 구독자 높은 순으로

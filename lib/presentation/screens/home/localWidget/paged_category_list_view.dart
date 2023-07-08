@@ -1,3 +1,6 @@
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.03.15
@@ -49,8 +52,8 @@ class PagedCategoryListView extends StatelessWidget {
           return Column(
             children: List.generate(
               4,
-              (index) => Column(
-                children: const [
+              (index) => const Column(
+                children: [
                   CategoryContentSectionSkeletonView(),
                   AppSpace.size32,
                 ],

@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'tmdb_tv_content_list_wrapped_response.g.dart';

@@ -1,5 +1,5 @@
 import 'package:soon_sak/app/di/binding.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/utilities/index_prev.dart';
 
 class SplashBinding extends Bindings {
   @override

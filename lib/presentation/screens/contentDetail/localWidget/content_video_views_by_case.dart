@@ -1,6 +1,5 @@
-import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2022.1.1

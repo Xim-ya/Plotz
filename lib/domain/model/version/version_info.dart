@@ -1,4 +1,4 @@
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/data/index.dart';
 
 class VersionInfo {
   final String versionCode;
@@ -14,4 +14,3 @@ class VersionInfo {
         systemAvailable: response.systemAvailable,
       );
 }
-

@@ -14,7 +14,8 @@ class CategoryContentCollectionResponse {
   CategoryContentCollectionResponse({required this.key, required this.items});
 
   factory CategoryContentCollectionResponse.fromJson(
-          Map<String, dynamic> json,) =>
+    Map<String, dynamic> json,
+  ) =>
       _$CategoryContentCollectionResponseFromJson(json);
 }
 
@@ -31,4 +32,3 @@ class CategoryContentsResponse {
   factory CategoryContentsResponse.fromJson(Map<String, dynamic> json) =>
       _$CategoryContentsResponseFromJson(json);
 }
-

@@ -1,4 +1,4 @@
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/domain/index.dart';
 
 /// 컨텐츠 리스트 섹션에서 [컨텐츠 상세페이지]로 이동할 때 argument로 넘겨주는 데이터 모델
 /// 다른 컨텐츠 리스트 섹션에서는 해당 값이 존재하지 않기 때문에 해당 필드는 nullable 처리를 함.

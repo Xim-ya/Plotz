@@ -1,4 +1,5 @@
-import 'package:soon_sak/utilities/extensions/tab_loading_state_extension.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TabsViewModel extends BaseViewModel {

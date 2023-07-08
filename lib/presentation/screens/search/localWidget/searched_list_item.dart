@@ -1,5 +1,9 @@
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 import 'package:soon_sak/utilities/index.dart';
+
 
 class SearchListItem extends StatelessWidget {
   const SearchListItem({

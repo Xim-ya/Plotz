@@ -1,4 +1,4 @@
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/domain/index.dart';
 
 /** Created BY Ximya - 2023.01.14
  *  컨텐츠의 originId를 특정 포맷으로 Split하고
@@ -17,7 +17,8 @@ class SplittedIdAndType {
   factory SplittedIdAndType.fromOriginId(String originId) {
     final List<String> splittedOrigin = originId.split('-');
     return SplittedIdAndType(
-        id: int.parse(splittedOrigin[1]),
-        type: ContentType.fromString(splittedOrigin[0]),);
+      id: int.parse(splittedOrigin[1]),
+      type: ContentType.fromString(splittedOrigin[0]),
+    );
   }
 }

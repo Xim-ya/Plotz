@@ -1,12 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:provider/provider.dart';
-import 'package:soon_sak/app/config/gradient_config.dart';
-import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
-import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/common/image/content_poster_item_view.dart';
-import 'package:soon_sak/presentation/screens/home/localWidget/home_scaffold.dart';
-import 'package:soon_sak/presentation/screens/home/localWidget/paged_category_list_view.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class HomeScreen extends BaseScreen<HomeViewModel> {

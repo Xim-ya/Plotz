@@ -1,5 +1,7 @@
 import 'dart:io';
-import 'package:soon_sak/app/config/gradient_config.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class LoginScreen extends BaseScreen<LoginViewModel> {

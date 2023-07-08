@@ -1,6 +1,6 @@
 /* TODO 임시 주석 */
 
-// import 'package:soon_sak/utilities/index.dart';
+// import 'package:soon_sak/utilities/index_prev.dart';
 //
 // /** Created By Ximya - 2023.02.18
 //  *  [GetBuilder] 모듈

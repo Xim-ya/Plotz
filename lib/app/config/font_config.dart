@@ -1,4 +1,5 @@
 import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/app/index.dart';
 
 /** Created By Ximya - 2022.11.04
  * TextStyle을 상속 받는 [PretendardTextStyle] 모듈을 기반으로 함.

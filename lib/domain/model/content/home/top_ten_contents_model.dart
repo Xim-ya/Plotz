@@ -1,5 +1,6 @@
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
 
 class TopTenContentsModel  {
   late String? key;

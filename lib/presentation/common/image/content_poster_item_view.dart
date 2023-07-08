@@ -1,5 +1,5 @@
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.05.08
@@ -71,7 +71,6 @@ class ContentPosterItemView extends StatelessWidget {
           SkeletonBox(borderRadius: borderRadius, height: 140, width: 92),
           AppSpace.size6,
           const SkeletonBox(
-            borderRadius: 4,
             height: 14,
             width: 40,
           )

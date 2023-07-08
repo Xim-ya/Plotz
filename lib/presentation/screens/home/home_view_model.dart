@@ -1,15 +1,9 @@
 import 'dart:developer';
-import 'package:go_router/go_router.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:soon_sak/data/api/channel/channel_api.dart';
-import 'package:soon_sak/data/api/channel/channel_api.dart';
-import 'package:soon_sak/data/api/channel/channel_api_impl.dart';
 import 'package:soon_sak/data/repository/channel/channel_repository.dart';
-import 'package:soon_sak/domain/model/channel/channel_model.dart';
-import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
-import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
-import 'package:soon_sak/domain/update_test.dart';
-import 'package:soon_sak/domain/useCase/content/home/load_cached_top_positioned_content_use_case.dart';
+import 'package:soon_sak/presentation/index.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 part 'home_view_model.part.dart';

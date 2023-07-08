@@ -1,25 +1,17 @@
 import 'dart:developer';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
+import 'package:soon_sak/utilities/index.dart';
 
-import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:soon_sak/app/di/locator/locator.dart';
-import 'package:soon_sak/data/api/content/response/video_response.dart';
-import 'package:soon_sak/data/repository/youtube/youtube_repository.dart';
-import 'package:soon_sak/domain/model/content/content.dart';
-import 'package:soon_sak/domain/model/youtube/youtube_video_content_info.dart';
-import 'package:soon_sak/presentation/common/alert/alert_widget.dart';
-import 'package:soon_sak/presentation/screens/contentDetail/content_detail_view_model.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-
+@SingleImport()
 class ContentVideo {
   final int episodeNum;
   final String videoId;
   late final String? overview;
   late final String? posterImageUrl;
   final BehaviorSubject<YoutubeVideoContentInfo?> youtubeInfo;
-
-
-
 
   ContentVideo(
       {required this.episodeNum,
