@@ -1,3 +1,6 @@
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {

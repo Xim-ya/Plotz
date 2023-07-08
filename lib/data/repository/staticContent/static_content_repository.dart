@@ -1,4 +1,4 @@
-import 'package:soon_sak/domain/model/content/home/top_positioned_collection.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class StaticContentRepository {

@@ -1,19 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:soon_sak/data/api/channel/channel_api.dart';
-import 'package:soon_sak/data/api/channel/channel_api_impl.dart';
-import 'package:soon_sak/data/api/content/content_api_impl.dart';
-import 'package:soon_sak/data/api/version/version_api.dart';
-import 'package:soon_sak/data/dataSource/channel/channel_data_source.dart';
-import 'package:soon_sak/data/dataSource/channel/channel_data_source_impl.dart';
-import 'package:soon_sak/data/dataSource/version/version_data_sourcel_impl.dart';
-import 'package:soon_sak/data/firebase/app_fire_storage.dart';
-import 'package:soon_sak/data/local/box/user/user_box.dart';
-import 'package:soon_sak/data/local/dao/user/user_dao.dart';
-import 'package:soon_sak/data/repository/channel/channel_repository.dart';
-import 'package:soon_sak/data/repository/channel/channel_respository_impl.dart';
-import 'package:soon_sak/data/repository/version/version_repository_impl.dart';
-import 'package:soon_sak/data/resources/app_dio.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+
 
 abstract class DataModules {
   DataModules._();

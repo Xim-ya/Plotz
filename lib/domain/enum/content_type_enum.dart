@@ -1,9 +1,12 @@
+import 'package:single_import_generator/single_import_generator.dart';
 import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 
 /** Created By ximya - 2022.12.17
  *  컨텐츠 타입 - '영화' '드라마'
  * */
 
+@SingleImport()
 enum ContentType {
   tv('드라마'),
   movie('영화');

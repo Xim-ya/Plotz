@@ -1,6 +1,6 @@
-import 'package:go_router/go_router.dart';
-import 'package:soon_sak/domain/model/content/onboarding/preference_content.dart';
-import 'package:soon_sak/domain/useCase/onboarding/load_paged_preference_content_list.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentPreferenceViewModel extends BaseViewModel {

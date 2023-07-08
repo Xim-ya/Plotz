@@ -1,6 +1,8 @@
-import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/presentation/screens/setting/setting_view_model.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 
 class SettingBinding extends Bindings {
   @override

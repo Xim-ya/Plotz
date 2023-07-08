@@ -1,11 +1,7 @@
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/data/api/channel/response/channel_response.dart';
-import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/common/gridView/paged_grid_list_view.dart';
-import 'package:soon_sak/presentation/screens/onboarding/channel/channel_preferences_view_model.dart';
-import 'package:soon_sak/presentation/screens/onboarding/localWidget/preferences_scaffold.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ChannelPreferencesScreen extends BaseScreen<ChannelPreferencesViewModel> {

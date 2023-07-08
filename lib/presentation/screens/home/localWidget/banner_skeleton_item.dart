@@ -1,4 +1,5 @@
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 
@@ -14,12 +15,12 @@ class BannerSkeletonItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 84,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
+              children: [
                 SkeletonBox(
                   borderRadius: 4,
                   padding: AppInset.vertical2,

@@ -1,4 +1,4 @@
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/domain/index.dart';
 
 extension DeterminContentType on ViewModelLoadingState {
   bool get isInitState {

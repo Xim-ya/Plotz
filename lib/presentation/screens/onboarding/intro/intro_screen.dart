@@ -1,5 +1,5 @@
-import 'package:go_router/go_router.dart';
-import 'package:soon_sak/app/config/gradient_config.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -14,7 +14,7 @@ class IntroScreen extends StatelessWidget {
           Column(
             children: <Widget>[
               // 이미지
-              Stack(  
+              Stack(
                 children: [
                   Image.asset(
                     'assets/images/intro.png',

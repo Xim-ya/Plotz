@@ -1,4 +1,6 @@
-import 'package:soon_sak/domain/model/video/content_video_model.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.12.31
@@ -14,8 +16,8 @@ class LoadContentVideoInfoUseCase {
 
   Future<Result<ContentVideoModel>> call(
       {required ContentType contentType,
-        required String contentId,
-        required BuildContext context}) async {
+      required String contentId,
+      required BuildContext context}) async {
     try {
       final response = await _dataSource.loadVideoInfo(
           contentId: contentId, contentType: contentType);

@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
-import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
-import 'package:soon_sak/data/local/box/user/user_box.dart';
-import 'package:soon_sak/data/local/dao/user/user_dao.dart';
+
+import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
+
 
 class UserDataSourceImpl
     with FireStoreErrorHandlerMixin

@@ -1197,6 +1197,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  single_import_generator:
+    dependency: "direct main"
+    description:
+      name: single_import_generator
+      sha256: d26765db5c0396585f5c9e0ddb5bfb50e35261b9543ab7f3e1bb73398c8f82a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1470,10 +1478,10 @@ packages:
     dependency: transitive
     description:
       name: yaml
-      sha256: "23812a9b125b48d4007117254bca50abb6c712352927eece9e155207b1db2370"
+      sha256: "75769501ea3489fca56601ff33454fe45507ea3bfb014161abc3b43ae25989d5"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   youtube_explode_dart:
     dependency: "direct main"
     description:

@@ -1,8 +1,6 @@
-import 'package:provider/provider.dart';
-import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/common/skeleton_box.dart';
-import 'package:soon_sak/presentation/screens/contentDetail/localWidget/expandable_text_view.dart';
-import 'package:soon_sak/presentation/screens/contentDetail/localWidget/star_raiting.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class OriginContentInfoTabView extends BaseView<ContentDetailViewModel> {
@@ -10,8 +8,8 @@ class OriginContentInfoTabView extends BaseView<ContentDetailViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const <Widget>[
+    return const Column(
+      children: <Widget>[
         AppSpace.size40,
         // 별점/평점
         _RateView(),

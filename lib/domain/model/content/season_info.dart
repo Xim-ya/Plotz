@@ -1,4 +1,4 @@
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/data/index.dart';
 
 class SeasonInfo {
   final String? airDate; // 방영일

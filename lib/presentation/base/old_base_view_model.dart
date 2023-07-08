@@ -1,4 +1,4 @@
-// import 'package:soon_sak/utilities/index.dart';
+// import 'package:soon_sak/utilities/index_prev.dart';
 //
 // abstract class BaseViewModel extends GetxController {
 //   final loading = false.obs;

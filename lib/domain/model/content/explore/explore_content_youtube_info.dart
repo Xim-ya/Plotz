@@ -6,14 +6,17 @@ class ExploreContentYoutubeInfo {
   final String channelName; // 유튜브 채널 이름
   final int? subscribers;
 
-  ExploreContentYoutubeInfo(
-      {required this.videoTitle,
-        required this.channelImgUrl,
-        required this.channelName,
-        required this.subscribers,}); // 구독자 수
+  ExploreContentYoutubeInfo({
+    required this.videoTitle,
+    required this.channelImgUrl,
+    required this.channelName,
+    required this.subscribers,
+  }); // 구독자 수
 
-  factory ExploreContentYoutubeInfo.fromResponse(
-      {required Channel channelRes, required Video videoRes,}) {
+  factory ExploreContentYoutubeInfo.fromResponse({
+    required Channel channelRes,
+    required Video videoRes,
+  }) {
     return ExploreContentYoutubeInfo(
       videoTitle: videoRes.title,
       channelImgUrl: channelRes.logoUrl,

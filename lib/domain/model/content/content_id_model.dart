@@ -1,4 +1,5 @@
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 
 class ContentIdInfoModel {
   ContentIdInfoModel(this.totalIdInfoList);

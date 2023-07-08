@@ -1,4 +1,5 @@
-import 'package:soon_sak/data/api/staticContent/response/top_positioned_collection_response.dart';
+import 'package:soon_sak/data/index.dart';
+
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class StaticContentDataSource {

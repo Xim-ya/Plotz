@@ -1,4 +1,4 @@
-import 'package:soon_sak/app/config/gradient_config.dart';
+import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class PreferenceScaffold extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:soon_sak/utilities/index.dart';
 
+
 /** Created By Ximya - 2022.11.22
  *  [ContentDetailScreen] > 컨텐츠 탭에서 사용되는 데이터 모델
  *  좋아요 수 / 조회수 / 컨텐츠 등록일 / 컨텐츠 제목 데이터를 매핑

@@ -1,18 +1,5 @@
-import 'package:go_router/go_router.dart';
-import 'package:soon_sak/app/routes/go_route_with_binding.dart';
-import 'package:soon_sak/presentation/screens/channel/channel_detail_binding.dart';
-import 'package:soon_sak/presentation/screens/channel/channel_detail_screen.dart';
-import 'package:soon_sak/presentation/screens/onboarding/channel/channel_preferences_binding.dart';
-import 'package:soon_sak/presentation/screens/onboarding/channel/channel_preferences_screen.dart';
-import 'package:soon_sak/presentation/screens/onboarding/content/content_preferences_binding.dart';
-import 'package:soon_sak/presentation/screens/onboarding/content/content_preferences_screen.dart';
-import 'package:soon_sak/presentation/screens/onboarding/intro/intro_screen.dart';
-import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_binding.dart';
-import 'package:soon_sak/presentation/screens/profileSetting/profile_setting_screen.dart';
-import 'package:soon_sak/presentation/screens/search/search_binding.dart';
-import 'package:soon_sak/presentation/screens/search/search_screen.dart';
-import 'package:soon_sak/presentation/screens/setting/setting_binding.dart';
-import 'package:soon_sak/presentation/screens/setting/setting_screen.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class AppPages {

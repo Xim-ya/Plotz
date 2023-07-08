@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:soon_sak/app/environment/environment.dart';
+import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/firebase_options_dev.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -13,10 +13,9 @@ void main() async {
 
   // get_it dependecies setup`
   AppBinding.dependencies();
-  
+
   await Hive.initFlutter();
   Hive.registerAdapter(UserBoxAdapter());
-
 
   /// FireBase 초기화
   await Firebase.initializeApp(

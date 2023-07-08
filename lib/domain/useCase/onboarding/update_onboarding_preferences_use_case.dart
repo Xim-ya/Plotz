@@ -1,7 +1,6 @@
-import 'package:soon_sak/data/api/channel/response/channel_response.dart';
-import 'package:soon_sak/data/api/user/request/preferred_content_request.dart';
-import 'package:soon_sak/data/api/user/request/user_onboarding_preferred_request.dart';
 import 'package:soon_sak/domain/model/content/onboarding/preference_content.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /** Created By Ximya - 2023.06.25

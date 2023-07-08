@@ -1,10 +1,7 @@
-import 'package:provider/provider.dart';
-import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/domain/model/content/onboarding/preference_content.dart';
-import 'package:soon_sak/presentation/base/base_view.dart';
-import 'package:soon_sak/presentation/common/gridView/paged_grid_list_view.dart';
-import 'package:soon_sak/presentation/screens/onboarding/content/content_preferences_view_model.dart';
-import 'package:soon_sak/presentation/screens/onboarding/localWidget/preferences_scaffold.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class ContentPreferencesScreen extends BaseScreen<ContentPreferenceViewModel> {

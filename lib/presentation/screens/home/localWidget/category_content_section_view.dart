@@ -1,6 +1,7 @@
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-
-import '../../../common/image/content_poster_item_view.dart';
 
 /** Edited By Ximya - 2023.03.21
  *  [HomeScreen]의 카테고리 섹션 영역 부분 섹션뷰 -> 각 개별 카테고리 '제목' + '컨텐츠 리스트'

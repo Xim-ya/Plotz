@@ -1,4 +1,6 @@
 import 'package:soon_sak/presentation/screens/search/localWidget/search_scaffold_controller.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SearchScaffold extends StatefulWidget {

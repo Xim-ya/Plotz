@@ -1,8 +1,9 @@
-import 'package:go_router/go_router.dart';
-import 'package:soon_sak/data/api/channel/response/channel_response.dart';
-import 'package:soon_sak/domain/useCase/channel/load_paged_preferences_channel_list_use_case.dart';
-import 'package:soon_sak/domain/useCase/onboarding/update_onboarding_preferences_use_case.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/data/api/channel/response/channel_response.dart';
 
 class ChannelPreferencesViewModel extends BaseViewModel {
   ChannelPreferencesViewModel({
@@ -23,6 +24,7 @@ class ChannelPreferencesViewModel extends BaseViewModel {
 
   /* Controllers */
   late final ScrollController scrollController;
+
   PagingController<int, ChannelBasicResponse> get pagingController =>
       _loadChannelsUseCase.pagingController;
 
@@ -78,11 +80,10 @@ class ChannelPreferencesViewModel extends BaseViewModel {
   }
 
   // 채널 선택 skip
-  void skipSelection(){
+  void skipSelection() {
     _updateUserPreferencesUseCase.updateUserPreferences([]);
     context.go(AppRoutes.onboarding3);
   }
-
 
   // '다음' 버튼이 클릭 되었을 때
   void onNextBtnTapped() {

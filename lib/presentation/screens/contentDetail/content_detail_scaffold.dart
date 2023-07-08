@@ -1,6 +1,9 @@
 import 'package:provider/provider.dart';
 import 'package:soon_sak/app/config/gradient_config.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/utilities/index_prev.dart';
 
 /* 2022.07.14 Created By Ximya
 * 광고수익금 스크린의 Scaffold

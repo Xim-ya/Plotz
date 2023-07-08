@@ -1,8 +1,10 @@
-import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/data/repository/channel/channel_repository.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_channel_contents_use_case.dart';
 import 'package:soon_sak/presentation/screens/channel/channel_detail_view_model.dart';
-import 'package:soon_sak/utilities/index.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 
 class ChannelDetailBinding extends Bindings {
   @override

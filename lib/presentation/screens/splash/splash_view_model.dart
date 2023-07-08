@@ -1,7 +1,7 @@
 import 'dart:developer';
-import 'package:go_router/go_router.dart';
-import 'package:soon_sak/app/environment/devMain.dart';
-import 'package:soon_sak/domain/useCase/version/check_version_and_network_use_case.dart';
+import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class SplashViewModel extends BaseViewModel {

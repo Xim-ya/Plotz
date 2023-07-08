@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:soon_sak/app/environment/environment.dart';
+import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/local/box/user/user_box.dart';
 import 'package:soon_sak/firebase_options.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -10,7 +10,6 @@ void main() async {
   // Flutter Engine 초기화
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
-
 
   /// FireBase 초기화
   // Firebase Crashlytics 설정
