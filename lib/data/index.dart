@@ -31,7 +31,6 @@ export 'repository/channel/channel_repository.dart';
 export 'repository/version/version_repository_impl.dart';
 export 'repository/version/version_repository.dart';
 export 'resources/app_dio.dart';
-export 'mixin/isolate_helper_mixin.dart';
 export 'mixin/youtube_meta_data_helper_mixin.dart';
 export 'mixin/firebase_isolate_helper_mixin.dart';
 export 'mixin/fire_store_helper_mixin.dart';

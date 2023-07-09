@@ -1,12 +1,9 @@
 import 'dart:developer';
-import 'package:go_router/go_router.dart';
-import 'package:rxdart/subjects.dart';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-
 
 part 'controllerResources/content_detail_header_view_model.part.dart'; // 헤더 영역
 part 'controllerResources/content_detail_info_tab_view_model.part.dart'; // 컨텐츠 정보 탭뷰 영역
