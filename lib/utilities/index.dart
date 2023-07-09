@@ -13,6 +13,7 @@ export 'package:rxdart/subjects.dart';
 export 'package:pub_semver/pub_semver.dart';
 export 'package:package_info_plus/package_info_plus.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
+export 'package:dots_indicator/dots_indicator.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_easyloading/flutter_easyloading.dart';
 export 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';

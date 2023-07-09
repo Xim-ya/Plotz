@@ -1,4 +1,3 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
@@ -473,62 +472,63 @@ class _ChannelSlider extends BaseView<HomeViewModel> {
         ),
         AppSpace.size7,
         SizedBox(
-            height: 113.75,
-            child: Selector<HomeViewModel, List<ChannelModel>?>(
-              selector: (context, vm) => vm.channelList,
-              builder: (context, itemList, _) {
-                return ListView.separated(
-                  padding: AppInset.left18,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (_, __) => AppSpace.size12,
-                  itemCount: itemList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    if (itemList.hasData) {
-                      return GestureDetector(
-                        onTap: () {
-                          vm(context).routeToChannelDetail(context,
-                              selectedIndex: index);
-                        },
-                        child: Column(
-                          children: <Widget>[
-                            RoundProfileImg(
-                              size: 88,
-                              imgUrl: vm(context).channelItem(index).logoImgUrl,
-                            ),
-                            const SizedBox(height: 5),
-                            SizedBox(
-                              width: 88,
-                              child: Text(
-                                vm(context).channelItem(index).name,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                                style: AppTextStyle.alert2,
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    } else {
-                      return const Column(
+          height: 113.75,
+          child: Selector<HomeViewModel, List<ChannelModel>?>(
+            selector: (context, vm) => vm.channelList,
+            builder: (context, itemList, _) {
+              return ListView.separated(
+                padding: AppInset.left18,
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (_, __) => AppSpace.size12,
+                itemCount: itemList?.length ?? 0,
+                itemBuilder: (context, index) {
+                  if (itemList.hasData) {
+                    return GestureDetector(
+                      onTap: () {
+                        vm(context).routeToChannelDetail(context,
+                            selectedIndex: index);
+                      },
+                      child: Column(
                         children: <Widget>[
-                          SkeletonBox(
-                            borderRadius: 44,
-                            height: 88,
+                          RoundProfileImg(
+                            size: 88,
+                            imgUrl: vm(context).channelItem(index).logoImgUrl,
+                          ),
+                          const SizedBox(height: 5),
+                          SizedBox(
                             width: 88,
-                          ),
-                          SizedBox(height: 7),
-                          SkeletonBox(
-                            height: 16,
-                            width: 56,
-                          ),
+                            child: Text(
+                              vm(context).channelItem(index).name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.alert2,
+                            ),
+                          )
                         ],
-                      );
-                    }
-                  },
-                );
-              },
-            ))
+                      ),
+                    );
+                  } else {
+                    return const Column(
+                      children: <Widget>[
+                        SkeletonBox(
+                          borderRadius: 44,
+                          height: 88,
+                          width: 88,
+                        ),
+                        SizedBox(height: 7),
+                        SkeletonBox(
+                          height: 16,
+                          width: 56,
+                        ),
+                      ],
+                    );
+                  }
+                },
+              );
+            },
+          ),
+        )
       ],
     );
   }
