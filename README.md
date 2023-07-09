@@ -47,6 +47,67 @@
 
 
 
+## Change Log
+### 1.0.0
+
+* 순삭 어플리케이션 배포
+
+### 1.0.1
+
+- 순삭 어드민 어플리케이션 내부 배포
+
+
+### 1.0.2
+- UI 모듈 고도화 (SkeletonBox, AppDialog, KeepAliveView)
+- Firebase Analytics 로직 추가
+- 기타 버그 수정.
+
+### 1.0.3
+- 개발환경 분리 (prod, dev)
+- 유저 트래킹 로직 추가
+- 홈 탭 내부 캐싱 로직 적용 + 페이징 로직 적용
+
+### 1.0.4
+- Isolate 로직을 도입 UI 프리징 이슈를 해결 (FirebaseIsolateHelper, IsolateHelper)
+- 홈 섹션 코드 리팩토링
+
+
+### 1.0.5
+- **서비스 리뉴얼**  (순삭 to Plotz)
+- 콘텐츠 상세 페이지 리뉴얼
+- 상태관리 라이브러리 전환 (Getx to Provider)
+- 라우팅 로직 변경 (Getx to go_router)
+- DI 로직 변경 (Getx to get_it)
+- 이미지 캐싱 관련 메모리 누수 문제 수정 
+
+
+### 1.0.6
+- 로그인 화면 리뉴얼 
+- DI 로직 고도화 
+  - route binding 로직 적용
+  - safeRegister 로직 적용
+- 기타 UX를 고려한 기능 추가
+  
+
+### 1.0.7
+- 기타 버그 수정
+
+
+### 1.0.8
+- 온보딩 섹션 추가
+- 유저 취향 정보 수집 로직 추가 
+- 불필요 isolate 로직 제거
+
+
+
+### 1.0.9
+- 큐레이션 탭 및 관련 기능 제거
+
+
+### 1.0.10
+- 마이페이지 리뉴얼
+- 설정 페이지 제거
+- SingleImport 로직 적용
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FXim-ya%2FSoonSack%2Fhit-counter&count_bg=%23E30914&title_bg=%23101010&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
