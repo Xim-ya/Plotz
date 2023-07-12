@@ -11,13 +11,7 @@ class ContentDataSourceImpl
 
   @override
   Future<List<String>> loadTotalContentIdList() =>
-      loadWithFirebaseIsolate(_api.loadTotalContentIdList);
-
-  @override
-  Future<List<OldVideoResponse>> oldLoadVideoInfo(String id) =>
-      loadWithFirebaseIsolate(
-        () => loadResponseOrThrow(() => _api.oldLoadVideoInfo(id)),
-      );
+      loadWithFirebaseIsolate(_api.loadTotalContentIds);
 
   @override
   Future<List<VideoResponse>> loadVideoInfo(
@@ -34,7 +28,7 @@ class ContentDataSourceImpl
 
   @override
   Future<void> requestContent(ContentRequest requestInfo) =>
-      loadResponseOrThrow(() => _api.requestContent(requestInfo));
+      loadResponseOrThrow(() => _api.createRequestContent(requestInfo));
 
   @override
   Future<ChannelResponse> loadChannelInfo(String contentId) =>

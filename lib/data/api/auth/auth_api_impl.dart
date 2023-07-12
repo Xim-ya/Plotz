@@ -41,7 +41,7 @@ class AuthApiImpl with FirestoreHelper implements AuthApi {
   }
 
   @override
-  Future<bool> isUserAlreadyRegistered(String userId) async {
+  Future<bool> isUserRegistered(String userId) async {
     final doc = await getDocById('user', docId: userId);
     if (doc.exists) {
       return true;

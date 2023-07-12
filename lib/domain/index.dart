@@ -12,7 +12,7 @@ export 'mixin/search_handler_mixin.dart';
 export 'mixin/paging_handler_mixin.dart';
 export 'model/video/content_video.dart';
 export 'model/video/content_video_model.dart';
-export 'model/auth/user_model.dart';
+export 'model/auth/user_model.m.dart';
 export 'model/content/home/top_positioned_collection.dart';
 export 'model/content/home/banner_model.dart';
 export 'model/content/home/category_content_collection_model.dart';

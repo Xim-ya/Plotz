@@ -7,13 +7,13 @@ abstract class UserDataSource {
   Future<void> withdrawUser();
 
   // 유저 시청 기록 추가
-  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
+  Future<void> updateUserWatchHistory(WatchingHistoryRequest requestInfo);
 
   // 유저 시청 기록 호출
   Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory();
 
   // 닉네임 중복 여부 확인
-  Future<bool> checkDuplicateDisplayName(String inputName);
+  Future<bool> isDuplicateNickName(String inputName);
 
   // 프로필 정보 업데이트
   Future<void> updateUserProfile(UserProfileRequest requestInfo);
@@ -27,7 +27,7 @@ abstract class UserDataSource {
   Future<void> updateUserPreferences(UserOnboardingPreferredRequest req);
 
   // 유저 정보 로컬 저장
-  void saveUserLocalData(String userId);
+  void storeUserLocalData(String userId);
 
   // 유저 로컬 데이터 호출
   UserBox? getUserLocalData();
@@ -39,7 +39,7 @@ abstract class UserDataSource {
   bool isOnboardingProgressDone();
 
   // 유저 온보딩 진행 여부값을 판별하는데 사용 (서버에서 데이터를 가져옴)
-  Future<bool> checkIfUserHasPreferencesData();
+  Future<bool> hasPreferencedHistory();
 
   // 유저 로컬 데이터 삭제
   void clearUserLocalData();

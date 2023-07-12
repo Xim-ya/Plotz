@@ -7,7 +7,7 @@ abstract class UserApi {
   Future<void> withdrawUser(String userId);
 
   // 유저 시청 기록 추가
-  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo);
+  Future<void> updateUserWatchHistory(WatchingHistoryRequest requestInfo);
 
   // 유저 시청 기록 호출
   Future<List<UserWatchHistoryItemResponse?>> loadUserWatchHistory(
@@ -15,7 +15,7 @@ abstract class UserApi {
   );
 
   // 닉네임 중복 여부 확인
-  Future<bool> checkDuplicateDisplayName(String inputName);
+  Future<bool> isDuplicateNickName(String inputName);
 
   // 프로필 정보 업데이트
   Future<void> updateUserProfile(UserProfileRequest requestInfo);
@@ -31,7 +31,7 @@ abstract class UserApi {
       UserOnboardingPreferredRequest req, String userId);
 
   // 유저 선호 콘텐츠 & 채널 필드 존재 여부
-  Future<bool> checkIfUserHasPreferencesData(String userId);
+  Future<bool> hasPreferencedHistory(String userId);
 
   // 유저 선호 채널 값 업데이트
   Future<void> updateUserChannelPreference(

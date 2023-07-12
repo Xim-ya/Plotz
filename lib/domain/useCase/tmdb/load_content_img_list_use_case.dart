@@ -12,10 +12,10 @@ class LoadContentImgListUseCase
   Future<Result<List<String>>> call(ContentType firstReq, int secondReq) {
     /// firstReq -> [contentType] / secondRequest -> [contentId]
     if (firstReq == ContentType.tv) {
-      return _repository.loadTvImgUrlList(secondReq);
+      return _repository.loadTvContentImages(secondReq);
     } else {
       // 임시
-      return _repository.loadMovieImgUrlList(secondReq);
+      return _repository.loadMovieContentImages(secondReq);
     }
   }
 }
