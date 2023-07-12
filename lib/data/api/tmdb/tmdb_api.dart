@@ -15,7 +15,7 @@ abstract class TmdbApi {
 
   // 'tv' 컨텐츠 상세 정보
   @GET('/tv/{tvId}')
-  Future<TmdbTvDetailResponse> loadTmdbMovieDetailResponse({
+  Future<TmdbTvDetailResponse> loadTvContentInfo({
     @Path('tvId') required int tvId,
     @Query('api_key') required String apiKey,
     @Query('language') required String language,
@@ -31,13 +31,14 @@ abstract class TmdbApi {
 
   // 'tv' 컨텐츠 이미지 리스트
   @GET('/tv/{tvId}/images')
-  Future<TmdbImagesResponse> loadTvImages(
-      {@Path('tvId') required int tvId,
-      @Query('api_key') required String apiKey,});
+  Future<TmdbImagesResponse> loadTvImages({
+    @Path('tvId') required int tvId,
+    @Query('api_key') required String apiKey,
+  });
 
   // 'tv' 컨텐츠 검색 결과
   @GET('/search/tv')
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList({
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContents({
     @Query('api_key') required String apiKey,
     @Query('language') required String language,
     @Query('page') required int page,
@@ -46,7 +47,7 @@ abstract class TmdbApi {
 
   // 'movie' 컨텐츠 상세 정보
   @GET('/movie/{movieId}')
-  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailInfoResponse({
+  Future<TmdbMovieDetailResponse> loadMovieInfo({
     @Path('movieId') required int movieId,
     @Query('api_key') required String apiKey,
     @Query('language') required String language,
@@ -69,7 +70,7 @@ abstract class TmdbApi {
 
   // 'movie' 컨텐츠 검색 결과
   @GET('/search/movie')
-  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList({
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContents({
     @Query('api_key') required String apiKey,
     @Query('language') required String language,
     @Query('page') required int page,

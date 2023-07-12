@@ -15,9 +15,9 @@ class UserDataSourceImpl
   final UserDao _local;
 
   @override
-  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo) {
+  Future<void> updateUserWatchHistory(WatchingHistoryRequest requestInfo) {
     return loadResponseOrThrow(
-      () => _api.addUserWatchHistory(requestInfo),
+      () => _api.updateUserWatchHistory(requestInfo),
     );
   }
 
@@ -28,8 +28,8 @@ class UserDataSourceImpl
       );
 
   @override
-  Future<bool> checkDuplicateDisplayName(String inputName) =>
-      loadResponseOrThrow(() => _api.checkDuplicateDisplayName(inputName));
+  Future<bool> isDuplicateNickName(String inputName) =>
+      loadResponseOrThrow(() => _api.isDuplicateNickName(inputName));
 
   // 프로필 정보 업데이트
   @override
@@ -62,7 +62,7 @@ class UserDataSourceImpl
   }
 
   @override
-  void saveUserLocalData(String userId) {
+  void storeUserLocalData(String userId) {
     _local.updateUserId(userId);
   }
 
@@ -70,8 +70,8 @@ class UserDataSourceImpl
   UserBox? getUserLocalData() => _local.value;
 
   @override
-  Future<bool> checkIfUserHasPreferencesData() async {
-    final result = _api.checkIfUserHasPreferencesData(_local.value!.userId);
+  Future<bool> hasPreferencedHistory() async {
+    final result = _api.hasPreferencedHistory(_local.value!.userId);
     return result;
   }
 

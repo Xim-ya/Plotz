@@ -11,8 +11,8 @@ class AuthDataSourceImpl
   final AuthApi api;
 
   @override
-  Future<bool> isUserAlreadyRegistered(String userId) =>
-      loadResponseOrThrow(() => api.isUserAlreadyRegistered(userId));
+  Future<bool> isUserRegistered(String userId) =>
+      loadResponseOrThrow(() => api.isUserRegistered(userId));
 
   @override
   Future<bool> isUserSignedIn() =>

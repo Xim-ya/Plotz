@@ -21,7 +21,7 @@ class _TmdbApi implements TmdbApi {
   String? baseUrl;
 
   @override
-  Future<TmdbTvDetailResponse> loadTmdbMovieDetailResponse({
+  Future<TmdbTvDetailResponse> loadTvContentInfo({
     required tvId,
     required apiKey,
     required language,
@@ -107,7 +107,7 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList({
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContents({
     required apiKey,
     required language,
     required page,
@@ -140,7 +140,7 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailInfoResponse({
+  Future<TmdbMovieDetailResponse> loadMovieInfo({
     required movieId,
     required apiKey,
     required language,
@@ -226,7 +226,7 @@ class _TmdbApi implements TmdbApi {
   }
 
   @override
-  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList({
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContents({
     required apiKey,
     required language,
     required page,

@@ -72,7 +72,7 @@ class SignInAndUpHandlerUseCase extends BaseTwoParamUseCase<Sns, BuildContext, R
   /// Firesotre에 유저 데이터 자장
   Future<void> signUp(UserModel userInfo) async {
     User? user = FirebaseAuth.instance.currentUser;
-    final response = await _authRepository.isUserAlreadyRegistered(user!.uid);
+    final response = await _authRepository.isUserRegistered(user!.uid);
     await response.fold(
       onSuccess: (isRegisteredUser) async {
         // 조건 : 이전에 등록에 유저가 아니라면

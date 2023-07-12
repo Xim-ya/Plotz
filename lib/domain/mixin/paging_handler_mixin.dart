@@ -42,7 +42,7 @@ mixin PagingSearchHandlerMixin {
     }
 
     responseResult =
-        await repository.loadSearchedMovieContentList(query: '', page: 1);
+        await repository.loadSearchedMovieContents(query: '', page: 1);
 
     responseResult.fold(
       onSuccess: (data) {

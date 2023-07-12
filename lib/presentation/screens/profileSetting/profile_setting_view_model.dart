@@ -158,7 +158,7 @@ class ProfileSettingViewModel extends BaseViewModel {
 
   // 닉네임 중복 확인
   Future<bool> checkDuplicateName(String value) async {
-    final response = await _userRepository.checkDuplicateDisplayName(value);
+    final response = await _userRepository.isDuplicateNickName(value);
     return response.fold(
       onSuccess: (isDuplicated) {
         if (isDuplicated) {

@@ -238,7 +238,7 @@ class ContentDetailViewModel extends BaseViewModel {
       originId: passedArgument.originId,
     );
 
-    final response = await _userRepository.addUserWatchHistory(requestData);
+    final response = await _userRepository.updateUserWatchHistory(requestData);
     response.fold(
       onSuccess: (_) {
         log('유저 시청기록 추가 성공');

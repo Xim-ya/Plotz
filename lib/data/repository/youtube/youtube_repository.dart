@@ -6,7 +6,7 @@ import 'package:soon_sak/utilities/index.dart';
 * */
 
 abstract class YoutubeRepository {
-  Future<Result<List<YoutubeContentComment>>> loadContentCommentList(
+  Future<Result<List<YoutubeContentComment>>> loadContentComments(
     String videoId,
   );
 

@@ -21,10 +21,10 @@ class LoadContentDetailInfoUseCase extends BaseTwoParamUseCase<ContentType,
       ContentType firstReq, int secondReq,) async {
     /// firstReq -> [contentType] / secondRequest -> [contentId]
     if (firstReq == ContentType.tv) {
-      return _repository.loadTmdbTvDetailResponse(secondReq);
+      return _repository.loadTvInfo(secondReq);
     } else {
       // 임시
-      return _repository.loadTmdbMovieDetailInfo(secondReq);
+      return _repository.loadMovieInfo(secondReq);
     }
   }
 }

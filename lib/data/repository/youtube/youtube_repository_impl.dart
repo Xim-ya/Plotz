@@ -10,7 +10,7 @@ class YoutubeRepositoryImpl extends YoutubeRepository with IsolateHelperMixin {
 
   /* 유튜브 컨텐츠 댓글 리스트 호출 */
   @override
-  Future<Result<List<YoutubeContentComment>>> loadContentCommentList(
+  Future<Result<List<YoutubeContentComment>>> loadContentComments(
     String videoId,
   ) async {
     try {

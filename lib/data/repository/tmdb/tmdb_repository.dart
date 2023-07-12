@@ -6,24 +6,24 @@ import 'package:soon_sak/utilities/index.dart';
 * */
 
 abstract class TmdbRepository {
-  Future<Result<ContentDetailInfo>> loadTmdbTvDetailResponse(int tvId);
+  Future<Result<ContentDetailInfo>> loadTvInfo(int tvId);
 
   Future<Result<List<ContentCreditInfo>>> loadTvCreditInfo(int tvId);
 
-  Future<Result<List<String>>> loadTvImgUrlList(int tvId);
+  Future<Result<List<String>>> loadTvContentImages(int tvId);
 
-  Future<Result<ContentDetailInfo>> loadTmdbMovieDetailInfo(int movieId);
+  Future<Result<ContentDetailInfo>> loadMovieInfo(int movieId);
 
-  Future<Result<List<ContentCreditInfo>>> loadMovieCreditInfo(int movieId);
+  Future<Result<List<ContentCreditInfo>>> loadMovieCredits(int movieId);
 
-  Future<Result<List<String>>> loadMovieImgUrlList(int movieId);
+  Future<Result<List<String>>> loadMovieContentImages(int movieId);
 
-  Future<Result<SearchContentModel>> loadSearchedTvContentList({
+  Future<Result<SearchContentModel>> loadSearchedTvContents({
     required String query,
     required int page,
   });
 
-  Future<Result<SearchContentModel>> loadSearchedMovieContentList({
+  Future<Result<SearchContentModel>> loadSearchedMovieContents({
     required String query,
     required int page,
   });

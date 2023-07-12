@@ -48,7 +48,7 @@ class ContentService {
 
   // 전체 컨텐츠 id 정보 호출
   Future<void> fetchTotalInfoList() async {
-    final response = await _contentRepository.loadContentIdInfoList();
+    final response = await _contentRepository.loadContentIds();
     response.fold(
       onSuccess: (data) {
         _contentTotalIdInfo = ContentIdInfoModel(data);

@@ -38,7 +38,7 @@ class UpdateTest {
           // TMDB API를 사용하여 아이템의 제목 가져오기
           if (SplittedIdAndType.fromOriginId(itemId).type ==
               ContentType.movie) {
-            final tmdbRes = await _tmdb.loadTmdbMovieDetailResponse(
+            final tmdbRes = await _tmdb.loadMovieInfo(
                 SplittedIdAndType.fromOriginId(itemId).id);
             String itemTitle = tmdbRes.title;
             // 데이터를 업데이트할 Firebase Realtime Database의 URL 설정
@@ -62,7 +62,7 @@ class UpdateTest {
               print('업데이트 실패: $i');
             }
           } else {
-            final tmdbRes = await _tmdb.loadTmdbTvDetailResponse(
+            final tmdbRes = await _tmdb.loadTvContentInfo(
                 SplittedIdAndType.fromOriginId(itemId).id);
             String itemTitle = tmdbRes.name;
             // 데이터를 업데이트할 Firebase Realtime Database의 URL 설정
