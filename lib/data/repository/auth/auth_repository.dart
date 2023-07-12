@@ -6,7 +6,7 @@ abstract class AuthRepository {
   Future<Result<bool>> isUserSignedIn();
 
   // 유저의 계정 등록 여부
-  Future<Result<bool>> isUserAlreadyRegistered(String userId);
+  Future<Result<bool>> isUserRegistered(String userId);
 
   // 유저 정보 호출
   Future<Result<UserModel>> loadUserInfo();

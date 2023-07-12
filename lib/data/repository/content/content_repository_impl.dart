@@ -8,7 +8,7 @@ class ContentRepositoryImpl implements ContentRepository {
   final ContentDataSource _contentDataSource;
 
   @override
-  Future<Result<List<ContentIdInfoItem>>> loadContentIdInfoList() async {
+  Future<Result<List<ContentIdInfoItem>>> loadContentIds() async {
     try {
       final response = await _contentDataSource.loadTotalContentIdList();
       return Result.success(
@@ -34,7 +34,7 @@ class ContentRepositoryImpl implements ContentRepository {
   }
 
   @override
-  Future<Result<void>> requestContent(ContentRequest requestInfo) async {
+  Future<Result<void>> createRequestContent(ContentRequest requestInfo) async {
     try {
       final response = await _contentDataSource.requestContent(requestInfo);
       return Result.success(response);

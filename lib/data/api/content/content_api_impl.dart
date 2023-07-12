@@ -5,7 +5,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override
-  Future<List<String>> loadTotalContentIdList() async {
+  Future<List<String>> loadTotalContentIds() async {
     final aim = await getDocumentIdsFromCollection('content');
     print(aim.length);
     return aim;
@@ -70,7 +70,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   }
 
   @override
-  Future<void> requestContent(ContentRequest requestInfo) async {
+  Future<void> createRequestContent(ContentRequest requestInfo) async {
     final data = requestInfo.toMap();
     await storeDocument(
       'requestContent',

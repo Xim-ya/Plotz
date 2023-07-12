@@ -135,7 +135,7 @@
 // export 'package:soon_sak/domain/model/content/home/top_ten_contents_model.dart';
 // export 'package:soon_sak/domain/model/content/content_id_model.dart';
 // export 'package:soon_sak/domain/model/content/explore/explore_content_model.dart';
-// export 'package:soon_sak/domain/model/auth/user_model.dart';
+// export 'package:soon_sak/domain/model/auth/user_model.m.dart';
 // export 'package:soon_sak/domain/model/content/home/banner_model.dart';
 // export 'package:soon_sak/domain/service/local_storage_service.dart';
 // export 'package:soon_sak/domain/useCase/content/home/load_cached_banner_content_use_case.dart';

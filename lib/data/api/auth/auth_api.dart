@@ -19,7 +19,7 @@ abstract class AuthApi {
   Future<UserModel> loadUserInfo();
 
   // 유저의 계정 등록 여부
-  Future<bool> isUserAlreadyRegistered(String userId);
+  Future<bool> isUserRegistered(String userId);
 
   // 구글 로그아웃
   Future<void> triggerGoogleSignOut();
@@ -29,6 +29,4 @@ abstract class AuthApi {
 
   // 유저 접속일 최신화
   Future<void> updateLoginDate(String userId);
-
-
 }

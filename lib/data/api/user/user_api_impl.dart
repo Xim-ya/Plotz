@@ -4,7 +4,7 @@ import 'package:soon_sak/utilities/index.dart';
 
 class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   @override
-  Future<void> addUserWatchHistory(WatchingHistoryRequest requestInfo) async {
+  Future<void> updateUserWatchHistory(WatchingHistoryRequest requestInfo) async {
     final contentRef = db.collection('content').doc(requestInfo.originId);
 
     final data = requestInfo.toMap(
@@ -52,7 +52,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   }
 
   @override
-  Future<bool> checkDuplicateDisplayName(String inputName) async {
+  Future<bool> isDuplicateNickName(String inputName) async {
     final isContainedFieldValue = await checkIfItContainField(
       'user',
       fieldName: 'displayName',
@@ -135,7 +135,7 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   }
 
   @override
-  Future<bool> checkIfUserHasPreferencesData(String userId) async {
+  Future<bool> hasPreferencedHistory(String userId) async {
     final result = checkSubCollectionExist(
       'user',
       docId: userId,

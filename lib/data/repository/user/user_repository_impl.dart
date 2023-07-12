@@ -10,11 +10,11 @@ class UserRepositoryImpl implements UserRepository {
   final UserDataSource _dataSource;
 
   @override
-  Future<Result<void>> addUserWatchHistory(
+  Future<Result<void>> updateUserWatchHistory(
     WatchingHistoryRequest requestInfo,
   ) async {
     try {
-      final response = await _dataSource.addUserWatchHistory(requestInfo);
+      final response = await _dataSource.updateUserWatchHistory(requestInfo);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -35,9 +35,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<bool>> checkDuplicateDisplayName(String inputName) async {
+  Future<Result<bool>> isDuplicateNickName(String inputName) async {
     try {
-      final response = await _dataSource.checkDuplicateDisplayName(inputName);
+      final response = await _dataSource.isDuplicateNickName(inputName);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -102,7 +102,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Result<void> saveUserLocalData(String userId) {
     try {
-      final response = _dataSource.saveUserLocalData(userId);
+      final response = _dataSource.storeUserLocalData(userId);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);
@@ -120,9 +120,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Result<bool>> checkIfUserHasPreferencesData() async {
+  Future<Result<bool>> hasPreferencedHistory() async {
     try {
-      final response = await _dataSource.checkIfUserHasPreferencesData();
+      final response = await _dataSource.hasPreferencedHistory();
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

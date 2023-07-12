@@ -11,8 +11,8 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
 // tmdb tv 컨텐츠 상세 정보
   @override
-  Future<TmdbTvDetailResponse> loadTmdbTvDetailResponse(int tvId) async =>
-      _api.loadTmdbMovieDetailResponse(
+  Future<TmdbTvDetailResponse> loadTvContentInfo(int tvId) async =>
+      _api.loadTvContentInfo(
         tvId: tvId,
         apiKey: _apiKey,
         language: _language,
@@ -20,7 +20,7 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
 // tmdb tv 컨텐츠 크레딧 정보
   @override
-  Future<TmdbContentCreditResponse> loadTmdbTvCastInfoResponse(
+  Future<TmdbContentCreditResponse> loadTmdbTvCastInfo(
           int tvId,) async =>
       _api.loadTvCreditInfo(tvId: tvId, apiKey: _apiKey, language: 'ko-KR');
 
@@ -30,16 +30,16 @@ class TmdbDataSourceImpl implements TmdbDataSource {
       _api.loadTvImages(tvId: tvId, apiKey: _apiKey);
 
   @override
-  Future<TmdbMovieDetailResponse> loadTmdbMovieDetailResponse(
+  Future<TmdbMovieDetailResponse> loadMovieInfo(
           int movieId,) async =>
-      _api.loadTmdbMovieDetailInfoResponse(
+      _api.loadMovieInfo(
         movieId: movieId,
         apiKey: _apiKey,
         language: _language,
       );
 
   @override
-  Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfoResponse(
+  Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfo(
           int movieId,) async =>
       _api.loadMovieCreditInfo(
         movieId: movieId,
@@ -52,14 +52,14 @@ class TmdbDataSourceImpl implements TmdbDataSource {
       _api.loadMovieImages(movieId: movieId, apiKey: _apiKey);
 
   @override
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContentList(
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContents(
           {required String query, required int page,}) async =>
-      _api.loadSearchedTvContentList(
+      _api.loadSearchedTvContents(
           apiKey: _apiKey, language: _language, page: page, query: query,);
 
   @override
-  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContentList(
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContents(
           {required String query, required int page,}) async =>
-      _api.loadSearchedMovieContentList(
+      _api.loadSearchedMovieContents(
           apiKey: _apiKey, language: _language, page: page, query: query,);
 }

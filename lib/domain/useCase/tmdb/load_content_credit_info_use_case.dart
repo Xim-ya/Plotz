@@ -24,7 +24,7 @@ class LoadContentCreditInfoUseCase extends BaseTwoParamUseCase<ContentType, int,
       return _repository.loadTvCreditInfo(secondReq);
     } else {
       // 임시
-      return _repository.loadMovieCreditInfo(secondReq);
+      return _repository.loadMovieCredits(secondReq);
     }
   }
 }

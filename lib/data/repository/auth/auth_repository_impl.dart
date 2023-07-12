@@ -72,9 +72,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<bool>> isUserAlreadyRegistered(String userId) async {
+  Future<Result<bool>> isUserRegistered(String userId) async {
     try {
-      final response = await _dataSource.isUserAlreadyRegistered(userId);
+      final response = await _dataSource.isUserRegistered(userId);
       return Result.success(response);
     } on Exception catch (e) {
       return Result.failure(e);

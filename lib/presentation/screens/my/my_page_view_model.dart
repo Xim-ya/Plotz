@@ -84,7 +84,7 @@ class MyPageViewModel extends BaseViewModel {
       originId: selectedContent.originId,
     );
 
-    final response = await _userRepository.addUserWatchHistory(requestData);
+    final response = await _userRepository.updateUserWatchHistory(requestData);
     response.fold(
       onSuccess: (_) {
         _userService.updateUserWatchHistory();

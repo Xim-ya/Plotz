@@ -8,14 +8,12 @@ import 'package:soon_sak/utilities/index.dart';
 
 abstract class ContentRepository {
   // 모든 컨텐츠 id 정보 리스트 호출
-  Future<Result<List<ContentIdInfoItem>>> loadContentIdInfoList();
+  Future<Result<List<ContentIdInfoItem>>> loadContentIds();
 
   /// 탐색 컨텐츠 리스트 호출
   /// 주어진 ids에 속한 컨텐츠 리스트 호출
   Future<Result<List<ExploreContent>>> loadExploreContents(List<String> ids);
 
-
-  // 컨텐츠 등록 요청 (단순 요청)
-  Future<Result<void>> requestContent(ContentRequest requestInfo);
-
+  // 컨텐츠 등록 요청
+  Future<Result<void>> createRequestContent(ContentRequest requestInfo);
 }

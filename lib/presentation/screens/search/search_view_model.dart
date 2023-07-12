@@ -62,7 +62,7 @@ class SearchViewModel extends BaseViewModel {
       title: content.title ?? '제목 없음',
       userId: _userService.userInfo.value.id!,
     );
-    final response = await _contentRepository.requestContent(request);
+    final response = await _contentRepository.createRequestContent(request);
     response.fold(
       onSuccess: (data) {
         context.pop();

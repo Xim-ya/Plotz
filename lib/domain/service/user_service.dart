@@ -89,7 +89,7 @@ class UserService {
     } else {
       // 서버 정보 확인
       final response = await _userRepository
-          .checkIfUserHasPreferencesData();
+          .hasPreferencedHistory();
       response.fold(
         onSuccess: (data) {
           isOnboardingProgressDone = data;
