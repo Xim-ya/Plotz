@@ -133,11 +133,20 @@ class SearchViewModel extends BaseViewModel {
   // 검색어 초기화 - 'X' 버튼이 클릭 되었을 때
   VoidCallback get onClosedBtnTapped => pagedSearchHandler.onCloseBtnTapped;
 
-  @override
-  void onInit() {
-    pagedSearchHandler.initUseCase();
+  void prepare() {
+    loadingState = ViewModelLoadingState.loading;
+
     // TODO: 업데이트 listner 범위 최소화
     textEditingController.addListener(notifyListeners);
-    // super.onInit();
+    loadingState = ViewModelLoadingState.done;
+  }
+
+// @override
+  void onInit() {
+    pagedSearchHandler.initUseCase();
+    // pagedSearchHandler.initUseCase();
+    // // TODO: 업데이트 listner 범위 최소화
+    // textEditingController.addListener(notifyListeners);
+    // // super.onInit();
   }
 }

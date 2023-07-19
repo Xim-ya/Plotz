@@ -4,13 +4,18 @@ enum BottomNavigationConstants {
     label: '홈',
     iconPath: 'tab_home.svg',
   ),
-  business(
+  search(
     indexedKey: 1,
+    label: '검색',
+    iconPath: 'tab_search.svg',
+  ),
+  explore(
+    indexedKey: 2,
     label: '탐색',
     iconPath: 'tab_explore.svg',
   ),
-  school(
-    indexedKey: 2,
+  myPage(
+    indexedKey: 3,
     label: '마이페이지',
     iconPath: 'tab_my_page.svg',
   );

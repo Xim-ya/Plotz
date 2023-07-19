@@ -21,8 +21,8 @@ class TabsScreen extends BaseScreen<TabsViewModel> {
       index: vmS<int>(context, (vm) => vm.selectedTabIndex),
       children: const <Widget>[
         HomeScreen(),
+        SearchScreen(),
         ExploreScreen(),
-        // OldMyPageScreen(),
         MyPageScreen(),
       ],
     );
