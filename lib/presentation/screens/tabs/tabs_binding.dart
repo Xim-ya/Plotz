@@ -25,6 +25,19 @@ abstract class TabsBinding {
             locator<LoadRandomPagedExploreContentsUseCase>()));
 
     locator.registerLazySingleton(
+      () => SearchViewModel(
+          searchHandler: locator<SearchedPagedContentUseCase>(),
+          contentRepository: locator<ContentRepository>(),
+          userService: locator<UserService>()),
+    );
+
+    locator.registerLazySingleton(() =>
+        SearchScaffoldController(searchViewModel: locator<SearchViewModel>()));
+
+    locator.registerLazySingleton(() =>
+        SearchedPagedContentUseCase(tmdbRepository: locator<TmdbRepository>()));
+
+    locator.registerLazySingleton(
       () => MyPageViewModel(
         userRepository: locator<UserRepository>(),
         userService: locator<UserService>(),
@@ -36,6 +49,7 @@ abstract class TabsBinding {
       () => TabsViewModel(
         exploreViewModel: locator<ExploreViewModel>(),
         myPageViewModel: locator<MyPageViewModel>(),
+        searchViewModel: locator<SearchViewModel>(),
       ),
     );
   }
@@ -43,7 +57,10 @@ abstract class TabsBinding {
   static void unRegisterDependencies() {
     locator.unregister<TabsViewModel>();
     locator.unregister<HomeViewModel>();
+    locator.unregister<SearchViewModel>();
     locator.unregister<ExploreViewModel>();
+    locator.unregister<SearchScaffoldController>();
+    locator.unregister<SearchedPagedContentUseCase>();
     locator.unregister<MyPageViewModel>();
   }
 }

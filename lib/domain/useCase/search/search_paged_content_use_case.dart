@@ -128,6 +128,7 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
   /// pagingController event listen 설정
   /// Delayed : 50필요함
   void initUseCase({ContentType? forcedContentType}) {
+    print("INIT USECASE INITEd");
     pagingController.addPageRequestListener((pageKey) {
       if (_debounce?.isActive ?? false) _debounce!.cancel();
       _debounce = Timer(const Duration(milliseconds: 50), () {
