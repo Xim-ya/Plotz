@@ -3,7 +3,7 @@ import 'package:soon_sak/domain/index.dart';
 class ExploreContentIdInfo {
   final int contentId;
   final String videoId;
-  final ContentType contentType;
+  final MediaType contentType;
 
   ExploreContentIdInfo({
     required this.contentId,

@@ -49,4 +49,4 @@ export 'result.dart';
 
 // @Annotation Marked Exports
 export 'package:soon_sak/domain/model/video/content_video.dart';
-export 'package:soon_sak/domain/enum/content_type_enum.dart';
+export 'package:soon_sak/domain/enum/media_type_enum.dart';

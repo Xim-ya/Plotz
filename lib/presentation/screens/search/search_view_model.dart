@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/search/searched_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -29,7 +30,7 @@ class SearchViewModel extends BaseViewModel {
   final SearchedPagedContentUseCase pagedSearchHandler;
 
   /* Variables (State) */
-  ContentType get selectedTabType => pagedSearchHandler.selectedTabType;
+  MediaType get selectedTabType => pagedSearchHandler.selectedTabType;
 
   bool get isInitialState => pagedSearchHandler.isInitialState;
 
@@ -39,7 +40,7 @@ class SearchViewModel extends BaseViewModel {
   TextEditingController get textEditingController =>
       pagedSearchHandler.fieldController;
 
-  PagingController<int, SearchedContent> get pagingController =>
+  PagingController<int, SearchedContentNew> get pagingController =>
       pagedSearchHandler.pagingController;
 
   FocusNode get focusNode => pagedSearchHandler.fieldNode;
@@ -53,7 +54,7 @@ class SearchViewModel extends BaseViewModel {
   }
 
   // 컨텐츠 요청
-  Future<void> requestContent(SearchedContent content) async {
+  Future<void> requestContent(SearchedContentNew content) async {
     final ContentRequest request = ContentRequest(
       contentId: Formatter.getOriginIdByTypeAndId(
         type: selectedTabType,
@@ -81,8 +82,8 @@ class SearchViewModel extends BaseViewModel {
   /// 검색된 컨텐츠 클릭 되었을 때
   /// 컨텐츠 등록 여부에 따라 다른 동작(1,2,3)을 실행
   void onSearchedContentTapped({
-    required SearchedContent content,
-    required ContentType contentType,
+    required SearchedContentNew content,
+    required MediaType contentType,
   }) {
     // 키보드 가리기
 

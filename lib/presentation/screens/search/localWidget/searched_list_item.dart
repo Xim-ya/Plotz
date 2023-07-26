@@ -1,5 +1,6 @@
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/search/searched_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -13,8 +14,8 @@ class SearchListItem extends StatelessWidget {
     required this.onItemClicked,
   }) : super(key: key);
 
-  final ContentType contentType;
-  final SearchedContent item;
+  final MediaType contentType;
+  final SearchedContentNew item;
   final VoidCallback onItemClicked;
 
   @override

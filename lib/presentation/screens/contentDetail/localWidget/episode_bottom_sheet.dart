@@ -22,7 +22,7 @@ class EpisodeBottomSheet extends StatelessWidget {
   final List<ContentVideo> videos;
   final void Function(int) onOptionTapped;
   final VoidCallback onCloseBtnTapped;
-  final ContentType contentType;
+  final MediaType contentType;
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ import 'package:soon_sak/utilities/index.dart';
 class Content {
   late final int id;
   late String? videoId;
-  late ContentType? type;
+  late MediaType? type;
   late ContentDetail? detail;
   late YoutubeVideo? youtubeVideo;
 

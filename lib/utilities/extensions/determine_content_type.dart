@@ -1,11 +1,11 @@
 import 'package:soon_sak/domain/index.dart';
 
-extension DeterminContentType on ContentType {
+extension DeterminContentType on MediaType {
   bool get isMovie {
-    return this == ContentType.movie ? true : false;
+    return this == MediaType.movie ? true : false;
   }
 
   bool get isTv {
-    return this == ContentType.tv ? true : false;
+    return this == MediaType.tv ? true : false;
   }
 }

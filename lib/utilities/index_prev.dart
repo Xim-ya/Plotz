@@ -153,7 +153,7 @@
 // export 'package:soon_sak/domain/enum/content_video_format.dart';
 //
 // export 'package:soon_sak/domain/model/content/simple_content_info.dart';
-// export 'package:soon_sak/domain/enum/content_type_enum.dart';
+// export 'package:soon_sak/domain/enum/media_type_enum.dart';
 // export 'package:soon_sak/domain/model/youtube/youtube_content_comment.dart';
 // export 'package:soon_sak/domain/model/youtube/youtube_video_content_info.dart';
 // export 'package:soon_sak/domain/model/content/tv_content_credit_info.dart';
@@ -167,7 +167,7 @@
 // export 'package:soon_sak/domain/enum/ott_type_enum.dart';
 // export 'package:soon_sak/domain/model/content/splitted_id_and_type.dart';
 // export 'package:soon_sak/domain/model/content/content_detail_info.dart';
-// export 'package:soon_sak/domain/model/content/searched_content.dart';
+// export 'package:soon_sak/domain/model/content/searched_content.m.dart';
 // export 'package:soon_sak/domain/service/content_service.dart';
 // export 'package:soon_sak/domain/useCase/tmdb/load_content_credit_info_use_case.dart';
 // export 'package:soon_sak/domain/useCase/tmdb/load_content_img_list_use_case.dart';

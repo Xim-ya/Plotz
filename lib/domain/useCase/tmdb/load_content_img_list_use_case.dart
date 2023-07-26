@@ -3,15 +3,15 @@ import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class LoadContentImgListUseCase
-    extends BaseTwoParamUseCase<ContentType, int, Result<List<String>>> {
+    extends BaseTwoParamUseCase<MediaType, int, Result<List<String>>> {
   LoadContentImgListUseCase(this._repository);
 
   final TmdbRepository _repository;
 
   @override
-  Future<Result<List<String>>> call(ContentType firstReq, int secondReq) {
+  Future<Result<List<String>>> call(MediaType firstReq, int secondReq) {
     /// firstReq -> [contentType] / secondRequest -> [contentId]
-    if (firstReq == ContentType.tv) {
+    if (firstReq == MediaType.tv) {
       return _repository.loadTvContentImages(secondReq);
     } else {
       // 임시

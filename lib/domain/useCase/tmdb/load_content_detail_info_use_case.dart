@@ -10,7 +10,7 @@ import 'package:soon_sak/utilities/index.dart';
  *  [contentType]값('tv' 'movie')에 따라 다른 Api를 호출
  * */
 
-class LoadContentDetailInfoUseCase extends BaseTwoParamUseCase<ContentType,
+class LoadContentDetailInfoUseCase extends BaseTwoParamUseCase<MediaType,
     int, Result<ContentDetailInfo>> {
   LoadContentDetailInfoUseCase(this._repository);
 
@@ -18,9 +18,9 @@ class LoadContentDetailInfoUseCase extends BaseTwoParamUseCase<ContentType,
 
   @override
   Future<Result<ContentDetailInfo>> call(
-      ContentType firstReq, int secondReq,) async {
+      MediaType firstReq, int secondReq,) async {
     /// firstReq -> [contentType] / secondRequest -> [contentId]
-    if (firstReq == ContentType.tv) {
+    if (firstReq == MediaType.tv) {
       return _repository.loadTvInfo(secondReq);
     } else {
       // 임시

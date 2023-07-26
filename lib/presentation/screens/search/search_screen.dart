@@ -1,5 +1,6 @@
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/search/searched_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -17,6 +18,7 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
     );
   }
 
+
   List<Widget> buildTabView(BuildContext context) => [
         PagingSearchedResultListView(
           focusNode: vm(context).focusNode,
@@ -24,15 +26,15 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
           pagingController: vm(context).pagingController,
           firstPageErrorText: '드라마 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
-            final searchedItem = item as SearchedContent;
+            final searchedItem = item as SearchedContentNew;
             return KeepAliveView(
               child: SearchListItem(
-                contentType: ContentType.tv,
+                contentType: MediaType.tv,
                 item: searchedItem,
                 onItemClicked: () {
                   vm(context).onSearchedContentTapped(
                     content: searchedItem,
-                    contentType: ContentType.tv,
+                    contentType: MediaType.tv,
                   );
                 },
               ),
@@ -45,15 +47,15 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
           pagingController: vm(context).pagingController,
           firstPageErrorText: '영화 제목을 입력해주세요',
           itemBuilder: (BuildContext context, dynamic item, int index) {
-            final searchedItem = item as SearchedContent;
+            final searchedItem = item as SearchedContentNew;
             return KeepAliveView(
               child: SearchListItem(
-                contentType: ContentType.movie,
+                contentType: MediaType.movie,
                 item: searchedItem,
                 onItemClicked: () {
                   vm(context).onSearchedContentTapped(
                     content: searchedItem,
-                    contentType: ContentType.movie,
+                    contentType: MediaType.movie,
                   );
                 },
               ),
@@ -118,6 +120,4 @@ class SearchScreen extends BaseScreen<SearchViewModel> {
   @override
   SearchViewModel createViewModel(BuildContext context) =>
       locator<SearchViewModel>();
-
-
 }
