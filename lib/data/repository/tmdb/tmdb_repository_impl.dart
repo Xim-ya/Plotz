@@ -1,5 +1,7 @@
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/search/searched_content.m.dart';
+import 'package:soon_sak/domain/model/content/search/searched_content_result.m.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class TmdbRepositoryImpl implements TmdbRepository {
@@ -61,8 +63,7 @@ class TmdbRepositoryImpl implements TmdbRepository {
     int movieId,
   ) async {
     try {
-      final response =
-          await _dataSource.loadTmdbMovieCreditInfo(movieId);
+      final response = await _dataSource.loadTmdbMovieCreditInfo(movieId);
       return Result.success(
         response.cast.map(ContentCreditInfo.fromResponse).toList(),
       );
@@ -110,6 +111,21 @@ class TmdbRepositoryImpl implements TmdbRepository {
         page: page,
       );
       return Result.success(SearchContentModel.fromMovieResponse(response));
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  // 콘텐츠 검색 결과 (통합)
+  @override
+  Future<Result<SearchedContentResult>> loadSearchedContents(
+      {required String query, required int page}) async {
+    try {
+      final response = await _dataSource.loadSearchedContents(
+        query: query,
+        page: page,
+      );
+      return Result.success(SearchedContentResult.fromResponse(response));
     } on Exception catch (e) {
       return Result.failure(e);
     }

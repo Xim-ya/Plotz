@@ -14,7 +14,7 @@ abstract class ContentDataSource {
 
   // 컨텐츠 비디오 정보 호출
   Future<List<VideoResponse>> loadVideoInfo(
-      {required String contentId, required ContentType contentType});
+      {required String contentId, required MediaType contentType});
 
   // 채널 정보 호출
   Future<ChannelResponse> loadChannelInfo(String contentId);

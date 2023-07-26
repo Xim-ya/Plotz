@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/tmdb/response/newResponse/searched_content_response.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -22,6 +23,12 @@ abstract class TmdbDataSource {
   });
 
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContents({
+    required String query,
+    required int page,
+  });
+
+  // 콘텐츠 검색 결과 (통합)
+  Future<SearchedContentResponse> loadSearchedContents({
     required String query,
     required int page,
   });

@@ -28,7 +28,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
 
   @override
   Future<List<VideoResponse>> loadVideoInfo(
-      {required String contentId, required ContentType contentType}) async {
+      {required String contentId, required MediaType contentType}) async {
     final documentSnapshots = await getFirstSubCollectionDoc(
       'content',
       docId: contentId,
