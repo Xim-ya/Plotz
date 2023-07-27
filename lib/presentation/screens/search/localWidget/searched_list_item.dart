@@ -1,10 +1,8 @@
 import 'package:soon_sak/app/index.dart';
-import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/domain/model/content/search/searched_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
-import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
+import 'package:soon_sak/utilities/extensions/cached_img_size_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
-
 
 class SearchListItem extends StatelessWidget {
   const SearchListItem({
@@ -20,33 +18,6 @@ class SearchListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 컨텐츠 등록 여부에 따른 인디케이터 case별 위젯 (이미지 overlay)
-    Widget caseOverlayIndicatorOnImg() {
-      switch (item.state.value) {
-        case RegistrationState.isLoading:
-          return const SizedBox();
-        case RegistrationState.registered:
-          return Positioned.fill(
-            child: Align(
-              child: IconInkWellButton(
-                iconPath: 'assets/icons/play.svg',
-                size: 40,
-                onIconTapped: onItemClicked,
-              ),
-            ),
-          );
-        case RegistrationState.unRegistered:
-          return Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColor.black.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          );
-      }
-    }
-
     // 컨텐츠 등록 여부 인디케이터 case별 위젯
     Widget caseIndicatorOnTrailing() {
       switch (item.state.value) {
@@ -62,91 +33,74 @@ class SearchListItem extends StatelessWidget {
         case RegistrationState.registered:
           return const SizedBox();
         case RegistrationState.unRegistered:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SvgPicture.asset('assets/icons/round_exclamation.svg'),
-              AppSpace.size2,
-              Text(
-                '등록되지 않은 컨텐츠 입니다',
-                style: AppTextStyle.alert2
-                    .copyWith(color: const Color(0xFF303030)),
-              ),
-            ],
-          );
+          return SvgPicture.asset('assets/icons/rounded_exclamation.svg');
       }
     }
 
     return InkWell(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(30),
-        bottomLeft: Radius.circular(12),
-      ),
       onTap: onItemClicked,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // 컨텐츠 포스터 이미지
-          Stack(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: item.posterImgUrl != null
-                        ? CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            memCacheWidth: 270,
-                            imageUrl: item.posterImgUrl!.prefixTmdbImgPath,
-                            placeholder: (context, url) =>
-                                const SkeletonBox(),
-                            errorWidget: (context, url, error) => Container(
-                              color: Colors.grey.withOpacity(0.1),
-                              child: const Center(
-                                child: Icon(Icons.error),
-                              ),
-                            ),
-                          )
-                        : const SkeletonBox()),
-              ),
-              caseOverlayIndicatorOnImg(),
-            ],
+          // 이미지
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: item.posterImgUrl != null
+                ? CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    height: 120,
+                    width: 79,
+                    memCacheHeight: 120.cacheSize(context),
+                    imageUrl: item.posterImgUrl!.prefixTmdbImgPath,
+                    placeholder: (context, url) => const SkeletonBox(),
+                    errorWidget: (context, url, error) => Container(
+                      color: Colors.grey.withOpacity(0.1),
+                      child: const Center(
+                        child: Icon(Icons.error),
+                      ),
+                    ),
+                  )
+                : const SkeletonBox(
+                    height: 120,
+                    width: 79,
+                  ),
           ),
           AppSpace.size8,
-          SizedBox(
-            height: 100,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                AppSpace.size2,
-                // 제목
-                SizedBox(
-                  width: SizeConfig.to.screenWidth - 140,
-                  child: Text(
-                    item.title ?? '제목 없음',
-                    style: AppTextStyle.title3,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                AppSpace.size2,
 
-                // 개봉 & 첫 방영일
-                if (item.releaseDate != null || item.releaseDate != '')
-                  Text(
-                    item.releaseDate != null
-                        ? Formatter.dateToyyMMdd(item.releaseDate!)
-                        : contentType.isTv
-                            ? '방영일 확인 불가'
-                            : '개봉일 확인 불가',
-                    style:
-                        AppTextStyle.body2.copyWith(color: AppColor.lightGrey),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 제목 & 유효 여부 인디케이터
+              Row(
+                children: <Widget>[
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: SizeConfig.to.screenWidth - 133,
+                    ),
+                    child: Text(
+                      item.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.body3.copyWith(
+                        color: item.state.value.isRegistered
+                            ? AppColor.main
+                            : AppColor.white,
+                      ),
+                    ),
                   ),
-                AppSpace.size2,
-                // 등록 여부 Indicator
-                caseIndicatorOnTrailing(),
-              ],
-            ),
+                  AppSpace.size2,
+                  caseIndicatorOnTrailing(),
+                ],
+              ),
+              AppSpace.size2,
+              // 미디어 타입 & 개봉 및 출시년도
+              Text(
+                '${item.type.asText} · ${item.releaseDate.hasData ? Formatter.dateToYear(item.releaseDate!) : '미상'}',
+                style: AppTextStyle.alert2.copyWith(
+                  color: AppColor.gray01,
+                ),
+              )
+            ],
           ),
         ],
       ),

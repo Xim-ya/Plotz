@@ -16,7 +16,7 @@ class SearchedContent {
   final String? posterImgUrl; // 컨텐츠 포스트
   final String? title;
   final String? releaseDate;
-  final BehaviorSubject<RegistrationState> state;
+  final BehaviorSubject<RegistrationStateOld> state;
   late String? youtubeVideoId;
 
   SearchedContent({
@@ -61,15 +61,15 @@ class SearchedContent {
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.title,
       releaseDate: verifyReleaseDate(),
-      state: BehaviorSubject<RegistrationState>.seeded(
-          RegistrationState.isLoading),
+      state: BehaviorSubject<RegistrationStateOld>.seeded(
+          RegistrationStateOld.isLoading),
     );
 
     if (ContentService.to.contentIdInfo!.movieContentIdList
         .contains(response.id)) {
-      obj.state.add(RegistrationState.registered);
+      obj.state.add(RegistrationStateOld.registered);
     } else {
-      obj.state.add(RegistrationState.unRegistered);
+      obj.state.add(RegistrationStateOld.unRegistered);
     }
 
     return obj;
@@ -91,20 +91,21 @@ class SearchedContent {
       }
     }
 
+
     final obj = SearchedContent(
       contentId: response.id,
       posterImgUrl: response.poster_path ?? response.backdrop_path,
       title: response.name,
       releaseDate: verifyReleaseDate(),
-      state: BehaviorSubject<RegistrationState>.seeded(
-          RegistrationState.isLoading),
+      state: BehaviorSubject<RegistrationStateOld>.seeded(
+          RegistrationStateOld.isLoading),
     );
 
     if (ContentService.to.contentIdInfo!.tvContentIdList
         .contains(response.id)) {
-      obj.state.add(RegistrationState.registered);
+      obj.state.add(RegistrationStateOld.registered);
     } else {
-      obj.state.add(RegistrationState.unRegistered);
+      obj.state.add(RegistrationStateOld.unRegistered);
     }
 
     return obj;
@@ -112,7 +113,7 @@ class SearchedContent {
 }
 
 // 등록 여부 필드 enum 값
-enum RegistrationState {
+enum RegistrationStateOld {
   isLoading,
   registered,
   unRegistered,

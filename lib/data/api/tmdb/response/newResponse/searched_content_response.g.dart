@@ -20,7 +20,7 @@ SearchedContentItemResponse _$SearchedContentItemResponseFromJson(
         Map<String, dynamic> json) =>
     SearchedContentItemResponse(
       adult: json['adult'] as bool,
-      backdropPath: json['backdrop_path'] as String,
+      backdropPath: json['backdrop_path'] as String?,
       id: json['id'] as int,
       name: json['name'] as String?,
       title: json['title'] as String?,
@@ -28,7 +28,7 @@ SearchedContentItemResponse _$SearchedContentItemResponseFromJson(
       originalName: json['original_name'] as String?,
       originalTitle: json['original_title'] as String?,
       overview: json['overview'] as String,
-      posterPath: json['poster_path'] as String,
+      posterPath: json['poster_path'] as String?,
       mediaType: json['media_type'] as String,
       genreIds:
           (json['genre_ids'] as List<dynamic>).map((e) => e as int).toList(),

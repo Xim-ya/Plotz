@@ -8,7 +8,7 @@ import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 
 @SingleImport()
 enum MediaType {
-  tv('드라마'),
+  tv('시리즈'),
   movie('영화');
 
   const MediaType(this.name);
@@ -39,6 +39,6 @@ enum MediaType {
   }
 
   String get asText {
-    return isTv ? '드라마' : '영화';
+    return isTv ? '시리즈' : '영화';
   }
 }

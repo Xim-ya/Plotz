@@ -31,7 +31,7 @@ class ChannelPreferencesScreen extends BaseScreen<ChannelPreferencesViewModel> {
                 onPressed: vm(context).onSkipBtnClicked,
                 child: Text(
                   '건너뛰기',
-                  style: AppTextStyle.body3.copyWith(color: AppColor.gray02),
+                  style: AppTextStyle.body3.copyWith(color: AppColor.gray01),
                 )),
           ],
         ),
@@ -93,7 +93,7 @@ class _BottomFixedBtn extends BaseView<ChannelPreferencesViewModel> {
       children: [
         MaterialButton(
           onPressed: vm(context).onNextBtnTapped,
-          color: AppColor.gray07,
+          color: AppColor.gray06,
           padding: EdgeInsets.only(bottom: SizeConfig.to.bottomInset),
           minWidth: SizeConfig.to.screenWidth,
           height: 48 + SizeConfig.to.bottomInset,
@@ -104,7 +104,7 @@ class _BottomFixedBtn extends BaseView<ChannelPreferencesViewModel> {
               builder: (_, isSufficient, __) => Text(
                 '다음',
                 style: AppTextStyle.headline3.copyWith(
-                    color: isSufficient ? AppColor.main : AppColor.gray04),
+                    color: isSufficient ? AppColor.main : AppColor.gray03),
               ),
             ),
           ),
@@ -134,7 +134,7 @@ class _IntroTextView extends StatelessWidget {
         Text(
           '다양한 리뷰 콘텐츠 정보를 받아보세요!',
           style: AppTextStyle.body3.copyWith(
-            color: AppColor.gray02,
+            color: AppColor.gray01,
           ),
         ),
         AppSpace.size36,
@@ -227,7 +227,7 @@ class _ChannelGridView extends BaseView<ChannelPreferencesViewModel> {
                         Text(
                           '구독자 ${Formatter.formatNumberWithUnit(item.subscribersCount)}명',
                           style: AppTextStyle.alert2
-                              .copyWith(color: AppColor.gray04),
+                              .copyWith(color: AppColor.gray03),
                         ),
                       ],
                     ),

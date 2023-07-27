@@ -64,7 +64,7 @@ class IntroScreen extends StatelessWidget {
                 context.go(AppRoutes.tabs);
                 TabsBinding.dependencies();
               },
-              color: AppColor.gray07,
+              color: AppColor.gray06,
               padding: EdgeInsets.only(bottom: SizeConfig.to.bottomInset),
               minWidth: SizeConfig.to.screenWidth,
               height: 48 + SizeConfig.to.bottomInset,

@@ -50,7 +50,7 @@ class _PlayBtn extends BaseView<ContentDetailViewModel> {
         width: 40,
         child: CircularProgressIndicator(
           strokeWidth: 2.6,
-          color: AppColor.gray06,
+          color: AppColor.gray05,
         ),
       ),
       builder: (context, videoInfo, loadingView) {
@@ -153,12 +153,12 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                         TextSpan(
                           text: value.item3.hasData ? '${value.item3} · ' : '',
                           style: AppTextStyle.alert2
-                              .copyWith(color: AppColor.gray03),
+                              .copyWith(color: AppColor.gray02),
                         ),
                         TextSpan(
                           text: value.item4,
                           style: AppTextStyle.alert2
-                              .copyWith(color: AppColor.gray03),
+                              .copyWith(color: AppColor.gray02),
                         ),
                       ],
                     ),

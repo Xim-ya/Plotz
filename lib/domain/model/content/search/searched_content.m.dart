@@ -9,7 +9,7 @@ class SearchedContentNew {
   final MediaType type;
   final String? releaseDate;
   final BehaviorSubject<RegistrationState> state;
-  final String posterImgUrl;
+  final String? posterImgUrl;
 
   SearchedContentNew(
       {required this.contentId,
@@ -21,11 +21,23 @@ class SearchedContentNew {
 
   factory SearchedContentNew.fromResponse(
       SearchedContentItemResponse response) {
+    /// TMDB API에서 형식이 이상 firstAirDate 필드가 넘어옴
+    /// 검증 로직이 필요
+    String? verifyReleaseDate() {
+      final releaseDate = response.mediaType == 'movie'
+          ? response.releaseDate
+          : response.firstAirDate;
+      if (releaseDate != null && releaseDate.contains('-')) {
+        return releaseDate;
+      }
+      return null;
+    }
+
     final data = SearchedContentNew(
       contentId: response.id,
       title: response.title ?? response.name ?? '제목 없음',
       type: MediaType.fromString(response.mediaType),
-      releaseDate: response.releaseDate ?? response.firstAirDate,
+      releaseDate: verifyReleaseDate(),
       posterImgUrl: response.posterPath,
       state: BehaviorSubject<RegistrationState>.seeded(
         RegistrationState.isLoading,
@@ -57,4 +69,10 @@ enum RegistrationState {
   isLoading,
   registered,
   unRegistered,
+}
+
+extension DeterminContentType on RegistrationState {
+  bool get isRegistered {
+    return this == RegistrationState.registered ? true : false;
+  }
 }

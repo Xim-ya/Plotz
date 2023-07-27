@@ -87,7 +87,7 @@ class _PagedPosterGridView extends BaseView<ChannelDetailViewModel> {
                               child: Text(
                                 item.contentType.name,
                                 style: AppTextStyle.nav.copyWith(
-                                    color: AppColor.gray02, height: 1.193),
+                                    color: AppColor.gray01, height: 1.193),
                               ),
                             ),
                           ),
@@ -103,7 +103,7 @@ class _PagedPosterGridView extends BaseView<ChannelDetailViewModel> {
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           style: PretendardTextStyle.regular(
-                            color: AppColor.gray02,
+                            color: AppColor.gray01,
                             size: 11,
                             height: 14,
                           ),
@@ -150,7 +150,7 @@ class _ChannelInfoView extends BaseView<ChannelDetailViewModel> {
         Text(
           '구독자 ${Formatter.formatNumberWithUnit(vm(context).channelInfo.subscribersCount)}명',
           style: AppTextStyle.alert2.copyWith(
-            color: AppColor.gray04,
+            color: AppColor.gray03,
           ),
         ),
         Padding(
@@ -159,7 +159,7 @@ class _ChannelInfoView extends BaseView<ChannelDetailViewModel> {
             alignment: Alignment.centerRight,
             child: Text(
               '${vm(context).channelInfo.totalContentCount}개의 콘텐츠',
-              style: AppTextStyle.alert2.copyWith(color: AppColor.gray04),
+              style: AppTextStyle.alert2.copyWith(color: AppColor.gray03),
             ),
           ),
         ),

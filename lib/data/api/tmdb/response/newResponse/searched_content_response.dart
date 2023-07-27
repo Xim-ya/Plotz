@@ -22,7 +22,7 @@ class SearchedContentItemResponse {
   bool adult;
 
   @JsonKey(name: 'backdrop_path')
-  String backdropPath;
+  String? backdropPath;
 
   @JsonKey(name: 'id')
   int id;
@@ -50,7 +50,7 @@ class SearchedContentItemResponse {
   String overview;
 
   @JsonKey(name: 'poster_path')
-  String posterPath;
+  String? posterPath;
 
   @JsonKey(name: 'media_type')
   String mediaType;

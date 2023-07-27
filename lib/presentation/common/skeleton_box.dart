@@ -21,7 +21,7 @@ class SkeletonBox extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       child: Container(
         decoration: BoxDecoration(
-            color: AppColor.gray07,
+            color: AppColor.gray06,
             borderRadius: BorderRadius.circular(borderRadius ?? 0)),
         height: height,
         width: width,

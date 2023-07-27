@@ -399,7 +399,7 @@ class ContentDetailViewModel extends BaseViewModel {
 
   /* [Getters] */
   // 컨텐츠트 타입 (영화 or tv)
-  ContentType get contentType => passedArgument.contentType;
+  MediaType get contentType => passedArgument.contentType;
 
   // Argument (이전 스크린에서 전달 받은 인자)
   ContentArgumentFormat get passedArgument => _passedArgument;

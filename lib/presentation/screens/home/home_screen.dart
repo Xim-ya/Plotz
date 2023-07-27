@@ -265,7 +265,7 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                                           value.selectedBannerContent?.genre ??
                                           ''),
                                   style: AppTextStyle.alert2.copyWith(
-                                      color: AppColor.gray03,
+                                      color: AppColor.gray02,
                                       letterSpacing: -0.2),
                                 ),
                               ],
@@ -293,9 +293,9 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                             spacing: EdgeInsets.symmetric(horizontal: 4),
                             size: Size(4, 4),
                             activeSize: Size(4, 4),
-                            color: AppColor.gray05,
+                            color: AppColor.gray04,
                             // Inactive color
-                            activeColor: AppColor.gray02,
+                            activeColor: AppColor.gray01,
                           ),
                         );
                       },

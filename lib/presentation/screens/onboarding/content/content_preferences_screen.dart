@@ -72,7 +72,7 @@ class _BottomFixedBtn extends BaseView<ContentPreferenceViewModel> {
       children: [
         MaterialButton(
           onPressed: vm(context).onNextBtnTapped,
-          color: AppColor.gray07,
+          color: AppColor.gray06,
           padding: EdgeInsets.only(bottom: SizeConfig.to.bottomInset),
           minWidth: SizeConfig.to.screenWidth,
           height: 48 + SizeConfig.to.bottomInset,
@@ -83,7 +83,7 @@ class _BottomFixedBtn extends BaseView<ContentPreferenceViewModel> {
               builder: (_, isSufficient, __) => Text(
                 '다음',
                 style: AppTextStyle.headline3.copyWith(
-                    color: isSufficient ? AppColor.main : AppColor.gray04),
+                    color: isSufficient ? AppColor.main : AppColor.gray03),
               ),
             ),
           ),
@@ -167,7 +167,7 @@ class _IntroTextView extends StatelessWidget {
         AppSpace.size8,
         Text.rich(
           style: AppTextStyle.body3.copyWith(
-            color: AppColor.gray02,
+            color: AppColor.gray01,
           ),
           TextSpan(
             children: <TextSpan>[
