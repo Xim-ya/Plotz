@@ -1,5 +1,3 @@
-import 'package:soon_sak/utilities/index_prev.dart';
-
 class OldVideoResponse {
   final int order;
   final String videoId;

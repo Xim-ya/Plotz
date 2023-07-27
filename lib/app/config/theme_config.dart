@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 @immutable
 class ThemeConfig {
   final _theme = ThemeData(
+    splashColor: Colors.transparent,
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),

@@ -11,20 +11,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     return aim;
   }
 
-  @override
-  Future<List<OldVideoResponse>> oldLoadVideoInfo(String id) async {
-    final documentSnapshots = await getFirstSubCollectionDoc(
-      'content',
-      docId: id,
-      subCollectionName: 'video',
-    );
 
-    final listRes = documentSnapshots.get('items') as List<dynamic>;
-
-    return listRes
-        .map<OldVideoResponse>((item) => OldVideoResponse.fromJson(item))
-        .toList();
-  }
 
   @override
   Future<List<VideoResponse>> loadVideoInfo(
