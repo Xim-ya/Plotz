@@ -46,6 +46,7 @@ export 'extensions/check_null_state_extension.dart';
 export 'formatter.dart';
 export 'youtube_meta_data.dart';
 export 'result.dart';
+export 'package:soon_sak/utilities/extensions/cached_img_size_extension.dart';
 
 // @Annotation Marked Exports
 export 'package:soon_sak/domain/model/video/content_video.dart';
