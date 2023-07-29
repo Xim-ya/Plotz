@@ -37,7 +37,7 @@ class CategoryContentItem {
   final int id;
   final String originId;
   final String title;
-  final ContentType contentType;
+  final MediaType contentType;
   final String posterImgUrl;
 
   CategoryContentItem({

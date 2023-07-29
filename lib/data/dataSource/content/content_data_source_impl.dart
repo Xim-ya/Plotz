@@ -15,7 +15,7 @@ class ContentDataSourceImpl
 
   @override
   Future<List<VideoResponse>> loadVideoInfo(
-      {required String contentId, required ContentType contentType}) async {
+      {required String contentId, required MediaType contentType}) async {
     return loadResponseOrThrow(() =>
         _api.loadVideoInfo(contentId: contentId, contentType: contentType));
   }

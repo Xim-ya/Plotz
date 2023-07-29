@@ -4,7 +4,6 @@ import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-
 class ExploreViewModel extends BaseViewModel {
   /* Variables */
   final BehaviorSubject<List<ExploreContent>> exploreContents;
@@ -26,11 +25,6 @@ class ExploreViewModel extends BaseViewModel {
   /* Intents */
   // 탐색 컨텐츠 리스트 재호출
   Future<void> reFetchExploreContent() async {}
-
-  // 검색 스크린으로 이동
-  void routeToSearch() {
-    context.push(AppRoutes.tabs + AppRoutes.search);
-  }
 
   // 컨텐츠 상세페이지로 이동
   void routeToContentDetail(int routingArgument) {
@@ -123,16 +117,9 @@ class ExploreViewModel extends BaseViewModel {
 
   Future<void> prepare() async {
     loadingState = ViewModelLoadingState.loading;
-    DateTime startTime = DateTime.now();
     await loadRandomExploreContents();
     // 메소드 실행이 완료된 후의 시간을 종료 시간으로 기록
-    DateTime endTime = DateTime.now();
 
-    // 두 시간의 차이를 계산
-    Duration elapsedTime = endTime.difference(startTime);
-
-    // 실행 시간 출력
-    print('Explore 비동기 메소드 실행 시간: ${elapsedTime.inMilliseconds} 초');
     loadingState = ViewModelLoadingState.done;
   }
 

@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/search/searched_content.m.dart';
+import 'package:soon_sak/domain/model/content/search/searched_content_result.m.dart';
 import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -19,13 +21,14 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
       : _tmdbRepository = tmdbRepository;
 
   /* Variables */
-  ContentType selectedTabType = ContentType.tv; // 선택된 탭
   int currentPage = 1;
   final int maxContentLength = 10;
-  bool isInitialState = true; // 검색 이벤트가 일어나기 초기 상태
+
   bool get showRoundClosedBtn => exposeRoundCloseBtn; // 검색타 'X' 버튼 노출여부
   TextEditingController get textEditingController =>
       fieldController; // 검색 필드 컨트롤러
+
+  final BehaviorSubject<bool> isInitialState = BehaviorSubject.seeded(true);
 
   /* Data Modules */
   final TmdbRepository _tmdbRepository;
@@ -34,8 +37,8 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
   Timer? _debounce;
 
   FocusNode get focusNode => fieldNode;
-  final PagingController<int, SearchedContent> pagingController =
-      PagingController<int, SearchedContent>(firstPageKey: 1);
+  final PagingController<int, SearchedContentNew> pagingController =
+      PagingController<int, SearchedContentNew>(firstPageKey: 1);
 
   /* Intents */
   VoidCallback get resetFieldValue => onCloseBtnTapped;
@@ -47,19 +50,20 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
     toggleCloseBtn();
 
     // 초기 상태 설정 로직
-    if (isInitialState == true) isInitialState = false;
-    if (fieldController.text == '') isInitialState = true;
+
+    if (isInitialState.value == true) isInitialState.add(false);
+    if (fieldController.text == '') isInitialState.add(true);
 
     // 검색어 Debounce 설정 0.3초
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(
-      const Duration(milliseconds: 450),
+      const Duration(milliseconds: 350),
       pagingController.refresh,
     );
   }
 
   // Paging Call 메소드
-  Future<void> fetchPage(int pageKey, {ContentType? forcedContentType}) async {
+  Future<void> fetchPage(int pageKey, {MediaType? forcedContentType}) async {
     /// 처음 pagingController listen 할 때는
     /// paging call 하지 않기 위해 예외처리 진행
     if (fieldController.text.isEmpty) {
@@ -67,40 +71,20 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
       return;
     }
 
-    Result<SearchContentModel> response;
+    Result<SearchedContentResult> response;
 
     /// 선택된 [ConteType] 에 따라 api call을 진행
     /// Movie & TV
 
     // 조건 : Viewmodel로부터 전달 받은 타입이 있을 경우
     // TODO : 조건문 리팩토링 필요
-    if (forcedContentType.hasData) {
-      if (forcedContentType!.isTv) {
-        response = await _tmdbRepository.loadSearchedTvContents(
-          query: fieldController.text,
-          page: pageKey,
-        );
-      } else {
-        response = await _tmdbRepository.loadSearchedMovieContents(
-          query: fieldController.text,
-          page: pageKey,
-        );
-      }
-    } else {
-      if (selectedTabType.isTv) {
-        response = await _tmdbRepository.loadSearchedTvContents(
-          query: fieldController.text,
-          page: pageKey,
-        );
-      } else {
-        response = await _tmdbRepository.loadSearchedMovieContents(
-          query: fieldController.text,
-          page: pageKey,
-        );
-      }
-    }
+    response = await _tmdbRepository.loadSearchedContents(
+      query: fieldController.text,
+      page: pageKey,
+    );
 
-    final PagingController<int, SearchedContent> controller = pagingController;
+    final PagingController<int, SearchedContentNew> controller =
+        pagingController;
 
     response.fold(
       onSuccess: (data) {
@@ -127,12 +111,10 @@ class SearchedPagedContentUseCase with SearchHandlerMixin {
   /// UseCase init메소드
   /// pagingController event listen 설정
   /// Delayed : 50필요함
-  void initUseCase({ContentType? forcedContentType}) {
+  void initUseCase({MediaType? forcedContentType}) {
     pagingController.addPageRequestListener((pageKey) {
       if (_debounce?.isActive ?? false) _debounce!.cancel();
-      _debounce = Timer(const Duration(milliseconds: 50), () {
-        fetchPage(pageKey, forcedContentType: forcedContentType);
-      });
+      fetchPage(pageKey, forcedContentType: forcedContentType);
     });
   }
 

@@ -4,8 +4,6 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
-import 'package:soon_sak/utilities/index_prev.dart';
-
 /* Created By Ximya - 2022.02.09
 *  값이 일정 기간동안 고정되어 있는 데이터의 API Call을 최소화 하기 위해
 *  Local Storage에 일부 데이터를 저장하고 받아오는 로직을 택함.

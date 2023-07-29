@@ -96,7 +96,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                           child: Text(
                             '앗! 아직 시청기록이 없으시네요.\n플로츠에서 다양한 콘텐츠를 즐겨보세요!',
                             style: AppTextStyle.body3
-                                .copyWith(color: AppColor.gray04),
+                                .copyWith(color: AppColor.gray03),
                             textAlign: TextAlign.center,
                           ),
                         )
@@ -178,7 +178,7 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
         child: Text(
           title,
           style: AppTextStyle.body3.copyWith(
-            color: AppColor.gray02,
+            color: AppColor.gray01,
           ),
         ),
       ),
@@ -195,13 +195,13 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
             TextSpan(
               text: '현재 버전  ',
               style: AppTextStyle.body3.copyWith(
-                color: AppColor.gray02,
+                color: AppColor.gray01,
               ),
             ),
             TextSpan(
               text: vm(context).currentVersionNum,
               style: AppTextStyle.body3.copyWith(
-                color: AppColor.gray02,
+                color: AppColor.gray01,
               ),
             ),
           ],

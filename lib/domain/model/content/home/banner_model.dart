@@ -20,7 +20,7 @@ class BannerModel {
 class BannerItem {
   final String originId;
   final int id;
-  final ContentType type;
+  final MediaType type;
   final String title;
   final String description;
   final String imgUrl;

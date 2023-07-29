@@ -50,7 +50,7 @@ class _PlayBtn extends BaseView<ContentDetailViewModel> {
         width: 40,
         child: CircularProgressIndicator(
           strokeWidth: 2.6,
-          color: AppColor.gray06,
+          color: AppColor.gray05,
         ),
       ),
       builder: (context, videoInfo, loadingView) {
@@ -153,12 +153,12 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                         TextSpan(
                           text: value.item3.hasData ? '${value.item3} · ' : '',
                           style: AppTextStyle.alert2
-                              .copyWith(color: AppColor.gray03),
+                              .copyWith(color: AppColor.gray02),
                         ),
                         TextSpan(
                           text: value.item4,
                           style: AppTextStyle.alert2
-                              .copyWith(color: AppColor.gray03),
+                              .copyWith(color: AppColor.gray02),
                         ),
                       ],
                     ),
@@ -343,7 +343,8 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
                 child: CachedNetworkImage(
                   alignment: Alignment.topCenter,
                   fadeInDuration: const Duration(milliseconds: 400),
-                  memCacheWidth: (SizeConfig.to.screenWidth * 2.8).toInt(),
+                  memCacheWidth:
+                      SizeConfig.to.screenWidth.cacheSize(context) * 375 ~/ 500,
                   fit: BoxFit.fitWidth,
                   width: SizeConfig.to.screenWidth,
                   imageUrl: headerBackdropImg!.prefixTmdbImgPath,
@@ -351,7 +352,7 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
-            : const SizedBox();
+            : const SizedBox(); 
       },
     );
   }

@@ -4,6 +4,7 @@ import 'package:soon_sak/app/config/app_insets.dart';
 import 'package:soon_sak/app/config/color_config.dart';
 import 'package:soon_sak/app/config/font_config.dart';
 
+
 /** Created By Ximya - 2022.12.10
  *  toast 메세지 UI로직
  *  'flutter_styled_toast' & 'getx' 라이브러리를 이용함
@@ -14,73 +15,6 @@ import 'package:soon_sak/app/config/font_config.dart';
 abstract class AlertWidget {
   AlertWidget._();
 
-  static BuildContext? _globalContext;
-
-  static void setGlobalContext(BuildContext context) {
-    _globalContext = context;
-  }
-
-  static BuildContext? getGlobalContext() {
-    return _globalContext;
-  }
-
-  static Future<void> toast(BuildContext context,
-      {required String message}) async {
-    showToastWidget(
-      Container(
-        key: const Key('toast'),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.black,
-        ),
-        margin: AppInset.horizontal16,
-        padding: AppInset.vertical12 + AppInset.horizontal20,
-        child: Text(
-          message,
-          style: AppTextStyle.body3.copyWith(color: AppColor.mixedWhite),
-        ),
-      ),
-      context: context,
-      animDuration: Duration.zero,
-    );
-  }
-
-  static Future<void> showGlobalContextToast(
-      {
-        bool? isUsedOnTabScreen,
-        required String message,
-      }) async {
-    showToastWidget(
-      Container(
-        key: const Key('toast'),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.black,
-        ),
-        height: 52,
-        width: double.infinity,
-        margin: isUsedOnTabScreen != null && isUsedOnTabScreen == true
-            ? AppInset.bottom46 + AppInset.horizontal8
-            : AppInset.horizontal8,
-        padding: AppInset.left24 + AppInset.right16 ,
-        child: Center(
-          child: SizedBox(
-            width: double.infinity,
-            child: Text(
-              message,
-              style: AppTextStyle.body2.copyWith(color: AppColor.mixedWhite),
-              textAlign: TextAlign.left,
-            ),
-          ),
-        ),
-      ),
-      context: _globalContext,
-      animDuration: Duration.zero,
-    );
-  }
-
-
-
   static Future<void> newToast(
     BuildContext context, {
     bool? isUsedOnTabScreen,
@@ -88,26 +22,20 @@ abstract class AlertWidget {
   }) async {
     showToastWidget(
       Container(
-        key: const Key('toast'),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: AppColor.gray05,
-        ),
-        height: 52,
-        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
         margin: isUsedOnTabScreen != null && isUsedOnTabScreen == true
-            ? AppInset.bottom46 + AppInset.horizontal8
-            : AppInset.horizontal8,
-        padding: AppInset.left24 + AppInset.right16 ,
-        child: Center(
-          child: SizedBox(
-            width: double.infinity,
-            child: Text(
-              message,
-              style: AppTextStyle.body2.copyWith(color: AppColor.mixedWhite),
-              textAlign: TextAlign.left,
-            ),
+            ? AppInset.bottom46 + AppInset.horizontal16
+            : AppInset.horizontal16,
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
           ),
+          color: AppColor.gray06,
+        ),
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: AppTextStyle.alert2,
         ),
       ),
       context: context,

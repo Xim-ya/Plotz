@@ -96,32 +96,15 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   Widget _buildStackedAppBar(BuildContext context) => Padding(
         padding: EdgeInsets.only(top: SizeConfig.to.statusBarHeight) +
             AppInset.horizontal16,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IgnorePointer(
-                child: Selector<HomeViewModel, bool>(
-              selector: (context, vm) => vm.isScrolledOnPosition,
-              builder: (_, isScrolledOnPosition, __) => AnimatedOpacity(
-                opacity: isScrolledOnPosition ? 0 : 1,
-                duration: const Duration(milliseconds: 300),
-                child: SvgPicture.asset('assets/icons/new_logo.svg'),
-              ),
-            )),
-            // TODO ICON INWELL BUTTON MODULE 수정 필요
-            MaterialButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              minWidth: 0,
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                vm(context).routeToSearch(context);
-              },
-              child: SvgPicture.asset(
-                'assets/icons/new_search.svg',
-              ),
+        child: IgnorePointer(
+          child: Selector<HomeViewModel, bool>(
+            selector: (context, vm) => vm.isScrolledOnPosition,
+            builder: (_, isScrolledOnPosition, __) => AnimatedOpacity(
+              opacity: isScrolledOnPosition ? 0 : 1,
+              duration: const Duration(milliseconds: 300),
+              child: SvgPicture.asset('assets/icons/new_logo.svg'),
             ),
-          ],
+          ),
         ),
       );
 
@@ -175,7 +158,10 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                   if (bannerModel.hasData) {
                     final BannerItem item = bannerModel!.contentList[itemIndex];
                     return CachedNetworkImage(
-                      memCacheHeight: (SizeConfig.to.screenWidth * 2.6).toInt(),
+                      memCacheHeight:
+                          SizeConfig.to.screenWidth.cacheSize(context) *
+                              375 ~/
+                              500,
                       imageUrl: item.imgUrl,
                       fit: BoxFit.fitHeight,
                     );
@@ -265,7 +251,7 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                                           value.selectedBannerContent?.genre ??
                                           ''),
                                   style: AppTextStyle.alert2.copyWith(
-                                      color: AppColor.gray03,
+                                      color: AppColor.gray02,
                                       letterSpacing: -0.2),
                                 ),
                               ],
@@ -293,9 +279,9 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                             spacing: EdgeInsets.symmetric(horizontal: 4),
                             size: Size(4, 4),
                             activeSize: Size(4, 4),
-                            color: AppColor.gray05,
+                            color: AppColor.gray04,
                             // Inactive color
-                            activeColor: AppColor.gray02,
+                            activeColor: AppColor.gray01,
                           ),
                         );
                       },
@@ -383,7 +369,7 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(4),
                               child: CachedNetworkImage(
-                                memCacheWidth: 220 * 3,
+                                memCacheWidth: 220.cacheSize(context),
                                 height: 140,
                                 width: 220,
                                 fit: BoxFit.cover,

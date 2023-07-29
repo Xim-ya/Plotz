@@ -7,6 +7,8 @@ import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_movie_detail_re
 import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_content_list_wrapped_response.dart';
 import 'package:soon_sak/data/api/tmdb/response/newResponse/tmdb_tv_detail_response.dart';
 
+import 'response/newResponse/searched_content_response.dart';
+
 part 'tmdb_api.g.dart';
 
 @RestApi(baseUrl: 'https://api.themoviedb.org/3')
@@ -71,6 +73,16 @@ abstract class TmdbApi {
   // 'movie' 컨텐츠 검색 결과
   @GET('/search/movie')
   Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContents({
+    @Query('api_key') required String apiKey,
+    @Query('language') required String language,
+    @Query('page') required int page,
+    @Query('query') required String query,
+  });
+
+  //https://api.themoviedb.org/3/search/multi?api_key=b40235ce96defc556ca26d48159f5f13&query=%EB%8B%A5%ED%84%B0&include_adult=false&language=ko-KR&page=1
+  // 콘텐츠 검색 결과 (통합)
+  @GET('/search/multi')
+  Future<SearchedContentResponse> loadSearchedContents({
     @Query('api_key') required String apiKey,
     @Query('language') required String language,
     @Query('page') required int page,

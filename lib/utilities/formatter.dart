@@ -95,7 +95,7 @@ class Formatter {
 
   // 컨텐츠 type & id  -> origin id
   static String getOriginIdByTypeAndId(
-      {required ContentType type, required int id}) {
+      {required MediaType type, required int id}) {
     return '${type.getTypeCharacter}-$id';
   }
 }

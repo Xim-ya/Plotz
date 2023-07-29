@@ -28,7 +28,7 @@ class AppSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 36,
       width: width, // check
       child: Stack(
         children: [
@@ -39,64 +39,47 @@ class AppSearchBar extends StatelessWidget {
             onChanged: onChanged,
             controller: textEditingController,
             cursorColor: AppColor.lightGrey,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontFamily: 'pretendard_regular',
-            ),
+            style: AppTextStyle.body2,
             decoration: InputDecoration(
               filled: true,
               contentPadding:
-                  EdgeInsets.only(left: showPrefixIcon! ? 38 : 14, right: 40),
+                  EdgeInsets.only(left: showPrefixIcon! ? 36 : 14, right: 40),
               hintText: hintText,
               errorBorder: InputBorder.none,
               enabledBorder: _fixedOutLinedBorder(),
               disabledBorder: _fixedOutLinedBorder(),
               focusedBorder: _fixedOutLinedBorder(),
               fillColor: AppColor.strongGrey,
-              hintStyle: TextStyle(
-                fontSize: 16,
-                color: AppColor.lightGrey.withOpacity(0.4),
-                fontFamily: 'pretendard_regular',
+              hintStyle: AppTextStyle.body2.copyWith(
+                color: AppColor.gray03,
               ),
             ),
           ),
-
           // 검색창 prefix 검색 아이콘
           if (showPrefixIcon!)
             Positioned(
-              child: Container(
-                alignment: Alignment.center,
-                width: 40,
-                child: const Icon(
-                  Icons.search_rounded,
-                  color: AppColor.lightGrey,
-                ),
+              left: 8,
+              top: 0,
+              bottom: 0,
+              child: SvgPicture.asset(
+                height: 24,
+                width: 24,
+                'assets/icons/search.svg',
               ),
             ),
 
           // 'X' 버튼
           if (showRoundCloseBtn)
             Positioned(
-              right: 0,
+              right: 12,
+              top: 0,
+              bottom: 0,
               child: GestureDetector(
                 onTap: resetSearchValue,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 40,
-                  child: Container(
-                    width: 18,
-                    height: 18,
-                    decoration: const BoxDecoration(
-                      color: AppColor.lightGrey,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.close_rounded,
-                      size: 12,
-                      color: AppColor.strongGrey,
-                    ),
-                  ),
+                child: SvgPicture.asset(
+                  'assets/icons/close_rounded.svg',
+                  height: 16,
+                  width: 16,
                 ),
               ),
             )

@@ -18,7 +18,7 @@ class PosterExposureContent {
   final String posterImgUrl; // 포스터 이미지 (백그라운드에 이미지로 활용)
   final ContentSeasonType? contentSeasonType; // 시리즈물 or 단일 컨텐
   final List<Video>? videos; // 유튜브 비디오 정보;
-  final ContentType contentType; // 영화 or 드라마
+  final MediaType contentType; // 영화 or 드라마
 
   PosterExposureContent({
     this.contentSeasonType,
@@ -42,7 +42,7 @@ class PosterExposureContent {
         videoId: json['videoId'],
         title: json['title'],
         description: json['description'],
-        contentType: ContentType.fromString(json['type']),
+        contentType: MediaType.fromString(json['type']),
       );
 
   factory PosterExposureContent.topExposedContent(Map<String, dynamic> json) {
@@ -55,7 +55,7 @@ class PosterExposureContent {
       videoId: json['videoId'],
       title: json['title'],
       description: json['description'],
-      contentType: ContentType.fromString(json['type']),
+      contentType: MediaType.fromString(json['type']),
     );
   }
 }

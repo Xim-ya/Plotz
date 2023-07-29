@@ -1,5 +1,6 @@
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/presentation/index.dart';
+import 'package:soon_sak/utilities/extensions/cached_img_size_extension.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 /* Created By Ximya - 2022.05.08
@@ -17,8 +18,11 @@ class ContentPosterItemView extends StatelessWidget {
     this.isSkeleton = false,
   }) : super(key: key);
 
-  factory ContentPosterItemView.createSkeleton() =>
-      const ContentPosterItemView(imgUrl: null, title: null, isSkeleton: true,);
+  factory ContentPosterItemView.createSkeleton() => const ContentPosterItemView(
+        imgUrl: null,
+        title: null,
+        isSkeleton: true,
+      );
 
   final String? imgUrl;
   final String? title;
@@ -34,6 +38,7 @@ class ContentPosterItemView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: CachedNetworkImage(
@@ -44,7 +49,8 @@ class ContentPosterItemView extends StatelessWidget {
                   const Center(child: Icon(Icons.error)),
               width: width,
               height: height,
-              memCacheHeight: (height * 3).toInt(),
+              memCacheHeight: height.cacheSize(context),
+              filterQuality: FilterQuality.high,
             ),
           ),
           AppSpace.size6,
@@ -58,7 +64,7 @@ class ContentPosterItemView extends StatelessWidget {
                 height: 14,
                 size: 11,
                 letterSpacing: -0.2,
-                color: AppColor.gray02,
+                color: AppColor.gray01,
               ),
             ),
           ),

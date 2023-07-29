@@ -110,8 +110,13 @@
 - SingleImport 로직 적용
 
 
-### 1.0.11 (예정)
+### 1.0.11 
 - 코딩 컨벤션 수정 및 보완
+- 검색 스크린 리뉴얼 
+  - 카테고리 통합 movie, tv -> all
+  - 탭 섹션으로 이동
+- 이미지 캐시 할당 로직 고도화 (최소 할당 캐시 설정)
+
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FXim-ya%2FSoonSack%2Fhit-counter&count_bg=%23E30914&title_bg=%23101010&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 

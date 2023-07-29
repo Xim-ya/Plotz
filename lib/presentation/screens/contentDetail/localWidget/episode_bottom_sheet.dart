@@ -1,9 +1,7 @@
 import 'package:soon_sak/app/index.dart';
-import 'package:soon_sak/domain/index.dart';
-import 'package:soon_sak/domain/model/video/content_video.dart';
 import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:soon_sak/utilities/index_prev.dart';
+
 /** Created By Ximya - 2022.06.02
  * 커스텀 Bottom Sheet Dialog
  * 에피소드 정보를 선택하는 다이어로그 창을 보여줌
@@ -22,7 +20,7 @@ class EpisodeBottomSheet extends StatelessWidget {
   final List<ContentVideo> videos;
   final void Function(int) onOptionTapped;
   final VoidCallback onCloseBtnTapped;
-  final ContentType contentType;
+  final MediaType contentType;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,7 @@ class EpisodeBottomSheet extends StatelessWidget {
             Container(
               height: 48,
               decoration: const BoxDecoration(
-                color: AppColor.gray07,
+                color: AppColor.gray06,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
@@ -45,20 +43,20 @@ class EpisodeBottomSheet extends StatelessWidget {
               child: Center(
                 child: Text(
                   '영상 선택',
-                  style: AppTextStyle.alert2.copyWith(color: AppColor.gray03),
+                  style: AppTextStyle.alert2.copyWith(color: AppColor.gray02),
                 ),
               ),
             ),
             Container(
               height: 0.5,
               width: double.infinity,
-              color: AppColor.gray06,
+              color: AppColor.gray05,
             ),
             ListView.separated(
               separatorBuilder: (_, __) => Container(
                 height: 0.5,
                 width: double.infinity,
-                color: AppColor.gray06,
+                color: AppColor.gray05,
               ),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -66,7 +64,7 @@ class EpisodeBottomSheet extends StatelessWidget {
               itemBuilder: (context, index) {
                 final bool isLastItem = videos.length == index + 1;
                 return MaterialButton(
-                  color: AppColor.gray07,
+                  color: AppColor.gray06,
                   padding: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                     borderRadius: isLastItem
@@ -98,7 +96,7 @@ class EpisodeBottomSheet extends StatelessWidget {
             AppSpace.size8,
             // 하단 버튼
             MaterialButton(
-              color: AppColor.gray07,
+              color: AppColor.gray06,
               padding: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),

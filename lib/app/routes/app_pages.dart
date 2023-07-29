@@ -53,12 +53,7 @@ abstract class AppPages {
         path: AppRoutes.tabs,
         builder: (context, state) => const TabsScreen(),
         routes: [
-          GoRouteWithBinding(
-            path: 'search',
-            prevPath: const [AppRoutes.tabs],
-            binding: SearchBinding(),
-            newBuilder: (context, state) => const SearchScreen(),
-          ),
+
           GoRouteWithBinding(
             path: 'setting',
             prevPath: const [AppRoutes.tabs],

@@ -6,18 +6,21 @@ class TabsViewModel extends BaseViewModel {
   TabsViewModel({
     required ExploreViewModel exploreViewModel,
     required MyPageViewModel myPageViewModel,
+    required SearchViewModel searchViewModel,
   })  : _exploreViewModel = exploreViewModel,
-        _myPageViewModel = myPageViewModel;
+        _myPageViewModel = myPageViewModel,
+        _searchViewModel = searchViewModel;
 
   /* ViewModels */
   final ExploreViewModel _exploreViewModel;
   final MyPageViewModel _myPageViewModel;
+  final SearchViewModel _searchViewModel;
 
   /* Variables */
 
   /// State Variables
   // 네비게이션 바 인덱스
-  int selectedTabIndex = 0; 
+  int selectedTabIndex = 0;
 
   /* Intents */
 
@@ -39,6 +42,18 @@ class TabsViewModel extends BaseViewModel {
       case 1:
         unawaited(
           AppAnalytics.instance.logScreenView(
+            screenClass: 'SearchScreen',
+            screenName: 'SearchTab',
+          ),
+        );
+        if (_exploreViewModel.loadingState.isInitState) {
+           _searchViewModel.prepare();
+        }
+        break;
+
+      case 2:
+        unawaited(
+          AppAnalytics.instance.logScreenView(
             screenClass: 'ExploreScreen',
             screenName: 'ExploreTab',
           ),
@@ -47,7 +62,7 @@ class TabsViewModel extends BaseViewModel {
           await _exploreViewModel.prepare();
         }
         break;
-      case 2:
+      case 3:
         unawaited(
           AppAnalytics.instance.logScreenView(
             screenClass: 'MyPageScreen',

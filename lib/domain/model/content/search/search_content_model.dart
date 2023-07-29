@@ -23,3 +23,7 @@ class SearchContentModel {
           contents:
               response.results.map(SearchedContent.fromMovieResponse).toList(),);
 }
+
+class SearchContent {
+
+}

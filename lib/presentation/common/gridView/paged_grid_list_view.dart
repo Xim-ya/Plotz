@@ -41,7 +41,7 @@ class PagedGridListView<T> extends StatelessWidget {
         newPageProgressIndicatorBuilder: (context) => const Center(
           child: CircularProgressIndicator(
             strokeWidth: 3.6,
-            color: AppColor.gray06,
+            color: AppColor.gray05,
           ),
         ),
 
@@ -62,7 +62,7 @@ class PagedGridListView<T> extends StatelessWidget {
         firstPageProgressIndicatorBuilder: (context) {
           return const Center(
             child: CircularProgressIndicator(
-              color: AppColor.gray06,
+              color: AppColor.gray05,
             ),
           );
         },

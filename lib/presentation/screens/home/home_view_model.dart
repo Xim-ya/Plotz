@@ -132,11 +132,6 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  // 검색 스크린으로 이동
-  void routeToSearch(BuildContext context) {
-    context.push(AppRoutes.tabs + AppRoutes.search);
-  }
-
   // 채널 상세 스크린으로 이동
   void routeToChannelDetail(BuildContext context,
       {required int selectedIndex}) {
