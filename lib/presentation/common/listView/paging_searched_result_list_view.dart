@@ -1,5 +1,4 @@
 import 'package:soon_sak/app/index.dart';
-import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/domain/model/content/search/searched_content.m.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -27,7 +26,7 @@ class PagingSearchedResultListView extends StatelessWidget {
 
   final FocusNode focusNode;
   final PagingController pagingController;
-  final bool? isInitialState;
+  final BehaviorSubject<bool> isInitialState;
   final ItemWidgetBuilder<SearchedContentNew> itemBuilder;
   final String firstPageErrorText;
   final String? noItemsFoundText;
@@ -52,26 +51,32 @@ class PagingSearchedResultListView extends StatelessWidget {
           newPageProgressIndicatorBuilder: (context) => const Center(
             child: CircularProgressIndicator(
               strokeWidth: 3.6,
-              color: AppColor.darkGrey,
+              color: AppColor.gray06,
             ),
           ),
 
           /* 검색된 결과가 없을 때 & 초기 화면 문구 */
-          noItemsFoundIndicatorBuilder: (context) => isInitialState! == true
-              ? Center(
-                  child: Text(
-                    firstPageErrorText,
-                    style: AppTextStyle.body1,
-                  ),
-                )
-              : Center(
-                  child: SizedBox(
-                    child: Text(
-                      '검색된 결과가 없습니다',
-                      style: AppTextStyle.body1,
-                    ),
-                  ),
-                ),
+          noItemsFoundIndicatorBuilder: (context) {
+            return StreamBuilder<bool>(
+                stream: isInitialState.stream,
+                builder: (context, snapshot) {
+                  return snapshot.data == true
+                      ? Center(
+                          child: Text(
+                            firstPageErrorText,
+                            style: AppTextStyle.body1,
+                          ),
+                        )
+                      : Center(
+                          child: SizedBox(
+                            child: Text(
+                              '검색된 결과가 없습니다',
+                              style: AppTextStyle.body1,
+                            ),
+                          ),
+                        );
+                });
+          },
 
           /* 에러 문구 */
           firstPageErrorIndicatorBuilder: (context) {
@@ -91,7 +96,7 @@ class PagingSearchedResultListView extends StatelessWidget {
             return const Center(
               child: CircularProgressIndicator(
                 strokeWidth: 3.6,
-                color: AppColor.darkGrey,
+                color: AppColor.gray06,
               ),
             );
           },

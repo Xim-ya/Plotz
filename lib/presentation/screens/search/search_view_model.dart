@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -30,10 +29,11 @@ class SearchViewModel extends BaseViewModel {
   /* UseCases */
   final SearchedPagedContentUseCase pagedSearchHandler;
 
-  /* Variables (State) */
-  MediaType get selectedTabType => pagedSearchHandler.selectedTabType;
 
-  bool get isInitialState => pagedSearchHandler.isInitialState;
+
+  /* Variables (State) */
+  BehaviorSubject<bool> get isInitialState =>
+      pagedSearchHandler.isInitialState;
 
   bool get showRoundCloseBtn => pagedSearchHandler.showRoundClosedBtn;
 
@@ -49,16 +49,12 @@ class SearchViewModel extends BaseViewModel {
   VoidCallback get onTextChanged => pagedSearchHandler.onSearchTermEntered;
 
   /* Intents */
-  // 뒤로가기
-  void routeBack(BuildContext context) {
-    context.pop();
-  }
 
   // 컨텐츠 요청
   Future<void> requestContent(SearchedContentNew content) async {
     final ContentRequest request = ContentRequest(
       contentId: Formatter.getOriginIdByTypeAndId(
-        type: selectedTabType,
+        type: content.type,
         id: content.contentId,
       ),
       title: content.title,

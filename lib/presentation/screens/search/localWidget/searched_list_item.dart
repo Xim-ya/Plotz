@@ -107,3 +107,4 @@ class SearchListItem extends StatelessWidget {
     );
   }
 }
+
