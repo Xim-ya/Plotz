@@ -9,7 +9,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Oversized 이미지 확인 설정
-    debugInvertOversizedImages = true;
+
+    // debugInvertOversizedImages = true;
 
     // (ios) 가끔 firestore sdk가 flavor에 맞게 전환이 안될 떄 있음
     // 아래 명령어 사용
