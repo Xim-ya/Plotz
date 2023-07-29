@@ -36,7 +36,7 @@ class SearchedContentItemResponse {
   String? title;
 
   @JsonKey(name: 'original_language')
-  String originalLanguage;
+  String? originalLanguage;
 
   // For TV shows
   @JsonKey(name: 'original_name')
@@ -47,7 +47,7 @@ class SearchedContentItemResponse {
   String? originalTitle;
 
   @JsonKey(name: 'overview')
-  String overview;
+  String? overview;
 
   @JsonKey(name: 'poster_path')
   String? posterPath;
@@ -56,10 +56,10 @@ class SearchedContentItemResponse {
   String mediaType;
 
   @JsonKey(name: 'genre_ids')
-  List<int> genreIds;
+  List<int>? genreIds;
 
   @JsonKey(name: 'popularity')
-  double popularity;
+  double? popularity;
 
   // For TV shows
   @JsonKey(name: 'first_air_date')
@@ -74,10 +74,10 @@ class SearchedContentItemResponse {
   bool? video;
 
   @JsonKey(name: 'vote_average')
-  double voteAverage;
+  double? voteAverage;
 
   @JsonKey(name: 'vote_count')
-  int voteCount;
+  int? voteCount;
 
   // For TV shows
   @JsonKey(name: 'origin_country')

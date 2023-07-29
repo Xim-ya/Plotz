@@ -25,6 +25,8 @@ enum MediaType {
         return MediaType.movie;
       case 'm':
         return MediaType.movie;
+      case 'person':
+        return MediaType.movie;
       default:
         throw Exception('enum not found');
     }
