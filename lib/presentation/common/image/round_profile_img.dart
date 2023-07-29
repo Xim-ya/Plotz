@@ -26,7 +26,7 @@ class RoundProfileImg extends StatelessWidget {
             ? CachedNetworkImage(
                 height: size,
                 width: size,
-                memCacheHeight: (size * 3).toInt(),
+                memCacheHeight: size.cacheSize(context),
                 imageUrl: imgUrl!,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => const SkeletonBox(),

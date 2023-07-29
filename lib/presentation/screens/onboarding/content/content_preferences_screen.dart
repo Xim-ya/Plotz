@@ -129,7 +129,7 @@ class _PosterGridView extends BaseView<ContentPreferenceViewModel> {
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
                   memCacheWidth:
-                      (SizeConfig.to.screenWidth * (109 / 165)).toInt(),
+                  (SizeConfig.to.screenWidth.cacheSize(context) * 0.21).toInt(),
                   imageUrl: item.posterImgUrl.prefixTmdbImgPath,
                   placeholder: (context, url) => const SkeletonBox(),
                   errorWidget: (_, __, ___) => Container(

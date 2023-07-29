@@ -112,7 +112,8 @@ class _VerticalSwiper extends BaseView<ExploreViewModel> {
                   if (snapshot.data.hasData)
                     CachedNetworkImage(
                       imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
-                      memCacheWidth: (SizeConfig.to.screenWidth * 3).toInt(),
+                      memCacheWidth:
+                          SizeConfig.to.screenWidth.cacheSize(context),
                       height: double.infinity,
                       fit: BoxFit.cover,
                     )

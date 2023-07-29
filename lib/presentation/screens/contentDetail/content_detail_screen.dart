@@ -343,7 +343,8 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
                 child: CachedNetworkImage(
                   alignment: Alignment.topCenter,
                   fadeInDuration: const Duration(milliseconds: 400),
-                  memCacheWidth: (SizeConfig.to.screenWidth * 2.8).toInt(),
+                  memCacheWidth:
+                      SizeConfig.to.screenWidth.cacheSize(context) * 375 ~/ 500,
                   fit: BoxFit.fitWidth,
                   width: SizeConfig.to.screenWidth,
                   imageUrl: headerBackdropImg!.prefixTmdbImgPath,
@@ -351,7 +352,7 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
-            : const SizedBox();
+            : const SizedBox(); 
       },
     );
   }

@@ -158,7 +158,10 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                   if (bannerModel.hasData) {
                     final BannerItem item = bannerModel!.contentList[itemIndex];
                     return CachedNetworkImage(
-                      memCacheHeight: (SizeConfig.to.screenWidth * 2.6).toInt(),
+                      memCacheHeight:
+                          SizeConfig.to.screenWidth.cacheSize(context) *
+                              375 ~/
+                              500,
                       imageUrl: item.imgUrl,
                       fit: BoxFit.fitHeight,
                     );
@@ -366,7 +369,7 @@ class _TopTenContentSlider extends BaseView<HomeViewModel> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(4),
                               child: CachedNetworkImage(
-                                memCacheWidth: 220 * 3,
+                                memCacheWidth: 220.cacheSize(context),
                                 height: 140,
                                 width: 220,
                                 fit: BoxFit.cover,
