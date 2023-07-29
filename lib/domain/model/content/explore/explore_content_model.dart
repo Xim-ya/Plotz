@@ -48,7 +48,7 @@ class ExploreContentModel with FirestoreHelper {
 class ExploreContentItem {
   final String originId;
   final int id;
-  final ContentType type;
+  final MediaType type;
   final String videoId;
   final String title;
   final String releaseDate;

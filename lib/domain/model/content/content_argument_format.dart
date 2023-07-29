@@ -6,7 +6,7 @@ import 'package:soon_sak/domain/index.dart';
 class ContentArgumentFormat {
   final String originId;
   final int contentId;
-  final ContentType contentType;
+  final MediaType contentType;
   final String? videoId;
   final String? title;
   final String? videoTitle;

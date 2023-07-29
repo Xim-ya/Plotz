@@ -1,9 +1,6 @@
-import 'package:provider/provider.dart';
-import 'package:soon_sak/app/config/gradient_config.dart';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:soon_sak/utilities/index_prev.dart';
 
 /* 2022.07.14 Created By Ximya
 * 광고수익금 스크린의 Scaffold
@@ -143,7 +140,7 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
                                   border: Border(
                                     bottom: BorderSide(
                                       width: 0.75,
-                                      color: AppColor.gray06,
+                                      color: AppColor.gray05,
                                     ),
                                   ),
                                   color: AppColor.black,
@@ -158,7 +155,7 @@ class _ContentDetailScaffoldState extends State<ContentDetailScaffold>
                                     ),
                                   ),
                                   labelColor: AppColor.white,
-                                  unselectedLabelColor: AppColor.gray04,
+                                  unselectedLabelColor: AppColor.gray03,
                                   indicatorColor: AppColor.main,
                                   labelStyle: AppTextStyle.body3,
                                   unselectedLabelStyle: AppTextStyle.body3,

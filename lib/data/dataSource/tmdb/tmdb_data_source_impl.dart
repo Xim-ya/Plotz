@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/tmdb/response/newResponse/searched_content_response.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -21,7 +22,8 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 // tmdb tv 컨텐츠 크레딧 정보
   @override
   Future<TmdbContentCreditResponse> loadTmdbTvCastInfo(
-          int tvId,) async =>
+    int tvId,
+  ) async =>
       _api.loadTvCreditInfo(tvId: tvId, apiKey: _apiKey, language: 'ko-KR');
 
 // tmdb tv 이미지 리스트
@@ -31,7 +33,8 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
   @override
   Future<TmdbMovieDetailResponse> loadMovieInfo(
-          int movieId,) async =>
+    int movieId,
+  ) async =>
       _api.loadMovieInfo(
         movieId: movieId,
         apiKey: _apiKey,
@@ -40,7 +43,8 @@ class TmdbDataSourceImpl implements TmdbDataSource {
 
   @override
   Future<TmdbContentCreditResponse> loadTmdbMovieCreditInfo(
-          int movieId,) async =>
+    int movieId,
+  ) async =>
       _api.loadMovieCreditInfo(
         movieId: movieId,
         apiKey: _apiKey,
@@ -52,14 +56,36 @@ class TmdbDataSourceImpl implements TmdbDataSource {
       _api.loadMovieImages(movieId: movieId, apiKey: _apiKey);
 
   @override
-  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContents(
-          {required String query, required int page,}) async =>
+  Future<TmdbTvContentListWrappedResponse> loadSearchedTvContents({
+    required String query,
+    required int page,
+  }) async =>
       _api.loadSearchedTvContents(
-          apiKey: _apiKey, language: _language, page: page, query: query,);
+        apiKey: _apiKey,
+        language: _language,
+        page: page,
+        query: query,
+      );
 
   @override
-  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContents(
-          {required String query, required int page,}) async =>
+  Future<TmdbMovieContentListWrappedResponse> loadSearchedMovieContents({
+    required String query,
+    required int page,
+  }) async =>
       _api.loadSearchedMovieContents(
-          apiKey: _apiKey, language: _language, page: page, query: query,);
+        apiKey: _apiKey,
+        language: _language,
+        page: page,
+        query: query,
+      );
+
+  @override
+  Future<SearchedContentResponse> loadSearchedContents(
+          {required String query, required int page}) =>
+      _api.loadSearchedContents(
+        apiKey: _apiKey,
+        language: _language,
+        page: page,
+        query: query,
+      );
 }

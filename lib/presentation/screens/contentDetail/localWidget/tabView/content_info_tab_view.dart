@@ -56,7 +56,7 @@ class _ChannelRelatedContentView extends BaseView<ContentDetailViewModel> {
                   padding: AppInset.left16,
                   child: Text(
                     '관련 콘텐츠가 없습니다',
-                    style: AppTextStyle.body3.copyWith(color: AppColor.gray03),
+                    style: AppTextStyle.body3.copyWith(color: AppColor.gray02),
                   ),
                 );
               } else {
@@ -130,7 +130,7 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
                           Text(
                             '구독자 ${Formatter.formatNumberWithUnit(vm(context).subscriberCount)}명',
                             style: AppTextStyle.alert2.copyWith(
-                              color: AppColor.gray03,
+                              color: AppColor.gray02,
                             ),
                           ),
                         ],
@@ -249,7 +249,7 @@ class _VideoInfoView extends BaseView<ContentDetailViewModel> {
               Text(
                 title,
                 style: AppTextStyle.nav.copyWith(
-                  color: AppColor.gray03,
+                  color: AppColor.gray02,
                 ),
               ),
             ],

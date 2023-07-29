@@ -3,7 +3,7 @@ import 'package:soon_sak/app/environment/environment.dart';
 import 'dart:convert';
 
 import 'package:soon_sak/data/dataSource/tmdb/tmdb_data_source.dart';
-import 'package:soon_sak/domain/enum/content_type_enum.dart';
+import 'package:soon_sak/domain/enum/media_type_enum.dart';
 import 'package:soon_sak/domain/model/content/splitted_id_and_type.dart';
 
 import '../app/di/locator/locator.dart';
@@ -37,7 +37,7 @@ class UpdateTest {
 
           // TMDB API를 사용하여 아이템의 제목 가져오기
           if (SplittedIdAndType.fromOriginId(itemId).type ==
-              ContentType.movie) {
+              MediaType.movie) {
             final tmdbRes = await _tmdb.loadMovieInfo(
                 SplittedIdAndType.fromOriginId(itemId).id);
             String itemTitle = tmdbRes.title;

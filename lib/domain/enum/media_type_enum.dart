@@ -7,24 +7,26 @@ import 'package:soon_sak/utilities/extensions/determine_content_type.dart';
  * */
 
 @SingleImport()
-enum ContentType {
-  tv('드라마'),
+enum MediaType {
+  tv('시리즈'),
   movie('영화');
 
-  const ContentType(this.name);
+  const MediaType(this.name);
 
   final String name;
 
-  factory ContentType.fromString(String originStr) {
+  factory MediaType.fromString(String originStr) {
     switch (originStr) {
       case 'tv':
-        return ContentType.tv;
+        return MediaType.tv;
       case 't':
-        return ContentType.tv;
+        return MediaType.tv;
       case 'movie':
-        return ContentType.movie;
+        return MediaType.movie;
       case 'm':
-        return ContentType.movie;
+        return MediaType.movie;
+      case 'person':
+        return MediaType.movie;
       default:
         throw Exception('enum not found');
     }
@@ -39,6 +41,6 @@ enum ContentType {
   }
 
   String get asText {
-    return isTv ? '드라마' : '영화';
+    return isTv ? '시리즈' : '영화';
   }
 }

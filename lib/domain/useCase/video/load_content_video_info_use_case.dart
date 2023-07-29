@@ -15,7 +15,7 @@ class LoadContentVideoInfoUseCase {
   final ContentDataSource _dataSource;
 
   Future<Result<ContentVideoModel>> call(
-      {required ContentType contentType,
+      {required MediaType contentType,
       required String contentId,
       required BuildContext context}) async {
     try {

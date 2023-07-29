@@ -5,7 +5,7 @@ class ContentPosterShell {
   final String originId;
   late final String? title;
   final int contentId;
-  final ContentType contentType;
+  final MediaType contentType;
   final String posterImgUrl;
   late final String? videoTitle;
 

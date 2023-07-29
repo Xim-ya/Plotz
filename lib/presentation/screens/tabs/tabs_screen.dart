@@ -46,7 +46,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: AppColor.gray06,
+              color: AppColor.gray05,
               width: vmS<int>(context, (vm) => vm.selectedTabIndex) == 1
                   ? 0.0
                   : 0.75,
@@ -65,7 +65,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
                     color: vmS<bool>(
                             context, (vm) => vm.isTabSelected(tab.indexedKey))
                         ? AppColor.main
-                        : AppColor.gray04,
+                        : AppColor.gray03,
                   ),
                 ),
                 label: tab.label,
@@ -75,7 +75,7 @@ class _BottomNavigationBar extends BaseView<TabsViewModel> {
           selectedItemColor: AppColor.main,
           selectedLabelStyle: AppTextStyle.nav,
           unselectedLabelStyle: AppTextStyle.nav,
-          unselectedItemColor: AppColor.gray04,
+          unselectedItemColor: AppColor.gray03,
           onTap: vm(context).onBottomNavBarItemTapped,
         ),
       ),

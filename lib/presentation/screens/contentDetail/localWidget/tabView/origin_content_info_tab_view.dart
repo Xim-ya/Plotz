@@ -93,7 +93,7 @@ class _CastView extends BaseView<ContentDetailViewModel> {
                               Text(
                                 creditItem.role,
                                 style: AppTextStyle.alert2.copyWith(
-                                  color: AppColor.gray02,
+                                  color: AppColor.gray01,
                                 ),
                               ),
                             ],

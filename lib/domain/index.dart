@@ -6,7 +6,7 @@ export 'enum/sns_type_enum.dart';
 export 'enum/content_genre_enum.dart';
 export 'enum/content_video_format.dart';
 export 'enum/content_season_type_enum.dart';
-export 'enum/content_type_enum.dart';
+export 'enum/media_type_enum.dart';
 export 'enum/tab_loading_state_enum.dart';
 export 'mixin/search_handler_mixin.dart';
 export 'mixin/paging_handler_mixin.dart';

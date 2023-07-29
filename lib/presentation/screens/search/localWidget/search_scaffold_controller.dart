@@ -1,4 +1,3 @@
-import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -18,11 +17,7 @@ class SearchScaffoldController extends BaseViewModel {
       return;
     }
     selectedTabIndex = index;
-    if (index == 0) {
-      _searchViewModel.pagedSearchHandler.selectedTabType = ContentType.tv;
-    } else {
-      _searchViewModel.pagedSearchHandler.selectedTabType = ContentType.movie;
-    }
+
 
     /// 탭이 전환 되었을 때
     /// paging call을 실행

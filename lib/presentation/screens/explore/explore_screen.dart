@@ -11,7 +11,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
       carouselBuilder: const _VerticalSwiper(),
-      actionButtons: const _TopActionBtn(),
+      actionButtons: const SizedBox(),
     );
   }
 
@@ -112,7 +112,8 @@ class _VerticalSwiper extends BaseView<ExploreViewModel> {
                   if (snapshot.data.hasData)
                     CachedNetworkImage(
                       imageUrl: contentItem!.posterImgUrl.prefixTmdbImgPath,
-                      memCacheWidth: (SizeConfig.to.screenWidth * 3).toInt(),
+                      memCacheWidth:
+                          SizeConfig.to.screenWidth.cacheSize(context),
                       height: double.infinity,
                       fit: BoxFit.cover,
                     )
@@ -215,21 +216,4 @@ class _VerticalSwiper extends BaseView<ExploreViewModel> {
         ),
         AppSpace.size20,
       ];
-}
-
-class _TopActionBtn extends BaseView<ExploreViewModel> {
-  const _TopActionBtn({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconInkWellButton.assetIcon(
-          iconPath: 'assets/icons/search.svg',
-          size: 40,
-          onIconTapped: vm(context).routeToSearch,
-        ),
-      ],
-    );
-  }
 }

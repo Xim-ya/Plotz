@@ -137,7 +137,7 @@ class AppDialog extends Dialog {
                 decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: AppColor.gray06,
+                      color: AppColor.gray05,
                       width: 0.5,
                     ),
                   ),
@@ -164,7 +164,7 @@ class AppDialog extends Dialog {
                     ),
                     Container(
                       width: 0.5,
-                      color: AppColor.gray06,
+                      color: AppColor.gray05,
                     ),
                     Expanded(
                       child: MaterialButton(
@@ -203,7 +203,7 @@ class AppDialog extends Dialog {
                   decoration: const BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        color: AppColor.gray06,
+                        color: AppColor.gray05,
                         width: 0.5,
                       ),
                     ),

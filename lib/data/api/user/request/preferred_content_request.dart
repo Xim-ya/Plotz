@@ -21,12 +21,10 @@ class PreferredRequestContent {
       );
 
   factory PreferredRequestContent.fromGenresName({required String name}) {
-    print("아지랑이 ${name}");
-  return  PreferredRequestContent(
+    return PreferredRequestContent(
       count: 1,
       genreName: ContentGenre.getContentGenre(name).name,
       genreId: ContentGenre.getContentGenre(name).id,
     );
   }
-
 }

@@ -10,7 +10,7 @@ import 'package:soon_sak/domain/index.dart';
 
 class SplittedIdAndType {
   final int id;
-  final ContentType type;
+  final MediaType type;
 
   SplittedIdAndType({required this.id, required this.type});
 
@@ -18,7 +18,7 @@ class SplittedIdAndType {
     final List<String> splittedOrigin = originId.split('-');
     return SplittedIdAndType(
       id: int.parse(splittedOrigin[1]),
-      type: ContentType.fromString(splittedOrigin[0]),
+      type: MediaType.fromString(splittedOrigin[0]),
     );
   }
 }

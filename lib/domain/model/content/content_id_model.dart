@@ -25,7 +25,7 @@ class ContentIdInfoModel {
 class ContentIdInfoItem {
   final String originId;
   final int id; // TMDMB 컨텐츠 id
-  final ContentType type; // 컨텐츠 타입 (movie or tv)
+  final MediaType type; // 컨텐츠 타입 (movie or tv)
 
   ContentIdInfoItem(
       {required this.originId, required this.id, required this.type,});

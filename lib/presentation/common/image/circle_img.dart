@@ -19,8 +19,7 @@ class CircleImg extends StatelessWidget {
           child: CachedNetworkImage(
             height: size,
             width: size,
-            memCacheWidth: size.toInt(),
-            memCacheHeight: size.toInt(),
+            memCacheWidth: size.cacheSize(context),
             imageUrl: imgUrl!,
             errorWidget: (context, url, error) => Container(
               color: Colors.grey.withOpacity(0.1),

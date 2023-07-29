@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:soon_sak/utilities/index_prev.dart';
 
 class ExploreContentResponse {
   final String id;
@@ -22,17 +21,19 @@ class ExploreContentResponse {
     required this.posterImgUrl,
   });
 
-  factory ExploreContentResponse.fromDocumentSnapshot(
-      {required DocumentSnapshot<Object?> contentSnapshot,
-      required DocumentSnapshot<Object?> channelSnapshot,}) {
+  factory ExploreContentResponse.fromDocumentSnapshot({
+    required DocumentSnapshot<Object?> contentSnapshot,
+    required DocumentSnapshot<Object?> channelSnapshot,
+  }) {
     return ExploreContentResponse(
-        id: contentSnapshot.get('id'),
-        title: contentSnapshot.get('title'),
-        releaseDate: contentSnapshot.get('releaseDate'),
-        posterImgUrl: contentSnapshot.get('posterImgUrl'),
-        channelLogoImgUrl: channelSnapshot.get('logoImgUrl'),
-        channelName: channelSnapshot.get('name'),
-        videoTitle: contentSnapshot.get('videoTitle'),
-        subscribersCount: channelSnapshot.get('subscribersCount'),);
+      id: contentSnapshot.get('id'),
+      title: contentSnapshot.get('title'),
+      releaseDate: contentSnapshot.get('releaseDate'),
+      posterImgUrl: contentSnapshot.get('posterImgUrl'),
+      channelLogoImgUrl: channelSnapshot.get('logoImgUrl'),
+      channelName: channelSnapshot.get('name'),
+      videoTitle: contentSnapshot.get('videoTitle'),
+      subscribersCount: channelSnapshot.get('subscribersCount'),
+    );
   }
 }
