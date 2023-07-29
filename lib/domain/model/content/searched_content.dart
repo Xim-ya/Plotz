@@ -91,7 +91,6 @@ class SearchedContent {
       }
     }
 
-
     final obj = SearchedContent(
       contentId: response.id,
       posterImgUrl: response.poster_path ?? response.backdrop_path,

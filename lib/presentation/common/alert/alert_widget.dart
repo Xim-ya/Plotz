@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:soon_sak/app/config/app_insets.dart';
 import 'package:soon_sak/app/config/color_config.dart';
 import 'package:soon_sak/app/config/font_config.dart';
-import 'package:soon_sak/app/config/size_config.dart';
+
 
 /** Created By Ximya - 2022.12.10
  *  toast 메세지 UI로직

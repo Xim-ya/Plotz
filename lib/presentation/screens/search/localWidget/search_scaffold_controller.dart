@@ -18,11 +18,7 @@ class SearchScaffoldController extends BaseViewModel {
       return;
     }
     selectedTabIndex = index;
-    if (index == 0) {
-      _searchViewModel.pagedSearchHandler.selectedTabType = MediaType.tv;
-    } else {
-      _searchViewModel.pagedSearchHandler.selectedTabType = MediaType.movie;
-    }
+
 
     /// 탭이 전환 되었을 때
     /// paging call을 실행
