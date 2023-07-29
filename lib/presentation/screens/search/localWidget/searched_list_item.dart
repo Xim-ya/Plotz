@@ -53,16 +53,14 @@ class SearchListItem extends StatelessWidget {
                     memCacheHeight: 120.cacheSize(context),
                     imageUrl: item.posterImgUrl!.prefixTmdbImgPath,
                     placeholder: (context, url) => const SkeletonBox(),
-                    errorWidget: (context, url, error) => Container(
-                      color: Colors.grey.withOpacity(0.1),
-                      child: const Center(
-                        child: Icon(Icons.error),
-                      ),
-                    ),
                   )
-                : const SkeletonBox(
+                : Container(
                     height: 120,
                     width: 79,
+                    color: Colors.grey.withOpacity(0.1),
+                    child: const Center(
+                      child: Icon(Icons.error),
+                    ),
                   ),
           ),
           AppSpace.size8,
@@ -107,4 +105,3 @@ class SearchListItem extends StatelessWidget {
     );
   }
 }
-
