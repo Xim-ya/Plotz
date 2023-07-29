@@ -96,32 +96,15 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
   Widget _buildStackedAppBar(BuildContext context) => Padding(
         padding: EdgeInsets.only(top: SizeConfig.to.statusBarHeight) +
             AppInset.horizontal16,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IgnorePointer(
-                child: Selector<HomeViewModel, bool>(
-              selector: (context, vm) => vm.isScrolledOnPosition,
-              builder: (_, isScrolledOnPosition, __) => AnimatedOpacity(
-                opacity: isScrolledOnPosition ? 0 : 1,
-                duration: const Duration(milliseconds: 300),
-                child: SvgPicture.asset('assets/icons/new_logo.svg'),
-              ),
-            )),
-            // TODO ICON INWELL BUTTON MODULE 수정 필요
-            MaterialButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              minWidth: 0,
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                vm(context).routeToSearch(context);
-              },
-              child: SvgPicture.asset(
-                'assets/icons/new_search.svg',
-              ),
+        child: IgnorePointer(
+          child: Selector<HomeViewModel, bool>(
+            selector: (context, vm) => vm.isScrolledOnPosition,
+            builder: (_, isScrolledOnPosition, __) => AnimatedOpacity(
+              opacity: isScrolledOnPosition ? 0 : 1,
+              duration: const Duration(milliseconds: 300),
+              child: SvgPicture.asset('assets/icons/new_logo.svg'),
             ),
-          ],
+          ),
         ),
       );
 

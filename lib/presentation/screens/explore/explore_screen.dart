@@ -11,7 +11,7 @@ class ExploreScreen extends BaseScreen<ExploreViewModel> {
     return ExploreSwiperItemScaffold(
       backdropImg: buildBackdropImg(),
       carouselBuilder: const _VerticalSwiper(),
-      actionButtons: const _TopActionBtn(),
+      actionButtons: const SizedBox(),
     );
   }
 
@@ -215,21 +215,4 @@ class _VerticalSwiper extends BaseView<ExploreViewModel> {
         ),
         AppSpace.size20,
       ];
-}
-
-class _TopActionBtn extends BaseView<ExploreViewModel> {
-  const _TopActionBtn({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconInkWellButton.assetIcon(
-          iconPath: 'assets/icons/search.svg',
-          size: 40,
-          onIconTapped: vm(context).routeToSearch,
-        ),
-      ],
-    );
-  }
 }

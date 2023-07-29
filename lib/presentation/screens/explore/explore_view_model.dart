@@ -4,7 +4,6 @@ import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
-
 class ExploreViewModel extends BaseViewModel {
   /* Variables */
   final BehaviorSubject<List<ExploreContent>> exploreContents;
@@ -26,11 +25,6 @@ class ExploreViewModel extends BaseViewModel {
   /* Intents */
   // 탐색 컨텐츠 리스트 재호출
   Future<void> reFetchExploreContent() async {}
-
-  // 검색 스크린으로 이동
-  void routeToSearch() {
-    context.push(AppRoutes.tabs + AppRoutes.search);
-  }
 
   // 컨텐츠 상세페이지로 이동
   void routeToContentDetail(int routingArgument) {
