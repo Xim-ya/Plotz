@@ -161,7 +161,7 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                       memCacheHeight:
                           SizeConfig.to.screenWidth.cacheSize(context) *
                               375 ~/
-                              500,
+                              500 ,
                       imageUrl: item.imgUrl,
                       fit: BoxFit.fitHeight,
                     );
