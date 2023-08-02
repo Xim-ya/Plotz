@@ -106,9 +106,25 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
                           itemBuilder: (BuildContext context, int index) {
                             final item = items?[index];
                             if (item.hasData) {
-                              return ContentPosterItemView(
-                                imgUrl: item?.posterImgUrl,
-                                title: item!.title,
+                              return GestureDetector(
+                                onTap: () {
+                                  final arg = ContentArgumentFormat(
+                                    originId: item.originId,
+                                    contentId: SplittedIdAndType.fromOriginId(
+                                            item.originId)
+                                        .id,
+                                    contentType: SplittedIdAndType.fromOriginId(
+                                            item.originId)
+                                        .type,
+                                    posterImgUrl: item.posterImgUrl,
+                                    title: item.title,
+                                  );
+                                  vm(context).routeToContentDetail(arg);
+                                },
+                                child: ContentPosterItemView(
+                                  imgUrl: item?.posterImgUrl,
+                                  title: item!.title,
+                                ),
                               );
                             } else {
                               return ContentPosterItemView.createSkeleton();

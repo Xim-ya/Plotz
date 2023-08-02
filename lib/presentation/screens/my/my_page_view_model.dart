@@ -117,6 +117,12 @@ class MyPageViewModel extends BaseViewModel {
     context.push(AppRoutes.tabs + AppRoutes.setting + AppRoutes.profileSetting);
   }
 
+  // 콘텐츠 상세 페이지로 이동
+  void routeToContentDetail(ContentArgumentFormat routingArgument) {
+    context.push(AppRoutes.contentDetail,
+        extra: {'arg1': routingArgument, 'arg2': true});
+  }
+
   // 탭이 선택되었을 때
   Future<void> prepare() async {
     loadingState = ViewModelLoadingState.loading;
