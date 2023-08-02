@@ -31,18 +31,6 @@ class _AppDio with DioMixin implements Dio {
     );
     (transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
 
-    final Dio tokenDio = Dio();
-
-    tokenDio.options = options;
-
-    // 로그 인터셉터 로직 추가
-    tokenDio.interceptors.addAll([
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-      ),
-    ]);
-
     interceptors.addAll([
       LogInterceptor(
         requestBody: true,
