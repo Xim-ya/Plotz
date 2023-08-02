@@ -41,7 +41,7 @@ class ChannelRepositoryImpl implements ChannelRepository {
     try {
       final response = await _dataSource.loadChannelContents(request);
       if (response.isEmpty) {
-        return Result.failure(Exception('콘텐츠 데이터를 불러오는데 실패했습니다'));
+        return Result.failure(Exception('콘텐츠 데이터를 불러오는데 실패했습니다0'));
       }
       return Result.success(ChannelContentList(
           contents: response

@@ -18,7 +18,6 @@ class LoadPagedChannelContentsUseCase {
   /* Repository */
   final ChannelRepository _channelRepository;
 
-
   Future<void> _fetchPage(String channelId) async {
     final response = await _channelRepository.loadPagedChannelContents(
       ChannelContentsRequest(
@@ -40,6 +39,7 @@ class LoadPagedChannelContentsUseCase {
         }
       },
       onFailure: (e) {
+        pagingController.appendLastPage([]);
         log('LoadPagedChannelCOntentsUseCase - $e');
       },
     );
