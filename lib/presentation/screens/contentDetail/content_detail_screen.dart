@@ -166,10 +166,6 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                   AppSpace.size16,
 
                   // 영상제목
-                  Text(
-                    '${vm(context).passedArgument.videoTitle}',
-                    style: AppTextStyle.alert1,
-                  ),
                   SizedBox(
                     width: SizeConfig.to.screenWidth - 96,
                     child: value.item5?.youtubeInfoLoaded ?? false
@@ -182,7 +178,7 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                           )
                         : StreamBuilder<YoutubeVideoContentInfo?>(
                             stream: value.item5?.videos[0].youtubeInfo,
-                            builder: (context, snapshot) {
+                            builder: (context, snapshot) {  
                               return Text(
                                 snapshot.hasData
                                     ? snapshot.data!.videoTitle
