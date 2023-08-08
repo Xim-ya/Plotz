@@ -50,8 +50,8 @@ abstract class AppTextStyle {
   );
 
   static TextStyle title3 = PretendardTextStyle.bold(
-    size: 14,
-    height: 20,
+    size: 15,
+    height: 22,
     letterSpacing: -0.2,
   );
   static TextStyle title3Bold = PretendardTextStyle.bold(
@@ -72,31 +72,31 @@ abstract class AppTextStyle {
   );
 
   static TextStyle body3 = PretendardTextStyle.medium(
-    size: 13,
-    height: 18,
+    size: 14,
+    height: 20,
     letterSpacing: -0.2,
   );
 
   static TextStyle body2 = PretendardTextStyle.medium(
-    size: 14,
+    size: 15,
     height: 22,
     letterSpacing: -0.2,
   );
 
   static TextStyle body1 = PretendardTextStyle.semiBold(
-    size: 14,
+    size: 15,
     height: 22,
     letterSpacing: -0.2,
   );
 
   static TextStyle alert1 = PretendardTextStyle.semiBold(
-    size: 12,
+    size: 14,
     height: 18,
     letterSpacing: -0.2,
   );
 
   static TextStyle alert2 = PretendardTextStyle.regular(
-    size: 12,
+    size: 13,
     height: 18,
     letterSpacing: -0.2,
   );
@@ -108,7 +108,7 @@ abstract class AppTextStyle {
   );
 
   static TextStyle nav = PretendardTextStyle.medium(
-    size: 10,
+    size: 12,
     letterSpacing: -0.2,
   );
 }

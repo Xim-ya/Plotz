@@ -178,7 +178,7 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                           )
                         : StreamBuilder<YoutubeVideoContentInfo?>(
                             stream: value.item5?.videos[0].youtubeInfo,
-                            builder: (context, snapshot) {  
+                            builder: (context, snapshot) {
                               return Text(
                                 snapshot.hasData
                                     ? snapshot.data!.videoTitle

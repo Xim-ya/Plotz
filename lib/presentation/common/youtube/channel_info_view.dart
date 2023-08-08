@@ -6,6 +6,7 @@ import 'package:soon_sak/utilities/index.dart';
 *  채널 프로필 이미지 & 채널명 & 구독자 수
 *  위 정보를 구성되어 있는 뷰
 *  기본적인 스켈레톤 처리도 진행함
+*  [ExploreScreen]에서 사용D
 * */
 
 class ChannelInfoView extends StatelessWidget {
@@ -44,7 +45,7 @@ class ChannelInfoView extends StatelessWidget {
             height: imgSize,
             borderRadius: 100,
           ),
-        AppSpace.size10,
+        AppSpace.size8,
         // 채널명
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,31 +55,31 @@ class ChannelInfoView extends StatelessWidget {
                 width: nameTextWidth,
                 child: Text(
                   name!,
-                  style:
-                      AppTextStyle.headline3.copyWith(fontSize: nameFontSize),
+                  style: AppTextStyle.body3.copyWith(fontSize: nameFontSize),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               )
-            else ...[
+            else
               const SkeletonBox(
+                padding: AppInset.vertical2,
                 width: 80,
-                height: 20,
+                height: 16,
               ),
-              AppSpace.size2,
-            ],
+            const SizedBox(height: 1),
             if (subscriberCount.hasData)
               Text(
                 '구독자 ${Formatter.formatNumberWithUnit(subscriberCount)}명',
-                style: AppTextStyle.body1.copyWith(
-                  color: AppColor.lightGrey,
+                style: AppTextStyle.alert2.copyWith(
+                  color: AppColor.gray02,
                   fontSize: subscriberFontSize,
                 ),
               )
             else
               const SkeletonBox(
-                width: 180,
-                height: 22,
+                padding: AppInset.vertical2,
+                width: 56,
+                height: 14,
               ),
           ],
         ),
