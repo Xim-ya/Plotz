@@ -7,11 +7,17 @@ import 'package:soon_sak/utilities/index.dart';
 
 class SkeletonBox extends StatelessWidget {
   const SkeletonBox(
-      {Key? key, this.padding, this.borderRadius = 4, this.height, this.width})
+      {Key? key,
+      this.padding,
+      this.borderRadius = 4,
+      this.height,
+      this.width,
+      this.color = AppColor.gray06})
       : super(key: key);
 
   final double? borderRadius;
   final EdgeInsets? padding;
+  final Color color;
   final double? height;
   final double? width;
 
@@ -21,7 +27,7 @@ class SkeletonBox extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       child: Container(
         decoration: BoxDecoration(
-            color: AppColor.gray06,
+            color: color,
             borderRadius: BorderRadius.circular(borderRadius ?? 0)),
         height: height,
         width: width,

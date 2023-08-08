@@ -168,7 +168,7 @@ class _HeaderDescription extends BaseView<ContentDetailViewModel> {
                   // 영상제목
                   SizedBox(
                     width: SizeConfig.to.screenWidth - 96,
-                    child: value.item5?.youtubeInoLoaded ?? false
+                    child: value.item5?.youtubeInfoLoaded ?? false
                         ? Text(
                             value.item6 ?? '제목 없음',
                             textAlign: TextAlign.center,
@@ -352,7 +352,7 @@ class _HeaderBgImg extends BaseView<ContentDetailViewModel> {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
-            : const SizedBox(); 
+            : const SizedBox();
       },
     );
   }

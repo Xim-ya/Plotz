@@ -38,6 +38,7 @@ class ExploreViewModel extends BaseViewModel {
       contentId: SplittedIdAndType.fromOriginId(contentItem.originId).id,
       contentType: SplittedIdAndType.fromOriginId(contentItem.originId).type,
       posterImgUrl: contentItem.posterImgUrl,
+      videoTitle: contentItem.videoTitle,
       title: contentItem.title,
       originId: contentItem.originId,
       channelName: contentItem.channelName,

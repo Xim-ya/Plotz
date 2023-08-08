@@ -45,7 +45,6 @@ export 'model/content/onboarding/preference_content.dart';
 export 'model/content/content_detail_info.dart';
 export 'model/youtube/youtube_content_comment.dart';
 export 'model/youtube/youtube_video_content_info.dart';
-export 'model/channel/channel_content_item.dart';
 export 'model/channel/channel_content_list.dart';
 export 'model/channel/channel_model.dart';
 export 'model/version/version_info.dart';

@@ -10,7 +10,7 @@ class ContentVideoModel {
   final BehaviorSubject<String?> mainUploadDate = BehaviorSubject<String?>();
   final BehaviorSubject<int?> mainViewCount = BehaviorSubject<int?>();
   final BehaviorSubject<int?> mainLikesCount = BehaviorSubject<int?>();
-  bool youtubeInoLoaded = false;
+  bool youtubeInfoLoaded = false;
 
   ContentVideoModel({required this.videos, required this.videoFormat});
 
@@ -45,7 +45,7 @@ class ContentVideoModel {
         totalViewCount += video.youtubeInfo.valueOrNull?.viewCount ?? 0;
       }
       model.mainViewCount.add(totalViewCount);
-      model.youtubeInoLoaded = true;
+      model.youtubeInfoLoaded = true;
     });
 
     return model;
@@ -83,7 +83,7 @@ class ContentVideoModel {
       }
       model.mainViewCount.add(totalViewCount);
 
-      model.youtubeInoLoaded = true;
+      model.youtubeInfoLoaded = true;
     });
 
     return model;
