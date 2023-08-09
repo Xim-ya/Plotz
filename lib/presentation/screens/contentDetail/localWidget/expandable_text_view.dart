@@ -78,9 +78,9 @@ class _ExpandableTextViewState extends State<ExpandableTextView> {
                 widget.text,
                 style: const TextStyle(
                   fontFamily: 'pretender_regular',
-                  fontSize: 12,
-                  height: 1.8,
-                  letterSpacing: -0.2,
+                  fontSize: 13,
+                  height: 22 / 13,
+                  letterSpacing: -2 / 13,
                   color: Colors.white,
                 ),
                 maxLines: isExpanded ? null : widget.maxLines,
