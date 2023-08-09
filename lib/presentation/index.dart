@@ -31,7 +31,7 @@ export 'screens/contentDetail/localWidget/tabView/content_info_tab_view.dart';
 export 'screens/contentDetail/localWidget/tabView/origin_content_info_tab_view.dart';
 export 'screens/contentDetail/localWidget/expandable_text_view.dart';
 export 'screens/explore/explore_view_model.dart';
-export 'screens/explore/localWidget/explore_swiper_item_scaffold.dart';
+export 'screens/explore/localWidget/explore_scaffold.dart';
 export 'screens/explore/explore_screen.dart';
 export 'screens/search/search_view_model.dart';
 export 'screens/search/search_binding.dart';
