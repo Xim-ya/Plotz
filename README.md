@@ -121,6 +121,8 @@
 - 기타 버그 수정
 - 어드민 어플리케이션 기능 수정 및 고도화
 
+### 1.0.14
+- 탐색 탭 리뉴얼
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FXim-ya%2FSoonSack%2Fhit-counter&count_bg=%23E30914&title_bg=%23101010&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
