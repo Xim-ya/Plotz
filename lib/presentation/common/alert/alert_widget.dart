@@ -4,7 +4,6 @@ import 'package:soon_sak/app/config/app_insets.dart';
 import 'package:soon_sak/app/config/color_config.dart';
 import 'package:soon_sak/app/config/font_config.dart';
 
-
 /** Created By Ximya - 2022.12.10
  *  toast 메세지 UI로직
  *  'flutter_styled_toast' & 'getx' 라이브러리를 이용함

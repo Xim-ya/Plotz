@@ -73,6 +73,8 @@ class ContentService {
 
   String? get topTenContentKey => _staticContentKeys?.topTenContentKey;
 
+  String? get newlyAddedContentKey => _staticContentKeys?.newlyAddedContentKey;
+
   String? get topPositionedCollectionKey =>
       _staticContentKeys?.topPositionedCollectionKey;
 

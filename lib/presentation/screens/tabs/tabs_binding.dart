@@ -1,6 +1,7 @@
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/useCase/content/home/load_cached_newly_added_contents.u.dart';
 import 'package:soon_sak/presentation/index.dart';
 
 abstract class TabsBinding {
@@ -9,6 +10,7 @@ abstract class TabsBinding {
   static void dependencies() {
     locator.registerLazySingleton(
       () => HomeViewModel(
+        loadNewlyAddedContentUseCase: locator<LoadCachedNewlyAddedContentsUseCase>(),
         loadPagedCategoryCollectionsUseCase:
             locator<LoadPagedCategoryCollectionUseCase>(),
         loadCachedTopPositionedContentsUseCase:

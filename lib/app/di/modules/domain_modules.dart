@@ -1,6 +1,7 @@
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/useCase/content/home/load_cached_newly_added_contents.u.dart';
 
 abstract class DomainModules {
   DomainModules._();
@@ -27,6 +28,11 @@ abstract class DomainModules {
         service: locator<ContentService>()));
 
     locator.registerLazySingleton(() => LoadCachedTopPositionedContentsUseCase(
+        repository: locator<StaticContentRepository>(),
+        localStorageService: locator<LocalStorageService>(),
+        contentService: locator<ContentService>()));
+
+    locator.registerLazySingleton(() => LoadCachedNewlyAddedContentsUseCase(
         repository: locator<StaticContentRepository>(),
         localStorageService: locator<LocalStorageService>(),
         contentService: locator<ContentService>()));
