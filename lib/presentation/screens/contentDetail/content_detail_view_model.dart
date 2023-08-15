@@ -111,6 +111,7 @@ class ContentDetailViewModel extends BaseViewModel {
       posterImgUrl: content.posterImgUrl,
     );
 
+
     contentDetailBinding.isDependenciesDeleted = true;
 
     safeUnregister<ContentDetailViewModel>();

@@ -19,6 +19,7 @@ import 'package:sembast/sembast_io.dart';
 *    2) field : topTen <-- 홈 스크린 TopTen 컨텐츠 리스트 데이터
 *    3) field : categoryCollection1 <-- 홈 스크린 카테고리 컨텐츠 데이터
 *    3) field : categoryCollection2
+*    4) field : newlyAdded <-- 최근 업로드된 콘텐츠
 *
 *
 * ** NEW ONE **
@@ -26,13 +27,19 @@ import 'package:sembast/sembast_io.dart';
 *
 * */
 
-class LocalStorageService  {
+enum CachedCategoryType {
+  banner('banner'),
+  newlyAdded('newlyAdded');
+
+  final String name;
+
+  const CachedCategoryType(this.name);
+}
+
+class LocalStorageService {
   late Directory dir;
   late StoreRef store;
   late String dbPath;
-
-
-
 
   // 로컬 스토리지 초기화 작업
   Future<void> initStorage() async {
@@ -41,6 +48,7 @@ class LocalStorageService  {
     await dir.create(recursive: true);
     dbPath = join('${dir.path}/storeData', 'content.db');
   }
+
   // 데이터 조회
   Future<Object?> getData({required String fieldName}) async {
     try {
@@ -55,8 +63,10 @@ class LocalStorageService  {
   }
 
   // 데이터 저장
-  Future<void> saveData(
-      {required String fieldName, required Object data,}) async {
+  Future<void> saveData({
+    required String fieldName,
+    required Object data,
+  }) async {
     try {
       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).put(db, data);
@@ -67,8 +77,9 @@ class LocalStorageService  {
   }
 
   // 데이터 삭제
-  Future<void> deleteData(
-      {required String fieldName,}) async {
+  Future<void> deleteData({
+    required String fieldName,
+  }) async {
     try {
       var db = await databaseFactoryIo.openDatabase(dbPath, version: 1);
       await store.record(fieldName).delete(db);

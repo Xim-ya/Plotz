@@ -1,5 +1,6 @@
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/home/newly_added_content_info.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -15,6 +16,7 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       stackedTopGradient: _buildStackedTopGradient(context),
       stackedAppBar: _buildStackedAppBar(context),
       topBannerSlider: const _BannerSlider(),
+      newlyAddedContentSlider: const _NewlyAddedContentSlider(),
       topTenSlider: const _TopTenContentSlider(),
       channelSlider: const _ChannelSlider(),
       scrollController: vm(context).scrollController,
@@ -123,6 +125,65 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
       locator<HomeViewModel>();
 }
 
+/// 최근 추가된 콘텐츠 슬라이더
+class _NewlyAddedContentSlider extends BaseView<HomeViewModel> {
+  const _NewlyAddedContentSlider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<HomeViewModel, NewlyAddedContentInfo?>(
+      selector: (context, vm) => vm.newlyAddedContentInfo,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(
+          '새로 올라온 콘텐츠',
+          style: AppTextStyle.title2,
+        ),
+      ),
+      builder: (context, value, title) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            title!,
+            AppSpace.size7,
+            ContentPostSlider(
+              height: 161,
+              itemCount: value?.contents.length ?? 5,
+              itemBuilder: (context, index) {
+                if (value.hasData) {
+                  final item = value!.contents[index];
+                  return GestureDetector(
+                    onTap: () {
+                      final argument = ContentArgumentFormat(
+                        contentId: item.id,
+                        contentType: item.contentType,
+                        posterImgUrl: item.posterImgUrl,
+                        originId: item.originId,
+                        title: item.title,
+                      );
+                      vm(context).routeToContentDetail(
+                        context,
+                        argument,
+                        sectionType: 'newlyAdded',
+                      );
+                    },
+                    child: ContentPosterItemView(
+                      imgUrl: item.posterImgUrl.prefixTmdbImgPath,
+                      title: item.title,
+                    ),
+                  );
+                } else {
+                  return ContentPosterItemView.createSkeleton();
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 /// 상단 배너 슬라이더
 class _BannerSlider extends BaseView<HomeViewModel> {
   const _BannerSlider({Key? key}) : super(key: key);
@@ -161,7 +222,7 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                       memCacheHeight:
                           SizeConfig.to.screenWidth.cacheSize(context) *
                               375 ~/
-                              500 ,
+                              500,
                       imageUrl: item.imgUrl,
                       fit: BoxFit.fitHeight,
                     );

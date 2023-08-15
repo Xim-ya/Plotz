@@ -8,7 +8,6 @@ enum BuildType {
 }
 
 /// 2022.06.22 : Firebase 관련 설정 추가
-/// TODO: APPsplyer --> sdk init을 여기에
 class Environment {
   static Environment? _instance;
 

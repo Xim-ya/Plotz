@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:soon_sak/data/repository/channel/channel_repository.dart';
+import 'package:soon_sak/domain/model/content/home/newly_added_content_info.m.dart';
+import 'package:soon_sak/domain/useCase/content/home/load_cached_newly_added_contents.u.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
@@ -16,10 +18,12 @@ class HomeViewModel extends BaseViewModel {
         loadCachedTopPositionedContentsUseCase,
     required LoadCachedTopTenContentsUseCase loadCachedTopTenContentsUseCase,
     required LoadCachedBannerContentUseCase loadBannerContentUseCase,
+    required LoadCachedNewlyAddedContentsUseCase loadNewlyAddedContentUseCase,
     required ChannelRepository channelRepository,
   })  : _loadBannerContentUseCase = loadBannerContentUseCase,
         _loadCachedTopPositionedContentsUseCase =
             loadCachedTopPositionedContentsUseCase,
+        _loadCachedNewlyAddedContentsUseCase = loadNewlyAddedContentUseCase,
         _loadCachedTopTenContentsUseCase = loadCachedTopTenContentsUseCase,
         loadPagedCategoryCollectionUseCase =
             loadPagedCategoryCollectionsUseCase,
@@ -31,7 +35,8 @@ class HomeViewModel extends BaseViewModel {
 
   /// Data
   BannerModel? bannerContents; // 배너 컨텐츠
-  List<TopPositionedCategory>? topPositionedCategory;
+  List<TopPositionedCategory>? topPositionedCategory; // 상단 노출 콘텐츠
+  NewlyAddedContentInfo? newlyAddedContentInfo; // 최근 추가된 콘텐츠
   TopTenContentsModel? topTenContents; // Top10 컨텐츠
   List<ChannelModel>? channelList; // 채널 리스트
 
@@ -58,6 +63,8 @@ class HomeViewModel extends BaseViewModel {
   final LoadCachedTopTenContentsUseCase _loadCachedTopTenContentsUseCase;
   final LoadCachedTopPositionedContentsUseCase
       _loadCachedTopPositionedContentsUseCase;
+  final LoadCachedNewlyAddedContentsUseCase
+      _loadCachedNewlyAddedContentsUseCase;
 
   /* [Intent] */
   // Banner 슬라이더 swipe 되었을 때
@@ -174,6 +181,26 @@ class HomeViewModel extends BaseViewModel {
     );
   }
 
+  // Top10 컨텐츠 호출
+  Future<void> _fetchNewlyAddedContents() async {
+    final response = await _loadCachedNewlyAddedContentsUseCase.call();
+    response.fold(
+      onSuccess: (data) {
+        newlyAddedContentInfo = data;
+        notifyListeners();
+        print("최근 업로드 된 콘텐츠 호출 성공");
+      },
+      onFailure: (e) {
+        AlertWidget.newToast(
+            message: '최근 업로드된 콘텐츠를 불러오는데 실패했습니다',
+            isUsedOnTabScreen: true,
+            context);
+
+        log('HomeViewModel > $e');
+      },
+    );
+  }
+
   // 배너 컨텐츠 호출
   Future<void> _fetchBannerContents() async {
     final response = await _loadBannerContentUseCase.call();
@@ -234,6 +261,7 @@ class HomeViewModel extends BaseViewModel {
 
     // 병렬 호출
     await Future.wait([
+      _fetchNewlyAddedContents(),
       _fetchBannerContents(),
       _fetchTopPositionedCollection(),
       _fetchTopTenContents(),

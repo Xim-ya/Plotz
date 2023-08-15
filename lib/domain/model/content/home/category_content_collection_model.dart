@@ -58,4 +58,6 @@ class CategoryContentItem {
         contentType: SplittedIdAndType.fromOriginId(response.id).type,
         posterImgUrl: response.posterImgUrl,
       );
+
+
 }

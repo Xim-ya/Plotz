@@ -1,3 +1,4 @@
+import 'package:soon_sak/data/api/staticContent/response/newly_added_content_response.dart';
 import 'package:soon_sak/data/index.dart';
 
 import 'package:soon_sak/utilities/index.dart';
@@ -8,6 +9,9 @@ abstract class StaticContentDataSource {
 
   // Top 10 컨텐츠 정보 호출
   Future<TopTenContentResponse> loadTopTenContents();
+
+  // 최근 업로드된 콘텐츠 리스트
+  Future<NewlyAddedContentResponse> loadNewlyAddedContents();
 
   // 고정 컨텐츠 key 값 호출
   Future<ContentKeyResponse> loadStaticContentKeys();

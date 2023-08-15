@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:soon_sak/data/api/staticContent/response/newly_added_content_response.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -70,5 +71,15 @@ class StaticContentDataSourceImpl implements StaticContentDataSource {
     final json = jsonDecode(response.toString());
 
     return TopPositionedCollectionResponse.fromJson(json);
+  }
+
+  @override
+  Future<NewlyAddedContentResponse> loadNewlyAddedContents() async {
+    final response = await _api.loadNewlyAddedContents();
+    await _localStorage.saveData(
+        fieldName: 'newlyAdded', data: jsonEncode(response.data));
+    final json = jsonDecode(response.toString());
+
+    return NewlyAddedContentResponse.fromJson(json);
   }
 }

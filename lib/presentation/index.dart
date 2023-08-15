@@ -10,7 +10,6 @@ export 'screens/home/localWidget/paged_category_list_view.dart';
 export 'screens/home/localWidget/home_scaffold.dart';
 export 'screens/home/localWidget/banner_skeleton_item.dart';
 export 'screens/home/home_screen.dart';
-export 'screens/temp_screen.dart';
 export 'screens/splash/splash_binding.dart';
 export 'screens/splash/splash_view_model.dart';
 export 'screens/splash/splash_screen.dart';
