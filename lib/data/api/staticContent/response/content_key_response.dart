@@ -10,6 +10,9 @@ class ContentKeyResponse {
   @JsonKey(name: 'topTenContentKey')
   final String topTenContentKey;
 
+  @JsonKey(name: 'newlyAddedContent')
+  final String newlyAddedContent;
+
   @JsonKey(name: 'categoryContent1')
   final String categoryContent1;
 
@@ -22,6 +25,7 @@ class ContentKeyResponse {
   ContentKeyResponse({
     required this.bannerKey,
     required this.topTenContentKey,
+    required this.newlyAddedContent,
     required this.categoryContent1,
     required this.categoryContent2,
     required this.topPositionedCollectionKey,

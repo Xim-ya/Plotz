@@ -22,6 +22,7 @@ class HomeScaffold extends StatelessWidget {
     required this.scrollController,
     required this.topBannerSlider,
     required this.topTenSlider,
+    required this.newlyAddedContentSlider,
     required this.categoryContentCollectionList,
     required this.channelSlider,
     required this.stackedTopGradient,
@@ -31,6 +32,7 @@ class HomeScaffold extends StatelessWidget {
 
   final Widget stackedAppBar;
   final Widget topBannerSlider;
+  final Widget newlyAddedContentSlider;
   final Widget topTenSlider;
   final Widget categoryContentCollectionList;
   final Widget stackedTopGradient;
@@ -75,10 +77,10 @@ class HomeScaffold extends StatelessWidget {
                       children: <Widget>[
                         topBannerSlider,
                         AppSpace.size32,
-                        topPositionedContentSliderList[0],
+                        newlyAddedContentSlider,
                         topTenSlider,
                         AppSpace.size14,
-                        topPositionedContentSliderList[1],
+                        topPositionedContentSliderList[0],
                         AppSpace.size32,
                         channelSlider,
                         AppSpace.size32,

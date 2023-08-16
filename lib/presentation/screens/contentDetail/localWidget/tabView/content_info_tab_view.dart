@@ -125,7 +125,15 @@ class _ChannelInfoView extends BaseView<ContentDetailViewModel> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(channel?.name ?? '', style: AppTextStyle.body1),
+                          SizedBox(
+                            width: SizeConfig.to.screenWidth - 132,
+                            child: Text(
+                              channel?.name ?? '',
+                              style: AppTextStyle.body1,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                           AppSpace.size2,
                           Text(
                             '구독자 ${Formatter.formatNumberWithUnit(vm(context).subscriberCount)}명',

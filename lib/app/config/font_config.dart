@@ -90,7 +90,7 @@ abstract class AppTextStyle {
   );
 
   static TextStyle alert1 = PretendardTextStyle.semiBold(
-    size: 14,
+    size: 13,
     height: 18,
     letterSpacing: -0.2,
   );
@@ -102,7 +102,7 @@ abstract class AppTextStyle {
   );
 
   static TextStyle desc = PretendardTextStyle.regular(
-    size: 11,
+    size: 12,
     height: 14,
     letterSpacing: -0.2,
   );
