@@ -1,5 +1,7 @@
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/presentation/index.dart';
+import 'package:soon_sak/presentation/screens/requested_content/requested_content_board_binding.dart';
+import 'package:soon_sak/presentation/screens/requested_content/requseted_content_board_screen.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class AppPages {
@@ -41,6 +43,14 @@ abstract class AppPages {
         newBuilder: (context, state) => const ContentDetailScreen(),
       ),
       GoRouteWithBinding(
+        path: AppRoutes.requestedContent,
+        prevPath: const [
+          AppRoutes.tabs,
+        ],
+        binding: RequestedContentBoardBinding(),
+        newBuilder: (context, state) => const RequestedContentBoardScreen(),
+      ),
+      GoRouteWithBinding(
         path: '/channelDetail',
         prevPath: const [
           AppRoutes.tabs,
@@ -53,7 +63,6 @@ abstract class AppPages {
         path: AppRoutes.tabs,
         builder: (context, state) => const TabsScreen(),
         routes: [
-
           GoRouteWithBinding(
             path: 'setting',
             prevPath: const [AppRoutes.tabs],

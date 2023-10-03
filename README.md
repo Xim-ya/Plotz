@@ -124,6 +124,10 @@
 ### 1.0.14
 - 탐색 탭 리뉴얼
 
+### 1.0.15 (예정)
+- 콘텐츠 신청 내역 확인 페이지 및 로직 추가
+- 어드민 페이지 flavor 분리
+
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FXim-ya%2FSoonSack%2Fhit-counter&count_bg=%23E30914&title_bg=%23101010&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 

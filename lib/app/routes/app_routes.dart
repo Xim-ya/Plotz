@@ -39,4 +39,7 @@ abstract class AppRoutes {
 
   /// 수집 종료 이후 Plotz 인트로 스크린
   static const onboarding3 = '/onboarding3';
+
+  // 요청된 콘텐츠 상태 보드
+  static const requestedContent = '/requestedContent';
 }

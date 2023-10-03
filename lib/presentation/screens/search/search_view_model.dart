@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -29,11 +30,8 @@ class SearchViewModel extends BaseViewModel {
   /* UseCases */
   final SearchedPagedContentUseCase pagedSearchHandler;
 
-
-
   /* Variables (State) */
-  BehaviorSubject<bool> get isInitialState =>
-      pagedSearchHandler.isInitialState;
+  BehaviorSubject<bool> get isInitialState => pagedSearchHandler.isInitialState;
 
   bool get showRoundCloseBtn => pagedSearchHandler.showRoundClosedBtn;
 
@@ -59,6 +57,8 @@ class SearchViewModel extends BaseViewModel {
       ),
       title: content.title,
       userId: _userService.userInfo.value.id!,
+      releaseDate: content.releaseDate,
+      posterImgUrl: content.posterImgUrl,
     );
     final response = await _contentRepository.createRequestContent(request);
     response.fold(

@@ -75,7 +75,7 @@ class _RequestedContentStatusIndicator extends BaseView<MyPageViewModel> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            '콘텐츠 신청 내역',
+            '요청중인 콘텐츠',
             style: AppTextStyle.title2,
           ),
           Text(

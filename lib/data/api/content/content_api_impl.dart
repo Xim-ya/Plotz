@@ -7,11 +7,9 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   @override
   Future<List<String>> loadTotalContentIds() async {
     final aim = await getDocumentIdsFromCollection('content');
-    print(aim.length);
+
     return aim;
   }
-
-
 
   @override
   Future<List<VideoResponse>> loadVideoInfo(
@@ -60,7 +58,7 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
   Future<void> createRequestContent(ContentRequest requestInfo) async {
     final data = requestInfo.toMap();
     await storeDocument(
-      'requestContent',
+      'requestedContent',
       docId: requestInfo.contentId,
       data: data,
     );

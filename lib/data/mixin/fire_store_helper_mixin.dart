@@ -514,5 +514,21 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
+  // 특정 field들의 값을 가지고 있는 document 리스트를 불러오는 메소드
+  Future<List<DocumentSnapshot>> getDocsWithContainingSeveralFields(
+    String collectionName, {
+    required String firstFieldName,
+    required dynamic targetFirstValue,
+    required String secondFieldName,
+    required dynamic targetSecondValue,
+  }) async {
+    final snapshot = await _db
+        .collection(collectionName)
+        .where(firstFieldName, isEqualTo: targetFirstValue)
+        .where('statusKey', isEqualTo: targetSecondValue)
+        .get();
+    return snapshot.docs;
+  }
+
   FirebaseFirestore get db => _db;
 }

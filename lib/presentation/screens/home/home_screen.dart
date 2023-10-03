@@ -372,7 +372,7 @@ class _PagedCategoryCollection extends BaseView<HomeViewModel> {
               contentId: item.contents[nestedIndex].id,
               contentType: item.contents[nestedIndex].contentType,
               posterImgUrl: item.contents[nestedIndex].posterImgUrl,
-              originId: item.contents[nestedIndex].originId,
+              originId: item.contents[nestedIndex].id,
             );
             vm(context).routeToContentDetail(context, argument,
                 sectionType: 'category');

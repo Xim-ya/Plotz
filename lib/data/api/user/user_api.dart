@@ -1,4 +1,6 @@
 import 'dart:io';
+
+import 'package:soon_sak/data/api/user/response/requested_content.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -40,4 +42,8 @@ abstract class UserApi {
   // 유저 선호 장르 값 업데이트
   Future<void> updateUserGenrePreference(
       {required String userId, required List<PreferredRequestContent> genres});
+
+  // 요청된 유저의 콘텐츠 리스트
+  Future<List<RequestedContentResponse>> loadRequestedContentByStatus(
+      {required String userId, required int statusKey});
 }

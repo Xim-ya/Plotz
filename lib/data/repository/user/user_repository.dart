@@ -1,6 +1,8 @@
 import 'dart:io';
+
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 abstract class UserRepository {
@@ -8,7 +10,8 @@ abstract class UserRepository {
   Future<Result<void>> withdrawUser();
 
   // 유저 시청 기록 추가
-  Future<Result<void>> updateUserWatchHistory(WatchingHistoryRequest requestInfo);
+  Future<Result<void>> updateUserWatchHistory(
+      WatchingHistoryRequest requestInfo);
 
   // 유저 시청 기록 데이터 호출
   Future<Result<List<UserWatchHistoryItem>>> loadUserWatchHistory();
@@ -52,4 +55,8 @@ abstract class UserRepository {
   // 유저 선호 장르 값 업데이트
   Future<Result<void>> updateUserGenrePreference(
       List<PreferredRequestContent> genres);
+
+  // 요청 콘텐츠 리스트 호출
+  Future<Result<List<RequestedContent>>> loadRequestedContentByStatus(
+      int statusKey);
 }
