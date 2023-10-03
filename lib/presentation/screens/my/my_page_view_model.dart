@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -34,6 +35,11 @@ class MyPageViewModel extends BaseViewModel {
   late final ScrollController scrollController;
 
   /* Intents */
+
+  // 요청 콘텐츠 보드 페이지로 이동
+  void routeToRequestedContentBoard() {
+    context.push(AppRoutes.requestedContent);
+  }
 
   // 설정 메뉴가 클릭 되었을 때
   void onSettingMenuTapped(SettingMenu selectedMenu) {
