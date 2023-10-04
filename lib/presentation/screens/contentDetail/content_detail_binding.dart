@@ -8,17 +8,18 @@ class ContentDetailBinding extends Bindings {
   void dependencies() {
     super.dependencies();
 
-    safeRegisterFactory<ContentDetailViewModel>(() => ContentDetailViewModel(
-          channelRepository: locator<ChannelRepository>(),
-          loadContentMainDescription: locator<LoadContentDetailInfoUseCase>(),
-          loadContentCreditInfo: locator<LoadContentCreditInfoUseCase>(),
-          userRepository: locator<UserRepository>(),
-          userService: locator<UserService>(),
-          argument: arg1,
-          loadContentVideoInfoUseCase: locator<LoadContentVideoInfoUseCase>(),
-          updateUserPreferencesUserCase:
-              locator<UpdateUserPreferencesUserCase>(),
-        ));
+    safeRegisterFactory<ContentDetailViewModel>(
+      () => ContentDetailViewModel(
+        channelRepository: locator<ChannelRepository>(),
+        loadContentMainDescription: locator<LoadContentDetailInfoUseCase>(),
+        loadContentCreditInfo: locator<LoadContentCreditInfoUseCase>(),
+        userRepository: locator<UserRepository>(),
+        userService: locator<UserService>(),
+        argument: arg1,
+        loadContentVideoInfoUseCase: locator<LoadContentVideoInfoUseCase>(),
+        updateUserPreferencesUserCase: locator<UpdateUserPreferencesUserCase>(),
+      ),
+    );
 
     safeRegisterFactory<LoadContentDetailInfoUseCase>(
         () => LoadContentDetailInfoUseCase(locator<TmdbRepository>()));
@@ -29,9 +30,11 @@ class ContentDetailBinding extends Bindings {
     safeRegisterFactory<LoadContentVideoInfoUseCase>(
         () => LoadContentVideoInfoUseCase(locator<ContentDataSource>()));
 
-    safeRegisterFactory<UpdateUserPreferencesUserCase>(() =>
-        UpdateUserPreferencesUserCase(
-            userRepository: locator<UserRepository>()));
+    safeRegisterFactory<UpdateUserPreferencesUserCase>(
+      () => UpdateUserPreferencesUserCase(
+        userRepository: locator<UserRepository>(),
+      ),
+    );
   }
 
   @override

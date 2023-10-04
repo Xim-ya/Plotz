@@ -1,9 +1,11 @@
 import 'dart:developer';
+
 import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/enum/requested_content_status.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-
 
 class UserService {
   UserService({
@@ -12,6 +14,7 @@ class UserService {
   })  : _authRepository = authRepository,
         _userRepository = userRepository,
         userWatchHistory = BehaviorSubject<List<UserWatchHistoryItem>>(),
+        waitingRequestedContents = BehaviorSubject<List<RequestedContent>>(),
         userInfo = BehaviorSubject<UserModel>();
 
   final AuthRepository _authRepository;
@@ -23,18 +26,33 @@ class UserService {
   final BehaviorSubject<UserModel> userInfo; // 유저 정보
   final BehaviorSubject<List<UserWatchHistoryItem>>
       userWatchHistory; // 유저 시청 기록
+  final BehaviorSubject<List<RequestedContent>> waitingRequestedContents;
 
   /* Intents */
   // 유저 시청 기록 업데이트
   Future<void> updateUserWatchHistory() async {
-    final response =
-        await _userRepository.loadUserWatchHistory();
+    final response = await _userRepository.loadUserWatchHistory();
     response.fold(
       onSuccess: (data) {
         userWatchHistory.add(data);
       },
       onFailure: (e) {
         log('UserService : $e');
+      },
+    );
+  }
+
+  /// 유저의 요청중인 콘텐츠 호출
+  Future<void> fetchUserRequestedContents() async {
+    final response = await _userRepository
+        .loadRequestedContentByStatus(RequestedContentStatus.waiting.key);
+
+    response.fold(
+      onSuccess: (contents) {
+        waitingRequestedContents.add(contents);
+      },
+      onFailure: (e) {
+        waitingRequestedContents.addError(e);
       },
     );
   }
@@ -88,8 +106,7 @@ class UserService {
       return;
     } else {
       // 서버 정보 확인
-      final response = await _userRepository
-          .hasPreferencedHistory();
+      final response = await _userRepository.hasPreferencedHistory();
       response.fold(
         onSuccess: (data) {
           isOnboardingProgressDone = data;
@@ -145,6 +162,7 @@ class UserService {
   /// [SplashViewModel]에서 사용됨
   Future<void> prepare(BuildContext context) async {
     await checkUserSignInState();
+    await fetchUserRequestedContents();
     listenNetworkConnection(context); // TODO 새로운 서비스 모듈로 분리 필요
   }
 }

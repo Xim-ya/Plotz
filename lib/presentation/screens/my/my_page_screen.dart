@@ -1,4 +1,5 @@
 import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/presentation/screens/my/localWidget/my_page_scaffold.dart';
 import 'package:soon_sak/presentation/screens/my/localWidget/my_profile_info_view.dart';
@@ -65,6 +66,41 @@ class _RequestedContentStatusIndicator extends BaseView<MyPageViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<List<RequestedContent>>(
+        stream: vm(context).userRequestedContents,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const SizedBox();
+          }
+
+          return MaterialButton(
+            onPressed: vm(context).routeToRequestedContentBoard,
+            height: 54,
+            padding: AppInset.horizontal16,
+            minWidth: SizeConfig.to.screenWidth,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  '요청중인 콘텐츠',
+                  style: AppTextStyle.title2,
+                ),
+                Text(
+                  '${snapshot.data?.length ?? 0}건',
+                  style: AppTextStyle.body3.copyWith(
+                    color:
+                        snapshot.data.hasData ? AppColor.main : AppColor.gray03,
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+
+    if (vmW(context).waitingRequestedContents.cycle.isFailed) {
+      return const SizedBox();
+    }
     return MaterialButton(
       onPressed: vm(context).routeToRequestedContentBoard,
       height: 54,
@@ -79,8 +115,12 @@ class _RequestedContentStatusIndicator extends BaseView<MyPageViewModel> {
             style: AppTextStyle.title2,
           ),
           Text(
-            '1건',
-            style: AppTextStyle.body3.copyWith(color: AppColor.main),
+            '${vmW(context).requestedContentsCount}건',
+            style: AppTextStyle.body3.copyWith(
+              color: vmW(context).hasWaitingRequestedContents
+                  ? AppColor.main
+                  : AppColor.gray03,
+            ),
           )
         ],
       ),

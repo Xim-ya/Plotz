@@ -12,8 +12,9 @@ class ChannelContentList {
           List<ChannelContentItemResponse> responseList,
           DocumentSnapshot lastDocument) =>
       ChannelContentList(
-          contents: responseList
-              .map((e) => ContentPosterShell.fromChannelContents(e))
-              .toList(),
-          lastDocument: lastDocument);
+        contents: responseList
+            .map((e) => ContentPosterShell.fromChannelContents(e))
+            .toList(),
+        lastDocument: lastDocument,
+      );
 }

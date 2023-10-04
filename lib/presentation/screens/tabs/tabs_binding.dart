@@ -2,6 +2,7 @@ import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/domain/useCase/content/home/load_cached_newly_added_contents.u.dart';
+import 'package:soon_sak/domain/useCase/content/user/load_user_requested_contents_use_case.dart';
 import 'package:soon_sak/presentation/index.dart';
 
 abstract class TabsBinding {
@@ -10,7 +11,8 @@ abstract class TabsBinding {
   static void dependencies() {
     locator.registerLazySingleton(
       () => HomeViewModel(
-        loadNewlyAddedContentUseCase: locator<LoadCachedNewlyAddedContentsUseCase>(),
+        loadNewlyAddedContentUseCase:
+            locator<LoadCachedNewlyAddedContentsUseCase>(),
         loadPagedCategoryCollectionsUseCase:
             locator<LoadPagedCategoryCollectionUseCase>(),
         loadCachedTopPositionedContentsUseCase:
@@ -43,9 +45,14 @@ abstract class TabsBinding {
       () => MyPageViewModel(
         userRepository: locator<UserRepository>(),
         userService: locator<UserService>(),
+        loadUserRequestedContentsUseCase:
+            locator<LoadUserRequestedContentsUseCase>(),
         signOutHandlerUseCase: locator<SignOutUseCase>(),
       ),
     );
+
+    locator.registerLazySingleton(
+        () => LoadUserRequestedContentsUseCase(locator<UserRepository>()));
 
     locator.registerFactory(
       () => TabsViewModel(
@@ -63,6 +70,7 @@ abstract class TabsBinding {
     locator.unregister<ExploreViewModel>();
     locator.unregister<SearchScaffoldController>();
     locator.unregister<SearchedPagedContentUseCase>();
+    locator.unregister<LoadUserRequestedContentsUseCase>();
     locator.unregister<MyPageViewModel>();
   }
 }
