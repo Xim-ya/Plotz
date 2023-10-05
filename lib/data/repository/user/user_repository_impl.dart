@@ -1,6 +1,8 @@
 import 'dart:io';
+
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -165,6 +167,39 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final response = await _dataSource.updateUserGenrePreference(genres);
       return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<RequestedContent>>> loadRequestedContentByStatus(
+      int statusKey) async {
+    try {
+      final response =
+          await _dataSource.loadRequestedContentByStatus(statusKey);
+      return Result.success(
+          response.map((e) => RequestedContent.fromResponse(e)).toList());
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> removeEveryRequestedContents() async {
+    try {
+      await _dataSource.removeEveryRequestedContents();
+      return Result.success(null);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<void>> removeRequestedContent(String contentId) async {
+    try {
+      await _dataSource.removeRequestedContent(contentId);
+      return Result.success(null);
     } on Exception catch (e) {
       return Result.failure(e);
     }

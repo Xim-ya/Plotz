@@ -16,4 +16,7 @@ abstract class ContentRepository {
 
   // 컨텐츠 등록 요청
   Future<Result<void>> createRequestContent(ContentRequest requestInfo);
+
+  /// 콘텐츠 요청 상태 여부
+  Future<Result<bool>> checkIfContentAlreadyRequested(String contentId);
 }

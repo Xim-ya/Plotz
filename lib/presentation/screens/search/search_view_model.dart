@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -29,11 +30,8 @@ class SearchViewModel extends BaseViewModel {
   /* UseCases */
   final SearchedPagedContentUseCase pagedSearchHandler;
 
-
-
   /* Variables (State) */
-  BehaviorSubject<bool> get isInitialState =>
-      pagedSearchHandler.isInitialState;
+  BehaviorSubject<bool> get isInitialState => pagedSearchHandler.isInitialState;
 
   bool get showRoundCloseBtn => pagedSearchHandler.showRoundClosedBtn;
 
@@ -52,18 +50,34 @@ class SearchViewModel extends BaseViewModel {
 
   // 컨텐츠 요청
   Future<void> requestContent(SearchedContentNew content) async {
+    final id = Formatter.getOriginIdByTypeAndId(
+      type: content.type,
+      id: content.contentId,
+    );
+
+    final stateResponse =
+        await _contentRepository.checkIfContentAlreadyRequested(id);
+    final isAlreadyRegistered = stateResponse.getOrThrow();
+
+    if (isAlreadyRegistered) {
+      AlertWidget.newToast(
+          message: '이미 등록된 콘텐츠입니다.', context, isUsedOnTabScreen: true);
+      return context.pop();
+    }
+
     final ContentRequest request = ContentRequest(
-      contentId: Formatter.getOriginIdByTypeAndId(
-        type: content.type,
-        id: content.contentId,
-      ),
+      contentId: id,
       title: content.title,
       userId: _userService.userInfo.value.id!,
+      releaseDate: content.releaseDate,
+      posterImgUrl: content.posterImgUrl,
     );
     final response = await _contentRepository.createRequestContent(request);
     response.fold(
       onSuccess: (data) {
         context.pop();
+
+        _userService.updateUserRequestedContents();
         AlertWidget.newToast(
             message: '요청이 완료되었어요. 검토 후 빠른 시일 내 등록을 완료할게요.',
             context,

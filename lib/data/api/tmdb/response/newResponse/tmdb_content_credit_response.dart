@@ -1,4 +1,4 @@
-import 'package:soon_sak/utilities/index.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'tmdb_content_credit_response.g.dart';
 
@@ -52,17 +52,18 @@ class TmdbCastInfoItemResponse {
   String? credit_id;
 
   TmdbCastInfoItemResponse(
-      this.adult,
-      this.gender,
-      this.id,
-      this.known_for_department,
-      this.name,
-      this.original_name,
-      this.popularity,
-      this.profile_path,
-      this.cast_id,
-      this.character,
-      this.credit_id,);
+    this.adult,
+    this.gender,
+    this.id,
+    this.known_for_department,
+    this.name,
+    this.original_name,
+    this.popularity,
+    this.profile_path,
+    this.cast_id,
+    this.character,
+    this.credit_id,
+  );
 
   factory TmdbCastInfoItemResponse.fromJson(Map<String, dynamic> json) =>
       _$TmdbCastInfoItemResponseFromJson(json);

@@ -1,10 +1,13 @@
 import 'dart:io';
+
+import 'package:soon_sak/data/api/user/response/requested_content.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
   @override
-  Future<void> updateUserWatchHistory(WatchingHistoryRequest requestInfo) async {
+  Future<void> updateUserWatchHistory(
+      WatchingHistoryRequest requestInfo) async {
     final contentRef = db.collection('content').doc(requestInfo.originId);
 
     final data = requestInfo.toMap(
@@ -184,5 +187,31 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
         data: newData,
       );
     }
+  }
+
+  @override
+  Future<List<RequestedContentResponse>> loadRequestedContentByStatus(
+      {required String userId, required int statusKey}) async {
+    final response = await getDocsWithContainingSeveralFields(
+      'requestedContent',
+      firstFieldName: 'userId',
+      targetFirstValue: userId,
+      secondFieldName: 'statusKey',
+      targetSecondValue: statusKey,
+    );
+    return response
+        .map((e) => RequestedContentResponse.fromDocumentRes(e))
+        .toList();
+  }
+
+  @override
+  Future<void> removeEveryRequestedContents(String userId) async {
+    await deleteDocumentWithContainingField('requestedContent',
+        fieldName: 'userId', targetValue: userId);
+  }
+
+  @override
+  Future<void> removeRequestedContent(String contentId) async {
+    await deleteDocument('requestedContent', docId: contentId);
   }
 }

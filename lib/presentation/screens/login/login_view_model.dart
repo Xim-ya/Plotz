@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
@@ -24,16 +25,20 @@ class LoginViewModel extends BaseViewModel {
     final result = await _signInHandlerUseCase.call(social, context);
     await result.fold(
       onSuccess: (data) async {
-        await launchServiceModules().whenComplete(() {
-          _userService.updateUserLoginDate();
-          if (_userService.isOnboardingProgressDone) {
-            context.go(AppRoutes.tabs);
-            TabsBinding.dependencies();
-            LoginBinding.unRegisterDependencies();
-          } else {
-            context.go(AppRoutes.onboarding1);
-          }
-        });
+        await launchServiceModules().whenComplete(
+          () {
+            _userService.updateUserLoginDate();
+            _userService.updateUserSignInState();
+            if (_userService.isOnboardingProgressDone) {
+              context.go(AppRoutes.tabs);
+              TabsBinding.dependencies();
+              LoginBinding.unRegisterDependencies();
+            } else {
+              context.go(AppRoutes.onboarding1);
+            }
+            _userService.prepare(context);
+          },
+        );
       },
       onFailure: (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -52,7 +57,10 @@ class LoginViewModel extends BaseViewModel {
   /// load가 필요한 모듈들을 실행
   Future<void> launchServiceModules() async {
     await _userService.getUserInfo();
-    await _userService.saveUserLocalDataIfNeeded();
-    await _userService.checkOnBoardingProgressState();
+
+    await Future.wait([
+      _userService.saveUserLocalDataIfNeeded(),
+      _userService.checkOnBoardingProgressState()
+    ]);
   }
 }

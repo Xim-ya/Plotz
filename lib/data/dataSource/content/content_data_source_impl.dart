@@ -35,4 +35,8 @@ class ContentDataSourceImpl
       loadWithFirebaseIsolate(
         () => loadResponseOrThrow(() => _api.loadChannelInfo(contentId)),
       );
+
+  @override
+  Future<bool> checkIfContentAlreadyRequested(String contentId) =>
+      loadResponseOrThrow(() => _api.checkIfContentAlreadyRequested(contentId));
 }

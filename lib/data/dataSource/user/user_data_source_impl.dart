@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:soon_sak/data/api/user/response/requested_content.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-
 
 class UserDataSourceImpl
     with FireStoreErrorHandlerMixin
@@ -98,4 +98,19 @@ class UserDataSourceImpl
       genres: genres,
     );
   }
+
+  @override
+  Future<List<RequestedContentResponse>> loadRequestedContentByStatus(
+      int statusKey) {
+    return loadResponseOrThrow(() => _api.loadRequestedContentByStatus(
+        userId: _local.userId!, statusKey: statusKey));
+  }
+
+  @override
+  Future<void> removeEveryRequestedContents() => loadResponseOrThrow(
+      () => _api.removeEveryRequestedContents(_local.userId!));
+
+  @override
+  Future<void> removeRequestedContent(String contentId) =>
+      loadResponseOrThrow(() => _api.removeRequestedContent(contentId));
 }

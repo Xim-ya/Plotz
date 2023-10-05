@@ -20,8 +20,8 @@ abstract class DomainModules {
 
     /* UseCase */
     locator.registerLazySingleton(() => CheckVersionAndNetworkUseCase(
-        repository: locator<VersionRepository>(),
-        userService: locator<UserService>()));
+          repository: locator<VersionRepository>(),
+        ));
 
     locator.registerLazySingleton(() => LoadRandomPagedExploreContentsUseCase(
         repository: locator<ContentRepository>(),

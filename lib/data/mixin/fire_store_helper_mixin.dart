@@ -514,5 +514,34 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
+  // 특정 field들의 값을 가지고 있는 document 리스트를 불러오는 메소드
+  Future<List<DocumentSnapshot>> getDocsWithContainingSeveralFields(
+    String collectionName, {
+    required String firstFieldName,
+    required dynamic targetFirstValue,
+    required String secondFieldName,
+    required dynamic targetSecondValue,
+  }) async {
+    final snapshot = await _db
+        .collection(collectionName)
+        .where(firstFieldName, isEqualTo: targetFirstValue)
+        .where('statusKey', isEqualTo: targetSecondValue)
+        .get();
+    return snapshot.docs;
+  }
+
+  //  특정 document 삭제
+  Future<void> deleteDocumentWithContainingField(String collectionName,
+      {required String fieldName, required dynamic targetValue}) async {
+    final querySnapshot = await _db
+        .collection(collectionName)
+        .where(fieldName, isEqualTo: targetValue)
+        .get();
+
+    for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+      await _db.collection(collectionName).doc(documentSnapshot.id).delete();
+    }
+  }
+
   FirebaseFirestore get db => _db;
 }

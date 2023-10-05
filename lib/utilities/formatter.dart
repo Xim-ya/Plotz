@@ -26,6 +26,10 @@ class Formatter {
     return DateFormat('yyyy.MM.dd').format(DateTime.parse(date));
   }
 
+  static String parseDateToyyyyMMdd(DateTime dateTime) {
+    return DateFormat('yyyy.MM.dd').format(dateTime);
+  }
+
   /// 좋아요 수 & 조회수 & 구독자 수를 유튜브 포맷에 맞게 변경
   /// 1000 미만 -> 숫자 ex) 956
   /// 1000 이상 -> 천 단위 ex) 1.4천
@@ -59,8 +63,6 @@ class Formatter {
       return '-';
     }
   }
-
-
 
   // 현재 일을 기준으로 인자로 받은 '날짜'를 계산하여 일정 포맷으로 리턴함
   static String getDateDifferenceFromNow(String? date) {
