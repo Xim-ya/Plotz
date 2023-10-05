@@ -1,9 +1,12 @@
 import 'dart:developer';
+
+import 'package:soon_sak/app/di/locator/locator.dart';
 import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/domain/enum/requested_content_status.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-
 
 class UserService {
   UserService({
@@ -12,29 +15,58 @@ class UserService {
   })  : _authRepository = authRepository,
         _userRepository = userRepository,
         userWatchHistory = BehaviorSubject<List<UserWatchHistoryItem>>(),
+        waitingRequestedContents = BehaviorSubject<List<RequestedContent>>(),
         userInfo = BehaviorSubject<UserModel>();
 
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
 
-  late final String currentVersionNum; // 버전정보
   bool isUserSignIn = false; // 유저 로그인 여부
   bool isOnboardingProgressDone = true; // 온보딩 완료 여부
   final BehaviorSubject<UserModel> userInfo; // 유저 정보
   final BehaviorSubject<List<UserWatchHistoryItem>>
       userWatchHistory; // 유저 시청 기록
+  final BehaviorSubject<List<RequestedContent>> waitingRequestedContents;
 
   /* Intents */
   // 유저 시청 기록 업데이트
   Future<void> updateUserWatchHistory() async {
-    final response =
-        await _userRepository.loadUserWatchHistory();
+    final response = await _userRepository.loadUserWatchHistory();
     response.fold(
       onSuccess: (data) {
         userWatchHistory.add(data);
       },
       onFailure: (e) {
         log('UserService : $e');
+      },
+    );
+  }
+
+  /// 유저의 요청중인 콘텐츠 호출
+  Future<void> updateUserRequestedContents() async {
+    if (isUserSignIn == false) return;
+
+    final response = await _userRepository
+        .loadRequestedContentByStatus(RequestedContentStatus.waiting.key);
+
+    response.fold(
+      onSuccess: (contents) {
+        waitingRequestedContents.add(contents);
+      },
+      onFailure: (e) {
+        waitingRequestedContents.addError(e);
+      },
+    );
+  }
+
+  Future<void> removeAllOfUserRequestedContents() async {
+    final response = await _userRepository.removeEveryRequestedContents();
+    response.fold(
+      onSuccess: (_) {
+        log('모든 유저 요청 콘텐츠 삭제');
+      },
+      onFailure: (e) {
+        log('유저 요청 콘텐츠 삭제 실패 : $e');
       },
     );
   }
@@ -88,8 +120,7 @@ class UserService {
       return;
     } else {
       // 서버 정보 확인
-      final response = await _userRepository
-          .hasPreferencedHistory();
+      final response = await _userRepository.hasPreferencedHistory();
       response.fold(
         onSuccess: (data) {
           isOnboardingProgressDone = data;
@@ -106,7 +137,7 @@ class UserService {
   }
 
   // 유저 등록 여부 확인
-  Future<void> checkUserSignInState() async {
+  Future<void> updateUserSignInState() async {
     final response = await _authRepository.isUserSignedIn();
     response.fold(
       onSuccess: (data) {
@@ -144,7 +175,17 @@ class UserService {
   /// 리소스 initialize 메소드
   /// [SplashViewModel]에서 사용됨
   Future<void> prepare(BuildContext context) async {
-    await checkUserSignInState();
+    await updateUserSignInState();
     listenNetworkConnection(context); // TODO 새로운 서비스 모듈로 분리 필요
+  }
+
+  void resetModule() {
+    safeUnregister<UserService>();
+    locator.registerSingleton(
+      UserService(
+        authRepository: locator<AuthRepository>(),
+        userRepository: locator<UserRepository>(),
+      ),
+    );
   }
 }

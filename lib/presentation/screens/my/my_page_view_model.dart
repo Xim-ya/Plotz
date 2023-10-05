@@ -1,7 +1,9 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
 
@@ -12,8 +14,10 @@ class MyPageViewModel extends BaseViewModel {
     required UserRepository userRepository,
     required UserService userService,
     required SignOutUseCase signOutHandlerUseCase,
+    required CheckVersionAndNetworkUseCase checkVersionAndNetworkUseCase,
   })  : _userService = userService,
         _userRepository = userRepository,
+        _checkVersionAndNetworkUseCase = checkVersionAndNetworkUseCase,
         _signOutHandlerUseCase = signOutHandlerUseCase;
 
   /* Data Modules */
@@ -29,11 +33,22 @@ class MyPageViewModel extends BaseViewModel {
 
   /* UseCase*/
   final SignOutUseCase _signOutHandlerUseCase;
+  final CheckVersionAndNetworkUseCase _checkVersionAndNetworkUseCase;
 
   /* Controllers */
   late final ScrollController scrollController;
 
   /* Intents */
+
+  // 요청 콘텐츠 보드 페이지로 이동
+  void routeToRequestedContentBoard() {
+    if (userRequestedContents.hasError) {
+      AlertWidget.newToast(context, message: '데이터를 불러오지 못하였습니다');
+    }
+
+    context.push(AppRoutes.requestedContent,
+        extra: {'arg1': userRequestedContents.valueOrNull});
+  }
 
   // 설정 메뉴가 클릭 되었을 때
   void onSettingMenuTapped(SettingMenu selectedMenu) {
@@ -75,30 +90,17 @@ class MyPageViewModel extends BaseViewModel {
     }
   }
 
-  /// 유저 시청 기록 추가
-  Future<void> updateUserWatchHistory(
-    UserWatchHistoryItem selectedContent,
-  ) async {
-    final requestData = WatchingHistoryRequest(
-      userId: _userService.userInfo.value.id!,
-      originId: selectedContent.originId,
-    );
-
-    final response = await _userRepository.updateUserWatchHistory(requestData);
-    response.fold(
-      onSuccess: (_) {
-        _userService.updateUserWatchHistory();
-        notifyListeners();
-      },
-      onFailure: (e) {
-        log('ContentDetailViewModel : $e');
-      },
-    );
+  Future<void> _fetchUserRequestedContents() async {
+    await _userService.updateUserRequestedContents();
+    notifyListeners();
+    print("UPDATED");
   }
 
   // 유저 시청 기록 호출
   Future<void> _fetchUserWatchHistory() async {
     await _userService.updateUserWatchHistory();
+
+    notifyListeners();
   }
 
   // 유저 로컬 데이터 삭제
@@ -126,16 +128,22 @@ class MyPageViewModel extends BaseViewModel {
   // 탭이 선택되었을 때
   Future<void> prepare() async {
     loadingState = ViewModelLoadingState.loading;
-    await _fetchUserWatchHistory();
+
+    await Future.wait(
+        [_fetchUserWatchHistory(), _fetchUserRequestedContents()]);
     loadingState = ViewModelLoadingState.done;
   }
 
   /* Getters */
   // 현재 버전 정보
-  String get currentVersionNum => _userService.currentVersionNum;
+  String get currentVersionNum => _checkVersionAndNetworkUseCase.appVersionNum;
 
   // 유저 간략 정보
   BehaviorSubject<UserModel> get userInfoSub => _userService.userInfo;
+
+  // 유저의 요청중인 콘텐츠
+  BehaviorSubject<List<RequestedContent>> get userRequestedContents =>
+      _userService.waitingRequestedContents;
 
   @override
   Future<void> onInit() async {

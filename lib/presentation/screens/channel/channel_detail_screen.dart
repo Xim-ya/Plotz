@@ -1,5 +1,3 @@
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/domain/model/content/home/content_poster_shell.dart';
 import 'package:soon_sak/presentation/index.dart';

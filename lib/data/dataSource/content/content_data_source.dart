@@ -21,4 +21,7 @@ abstract class ContentDataSource {
 
   // 컨텐츠 등록 요청 (단순 요청)
   Future<void> requestContent(ContentRequest requestInfo);
+
+  /// 콘텐츠 요청 상태 여부
+  Future<bool> checkIfContentAlreadyRequested(String contentId);
 }

@@ -40,6 +40,7 @@ dependencies:
   # State Controller
   rxdart: ^0.27.7
   provider: ^6.0.5
+  flutter_hooks: ^0.20.1
 
   #Network
   video_url_validator: ^1.0.2

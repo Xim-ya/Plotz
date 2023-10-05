@@ -1,6 +1,9 @@
 import 'package:soon_sak/app/index.dart';
-import 'package:soon_sak/domain/index.dart';
+import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/presentation/index.dart';
+import 'package:soon_sak/presentation/screens/my/localWidget/my_page_scaffold.dart';
+import 'package:soon_sak/presentation/screens/my/localWidget/my_profile_info_view.dart';
+import 'package:soon_sak/presentation/screens/my/localWidget/my_watch_history_slider.dart';
 import 'package:soon_sak/utilities/index.dart';
 
 class MyPageScreen extends BaseScreen<MyPageViewModel> {
@@ -8,181 +11,33 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          controller: vm(context).scrollController,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 60),
-              // 상단 프로필 이미지
-              StreamBuilder<UserModel>(
-                stream: vm(context).userInfoSub.stream,
-                builder: (context, snapshot) {
-                  return Center(
-                    child: Column(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: vm(context).routeToProfileSetting,
-                          child: RoundProfileImg(
-                            size: 90,
-                            imgUrl: snapshot.data?.photoUrl,
-                          ),
-                        ),
-                        AppSpace.size14,
-                        Transform.translate(
-                          offset: const Offset(10, 0),
-                          child: TextButton(
-                            onPressed: vm(context).routeToProfileSetting,
-                            style: TextButton.styleFrom(
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.only(
-                                right: 24,
-                                left: 4,
-                              ),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                Text(
-                                  snapshot.data?.displayName ?? '-',
-                                  style: AppTextStyle.headline1.copyWith(
-                                    color: AppColor.mixedWhite,
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  bottom: 0,
-                                  right: -22,
-                                  child: SvgPicture.asset(
-                                    'assets/icons/edit.svg',
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              AppSpace.size36,
-              // 시청 기록
-              Padding(
-                padding: AppInset.left16,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '시청 기록',
-                    style: AppTextStyle.title2,
-                  ),
-                ),
-              ),
-              AppSpace.size8,
-              StreamBuilder<List<UserWatchHistoryItem>?>(
-                stream: vm(context).watchHistorySub.stream,
-                builder: (context, snapshot) {
-                  final items = snapshot.data;
-                  return items.hasData && items!.isEmpty
-                      ? Container(
-                          alignment: Alignment.center,
-                          height: 160,
-                          child: Text(
-                            '앗! 아직 시청기록이 없으시네요.\n플로츠에서 다양한 콘텐츠를 즐겨보세요!',
-                            style: AppTextStyle.body3
-                                .copyWith(color: AppColor.gray03),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : ContentPostSlider(
-                          height: 160,
-                          itemCount: items?.length ?? 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            final item = items?[index];
-                            if (item.hasData) {
-                              return GestureDetector(
-                                onTap: () {
-                                  final arg = ContentArgumentFormat(
-                                    originId: item.originId,
-                                    contentId: SplittedIdAndType.fromOriginId(
-                                            item.originId)
-                                        .id,
-                                    contentType: SplittedIdAndType.fromOriginId(
-                                            item.originId)
-                                        .type,
-                                    posterImgUrl: item.posterImgUrl,
-                                    title: item.title,
-                                  );
-                                  vm(context).routeToContentDetail(arg);
-                                },
-                                child: ContentPosterItemView(
-                                  imgUrl: item?.posterImgUrl,
-                                  title: item!.title,
-                                ),
-                              );
-                            } else {
-                              return ContentPosterItemView.createSkeleton();
-                            }
-                          },
-                        );
-                },
-              ),
-              AppSpace.size56,
-
-              // 환경설정
-              Padding(
-                padding: AppInset.left16,
-                child: Text(
-                  '환경 설정',
-                  style: AppTextStyle.title2,
-                ),
-              ),
-              _versionMenu(context),
-              ...vm(context)
-                  .settingOptions
-                  .map(
-                    (e) => _settingMenu(
-                      title: e.name,
-                      onTap: () {
-                        vm(context).onSettingMenuTapped(e);
-                      },
-                    ),
-                  )
-                  .toList(),
-              AppSpace.size56,
-            ],
-          ),
-        ),
-        Positioned(
-          top: 0,
-          child: Selector<MyPageViewModel, bool>(
-            selector: (_, vm) => vm.hideGradient,
-            builder: (_, hideGradient, __) => AnimatedOpacity(
-              duration: const Duration(milliseconds: 300),
-              opacity: hideGradient ? 0 : 1,
-              child: Container(
-                height: 88,
-                width: SizeConfig.to.screenWidth,
-                decoration: const BoxDecoration(
-                  gradient: AppGradient.topToBottom,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+    return MyPageScaffold(
+      scrollController: vm(context).scrollController,
+      profileInfoView: const MyProfileInfoView(),
+      watchHistorySlider: const MyWatchHistorySlider(),
+      currentVersionInfoTile: const _CurrentVersionInfoTile(),
+      requestedContentIndicator: const _RequestedContentStatusIndicator(),
+      settingBtnList: _buildSettingMenuList(context),
+      hideTopLinearGradient: vm(context).hideGradient,
     );
   }
 
-  @override
-  MyPageViewModel createViewModel(BuildContext context) =>
-      locator<MyPageViewModel>();
+  // 환경설정 옵션 버튼 리스트 뷰
+  List<Widget> _buildSettingMenuList(BuildContext context) {
+    return [
+      ...vm(context)
+          .settingOptions
+          .map(
+            (e) => _settingMenu(
+              title: e.name,
+              onTap: () {
+                vm(context).onSettingMenuTapped(e);
+              },
+            ),
+          )
+          .toList(),
+    ];
+  }
 
   InkWell _settingMenu({required String title, required VoidCallback onTap}) {
     return InkWell(
@@ -201,7 +56,57 @@ class MyPageScreen extends BaseScreen<MyPageViewModel> {
     );
   }
 
-  Container _versionMenu(BuildContext context) {
+  @override
+  MyPageViewModel createViewModel(BuildContext context) =>
+      locator<MyPageViewModel>();
+}
+
+class _RequestedContentStatusIndicator extends BaseView<MyPageViewModel> {
+  const _RequestedContentStatusIndicator({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<RequestedContent>>(
+        stream: vm(context).userRequestedContents,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const SizedBox();
+          }
+
+          return MaterialButton(
+            onPressed: vm(context).routeToRequestedContentBoard,
+            height: 54,
+            padding: AppInset.horizontal16,
+            minWidth: SizeConfig.to.screenWidth,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  '요청중인 콘텐츠',
+                  style: AppTextStyle.title2,
+                ),
+                Text(
+                  '${snapshot.data?.length ?? 0}건',
+                  style: AppTextStyle.body3.copyWith(
+                    color: snapshot.data?.isNotEmpty ?? false
+                        ? AppColor.main
+                        : AppColor.gray03,
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+}
+
+/// 버전 정보 타일 뷰
+class _CurrentVersionInfoTile extends BaseView<MyPageViewModel> {
+  const _CurrentVersionInfoTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin:
           AppInset.horizontal16 + const EdgeInsets.only(top: 24, bottom: 16),

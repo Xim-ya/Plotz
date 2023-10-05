@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
@@ -77,6 +78,7 @@ class SplashViewModel extends BaseViewModel {
     await launchServiceModules();
     await _userService.getUserInfo();
     await Future.wait([
+      _userService.updateUserRequestedContents(),
       _userService.saveUserLocalDataIfNeeded(),
       _userService.checkOnBoardingProgressState()
     ]);

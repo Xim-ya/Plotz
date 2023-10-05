@@ -36,6 +36,12 @@ class HomeScreen extends BaseScreen<HomeViewModel> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'data',
+                  style: AppTextStyle.alert1.copyWith(
+                    color: Theme.of(context).dividerColor,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: value.isTopPositionedCollectionLoaded
@@ -327,26 +333,27 @@ class _BannerSlider extends BaseView<HomeViewModel> {
                 ),
                 AppSpace.size12,
                 Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Consumer<HomeViewModel>(
-                      builder: (context, vm, _) {
-                        return DotsIndicator(
-                          dotsCount: vmS<int>(context,
-                              (vm) => vm.bannerContentList?.length ?? 4),
-                          position: vmS<int>(
-                                  context, (vm) => vm.bannerContentsSliderIndex)
-                              .toDouble(),
-                          decorator: const DotsDecorator(
-                            spacing: EdgeInsets.symmetric(horizontal: 4),
-                            size: Size(4, 4),
-                            activeSize: Size(4, 4),
-                            color: AppColor.gray04,
-                            // Inactive color
-                            activeColor: AppColor.gray01,
-                          ),
-                        );
-                      },
-                    )),
+                  alignment: Alignment.bottomCenter,
+                  child: Consumer<HomeViewModel>(
+                    builder: (context, vm, _) {
+                      return DotsIndicator(
+                        dotsCount: vmS<int>(
+                            context, (vm) => vm.bannerContentList?.length ?? 4),
+                        position: vmS<int>(
+                                context, (vm) => vm.bannerContentsSliderIndex)
+                            .toDouble(),
+                        decorator: const DotsDecorator(
+                          spacing: EdgeInsets.symmetric(horizontal: 4),
+                          size: Size(4, 4),
+                          activeSize: Size(4, 4),
+                          color: AppColor.gray04,
+                          // Inactive color
+                          activeColor: AppColor.gray01,
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

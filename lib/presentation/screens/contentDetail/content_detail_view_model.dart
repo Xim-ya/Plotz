@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -110,7 +111,6 @@ class ContentDetailViewModel extends BaseViewModel {
       title: content.title,
       posterImgUrl: content.posterImgUrl,
     );
-
 
     contentDetailBinding.isDependenciesDeleted = true;
 
