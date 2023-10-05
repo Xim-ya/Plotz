@@ -1,15 +1,17 @@
 import 'package:soon_sak/app/index.dart';
+import 'package:soon_sak/data/api/channel/response/channel_response.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'package:soon_sak/data/api/channel/response/channel_response.dart';
 
 class ChannelPreferencesViewModel extends BaseViewModel {
   ChannelPreferencesViewModel({
     required LoadPagedPreferenceChannelListUseCase loadChannelsUseCase,
     required UpdateOnboardingPreferencesUseCase updateUserPreferencesUseCase,
+    required UserService userService,
   })  : _loadChannelsUseCase = loadChannelsUseCase,
+        _userService = userService,
         _updateUserPreferencesUseCase = updateUserPreferencesUseCase;
 
   /* State Variables */
@@ -21,6 +23,7 @@ class ChannelPreferencesViewModel extends BaseViewModel {
   /* UseCases */
   final LoadPagedPreferenceChannelListUseCase _loadChannelsUseCase;
   final UpdateOnboardingPreferencesUseCase _updateUserPreferencesUseCase;
+  final UserService _userService;
 
   /* Controllers */
   late final ScrollController scrollController;

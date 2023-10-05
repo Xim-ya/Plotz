@@ -82,4 +82,10 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
       return ChannelResponse();
     }
   }
+
+  @override
+  Future<bool> checkIfContentAlreadyRequested(String contentId) async {
+    final doc = await getDocById('requestedContent', docId: contentId);
+    return doc.exists;
+  }
 }

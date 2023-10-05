@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:soon_sak/app/di/locator/locator.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/enum/requested_content_status.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -20,7 +21,6 @@ class UserService {
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
 
-  late final String currentVersionNum; // 버전정보
   bool isUserSignIn = false; // 유저 로그인 여부
   bool isOnboardingProgressDone = true; // 온보딩 완료 여부
   final BehaviorSubject<UserModel> userInfo; // 유저 정보
@@ -43,13 +43,16 @@ class UserService {
   }
 
   /// 유저의 요청중인 콘텐츠 호출
-  Future<void> fetchUserRequestedContents() async {
+  Future<void> updateUserRequestedContents() async {
+    if (isUserSignIn == false) return;
+
     final response = await _userRepository
         .loadRequestedContentByStatus(RequestedContentStatus.waiting.key);
 
     response.fold(
       onSuccess: (contents) {
         waitingRequestedContents.add(contents);
+        print("REAL UPDATE");
       },
       onFailure: (e) {
         waitingRequestedContents.addError(e);
@@ -123,7 +126,7 @@ class UserService {
   }
 
   // 유저 등록 여부 확인
-  Future<void> checkUserSignInState() async {
+  Future<void> updateUserSignInState() async {
     final response = await _authRepository.isUserSignedIn();
     response.fold(
       onSuccess: (data) {
@@ -161,8 +164,17 @@ class UserService {
   /// 리소스 initialize 메소드
   /// [SplashViewModel]에서 사용됨
   Future<void> prepare(BuildContext context) async {
-    await checkUserSignInState();
-    await fetchUserRequestedContents();
+    await updateUserSignInState();
     listenNetworkConnection(context); // TODO 새로운 서비스 모듈로 분리 필요
+  }
+
+  void resetModule() {
+    safeUnregister<UserService>();
+    locator.registerSingleton(
+      UserService(
+        authRepository: locator<AuthRepository>(),
+        userRepository: locator<UserRepository>(),
+      ),
+    );
   }
 }

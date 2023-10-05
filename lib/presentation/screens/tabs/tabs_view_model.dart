@@ -47,7 +47,7 @@ class TabsViewModel extends BaseViewModel {
           ),
         );
         if (_exploreViewModel.loadingState.isInitState) {
-           _searchViewModel.prepare();
+          _searchViewModel.prepare();
         }
         break;
 

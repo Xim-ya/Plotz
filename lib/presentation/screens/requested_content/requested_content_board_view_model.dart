@@ -1,19 +1,24 @@
-import 'package:flutter/material.dart';
+import 'package:soon_sak/app/routes/app_routes.dart';
 import 'package:soon_sak/domain/enum/requested_content_status.dart';
+import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/domain/model/content/myPage/requested_content.m.dart';
 import 'package:soon_sak/domain/useCase/content/user/load_user_requested_contents_use_case.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/presentation/screens/requested_content/requseted_content_board_screen.dart';
 import 'package:soon_sak/utilities/data_status.dart';
+import 'package:soon_sak/utilities/index.dart';
 
 class RequestedContentBoardViewModel extends BaseViewModel {
-  RequestedContentBoardViewModel(this._loadUserRequestedContentsUseCase);
+  RequestedContentBoardViewModel(
+      this._loadUserRequestedContentsUseCase, this._passedRequestedContents);
 
   final LoadUserRequestedContentsUseCase _loadUserRequestedContentsUseCase;
 
   final List<Ds<List<RequestedContent>>> requestedContentCollection = [
     ...List.generate(3, (_) => Initial())
   ];
+
+  final List<RequestedContent>? _passedRequestedContents;
 
   Ds<List<RequestedContent>> getContentsByKey(int key) {
     return requestedContentCollection[key];
@@ -47,13 +52,31 @@ class RequestedContentBoardViewModel extends BaseViewModel {
   }
 
   ///
+  /// 요청이 완료된 콘텐츠 선택되었을 때
+  ///
+  void onRegisteredContentTapped(RequestedContent item) {
+    final routingArg = ContentArgumentFormat(
+      originId: item.id,
+      contentId: SplittedIdAndType.fromOriginId(item.id).id,
+      contentType: SplittedIdAndType.fromOriginId(item.id).type,
+      title: item.title,
+      posterImgUrl: item.posterImgUrl,
+    );
+
+    context.push(AppRoutes.contentDetail,
+        extra: {'arg1': routingArg, 'arg2': true});
+  }
+
+  ///
   /// 현재 바인딩되는 Screen[RequestedContentBoardScreen]이
   /// Stateful Widget으로 감싸져 있기 때문에 초기화 동작을 지정할 때
   /// 기존 [onInit] 오버라이드 사용하지 않음
   ///
   void onIntentInit(TabController controller) {
     tabController = controller;
-    _fetchRequestedContentsByStatus(0);
+    if (_passedRequestedContents != null) {
+      requestedContentCollection[0] = Fetched(_passedRequestedContents!);
+    }
 
     tabController.addListener(_fetchContentsIfNeeded);
   }

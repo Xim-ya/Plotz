@@ -45,8 +45,7 @@ abstract class TabsBinding {
       () => MyPageViewModel(
         userRepository: locator<UserRepository>(),
         userService: locator<UserService>(),
-        loadUserRequestedContentsUseCase:
-            locator<LoadUserRequestedContentsUseCase>(),
+        checkVersionAndNetworkUseCase: locator<CheckVersionAndNetworkUseCase>(),
         signOutHandlerUseCase: locator<SignOutUseCase>(),
       ),
     );

@@ -1,10 +1,10 @@
 import 'dart:developer';
-import 'package:go_router/go_router.dart';
+import 'dart:io' show Platform, exit;
+
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/presentation/index.dart';
 import 'package:soon_sak/utilities/index.dart';
-import 'dart:io' show Platform, exit;
 
 /** Created By Ximya - 2023.03.01
  *  버전 정보와 네트워크를 확인하는 UseCase
@@ -19,13 +19,12 @@ import 'dart:io' show Platform, exit;
 
 class CheckVersionAndNetworkUseCase
     extends BaseUseCase<BuildContext, Result<void>> {
-  CheckVersionAndNetworkUseCase(
-      {required VersionRepository repository, required UserService userService})
-      : _repository = repository,
-        _userService = userService;
+  CheckVersionAndNetworkUseCase({required VersionRepository repository})
+      : _repository = repository;
 
   final VersionRepository _repository;
-  final UserService _userService;
+
+  late final String appVersionNum;
 
   @override
   Future<Result<void>> call(BuildContext context) async {
@@ -41,8 +40,7 @@ class CheckVersionAndNetworkUseCase
         final serverVersionCode = Version.parse(version.versionCode);
         final appVersionCode = Version.parse(packageInfo.version);
 
-        // 서비스 모듈 버전 정보 저장
-        _userService.currentVersionNum = version.versionCode;
+        appVersionNum = version.versionCode;
 
         // 심사를 진행중인 상태라면
         if (version.systemAvailable == 'R' &&

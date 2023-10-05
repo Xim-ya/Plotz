@@ -89,42 +89,15 @@ class _RequestedContentStatusIndicator extends BaseView<MyPageViewModel> {
                 Text(
                   '${snapshot.data?.length ?? 0}건',
                   style: AppTextStyle.body3.copyWith(
-                    color:
-                        snapshot.data.hasData ? AppColor.main : AppColor.gray03,
+                    color: snapshot.data?.isNotEmpty ?? false
+                        ? AppColor.main
+                        : AppColor.gray03,
                   ),
                 )
               ],
             ),
           );
         });
-
-    if (vmW(context).waitingRequestedContents.cycle.isFailed) {
-      return const SizedBox();
-    }
-    return MaterialButton(
-      onPressed: vm(context).routeToRequestedContentBoard,
-      height: 54,
-      padding: AppInset.horizontal16,
-      minWidth: SizeConfig.to.screenWidth,
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            '요청중인 콘텐츠',
-            style: AppTextStyle.title2,
-          ),
-          Text(
-            '${vmW(context).requestedContentsCount}건',
-            style: AppTextStyle.body3.copyWith(
-              color: vmW(context).hasWaitingRequestedContents
-                  ? AppColor.main
-                  : AppColor.gray03,
-            ),
-          )
-        ],
-      ),
-    );
   }
 }
 

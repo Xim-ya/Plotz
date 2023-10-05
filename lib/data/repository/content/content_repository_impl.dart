@@ -42,4 +42,15 @@ class ContentRepositoryImpl implements ContentRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<bool>> checkIfContentAlreadyRequested(String contentId) async {
+    try {
+      final response =
+          await _contentDataSource.checkIfContentAlreadyRequested(contentId);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

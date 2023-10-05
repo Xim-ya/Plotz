@@ -38,6 +38,7 @@ abstract class AppPages {
           AppRoutes.tabs,
           AppRoutes.channelDetail,
           AppRoutes.contentDetail,
+          AppRoutes.requestedContent,
         ],
         binding: ContentDetailBinding(),
         newBuilder: (context, state) => const ContentDetailScreen(),
@@ -62,22 +63,6 @@ abstract class AppPages {
       GoRoute(
         path: AppRoutes.tabs,
         builder: (context, state) => const TabsScreen(),
-        routes: [
-          GoRouteWithBinding(
-            path: 'setting',
-            prevPath: const [AppRoutes.tabs],
-            binding: SettingBinding(),
-            newBuilder: (context, state) => const SettingScreen(),
-            routes: [
-              GoRouteWithBinding(
-                path: 'profileSetting',
-                prevPath: const [AppRoutes.tabs + AppRoutes.setting],
-                binding: ProfileSettingBinding(),
-                newBuilder: (context, state) => const ProfileSettingScreen(),
-              ),
-            ],
-          ),
-        ],
       ),
     ],
   );

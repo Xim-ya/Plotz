@@ -1,7 +1,6 @@
 import 'package:soon_sak/app/di/binding.dart';
 import 'package:soon_sak/app/di/locator/locator.dart';
 import 'package:soon_sak/data/repository/channel/channel_repository.dart';
-import 'package:soon_sak/data/repository/tmdb/tmdb_repository.dart';
 import 'package:soon_sak/data/repository/user/user_repository.dart';
 import 'package:soon_sak/domain/service/user_service.dart';
 import 'package:soon_sak/domain/useCase/channel/load_paged_preferences_channel_list_use_case.dart';
@@ -16,7 +15,9 @@ class ChannelPreferencesBinding extends Bindings {
     locator.registerFactory(
       () => ChannelPreferencesViewModel(
         loadChannelsUseCase: locator<LoadPagedPreferenceChannelListUseCase>(),
-        updateUserPreferencesUseCase: locator<UpdateOnboardingPreferencesUseCase>(),
+        updateUserPreferencesUseCase:
+            locator<UpdateOnboardingPreferencesUseCase>(),
+        userService: locator<UserService>(),
       ),
     );
     locator.registerFactory(() => LoadPagedPreferenceChannelListUseCase(
