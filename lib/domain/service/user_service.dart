@@ -52,10 +52,21 @@ class UserService {
     response.fold(
       onSuccess: (contents) {
         waitingRequestedContents.add(contents);
-        print("REAL UPDATE");
       },
       onFailure: (e) {
         waitingRequestedContents.addError(e);
+      },
+    );
+  }
+
+  Future<void> removeAllOfUserRequestedContents() async {
+    final response = await _userRepository.removeEveryRequestedContents();
+    response.fold(
+      onSuccess: (_) {
+        log('모든 유저 요청 콘텐츠 삭제');
+      },
+      onFailure: (e) {
+        log('유저 요청 콘텐츠 삭제 실패 : $e');
       },
     );
   }

@@ -184,4 +184,14 @@ class UserRepositoryImpl implements UserRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<void>> removeEveryRequestedContents() async {
+    try {
+      await _dataSource.removeEveryRequestedContents();
+      return Result.success(null);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

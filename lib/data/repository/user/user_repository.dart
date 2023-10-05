@@ -59,4 +59,7 @@ abstract class UserRepository {
   // 요청 콘텐츠 리스트 호출
   Future<Result<List<RequestedContent>>> loadRequestedContentByStatus(
       int statusKey);
+
+  // 요청된 모든 유저 콘텐츠 삭제
+  Future<Result<void>> removeEveryRequestedContents();
 }

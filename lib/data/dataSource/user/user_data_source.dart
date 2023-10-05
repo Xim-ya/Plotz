@@ -55,4 +55,7 @@ abstract class UserDataSource {
   // 요청 콘텐츠 리스트 호출
   Future<List<RequestedContentResponse>> loadRequestedContentByStatus(
       int statusKey);
+
+  // 요청된 유저의 콘텐츠 리스트 삭제
+  Future<void> removeEveryRequestedContents();
 }

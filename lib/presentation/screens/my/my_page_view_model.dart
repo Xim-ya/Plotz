@@ -129,7 +129,6 @@ class MyPageViewModel extends BaseViewModel {
   Future<void> prepare() async {
     loadingState = ViewModelLoadingState.loading;
 
-    print("aim");
     await Future.wait(
         [_fetchUserWatchHistory(), _fetchUserRequestedContents()]);
     loadingState = ViewModelLoadingState.done;

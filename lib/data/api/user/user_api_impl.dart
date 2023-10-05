@@ -203,4 +203,10 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
         .map((e) => RequestedContentResponse.fromDocumentRes(e))
         .toList();
   }
+
+  @override
+  Future<void> removeEveryRequestedContents(String userId) async {
+    await deleteDocumentWithContainingField('requestedContent',
+        fieldName: 'userId', targetValue: userId);
+  }
 }

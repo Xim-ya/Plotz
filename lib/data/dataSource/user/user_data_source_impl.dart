@@ -105,4 +105,8 @@ class UserDataSourceImpl
     return loadResponseOrThrow(() => _api.loadRequestedContentByStatus(
         userId: _local.userId!, statusKey: statusKey));
   }
+
+  @override
+  Future<void> removeEveryRequestedContents() => loadResponseOrThrow(
+      () => _api.removeEveryRequestedContents(_local.userId!));
 }

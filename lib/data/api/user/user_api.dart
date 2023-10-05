@@ -46,4 +46,7 @@ abstract class UserApi {
   // 요청된 유저의 콘텐츠 리스트
   Future<List<RequestedContentResponse>> loadRequestedContentByStatus(
       {required String userId, required int statusKey});
+
+  // 요청된 유저의 콘텐츠 리스트 삭제
+  Future<void> removeEveryRequestedContents(String userId);
 }

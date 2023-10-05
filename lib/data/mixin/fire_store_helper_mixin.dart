@@ -530,5 +530,18 @@ mixin FirestoreHelper {
     return snapshot.docs;
   }
 
+  //  특정 document 삭제
+  Future<void> deleteDocumentWithContainingField(String collectionName,
+      {required String fieldName, required dynamic targetValue}) async {
+    final querySnapshot = await _db
+        .collection(collectionName)
+        .where(fieldName, isEqualTo: targetValue)
+        .get();
+
+    for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+      await _db.collection(collectionName).doc(documentSnapshot.id).delete();
+    }
+  }
+
   FirebaseFirestore get db => _db;
 }

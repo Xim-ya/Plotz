@@ -27,7 +27,9 @@ extension MyPageViewModelMenuEvent on MyPageViewModel {
       onSuccess: (data) {
         _logOut().whenComplete(() {
           clearUserLocalData();
+          _userService.removeAllOfUserRequestedContents();
           _userService.resetModule();
+
           AlertWidget.newToast(message: '회원탈퇴 처리 되었습니다', context);
         });
       },
