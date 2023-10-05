@@ -62,4 +62,7 @@ abstract class UserRepository {
 
   // 요청된 모든 유저 콘텐츠 삭제
   Future<Result<void>> removeEveryRequestedContents();
+
+  // 요청된 특정 콘텐츠 삭제
+  Future<Result<void>> removeRequestedContent(String contentId);
 }

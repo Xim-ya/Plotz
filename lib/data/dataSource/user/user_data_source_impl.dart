@@ -109,4 +109,8 @@ class UserDataSourceImpl
   @override
   Future<void> removeEveryRequestedContents() => loadResponseOrThrow(
       () => _api.removeEveryRequestedContents(_local.userId!));
+
+  @override
+  Future<void> removeRequestedContent(String contentId) =>
+      loadResponseOrThrow(() => _api.removeRequestedContent(contentId));
 }

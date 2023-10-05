@@ -209,4 +209,9 @@ class UserApiImpl with FirestoreHelper, FireStorageHelper implements UserApi {
     await deleteDocumentWithContainingField('requestedContent',
         fieldName: 'userId', targetValue: userId);
   }
+
+  @override
+  Future<void> removeRequestedContent(String contentId) async {
+    await deleteDocument('requestedContent', docId: contentId);
+  }
 }

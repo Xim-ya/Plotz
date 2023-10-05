@@ -49,4 +49,7 @@ abstract class UserApi {
 
   // 요청된 유저의 콘텐츠 리스트 삭제
   Future<void> removeEveryRequestedContents(String userId);
+
+  // 요청된 특정 콘텐츠 삭제
+  Future<void> removeRequestedContent(String contentId);
 }
