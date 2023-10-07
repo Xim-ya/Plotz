@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:soon_sak/data/api/staticContent/response/newly_added_content_response.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -88,6 +89,7 @@ class LoadCachedNewlyAddedContentsUseCase
     try {
       Map<String, dynamic> data = json.decode(jsonText);
       if (data['key'] == givenKey) {
+        print("업데이트 키라고? : ${data['key']} == ${givenKey}");
         return true;
       } else {
         return false;

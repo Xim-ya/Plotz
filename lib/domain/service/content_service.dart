@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -39,6 +40,7 @@ class ContentService {
     response.fold(
       onSuccess: (data) {
         _staticContentKeys = data;
+        print("========== 전달 받은 키 ${data.newlyAddedContentKey}");
       },
       onFailure: (e) {
         log('ContentService : $e');
