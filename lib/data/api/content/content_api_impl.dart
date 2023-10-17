@@ -88,4 +88,13 @@ class ContentApiImpl with FirestoreHelper implements ContentApi {
     final doc = await getDocById('requestedContent', docId: contentId);
     return doc.exists;
   }
+
+  @override
+  Future<void> reportInvalidContent(String id) async {
+    final doc = await getDocById('content', docId: id);
+
+    final data = doc.data() as Map<String, dynamic>;
+
+    await addDocumentWithId('invalidContent', data: data, id: id);
+  }
 }

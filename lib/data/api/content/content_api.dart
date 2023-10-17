@@ -22,4 +22,7 @@ abstract class ContentApi {
 
   /// 콘텐츠 요청 상태 여부
   Future<bool> checkIfContentAlreadyRequested(String contentId);
+
+  /// 유효하지 않은 콘텐츠 리포트
+  Future<void> reportInvalidContent(String id);
 }

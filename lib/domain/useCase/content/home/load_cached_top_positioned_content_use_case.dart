@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
 import 'package:soon_sak/utilities/index.dart';
@@ -86,10 +87,10 @@ class LoadCachedTopPositionedContentsUseCase
 
   /// 'key' 값이 최신화 되어 있는지 확인
   bool _isUpdatedKey({required String jsonText, required String givenKey}) {
-    
     try {
       Map<String, dynamic> data = json.decode(jsonText);
       if (data['key'] == givenKey) {
+        print("업데이트 키라고 --> 탑포지션? : ${data['key']} == ${givenKey}");
         return true;
       } else {
         return false;
@@ -98,6 +99,5 @@ class LoadCachedTopPositionedContentsUseCase
       _localStorageService.deleteData(fieldName: 'topPositionedCollection');
       return false;
     }
-    
   }
 }

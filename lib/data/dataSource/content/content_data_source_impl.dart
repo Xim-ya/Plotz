@@ -39,4 +39,8 @@ class ContentDataSourceImpl
   @override
   Future<bool> checkIfContentAlreadyRequested(String contentId) =>
       loadResponseOrThrow(() => _api.checkIfContentAlreadyRequested(contentId));
+
+  @override
+  Future<void> reportInvalidContent(String id) =>
+      loadResponseOrThrow(() => _api.reportInvalidContent(id));
 }
