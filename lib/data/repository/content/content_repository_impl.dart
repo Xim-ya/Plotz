@@ -53,4 +53,14 @@ class ContentRepositoryImpl implements ContentRepository {
       return Result.failure(e);
     }
   }
+
+  @override
+  Future<Result<void>> reportInvalidContent(String id) async {
+    try {
+      final response = await _contentDataSource.reportInvalidContent(id);
+      return Result.success(response);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
 }

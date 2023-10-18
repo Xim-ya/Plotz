@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
 import 'package:soon_sak/domain/index.dart';
@@ -38,6 +39,8 @@ class ContentVideo {
     if (videoId.contains('&')) {
       selectedVideoId = videoId.substring(0, videoId.indexOf('&'));
     }
+
+    // TODO: 수정필요
 
     final responseRes = await locator<YoutubeRepository>()
         .loadYoutubeVideoContentInfo(selectedVideoId);

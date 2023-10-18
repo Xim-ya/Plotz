@@ -235,6 +235,11 @@ mixin FirestoreHelper {
     }
   }
 
+  Future<void> addDocumentWithId(String collectionName,
+      {required Map<String, dynamic> data, required String id}) {
+    return _db.collection(collectionName).doc(id).set(data);
+  }
+
   /// 특정 필드값을 업데이트 하는 메소드
   /// 최대 2개의 필드 값을 업데이트할 수 있고
   /// 두 번째 필드 값 정보가 없다면

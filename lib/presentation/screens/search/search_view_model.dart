@@ -61,7 +61,7 @@ class SearchViewModel extends BaseViewModel {
 
     if (isAlreadyRegistered) {
       AlertWidget.newToast(
-          message: '이미 등록된 콘텐츠입니다.', context, isUsedOnTabScreen: true);
+          message: '이미 요청된 콘텐츠입니다.', context, isUsedOnTabScreen: true);
       return context.pop();
     }
 

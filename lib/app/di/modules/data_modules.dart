@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:soon_sak/app/index.dart';
 import 'package:soon_sak/data/index.dart';
+import 'package:soon_sak/data/resources/app_dio.dart';
 import 'package:soon_sak/domain/index.dart';
-
 
 abstract class DataModules {
   DataModules._();
@@ -19,7 +19,7 @@ abstract class DataModules {
 
     /* User*/
     locator.registerLazySingleton<UserApi>(() => UserApiImpl());
-    locator.registerLazySingleton<UserDao>(()=> UserDao());
+    locator.registerLazySingleton<UserDao>(() => UserDao());
 
     locator.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(

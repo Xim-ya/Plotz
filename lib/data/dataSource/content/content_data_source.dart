@@ -24,4 +24,7 @@ abstract class ContentDataSource {
 
   /// 콘텐츠 요청 상태 여부
   Future<bool> checkIfContentAlreadyRequested(String contentId);
+
+  /// 유효하지 않은 콘텐츠 삭제
+  Future<void> reportInvalidContent(String id);
 }

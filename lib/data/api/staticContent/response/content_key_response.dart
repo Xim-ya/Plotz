@@ -19,7 +19,7 @@ class ContentKeyResponse {
   @JsonKey(name: 'categoryContent2')
   final String categoryContent2;
 
-  @JsonKey(name: 'topPositionedCollectionKey')
+  @JsonKey(name: 'topPositionedCollection')
   final String topPositionedCollectionKey;
 
   ContentKeyResponse({
