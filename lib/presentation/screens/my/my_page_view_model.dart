@@ -116,7 +116,7 @@ class MyPageViewModel extends BaseViewModel {
 
   // 프로필 설정 이동
   void routeToProfileSetting() {
-    context.push(AppRoutes.tabs + AppRoutes.setting + AppRoutes.profileSetting);
+    context.push(AppRoutes.profileSetting);
   }
 
   // 콘텐츠 상세 페이지로 이동

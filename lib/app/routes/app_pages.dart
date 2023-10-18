@@ -44,6 +44,14 @@ abstract class AppPages {
         newBuilder: (context, state) => const ContentDetailScreen(),
       ),
       GoRouteWithBinding(
+        path: AppRoutes.profileSetting,
+        prevPath: const [
+          AppRoutes.tabs,
+        ],
+        binding: ProfileSettingBinding(),
+        newBuilder: (context, state) => const ProfileSettingScreen(),
+      ),
+      GoRouteWithBinding(
         path: AppRoutes.requestedContent,
         prevPath: const [
           AppRoutes.tabs,
